@@ -1,23 +1,27 @@
 import { useEffect, useRef, useState } from 'react';
+import { isoWeek } from '../../engine/dates';
 import { formatDecimal, formatInt } from '../../engine/format';
 import { randomSeed } from '../../engine/rng';
 import { PHASE_MS } from '../../engine/session';
 import type { Saved } from '../../engine/storage';
 import { comboMultiplier, type Stake } from '../../engine/xp';
+import { patternById } from '../../domain/patterns';
 import { imageOf } from '../../memory/images';
 import { HintBox, MemoryBox, PresentationCard } from '../../memory/MemoryViews';
 import { routeOf } from '../../memory/palace';
 import { HINT_COST, supportPlan } from '../../memory/support';
-import { patternById } from '../../domain/patterns';
 import { CompleteView } from '../../modes/complete/CompleteView';
 import { EstimateView } from '../../modes/estimate/EstimateView';
 import { HigherLowerView } from '../../modes/higherLower/HigherLowerView';
 import { PalaceView } from '../../modes/palace/PalaceView';
 import { ReadView } from '../../modes/read/ReadView';
+import { SudokuView } from '../../modes/sudoku/SudokuView';
+import { Klubaften } from '../../ui/Klubaften';
 import { secondsText, xpText } from '../../ui/text';
 import { useNow } from '../../ui/useNow';
 import { gradeProgress } from '../progression';
 import {
+  completeSudoku,
   finishSession,
   introducePattern,
   nextStep,
@@ -36,6 +40,7 @@ const PHASE_LABEL: Record<Phase, string> = {
   review: 'Repetition',
   level: 'Niveauøvelse',
   lightning: 'Lynrunde',
+  sudoku: '13-sudoku',
   repeat: 'Gentagelse',
   status: 'Status',
 };
@@ -121,6 +126,12 @@ export function SessionScreen({ saved, onSave, onExit }: SessionScreenProps) {
     }
   }
 
+  function sudokuDone(points: number) {
+    const r = completeSudoku(runRef.current.session, savedRef.current, points);
+    save(r.saved);
+    advance(r.state);
+  }
+
   function introduce(patternId: string) {
     const r = introducePattern(runRef.current.session, savedRef.current, patternId, Date.now());
     save(r.saved);
@@ -151,7 +162,9 @@ export function SessionScreen({ saved, onSave, onExit }: SessionScreenProps) {
         ? current.next.phase
         : current.type === 'intro'
           ? 'level'
-          : 'status';
+          : current.type === 'sudoku'
+            ? 'sudoku'
+            : 'status';
   const finished = phase === 'status';
   const inLightning = phase === 'lightning' && session.lightningStartedAt !== undefined;
   const lightningLeft = Math.min(PHASE_MS.lightning, PHASE_MS.lightning - (now - (session.lightningStartedAt ?? now)));
@@ -160,6 +173,8 @@ export function SessionScreen({ saved, onSave, onExit }: SessionScreenProps) {
   let content;
   if (current.type === 'status') {
     content = <StatusView session={session} saved={saved} jokerUsed={run.jokerUsed ?? false} onDone={onExit} />;
+  } else if (current.type === 'sudoku') {
+    content = <SudokuView task={current.task} onDone={(points) => isCurrent(view) && sudokuDone(points)} />;
   } else if (current.type === 'intro') {
     content = (
       <PresentationCard
@@ -428,6 +443,7 @@ function StatusView({ session, saved, jokerUsed, onDone }: StatusViewProps) {
         </div>
       </dl>
       {jokerUsed && <p>Ugens joker dækkede en glemt dag, så din streak lever.</p>}
+      {session.boss && <WeekStatus saved={saved} />}
       <p>
         I morgen: {next.due === 1 ? '1 emne' : `${next.due} emner`} til repetition
         {next.fresh > 0 && ` og ${next.fresh === 1 ? '1 nyt mønster' : `${next.fresh} nye mønstre`}`}.
@@ -436,6 +452,25 @@ function StatusView({ session, saved, jokerUsed, onDone }: StatusViewProps) {
       <button type="button" className="btn primary wide" onClick={onDone} autoFocus>
         Færdig
       </button>
+    </section>
+  );
+}
+
+/** Ugens status på bossens dag: ugens sessioner og klubaftenen. */
+function WeekStatus({ saved }: { saved: Saved }) {
+  const week = isoWeek(saved.sessions.at(-1)?.day ?? '');
+  const sessions = saved.sessions.filter((s) => isoWeek(s.day) === week);
+  const correct = sessions.reduce((sum, s) => sum + s.correct, 0);
+  const total = sessions.reduce((sum, s) => sum + s.total, 0);
+  return (
+    <section className="card">
+      <h2>Ugens status</h2>
+      <p>
+        {sessions.length} {sessions.length === 1 ? 'session' : 'sessioner'} i uge {Number(week.slice(6))} ·{' '}
+        {correct} af {total} rigtige.
+      </p>
+      <p className="muted small">Sådan ser 100 hænder ud på en klubaften:</p>
+      <Klubaften />
     </section>
   );
 }

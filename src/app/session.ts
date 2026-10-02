@@ -16,6 +16,7 @@ import { patternById, type Pattern } from '../domain/patterns';
 import { HINT_COST, supportPlan } from '../memory/support';
 import { makeCompleteTask, scoreComplete, type CompleteTask } from '../modes/complete/task';
 import { CLUB_PATTERNS, checkEstimate, makeEstimateTask, type EstimateTask } from '../modes/estimate/task';
+import { makeSudoku, type SudokuTask } from '../modes/sudoku/task';
 import {
   checkHigherLower,
   makeHigherLowerTask,
@@ -47,8 +48,8 @@ import {
   unlockedPatterns,
 } from './progression';
 
-/** review = repetition, level = niveauøvelse, lightning = lynrunde, repeat = hyperkorrektion. */
-export type Phase = 'review' | 'level' | 'lightning' | 'repeat' | 'status';
+/** review = repetition, level = niveauøvelse, lightning = lynrunde, sudoku = 13-sudoku, repeat = hyperkorrektion. */
+export type Phase = 'review' | 'level' | 'lightning' | 'sudoku' | 'repeat' | 'status';
 
 export type ModeTask = HigherLowerTask | CompleteTask | PalaceTask | ReadTask | EstimateTask;
 export type TaskKind = ModeTask['kind'];
@@ -75,6 +76,8 @@ export type Step =
   | { type: 'intro'; patternId: string }
   /** Emnet præsenteres (station, mønster, billede) og testes straks. */
   | { type: 'present'; patternId: string; next: TaskStep }
+  /** Én 13-sudoku; ugens boss får en svær opgave med dobbelt XP. */
+  | { type: 'sudoku'; task: SudokuTask }
   | { type: 'status' };
 
 /** Klubaften-estimat træner hyppigheden og hører derfor til sammenligning ligesom højere/lavere. */
@@ -112,8 +115,14 @@ export function lightningKind(day: string): 'higher-lower' | 'read' {
 /** Repetitionen slutter efter 60 s. */
 export const REVIEW_END = PHASE_MS.review;
 
-/** Niveauøvelsen slutter her. 13-sudoku kommer i trin 5; indtil da går dens 75 s til niveauøvelsen. */
-export const LEVEL_END = PHASE_MS.review + PHASE_MS.level + PHASE_MS.sudoku;
+/** Niveauøvelsen slutter efter 60 + 90 s. */
+export const LEVEL_END = PHASE_MS.review + PHASE_MS.level;
+
+/** 13-sudokuen springes over, hvis lynrunden slutter så sent, at der kun er tid til status. */
+export const SUDOKU_DEADLINE = 300_000 - PHASE_MS.status;
+
+/** Hver 7. session er ugens boss. */
+export const BOSS_EVERY = 7;
 
 export interface SessionState {
   startedAt: number;
@@ -138,6 +147,11 @@ export interface SessionState {
   recent: boolean[];
   /** Seneste par i lynrunden, så samme par ikke kommer to gange i træk. */
   lastPair?: string;
+  /** Ugens boss: hver 7. session er sudokuen svær og giver dobbelt XP. */
+  boss: boolean;
+  sudokuShown: boolean;
+  /** Rigtige og stillede opgaver pr. grad uden for lynrunden, til kurverne. */
+  grades: Record<string, [number, number]>;
 }
 
 /** Giver et nyt seed til hver opgave, så den kan genskabes. */
@@ -157,6 +171,9 @@ export function startSession(saved: Saved, now: number): SessionState {
     lightning: { correct: 0, total: 0 },
     repeat: [],
     recent: recentFromLogs(saved),
+    boss: (saved.sessions.length + 1) % BOSS_EVERY === 0,
+    sudokuShown: false,
+    grades: {},
   };
 }
 
@@ -352,7 +369,13 @@ export function nextStep(
       const lastPair = step.task.kind === 'higher-lower' ? pairOf(step.task) : undefined;
       return issue({ ...s, lastPair }, saved, step);
     }
-    s = { ...s, phase: 'repeat', lightningEndedAt: now };
+    s = { ...s, phase: 'sudoku', lightningEndedAt: now };
+  }
+  if (s.phase === 'sudoku') {
+    if (!s.sudokuShown && elapsed < SUDOKU_DEADLINE) {
+      return { state: { ...s, sudokuShown: true }, step: { type: 'sudoku', task: makeSudoku(seed(), s.boss) } };
+    }
+    s = { ...s, phase: 'repeat' };
   }
   if (s.phase === 'repeat') {
     const [first, ...rest] = s.repeat;
@@ -378,6 +401,15 @@ export function introducePattern(
     },
     saved: introduce(saved, patternId, today),
   };
+}
+
+/** Sudokuen er løst (eller opgivet): pointene lægges til XP. */
+export function completeSudoku(
+  state: SessionState,
+  saved: Saved,
+  points: number,
+): { state: SessionState; saved: Saved } {
+  return { state: { ...state, xp: state.xp + points }, saved: { ...saved, xp: addXp(saved.xp, points) } };
 }
 
 export function scoreAnswer(task: ModeTask, answer: Answer): 0 | 0.5 | 1 {
@@ -474,8 +506,11 @@ export function submitAnswer(
   }
 
   const combo = ok ? state.combo + 1 : 0;
+  const grade = patternById(task.patternId).grade;
+  const [gradeCorrect, gradeTotal] = state.grades[grade] ?? [0, 0];
   const next: SessionState = {
     ...state,
+    grades: lightning ? state.grades : { ...state.grades, [grade]: [gradeCorrect + (ok ? 1 : 0), gradeTotal + 1] },
     combo,
     correct: state.correct + (ok ? 1 : 0),
     total: state.total + 1,
@@ -505,6 +540,7 @@ export function finishSession(state: SessionState, saved: Saved, now: number): S
     correct: state.correct,
     total: state.total,
     cpm: correctPerMinute(state.lightning.correct, lightningMs),
+    ...(Object.keys(state.grades).length > 0 ? { grades: state.grades } : {}),
   };
   return { ...saved, streak: completeDay(saved.streak, today), sessions: [...saved.sessions, record] };
 }

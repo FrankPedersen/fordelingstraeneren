@@ -18,6 +18,8 @@ export interface SessionRecord {
   total: number;
   /** Korrekte svar pr. minut i lynrunden. */
   cpm: number;
+  /** Tilføjet i trin 5: rigtige og stillede opgaver pr. grad (uden lynrunden), til kurverne. */
+  grades?: Record<string, [number, number]>;
 }
 
 /** Skemaet fra SPEC.md (Data og lagring). */
@@ -89,13 +91,16 @@ const isStreak = (v: unknown): v is Streak =>
   (v.lastDay === '' || isDay(v.lastDay)) &&
   (v.jokerWeek === undefined || (isString(v.jokerWeek) && /^\d{4}-W\d{2}$/.test(v.jokerWeek)));
 
+const isTally = (v: unknown) => Array.isArray(v) && v.length === 2 && v.every(isCount) && v[0] <= v[1];
+
 const isSession = (v: unknown): v is SessionRecord =>
   isObject(v) &&
   isDay(v.day) &&
   isCount(v.ms) &&
   isCount(v.correct) &&
   isCount(v.total) &&
-  isNumber(v.cpm);
+  isNumber(v.cpm) &&
+  (v.grades === undefined || (isObject(v.grades) && Object.values(v.grades).every(isTally)));
 
 const isAlbumEntry = (v: unknown) => isObject(v) && isDay(v.first) && isCount(v.count);
 

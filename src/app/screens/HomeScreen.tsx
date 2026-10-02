@@ -14,13 +14,14 @@ interface HomeScreenProps {
   onPalace(): void;
   onAlbum(): void;
   onClub(): void;
+  onCurves(): void;
   onSettings(): void;
 }
 
 const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
 
 export function HomeScreen(props: HomeScreenProps) {
-  const { saved, updateReady, onUpdate, onStart, onPalace, onAlbum, onClub, onSettings } = props;
+  const { saved, updateReady, onUpdate, onStart, onPalace, onAlbum, onClub, onCurves, onSettings } = props;
   const today = dayOf(Date.now(), saved.settings.dayStartsAtHour);
   const streak = streakOn(saved.streak, today);
   const progress = gradeProgress(saved);
@@ -120,6 +121,9 @@ export function HomeScreen(props: HomeScreenProps) {
           </button>
           <button type="button" className="btn" onClick={onClub}>
             Klubaften
+          </button>
+          <button type="button" className="btn" onClick={onCurves}>
+            Kurver
           </button>
           <button type="button" className="btn" onClick={onSettings}>
             Indstillinger

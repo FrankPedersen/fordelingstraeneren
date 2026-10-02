@@ -1097,3 +1097,215 @@ textarea {
   max-height: calc(100dvh - 32px);
   overflow-y: auto;
 }
+
+h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+/* 13-sudoku */
+
+.grid4 {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 4px;
+  font-variant-numeric: tabular-nums;
+}
+
+.grid4 th {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.grid4 thead th,
+.grid4 tfoot th {
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.grid4 th.red {
+  color: #c62828;
+}
+
+.grid4 td {
+  padding: 0;
+  text-align: center;
+}
+
+.cell {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-width: 44px;
+  height: 48px;
+  padding: 0;
+  border-radius: 10px;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+button.cell {
+  background: var(--surface);
+  border: 2px solid var(--line);
+}
+
+.cell.fixed {
+  background: var(--surface-2);
+  color: var(--muted);
+}
+
+.cell.selected {
+  border-color: var(--ink);
+}
+
+.cell.right {
+  border-color: var(--ok);
+  background: var(--ok-bg);
+}
+
+.cell.wrong {
+  border-style: dashed;
+}
+
+.notes {
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--muted);
+}
+
+.grid4 .sum {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.grid4 .sum.ok {
+  color: var(--ok);
+  font-weight: 700;
+}
+
+.grid-keys {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+
+.grid-keys .key {
+  min-height: 48px;
+  font-size: 1.2rem;
+}
+
+.clues {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 1.4em;
+}
+
+.badge.boss {
+  margin-left: 8px;
+  vertical-align: middle;
+  background: var(--ink);
+  color: var(--ink-text);
+}
+
+/* Kurver: én serie pr. diagram i en farve, der ikke forveksles med familiefarverne */
+
+.chart {
+  --chart-series: #d55181;
+  display: grid;
+  gap: 6px;
+}
+
+.chart-frame {
+  display: grid;
+  gap: 4px;
+  border-radius: 8px;
+}
+
+.chart svg {
+  width: 100%;
+  height: auto;
+  touch-action: pan-y;
+}
+
+.chart-grid {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+
+.chart-tick {
+  fill: var(--muted);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.chart-line {
+  fill: none;
+  stroke: var(--chart-series);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+.chart-dot {
+  fill: var(--chart-series);
+  stroke: var(--surface);
+  stroke-width: 2;
+}
+
+.chart-end {
+  fill: var(--text);
+  font-size: 12px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.chart-crosshair {
+  stroke: var(--muted);
+  stroke-width: 1;
+}
+
+.chart-readout {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.chart-readout strong {
+  color: var(--text);
+}
+
+.chart-table summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.chart-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.chart-table caption {
+  text-align: left;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.chart-table th,
+.chart-table td {
+  padding: 4px;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+
+/* En enlig knap i sidste række fylder hele bredden. */
+.two > :last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}

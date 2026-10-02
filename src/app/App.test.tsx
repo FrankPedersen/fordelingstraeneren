@@ -153,6 +153,55 @@ describe('App', () => {
     expect(screen.getByText(/Dagens session er gennemført/)).toBeTruthy();
   });
 
+  it('stiller en 13-sudoku efter lynrunden, hvor en forkert lås koster grundpointene', () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date(2026, 9, 2, 12, 0));
+    render(<App />);
+    click('Start dagens session');
+    click('Videre');
+    for (const key of ['4', '4', '3']) click(key);
+    // Forbi niveauøvelsen (150 s), så næste opgave er lynrunden.
+    vi.setSystemTime(new Date(2026, 9, 2, 12, 2, 40));
+    click('Svar');
+    click('Næste');
+    click(/Lige hyppige/);
+    // Lynrunden er slut efter 60 s; der er stadig tid til sudokuen.
+    vi.setSystemTime(new Date(2026, 9, 2, 12, 3, 45));
+    act(() => vi.advanceTimersByTime(3000));
+    expect(screen.getByText(/Find Østs og Vests fordeling/)).toBeTruthy();
+    expect(screen.getAllByRole('listitem').length).toBeGreaterThanOrEqual(1);
+    for (const seat of ['Øst', 'Vest']) {
+      for (const suit of ['spar', 'hjerter', 'ruder', 'klør']) {
+        click(new RegExp(`^${seat}, ${suit}:`));
+        click('0');
+      }
+    }
+    click(/^Lås/);
+    expect(screen.getByText(/Ikke rigtigt – låsen koster 10 XP/)).toBeTruthy();
+    click('Vis løsningen');
+    expect(screen.getByText('−10 XP')).toBeTruthy();
+    click('Videre');
+    expect(screen.getByText('Session gennemført')).toBeTruthy();
+  });
+
+  it('tegner kurverne pr. uge med en tabelvisning', () => {
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        ...defaultSaved(),
+        sessions: [
+          { day: '2026-09-24', ms: 300_000, correct: 8, total: 10, cpm: 9, grades: { common: [8, 10] } },
+          { day: '2026-10-02', ms: 300_000, correct: 9, total: 10, cpm: 12, grades: { common: [9, 10] } },
+        ],
+      }),
+    );
+    render(<App />);
+    click('Kurver');
+    expect(screen.getByRole('img', { name: /^Højere\/lavere: korrekte svar pr\. minut\. uge 39: 9, uge 40: 12$/ })).toBeTruthy();
+    expect(screen.getByRole('img', { name: /^Træfsikkerhed, almindelig\. uge 39: 80 %, uge 40: 90 %$/ })).toBeTruthy();
+    expect(screen.getAllByText('Vis som tabel').length).toBeGreaterThanOrEqual(2);
+  });
+
   it('importerer en fil først, når resuméet er godkendt', async () => {
     render(<App />);
     click('Indstillinger');

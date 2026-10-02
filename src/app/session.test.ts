@@ -9,6 +9,8 @@ import { completeFacit } from '../modes/complete/task';
 import { introduce } from './progression';
 import {
   LEVEL_END,
+  SUDOKU_DEADLINE,
+  completeSudoku,
   finishSession,
   introducePattern,
   lightningKind,
@@ -90,6 +92,11 @@ function simulate(start: Saved, { ms = 2000, answer = (s) => right(s.task), stak
       ({ state, saved } = introducePattern(state, saved, next.step.patternId, now));
       continue;
     }
+    if (next.step.type === 'sudoku') {
+      now += 30_000;
+      ({ state, saved } = completeSudoku(state, saved, 40));
+      continue;
+    }
     const s = next.step.type === 'present' ? next.step.next : next.step;
     const shownAt = now;
     now += ms;
@@ -142,7 +149,7 @@ describe('Session – første dag', () => {
     expect(simulate(defaultSaved()).steps.some((s) => s.type === 'present')).toBe(false);
   });
 
-  it('følger den bløde timer: niveauøvelse, 60 s lynrunde og derefter status', () => {
+  it('følger den bløde timer: niveauøvelse, 60 s lynrunde, 13-sudoku og derefter status', () => {
     const { steps, now } = simulate(defaultSaved());
     const all = tasks(steps);
     expect([...new Set(all.map((s) => s.phase))]).toEqual(['level', 'lightning']);
@@ -151,10 +158,11 @@ describe('Session – første dag', () => {
     for (const s of lightning) {
       expect(s).toMatchObject({ stake: false, support: 0, task: { kind: 'higher-lower' } });
     }
+    expect(steps.at(-2)).toMatchObject({ type: 'sudoku', task: { kind: 'sudoku', hard: false } });
     expect(steps.at(-1)).toEqual({ type: 'status' });
-    // Sidste niveauopgave starter ved 224 s og gøres færdig ved 226 s; så følger 60 s lynrunde.
-    expect(LEVEL_END).toBe(225_000);
-    expect(now - T0).toBe(226_000 + 60_000);
+    // Niveauøvelsen slutter efter 150 s, lynrunden varer 60 s, og sudokuen tager her 30 s.
+    expect(LEVEL_END).toBe(150_000);
+    expect(now - T0).toBe(150_000 + 60_000 + 30_000);
   });
 
   it('holder højst 2 opgaver af samme type i træk uden for lynrunden', () => {
@@ -179,10 +187,43 @@ describe('Session – første dag', () => {
     const done = finishSession(state, saved, now);
     expect(done.streak).toMatchObject({ current: 1, best: 1, lastDay: today });
     expect(done.sessions).toEqual([
-      { day: today, ms: now - T0, correct: state.total, total: state.total, cpm: 30 },
+      { day: today, ms: now - T0, correct: state.total, total: state.total, cpm: 30, grades: state.grades },
     ]);
     expect(done.xp).toBe(state.xp);
     expect(done.xp).toBeGreaterThan(0);
+  });
+});
+
+describe('Session – 13-sudoku og ugens boss', () => {
+  it('lægger sudokuens point til XP', () => {
+    const { state, saved } = simulate(defaultSaved());
+    expect(saved.xp).toBe(state.xp);
+    const before = startSession(defaultSaved(), T0);
+    expect(completeSudoku(before, defaultSaved(), 40)).toMatchObject({ state: { xp: 40 }, saved: { xp: 40 } });
+    expect(completeSudoku(before, defaultSaved(), -10).saved.xp).toBe(0);
+  });
+
+  it('springer sudokuen over, hvis lynrunden slutter, når der kun er tid til status', () => {
+    const saved = defaultSaved();
+    const late = { ...startSession(saved, T0), phase: 'lightning' as const, lightningStartedAt: T0 + 215_000 };
+    expect(SUDOKU_DEADLINE).toBe(285_000);
+    expect(nextStep(late, saved, T0 + 290_000, counter()).step).toEqual({ type: 'status' });
+    expect(nextStep(late, saved, T0 + 280_000, counter()).step.type).toBe('sudoku');
+  });
+
+  it('gør hver 7. session til ugens boss med en svær sudoku', () => {
+    const saved = defaultSaved();
+    saved.sessions = Array.from({ length: 6 }, () => ({ day: '2026-09-30', ms: 300_000, correct: 1, total: 1, cpm: 1 }));
+    const { steps } = simulate(saved);
+    expect(steps.at(-2)).toMatchObject({ type: 'sudoku', task: { hard: true } });
+    expect(startSession(defaultSaved(), T0).boss).toBe(false);
+  });
+
+  it('tæller svar pr. grad uden for lynrunden', () => {
+    const { state, saved, now } = simulate(defaultSaved());
+    const done = finishSession(state, saved, now);
+    const outside = state.total - state.lightning.total;
+    expect(done.sessions[0].grades).toEqual({ common: [outside, outside] });
   });
 });
 

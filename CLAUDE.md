@@ -64,4 +64,16 @@ Bridge-træningsapp til hånd-fordelinger. **Den fulde specifikation står i [SP
     - Klubaften-estimat træner færdigheden "compare": forfaldne sammenligningsemner for klubaftenens 16 mønstre stilles som højere/lavere eller estimat (50/50).
     - Sjældne fund = episke og legendariske mønstre; de fejres med odds, ligesom nye mønstre i albummet. Legendarisk oplåsning kræver alle tre svar rigtige i ét forsøg.
     - Et nyt mønsters aflæsning øves først i repetitionen, ikke lige efter introduktionen.
-- [ ] Trin 5: Meldetolkning og 13-sudoku, ugens boss og kurver
+- [x] Trin 5: Meldetolkning og 13-sudoku, ugens boss og kurver
+  - `src/system/dk-2over1.json` (48 regler: åbninger, direkte indmeldinger over åbninger på 1-trinnet og DONT over 1NT), `interpreter.ts` og `auction.ts`. SPEC.md's åbne punkter står i reglernes `note`-felt.
+  - Løser: `src/domain/sudoku.ts`. Generator og visning: `src/modes/sudoku/`. Gitter: `src/ui/Gitter4x4.tsx`. Kurver: `src/app/curves.ts` og `src/ui/LineChart.tsx`.
+  - Skemaet: sessionsposter har fået det valgfri felt `grades` (rigtige og stillede pr. grad).
+  - Valg, hvor SPEC.md er åben (spørg før ændring):
+    - "Simple svar" i generatoren er udeladt, da svarsekvenser ikke er med i første version af systemet. Auktionen er åbning plus direkte indmelding.
+    - Regelformatet har to tilføjelser: `hcp` kan være flere intervaller (8–15 eller 17+), og `stopper: true` kræver hold i åbnerens farve. Det sidste bruges kun af meldegiveren.
+    - Oplysningsdobling over 1♥/1♠ = præcis 4 i den anden major og højst 2 i deres farve, da der kun er én umeldt major.
+    - Spilhændelser: "kan ikke bekende" for længder op til 3, "følger n gange" for n ≥ 2 og højst ét udspil af 4. højeste (Vest, da Syd spiller). Normalt vælges den mest oplysende hændelse, til ugens boss den mindst oplysende.
+    - Grundpoint 10. Ugens boss (hver 7. session) fordobler både gevinst og straf. "Vis løsningen" giver 0 point minus forkerte låse.
+    - Niveauøvelsen er tilbage på 90 s; sudokuen springes over, hvis lynrunden slutter efter 285 s.
+    - Kurverne er små multipler med én serie pr. diagram i magenta (`#d55181`, valideret mod begge flader), så familiefarverne ikke får en ny betydning. Træfsikkerhed pr. grad tæller ikke lynrunden med.
+    - Ugens status (ugens tal og klubaftenen) vises på status-skærmen i bossens session.
