@@ -1,5 +1,5 @@
 import { addDays, dayOf } from '../engine/dates';
-import { review, type LogEntry, type Outcome } from '../engine/leitner';
+import { review, type LogEntry, type Outcome, type Support } from '../engine/leitner';
 import { mulberry32, shuffle } from '../engine/rng';
 import {
   PHASE_MS,
@@ -13,6 +13,7 @@ import type { Saved, Skill } from '../engine/storage';
 import { completeDay } from '../engine/streak';
 import { addXp, answerXp, type Stake } from '../engine/xp';
 import { patternById, type Pattern } from '../domain/patterns';
+import { HINT_COST, supportPlan } from '../memory/support';
 import { makeCompleteTask, scoreComplete, type CompleteTask } from '../modes/complete/task';
 import {
   checkHigherLower,
@@ -20,6 +21,7 @@ import {
   type HigherLowerAnswer,
   type HigherLowerTask,
 } from '../modes/higherLower/task';
+import { checkPalace, makePalaceTask, type PalaceAnswer, type PalaceTask } from '../modes/palace/task';
 import {
   currentGrade,
   dueItemKeys,
@@ -30,6 +32,7 @@ import {
   newPatternsWaiting,
   nextNewPattern,
   recentFromLogs,
+  skillsOf,
   splitItemKey,
   unlockedPatterns,
 } from './progression';
@@ -37,28 +40,48 @@ import {
 /** review = repetition, level = niveauøvelse, lightning = lynrunde, repeat = hyperkorrektion. */
 export type Phase = 'review' | 'level' | 'lightning' | 'repeat' | 'status';
 
-export type ModeTask = HigherLowerTask | CompleteTask;
+export type ModeTask = HigherLowerTask | CompleteTask | PalaceTask;
 export type TaskKind = ModeTask['kind'];
 
 export type Answer =
   | { kind: 'higher-lower'; choice: HigherLowerAnswer }
-  | { kind: 'complete'; patterns: string[] };
+  | { kind: 'complete'; patterns: string[] }
+  | { kind: 'palace'; answer: PalaceAnswer };
 
 export interface TaskStep {
   type: 'task';
   phase: Phase;
   /** Repetitionsemner afsluttes med "Sikker" eller "Gæt". */
   stake: boolean;
+  /** Støtteniveauet for opgavens emne, da opgaven blev stillet. */
+  support: Support;
   task: ModeTask;
 }
 
-export type Step = TaskStep | { type: 'intro'; patternId: string } | { type: 'status' };
+export type Step =
+  | TaskStep
+  | { type: 'intro'; patternId: string }
+  /** Emnet præsenteres (station, mønster, billede) og testes straks. */
+  | { type: 'present'; patternId: string; next: TaskStep }
+  | { type: 'status' };
 
-const SKILL_OF: Record<TaskKind, Skill> = { 'higher-lower': 'compare', complete: 'complete' };
-const KIND_OF: Partial<Record<Skill, TaskKind>> = { compare: 'higher-lower', complete: 'complete' };
+const SKILL_OF: Record<TaskKind, Skill> = {
+  'higher-lower': 'compare',
+  complete: 'complete',
+  palace: 'rank',
+};
 
-/** Fuldfør er niveauøvelsen; højere/lavere skydes ind af hensyn til interleaving. */
-const LEVEL_KINDS: readonly TaskKind[] = ['complete', 'higher-lower'];
+const KIND_OF: Partial<Record<Skill, TaskKind>> = {
+  compare: 'higher-lower',
+  complete: 'complete',
+  rank: 'palace',
+};
+
+/** Niveauøvelserne: Fuldfør mønsteret og Paladsvandring. */
+const LEVEL_KINDS: readonly TaskKind[] = ['complete', 'palace'];
+
+/** Et nyt mønster øves straks i hver af sine øvelser, i denne rækkefølge. */
+const PRACTICE_KINDS: readonly TaskKind[] = ['complete', 'palace', 'higher-lower'];
 
 /** Repetitionen slutter efter 60 s. */
 export const REVIEW_END = PHASE_MS.review;
@@ -75,6 +98,8 @@ export interface SessionState {
   history: { kind: TaskKind; patternId: string }[];
   /** Mønstre introduceret i denne session. */
   introduced: string[];
+  /** Mønstre, der er præsenteret i denne session. */
+  presented: string[];
   /** Rigtige svar i træk. */
   combo: number;
   correct: number;
@@ -98,6 +123,7 @@ export function startSession(saved: Saved, now: number): SessionState {
     phase: 'review',
     history: [],
     introduced: [],
+    presented: [],
     combo: 0,
     correct: 0,
     total: 0,
@@ -108,6 +134,10 @@ export function startSession(saved: Saved, now: number): SessionState {
   };
 }
 
+function kindsOf(pattern: Pattern): TaskKind[] {
+  return skillsOf(pattern).flatMap((skill) => KIND_OF[skill] ?? []);
+}
+
 function makeTask(
   kind: TaskKind,
   pattern: Pattern,
@@ -115,10 +145,24 @@ function makeTask(
   difficulty: Difficulty,
   seed: number,
 ): ModeTask {
-  return kind === 'higher-lower'
-    ? makeHigherLowerTask(seed, pattern, unlockedPatterns(saved), difficulty)
-    : makeCompleteTask(seed, pattern, difficulty);
+  switch (kind) {
+    case 'higher-lower':
+      return makeHigherLowerTask(seed, pattern, unlockedPatterns(saved), difficulty);
+    case 'complete':
+      return makeCompleteTask(seed, pattern, difficulty);
+    case 'palace':
+      return makePalaceTask(seed, pattern, difficulty);
+  }
 }
+
+/** Støtteniveauet sættes, når opgaven stilles (se issue). */
+const taskStep = (phase: Phase, stake: boolean, task: ModeTask): TaskStep => ({
+  type: 'task',
+  phase,
+  stake,
+  support: 0,
+  task,
+});
 
 /** Repetition: forfaldne emner, blandet på tværs af øvelserne. */
 function reviewStep(s: SessionState, saved: Saved, today: string, seed: SeedSource): TaskStep | null {
@@ -135,13 +179,12 @@ function reviewStep(s: SessionState, saved: Saved, today: string, seed: SeedSour
   const key = order.find((k) => allowsKind(kinds, kindOf(k)));
   if (key) {
     const pattern = patternById(splitItemKey(key).patternId);
-    const task = makeTask(kindOf(key), pattern, saved, difficulty, seed());
-    return { type: 'task', phase: 'review', stake: true, task };
+    return taskStep('review', true, makeTask(kindOf(key), pattern, saved, difficulty, seed()));
   }
-  // Kun én opgavetype er forfalden, og den har været der to gange i træk: indskyd den anden type.
-  const other: TaskKind = kindOf(order[0]) === 'complete' ? 'higher-lower' : 'complete';
+  // Kun én opgavetype er forfalden, og den har været der to gange i træk: indskyd en anden øvelse.
   const pattern = patternById(splitItemKey(order[0]).patternId);
-  return { type: 'task', phase: 'review', stake: false, task: makeTask(other, pattern, saved, difficulty, seed()) };
+  const other = kindsOf(pattern).find((k) => allowsKind(kinds, k)) ?? 'complete';
+  return taskStep('review', false, makeTask(other, pattern, saved, difficulty, seed()));
 }
 
 /** Mønstrene på det aktuelle niveau, der er introduceret (ellers alle introducerede). */
@@ -152,21 +195,20 @@ function levelPool(saved: Saved): Pattern[] {
   return here.length > 0 ? here : introduced;
 }
 
-/** Niveauøvelse: nye mønstre introduceres og øves straks; derefter niveauets mønstre. */
+/** Niveauøvelse: nye mønstre introduceres og øves straks; derefter Fuldfør og Paladsvandring på niveauet. */
 function levelStep(s: SessionState, saved: Saved, today: string, seed: SeedSource): Step | null {
   const kinds = s.history.map((h) => h.kind);
-  const task = (kind: TaskKind, pattern: Pattern, difficulty = difficultyOf(s.recent)): TaskStep => ({
-    type: 'task',
-    phase: 'level',
-    stake: false,
-    task: makeTask(kind, pattern, saved, difficulty, seed()),
-  });
+  const task = (kind: TaskKind, pattern: Pattern, difficulty = difficultyOf(s.recent)) =>
+    taskStep('level', false, makeTask(kind, pattern, saved, difficulty, seed()));
 
-  // Et nyt mønster testes straks efter introduktionen – med lette opgaver.
+  // Et nyt mønster testes straks i hver af sine øvelser – med lette opgaver.
   for (const id of s.introduced) {
+    const pattern = patternById(id);
     const done = s.history.filter((h) => h.patternId === id).map((h) => h.kind);
-    const kind = LEVEL_KINDS.find((k) => !done.includes(k) && allowsKind(kinds, k));
-    if (kind) return task(kind, patternById(id), 'easy');
+    const kind = PRACTICE_KINDS.find(
+      (k) => kindsOf(pattern).includes(k) && !done.includes(k) && allowsKind(kinds, k),
+    );
+    if (kind) return task(kind, pattern, 'easy');
   }
 
   const fresh = nextNewPattern(saved, today);
@@ -174,13 +216,29 @@ function levelStep(s: SessionState, saved: Saved, today: string, seed: SeedSourc
 
   const pool = levelPool(saved);
   if (pool.length === 0) return null;
-  const kind = LEVEL_KINDS.find((k) => allowsKind(kinds, k))!;
+  const usable = (kind: TaskKind) => pool.filter((p) => kindsOf(p).includes(kind));
+
+  // Forfaldne emner i niveauøvelserne går først.
   const due = dueItemKeys(saved, today)
     .map(splitItemKey)
-    .find((k) => KIND_OF[k.skill] === kind && pool.some((p) => p.id === k.patternId));
-  if (due) return task(kind, patternById(due.patternId));
+    .find((k) => {
+      const kind = KIND_OF[k.skill];
+      return (
+        kind !== undefined &&
+        LEVEL_KINDS.includes(kind) &&
+        allowsKind(kinds, kind) &&
+        pool.some((p) => p.id === k.patternId)
+      );
+    });
+  if (due) return task(KIND_OF[due.skill]!, patternById(due.patternId));
+
+  // Ellers skiftes der mellem Fuldfør og Paladsvandring.
+  const lastLevel = [...s.history].reverse().find((h) => LEVEL_KINDS.includes(h.kind))?.kind;
+  const options = LEVEL_KINDS.filter((k) => usable(k).length > 0 && allowsKind(kinds, k));
+  const kind = options.find((k) => k !== lastLevel) ?? options[0] ?? 'higher-lower';
+  const candidates = kind === 'higher-lower' ? pool : usable(kind);
   const last = s.history.at(-1)?.patternId;
-  const choices = pool.length > 1 ? pool.filter((p) => p.id !== last) : pool;
+  const choices = candidates.length > 1 ? candidates.filter((p) => p.id !== last) : candidates;
   return task(kind, choices[mulberry32(seed()).int(choices.length)]);
 }
 
@@ -194,13 +252,33 @@ function lightningStep(s: SessionState, saved: Saved, seed: SeedSource): TaskSte
   for (let i = 0; i < 5 && pairOf(task) === s.lastPair; i++) {
     task = makeHigherLowerTask(seed(), null, pool, difficulty);
   }
-  return { type: 'task', phase: 'lightning', stake: false, task };
+  return taskStep('lightning', false, task);
 }
 
-function issue(state: SessionState, step: Step): { state: SessionState; step: Step } {
+function supportOf(saved: Saved, task: ModeTask): Support {
+  return saved.items[itemKey(task.patternId, SKILL_OF[task.kind])]?.support ?? 3;
+}
+
+/**
+ * Stiller opgaven: sætter emnets støtteniveau og præsenterer emnet først, hvis niveauet er 3
+ * (højst én gang pr. mønster pr. session). Lynrunden kører uden støtte.
+ */
+function issue(state: SessionState, saved: Saved, step: Step): { state: SessionState; step: Step } {
   if (step.type !== 'task') return { state, step };
-  const entry = { kind: step.task.kind, patternId: step.task.patternId };
-  return { state: { ...state, history: [...state.history, entry] }, step };
+  const lightning = step.phase === 'lightning';
+  const ready: TaskStep = { ...step, support: lightning ? 0 : supportOf(saved, step.task) };
+  const id = step.task.patternId;
+  const history =
+    lightning || step.phase === 'repeat'
+      ? state.history
+      : [...state.history, { kind: step.task.kind, patternId: id }];
+  if (supportPlan(ready.support).present && !state.presented.includes(id)) {
+    return {
+      state: { ...state, history, presented: [...state.presented, id] },
+      step: { type: 'present', patternId: id, next: ready },
+    };
+  }
+  return { state: { ...state, history }, step: ready };
 }
 
 /**
@@ -218,24 +296,24 @@ export function nextStep(
   let s = state;
   if (s.phase === 'review') {
     const step = elapsed < REVIEW_END ? reviewStep(s, saved, today, seed) : null;
-    if (step) return issue(s, step);
+    if (step) return issue(s, saved, step);
     s = { ...s, phase: 'level' };
   }
   if (s.phase === 'level') {
     const step = elapsed < LEVEL_END ? levelStep(s, saved, today, seed) : null;
-    if (step) return issue(s, step);
+    if (step) return issue(s, saved, step);
     s = { ...s, phase: 'lightning', lightningStartedAt: now };
   }
   if (s.phase === 'lightning') {
     if (now - (s.lightningStartedAt ?? now) < PHASE_MS.lightning) {
       const step = lightningStep(s, saved, seed);
-      return { state: { ...s, lastPair: pairOf(step.task as HigherLowerTask) }, step };
+      return issue({ ...s, lastPair: pairOf(step.task as HigherLowerTask) }, saved, step);
     }
     s = { ...s, phase: 'repeat', lightningEndedAt: now };
   }
   if (s.phase === 'repeat') {
     const [first, ...rest] = s.repeat;
-    if (first) return { state: { ...s, repeat: rest }, step: first };
+    if (first) return issue({ ...s, repeat: rest }, saved, first);
     s = { ...s, phase: 'status' };
   }
   return { state: s, step: { type: 'status' } };
@@ -250,7 +328,11 @@ export function introducePattern(
 ): { state: SessionState; saved: Saved } {
   const today = dayOf(now, saved.settings.dayStartsAtHour);
   return {
-    state: { ...state, introduced: [...state.introduced, patternId] },
+    state: {
+      ...state,
+      introduced: [...state.introduced, patternId],
+      presented: [...state.presented, patternId],
+    },
     saved: introduce(saved, patternId, today),
   };
 }
@@ -262,23 +344,33 @@ export function scoreAnswer(task: ModeTask, answer: Answer): 0 | 0.5 | 1 {
   if (task.kind === 'complete' && answer.kind === 'complete') {
     return scoreComplete(task, answer.patterns);
   }
+  if (task.kind === 'palace' && answer.kind === 'palace') {
+    return checkPalace(task, answer.answer) ? 1 : 0;
+  }
   throw new Error('Svaret passer ikke til opgaven');
 }
 
 /** Emnerne, et svar flytter. Højere/lavere rammer begge mønstre (parreglen). */
 function itemKeysOf(task: ModeTask): string[] {
-  return task.kind === 'higher-lower'
-    ? [itemKey(task.a, 'compare'), itemKey(task.b, 'compare')]
-    : [itemKey(task.patternId, 'complete')];
+  if (task.kind === 'higher-lower') return [itemKey(task.a, 'compare'), itemKey(task.b, 'compare')];
+  return [itemKey(task.patternId, SKILL_OF[task.kind])];
 }
 
 export interface Feedback {
   score: 0 | 0.5 | 1;
   xp: number;
+  /** XP trukket for at åbne ledetråden. */
+  hintCost: number;
   fast: boolean;
   ms: number;
   /** Rigtige i træk efter svaret. */
   combo: number;
+}
+
+export interface AnswerOptions {
+  stake?: Stake;
+  /** Brugeren åbnede ledetråden før svaret. */
+  hint?: boolean;
 }
 
 export function submitAnswer(
@@ -287,7 +379,7 @@ export function submitAnswer(
   step: TaskStep,
   answer: Answer,
   timing: { shownAt: number; answeredAt: number },
-  stake?: Stake,
+  { stake, hint = false }: AnswerOptions = {},
 ): { state: SessionState; saved: Saved; feedback: Feedback } {
   const { task, phase } = step;
   const score = scoreAnswer(task, answer);
@@ -295,13 +387,15 @@ export function submitAnswer(
   const ms = Math.max(0, timing.answeredAt - timing.shownAt);
   const fast = ms < saved.settings.fastMs[SKILL_OF[task.kind]];
   const today = dayOf(timing.answeredAt, saved.settings.dayStartsAtHour);
-  const xp = answerXp({
-    score,
-    fast,
-    levelAccuracy: levelAccuracy(saved, patternById(task.patternId).grade),
-    comboBefore: state.combo,
-    stake,
-  });
+  const hintCost = hint && supportPlan(step.support).hint === 'paid' ? HINT_COST : 0;
+  const xp =
+    answerXp({
+      score,
+      fast,
+      levelAccuracy: levelAccuracy(saved, patternById(task.patternId).grade),
+      comboBefore: state.combo,
+      stake,
+    }) - hintCost;
 
   // Halv score i fuldfør behandles som rigtigt men langsomt: emnet bliver stående.
   const outcome: Outcome = score === 0 ? 'wrong' : ok && fast ? 'fast' : 'slow';
@@ -333,7 +427,7 @@ export function submitAnswer(
   return {
     state: next,
     saved: { ...saved, items, xp: addXp(saved.xp, xp) },
-    feedback: { score, xp, fast, ms, combo },
+    feedback: { score, xp, hintCost, fast, ms, combo },
   };
 }
 

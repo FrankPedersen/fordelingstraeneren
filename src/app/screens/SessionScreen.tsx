@@ -4,12 +4,16 @@ import { randomSeed } from '../../engine/rng';
 import { PHASE_MS } from '../../engine/session';
 import type { Saved } from '../../engine/storage';
 import { comboMultiplier, type Stake } from '../../engine/xp';
-import { GRADE_LABEL, patternById } from '../../domain/patterns';
+import { imageOf } from '../../memory/images';
+import { HintBox, MemoryBox, PresentationCard } from '../../memory/MemoryViews';
+import { routeOf } from '../../memory/palace';
+import { HINT_COST, supportPlan } from '../../memory/support';
 import { CompleteView } from '../../modes/complete/CompleteView';
 import { HigherLowerView } from '../../modes/higherLower/HigherLowerView';
-import { Skyline } from '../../ui/Skyline';
-import { patternPercent, secondsText, xpText } from '../../ui/text';
+import { PalaceView } from '../../modes/palace/PalaceView';
+import { secondsText, xpText } from '../../ui/text';
 import { useNow } from '../../ui/useNow';
+import { gradeProgress } from '../progression';
 import {
   finishSession,
   introducePattern,
@@ -37,9 +41,9 @@ const PHASE_LABEL: Record<Phase, string> = {
 const SESSION_MS = 300_000;
 
 type View =
-  | { kind: 'step'; step: Step; shownAt: number }
-  | { kind: 'stake'; step: TaskStep; answer: Answer; shownAt: number; answeredAt: number }
-  | { kind: 'feedback'; step: TaskStep; answer: Answer; feedback: Feedback };
+  | { kind: 'step'; step: Step; shownAt: number; hint?: boolean }
+  | { kind: 'stake'; step: TaskStep; answer: Answer; shownAt: number; answeredAt: number; hint: boolean }
+  | { kind: 'feedback'; step: TaskStep; answer: Answer; feedback: Feedback; hint: boolean };
 
 interface Run {
   session: SessionState;
@@ -98,18 +102,19 @@ export function SessionScreen({ saved, onSave, onExit }: SessionScreenProps) {
     setRun({ session: state, view: { kind: 'step', step, shownAt: t } });
   }
 
-  function submit(step: TaskStep, answer: Answer, shownAt: number, answeredAt: number, stake?: Stake) {
-    const r = submitAnswer(runRef.current.session, savedRef.current, step, answer, { shownAt, answeredAt }, stake);
+  function submit(step: TaskStep, answer: Answer, shownAt: number, answeredAt: number, hint: boolean, stake?: Stake) {
+    const timing = { shownAt, answeredAt };
+    const r = submitAnswer(runRef.current.session, savedRef.current, step, answer, timing, { stake, hint });
     save(r.saved);
-    setRun({ session: r.state, view: { kind: 'feedback', step, answer, feedback: r.feedback } });
+    setRun({ session: r.state, view: { kind: 'feedback', step, answer, feedback: r.feedback, hint } });
   }
 
-  function answerTask(step: TaskStep, answer: Answer, shownAt: number) {
+  function answerTask(step: TaskStep, answer: Answer, shownAt: number, hint: boolean) {
     const answeredAt = Date.now();
     if (step.stake) {
-      setRun({ ...runRef.current, view: { kind: 'stake', step, answer, shownAt, answeredAt } });
+      setRun({ ...runRef.current, view: { kind: 'stake', step, answer, shownAt, answeredAt, hint } });
     } else {
-      submit(step, answer, shownAt, answeredAt);
+      submit(step, answer, shownAt, answeredAt, hint);
     }
   }
 
@@ -134,7 +139,14 @@ export function SessionScreen({ saved, onSave, onExit }: SessionScreenProps) {
 
   const { session, view } = run;
   const current = view.step;
-  const phase: Phase = current.type === 'task' ? current.phase : current.type === 'intro' ? 'level' : 'status';
+  const phase: Phase =
+    current.type === 'task'
+      ? current.phase
+      : current.type === 'present'
+        ? current.next.phase
+        : current.type === 'intro'
+          ? 'level'
+          : 'status';
   const finished = phase === 'status';
   const inLightning = phase === 'lightning' && session.lightningStartedAt !== undefined;
   const lightningLeft = Math.min(PHASE_MS.lightning, PHASE_MS.lightning - (now - (session.lightningStartedAt ?? now)));
@@ -145,35 +157,69 @@ export function SessionScreen({ saved, onSave, onExit }: SessionScreenProps) {
     content = <StatusView session={session} saved={saved} jokerUsed={run.jokerUsed ?? false} onDone={onExit} />;
   } else if (current.type === 'intro') {
     content = (
-      <IntroCard
+      <PresentationCard
+        saved={saved}
         patternId={current.patternId}
+        title="Nyt mønster"
         onContinue={() => isCurrent(view) && introduce(current.patternId)}
+      />
+    );
+  } else if (current.type === 'present') {
+    content = (
+      <PresentationCard
+        saved={saved}
+        patternId={current.patternId}
+        title="Husk"
+        onContinue={() =>
+          isCurrent(view) && setRun({ ...runRef.current, view: { kind: 'step', step: current.next, shownAt: Date.now() } })
+        }
       />
     );
   } else {
     const step = current;
+    const plan = supportPlan(step.support);
+    const image = imageOf(saved, step.task.patternId);
+    const hint = view.hint ?? false;
+    const canHint = step.phase !== 'lightning' && plan.hint !== 'none' && image !== null;
     content = (
       <>
         <TaskView
           key={`${step.phase}-${step.task.seed}`}
           step={step}
+          saved={saved}
           answer={view.kind === 'step' ? undefined : view.answer}
           reveal={view.kind === 'feedback'}
-          onAnswer={(a) => view.kind === 'step' && isCurrent(view) && answerTask(step, a, view.shownAt)}
+          skylines={plan.after !== 'facit'}
+          onAnswer={(a) => view.kind === 'step' && isCurrent(view) && answerTask(step, a, view.shownAt, hint)}
         />
+        {canHint && hint && view.kind !== 'feedback' && <HintBox image={image} />}
+        {canHint && !hint && view.kind === 'step' && (
+          <button
+            type="button"
+            className="btn hint-btn"
+            onClick={() => isCurrent(view) && setRun({ ...runRef.current, view: { ...view, hint: true } })}
+          >
+            Vis ledetråd{plan.hint === 'paid' ? ` (−${HINT_COST} XP)` : ''}
+          </button>
+        )}
         {view.kind === 'stake' && (
           <StakePrompt
             onStake={(stake) =>
-              isCurrent(view) && submit(step, view.answer, view.shownAt, view.answeredAt, stake)
+              isCurrent(view) && submit(step, view.answer, view.shownAt, view.answeredAt, view.hint, stake)
             }
           />
         )}
         {view.kind === 'feedback' && (
-          <FeedbackBar
-            feedback={view.feedback}
-            auto={step.phase === 'lightning'}
-            onNext={() => isCurrent(view) && advance(runRef.current.session)}
-          />
+          <>
+            <FeedbackBar
+              feedback={view.feedback}
+              auto={step.phase === 'lightning'}
+              onNext={() => isCurrent(view) && advance(runRef.current.session)}
+            />
+            {step.phase !== 'lightning' && plan.after !== 'facit' && (
+              <MemoryBox saved={saved} patternId={step.task.patternId} full={plan.after === 'full'} />
+            )}
+          </>
         )}
       </>
     );
@@ -223,31 +269,48 @@ export function SessionScreen({ saved, onSave, onExit }: SessionScreenProps) {
 
 interface TaskViewProps {
   step: TaskStep;
+  saved: Saved;
   answer?: Answer;
   reveal: boolean;
+  /** Facit med skylines; på støtteniveau 0 vises kun rigtigt/forkert og facit. */
+  skylines: boolean;
   onAnswer(answer: Answer): void;
 }
 
-function TaskView({ step, answer, reveal, onAnswer }: TaskViewProps) {
+function TaskView({ step, saved, answer, reveal, skylines, onAnswer }: TaskViewProps) {
   const { task } = step;
-  if (task.kind === 'higher-lower') {
-    return (
-      <HigherLowerView
-        task={task}
-        chosen={answer?.kind === 'higher-lower' ? answer.choice : undefined}
-        reveal={reveal}
-        onAnswer={(choice) => onAnswer({ kind: 'higher-lower', choice })}
-      />
-    );
+  switch (task.kind) {
+    case 'higher-lower':
+      return (
+        <HigherLowerView
+          task={task}
+          chosen={answer?.kind === 'higher-lower' ? answer.choice : undefined}
+          reveal={reveal}
+          onAnswer={(choice) => onAnswer({ kind: 'higher-lower', choice })}
+        />
+      );
+    case 'complete':
+      return (
+        <CompleteView
+          task={task}
+          submitted={answer?.kind === 'complete' ? answer.patterns : undefined}
+          reveal={reveal}
+          skylines={skylines}
+          onAnswer={(patterns) => onAnswer({ kind: 'complete', patterns })}
+        />
+      );
+    case 'palace':
+      return (
+        <PalaceView
+          task={task}
+          route={routeOf(saved, gradeProgress(saved).level)}
+          answer={answer?.kind === 'palace' ? answer.answer : undefined}
+          reveal={reveal}
+          skylines={skylines}
+          onAnswer={(a) => onAnswer({ kind: 'palace', answer: a })}
+        />
+      );
   }
-  return (
-    <CompleteView
-      task={task}
-      submitted={answer?.kind === 'complete' ? answer.patterns : undefined}
-      reveal={reveal}
-      onAnswer={(patterns) => onAnswer({ kind: 'complete', patterns })}
-    />
-  );
 }
 
 function StakePrompt({ onStake }: { onStake(stake: Stake): void }) {
@@ -276,7 +339,7 @@ const SCORE_TEXT = {
 function FeedbackBar({ feedback, auto, onNext }: { feedback: Feedback; auto: boolean; onNext(): void }) {
   const multiplier = comboMultiplier(feedback.combo);
   const meta = [
-    xpText(feedback.xp),
+    xpText(feedback.xp) + (feedback.hintCost ? ` (ledetråd −${feedback.hintCost})` : ''),
     secondsText(feedback.ms) + (feedback.fast && feedback.score === 1 ? ' – hurtigt' : ''),
     feedback.combo >= 5 && `${feedback.combo} i træk, combo ×${formatDecimal(multiplier, multiplier % 1 ? 1 : 0)}`,
   ].filter(Boolean);
@@ -289,36 +352,6 @@ function FeedbackBar({ feedback, auto, onNext }: { feedback: Feedback; auto: boo
           Næste
         </button>
       )}
-    </section>
-  );
-}
-
-function IntroCard({ patternId, onContinue }: { patternId: string; onContinue(): void }) {
-  const p = patternById(patternId);
-  const facts: [string, string | number][] = [
-    ['Rang', p.rank],
-    ['Sandsynlighed', patternPercent(p)],
-    ['Pr. 100 hænder', p.per100],
-    ['1 ud af', formatInt(p.oneIn)],
-    ['Placeringer', p.placements],
-    ['Grad', GRADE_LABEL[p.grade]],
-  ];
-  return (
-    <section className="intro">
-      <p className="eyebrow">Nyt mønster</p>
-      <Skyline id={p.id} size="lg" />
-      <dl className="facts">
-        {facts.map(([label, value]) => (
-          <div key={label}>
-            <dt>{label}</dt>
-            <dd>{value}</dd>
-          </div>
-        ))}
-      </dl>
-      <div className="spacer" />
-      <button type="button" className="btn primary wide" onClick={onContinue}>
-        Videre
-      </button>
     </section>
   );
 }

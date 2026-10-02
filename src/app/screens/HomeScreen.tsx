@@ -3,6 +3,7 @@ import { formatInt } from '../../engine/format';
 import type { Saved } from '../../engine/storage';
 import { streakOn } from '../../engine/streak';
 import { GRADE_LABEL } from '../../domain/patterns';
+import { isRoomOpen, palaceOf } from '../../memory/palace';
 import { dueItemKeys, gradeProgress, newPatternsToday } from '../progression';
 
 interface HomeScreenProps {
@@ -10,15 +11,18 @@ interface HomeScreenProps {
   updateReady: boolean;
   onUpdate?: () => void;
   onStart(): void;
+  onPalace(): void;
   onSettings(): void;
 }
 
 const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
 
-export function HomeScreen({ saved, updateReady, onUpdate, onStart, onSettings }: HomeScreenProps) {
+export function HomeScreen({ saved, updateReady, onUpdate, onStart, onPalace, onSettings }: HomeScreenProps) {
   const today = dayOf(Date.now(), saved.settings.dayStartsAtHour);
   const streak = streakOn(saved.streak, today);
   const progress = gradeProgress(saved);
+  const stations = palaceOf(saved).stations.filter((s) => isRoomOpen(s.room, progress.level));
+  const named = stations.filter((s) => s.name.trim()).length;
   const due = dueItemKeys(saved, today).length;
   const fresh = newPatternsToday(saved, today);
   const doneToday = saved.streak.lastDay === today;
@@ -82,6 +86,9 @@ export function HomeScreen({ saved, updateReady, onUpdate, onStart, onSettings }
           {progress.itemsDone} af {progress.items} emner i kasse 3 eller højere ·{' '}
           {progress.introduced} af {progress.patterns} mønstre introduceret
         </p>
+        <p className="muted small">
+          Huskepalads: {named} af {stations.length} stationer navngivet.
+        </p>
       </section>
 
       <section className="card">
@@ -98,9 +105,14 @@ export function HomeScreen({ saved, updateReady, onUpdate, onStart, onSettings }
         <button type="button" className="btn primary" onClick={onStart}>
           {doneToday ? 'Tag en ekstra session' : 'Start dagens session'}
         </button>
-        <button type="button" className="btn" onClick={onSettings}>
-          Indstillinger
-        </button>
+        <div className="two">
+          <button type="button" className="btn" onClick={onPalace}>
+            Huskepalads
+          </button>
+          <button type="button" className="btn" onClick={onSettings}>
+            Indstillinger
+          </button>
+        </div>
       </div>
     </main>
   );

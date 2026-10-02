@@ -1,0 +1,104 @@
+import { patternById } from '../../domain/patterns';
+import { LOFT_ROOM, placeOf, type RouteRoom } from '../../memory/palace';
+import { PatternKeypad } from '../../ui/PatternKeypad';
+import { Skyline } from '../../ui/Skyline';
+import { checkPalace, type PalaceAnswer, type PalaceTask } from './task';
+
+interface PalaceViewProps {
+  task: PalaceTask;
+  route: RouteRoom[];
+  /** Brugerens svar; så låses opgaven. */
+  answer?: PalaceAnswer;
+  /** Vis facit. */
+  reveal: boolean;
+  /** Vis facit med skyline (ellers kun som tekst). */
+  skylines: boolean;
+  onAnswer(answer: PalaceAnswer): void;
+}
+
+export function PalaceView({ task, route, answer, reveal, skylines, onAnswer }: PalaceViewProps) {
+  const pattern = patternById(task.patternId);
+  const place = placeOf(pattern)!;
+
+  if (task.direction === 'to-pattern') {
+    const room = route.find((r) => r.stations.some((s) => s.place === place))!;
+    const station = room.stations.find((s) => s.place === place)!;
+    const typed = answer && 'pattern' in answer ? answer.pattern : undefined;
+    const right = answer !== undefined && checkPalace(task, answer);
+    return (
+      <div className="task">
+        <p className="prompt">Hvilket mønster bor ved station {place}?</p>
+        <p className="instruction">
+          {station.name} · {room.name}
+        </p>
+        {typed === undefined ? (
+          <PatternKeypad onPattern={(lengths) => onAnswer({ pattern: lengths.join('-') })} />
+        ) : (
+          <div className="pair">
+            <div className={`choice${reveal ? (right ? ' right' : ' wrong') : ' chosen'}`}>
+              <span className="muted small">Dit svar</span>
+              {skylines || !reveal ? <Skyline id={typed} /> : <strong>{typed}</strong>}
+            </div>
+            {reveal && !right && (
+              <div className="choice right">
+                <span className="muted small">Facit</span>
+                {skylines ? <Skyline id={pattern.id} /> : <strong>{pattern.id}</strong>}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  const chosen = answer && 'place' in answer ? answer.place : undefined;
+  const classes = (option: number | 'loft') =>
+    [
+      'choice station',
+      chosen === option && 'chosen',
+      reveal && option === place && 'right',
+      reveal && chosen === option && option !== place && 'wrong',
+    ]
+      .filter(Boolean)
+      .join(' ');
+
+  return (
+    <div className="task">
+      <p className="prompt">Hvor på ruten bor {pattern.id}?</p>
+      <div className="center">
+        <Skyline id={pattern.id} />
+      </div>
+      {route
+        .filter((r) => r.open)
+        .map((r) => (
+          <section key={r.room} className="route-room" aria-label={r.name}>
+            <h3>{r.name}</h3>
+            <div className="route-stations">
+              {r.room === LOFT_ROOM ? (
+                <button
+                  type="button"
+                  className={classes('loft')}
+                  disabled={chosen !== undefined}
+                  onClick={() => onAnswer({ place: 'loft' })}
+                >
+                  {r.name}
+                </button>
+              ) : (
+                r.stations.map((s) => (
+                  <button
+                    key={s.place}
+                    type="button"
+                    className={classes(s.place)}
+                    disabled={chosen !== undefined}
+                    onClick={() => onAnswer({ place: s.place })}
+                  >
+                    <span className="station-number">{s.place}</span> {s.name}
+                  </button>
+                ))
+              )}
+            </div>
+          </section>
+        ))}
+    </div>
+  );
+}

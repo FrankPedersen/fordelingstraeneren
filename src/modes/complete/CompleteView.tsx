@@ -18,10 +18,12 @@ interface CompleteViewProps {
   submitted?: string[];
   /** Vis facit med procent pr. mønster. */
   reveal: boolean;
+  /** Vis skylines i facit. */
+  skylines?: boolean;
   onAnswer(patterns: string[]): void;
 }
 
-export function CompleteView({ task, submitted, reveal, onAnswer }: CompleteViewProps) {
+export function CompleteView({ task, submitted, reveal, skylines = true, onAnswer }: CompleteViewProps) {
   const [list, setList] = useState<string[]>([]);
   const [note, setNote] = useState('');
   const locked = submitted !== undefined;
@@ -51,7 +53,7 @@ export function CompleteView({ task, submitted, reveal, onAnswer }: CompleteView
       <p className="instruction">{instructionText(task)}</p>
 
       {reveal ? (
-        <Facit task={task} answer={entries} />
+        <Facit task={task} answer={entries} skylines={skylines} />
       ) : (
         <>
           <ol className="entries">
@@ -105,7 +107,7 @@ export function CompleteView({ task, submitted, reveal, onAnswer }: CompleteView
   );
 }
 
-function Facit({ task, answer }: { task: CompleteTask; answer: string[] }) {
+function Facit({ task, answer, skylines }: { task: CompleteTask; answer: string[]; skylines: boolean }) {
   const { total, list, required } = completeFacit(task);
   const rows = list.slice(0, Math.max(FACIT_ROWS, required.length));
   const rest = list.slice(rows.length);
@@ -119,9 +121,11 @@ function Facit({ task, answer }: { task: CompleteTask; answer: string[] }) {
           {rows.map((c, i) => (
             <tr key={c.pattern.id} className={i < required.length ? 'required' : 'other'}>
               <td>{i < required.length ? `${i + 1}.` : ''}</td>
-              <td>
-                <Skyline id={c.pattern.id} size="sm" label={false} />
-              </td>
+              {skylines && (
+                <td>
+                  <Skyline id={c.pattern.id} size="sm" label={false} />
+                </td>
+              )}
               <th scope="row">{c.pattern.id}</th>
               <td className="num">{percentText(c.weight, total)}</td>
               <td>{answer.includes(c.pattern.id) ? `din nr. ${answer.indexOf(c.pattern.id) + 1}` : ''}</td>

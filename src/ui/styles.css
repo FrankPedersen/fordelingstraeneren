@@ -760,3 +760,142 @@ p {
     min-height: 44px;
   }
 }
+
+/* Huskepalads og aftrapning */
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.memory {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+}
+
+.scene {
+  font-style: italic;
+}
+
+.hint {
+  padding: 12px 16px;
+  background: var(--surface-2);
+  border-radius: var(--radius);
+}
+
+.hint-btn {
+  min-height: 48px;
+  font-size: 0.98rem;
+}
+
+.memory-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.route-room {
+  display: grid;
+  gap: 6px;
+}
+
+.route-room h3 {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.route-stations {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.choice.station {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 52px;
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.station-number {
+  display: inline-grid;
+  place-items: center;
+  min-width: 28px;
+  height: 28px;
+  border-radius: 14px;
+  background: var(--surface-2);
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Paladsets editor */
+
+.field {
+  display: grid;
+  gap: 4px;
+}
+
+input,
+textarea {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  color: var(--text);
+  font: inherit;
+  font-size: 16px;
+}
+
+input:disabled {
+  opacity: 0.6;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.stations {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.station-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 52px;
+  padding: 8px 10px;
+  text-align: left;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.station-editor {
+  display: grid;
+  gap: 10px;
+  padding: 12px 4px 4px;
+}
+
+.loft-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

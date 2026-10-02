@@ -33,10 +33,14 @@ describe('App', () => {
     expect(screen.getByRole('img', { name: 'Mønster 4-4-3-2' })).toBeTruthy();
     click('Videre');
     expect(screen.getByText(/har vist/)).toBeTruthy();
-    expect(Object.keys(stored().items).sort()).toEqual(['4-4-3-2:compare', '4-4-3-2:complete']);
+    expect(Object.keys(stored().items).sort()).toEqual([
+      '4-4-3-2:compare',
+      '4-4-3-2:complete',
+      '4-4-3-2:rank',
+    ]);
   });
 
-  it('tager mønstre fra tastaturet, giver feedback og går videre til højere/lavere', () => {
+  it('tager mønstre fra tastaturet, giver feedback og går videre til Paladsvandring', () => {
     render(<App />);
     click('Start dagens session');
     click('Videre');
@@ -46,7 +50,34 @@ describe('App', () => {
     expect(screen.getByRole('status').textContent).toMatch(/Rigtigt|Halv score|Forkert/);
     expect(screen.getByText(/havde \d+=\d+=\d+=\d+/)).toBeTruthy();
     click('Næste');
+    expect(screen.getByText('Hvor på ruten bor 4-4-3-2?')).toBeTruthy();
+    click(/^1 Station 1$/);
+    expect(screen.getByRole('status').textContent).toMatch(/Rigtigt/);
+    // Støtteniveau 3: station, billede og skyline efter svaret.
+    expect(screen.getByText(/Station 1 · Rum 1/)).toBeTruthy();
+    click('Næste');
     expect(screen.getByText('Hvilket mønster er hyppigst?')).toBeTruthy();
+  });
+
+  it('viser billedet som gratis ledetråd på støtteniveau 3', () => {
+    render(<App />);
+    click('Start dagens session');
+    click('Videre');
+    click('Vis ledetråd');
+    expect(screen.getByRole('note').textContent).toContain('Trappen');
+  });
+
+  it('lader brugeren navngive stationer og skrive scener i huskepaladset', () => {
+    render(<App />);
+    click('Huskepalads');
+    expect(screen.getByText(/Låses op på niveau 2/)).toBeTruthy();
+    click(/Navngiv stationen.*Trappen/);
+    fireEvent.change(screen.getByLabelText('Stationens navn'), { target: { value: 'Hoveddøren' } });
+    click('Brug skabelonen');
+    expect((screen.getByLabelText('Scene') as HTMLTextAreaElement).value).toBe('Ved Hoveddøren: Trappen ');
+    fireEvent.change(screen.getByLabelText('Billede'), { target: { value: 'Mormors trappe' } });
+    expect(stored().palace.stations[0]).toMatchObject({ name: 'Hoveddøren', scene: 'Ved Hoveddøren: Trappen ' });
+    expect(stored().images['4-4-3-2']).toBe('Mormors trappe');
   });
 
   it('kan afbryde en session', () => {

@@ -1,13 +1,15 @@
 import { describe, expect, it } from 'vitest';
 import { defaultSaved, type Saved } from '../engine/storage';
-import { PATTERNS } from '../domain/patterns';
+import { PATTERNS, patternById } from '../domain/patterns';
 import {
   currentGrade,
   dueItemKeys,
+  ensureItems,
   gradeProgress,
   introduce,
   isIntroduced,
   nextNewPattern,
+  skillsOf,
   unlockedPatterns,
 } from './progression';
 
@@ -48,8 +50,30 @@ describe('Progression', () => {
   it('introducerer et mønster med et emne pr. færdighed i kasse 1, forfaldent i dag', () => {
     const saved = introduce(defaultSaved(), '4-4-3-2', today);
     expect(isIntroduced(saved, '4-4-3-2')).toBe(true);
-    expect(Object.keys(saved.items).sort()).toEqual(['4-4-3-2:compare', '4-4-3-2:complete']);
+    expect(Object.keys(saved.items).sort()).toEqual([
+      '4-4-3-2:compare',
+      '4-4-3-2:complete',
+      '4-4-3-2:rank',
+    ]);
     expect(saved.items['4-4-3-2:compare']).toEqual({ box: 1, due: today, support: 3, log: [] });
+  });
+
+  it('giver kun mønstre med en plads i paladset et rang-emne', () => {
+    expect(skillsOf(patternById('5-5-3-0'))).toContain('rank');
+    expect(skillsOf(patternById('7-6-0-0'))).toEqual(['compare', 'complete']);
+  });
+
+  it('opretter manglende emner for mønstre, der blev introduceret før', () => {
+    const saved = defaultSaved();
+    saved.items['4-4-3-2:compare'] = { box: 3, due: '2026-10-04', support: 1, log: [] };
+    const ensured = ensureItems(saved, today);
+    expect(Object.keys(ensured.items).sort()).toEqual([
+      '4-4-3-2:compare',
+      '4-4-3-2:complete',
+      '4-4-3-2:rank',
+    ]);
+    expect(ensured.items['4-4-3-2:compare'].box).toBe(3);
+    expect(ensureItems(ensured, today)).toBe(ensured);
   });
 
   it('introducerer højst 2 nye mønstre pr. dag', () => {
@@ -70,6 +94,13 @@ describe('Progression', () => {
     expect(unlockedPatterns(done)).toHaveLength(10);
   });
 
+  it('låser ikke niveauet igen, når et emne fra en lavere grad falder tilbage', () => {
+    let saved = introduce(inBox(defaultSaved(), 3), '6-3-2-2', today);
+    expect(currentGrade(saved)).toBe('uncommon');
+    saved = { ...saved, items: { ...saved.items, '4-4-3-2:compare': { ...saved.items['4-4-3-2:compare'], box: 1 } } };
+    expect(currentGrade(saved)).toBe('uncommon');
+  });
+
   it('viser fremdriften på det aktuelle niveau', () => {
     const saved = introduce(defaultSaved(), '4-4-3-2', today);
     expect(gradeProgress(saved)).toEqual({
@@ -78,7 +109,7 @@ describe('Progression', () => {
       introduced: 1,
       patterns: 5,
       itemsDone: 0,
-      items: 10,
+      items: 15,
     });
   });
 
@@ -89,7 +120,7 @@ describe('Progression', () => {
       '5-3-3-2:compare': { box: 1, due: '2026-10-02', support: 3, log: [] },
       '5-4-3-1:complete': { box: 1, due: '2026-09-30', support: 3, log: [] },
       '5-4-2-2:complete': { box: 1, due: '2026-10-03', support: 3, log: [] },
-      '4-3-3-3:rank': { box: 1, due: '2026-09-01', support: 3, log: [] },
+      '7-6-0-0:rank': { box: 1, due: '2026-09-01', support: 3, log: [] },
       'ukendt:compare': { box: 1, due: '2026-09-01', support: 3, log: [] },
     };
     expect(dueItemKeys(saved, today)).toEqual([

@@ -3,9 +3,12 @@ import { newItem, recentAnswers } from '../engine/leitner';
 import { accuracy } from '../engine/session';
 import { SKILLS, type Saved, type Skill } from '../engine/storage';
 import { GRADES, PATTERNS, findPattern, type Grade, type Pattern } from '../domain/patterns';
+import { placeOf } from '../memory/palace';
 
-/** Færdighederne, der trænes indtil videre: sammenligning (højere/lavere) og fuldførelse. */
-export const ACTIVE_SKILLS: readonly Skill[] = ['compare', 'complete'];
+/** Færdighederne for et mønster. Rang (paladset) kun for mønstre med en plads; legendariske placeres ikke. */
+export function skillsOf(pattern: Pattern): Skill[] {
+  return placeOf(pattern) === null ? ['compare', 'complete'] : ['rank', 'compare', 'complete'];
+}
 
 export const NEW_PATTERNS_PER_DAY = 2;
 
@@ -31,13 +34,18 @@ export function introducedPatterns(saved: Saved): Pattern[] {
 
 function isGradeDone(saved: Saved, grade: Grade): boolean {
   return PATTERNS.filter((p) => p.grade === grade).every((p) =>
-    ACTIVE_SKILLS.every((skill) => (saved.items[itemKey(p.id, skill)]?.box ?? 0) >= UNLOCK_BOX),
+    skillsOf(p).every((skill) => (saved.items[itemKey(p.id, skill)]?.box ?? 0) >= UNLOCK_BOX),
   );
 }
 
-/** Det aktuelle niveau er den første grad, der ikke er lært. */
+/**
+ * Det aktuelle niveau: den højeste grad med et introduceret mønster – eller den næste, når den er
+ * lært. Oplåsningen er varig: en fejl på et lavere niveau låser ikke niveauet igen.
+ */
 export function currentGrade(saved: Saved): Grade {
-  return GRADES.find((g) => !isGradeDone(saved, g)) ?? GRADES[GRADES.length - 1];
+  const reached = introducedPatterns(saved).reduce((max, p) => Math.max(max, GRADES.indexOf(p.grade)), 0);
+  const done = isGradeDone(saved, GRADES[reached]) && reached < GRADES.length - 1;
+  return GRADES[done ? reached + 1 : reached];
 }
 
 /** Mønstrene i graderne til og med det aktuelle niveau. */
@@ -82,19 +90,26 @@ export function newPatternsToday(saved: Saved, today: string): number {
 
 /** Opretter mønstrets emner: kasse 1, forfaldne i dag og med fuld støtte. */
 export function introduce(saved: Saved, patternId: string, today: string): Saved {
+  const pattern = findPattern(patternId);
+  if (!pattern) return saved;
+  const missing = skillsOf(pattern).filter((skill) => !saved.items[itemKey(patternId, skill)]);
+  if (missing.length === 0) return saved;
   const items = { ...saved.items };
-  for (const skill of ACTIVE_SKILLS) {
-    const key = itemKey(patternId, skill);
-    if (!items[key]) items[key] = newItem(today);
-  }
+  for (const skill of missing) items[itemKey(patternId, skill)] = newItem(today);
   return { ...saved, items };
 }
 
-/** Forfaldne emner for de aktive færdigheder: laveste kasse og ældste forfald først. */
+/** Giver de introducerede mønstre emner for færdigheder, der er kommet til siden (fx rang i trin 3). */
+export function ensureItems(saved: Saved, today: string): Saved {
+  return introducedPatterns(saved).reduce((next, p) => introduce(next, p.id, today), saved);
+}
+
+/** Forfaldne emner for mønstrenes færdigheder: laveste kasse og ældste forfald først. */
 export function dueItemKeys(saved: Saved, day: string): string[] {
   const active = (key: string) => {
     const { patternId, skill } = splitItemKey(key);
-    return ACTIVE_SKILLS.includes(skill) && findPattern(patternId) !== undefined;
+    const pattern = findPattern(patternId);
+    return pattern !== undefined && skillsOf(pattern).includes(skill);
   };
   return Object.entries(saved.items)
     .filter(([key, item]) => active(key) && item.due <= day)
@@ -129,7 +144,7 @@ export interface GradeProgress {
 export function gradeProgress(saved: Saved): GradeProgress {
   const grade = currentGrade(saved);
   const patterns = PATTERNS.filter((p) => p.grade === grade);
-  const keys = patterns.flatMap((p) => ACTIVE_SKILLS.map((skill) => itemKey(p.id, skill)));
+  const keys = patterns.flatMap((p) => skillsOf(p).map((skill) => itemKey(p.id, skill)));
   return {
     grade,
     level: GRADES.indexOf(grade) + 1,

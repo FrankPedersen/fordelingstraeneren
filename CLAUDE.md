@@ -44,6 +44,15 @@ Bridge-træningsapp til hånd-fordelinger. **Den fulde specifikation står i [SP
     - Sværheden tilpasses først efter 10 svar. Combo ganges på svarets XP; indsatsen lægges til bagefter.
     - Tasten "10+" er den lange farve; dens længde er 13 minus de tre andre.
     - Introduktionsdagen udledes af emnernes ældste logpost, da skemaet ikke har en dato.
-- [ ] Trin 3: Huskepalads, skyline-billeder og aftrapning
+- [x] Trin 3: Huskepalads, skyline-billeder og aftrapning
+  - `src/memory/`: standardbilleder (eget billede vinder overalt), paladsets rum og stationer, støtteniveauernes plan og visningerne (præsentation, ledetråd, huskeboks). Paladsvandring: `src/modes/palace/` (færdigheden "rank"). Editor: `src/app/screens/PalaceScreen.tsx`.
+  - Valg, hvor SPEC.md er åben (spørg før ændring):
+    - Kun de 13 mønstre fra tabellen har standardbillede; de øvrige får kun brugerens eget.
+    - Rang-emner findes for mønstre med en plads: station 1–13 og de episke på Loftet (mønster → rum). Legendariske har intet rang-emne.
+    - Paladsvandring: let = mønster → station, svær = station → mønster (tastes, afleveres straks), normal = begge veje.
+    - Præsentationen på støtteniveau 3 vises højst én gang pr. mønster pr. session; introduktionen tæller som præsentation. Ledetråden er gratis på niveau 3 og koster 5 XP på niveau 2. Lynrunden kører uden støtte.
+    - Efter svaret: niveau 3–2 viser station, billede, scene og skyline; niveau 1 kun skyline; niveau 0 kun rigtigt/forkert og facit (Fuldfør uden skylines).
+    - Oplåsning er varig: niveauet er den højeste grad med et introduceret mønster (eller den næste, når den er lært).
+    - Nye færdigheder giver allerede introducerede mønstre emner ved sessionsstart (`ensureItems`).
 - [ ] Trin 4: Lynaflæsning, album og Klubaften
 - [ ] Trin 5: Meldetolkning og 13-sudoku, ugens boss og kurver
