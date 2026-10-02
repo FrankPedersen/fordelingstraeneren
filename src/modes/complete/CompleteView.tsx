@@ -3,6 +3,7 @@ import { SEAT_NAMES } from '../../domain/dealer';
 import { distributionText } from '../../domain/patterns';
 import { PatternKeypad } from '../../ui/PatternKeypad';
 import { Skyline } from '../../ui/Skyline';
+import { SuitText } from '../../ui/SuitText';
 import { percentText } from '../../ui/text';
 import { completeFacit, instructionText, shownText, type CompleteTask } from './task';
 
@@ -48,7 +49,7 @@ export function CompleteView({ task, submitted, reveal, skylines = true, onAnswe
   return (
     <div className="task">
       <p className="prompt">
-        {SEAT_NAMES[task.seat]} har vist {shownText(task)}.
+        {SEAT_NAMES[task.seat]} har vist <SuitText text={shownText(task)} />.
       </p>
       <p className="instruction">{instructionText(task)}</p>
 

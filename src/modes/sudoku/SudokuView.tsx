@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { Defender } from '../../domain/sudoku';
 import { Gitter4x4, type GridCell } from '../../ui/Gitter4x4';
+import { SuitText } from '../../ui/SuitText';
 import { SUDOKU_BASE, sudokuPoints, type SudokuTask } from './task';
 
 const ROWS = [
@@ -84,7 +85,7 @@ export function SudokuView({ task, onDone }: SudokuViewProps) {
       <ol className="clues">
         {task.clues.slice(0, result ? task.clues.length : revealed).map((clue, i) => (
           <li key={i} className={i >= revealed ? 'muted' : ''}>
-            {clue.text}
+            <SuitText text={clue.text} />
           </li>
         ))}
       </ol>

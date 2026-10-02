@@ -19,6 +19,8 @@
   --fam-5: #15803d;
   --fam-6: #d97706;
   --fam-7: #7c3aed;
+  /* Kulørernes røde farve til ♥ og ♦ i tekst. */
+  --suit-red: #c62828;
   --radius: 14px;
 }
 
@@ -39,6 +41,7 @@
     --fam-5: #4ade80;
     --fam-6: #fbbf24;
     --fam-7: #a78bfa;
+    --suit-red: #ff6b6b;
   }
 }
 
@@ -1124,8 +1127,9 @@ h3 {
   font-size: 1.1rem;
 }
 
-.grid4 th.red {
-  color: #c62828;
+.grid4 th.red,
+.suit-red {
+  color: var(--suit-red);
 }
 
 .grid4 td {
