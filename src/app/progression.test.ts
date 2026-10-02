@@ -54,13 +54,14 @@ describe('Progression', () => {
       '4-4-3-2:compare',
       '4-4-3-2:complete',
       '4-4-3-2:rank',
+      '4-4-3-2:read',
     ]);
     expect(saved.items['4-4-3-2:compare']).toEqual({ box: 1, due: today, support: 3, log: [] });
   });
 
   it('giver kun mønstre med en plads i paladset et rang-emne', () => {
     expect(skillsOf(patternById('5-5-3-0'))).toContain('rank');
-    expect(skillsOf(patternById('7-6-0-0'))).toEqual(['compare', 'complete']);
+    expect(skillsOf(patternById('7-6-0-0'))).toEqual(['compare', 'complete', 'read']);
   });
 
   it('opretter manglende emner for mønstre, der blev introduceret før', () => {
@@ -71,6 +72,7 @@ describe('Progression', () => {
       '4-4-3-2:compare',
       '4-4-3-2:complete',
       '4-4-3-2:rank',
+      '4-4-3-2:read',
     ]);
     expect(ensured.items['4-4-3-2:compare'].box).toBe(3);
     expect(ensureItems(ensured, today)).toBe(ensured);
@@ -109,7 +111,7 @@ describe('Progression', () => {
       introduced: 1,
       patterns: 5,
       itemsDone: 0,
-      items: 15,
+      items: 20,
     });
   });
 

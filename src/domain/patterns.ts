@@ -127,6 +127,9 @@ function buildPatterns(): Pattern[] {
 /** De 39 mønstre sorteret efter rang. */
 export const PATTERNS: readonly Pattern[] = buildPatterns();
 
+/** Klubaftenens mønstre: dem, der får mindst én af de 100 hænder (25 spil × 4 hænder). */
+export const CLUB_PATTERNS: readonly Pattern[] = PATTERNS.filter((p) => p.per100 > 0);
+
 const BY_ID = new Map(PATTERNS.map((p) => [p.id, p]));
 
 export function patternById(id: string): Pattern {

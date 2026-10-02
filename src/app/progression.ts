@@ -7,7 +7,8 @@ import { placeOf } from '../memory/palace';
 
 /** Færdighederne for et mønster. Rang (paladset) kun for mønstre med en plads; legendariske placeres ikke. */
 export function skillsOf(pattern: Pattern): Skill[] {
-  return placeOf(pattern) === null ? ['compare', 'complete'] : ['rank', 'compare', 'complete'];
+  const skills: Skill[] = ['compare', 'complete', 'read'];
+  return placeOf(pattern) === null ? skills : ['rank', ...skills];
 }
 
 export const NEW_PATTERNS_PER_DAY = 2;

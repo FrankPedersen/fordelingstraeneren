@@ -11,6 +11,7 @@ import {
   LEVEL_END,
   finishSession,
   introducePattern,
+  lightningKind,
   nextStep,
   startSession,
   submitAnswer,
@@ -41,6 +42,10 @@ function right(task: ModeTask): Answer {
       return task.direction === 'to-pattern'
         ? { kind: 'palace', answer: { pattern: task.patternId } }
         : { kind: 'palace', answer: { place: placeOf(patternById(task.patternId))! } };
+    case 'read':
+      return { kind: 'read', lengths: [...patternById(task.patternId).lengths] };
+    case 'estimate':
+      return { kind: 'estimate', count: patternById(task.patternId).per100 };
   }
 }
 
@@ -54,6 +59,10 @@ function wrong(task: ModeTask): Answer {
       return { kind: 'complete', patterns: [] };
     case 'palace':
       return { kind: 'palace', answer: { pattern: '13-0-0-0' } };
+    case 'read':
+      return { kind: 'read', lengths: [13, 0, 0, 0] };
+    case 'estimate':
+      return { kind: 'estimate', count: patternById(task.patternId).per100 + 5 };
   }
 }
 
@@ -61,13 +70,15 @@ interface Options {
   ms?: number;
   answer?: (step: TaskStep) => Answer;
   stake?: Stake;
+  /** Sessionens starttidspunkt. */
+  at?: number;
 }
 
 /** Kører en hel session og svarer på hver opgave efter `ms` millisekunder. */
-function simulate(start: Saved, { ms = 2000, answer = (s) => right(s.task), stake }: Options = {}) {
+function simulate(start: Saved, { ms = 2000, answer = (s) => right(s.task), stake, at = T0 }: Options = {}) {
   const seed = counter();
   let saved = start;
-  let now = T0;
+  let now = at;
   let state: SessionState = startSession(saved, now);
   const steps: Step[] = [];
   for (let i = 0; i < 1000; i++) {
@@ -177,7 +188,7 @@ describe('Session – første dag', () => {
 
 describe('Session – repetition', () => {
   it('stiller de forfaldne emner først, med indsats', () => {
-    const saved = learned(['4-4-3-2', '5-3-3-2'], { compare: later, rank: later });
+    const saved = learned(['4-4-3-2', '5-3-3-2'], { compare: later, rank: later, read: later });
     const all = tasks(simulate(saved).steps);
     expect(all[0]).toMatchObject({ phase: 'review', stake: true, task: { kind: 'complete' } });
     expect(all[1]).toMatchObject({ phase: 'review', stake: true, task: { kind: 'complete' } });
@@ -186,23 +197,23 @@ describe('Session – repetition', () => {
 
   it('indskyder en opgave af en anden type, når kun én type er forfalden', () => {
     const ids = PATTERNS.slice(0, 5).map((p) => p.id);
-    const saved = learned(ids, { complete: later, rank: later });
+    const saved = learned(ids, { compare: later, rank: later, read: later });
     const review = tasks(simulate(saved, { ms: 1000 }).steps).filter((s) => s.phase === 'review');
     expect(review.slice(0, 3).map((s) => [s.task.kind, s.stake])).toEqual([
-      ['higher-lower', true],
-      ['higher-lower', true],
+      ['complete', true],
+      ['complete', true],
       ['palace', false],
     ]);
   });
 
   it('rykker hurtigt rigtige emner op og lader dem ikke komme igen samme dag', () => {
-    const saved = learned(['4-4-3-2', '5-3-3-2'], { compare: later, rank: later });
+    const saved = learned(['4-4-3-2', '5-3-3-2'], { compare: later, rank: later, read: later });
     const after = simulate(saved, { ms: 1000 }).saved;
     expect(after.items['4-4-3-2:complete']).toMatchObject({ box: 2, due: '2026-10-04', support: 0 });
   });
 
   it('gentager et forkert svar markeret "Sikker" sidst i sessionen', () => {
-    const saved = learned(['4-4-3-2'], { compare: later, rank: later });
+    const saved = learned(['4-4-3-2'], { compare: later, rank: later, read: later });
     const answer = (s: TaskStep) => (s.phase === 'review' ? wrong(s.task) : right(s.task));
     const { steps } = simulate(saved, { answer, stake: 'sure' });
     const first = tasks(steps)[0];
@@ -211,10 +222,49 @@ describe('Session – repetition', () => {
   });
 
   it('gentager ikke et forkert svar markeret "Gæt"', () => {
-    const saved = learned(['4-4-3-2'], { compare: later, rank: later });
+    const saved = learned(['4-4-3-2'], { compare: later, rank: later, read: later });
     const answer = (s: TaskStep) => (s.phase === 'review' ? wrong(s.task) : right(s.task));
     const { steps } = simulate(saved, { answer, stake: 'guess' });
     expect(tasks(steps).some((s) => s.phase === 'repeat')).toBe(false);
+  });
+});
+
+describe('Session – lynrunde, estimat og album', () => {
+  it('skifter fra dag til dag mellem højere/lavere og Lynaflæsning', () => {
+    expect(lightningKind('2026-10-02')).toBe('higher-lower');
+    expect(lightningKind('2026-10-03')).toBe('read');
+    expect(lightningKind('2025-12-31')).toBe('read');
+  });
+
+  it('viser tilfældige hænder i Lynaflæsning og registrerer hver hånd i albummet', () => {
+    const nextDay = new Date(2026, 9, 3, 12, 0).getTime();
+    const { steps, saved } = simulate(defaultSaved(), { at: nextDay });
+    const lightning = tasks(steps).filter((s) => s.phase === 'lightning').map((s) => s.task);
+    expect(lightning).toHaveLength(30);
+    for (const t of lightning) expect(t).toMatchObject({ kind: 'read', random: true });
+    const seen = Object.values(saved.album).reduce((sum, e) => sum + e.count, 0);
+    expect(seen).toBe(30);
+    expect(Object.values(saved.album).every((e) => e.first === '2026-10-03')).toBe(true);
+    // 30 rigtige svar: t går fra 3.000 ms ned mod gulvet på 800 ms.
+    expect(saved.readMs).toBe(800);
+  });
+
+  it('lader t stige 15 % efter en forkert aflæsning', () => {
+    const saved = { ...learned(['4-4-3-2']), readMs: 2000 };
+    const task: ModeTask = { kind: 'read', seed: 1, patternId: '4-4-3-2', cards: [], showMs: 2000, random: false };
+    const step: TaskStep = { type: 'task', phase: 'review', stake: false, support: 1, task };
+    const r = submitAnswer(startSession(saved, T0), saved, step, wrong(task), { shownAt: T0, answeredAt: T0 + 900 });
+    expect(r.saved.readMs).toBe(2300);
+    expect(r.saved.album).toEqual({});
+    expect(r.saved.items['4-4-3-2:read']).toMatchObject({ box: 1, due: '2026-10-03' });
+  });
+
+  it('øver sammenligning som Klubaften-estimat i repetitionen', () => {
+    const ids = PATTERNS.slice(0, 5).map((p) => p.id);
+    const saved = learned(ids, { complete: later, rank: later, read: later });
+    const review = tasks(simulate(saved, { ms: 1000 }).steps).filter((s) => s.phase === 'review');
+    const kinds = new Set(review.map((s) => s.task.kind));
+    expect(kinds).toEqual(new Set(['higher-lower', 'estimate']));
   });
 });
 
@@ -288,7 +338,7 @@ describe('Session – svar', () => {
 
   it('gør fuldfør sværere ved over 90 % træfsikkerhed: kun én kendt farve', () => {
     const ids = PATTERNS.slice(0, 5).map((p) => p.id);
-    const sharp = learned(ids, { compare: later, complete: later, rank: later });
+    const sharp = learned(ids, { compare: later, complete: later, rank: later, read: later });
     sharp.items['4-4-3-2:complete'].log = Array.from({ length: 20 }, (_, i) => ({ t: i + 1, ok: true, ms: 1 }));
     const r = nextStep(startSession(sharp, T0), sharp, T0, counter());
     const t = (r.step as TaskStep).task;

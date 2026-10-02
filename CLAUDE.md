@@ -54,5 +54,14 @@ Bridge-træningsapp til hånd-fordelinger. **Den fulde specifikation står i [SP
     - Efter svaret: niveau 3–2 viser station, billede, scene og skyline; niveau 1 kun skyline; niveau 0 kun rigtigt/forkert og facit (Fuldfør uden skylines).
     - Oplåsning er varig: niveauet er den højeste grad med et introduceret mønster (eller den næste, når den er lært).
     - Nye færdigheder giver allerede introducerede mønstre emner ved sessionsstart (`ensureItems`).
-- [ ] Trin 4: Lynaflæsning, album og Klubaften
+- [x] Trin 4: Lynaflæsning, album og Klubaften
+  - Lynaflæsning: `src/modes/read/` (færdigheden "read"). Klubaften-estimat: `src/modes/estimate/`. Klubaften-ikonarrayet: `src/ui/Klubaften.tsx`. Album: `src/app/album.ts` og `AlbumScreen`.
+  - Skemaet har fået det valgfri felt `readMs` (visningstiden t); version er stadig 1.
+  - Valg, hvor SPEC.md er åben (spørg før ændring):
+    - Lynrunden skifter mellem højere/lavere og Lynaflæsning efter dagens paritet (dage siden 2026-01-01).
+    - Lynaflæsning i lynrunden bruger helt tilfældige hænder (Syds hånd fra `deal`), og hver hånd registreres i albummet. Forfaldne aflæsningsemner i repetitionen får en jævnt tilfældig hånd med mønstret; den registreres ikke i albummet.
+    - Svartiden for aflæsning måles fra, hånden forsvinder; tastaturet er spærret, mens den vises. t justeres ved hvert svar og gemmes.
+    - Klubaften-estimat træner færdigheden "compare": forfaldne sammenligningsemner for klubaftenens 16 mønstre stilles som højere/lavere eller estimat (50/50).
+    - Sjældne fund = episke og legendariske mønstre; de fejres med odds, ligesom nye mønstre i albummet. Legendarisk oplåsning kræver alle tre svar rigtige i ét forsøg.
+    - Et nyt mønsters aflæsning øves først i repetitionen, ikke lige efter introduktionen.
 - [ ] Trin 5: Meldetolkning og 13-sudoku, ugens boss og kurver

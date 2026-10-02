@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import { dayOf } from '../engine/dates';
 import { ensureItems } from './progression';
+import { AlbumScreen } from './screens/AlbumScreen';
 import { HomeScreen } from './screens/HomeScreen';
+import { KlubaftenScreen } from './screens/KlubaftenScreen';
 import { PalaceScreen } from './screens/PalaceScreen';
 import { SessionScreen } from './screens/SessionScreen';
 import { SettingsScreen } from './screens/SettingsScreen';
 import { useSaved } from './useSaved';
 
-type Screen = 'home' | 'session' | 'palace' | 'settings';
+type Screen = 'home' | 'session' | 'palace' | 'album' | 'club' | 'settings';
 
 interface AppProps {
   /** En ny version af appen er hentet og venter. */
@@ -37,6 +39,10 @@ export default function App({ updateReady = false, onUpdate }: AppProps) {
       return <SessionScreen saved={saved} onSave={setSaved} onExit={home} />;
     case 'palace':
       return <PalaceScreen saved={saved} onSave={setSaved} onBack={home} />;
+    case 'album':
+      return <AlbumScreen saved={saved} onSave={setSaved} onBack={home} />;
+    case 'club':
+      return <KlubaftenScreen onBack={home} />;
     case 'settings':
       return <SettingsScreen saved={saved} onSave={setSaved} onBack={home} />;
     default:
@@ -47,6 +53,8 @@ export default function App({ updateReady = false, onUpdate }: AppProps) {
           onUpdate={onUpdate}
           onStart={startSession}
           onPalace={() => setScreen('palace')}
+          onAlbum={() => setScreen('album')}
+          onClub={() => setScreen('club')}
           onSettings={() => setScreen('settings')}
         />
       );

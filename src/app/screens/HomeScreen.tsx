@@ -12,12 +12,15 @@ interface HomeScreenProps {
   onUpdate?: () => void;
   onStart(): void;
   onPalace(): void;
+  onAlbum(): void;
+  onClub(): void;
   onSettings(): void;
 }
 
 const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
 
-export function HomeScreen({ saved, updateReady, onUpdate, onStart, onPalace, onSettings }: HomeScreenProps) {
+export function HomeScreen(props: HomeScreenProps) {
+  const { saved, updateReady, onUpdate, onStart, onPalace, onAlbum, onClub, onSettings } = props;
   const today = dayOf(Date.now(), saved.settings.dayStartsAtHour);
   const streak = streakOn(saved.streak, today);
   const progress = gradeProgress(saved);
@@ -50,6 +53,9 @@ export function HomeScreen({ saved, updateReady, onUpdate, onStart, onPalace, on
             Fem minutter om dagen. Du lærer de 39 mønstre og deres hyppighed og øver dig i at tænke i
             mønstre, når du tæller en hånd ud.
           </p>
+          <button type="button" className="btn small-btn" onClick={onClub}>
+            Se en klubaften: 100 hænder
+          </button>
         </section>
       )}
 
@@ -108,6 +114,12 @@ export function HomeScreen({ saved, updateReady, onUpdate, onStart, onPalace, on
         <div className="two">
           <button type="button" className="btn" onClick={onPalace}>
             Huskepalads
+          </button>
+          <button type="button" className="btn" onClick={onAlbum}>
+            Album
+          </button>
+          <button type="button" className="btn" onClick={onClub}>
+            Klubaften
           </button>
           <button type="button" className="btn" onClick={onSettings}>
             Indstillinger

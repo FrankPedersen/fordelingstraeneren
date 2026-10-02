@@ -36,6 +36,8 @@ export interface Saved {
   streak: Streak;
   xp: number;
   sessions: SessionRecord[];
+  /** Tilføjet i trin 4: visningstiden t i Lynaflæsning. Mangler den, er t = 3.000 ms. */
+  readMs?: number;
 }
 
 export function defaultSaved(): Saved {
@@ -185,6 +187,11 @@ export function readSaved(input: unknown): { saved: Saved; problems: string[] } 
     xp: check('xp', raw.xp, (v) => isNumber(v) && v >= 0, 0),
     sessions: list('sessions', raw.sessions, isSession),
   };
+  // Valgfrie felter, der er kommet til senere.
+  if (raw.readMs !== undefined && !(isNumber(raw.readMs) && raw.readMs >= 800 && raw.readMs <= 5000)) {
+    problems.push('readMs er ugyldig');
+    delete saved.readMs;
+  }
   return { saved, problems };
 }
 

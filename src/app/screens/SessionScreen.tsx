@@ -8,9 +8,12 @@ import { imageOf } from '../../memory/images';
 import { HintBox, MemoryBox, PresentationCard } from '../../memory/MemoryViews';
 import { routeOf } from '../../memory/palace';
 import { HINT_COST, supportPlan } from '../../memory/support';
+import { patternById } from '../../domain/patterns';
 import { CompleteView } from '../../modes/complete/CompleteView';
+import { EstimateView } from '../../modes/estimate/EstimateView';
 import { HigherLowerView } from '../../modes/higherLower/HigherLowerView';
 import { PalaceView } from '../../modes/palace/PalaceView';
+import { ReadView } from '../../modes/read/ReadView';
 import { secondsText, xpText } from '../../ui/text';
 import { useNow } from '../../ui/useNow';
 import { gradeProgress } from '../progression';
@@ -131,7 +134,9 @@ export function SessionScreen({ saved, onSave, onExit }: SessionScreenProps) {
   useEffect(() => {
     const view = run.view;
     if (view.kind !== 'feedback' || view.step.phase !== 'lightning') return;
-    const delay = view.feedback.score === 1 ? 600 : 1500;
+    // Et nyt eller sjældent fund i albummet får tid til at blive fejret.
+    const album = view.feedback.album;
+    const delay = album && (album.first || album.rare) ? 2500 : view.feedback.score === 1 ? 600 : 1500;
     const timer = setTimeout(() => isCurrent(view) && advance(runRef.current.session), delay);
     return () => clearTimeout(timer);
     // advance læser den nyeste tilstand gennem refs, så effekten afhænger kun af visningen.
@@ -190,7 +195,9 @@ export function SessionScreen({ saved, onSave, onExit }: SessionScreenProps) {
           answer={view.kind === 'step' ? undefined : view.answer}
           reveal={view.kind === 'feedback'}
           skylines={plan.after !== 'facit'}
-          onAnswer={(a) => view.kind === 'step' && isCurrent(view) && answerTask(step, a, view.shownAt, hint)}
+          onAnswer={(a, startedAt) =>
+            view.kind === 'step' && isCurrent(view) && answerTask(step, a, startedAt ?? view.shownAt, hint)
+          }
         />
         {canHint && hint && view.kind !== 'feedback' && <HintBox image={image} />}
         {canHint && !hint && view.kind === 'step' && (
@@ -274,7 +281,8 @@ interface TaskViewProps {
   reveal: boolean;
   /** Facit med skylines; på støtteniveau 0 vises kun rigtigt/forkert og facit. */
   skylines: boolean;
-  onAnswer(answer: Answer): void;
+  /** `startedAt` erstatter visningstidspunktet, når svartiden måles fra et senere tidspunkt. */
+  onAnswer(answer: Answer, startedAt?: number): void;
 }
 
 function TaskView({ step, saved, answer, reveal, skylines, onAnswer }: TaskViewProps) {
@@ -310,6 +318,25 @@ function TaskView({ step, saved, answer, reveal, skylines, onAnswer }: TaskViewP
           onAnswer={(a) => onAnswer({ kind: 'palace', answer: a })}
         />
       );
+    case 'read':
+      return (
+        <ReadView
+          task={task}
+          answer={answer?.kind === 'read' ? answer.lengths : undefined}
+          reveal={reveal}
+          skylines={skylines}
+          onAnswer={(lengths, hiddenAt) => onAnswer({ kind: 'read', lengths }, hiddenAt)}
+        />
+      );
+    case 'estimate':
+      return (
+        <EstimateView
+          task={task}
+          answer={answer?.kind === 'estimate' ? answer.count : undefined}
+          reveal={reveal}
+          onAnswer={(count) => onAnswer({ kind: 'estimate', count })}
+        />
+      );
   }
 }
 
@@ -343,10 +370,18 @@ function FeedbackBar({ feedback, auto, onNext }: { feedback: Feedback; auto: boo
     secondsText(feedback.ms) + (feedback.fast && feedback.score === 1 ? ' – hurtigt' : ''),
     feedback.combo >= 5 && `${feedback.combo} i træk, combo ×${formatDecimal(multiplier, multiplier % 1 ? 1 : 0)}`,
   ].filter(Boolean);
+  const album = feedback.album;
+  const find = album && patternById(album.patternId);
   return (
     <section className={`feedback ${feedback.score === 1 ? 'ok' : 'bad'}`} role="status">
       <p className="feedback-title">{SCORE_TEXT[feedback.score]}</p>
       <p className="feedback-meta">{meta.join(' · ')}</p>
+      {find && album.rare && (
+        <p className="find">
+          Sjældent fund! {find.id}: 1 ud af {formatInt(find.oneIn)}
+        </p>
+      )}
+      {find && album.first && <p className="find">Nyt i albummet: {find.id}</p>}
       {!auto && (
         <button type="button" className="btn primary" onClick={onNext} autoFocus>
           Næste

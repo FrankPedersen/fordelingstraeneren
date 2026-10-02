@@ -1,4 +1,4 @@
-import { addDays, dayOf } from '../engine/dates';
+import { addDays, dayOf, daysBetween } from '../engine/dates';
 import { review, type LogEntry, type Outcome, type Support } from '../engine/leitner';
 import { mulberry32, shuffle } from '../engine/rng';
 import {
@@ -15,6 +15,7 @@ import { addXp, answerXp, type Stake } from '../engine/xp';
 import { patternById, type Pattern } from '../domain/patterns';
 import { HINT_COST, supportPlan } from '../memory/support';
 import { makeCompleteTask, scoreComplete, type CompleteTask } from '../modes/complete/task';
+import { CLUB_PATTERNS, checkEstimate, makeEstimateTask, type EstimateTask } from '../modes/estimate/task';
 import {
   checkHigherLower,
   makeHigherLowerTask,
@@ -22,6 +23,15 @@ import {
   type HigherLowerTask,
 } from '../modes/higherLower/task';
 import { checkPalace, makePalaceTask, type PalaceAnswer, type PalaceTask } from '../modes/palace/task';
+import {
+  READ_MS,
+  checkRead,
+  makeRandomReadTask,
+  makeTargetedReadTask,
+  nextReadMs,
+  type ReadTask,
+} from '../modes/read/task';
+import { isRareFind, registerHand } from './album';
 import {
   currentGrade,
   dueItemKeys,
@@ -40,13 +50,15 @@ import {
 /** review = repetition, level = niveauøvelse, lightning = lynrunde, repeat = hyperkorrektion. */
 export type Phase = 'review' | 'level' | 'lightning' | 'repeat' | 'status';
 
-export type ModeTask = HigherLowerTask | CompleteTask | PalaceTask;
+export type ModeTask = HigherLowerTask | CompleteTask | PalaceTask | ReadTask | EstimateTask;
 export type TaskKind = ModeTask['kind'];
 
 export type Answer =
   | { kind: 'higher-lower'; choice: HigherLowerAnswer }
   | { kind: 'complete'; patterns: string[] }
-  | { kind: 'palace'; answer: PalaceAnswer };
+  | { kind: 'palace'; answer: PalaceAnswer }
+  | { kind: 'read'; lengths: number[] }
+  | { kind: 'estimate'; count: number };
 
 export interface TaskStep {
   type: 'task';
@@ -65,23 +77,37 @@ export type Step =
   | { type: 'present'; patternId: string; next: TaskStep }
   | { type: 'status' };
 
+/** Klubaften-estimat træner hyppigheden og hører derfor til sammenligning ligesom højere/lavere. */
 const SKILL_OF: Record<TaskKind, Skill> = {
   'higher-lower': 'compare',
+  estimate: 'compare',
   complete: 'complete',
   palace: 'rank',
+  read: 'read',
 };
 
 const KIND_OF: Partial<Record<Skill, TaskKind>> = {
   compare: 'higher-lower',
   complete: 'complete',
   rank: 'palace',
+  read: 'read',
 };
 
 /** Niveauøvelserne: Fuldfør mønsteret og Paladsvandring. */
 const LEVEL_KINDS: readonly TaskKind[] = ['complete', 'palace'];
 
-/** Et nyt mønster øves straks i hver af sine øvelser, i denne rækkefølge. */
+/**
+ * Et nyt mønster øves straks i disse øvelser, i denne rækkefølge. Aflæsningen venter til
+ * repetitionen, så lynrunden ikke er eneste sted, mønstret ses i en hånd.
+ */
 const PRACTICE_KINDS: readonly TaskKind[] = ['complete', 'palace', 'higher-lower'];
+
+const CLUB_IDS = new Set(CLUB_PATTERNS.map((p) => p.id));
+
+/** Lynrunden skifter fra dag til dag mellem højere/lavere og Lynaflæsning. */
+export function lightningKind(day: string): 'higher-lower' | 'read' {
+  return Math.abs(daysBetween('2026-01-01', day)) % 2 === 0 ? 'higher-lower' : 'read';
+}
 
 /** Repetitionen slutter efter 60 s. */
 export const REVIEW_END = PHASE_MS.review;
@@ -152,6 +178,10 @@ function makeTask(
       return makeCompleteTask(seed, pattern, difficulty);
     case 'palace':
       return makePalaceTask(seed, pattern, difficulty);
+    case 'read':
+      return makeTargetedReadTask(seed, pattern, saved.readMs ?? READ_MS.start);
+    case 'estimate':
+      return makeEstimateTask(seed, pattern);
   }
 }
 
@@ -170,16 +200,22 @@ function reviewStep(s: SessionState, saved: Saved, today: string, seed: SeedSour
   if (due.length === 0) return null;
   const kinds = s.history.map((h) => h.kind);
   const difficulty = difficultyOf(s.recent);
+  const rng = mulberry32(seed());
   // Laveste kasse og ældste forfald først; emner, der står lige, blandes.
-  const order = shuffle([...due], mulberry32(seed())).sort(
+  const order = shuffle([...due], rng).sort(
     (a, b) =>
       saved.items[a].box - saved.items[b].box || saved.items[a].due.localeCompare(saved.items[b].due),
   );
-  const kindOf = (key: string) => KIND_OF[splitItemKey(key).skill]!;
-  const key = order.find((k) => allowsKind(kinds, kindOf(k)));
-  if (key) {
-    const pattern = patternById(splitItemKey(key).patternId);
-    return taskStep('review', true, makeTask(kindOf(key), pattern, saved, difficulty, seed()));
+  // Sammenligning øves som højere/lavere eller, for klubaftenens mønstre, som Klubaften-estimat.
+  const choices = order.map((key) => {
+    const { patternId, skill } = splitItemKey(key);
+    const estimate = skill === 'compare' && CLUB_IDS.has(patternId) && rng.int(2) === 0;
+    return { key, kind: estimate ? 'estimate' : KIND_OF[skill]! };
+  });
+  const pick = choices.find((c) => allowsKind(kinds, c.kind));
+  if (pick) {
+    const pattern = patternById(splitItemKey(pick.key).patternId);
+    return taskStep('review', true, makeTask(pick.kind, pattern, saved, difficulty, seed()));
   }
   // Kun én opgavetype er forfalden, og den har været der to gange i træk: indskyd en anden øvelse.
   const pattern = patternById(splitItemKey(order[0]).patternId);
@@ -244,8 +280,14 @@ function levelStep(s: SessionState, saved: Saved, today: string, seed: SeedSourc
 
 const pairOf = (task: HigherLowerTask) => [task.a, task.b].sort().join('|');
 
-/** Lynrunde: højere/lavere mellem mønstrene på de oplåste niveauer. */
-function lightningStep(s: SessionState, saved: Saved, seed: SeedSource): TaskStep {
+/**
+ * Lynrunde: højere/lavere mellem mønstrene på de oplåste niveauer eller – hveranden dag –
+ * Lynaflæsning af helt tilfældige hænder.
+ */
+function lightningStep(s: SessionState, saved: Saved, today: string, seed: SeedSource): TaskStep {
+  if (lightningKind(today) === 'read') {
+    return taskStep('lightning', false, makeRandomReadTask(seed(), saved.readMs ?? READ_MS.start));
+  }
   const pool = unlockedPatterns(saved);
   const difficulty = difficultyOf(s.recent);
   let task = makeHigherLowerTask(seed(), null, pool, difficulty);
@@ -306,8 +348,9 @@ export function nextStep(
   }
   if (s.phase === 'lightning') {
     if (now - (s.lightningStartedAt ?? now) < PHASE_MS.lightning) {
-      const step = lightningStep(s, saved, seed);
-      return issue({ ...s, lastPair: pairOf(step.task as HigherLowerTask) }, saved, step);
+      const step = lightningStep(s, saved, today, seed);
+      const lastPair = step.task.kind === 'higher-lower' ? pairOf(step.task) : undefined;
+      return issue({ ...s, lastPair }, saved, step);
     }
     s = { ...s, phase: 'repeat', lightningEndedAt: now };
   }
@@ -347,6 +390,12 @@ export function scoreAnswer(task: ModeTask, answer: Answer): 0 | 0.5 | 1 {
   if (task.kind === 'palace' && answer.kind === 'palace') {
     return checkPalace(task, answer.answer) ? 1 : 0;
   }
+  if (task.kind === 'read' && answer.kind === 'read') {
+    return checkRead(task, answer.lengths) ? 1 : 0;
+  }
+  if (task.kind === 'estimate' && answer.kind === 'estimate') {
+    return checkEstimate(task, answer.count) ? 1 : 0;
+  }
   throw new Error('Svaret passer ikke til opgaven');
 }
 
@@ -365,6 +414,8 @@ export interface Feedback {
   ms: number;
   /** Rigtige i træk efter svaret. */
   combo: number;
+  /** En tilfældig hånd i albummet: første gang mønstret samles, og om det er et sjældent fund. */
+  album?: { patternId: string; first: boolean; rare: boolean };
 }
 
 export interface AnswerOptions {
@@ -410,6 +461,18 @@ export function submitAnswer(
     if (item && !(lightning && outcome !== 'wrong')) items[key] = review(item, outcome, today, entry);
   }
 
+  let after: Saved = { ...saved, items, xp: addXp(saved.xp, xp) };
+  let album: Feedback['album'];
+  if (task.kind === 'read') {
+    after.readMs = nextReadMs(saved.readMs ?? READ_MS.start, ok);
+    // Hver tilfældig hånd registreres i albummet.
+    if (task.random) {
+      const registered = registerHand(after, task.patternId, today);
+      after = registered.saved;
+      album = { patternId: task.patternId, first: registered.first, rare: isRareFind(patternById(task.patternId)) };
+    }
+  }
+
   const combo = ok ? state.combo + 1 : 0;
   const next: SessionState = {
     ...state,
@@ -426,8 +489,8 @@ export function submitAnswer(
   };
   return {
     state: next,
-    saved: { ...saved, items, xp: addXp(saved.xp, xp) },
-    feedback: { score, xp, hintCost, fast, ms, combo },
+    saved: after,
+    feedback: { score, xp, hintCost, fast, ms, combo, ...(album ? { album } : {}) },
   };
 }
 

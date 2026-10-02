@@ -72,6 +72,13 @@ describe('Lagring', () => {
     expect(storage.data.get(BACKUP_KEY)).toBe(raw);
   });
 
+  it('læser visningstiden for Lynaflæsning, når den findes', () => {
+    const storage = memoryStorage({ [STORAGE_KEY]: JSON.stringify({ ...sample(), readMs: 2187 }) });
+    expect(loadSaved(storage).readMs).toBe(2187);
+    const bad = memoryStorage({ [STORAGE_KEY]: JSON.stringify({ ...sample(), readMs: 50 }) });
+    expect(loadSaved(bad).readMs).toBeUndefined();
+  });
+
   it('kasserer ikke data, der ikke kan læses', () => {
     const storage = memoryStorage({ [STORAGE_KEY]: '{ikke json' });
     expect(loadSaved(storage)).toEqual(defaultSaved());

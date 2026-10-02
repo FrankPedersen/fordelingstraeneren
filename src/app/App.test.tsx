@@ -37,7 +37,49 @@ describe('App', () => {
       '4-4-3-2:compare',
       '4-4-3-2:complete',
       '4-4-3-2:rank',
+      '4-4-3-2:read',
     ]);
+  });
+
+  it('viser klubaftenens 100 hænder og fremhæver et mønster', () => {
+    render(<App />);
+    click('Klubaften');
+    expect(screen.getByRole('img', { name: /^100 hænder: 22 × 4-4-3-2, 16 × 5-3-3-2/ })).toBeTruthy();
+    click(/^6-3-2-2 × 6$/);
+    expect(screen.getByText(/af 100 hænder/).textContent).toBe('6-3-2-2: 6 af 100 hænder');
+  });
+
+  it('låser en legendarisk albumplads op med tre rigtige svar', () => {
+    render(<App />);
+    click('Album');
+    expect(screen.getByText(/0 af 39 mønstre samlet/)).toBeTruthy();
+    click(/^\?6-6-1-01 ud af 1\.382$/);
+    click('Lås op med tre spørgsmål');
+    click('legendarisk');
+    click('1 ud af 1.000–9.999');
+    click('12');
+    expect(screen.getByText('✓ Låst op!')).toBeTruthy();
+    click('Til albummet');
+    expect(stored().album['6-6-1-0']).toMatchObject({ count: 0 });
+  });
+
+  it('viser hånden i Lynaflæsning i t millisekunder og registrerer den i albummet', () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date(2026, 9, 3, 12, 0));
+    render(<App />);
+    click('Start dagens session');
+    click('Videre');
+    for (const key of ['4', '4', '3']) click(key);
+    vi.setSystemTime(new Date(2026, 9, 3, 12, 4));
+    click('Svar');
+    click('Næste');
+    expect(screen.getByText('Lynrunde')).toBeTruthy();
+    expect(screen.getByLabelText('Hånden').children).toHaveLength(13);
+    act(() => vi.advanceTimersByTime(3000));
+    expect(screen.getByLabelText('Hånden er skjult')).toBeTruthy();
+    for (const key of ['4', '3', '3']) click(key);
+    const album = stored().album;
+    expect(Object.values(album)).toEqual([{ first: '2026-10-03', count: 1 }]);
   });
 
   it('tager mønstre fra tastaturet, giver feedback og går videre til Paladsvandring', () => {
