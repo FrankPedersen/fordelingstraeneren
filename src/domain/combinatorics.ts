@@ -10,3 +10,12 @@ export function binomial(n: number, k: number): bigint {
 
 /** Antallet af mulige 13-korts hænder: C(52, 13) = 635.013.559.600. */
 export const TOTAL_HANDS = binomial(52, 13);
+
+/** C(13, l) for l = 0–13: antal måder at få l kort i én farve. */
+export const SUIT_WAYS: readonly bigint[] = Array.from({ length: 14 }, (_, l) => binomial(13, l));
+
+/** num / den i procent, eksakt afrundet (halvt op) til `decimals` decimaler. */
+export function ratioPercent(num: bigint, den: bigint, decimals = 2): number {
+  const scale = 10n ** BigInt(decimals);
+  return Number((2n * num * 100n * scale + den) / (2n * den)) / Number(scale);
+}

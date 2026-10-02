@@ -5,6 +5,8 @@ import type { Card } from './cards';
 export const SEATS = ['N', 'E', 'S', 'W'] as const;
 export type Seat = (typeof SEATS)[number];
 
+export const SEAT_NAMES: Record<Seat, string> = { N: 'Nord', E: 'Øst', S: 'Syd', W: 'Vest' };
+
 /** Fire hænder á 13 kort i den rækkefølge, de blev givet (usorteret). */
 export type Hands = Record<Seat, Card[]>;
 

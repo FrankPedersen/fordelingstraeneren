@@ -30,6 +30,11 @@ export function mulberry32(seed: number): Rng {
   };
 }
 
+/** Et tilfældigt seed til en ny opgave. */
+export function randomSeed(): number {
+  return crypto.getRandomValues(new Uint32Array(1))[0];
+}
+
 /** Fisher–Yates: blander arrayet på stedet og returnerer det. */
 export function shuffle<T>(items: T[], rng: Rng): T[] {
   for (let i = items.length - 1; i > 0; i--) {

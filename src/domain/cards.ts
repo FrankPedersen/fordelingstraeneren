@@ -4,6 +4,9 @@
  */
 export type Card = number;
 
+/** Farvesymbolerne i farveordenen. */
+export const SUIT_SYMBOLS = ['♠', '♥', '♦', '♣'] as const;
+
 /** Farvelængder i farveordenen ♠♥♦♣. */
 export type SuitLengths = readonly [number, number, number, number];
 

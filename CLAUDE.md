@@ -32,7 +32,18 @@ Bridge-træningsapp til hånd-fordelinger. **Den fulde specifikation står i [SP
   - `src/domain/patterns.ts`: de 39 mønstre beregnes med BigInt (rang, grad, familie, pr. 100, 1 ud af N). Delt rang følger "1 + antal strengt hyppigere": 7-5-1-0 og 8-3-2-0 deler 23, næste er 25, sidste er 39.
   - `src/domain/dealer.ts`: Fisher–Yates over 52 kort; mulberry32 og `shuffle` ligger i `src/engine/rng.ts`. Seed 1 er låst i en regressionstest, så gemte opgaver kan genskabes.
   - `npm test` kører `tsc` og derefter Vitest. `src/architecture.test.ts` håndhæver, at `engine/` ikke importerer fra `domain/` eller `system/`.
-- [ ] Trin 2: MVP til daglig brug
+- [x] Trin 2: MVP til daglig brug
+  - Motor: `src/engine/` (Leitner, streak med joker, XP, sessionshjælpere, lagring med eksport/import). Øvelser: `src/modes/higherLower/` og `src/modes/complete/`. Fælles UI: `src/ui/` (Skyline, Mønstertastatur).
+  - `src/app/` er tilføjet til SPEC.md's mappetræ: sessionsmotoren (`session.ts`), progression (nye mønstre, oplåsning), skærme og lagringskrog. Den binder motor, domæne og øvelser sammen.
+  - PWA via vite-plugin-pwa (en ny version vises som knap, ingen auto-genindlæsning). `.github/workflows/pages.yml` bygger med `--base=/<repo>/`; Pages-kilden skal være "GitHub Actions". Ikoner: `npm run icons`.
+  - Valg, hvor SPEC.md er åben (spørg før ændring):
+    - 13-sudokuens 75 s går til niveauøvelsen, indtil trin 5.
+    - Fuldfør beder om højst 3 mønstre: alle mulige, hvis der er højst 3, ellers de tre hyppigste (med én kendt farve er der 8–12 mulige). Let = de to længste farver, normal = to tilfældige, svær = én farve. Et nyt mønster testes straks med lette opgaver.
+    - Halv score i Fuldfør giver 5 XP, og emnet bliver stående som ved rigtigt men langsomt.
+    - Rigtige svar flytter kun forfaldne emner op; et forkert svar sender altid i kasse 1. Lynrunden skriver ikke i loggen og flytter kun emner ved fejl (parreglen).
+    - Sværheden tilpasses først efter 10 svar. Combo ganges på svarets XP; indsatsen lægges til bagefter.
+    - Tasten "10+" er den lange farve; dens længde er 13 minus de tre andre.
+    - Introduktionsdagen udledes af emnernes ældste logpost, da skemaet ikke har en dato.
 - [ ] Trin 3: Huskepalads, skyline-billeder og aftrapning
 - [ ] Trin 4: Lynaflæsning, album og Klubaften
 - [ ] Trin 5: Meldetolkning og 13-sudoku, ugens boss og kurver

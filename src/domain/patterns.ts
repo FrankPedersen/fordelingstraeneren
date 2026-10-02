@@ -1,5 +1,5 @@
 import type { SuitLengths } from './cards';
-import { TOTAL_HANDS, binomial } from './combinatorics';
+import { SUIT_WAYS, TOTAL_HANDS, ratioPercent } from './combinatorics';
 
 export type Grade = 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary';
 
@@ -37,8 +37,6 @@ export interface Pattern {
   /** N i "1 ud af N", dvs. round(1/p). */
   readonly oneIn: number;
 }
-
-const C13 = Array.from({ length: 14 }, (_, k) => binomial(13, k));
 
 // Gradernes nedre grænser: p ≥ 1/10, 1/40, 1/100 og 1/1000 (10 %, 2,5 %, 1 % og 0,1 %).
 const GRADE_FLOORS: [Grade, bigint][] = [
@@ -101,7 +99,7 @@ function compareLengths(x: readonly number[], y: readonly number[]): number {
 function buildPatterns(): Pattern[] {
   const rows = allLengths().map((lengths) => {
     const placements = placementsOf(lengths);
-    const hands = lengths.reduce((product, l) => product * C13[l], BigInt(placements));
+    const hands = lengths.reduce((product, l) => product * SUIT_WAYS[l], BigInt(placements));
     return { lengths, placements, hands };
   });
   // Faldende sandsynlighed; lige sandsynlige mønstre ordnes efter længste farve (7-5-1-0 før 8-3-2-0).
@@ -137,6 +135,10 @@ export function patternById(id: string): Pattern {
   return pattern;
 }
 
+export function findPattern(id: string): Pattern | undefined {
+  return BY_ID.get(id);
+}
+
 /** Mønstret for fire farvelængder i vilkårlig orden, fx [2, 5, 2, 4] → 5-4-2-2. */
 export function patternOf(lengths: readonly number[]): Pattern {
   return patternById([...lengths].sort((a, b) => b - a).join('-'));
@@ -144,9 +146,7 @@ export function patternOf(lengths: readonly number[]): Pattern {
 
 /** Andelen af alle hænder i procent, eksakt afrundet (halvt op) til `decimals` decimaler. */
 export function percent(hands: bigint, decimals = 2): number {
-  const scale = 10n ** BigInt(decimals);
-  const rounded = (2n * hands * 100n * scale + TOTAL_HANDS) / (2n * TOTAL_HANDS);
-  return Number(rounded) / Number(scale);
+  return ratioPercent(hands, TOTAL_HANDS, decimals);
 }
 
 /** En konkret fordeling i farveordenen ♠♥♦♣ med lighedstegn, fx 2=5=2=4. */
