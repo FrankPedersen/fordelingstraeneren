@@ -14,27 +14,45 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "A"
+       }
+      },
+      {
+       "leadFrom": "S",
+       "card": "A"
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset. Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Slå kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -44,11 +62,16 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "5"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     }
@@ -74,7 +97,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Kongen fra bordet",
+     "text": "Slå kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -84,17 +107,22 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "5"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -104,21 +132,31 @@
     },
     {
      "id": "D",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med kongen, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     }
@@ -144,27 +182,37 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -174,11 +222,16 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     }
@@ -204,17 +257,22 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Esset fra hånden",
+     "text": "Slå esset. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -224,7 +282,7 @@
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -234,11 +292,11 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden",
+     "text": "Lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "5"
+       "card": "low"
       }
      ]
     }
@@ -264,41 +322,80 @@
    "lines": [
     {
      "id": "A",
-     "text": "Esset fra bordet",
+     "text": "Slå esset og kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "N",
        "card": "A"
+      },
+      {
+       "leadFrom": "N",
+       "card": "K"
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille. Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
+      },
+      {
+       "leadFrom": "N",
+       "card": "A"
+      },
+      {
+       "leadFrom": "N",
+       "card": "K"
       }
      ]
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med esset, ellers lad den løbe. Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "A"
+       }
+      },
+      {
+       "leadFrom": "N",
+       "card": "A"
+      },
+      {
+       "leadFrom": "N",
+       "card": "K"
       }
      ]
     },
     {
      "id": "D",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til esset. Slå kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "5"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
+      },
+      {
+       "leadFrom": "N",
+       "card": "K"
       }
      ]
     }
@@ -325,7 +422,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Kongen fra bordet",
+     "text": "Slå kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -335,17 +432,22 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -355,21 +457,31 @@
     },
     {
      "id": "D",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med kongen, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "5"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     }
@@ -397,17 +509,22 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "T",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Esset fra hånden",
+     "text": "Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -417,7 +534,7 @@
     },
     {
      "id": "C",
-     "text": "10'eren fra hånden",
+     "text": "10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -427,11 +544,11 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden",
+     "text": "Lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "5"
+       "card": "low"
       }
      ]
     }
@@ -460,17 +577,22 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Esset fra hånden",
+     "text": "Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -480,7 +602,7 @@
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -490,11 +612,11 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden",
+     "text": "Lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "5"
+       "card": "low"
       }
      ]
     }
@@ -523,41 +645,68 @@
    "lines": [
     {
      "id": "A",
-     "text": "Esset fra bordet",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "N",
        "card": "A"
+      },
+      {
+       "leadFrom": "N",
+       "card": "K"
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med esset, ellers læg esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
+      },
+      {
+       "leadFrom": "N",
+       "card": "K"
       }
      ]
     },
     {
      "id": "D",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "7"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
+      },
+      {
+       "leadFrom": "N",
+       "card": "K"
       }
      ]
     }
@@ -583,7 +732,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Esset fra bordet",
+     "text": "Slå esset. Knægten fra hånden; dækker Vest, tages stikket med kongen, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "N",
@@ -593,31 +742,46 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med esset, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "D",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til esset. Knægten fra hånden; dækker Vest, tages stikket med kongen, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     }
@@ -643,7 +807,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Kongen fra bordet",
+     "text": "Slå kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -653,41 +817,60 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
        "card": "A"
+      },
+      {
+       "leadFrom": "N",
+       "card": "K"
       }
      ]
     },
     {
      "id": "D",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med kongen, ellers læg kongen. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     }
@@ -714,17 +897,22 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Esset fra hånden",
+     "text": "Slå esset. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -734,7 +922,7 @@
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -744,11 +932,11 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden",
+     "text": "Lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "5"
+       "card": "low"
       }
      ]
     }
@@ -775,27 +963,27 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "3"
-      }
-     ]
+     "text": "Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, tages den med esset.",
+     "steps": []
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -805,21 +993,31 @@
     },
     {
      "id": "D",
-     "text": "9 fra hånden",
+     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers læg knægten.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     }
@@ -846,37 +1044,42 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "9 fra bordet",
+     "text": "9'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Lille fra bordet",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "2"
-      }
-     ]
+     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "steps": []
     },
     {
      "id": "D",
-     "text": "Esset fra hånden",
+     "text": "Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -886,11 +1089,16 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     }
@@ -917,7 +1125,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Kongen fra bordet",
+     "text": "Slå kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -927,51 +1135,75 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
        "card": "A"
+      },
+      {
+       "leadFrom": "N",
+       "card": "K"
       }
      ]
     },
     {
      "id": "D",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med kongen, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "E",
-     "text": "9 fra hånden",
+     "text": "9'eren fra hånden; dækker Vest, tages stikket med kongen, ellers læg kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "F",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     }
@@ -998,7 +1230,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Esset fra bordet",
+     "text": "Slå esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -1008,27 +1240,37 @@
     },
     {
      "id": "B",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med kongen, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til kongen. Lille fra begge hænder; lægger Vest en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "D",
-     "text": "Kongen fra hånden",
+     "text": "Slå kongen. Lille fra begge hænder; lægger Vest en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -1038,21 +1280,31 @@
     },
     {
      "id": "E",
-     "text": "9 fra hånden",
+     "text": "9'eren fra hånden; dækker Vest, tages stikket med esset, ellers læg knægten.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "F",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     }
@@ -1079,7 +1331,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Kongen fra bordet",
+     "text": "Slå kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -1089,27 +1341,37 @@
     },
     {
      "id": "B",
-     "text": "9 fra bordet",
+     "text": "9'eren fra bordet; dækker Øst, tages stikket med esset, ellers læg knægten.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "D",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -1119,21 +1381,21 @@
     },
     {
      "id": "E",
-     "text": "Knægten fra hånden",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "J"
-      }
-     ]
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med kongen, ellers lad den løbe.",
+     "steps": []
     },
     {
      "id": "F",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "5"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     }
@@ -1159,7 +1421,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Kongen fra bordet",
+     "text": "Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -1169,17 +1431,22 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "5"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -1189,21 +1456,31 @@
     },
     {
      "id": "D",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med kongen, ellers læg kongen.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til kongen.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "8"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     }
@@ -1230,27 +1507,36 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
        "card": "A"
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
       }
      ]
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -1260,11 +1546,11 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden",
+     "text": "Lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "4"
+       "card": "low"
       }
      ]
     }
@@ -1292,27 +1578,27 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "J"
-      }
-     ]
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers læg esset.",
+     "steps": []
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -1322,21 +1608,31 @@
     },
     {
      "id": "D",
-     "text": "9 fra hånden",
+     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers læg knægten.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "5"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     }
@@ -1364,7 +1660,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Kongen fra bordet",
+     "text": "Slå kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -1374,17 +1670,22 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -1394,31 +1695,36 @@
     },
     {
      "id": "D",
-     "text": "Knægten fra hånden",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "J"
-      }
-     ]
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med kongen, ellers lad den løbe.",
+     "steps": []
     },
     {
      "id": "E",
-     "text": "9 fra hånden",
+     "text": "9'eren fra hånden; dækker Vest, tages stikket med kongen, ellers læg kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "F",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "5"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     }
@@ -1447,27 +1753,27 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "2"
-      }
-     ]
+     "text": "Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, tages den med esset.",
+     "steps": []
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -1477,21 +1783,31 @@
     },
     {
      "id": "D",
-     "text": "9 fra hånden",
+     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers læg knægten.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     }
@@ -1520,7 +1836,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Kongen fra bordet",
+     "text": "Slå kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -1530,17 +1846,22 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -1550,31 +1871,46 @@
     },
     {
      "id": "D",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med kongen, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "E",
-     "text": "9 fra hånden",
+     "text": "9'eren fra hånden; dækker Vest, tages stikket med kongen, ellers læg kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "F",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     }
@@ -1603,7 +1939,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Esset fra bordet",
+     "text": "Slå esset. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -1613,17 +1949,22 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Kongen fra hånden",
+     "text": "Slå kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -1633,31 +1974,46 @@
     },
     {
      "id": "D",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med esset, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "E",
-     "text": "9 fra hånden",
+     "text": "9'eren fra hånden; dækker Vest, tages stikket med esset, ellers læg esset. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "F",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til esset. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     }
@@ -1684,27 +2040,27 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "2"
-      }
-     ]
+     "text": "Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, tages den med esset.",
+     "steps": []
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset. Knægten fra bordet; dækker Øst, tages stikket med kongen, ellers lad den løbe. Slå kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -1714,21 +2070,31 @@
     },
     {
      "id": "D",
-     "text": "9 fra hånden",
+     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers læg knægten.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     }
@@ -1754,7 +2120,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Kongen fra bordet",
+     "text": "Slå kongen. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -1764,17 +2130,12 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "2"
-      }
-     ]
+     "text": "Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, tages den med esset.",
+     "steps": []
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -1784,31 +2145,46 @@
     },
     {
      "id": "D",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med kongen, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "E",
-     "text": "9 fra hånden",
+     "text": "9'eren fra hånden; dækker Vest, tages stikket med kongen, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "F",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til kongen. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     }
@@ -1834,31 +2210,55 @@
    "lines": [
     {
      "id": "A",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen. Lille fra hånden. Lille fra hånden.",
      "steps": [
       {
        "leadFrom": "S",
        "card": "A"
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
       }
      ]
     },
     {
      "id": "B",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden. Slå esset og kongen. Lille fra hånden.",
      "steps": [
       {
        "leadFrom": "S",
        "card": "J"
+      },
+      {
+       "leadFrom": "S",
+       "card": "A"
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
+      },
+      {
+       "leadFrom": "S",
+       "card": "low"
       }
      ]
     },
     {
      "id": "C",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden. Slå esset og kongen. Lille fra hånden.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "3"
+       "card": "low"
+      },
+      {
+       "leadFrom": "S",
+       "card": "A"
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
       }
      ]
     }
@@ -1884,27 +2284,37 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -1914,21 +2324,31 @@
     },
     {
      "id": "D",
-     "text": "9 fra hånden",
+     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers læg knægten.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "5"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     }
@@ -1956,17 +2376,22 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Esset fra hånden",
+     "text": "Slå esset. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -1976,7 +2401,7 @@
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -1986,7 +2411,7 @@
     },
     {
      "id": "D",
-     "text": "9 fra hånden",
+     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -1996,11 +2421,11 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "5"
+       "card": "low"
       }
      ]
     }
@@ -2029,37 +2454,42 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "J"
-      }
-     ]
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
+     "steps": []
     },
     {
      "id": "B",
-     "text": "9 fra bordet",
+     "text": "9'eren fra bordet; dækker Øst, tages stikket med esset, ellers læg esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "D",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -2069,11 +2499,16 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "5"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     }
@@ -2101,7 +2536,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Kongen fra bordet",
+     "text": "Slå kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -2111,27 +2546,37 @@
     },
     {
      "id": "B",
-     "text": "9 fra bordet",
+     "text": "9'eren fra bordet; dækker Øst, tages stikket med esset, ellers læg knægten.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "D",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -2141,21 +2586,21 @@
     },
     {
      "id": "E",
-     "text": "Knægten fra hånden",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "J"
-      }
-     ]
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med kongen, ellers lad den løbe.",
+     "steps": []
     },
     {
      "id": "F",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "5"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     }
@@ -2182,7 +2627,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Kongen fra bordet",
+     "text": "Slå kongen og esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -2192,27 +2637,27 @@
     },
     {
      "id": "B",
-     "text": "Knægten fra bordet",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "J"
-      }
-     ]
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
+     "steps": []
     },
     {
      "id": "C",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Lille fra begge hænder; lægger Vest en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "D",
-     "text": "Esset fra hånden",
+     "text": "Slå esset. Lille fra begge hænder; lægger Vest en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -2222,21 +2667,31 @@
     },
     {
      "id": "E",
-     "text": "9 fra hånden",
+     "text": "9'eren fra hånden; dækker Vest, tages stikket med kongen, ellers læg knægten.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "F",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "5"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "K"
+       }
       }
      ]
     }
@@ -2265,17 +2720,22 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Esset fra hånden",
+     "text": "Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -2285,7 +2745,7 @@
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -2295,7 +2755,7 @@
     },
     {
      "id": "D",
-     "text": "9 fra hånden",
+     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -2305,11 +2765,11 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "4"
+       "card": "low"
       }
      ]
     }
@@ -2337,17 +2797,22 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Lille fra begge hænder; lægger Øst en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Esset fra hånden",
+     "text": "Slå esset. Lille fra begge hænder; lægger Øst en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -2357,7 +2822,7 @@
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -2388,51 +2853,50 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "J"
-      }
-     ]
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers læg esset.",
+     "steps": []
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "2"
-      }
-     ]
+     "text": "Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, tages den med esset.",
+     "steps": []
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset. Knægten fra bordet; dækker Øst, tages stikket med kongen, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
        "card": "A"
+      },
+      {
+       "leadFrom": "N",
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "D",
-     "text": "9 fra hånden",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "9"
-      }
-     ]
+     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
+     "steps": []
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "5"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     }
@@ -2459,27 +2923,27 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "3"
-      }
-     ]
+     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "steps": []
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -2489,13 +2953,8 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "9"
-      }
-     ]
+     "text": "Lille fra begge hænder.",
+     "steps": []
     }
    ],
    "source": {
@@ -2518,7 +2977,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Kongen fra bordet",
+     "text": "Slå kongen og esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -2528,27 +2987,37 @@
     },
     {
      "id": "B",
-     "text": "10'eren fra bordet",
+     "text": "10'eren fra bordet; dækker Øst, tages stikket med esset, ellers læg esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "T"
+       "card": "T",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "D",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -2558,21 +3027,35 @@
     },
     {
      "id": "E",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med kongen, ellers læg kongen. Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
+      },
+      {
+       "leadFrom": "S",
+       "card": "A"
       }
      ]
     },
     {
      "id": "F",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til kongen. Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "5"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     }
@@ -2597,8 +3080,31 @@
    "lines": [
     {
      "id": "A",
-     "text": "Kongen fra bordet",
+     "text": "Slå kongen og esset.",
      "steps": [
+      {
+       "leadFrom": "N",
+       "card": "K"
+      },
+      {
+       "leadFrom": "S",
+       "card": "A"
+      }
+     ]
+    },
+    {
+     "id": "B",
+     "text": "9'eren fra bordet; dækker Øst, tages stikket med esset, ellers læg esset. Slå kongen.",
+     "steps": [
+      {
+       "leadFrom": "N",
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
+      },
       {
        "leadFrom": "N",
        "card": "K"
@@ -2606,28 +3112,23 @@
      ]
     },
     {
-     "id": "B",
-     "text": "9 fra bordet",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "9"
-      }
-     ]
-    },
-    {
      "id": "C",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "D",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -2637,21 +3138,35 @@
     },
     {
      "id": "E",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med kongen, ellers læg kongen. Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "F",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til kongen. Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "6"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
+      },
+      {
+       "leadFrom": "S",
+       "card": "A"
       }
      ]
     }
@@ -2676,8 +3191,31 @@
    "lines": [
     {
      "id": "A",
-     "text": "Kongen fra bordet",
+     "text": "Slå kongen og esset.",
      "steps": [
+      {
+       "leadFrom": "N",
+       "card": "K"
+      },
+      {
+       "leadFrom": "S",
+       "card": "A"
+      }
+     ]
+    },
+    {
+     "id": "B",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers læg esset. Slå kongen.",
+     "steps": [
+      {
+       "leadFrom": "N",
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
+      },
       {
        "leadFrom": "N",
        "card": "K"
@@ -2685,28 +3223,23 @@
      ]
     },
     {
-     "id": "B",
-     "text": "Knægten fra bordet",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "J"
-      }
-     ]
-    },
-    {
      "id": "C",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "D",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -2716,21 +3249,35 @@
     },
     {
      "id": "E",
-     "text": "9 fra hånden",
+     "text": "9'eren fra hånden; dækker Vest, tages stikket med kongen, ellers læg kongen. Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "F",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til kongen. Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "6"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
+      },
+      {
+       "leadFrom": "S",
+       "card": "A"
       }
      ]
     }
@@ -2755,41 +3302,64 @@
    "lines": [
     {
      "id": "A",
-     "text": "Esset fra bordet",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "N",
        "card": "A"
+      },
+      {
+       "leadFrom": "N",
+       "card": "K"
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med esset, ellers læg esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "D",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "5"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
+      },
+      {
+       "leadFrom": "N",
+       "card": "K"
       }
      ]
     }
@@ -2815,17 +3385,12 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "3"
-      }
-     ]
+     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "steps": []
     },
     {
      "id": "B",
-     "text": "Esset fra hånden",
+     "text": "Slå esset. Lille fra begge hænder; lægger Øst en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -2835,7 +3400,7 @@
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -2845,11 +3410,11 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden",
+     "text": "Lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "9"
+       "card": "low"
       }
      ]
     }
@@ -2875,7 +3440,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Kongen fra bordet",
+     "text": "Slå kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -2885,43 +3450,42 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "9"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen. Lille fra hånden.",
      "steps": [
       {
        "leadFrom": "S",
        "card": "A"
+      },
+      {
+       "leadFrom": "N",
+       "card": "K"
       }
      ]
     },
     {
      "id": "D",
-     "text": "Knægten fra hånden",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "J"
-      }
-     ]
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med kongen, ellers lad den løbe.",
+     "steps": []
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "3"
-      }
-     ]
+     "text": "Lille fra begge hænder; lægger Vest en honnør, tages den med kongen. Slå kongen og esset.",
+     "steps": []
     }
    ],
    "source": {
@@ -2946,31 +3510,51 @@
    "lines": [
     {
      "id": "A",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen. Lille fra hånden.",
      "steps": [
       {
        "leadFrom": "S",
        "card": "A"
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
       }
      ]
     },
     {
      "id": "B",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden. Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
        "card": "J"
+      },
+      {
+       "leadFrom": "S",
+       "card": "A"
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
       }
      ]
     },
     {
      "id": "C",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden. Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "5"
+       "card": "low"
+      },
+      {
+       "leadFrom": "S",
+       "card": "A"
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
       }
      ]
     }
@@ -2997,7 +3581,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Kongen fra bordet",
+     "text": "Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -3007,17 +3591,22 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -3027,21 +3616,31 @@
     },
     {
      "id": "D",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med kongen, ellers læg kongen.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til kongen.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "8"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     }
@@ -3067,17 +3666,22 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Esset fra hånden",
+     "text": "Slå esset. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -3087,7 +3691,7 @@
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -3097,11 +3701,11 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden",
+     "text": "Lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "9"
+       "card": "low"
       }
      ]
     }
@@ -3127,7 +3731,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Kongen fra bordet",
+     "text": "Slå kongen. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -3137,41 +3741,60 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
        "card": "A"
+      },
+      {
+       "leadFrom": "N",
+       "card": "K"
       }
      ]
     },
     {
      "id": "D",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med kongen, ellers læg kongen. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til kongen. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     }
@@ -3196,17 +3819,22 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Lille fra begge hænder; lægger Øst en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "5"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Esset fra hånden",
+     "text": "Slå esset. Lille fra begge hænder; lægger Øst en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -3216,7 +3844,7 @@
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -3245,51 +3873,69 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers læg esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
        "card": "A"
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
       }
      ]
     },
     {
      "id": "D",
-     "text": "9 fra hånden",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "9"
-      }
-     ]
+     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
+     "steps": []
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "6"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     }
@@ -3315,7 +3961,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Esset fra bordet",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -3325,41 +3971,55 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "J"
-      }
-     ]
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med esset, ellers lad den løbe.",
+     "steps": []
     },
     {
      "id": "D",
-     "text": "9 fra hånden",
+     "text": "9'eren fra hånden; dækker Vest, tages stikket med esset, ellers læg esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
+      },
+      {
+       "leadFrom": "N",
+       "card": "K"
       }
      ]
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     }
@@ -3386,27 +4046,27 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "J"
-      }
-     ]
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
+     "steps": []
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -3416,21 +4076,21 @@
     },
     {
      "id": "D",
-     "text": "8 fra hånden",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "8"
-      }
-     ]
+     "text": "8'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
+     "steps": []
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "5"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     }
@@ -3457,37 +4117,52 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "9 fra bordet",
+     "text": "9'eren fra bordet; dækker Øst, tages stikket med esset, ellers læg esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "D",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -3497,11 +4172,16 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     }
@@ -3528,27 +4208,27 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "J"
-      }
-     ]
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
+     "steps": []
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -3558,21 +4238,21 @@
     },
     {
      "id": "D",
-     "text": "9 fra hånden",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "9"
-      }
-     ]
+     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
+     "steps": []
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     }
@@ -3599,51 +4279,69 @@
    "lines": [
     {
      "id": "A",
-     "text": "Esset fra bordet",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "N",
        "card": "A"
+      },
+      {
+       "leadFrom": "N",
+       "card": "K"
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "J"
-      }
-     ]
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med esset, ellers lad den løbe.",
+     "steps": []
     },
     {
      "id": "D",
-     "text": "9 fra hånden",
+     "text": "9'eren fra hånden; dækker Vest, tages stikket med esset, ellers læg esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
+      },
+      {
+       "leadFrom": "N",
+       "card": "K"
       }
      ]
     }
@@ -3670,27 +4368,27 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "2"
-      }
-     ]
+     "text": "Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, tages den med esset.",
+     "steps": []
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -3700,21 +4398,31 @@
     },
     {
      "id": "D",
-     "text": "9 fra hånden",
+     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers læg knægten.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     }
@@ -3741,7 +4449,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Esset fra hånden",
+     "text": "Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -3751,7 +4459,7 @@
     },
     {
      "id": "B",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden.",
      "steps": [
       {
        "leadFrom": "S",
@@ -3761,11 +4469,11 @@
     },
     {
      "id": "C",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "3"
+       "card": "low"
       }
      ]
     }
@@ -3791,27 +4499,36 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet",
+     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
        "card": "A"
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
       }
      ]
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -3840,31 +4557,45 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Esset fra hånden",
+     "text": "Slå esset. 10'eren fra bordet; dækker Øst, tages stikket med kongen, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
        "card": "A"
+      },
+      {
+       "leadFrom": "N",
+       "card": "T",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Lille fra hånden",
+     "text": "Lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "3"
+       "card": "low"
       }
      ]
     }
@@ -3889,27 +4620,36 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
        "card": "A"
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
       }
      ]
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -3919,11 +4659,11 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden",
+     "text": "Lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "4"
+       "card": "low"
       }
      ]
     }
@@ -3949,27 +4689,27 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers læg esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "2"
-      }
-     ]
+     "text": "Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, tages den med esset.",
+     "steps": []
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset. Knægten fra bordet; dækker Øst, tages stikket med kongen, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -3979,21 +4719,21 @@
     },
     {
      "id": "D",
-     "text": "9 fra hånden",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "9"
-      }
-     ]
+     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
+     "steps": []
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     }
@@ -4021,7 +4761,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Kongen fra bordet",
+     "text": "Slå kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -4031,51 +4771,65 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
        "card": "A"
+      },
+      {
+       "leadFrom": "N",
+       "card": "K"
       }
      ]
     },
     {
      "id": "D",
-     "text": "Knægten fra hånden",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "J"
-      }
-     ]
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med kongen, ellers lad den løbe.",
+     "steps": []
     },
     {
      "id": "E",
-     "text": "8 fra hånden",
+     "text": "8'eren fra hånden; dækker Vest, tages stikket med kongen, ellers læg kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "8"
+       "card": "8",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "F",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "5"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     }
@@ -4102,17 +4856,22 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet",
+     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Esset fra hånden",
+     "text": "Slå esset. Lille fra begge hænder; lægger Øst en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -4122,7 +4881,7 @@
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -4151,37 +4910,51 @@
    "lines": [
     {
      "id": "A",
-     "text": "Kongen fra bordet",
+     "text": "Slå kongen og esset.",
      "steps": [
       {
        "leadFrom": "N",
        "card": "K"
+      },
+      {
+       "leadFrom": "S",
+       "card": "A"
       }
      ]
     },
     {
      "id": "B",
-     "text": "9 fra bordet",
+     "text": "9'eren fra bordet; dækker Øst, tages stikket med esset, ellers læg esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "D",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -4191,21 +4964,39 @@
     },
     {
      "id": "E",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med kongen, ellers læg kongen. Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
+      },
+      {
+       "leadFrom": "S",
+       "card": "A"
       }
      ]
     },
     {
      "id": "F",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til kongen. Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "6"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
+      },
+      {
+       "leadFrom": "S",
+       "card": "A"
       }
      ]
     }
@@ -4230,7 +5021,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Kongen fra bordet",
+     "text": "Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -4240,27 +5031,37 @@
     },
     {
      "id": "B",
-     "text": "10'eren fra bordet",
+     "text": "10'eren fra bordet; dækker Øst, tages stikket med esset, ellers læg esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "T"
+       "card": "T",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "D",
-     "text": "Esset fra hånden",
+     "text": "Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -4270,21 +5071,31 @@
     },
     {
      "id": "E",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med kongen, ellers læg kongen.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "F",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til kongen.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "6"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     }
@@ -4309,18 +5120,16 @@
    "lines": [
     {
      "id": "A",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen. Knægten fra hånden. Slå 10'eren.",
      "steps": [
       {
        "leadFrom": "S",
        "card": "A"
-      }
-     ]
-    },
-    {
-     "id": "B",
-     "text": "Knægten fra hånden",
-     "steps": [
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
+      },
       {
        "leadFrom": "S",
        "card": "J"
@@ -4328,12 +5137,42 @@
      ]
     },
     {
-     "id": "C",
-     "text": "Lille fra hånden",
+     "id": "B",
+     "text": "Knægten fra hånden. Slå esset, kongen og 10'eren.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "2"
+       "card": "J"
+      },
+      {
+       "leadFrom": "S",
+       "card": "A"
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
+      },
+      {
+       "leadFrom": "S",
+       "card": "T"
+      }
+     ]
+    },
+    {
+     "id": "C",
+     "text": "Lille fra hånden. Slå esset og kongen.",
+     "steps": [
+      {
+       "leadFrom": "S",
+       "card": "low"
+      },
+      {
+       "leadFrom": "S",
+       "card": "A"
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
       }
      ]
     }
@@ -4359,27 +5198,27 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "3"
-      }
-     ]
+     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "steps": []
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset. Knægten fra bordet; dækker Øst, tages stikket med kongen, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -4389,13 +5228,8 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "9"
-      }
-     ]
+     "text": "Lille fra begge hænder.",
+     "steps": []
     }
    ],
    "source": {
@@ -4420,27 +5254,17 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "J"
-      }
-     ]
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
+     "steps": []
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "9"
-      }
-     ]
+     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "steps": []
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -4450,11 +5274,11 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden",
+     "text": "Lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "3"
+       "card": "low"
       }
      ]
     }
@@ -4480,31 +5304,45 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Esset fra hånden",
+     "text": "Slå esset. 10'eren fra bordet; dækker Øst, tages stikket med kongen, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
        "card": "A"
+      },
+      {
+       "leadFrom": "N",
+       "card": "T",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Lille fra hånden",
+     "text": "Lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "4"
+       "card": "low"
       }
      ]
     }
@@ -4529,7 +5367,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Kongen fra bordet",
+     "text": "Slå kongen. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -4539,27 +5377,37 @@
     },
     {
      "id": "B",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers læg esset. Lille fra hånden mod 9'eren (kip); lægger Vest en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Lille fra begge hænder; lægger Vest en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "D",
-     "text": "Esset fra hånden",
+     "text": "Slå esset. Lille fra begge hænder; lægger Vest en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -4569,21 +5417,31 @@
     },
     {
      "id": "E",
-     "text": "10'eren fra hånden",
+     "text": "10'eren fra hånden; dækker Vest, tages stikket med kongen, ellers læg kongen. Lille fra bordet mod 8'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "T"
+       "card": "T",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "F",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til kongen. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     }
@@ -4610,17 +5468,22 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Esset fra hånden",
+     "text": "Slå esset. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -4630,7 +5493,7 @@
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -4640,11 +5503,11 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden",
+     "text": "Lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "9"
+       "card": "low"
       }
      ]
     }
@@ -4672,27 +5535,41 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers læg esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -4702,21 +5579,31 @@
     },
     {
      "id": "D",
-     "text": "8 fra hånden",
+     "text": "8'eren fra hånden; dækker Vest, lægges der lille, ellers læg knægten.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "8"
+       "card": "8",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "6"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     }
@@ -4743,27 +5630,27 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "2"
-      }
-     ]
+     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "steps": []
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -4773,13 +5660,8 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "9"
-      }
-     ]
+     "text": "Lille fra begge hænder.",
+     "steps": []
     }
    ],
    "source": {
@@ -4803,27 +5685,37 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers læg esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -4833,21 +5725,31 @@
     },
     {
      "id": "D",
-     "text": "9 fra hånden",
+     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers læg knægten.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "7"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     }
@@ -4873,51 +5775,83 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers læg esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
        "card": "A"
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
       }
      ]
     },
     {
      "id": "D",
-     "text": "8 fra hånden",
+     "text": "8'eren fra hånden; dækker Vest, lægges der lille, ellers læg knægten.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "8"
+       "card": "8",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "6"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     }
@@ -4945,27 +5879,37 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "9"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -4975,13 +5919,8 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "4"
-      }
-     ]
+     "text": "Lille fra begge hænder.",
+     "steps": []
     }
    ],
    "source": {
@@ -5006,27 +5945,37 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers læg esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "5"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -5036,21 +5985,31 @@
     },
     {
      "id": "D",
-     "text": "9 fra hånden",
+     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers læg knægten.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "7"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     }
@@ -5075,7 +6034,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Esset fra bordet",
+     "text": "Slå esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -5085,27 +6044,37 @@
     },
     {
      "id": "B",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med kongen, ellers læg kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "D",
-     "text": "Kongen fra hånden",
+     "text": "Slå kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -5115,21 +6084,31 @@
     },
     {
      "id": "E",
-     "text": "9 fra hånden",
+     "text": "9'eren fra hånden; dækker Vest, tages stikket med esset, ellers læg esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "F",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "6"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     }
@@ -5155,27 +6134,27 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers læg esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "2"
-      }
-     ]
+     "text": "Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, tages den med esset.",
+     "steps": []
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset. Knægten fra bordet; dækker Øst, tages stikket med kongen, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -5185,21 +6164,21 @@
     },
     {
      "id": "D",
-     "text": "9 fra hånden",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "9"
-      }
-     ]
+     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
+     "steps": []
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     }
@@ -5227,41 +6206,69 @@
    "lines": [
     {
      "id": "A",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen. Lille fra hånden.",
      "steps": [
       {
        "leadFrom": "S",
        "card": "A"
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
       }
      ]
     },
     {
      "id": "B",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden. Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
        "card": "J"
+      },
+      {
+       "leadFrom": "S",
+       "card": "A"
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
       }
      ]
     },
     {
      "id": "C",
-     "text": "8 fra hånden",
+     "text": "8'eren fra hånden. Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
        "card": "8"
+      },
+      {
+       "leadFrom": "S",
+       "card": "A"
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
       }
      ]
     },
     {
      "id": "D",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden. Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "4"
+       "card": "low"
+      },
+      {
+       "leadFrom": "S",
+       "card": "A"
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
       }
      ]
     }
@@ -5288,17 +6295,22 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers læg esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -5308,11 +6320,11 @@
     },
     {
      "id": "C",
-     "text": "Lille fra hånden",
+     "text": "Lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "5"
+       "card": "low"
       }
      ]
     }
@@ -5337,27 +6349,37 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers læg esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "3"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -5367,21 +6389,31 @@
     },
     {
      "id": "D",
-     "text": "9 fra hånden",
+     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers læg knægten.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "9"
+       "card": "9",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "7"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
       }
      ]
     }
@@ -5407,27 +6439,37 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "low",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "9"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -5437,23 +6479,13 @@
     },
     {
      "id": "D",
-     "text": "7 fra hånden",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "7"
-      }
-     ]
+     "text": "7'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
+     "steps": []
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "3"
-      }
-     ]
+     "text": "Lille fra begge hænder.",
+     "steps": []
     }
    ],
    "source": {
@@ -5478,27 +6510,36 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "2"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
        "card": "A"
+      },
+      {
+       "leadFrom": "S",
+       "card": "K"
       }
      ]
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -5508,7 +6549,7 @@
     },
     {
      "id": "D",
-     "text": "9 fra hånden",
+     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -5518,11 +6559,11 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "3"
+       "card": "low"
       }
      ]
     }
@@ -5549,27 +6590,37 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers læg esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "9"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -5579,13 +6630,8 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "5"
-      }
-     ]
+     "text": "Lille fra begge hænder.",
+     "steps": []
     }
    ],
    "source": {
@@ -5610,7 +6656,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Kongen fra bordet",
+     "text": "Slå kongen og esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -5620,17 +6666,22 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til esset. Slå kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "9"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Esset fra hånden",
+     "text": "Slå esset og kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -5640,21 +6691,31 @@
     },
     {
      "id": "D",
-     "text": "Knægten fra hånden",
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med kongen, ellers læg kongen. Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til kongen. Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "4"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     }
@@ -5680,7 +6741,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Esset fra bordet",
+     "text": "Slå esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -5690,27 +6751,37 @@
     },
     {
      "id": "B",
-     "text": "Knægten fra bordet",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med kongen, ellers læg kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "J"
+       "card": "J",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "C",
-     "text": "Lille fra bordet",
+     "text": "Lille fra bordet til kongen.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "9"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "K"
+       }
       }
      ]
     },
     {
      "id": "D",
-     "text": "Kongen fra hånden",
+     "text": "Slå kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -5720,11 +6791,16 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden",
+     "text": "Lille fra hånden til esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "6"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
       }
      ]
     }

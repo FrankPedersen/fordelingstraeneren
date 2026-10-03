@@ -3,6 +3,7 @@
 //   src/farvebehandling/content/suit-combinations.json        opgavebanken (brugbare cases i hyppighedsorden)
 //   src/farvebehandling/content/solutions.json                løserens resultater med optimalt modspil
 //   src/farvebehandling/content/validering-damen-mangler.md   sammenligning med kilden, begge fortolkninger af x
+//   src/farvebehandling/content/linjer-damen-mangler.md       linjeteksterne til godkendelse
 //
 //   node scripts/solve.ts
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -56,4 +57,5 @@ writeFileSync(
 const excluded = cases.filter((c) => !c.usable);
 const report = pre.validationReport(validation, excluded, { page: page.page, url: page.url, fetched: page.fetched, tolerance: 0.5 });
 writeFileSync(`${content}validering-damen-mangler.md`, report.replace('## Resultat\n', `## Resultat\n\n${pre.frequencySummary(rows)}\n`));
+writeFileSync(`${content}linjer-damen-mangler.md`, pre.linesReport(bank, solutions as Record<string, any>));
 console.log(`Færdig på ${((Date.now() - started) / 60000).toFixed(1)} min.`);

@@ -1,0 +1,419 @@
+/*
+ * Farvebehandlingens komponenter. Kun tokens (tokens.css og appens styles.css), 0, 1px-streger og procenter.
+ * Analyse må gå bredere end appens kolonne: to spalter, når der er plads, ellers én.
+ */
+
+.fb-screen {
+  width: 100%;
+  max-width: var(--analysis-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  padding: var(--space-12) var(--space-16) var(--space-16);
+}
+
+.fb-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-12);
+}
+
+.fb-header h1 {
+  flex: 1;
+}
+
+.fb-tabs {
+  display: flex;
+  gap: var(--space-4);
+  width: 100%;
+}
+
+.fb-tab {
+  flex: 1;
+  min-height: var(--touch-min);
+  padding: 0 var(--space-12);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  font-weight: 600;
+}
+
+.fb-tab-current {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--ink-text);
+}
+
+.fb-analysis {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-16);
+  align-items: flex-start;
+}
+
+.fb-column {
+  display: grid;
+  flex: 1 1 var(--column);
+  gap: var(--space-16);
+  min-width: 0;
+}
+
+.fb-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--type-note);
+}
+
+.fb-segment,
+.fb-goals {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.fb-segment .selected,
+.fb-goals .selected {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--ink-text);
+}
+
+/* Banken */
+
+.fb-bank {
+  display: grid;
+  gap: var(--space-4);
+  max-height: var(--bank-height);
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  list-style: none;
+}
+
+.fb-bank-item {
+  width: 100%;
+  min-height: var(--touch-min);
+  padding: var(--space-8) var(--space-12);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-10);
+  background: var(--surface);
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+}
+
+.fb-bank-current {
+  border-color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--ink);
+  font-weight: 600;
+}
+
+/* Kortvælgeren */
+
+.fb-picker {
+  display: grid;
+  gap: var(--space-10);
+}
+
+.fb-picker-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+}
+
+.fb-pick {
+  flex: 1 1 12%;
+  display: grid;
+  place-items: center;
+  min-height: var(--touch-min);
+  padding: var(--space-4) 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-8);
+  background: var(--surface);
+  font-weight: 700;
+}
+
+.fb-pick-N,
+.fb-pick-S {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--ink-text);
+}
+
+.fb-pick-S {
+  box-shadow: inset 0 0 0 1px var(--ink-text);
+}
+
+.fb-pick-owner {
+  font-size: var(--type-eyebrow);
+  letter-spacing: var(--letter-eyebrow);
+}
+
+/* Bridgebordet */
+
+.fb-table {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  justify-content: space-between;
+  grid-template-areas:
+    '. north .'
+    'west center east'
+    '. south .';
+  gap: var(--space-8);
+  align-items: center;
+  justify-items: center;
+  margin: 0;
+  padding: var(--space-12);
+  border-radius: var(--radius-12);
+  background: var(--surface-2);
+}
+
+.fb-seat {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+}
+
+.fb-seat-north {
+  grid-area: north;
+}
+
+.fb-seat-west {
+  grid-area: west;
+}
+
+.fb-seat-east {
+  grid-area: east;
+}
+
+.fb-seat-south {
+  grid-area: south;
+}
+
+.fb-table-center {
+  grid-area: center;
+  color: var(--muted);
+  font-size: var(--type-h1);
+  font-weight: 700;
+}
+
+.fb-seat-name {
+  color: var(--muted);
+  font-size: var(--type-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--letter-eyebrow);
+  text-transform: uppercase;
+}
+
+.fb-hand {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-6);
+  font-size: var(--type-prompt);
+  font-variant-numeric: tabular-nums;
+}
+
+.fb-honor {
+  font-weight: 700;
+}
+
+.fb-hidden-hand {
+  font-size: var(--type-h2);
+  font-variant-numeric: tabular-nums;
+}
+
+.fb-table figcaption {
+  grid-column: 1 / -1;
+}
+
+/* Linjerne */
+
+.fb-lines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-10);
+}
+
+.fb-line {
+  flex: 1 1 calc(var(--column) / 2);
+  display: grid;
+  gap: var(--space-8);
+  align-content: start;
+  padding: var(--space-12);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-12);
+  background: var(--surface);
+}
+
+.fb-line-best {
+  border-color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--ink);
+}
+
+.fb-line-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-8);
+}
+
+.fb-line-head h3 {
+  margin: 0;
+}
+
+.fb-line-value {
+  font-size: var(--type-prompt);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.fb-badge {
+  padding: var(--space-2) var(--space-10);
+  border-radius: var(--radius-pill);
+  background: var(--ink);
+  color: var(--ink-text);
+  font-size: var(--type-eyebrow);
+  font-weight: 700;
+}
+
+.fb-badge-quiet {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.fb-steps {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding-left: var(--space-20);
+}
+
+/* Sandsynlighedsbåndet */
+
+.fb-band {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.fb-band-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.fb-band-letter {
+  width: var(--space-20);
+  font-weight: 700;
+}
+
+.fb-band-bar {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  height: var(--touch-min);
+  overflow: hidden;
+  border-radius: var(--radius-8);
+  background: var(--surface-2);
+}
+
+.fb-field {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  height: 100%;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  box-shadow: inset -1px 0 0 var(--surface);
+  font-size: var(--type-small);
+  font-weight: 700;
+}
+
+.fb-field-hit {
+  background: var(--fb-hit);
+  color: var(--fb-hit-text);
+}
+
+.fb-field-miss {
+  border: 1px dashed var(--fb-miss-line);
+  background: var(--fb-miss);
+  color: var(--muted);
+}
+
+.fb-field-selected {
+  box-shadow: inset 0 0 0 1px var(--fb-hit-text), inset 0 0 0 1px var(--ink);
+  outline: 1px solid var(--text);
+  outline-offset: -1px;
+}
+
+/* Sidningerne */
+
+.fb-layouts {
+  display: grid;
+  gap: var(--space-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fb-layout {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8);
+  width: 100%;
+  min-height: var(--touch-min);
+  padding: var(--space-8) var(--space-12);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-10);
+  background: var(--surface);
+  text-align: left;
+}
+
+.fb-layout-selected {
+  border-color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--ink);
+}
+
+.fb-layout-cards {
+  flex: 1 1 100%;
+  min-width: 0;
+  font-weight: 600;
+}
+
+.fb-layout-chance {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.fb-layout-results {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.fb-chip {
+  padding: var(--space-2) var(--space-8);
+  border-radius: var(--radius-pill);
+  font-size: var(--type-small);
+  font-weight: 700;
+}
+
+.fb-chip-hit {
+  background: var(--fb-hit);
+  color: var(--fb-hit-text);
+}
+
+.fb-chip-miss {
+  border: 1px dashed var(--fb-miss-line);
+  background: var(--fb-miss);
+  color: var(--text);
+}
+
+.fb-result h3 {
+  margin: 0;
+  font-size: var(--type-h3);
+}

@@ -3,7 +3,8 @@ import { cardsData, cardsText, rankFromSymbol, rankText, type Rank } from './mod
 import { percentOf, type Fraction } from './model/fraction';
 import { combinationFrequency, eveningText, oncePerDeals } from './model/frequency';
 import { buildGame, type Objective } from './solver/game';
-import type { Line } from './solver/lines';
+import { describeLine } from './solver/describe';
+import type { Line, LineStep } from './solver/lines';
 import { solveGame, type Solution } from './solver/solve';
 import { concreteHands, frequencyHolding, type ClassifiedCase, type XRule } from './source/bridgehands';
 
@@ -112,26 +113,10 @@ export function bankEntry(c: ClassifiedCase, pageName: string, solution: Combina
     south: cardsData(south),
     goals: [...c.needs],
     entries: 'unlimited',
-    lines: firstGoal.leads.map((l, i) => ({
-      id: String.fromCharCode(65 + i),
-      text: leadText(l.hand, l.high, l.low, north, south),
-      steps: [{ leadFrom: l.hand, card: cardsData([l.high]) }],
-    })),
+    lines: firstGoal.leads.map((l, i) => ({ id: String.fromCharCode(65 + i), text: l.steps.join(' '), steps: l.line })),
     source: { name: `${pageName}, case ${c.number}`, values },
     verified,
   };
-}
-
-const HONOR_NAME: Record<number, string> = { 14: 'esset', 13: 'kongen', 12: 'damen', 11: 'knægten', 10: "10'eren" };
-
-/** Kort tekst for et første udspil, fx "Esset fra hånden" eller "Lille fra bordet". */
-export function leadText(hand: 'N' | 'S', high: Rank, low: Rank, north: readonly Rank[], south: readonly Rank[]): string {
-  const cards = hand === 'N' ? north : south;
-  const where = hand === 'N' ? 'fra bordet' : 'fra hånden';
-  const isLowest = low === Math.min(...cards) && high < 10;
-  if (isLowest) return `Lille ${where}`;
-  const name = HONOR_NAME[high] ?? rankText(high);
-  return `${name[0].toUpperCase()}${name.slice(1)} ${where}`;
 }
 
 // ---------- Løsninger ----------
@@ -147,6 +132,10 @@ export interface LeadResult {
   certified: boolean;
   /** Garantien pr. abstrakt sidning (samme rækkefølge som `layouts`). */
   layouts: number[];
+  /** Linjen på dansk som nummererede trin. */
+  steps: string[];
+  /** De første trin i linjeformatet; derefter spiller løseren videre. */
+  line: LineStep[];
 }
 
 export interface GoalResult {
@@ -171,16 +160,21 @@ function goalResult(solution: Solution): GoalResult {
   return {
     value: solution.value,
     best: solution.best,
-    leads: solution.leads.map((l) => ({
-      hand: l.lead.hand,
-      high: l.lead.high,
-      low: l.lead.low,
-      value: l.value,
-      exact: l.exact.toString(),
-      upper: l.upper,
-      certified: l.certified,
-      layouts: [...l.layoutValues],
-    })),
+    leads: solution.leads.map((l) => {
+      const described = describeLine(solution.game, l.strategy, l.slot);
+      return {
+        hand: l.lead.hand,
+        high: l.lead.high,
+        low: l.lead.low,
+        value: l.value,
+        exact: l.exact.toString(),
+        upper: l.upper,
+        certified: l.certified,
+        layouts: [...l.layoutValues],
+        steps: described.steps,
+        line: described.line.steps,
+      };
+    }),
   };
 }
 
@@ -306,6 +300,37 @@ export function validationReport(
     );
   }
   out.push('');
+  return out.join('\n');
+}
+
+/** Linjeteksterne for hele banken til godkendelse: bedste linje og alternativer pr. mål. */
+export function linesReport(bank: readonly Combination[], solutions: Readonly<Record<string, CombinationSolution>>): string {
+  const out: string[] = ['# Linjetekster: damen mangler', ''];
+  out.push(
+    'Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert mål står den bedste linje og ' +
+      'alternativerne (løserens bedste linje for hvert andet første udspil) med chancen. "Blandet" betyder, at ' +
+      'spilføreren skal blande mellem to linjer for at nå chancen.',
+  );
+  out.push('');
+  bank.forEach((b, i) => {
+    const s = solutions[b.id];
+    const south = cardsText([...b.south].map(rankFromSymbol));
+    const north = cardsText([...b.north].map(rankFromSymbol));
+    out.push(`## ${i + 1}. ${south} / ${north}`);
+    out.push('');
+    for (const goal of b.goals) {
+      const g = s.goals[String(goal)];
+      out.push(`**${goal} stik**`);
+      out.push('');
+      const order = g.leads.map((l, j) => ({ l, j })).sort((p, q) => q.l.value - p.l.value);
+      for (const { l, j } of order) {
+        const tag = j === g.best ? ' (bedst)' : '';
+        const mixed = l.certified ? '' : ', blandet';
+        out.push(`- ${formatDecimal(100 * l.value, 1)} %${tag}${mixed}: ${l.steps.join(' ')}`);
+      }
+      out.push('');
+    }
+  });
   return out.join('\n');
 }
 

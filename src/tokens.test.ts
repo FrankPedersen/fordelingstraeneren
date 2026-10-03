@@ -6,6 +6,8 @@ import tokens from '../design/tokens.json';
 const nodeFs = 'node:fs';
 const fs = (await import(/* @vite-ignore */ nodeFs)) as { readFileSync(path: URL, encoding: 'utf8'): string };
 const css = fs.readFileSync(new URL('./ui/styles.css', import.meta.url), 'utf8');
+const fbCss = fs.readFileSync(new URL('./farvebehandling/ui/tokens.css', import.meta.url), 'utf8');
+const isAlias = (value: string) => value.startsWith('{');
 
 /** CSS-variablerne i en blok, uden --. */
 function variables(block: string): Map<string, string> {
@@ -35,16 +37,44 @@ describe('Designtokens', () => {
     }
   });
 
-  it('henter de øvrige farver og alle længder fra styles.css', () => {
+  it('henter de øvrige farver og alle længder fra styles.css eller farvebehandlingens tokens.css', () => {
     const source = css.toLowerCase();
     for (const [name, value] of colors) {
-      if (light.has(name)) continue;
+      if (light.has(name) || isAlias(value.light)) continue;
       expect(source, name).toContain(value.light.toLowerCase());
       expect(source, name).toContain(value.dark.toLowerCase());
     }
     for (const [name, value] of lengths) {
-      expect(source, name).toMatch(new RegExp(`[\\s(:]${value.replace('.', '\\.')}[\\s;)]`));
+      const pattern = new RegExp(`[\\s(:]${value.replace('.', '\\.')}[\\s;)]`);
+      expect(pattern.test(css) || pattern.test(fbCss), name).toBe(true);
     }
+  });
+
+  it('har farvebehandlingens tokens.css i takt med tokens.json', () => {
+    const fb = variables(fbCss);
+    expect(fb.size).toBeGreaterThan(0);
+    const styles = new Map(tokens.type.groups.flatMap((g) => g.styles.map((s) => [s.name, s.fontSize] as const)));
+    const letters = new Map(
+      tokens.type.groups.flatMap((g) => g.styles.flatMap((s) => ('letterSpacing' in s ? [[s.name, s.letterSpacing] as const] : []))),
+    );
+    for (const [name, value] of fb) {
+      const color = colors.get(name);
+      if (color) {
+        // Farverne er aliaser for eksisterende tokens, så lys og mørk tilstand følger med.
+        expect(isAlias(color.light), name).toBe(true);
+        expect(value, name).toBe(`var(--${color.light.slice(1, -1)})`);
+        expect(color.dark, name).toBe(color.light);
+        expect(colors.has(color.light.slice(1, -1)), name).toBe(true);
+      } else if (name.startsWith('type-')) {
+        expect(styles.get(name.slice(5)), name).toBe(value);
+      } else if (name.startsWith('letter-')) {
+        expect(letters.get(name.slice(7)), name).toBe(value);
+      } else {
+        expect(lengths.get(name), name).toBe(value);
+      }
+    }
+    // Alle aliaser i tokens.json er defineret i tokens.css.
+    for (const [name, value] of colors) if (isAlias(value.light)) expect(fb.has(name), name).toBe(true);
   });
 
   it('bruger appens skrift', () => {

@@ -59,6 +59,8 @@ export interface Game {
   payoff: Int16Array;
   /** Antal vundne stik ved knuden. */
   tricks: Int8Array;
+  /** Modpartens højest mulige kort ved knuden (0 = ingen kort tilbage). Et kort over det er en sikker vinder. */
+  opponentHigh: Int8Array;
   parent: Int32Array;
   parentSlot: Int8Array;
   childStart: Int32Array;
@@ -143,6 +145,7 @@ export function buildGame(north: readonly Rank[], south: readonly Rank[], option
 
   // Træet bygges i almindelige arrays og pakkes bagefter.
   const kind: number[] = [], payoff: number[] = [], tricks: number[] = [], parent: number[] = [], parentSlot: number[] = [];
+  const opponentHigh: number[] = [];
   const childStart: number[] = [], childCount: number[] = [], children: number[] = [];
   const slotHand: number[] = [], slotHigh: number[] = [], slotLow: number[] = [];
   const itemLayout: number[] = [], itemNode: number[] = [], itemChildStart: number[] = [], itemChildren: number[] = [];
@@ -153,6 +156,8 @@ export function buildGame(north: readonly Rank[], south: readonly Rank[], option
     kind.push(k);
     payoff.push(0);
     tricks.push(st.tricks);
+    const q = st.gaps.findIndex((g) => g > 0);
+    opponentHigh.push(q < 0 ? 0 : q === 0 ? 14 : st.decl[q - 1].rank - 1);
     parent.push(-1);
     parentSlot.push(-1);
     childStart.push(0);
@@ -361,6 +366,7 @@ export function buildGame(north: readonly Rank[], south: readonly Rank[], option
     kind: Int8Array.from(kind),
     payoff: Int16Array.from(payoff),
     tricks: Int8Array.from(tricks),
+    opponentHigh: Int8Array.from(opponentHigh),
     parent: Int32Array.from(parent),
     parentSlot: Int8Array.from(parentSlot),
     childStart: Int32Array.from(childStart),

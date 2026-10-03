@@ -1,0 +1,48 @@
+/*
+ * Farvebehandlingens tokens som CSS-variabler. Værdierne står i design/tokens.json, og src/tokens.test.ts holder
+ * filerne i takt. Farverne er aliaser for appens eksisterende tokens, så lys og mørk tilstand følger med.
+ * Kun denne fil indeholder værdier; komponenterne bruger variablerne.
+ */
+:root {
+  --fb-hit: var(--ink);
+  --fb-hit-text: var(--ink-text);
+  --fb-miss: var(--surface);
+  --fb-miss-line: var(--muted);
+  --fb-bar: var(--muted);
+
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-14: 14px;
+  --space-16: 16px;
+  --space-20: 20px;
+
+  --radius-12: 12px;
+  --radius-10: 10px;
+  --radius-8: 8px;
+  --radius-4: 4px;
+  --radius-3: 3px;
+  --radius-pill: 999px;
+  --radius-round: 50%;
+
+  --column: 480px;
+  --touch-min: 44px;
+  --button-height: 56px;
+  --choice-height: 64px;
+  --analysis-width: 1280px;
+  --bank-height: 360px;
+
+  --type-h1: 1.6rem;
+  --type-h2: 1.1rem;
+  --type-h3: 1rem;
+  --type-prompt: 1.25rem;
+  --type-note: 0.92rem;
+  --type-small: 0.88rem;
+  --type-eyebrow: 0.8rem;
+  --type-button: 1.05rem;
+  --type-key: 1.45rem;
+  --letter-eyebrow: 0.08em;
+}

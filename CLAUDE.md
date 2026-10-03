@@ -86,10 +86,13 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
 
 **Kort over koden** (`src/farvebehandling/`)
 - `model/`: kort (E K D B 10 i visningen), sidningsberegning med ledige pladser, hyppighed, normalt modspil (kun til Spil den selv) og gætteintervaller.
-- `solver/`: spiltræet (`game.ts`), løseren med optimalt modspil (`cfr.ts`), linjeformatet (`lines.ts`) og det samlede API (`solve.ts`).
+- `solver/`: spiltræet (`game.ts`), løseren med optimalt modspil (`cfr.ts`), naturlige valg mellem lige gode træk (`natural.ts`), linjerne på dansk (`describe.ts`), linjeformatet (`lines.ts`) og det samlede API (`solve.ts`).
 - `source/bridgehands.ts`: læser bridgehands.com's tabeller, sorterer fejl fra og omsætter x til konkrete kort.
-- `precompute.ts`: hyppighed, opgavebank, løsninger og valideringsrapport som rene funktioner.
-- `content/`: kildens cases, `damen-mangler-hyppighed.csv`, `suit-combinations.json`, `solutions.json`, `techniques.json` og `validering-damen-mangler.md`. Alt undtagen `techniques.json` genereres.
+- `precompute.ts`: hyppighed, opgavebank, løsninger, valideringsrapport og linjeteksterne til godkendelse som rene funktioner.
+- `analysis.ts`: data til analysevinduet (banken, linjerne, sandsynlighedsbåndet og kortvælgerens opslag).
+- `ui/`: skærmen (`FarvebehandlingScreen.tsx`, indlæses dovent fra `src/app/App.tsx`), `Analysevindue.tsx`, komponenterne Bridgebord, Kortvælger, Linjekort, Resultatkort og Sandsynlighedsbånd, al ordlyd i `texts.ts`, tokens i `tokens.css` og resten i `farvebehandling.css`.
+- `storage.ts`: udkast til skemaet for `farvebehandling:v1`; bruges først, når det er godkendt.
+- `content/`: kildens cases, `damen-mangler-hyppighed.csv`, `suit-combinations.json`, `solutions.json`, `techniques.json`, `validering-damen-mangler.md` og `linjer-damen-mangler.md`. Alt undtagen `techniques.json` genereres.
 - Scripts: Node 24 kører TypeScript direkte, og kildekoden indlæses med Vites `runnerImport`, så `package.json` er uændret.
   - `node scripts/bridgehands.ts` henter siden "damen mangler".
   - `node scripts/solve.ts` regner alt i `content/` (ca. 35 min).
@@ -110,7 +113,13 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
 - **Brugbare cases:** sorteret fra er "…", kortantal, der ikke passer med fordelingen, forskelligt antal mål og procenter og dubletter. Det giver 85 af 100 på siden "damen mangler".
 - **Hyppighed:** navngivne små kort, der er de allerlaveste, regnes som x (E B 3 2 / K 5 4 = E B x x / K x x).
 - **Gætteintervaller:** afgøres ud fra chancen afrundet til én decimal som i visningen.
+- **Naturlige valg:** er flere træk lige gode, vælger løseren tilfældigt. Bagefter skiftes et træk kun ud, når det nye er mindst lige så godt i alle sidninger, så garantien aldrig falder. 3. hånd tager en honnør fra 2. hånd med det billigste kort, der slår den, og lægger ellers lavt. Udspil foretrækkes som sikker vinder, dernæst som lille kort.
+- **Linjerne på dansk:** hovedvejen er den, man selv ville fortælle: 2. hånd lægger lavt, og 4. hånd stikker så billigt som muligt. Beskrivelsen stopper, når resultatet er afgjort i alle sidninger. "Slå"-trin i træk slås sammen. Linjeformatet får trinene frem til det første sted, hvor næste udspil afhænger af, hvad modspillet lagde.
+- **Sandsynlighedsbåndet:** et hul, hvor alle modpartens kort er 10 eller højere, vises med de konkrete kort; ellers er kortene små og vises som x. Felterne står efter fordeling (Vests antal kort) eller honnørplacering.
+- **Kortvælgeren:** en kombination findes i banken ud fra strukturen: hvilken hånd hvert af spilførerens kort sidder i, og hvor mange modpartskort der ligger imellem.
+- **Komponentreglen:** farvebehandlingens komponenter og `farvebehandling.css` bruger kun tokens, 0, 1px og procenter. Spalterne laves med flexbox og `var(--column)` i stedet for `fr` og media queries.
 
 **Status**
 - [x] Trin 2: Tokens (`design/tokens.json`) og designsystemet i Claude Design.
 - [x] Trin 1: Løser og model, startbank og validering for siden "damen mangler". Løsertestene tager 15–20 s.
+- [x] Trin 3: Analyse fase 1 med banken, kortvælgeren, linjerne på dansk, sandsynlighedsbåndet og sidningerne. Linjeteksterne venter på Franks godkendelse (`content/linjer-damen-mangler.md`).

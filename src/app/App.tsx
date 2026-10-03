@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { dayOf } from '../engine/dates';
 import { ensureItems } from './progression';
 import { AlbumScreen } from './screens/AlbumScreen';
@@ -10,7 +10,10 @@ import { SessionScreen } from './screens/SessionScreen';
 import { SettingsScreen } from './screens/SettingsScreen';
 import { useSaved } from './useSaved';
 
-type Screen = 'home' | 'session' | 'palace' | 'album' | 'club' | 'curves' | 'settings';
+// Farvebehandling er et selvstændigt spor; det hentes først, når menupunktet bruges.
+const FarvebehandlingScreen = lazy(() => import('../farvebehandling/ui/FarvebehandlingScreen'));
+
+type Screen = 'home' | 'session' | 'palace' | 'album' | 'club' | 'curves' | 'settings' | 'farvebehandling';
 
 interface AppProps {
   /** En ny version af appen er hentet og venter. */
@@ -48,6 +51,12 @@ export default function App({ updateReady = false, onUpdate }: AppProps) {
       return <CurvesScreen saved={saved} onBack={home} />;
     case 'settings':
       return <SettingsScreen saved={saved} onSave={setSaved} onBack={home} />;
+    case 'farvebehandling':
+      return (
+        <Suspense fallback={<main className="screen" aria-busy="true" />}>
+          <FarvebehandlingScreen onBack={home} />
+        </Suspense>
+      );
     default:
       return (
         <HomeScreen
@@ -60,6 +69,7 @@ export default function App({ updateReady = false, onUpdate }: AppProps) {
           onClub={() => setScreen('club')}
           onCurves={() => setScreen('curves')}
           onSettings={() => setScreen('settings')}
+          onFarvebehandling={() => setScreen('farvebehandling')}
         />
       );
   }

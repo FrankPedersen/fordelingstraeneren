@@ -16,12 +16,14 @@ interface HomeScreenProps {
   onClub(): void;
   onCurves(): void;
   onSettings(): void;
+  /** Farvebehandling: et selvstændigt spor (SPEC-farvebehandling.md). */
+  onFarvebehandling?(): void;
 }
 
 const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
 
 export function HomeScreen(props: HomeScreenProps) {
-  const { saved, updateReady, onUpdate, onStart, onPalace, onAlbum, onClub, onCurves, onSettings } = props;
+  const { saved, updateReady, onUpdate, onStart, onPalace, onAlbum, onClub, onCurves, onSettings, onFarvebehandling } = props;
   const today = dayOf(Date.now(), saved.settings.dayStartsAtHour);
   const streak = streakOn(saved.streak, today);
   const progress = gradeProgress(saved);
@@ -125,6 +127,11 @@ export function HomeScreen(props: HomeScreenProps) {
           <button type="button" className="btn" onClick={onCurves}>
             Kurver
           </button>
+          {onFarvebehandling && (
+            <button type="button" className="btn" onClick={onFarvebehandling}>
+              Farvebehandling
+            </button>
+          )}
           <button type="button" className="btn" onClick={onSettings}>
             Indstillinger
           </button>

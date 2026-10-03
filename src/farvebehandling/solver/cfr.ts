@@ -1,4 +1,5 @@
 import { END, FOURTH, LEAD, SECOND, THIRD, type Game } from './game';
+import { naturalize } from './natural';
 
 /**
  * Optimalt modspil: et tospersonersspil med skjult information. Spilføreren maksimerer og ser kun de spillede kort;
@@ -305,18 +306,28 @@ export function solveSubgame(game: Game, root: number, options: SubgameOptions =
     // Spilføreren skal blande: grænserne er tæt på hinanden, og den bedste rene linje ligger klart under.
     if (gap <= gapTolerance && best!.value < cfrLower - gapTolerance) break;
   }
-  const lower = Math.max(cfrLower, best!.value);
-  const certified = best!.value >= upper - tolerance;
+  // Lige gode træk erstattes af de mest naturlige; garantien kan kun stige.
+  const natural = naturalize(game, root, best!.strategy, allowed);
+  let exact = 0n;
+  const layoutValues = new Int32Array(game.layouts.length);
+  for (let x = 0; x < rC; x++) {
+    const v = natural.values[rS + x];
+    layoutValues[itemLayout[rS + x]] = v;
+    exact += game.layouts[itemLayout[rS + x]].weight * BigInt(v);
+  }
+  const pureValue = Number(exact) / Number(rootExactWeight);
+  const lower = Math.max(cfrLower, pureValue);
+  const certified = pureValue >= upper - tolerance;
   return {
     root,
-    value: certified ? best!.value : (lower + upper) / 2,
-    exact: best!.exact,
+    value: certified ? pureValue : (lower + upper) / 2,
+    exact,
     weight: rootExactWeight,
     lower,
     upper,
     certified,
     iterations,
-    strategy: best!.strategy,
-    layoutValues: best!.layoutValues,
+    strategy: natural.strategy,
+    layoutValues,
   };
 }
