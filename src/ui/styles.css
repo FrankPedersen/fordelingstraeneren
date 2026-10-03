@@ -1313,3 +1313,13 @@ button.cell {
 .two > :last-child:nth-child(odd) {
   grid-column: 1 / -1;
 }
+
+/* Lynaflæsning med kortene sorteret efter farve: én blok pr. farve */
+.hand-sorted {
+  display: grid;
+  gap: 8px;
+}
+
+.choice-btn.selected {
+  border: 2px solid var(--ink);
+}

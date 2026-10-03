@@ -63,7 +63,8 @@ describe('App', () => {
     expect(stored().album['6-6-1-0']).toMatchObject({ count: 0 });
   });
 
-  it('viser hånden i Lynaflæsning i t millisekunder og registrerer den i albummet', () => {
+  /** Starter en session på en Lynaflæsningsdag og springer frem til lynrunden. */
+  function toReadingRound() {
     vi.useFakeTimers();
     vi.setSystemTime(new Date(2026, 9, 3, 12, 0));
     render(<App />);
@@ -74,6 +75,28 @@ describe('App', () => {
     click('Svar');
     click('Næste');
     expect(screen.getByText('Lynrunde')).toBeTruthy();
+  }
+
+  it('viser hånden i Lynaflæsning, til brugeren trykker Klar', () => {
+    toReadingRound();
+    act(() => vi.advanceTimersByTime(10_000));
+    expect(screen.getByLabelText('Hånden').children).toHaveLength(13);
+    click('Klar – skjul hånden');
+    expect(screen.getByLabelText('Hånden er skjult')).toBeTruthy();
+  });
+
+  it('kan vise hånden sorteret efter farve', () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...defaultSaved(), settings: { ...defaultSaved().settings, readSorted: true } }));
+    toReadingRound();
+    const blocks = [...screen.getByLabelText('Hånden').children];
+    const suits = blocks.map((block) => new Set([...block.children].map((card) => card.lastElementChild?.textContent)));
+    for (const suit of suits) expect(suit.size).toBe(1);
+    expect(blocks.reduce((sum, block) => sum + block.children.length, 0)).toBe(13);
+  });
+
+  it('viser hånden i t millisekunder, når kort visningstid er valgt, og registrerer den i albummet', () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...defaultSaved(), settings: { ...defaultSaved().settings, readShow: 'timed' } }));
+    toReadingRound();
     expect(screen.getByLabelText('Hånden').children).toHaveLength(13);
     act(() => vi.advanceTimersByTime(3000));
     expect(screen.getByLabelText('Hånden er skjult')).toBeTruthy();
@@ -200,6 +223,15 @@ describe('App', () => {
     expect(screen.getByRole('img', { name: /^Højere\/lavere: korrekte svar pr\. minut\. uge 39: 9, uge 40: 12$/ })).toBeTruthy();
     expect(screen.getByRole('img', { name: /^Træfsikkerhed, almindelig\. uge 39: 80 %, uge 40: 90 %$/ })).toBeTruthy();
     expect(screen.getAllByText('Vis som tabel').length).toBeGreaterThanOrEqual(2);
+  });
+
+  it('gemmer valgene for Lynaflæsning i indstillingerne', () => {
+    render(<App />);
+    click('Indstillinger');
+    expect(screen.getByRole('button', { name: 'Til jeg trykker Klar' }).getAttribute('aria-pressed')).toBe('true');
+    click(/^Kort tid/);
+    click('Sorteret efter farve');
+    expect(stored().settings).toMatchObject({ readShow: 'timed', readSorted: true });
   });
 
   it('importerer en fil først, når resuméet er godkendt', async () => {

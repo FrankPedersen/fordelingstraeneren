@@ -340,6 +340,8 @@ function TaskView({ step, saved, answer, reveal, skylines, onAnswer }: TaskViewP
           answer={answer?.kind === 'read' ? answer.lengths : undefined}
           reveal={reveal}
           skylines={skylines}
+          show={saved.settings.readShow ?? 'tap'}
+          sorted={saved.settings.readSorted ?? false}
           onAnswer={(lengths, hiddenAt) => onAnswer({ kind: 'read', lengths }, hiddenAt)}
         />
       );

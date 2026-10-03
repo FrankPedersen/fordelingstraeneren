@@ -279,7 +279,9 @@ describe('Session – lynrunde, estimat og album', () => {
 
   it('viser tilfældige hænder i Lynaflæsning og registrerer hver hånd i albummet', () => {
     const nextDay = new Date(2026, 9, 3, 12, 0).getTime();
-    const { steps, saved } = simulate(defaultSaved(), { at: nextDay });
+    const timed = defaultSaved();
+    timed.settings.readShow = 'timed';
+    const { steps, saved } = simulate(timed, { at: nextDay });
     const lightning = tasks(steps).filter((s) => s.phase === 'lightning').map((s) => s.task);
     expect(lightning).toHaveLength(30);
     for (const t of lightning) expect(t).toMatchObject({ kind: 'read', random: true });
@@ -290,8 +292,14 @@ describe('Session – lynrunde, estimat og album', () => {
     expect(saved.readMs).toBe(800);
   });
 
+  it('lader t stå, når hånden vises, til brugeren trykker Klar (standard)', () => {
+    const nextDay = new Date(2026, 9, 3, 12, 0).getTime();
+    expect(simulate(defaultSaved(), { at: nextDay }).saved.readMs).toBeUndefined();
+  });
+
   it('lader t stige 15 % efter en forkert aflæsning', () => {
     const saved = { ...learned(['4-4-3-2']), readMs: 2000 };
+    saved.settings = { ...saved.settings, readShow: 'timed' };
     const task: ModeTask = { kind: 'read', seed: 1, patternId: '4-4-3-2', cards: [], showMs: 2000, random: false };
     const step: TaskStep = { type: 'task', phase: 'review', stake: false, support: 1, task };
     const r = submitAnswer(startSession(saved, T0), saved, step, wrong(task), { shownAt: T0, answeredAt: T0 + 900 });

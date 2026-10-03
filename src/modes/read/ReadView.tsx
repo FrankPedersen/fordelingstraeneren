@@ -11,6 +11,10 @@ interface ReadViewProps {
   answer?: number[];
   reveal: boolean;
   skylines: boolean;
+  /** tap: hånden vises, til brugeren trykker Klar. timed: hånden vises i t ms. */
+  show: 'tap' | 'timed';
+  /** Kortene sorteres efter farve som hjælp. */
+  sorted: boolean;
   /** Svaret og tidspunktet, hånden forsvandt (svartiden måles derfra). */
   onAnswer(lengths: number[], hiddenAt: number): void;
 }
@@ -18,37 +22,56 @@ interface ReadViewProps {
 const suitOf = (card: Card) => Math.floor(card / 13);
 const isRed = (card: Card) => suitOf(card) === 1 || suitOf(card) === 2;
 
-/** Hånden vises usorteret i t millisekunder; derefter tastes mønstret. */
-export function ReadView({ task, answer, reveal, skylines, onAnswer }: ReadViewProps) {
+/** Hånden vises, til brugeren trykker Klar, eller i t millisekunder; derefter tastes mønstret. */
+export function ReadView({ task, answer, reveal, skylines, show, sorted, onAnswer }: ReadViewProps) {
   const [hiddenAt, setHiddenAt] = useState<number | null>(null);
 
   useEffect(() => {
+    if (show !== 'timed') return;
     const timer = setTimeout(() => setHiddenAt(Date.now()), task.showMs);
     return () => clearTimeout(timer);
-  }, [task.showMs]);
+  }, [show, task.showMs]);
 
   const showing = hiddenAt === null && answer === undefined;
   const typed = answer?.join('-');
   const right = answer !== undefined && checkRead(task, answer);
+  const prompt = showing
+    ? show === 'tap'
+      ? 'Se hånden, og tryk Klar'
+      : 'Se hånden …'
+    : reveal
+      ? 'Hånden'
+      : 'Hvilket mønster var det?';
 
   return (
     <div className="task">
-      <p className="prompt">{showing ? 'Se hånden …' : reveal ? 'Hånden' : 'Hvilket mønster var det?'}</p>
+      <p className="prompt">{prompt}</p>
       {reveal ? (
         <SortedHand cards={task.cards} />
+      ) : showing && sorted ? (
+        <div className="hand-sorted" aria-label="Hånden">
+          {SUIT_SYMBOLS.map((symbol, suit) => {
+            const cards = task.cards.filter((c) => suitOf(c) === suit).sort((a, b) => b - a);
+            return cards.length === 0 ? null : (
+              <div key={symbol} className="hand">
+                {cards.map((card) => (
+                  <CardFace key={card} card={card} />
+                ))}
+              </div>
+            );
+          })}
+        </div>
       ) : (
         <div className="hand" aria-label={showing ? 'Hånden' : 'Hånden er skjult'}>
-          {task.cards.map((card) => (
-            <span key={card} className={`playing-card${showing ? '' : ' back'}${isRed(card) ? ' red' : ''}`}>
-              {showing && (
-                <>
-                  <span>{rankLabel(card % 13)}</span>
-                  <span>{SUIT_SYMBOLS[suitOf(card)]}</span>
-                </>
-              )}
-            </span>
-          ))}
+          {task.cards.map((card) =>
+            showing ? <CardFace key={card} card={card} /> : <span key={card} className="playing-card back" />,
+          )}
         </div>
+      )}
+      {showing && show === 'tap' && (
+        <button type="button" className="btn primary" onClick={() => setHiddenAt(Date.now())}>
+          Klar – skjul hånden
+        </button>
       )}
       {answer === undefined && (
         <PatternKeypad disabled={showing} onPattern={(lengths) => onAnswer(lengths, hiddenAt ?? Date.now())} />
@@ -69,6 +92,15 @@ export function ReadView({ task, answer, reveal, skylines, onAnswer }: ReadViewP
         </div>
       )}
     </div>
+  );
+}
+
+function CardFace({ card }: { card: Card }) {
+  return (
+    <span className={`playing-card${isRed(card) ? ' red' : ''}`}>
+      <span>{rankLabel(card % 13)}</span>
+      <span>{SUIT_SYMBOLS[suitOf(card)]}</span>
+    </span>
   );
 }
 

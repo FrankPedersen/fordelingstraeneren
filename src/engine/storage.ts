@@ -25,7 +25,15 @@ export interface SessionRecord {
 /** Skemaet fra SPEC.md (Data og lagring). */
 export interface Saved {
   version: 1;
-  settings: { sessionSeconds: 300; dayStartsAtHour: 4; fastMs: Record<Skill, number> };
+  settings: {
+    sessionSeconds: 300;
+    dayStartsAtHour: 4;
+    fastMs: Record<Skill, number>;
+    /** Tilføjet efter trin 5: Lynaflæsningens hånd vises, til brugeren trykker Klar (standard), eller i t ms. */
+    readShow?: 'tap' | 'timed';
+    /** Tilføjet efter trin 5: kortene i Lynaflæsning sorteres efter farve som hjælp. */
+    readSorted?: boolean;
+  };
   palace: {
     rooms: { name: string }[];
     stations: { name: string; room: number; patternId: string; scene?: string }[];
@@ -193,6 +201,15 @@ export function readSaved(input: unknown): { saved: Saved; problems: string[] } 
     sessions: list('sessions', raw.sessions, isSession),
   };
   // Valgfrie felter, der er kommet til senere.
+  const settings = saved.settings;
+  if (settings.readShow !== undefined && settings.readShow !== 'tap' && settings.readShow !== 'timed') {
+    problems.push('settings.readShow er ugyldig');
+    delete settings.readShow;
+  }
+  if (settings.readSorted !== undefined && typeof settings.readSorted !== 'boolean') {
+    problems.push('settings.readSorted er ugyldig');
+    delete settings.readSorted;
+  }
   if (raw.readMs !== undefined && !(isNumber(raw.readMs) && raw.readMs >= 800 && raw.readMs <= 5000)) {
     problems.push('readMs er ugyldig');
     delete saved.readMs;

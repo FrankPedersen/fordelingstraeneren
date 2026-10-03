@@ -9,6 +9,7 @@ import {
   type Skill,
   type Summary,
 } from '../../engine/storage';
+import { READ_MS } from '../../modes/read/task';
 import { secondsText } from '../../ui/text';
 
 interface SettingsScreenProps {
@@ -124,8 +125,70 @@ export function SettingsScreen({ saved, onSave, onBack }: SettingsScreenProps) {
           value={saved.settings.fastMs.complete}
           onChange={(ms) => setFast('complete', ms)}
         />
+        <Stepper
+          label="Lynaflæsning"
+          value={saved.settings.fastMs.read}
+          onChange={(ms) => setFast('read', ms)}
+        />
+      </section>
+
+      <section className="card">
+        <h2>Lynaflæsning</h2>
+        <p className="muted small">
+          Svartiden måles fra, hånden er skjult. Med kort visningstid bliver tiden 10 % kortere efter et rigtigt
+          svar og 15 % længere efter en fejl (0,8–5 s).
+        </p>
+        <Choice
+          label="Hånden vises"
+          options={[
+            ['tap', 'Til jeg trykker Klar'],
+            ['timed', `Kort tid (nu ${secondsText(saved.readMs ?? READ_MS.start)})`],
+          ]}
+          value={saved.settings.readShow ?? 'tap'}
+          onChange={(readShow) => onSave({ ...saved, settings: { ...saved.settings, readShow } })}
+        />
+        <Choice
+          label="Kortene"
+          options={[
+            ['unsorted', 'Usorteret'],
+            ['sorted', 'Sorteret efter farve'],
+          ]}
+          value={saved.settings.readSorted ? 'sorted' : 'unsorted'}
+          onChange={(v) => onSave({ ...saved, settings: { ...saved.settings, readSorted: v === 'sorted' } })}
+        />
       </section>
     </main>
+  );
+}
+
+function Choice<T extends string>({
+  label,
+  options,
+  value,
+  onChange,
+}: {
+  label: string;
+  options: [T, string][];
+  value: T;
+  onChange(value: T): void;
+}) {
+  return (
+    <div className="field" role="group" aria-label={label}>
+      <span>{label}</span>
+      <div className="actions">
+        {options.map(([key, text]) => (
+          <button
+            key={key}
+            type="button"
+            className={`btn small-btn choice-btn${value === key ? ' selected' : ''}`}
+            aria-pressed={value === key}
+            onClick={() => onChange(key)}
+          >
+            {text}
+          </button>
+        ))}
+      </div>
+    </div>
   );
 }
 

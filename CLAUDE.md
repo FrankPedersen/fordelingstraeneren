@@ -77,3 +77,6 @@ Bridge-træningsapp til hånd-fordelinger. **Den fulde specifikation står i [SP
     - Niveauøvelsen er tilbage på 90 s; sudokuen springes over, hvis lynrunden slutter efter 285 s.
     - Kurverne er små multipler med én serie pr. diagram i magenta (`#d55181`, valideret mod begge flader), så familiefarverne ikke får en ny betydning. Træfsikkerhed pr. grad tæller ikke lynrunden med.
     - Ugens status (ugens tal og klubaftenen) vises på status-skærmen i bossens session.
+- Ændringer efter brugerens ønske (afviger bevidst fra SPEC.md):
+  - 3/10-2026, Lynaflæsning: hånden vises som standard, til brugeren trykker "Klar" (`settings.readShow`, standard `'tap'`). SPEC.md's visning i t ms er valget `'timed'`, og kun dér tilpasses t. Kortene kan sorteres efter farve som hjælp (`settings.readSorted`). Begge vælges under Indstillinger.
+  - ♥ og ♦ står med rødt i tekst (`src/ui/SuitText.tsx`).

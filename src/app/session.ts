@@ -496,7 +496,8 @@ export function submitAnswer(
   let after: Saved = { ...saved, items, xp: addXp(saved.xp, xp) };
   let album: Feedback['album'];
   if (task.kind === 'read') {
-    after.readMs = nextReadMs(saved.readMs ?? READ_MS.start, ok);
+    // t tilpasses kun, når hånden vises i t ms; ellers bestemmer brugeren selv visningstiden.
+    if (saved.settings.readShow === 'timed') after.readMs = nextReadMs(saved.readMs ?? READ_MS.start, ok);
     // Hver tilfældig hånd registreres i albummet.
     if (task.random) {
       const registered = registerHand(after, task.patternId, today);
