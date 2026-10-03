@@ -2,6 +2,8 @@
 
 Oct 2, 2026 · @Frank
 
+> Opdateret 3. okt. 2026: alle fem trin er bygget og udgivet på GitHub Pages. Spec'en beskriver appen, som den er; ændringer i forhold til den oprindelige plan er skrevet ind i de relevante afsnit.
+
 ## Formål og rammer
 
 Appen træner hånd-fordelinger i bridge i daglige sessioner på 5 minutter. Målet har to trin: først at kende de 39 mønstres rangorden og omtrentlige hyppighed, dernæst at tænke i mønstre under optælling.
@@ -11,7 +13,7 @@ Det andet trin er det egentlige mål. Når Vest har vist 5 spar og 4 hjerter, sk
 - **Bruger:** én øvet spiller. Ingen login og ingen server.
 - **Sprog:** al tekst i appen er på dansk.
 - **Bridgeterminologi:** "bordet" (ikke blindemand), "kipning" (ikke snit), "forbindelser" (ikke broer), "slutspil" eller "endplay" (ikke indspil).
-- **Notation:** et mønster skrives faldende med bindestreg (5-4-2-2). En konkret fordeling skrives i farveordenen ♠♥♦♣ med lighedstegn (2=5=2=4).
+- **Notation:** et mønster skrives faldende med bindestreg (5-4-2-2). En konkret fordeling skrives i farveordenen ♠♥♦♣ med lighedstegn (2=5=2=4). ♥ og ♦ står med rødt, også i tekst.
 - **Meldesystem:** al meldetolkning følger standard dansk 2/1 og ligger i en konfigurationsfil (se Meldetolkning).
 - **Pædagogisk princip:** husketeknikkerne er stilladser, der aftrappes. Slutmålet er direkte genkald ved bordet, uden palads og billeder.
 
@@ -27,6 +29,7 @@ src/
   memory/   huskepalads, skyline-billeder, støtteniveauer
   modes/    én mappe pr. øvelse
   ui/       Skyline, Mønstertastatur, Album, Klubaften, Gitter4x4
+  app/      sessionsmotor, progression og skærme: binder motor, domæne og øvelser sammen
 ```
 
 - `engine/` må ikke importere fra `domain/` eller `system/`. Så kan motoren genbruges i andre træningsapps.
@@ -120,19 +123,21 @@ Seks øvelser fører fra rangorden til optælling. Alle kan betjenes med én hå
 1. **Højere/lavere.** To mønstre vises som skyline med tal, og brugeren trykker på det hyppigste eller på ≈.
    - ≈ er rigtigt, når den relative forskel er under 2 %. Det gælder 5-4-2-2 mod 4-3-3-3 og 7-5-1-0 mod 8-3-2-0.
    - Par fra samme grad og med nabo-rang er de sværeste.
-2. **Fuldfør mønsteret.** Opgaven giver 1–2 kendte farvelængder, fx "Vest har vist 5♠ og 4♥". Brugeren taster de mulige mønstre og sorterer dem efter sandsynlighed.
+2. **Fuldfør mønsteret.** Opgaven giver 1–2 kendte farvelængder, fx "Vest har vist 5♠ og 4♥". Brugeren taster de mulige mønstre og sorterer dem efter sandsynlighed. Der tastes højst tre: er der flere mulige (med én kendt farve er der 8–12), bedes der om de tre hyppigste, så opgaven kan løses inden for tærsklen for hurtigt svar.
    - Facit: de ukendte farver deler de resterende kort hypergeometrisk, dvs. P er proportional med produktet af C(13, l) over de ukendte farver.
    - Fuld score for rigtig mængde og rækkefølge, halv score for rigtig mængde. Feedback viser procent pr. mønster.
-3. **Lynaflæsning.** En tilfældig hånd vises usorteret i t millisekunder, og brugeren taster mønstret.
-   - t starter på 3.000 ms, falder 10 % efter et rigtigt svar og stiger 15 % efter en fejl, inden for 800–5.000 ms.
-   - Hver hånd registreres i albummet.
+3. **Lynaflæsning.** En tilfældig hånd vises usorteret, og brugeren taster mønstret.
+   - Som standard står hånden, til brugeren trykker "Klar". Under Indstillinger kan i stedet vælges visning i t millisekunder: t starter på 3.000 ms, falder 10 % efter et rigtigt svar og stiger 15 % efter en fejl, inden for 800–5.000 ms.
+   - Som hjælp kan kortene vises sorteret efter farve (valg under Indstillinger).
+   - Svartiden måles fra, hånden er skjult.
+   - Hver tilfældig hånd registreres i albummet.
 4. **Paladsvandring.** Station → mønster (tastes) og mønster → station (vælges på ruten). Øvelsen følger støtteniveauerne fra Husketeknikker.
-5. **Klubaften-estimat.** "Hvor mange af aftenens 100 hænder er 6-3-2-2?" Svaret er rigtigt inden for ±1 for antal op til 10 og ±2 derover.
+5. **Klubaften-estimat.** "Hvor mange af aftenens 100 hænder er 6-3-2-2?" Svaret er rigtigt inden for ±1 for antal op til 10 og ±2 derover. Øvelsen træner færdigheden sammenligning og kommer i repetitionen som alternativ til højere/lavere for klubaftenens 16 mønstre.
 6. **13-sudoku.** Overføringen til bordet.
    - Gitteret har rækkerne Nord (bordet), Øst, Syd (dig) og Vest og søjlerne ♠♥♦♣. Alle rækker og søjler summer til 13, og Nord og Syd er kendte.
    - Ledetrådene kommer én ad gangen: meldinger tolket efter systemfilen og spilhændelser som "Øst kan ikke bekende i 2. ruderrunde" (præcis 1 ruder) eller "Vest følger tre gange i klør" (mindst 3 klør).
    - Brugeren udfylder celler med blyantsnoter og kan når som helst låse hele fordelingen. Point = grundpoint × (ledetråde tilbage + 1). En forkert lås koster grundpointene, og opgaven fortsætter.
-   - Generatoren giver tilfældigt, lader systemfilen melde for Øst og Vest (åbning, indmelding og simple svar) og udleder spilhændelser af de faktiske længder. Den tilføjer ledetråde, indtil løseren finder præcis én løsning. Løseren filtrerer Østs højst 560 mulige fordelinger med ledetrådene; Vest følger af søjlesummerne og skal opfylde sine egne.
+   - Generatoren giver tilfældigt, lader systemfilen melde for Øst og Vest (åbning og direkte indmelding; svar kommer med svarsekvenserne, der ikke er med i første version) og udleder spilhændelser af de faktiske længder. Den tilføjer ledetråde, indtil løseren finder præcis én løsning. Løseren filtrerer Østs højst 560 mulige fordelinger med ledetrådene; Vest følger af søjlesummerne og skal opfylde sine egne.
 
 ## Meldetolkning – standard dansk 2/1
 
@@ -239,7 +244,13 @@ type Skill = "rank" | "compare" | "read" | "complete";
 
 type Saved = {
   version: 1;
-  settings: { sessionSeconds: 300; dayStartsAtHour: 4; fastMs: Record<Skill, number> };
+  settings: {
+    sessionSeconds: 300;
+    dayStartsAtHour: 4;
+    fastMs: Record<Skill, number>;
+    readShow?: "tap" | "timed";   // Lynaflæsning: til "Klar" (standard) eller i t ms
+    readSorted?: boolean;         // Lynaflæsning: kortene sorteret efter farve
+  };
   palace: {
     rooms: { name: string }[];
     stations: { name: string; room: number; patternId: string; scene?: string }[];
@@ -254,18 +265,22 @@ type Saved = {
   album: Record<string, { first: string; count: number }>;
   streak: { current: number; best: number; lastDay: string; jokerWeek?: string };
   xp: number;
-  sessions: { day: string; ms: number; correct: number; total: number; cpm: number }[];
+  sessions: {
+    day: string; ms: number; correct: number; total: number; cpm: number;
+    grades?: Record<string, [number, number]>; // rigtige og stillede pr. grad, til kurverne
+  }[];
+  readMs?: number;                // visningstiden t i Lynaflæsning
 };
 ```
 
 - Datoer regnes i lokal tid (Europe/Copenhagen).
-- Ved en ny skemaversion migreres data, og ukendte felter bevares.
+- Ved en ny skemaversion migreres data, og ukendte felter bevares. Valgfrie felter (markeret med ?) er kommet til uden ny version.
 - Import validerer skemaet og viser et resumé, før noget overskrives.
 - localStorage gælder pr. enhed og browser. Eksport og import er sikkerhedsnettet; synkronisering mellem enheder er ikke med i MVP.
 
 ## Leveranceplan og accepttest
 
-Byg i fem trin, og tag appen i daglig brug efter trin 2.
+Byg i fem trin, og tag appen i daglig brug efter trin 2. Alle fem trin er bygget, og alle accepttest består.
 
 1. **Mønstermodel og kortgiver** med tests (se nedenfor).
 2. **MVP til daglig brug:** Højere/lavere, Fuldfør mønsteret, Leitner, streak, 5-minutters session, lagring med eksport/import og PWA.
@@ -275,15 +290,15 @@ Byg i fem trin, og tag appen i daglig brug efter trin 2.
 
 Accepttest i Vitest:
 
-- [ ] Præcis 39 mønstre, og summen af sandsynlighederne er præcis 1 (BigInt-brøker).
-- [ ] P(4-4-3-2) = 21,5512 % og P(4-3-3-3) = 10,5361 %.
-- [ ] Top 5 = 71,11 % og top 10 = 91,07 %.
-- [ ] 7-5-1-0 og 8-3-2-0 har samme antal hænder (689.049.504).
-- [ ] "1 ud af N": 7-6-0-0 = 17.971 og 13-0-0-0 = 158.753.389.900.
-- [ ] Graderne giver 5, 5, 3, 11 og 15 mønstre.
-- [ ] "Pr. 100 hænder" summer til 100 og matcher tabellen i Mønstermodel.
-- [ ] Fuldfør med kendt 5♠ og 4♥: minorerne sidder 3-1 (begge veje) 49,74 %, 2-2 40,70 % og 4-0 9,57 %.
-- [ ] Kortgiveren: 100.000 hænder på fast seed giver 4-4-3-2 i 21,55 % ± 0,4 procentpoint.
-- [ ] 13-sudoku: hver genereret opgave har præcis én løsning, når alle ledetråde er givet.
-- [ ] Meldegiveren: på 10.000 tilfældige hænder opfylder den valgte melding altid sit eget `shows`, og ingen regel er uopnåelig.
-- [ ] Leitner: et forkert svar giver kasse 1 og forfald i morgen. Jokeren bruges højst én gang pr. kalenderuge.
+- [x] Præcis 39 mønstre, og summen af sandsynlighederne er præcis 1 (BigInt-brøker).
+- [x] P(4-4-3-2) = 21,5512 % og P(4-3-3-3) = 10,5361 %.
+- [x] Top 5 = 71,11 % og top 10 = 91,07 %.
+- [x] 7-5-1-0 og 8-3-2-0 har samme antal hænder (689.049.504).
+- [x] "1 ud af N": 7-6-0-0 = 17.971 og 13-0-0-0 = 158.753.389.900.
+- [x] Graderne giver 5, 5, 3, 11 og 15 mønstre.
+- [x] "Pr. 100 hænder" summer til 100 og matcher tabellen i Mønstermodel.
+- [x] Fuldfør med kendt 5♠ og 4♥: minorerne sidder 3-1 (begge veje) 49,74 %, 2-2 40,70 % og 4-0 9,57 %.
+- [x] Kortgiveren: 100.000 hænder på fast seed giver 4-4-3-2 i 21,55 % ± 0,4 procentpoint.
+- [x] 13-sudoku: hver genereret opgave har præcis én løsning, når alle ledetråde er givet.
+- [x] Meldegiveren: på 10.000 tilfældige hænder opfylder den valgte melding altid sit eget `shows`, og ingen regel er uopnåelig.
+- [x] Leitner: et forkert svar giver kasse 1 og forfald i morgen. Jokeren bruges højst én gang pr. kalenderuge.
