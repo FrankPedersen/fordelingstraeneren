@@ -1,0 +1,1481 @@
+{
+ "page": "Suit Combinations 2 – 2 High Card Point held by opponents - The Queen",
+ "url": "https://www.bridgehands.com/S/Suit_Combination_2.htm",
+ "fetched": "2026-10-03",
+ "cases": [
+  {
+   "number": 1,
+   "split": "5-0",
+   "hand": "AKJTx",
+   "dummy": "",
+   "needs": [
+    4
+   ],
+   "percents": [
+    37
+   ],
+   "remark": "Drop Q"
+  },
+  {
+   "number": 2,
+   "split": "5-0",
+   "hand": "AKJxx",
+   "dummy": "",
+   "needs": [
+    3
+   ],
+   "percents": [
+    55
+   ],
+   "remark": "Drop Q"
+  },
+  {
+   "number": 3,
+   "split": "4-1",
+   "hand": "AKJT",
+   "dummy": "x",
+   "needs": [
+    4
+   ],
+   "percents": [
+    11
+   ],
+   "remark": "Finesse Q"
+  },
+  {
+   "number": 4,
+   "split": "6-0",
+   "hand": "AKJTxx",
+   "dummy": "",
+   "needs": [
+    6,
+    5
+   ],
+   "percents": [
+    9,
+    94
+   ],
+   "remark": ""
+  },
+  {
+   "number": 5,
+   "split": "5-1",
+   "hand": "AKJ9xx",
+   "dummy": "x",
+   "needs": [
+    6,
+    5,
+    4,
+    3
+   ],
+   "percents": [
+    19,
+    68,
+    92,
+    99
+   ],
+   "remark": "Finesse Q"
+  },
+  {
+   "number": 6,
+   "split": "5-1",
+   "hand": "AKJxxx",
+   "dummy": "x",
+   "needs": [
+    6,
+    5,
+    4,
+    3
+   ],
+   "percents": [
+    18,
+    60,
+    91,
+    99
+   ],
+   "remark": "Finesse Q"
+  },
+  {
+   "number": 7,
+   "split": "4-2",
+   "hand": "AKJ9",
+   "dummy": "xx",
+   "needs": [
+    4,
+    3
+   ],
+   "percents": [
+    24,
+    76
+   ],
+   "remark": "Finesse 10 then Q"
+  },
+  {
+   "number": 8,
+   "split": "4-2",
+   "hand": "AK98",
+   "dummy": "Jx",
+   "needs": [
+    4,
+    3
+   ],
+   "percents": [
+    6,
+    76
+   ],
+   "remark": "Lead J, finessing Q and if covered finesse 10, or | finesse 10 and then drop Q"
+  },
+  {
+   "number": 9,
+   "split": "4-2",
+   "hand": "AK9x",
+   "dummy": "Jx",
+   "needs": [
+    3
+   ],
+   "percents": [
+    75
+   ],
+   "remark": "Finesse Q and if covered finesse 10"
+  },
+  {
+   "number": 10,
+   "split": "4-2",
+   "hand": "AJ9x",
+   "dummy": "Kx",
+   "needs": [
+    4,
+    3
+   ],
+   "percents": [
+    6,
+    69
+   ],
+   "remark": "Play K and if East does not drop honor finesse Q"
+  },
+  {
+   "number": 11,
+   "split": "4-2",
+   "hand": "AJxx",
+   "dummy": "K9",
+   "needs": [
+    3
+   ],
+   "percents": [
+    68
+   ],
+   "remark": "Play K and if East does not drop honor finesse Q"
+  },
+  {
+   "number": 12,
+   "split": "3-3",
+   "hand": "AK9",
+   "dummy": "Jxx",
+   "needs": [
+    3
+   ],
+   "percents": [
+    24
+   ],
+   "remark": "Lead J, finessing Q and if covered finesse 10, or | finesse 10 and then drop Q"
+  },
+  {
+   "number": 13,
+   "split": "3-3",
+   "hand": "AKx",
+   "dummy": "Jxx",
+   "needs": [
+    3
+   ],
+   "percents": [
+    10
+   ],
+   "remark": "Drop Q"
+  },
+  {
+   "number": 14,
+   "split": "7-0",
+   "hand": "AKJT9x",
+   "dummy": "",
+   "needs": [
+    6,
+    5
+   ],
+   "percents": [
+    9,
+    94
+   ],
+   "remark": ""
+  },
+  {
+   "number": 15,
+   "split": "7-0",
+   "hand": "AKJ9xx",
+   "dummy": "",
+   "needs": [
+    7,
+    6,
+    5,
+    4
+   ],
+   "percents": [
+    3,
+    65,
+    89,
+    99
+   ],
+   "remark": ""
+  },
+  {
+   "number": 16,
+   "split": "7-0",
+   "hand": "AKJ8xxx",
+   "dummy": "",
+   "needs": [
+    6,
+    5,
+    4
+   ],
+   "percents": [
+    55,
+    86,
+    99
+   ],
+   "remark": ""
+  },
+  {
+   "number": 17,
+   "split": "7-0",
+   "hand": "AKJxxxx",
+   "dummy": "",
+   "needs": [
+    6,
+    5,
+    4
+   ],
+   "percents": [
+    52,
+    86,
+    99
+   ],
+   "remark": ""
+  },
+  {
+   "number": 18,
+   "split": "6-1",
+   "hand": "AKJTxx",
+   "dummy": "x",
+   "needs": [
+    6,
+    5,
+    4
+   ],
+   "percents": [
+    26,
+    86,
+    99
+   ],
+   "remark": "Finesse Q"
+  },
+  {
+   "number": 19,
+   "split": "6-1",
+   "hand": "AKJ9xx",
+   "dummy": "x",
+   "needs": [
+    6,
+    5,
+    4,
+    3
+   ],
+   "percents": [
+    19,
+    68,
+    92,
+    99
+   ],
+   "remark": "Finesse Q if goal is 6 tricks, or | finesse Q or 10 if 3-5 tricks | "
+  },
+  {
+   "number": 20,
+   "split": "6-1",
+   "hand": "AKJxxx",
+   "dummy": "x",
+   "needs": [
+    6,
+    5,
+    4,
+    3
+   ],
+   "percents": [
+    18,
+    60,
+    91,
+    99
+   ],
+   "remark": "Finesse Q"
+  },
+  {
+   "number": 21,
+   "split": "5-2",
+   "hand": "AKJT9",
+   "dummy": "xx",
+   "needs": [
+    5
+   ],
+   "percents": [
+    43
+   ],
+   "remark": "Finesse Q (not Ace first)"
+  },
+  {
+   "number": 22,
+   "split": "5-2",
+   "hand": "AKJ98",
+   "dummy": "xx",
+   "needs": [
+    5,
+    4,
+    3
+   ],
+   "percents": [
+    19,
+    74,
+    94
+   ],
+   "remark": "Play A then finesse Q, or finesse Q | Finesse 10 an if loses to 10 play A and K | Play A then finesse Q, or finesse 10 then Q"
+  },
+  {
+   "number": 23,
+   "split": "5-2",
+   "hand": "AJT9x",
+   "dummy": "Kx",
+   "needs": [
+    5
+   ],
+   "percents": [
+    28
+   ],
+   "remark": "Play K then finesse Q"
+  },
+  {
+   "number": 24,
+   "split": "5-2",
+   "hand": "AJTxx",
+   "dummy": "Kx",
+   "needs": [
+    5,
+    4
+   ],
+   "percents": [
+    26,
+    86
+   ],
+   "remark": "Play K then finesse Q"
+  },
+  {
+   "number": 25,
+   "split": "5-2",
+   "hand": "AK98x",
+   "dummy": "Jx",
+   "needs": [
+    5,
+    4
+   ],
+   "percents": [
+    9,
+    73
+   ],
+   "remark": "Play J then finesse 10, or finesse the 10 | Play A then finesse Q"
+  },
+  {
+   "number": 26,
+   "split": "5-2",
+   "hand": "AK9xx",
+   "dummy": "Jx",
+   "needs": [
+    5,
+    4,
+    3
+   ],
+   "percents": [
+    7,
+    68,
+    99
+   ],
+   "remark": "Play J or finesse the 10 | Finesse Q and if loses play A and K | Finesse Q and if loses play low to 9"
+  },
+  {
+   "number": 27,
+   "split": "5-2",
+   "hand": "AJ9xx",
+   "dummy": "Kx",
+   "needs": [
+    5,
+    4,
+    3
+   ],
+   "percents": [
+    19,
+    69,
+    94
+   ],
+   "remark": "Play K and finesse Q | Above, or play K and finesse Q or 10 | Play K and finesse Q or 10"
+  },
+  {
+   "number": 28,
+   "split": "5-2",
+   "hand": "AJxxx",
+   "dummy": "Kx",
+   "needs": [
+    5,
+    4,
+    3
+   ],
+   "percents": [
+    18,
+    60,
+    93
+   ],
+   "remark": "Play K, if East dropped 10 play A, else finesse Q"
+  },
+  {
+   "number": 29,
+   "split": "5-2",
+   "hand": "KJ9xx",
+   "dummy": "Ax",
+   "needs": [
+    5,
+    4,
+    3
+   ],
+   "percents": [
+    19,
+    69,
+    94
+   ],
+   "remark": "Play A, if East drops 10 finesse Q, else finesse Q | Above, or play A and finesse Q or 10 | Above"
+  },
+  {
+   "number": 30,
+   "split": "5-2",
+   "hand": "AKJTx",
+   "dummy": "xx",
+   "needs": [
+    4
+   ],
+   "percents": [
+    42,
+    92
+   ],
+   "remark": "Finesse Q"
+  },
+  {
+   "number": 31,
+   "split": "4-3",
+   "hand": "AKJT",
+   "dummy": "xxx",
+   "needs": [
+    4
+   ],
+   "percents": [
+    51
+   ],
+   "remark": "Play then finesse Q"
+  },
+  {
+   "number": 32,
+   "split": "4-3",
+   "hand": "AKJ9",
+   "dummy": "xxx",
+   "needs": [
+    4,
+    3
+   ],
+   "percents": [
+    29,
+    85
+   ],
+   "remark": "Play A then finesse Q | Play A then low to K"
+  },
+  {
+   "number": 33,
+   "split": "4-3",
+   "hand": "AKJx",
+   "dummy": "xxx",
+   "needs": [
+    4,
+    3
+   ],
+   "percents": [
+    18,
+    77
+   ],
+   "remark": "Play A then finesse Q | Play A and K then finesse Q"
+  },
+  {
+   "number": 34,
+   "split": "4-3",
+   "hand": "AKTx",
+   "dummy": "xxx",
+   "needs": [
+    4,
+    3
+   ],
+   "percents": [
+    7,
+    56
+   ],
+   "remark": "Finesse Q J then drop Q | Play A then finesse Q J"
+  },
+  {
+   "number": 35,
+   "split": "4-3",
+   "hand": "AK98",
+   "dummy": "Jxx",
+   "needs": [
+    4,
+    3
+   ],
+   "percents": [
+    25,
+    84
+   ],
+   "remark": "Play J, if covered finesse the 10 | Play A then finesse the 10 or Q"
+  },
+  {
+   "number": 36,
+   "split": "4-3",
+   "hand": "AK9x",
+   "dummy": "Jxx",
+   "needs": [
+    4,
+    3
+   ],
+   "percents": [
+    9,
+    85
+   ],
+   "remark": "Finesse J 10 | Play A, finesse Q"
+  },
+  {
+   "number": 37,
+   "split": "4-3",
+   "hand": "AKxx",
+   "dummy": "JT9",
+   "needs": [
+    4
+   ],
+   "percents": [
+    50
+   ],
+   "remark": "Finesse Q"
+  },
+  {
+   "number": 38,
+   "split": "4-3",
+   "hand": "AKxx",
+   "dummy": "J98",
+   "needs": [
+    4,
+    3
+   ],
+   "percents": [
+    8,
+    78
+   ],
+   "remark": "Finesse Q then drop Q | Play A then finesse 9"
+  },
+  {
+   "number": 39,
+   "split": "4-3",
+   "hand": "AKxx",
+   "dummy": "J9x",
+   "needs": [
+    4,
+    3
+   ],
+   "percents": [
+    1,
+    78
+   ],
+   "remark": "Play A then finesse 10 or Q"
+  },
+  {
+   "number": 40,
+   "split": "4-3",
+   "hand": "AKxx",
+   "dummy": "Jxx",
+   "needs": [
+    3
+   ],
+   "percents": [
+    69
+   ],
+   "remark": "Play A then finesse Q"
+  },
+  {
+   "number": 41,
+   "split": "4-3",
+   "hand": "AJ98",
+   "dummy": "Kxx",
+   "needs": [
+    3
+   ],
+   "percents": [
+    29,
+    85
+   ],
+   "remark": "Play K then finesse Q | Play A then 9 to K"
+  },
+  {
+   "number": 42,
+   "split": "4-3",
+   "hand": "AKxx",
+   "dummy": "Jxx",
+   "needs": [
+    3
+   ],
+   "percents": [
+    69
+   ],
+   "remark": "Play A then finesse Q"
+  },
+  {
+   "number": 43,
+   "split": "4-3",
+   "hand": "AJ9x",
+   "dummy": "Kxx",
+   "needs": [
+    4,
+    3
+   ],
+   "percents": [
+    29,
+    85
+   ],
+   "remark": "Play K then finesse Q | Play K then low to A and finesse Q"
+  },
+  {
+   "number": 44,
+   "split": "4-3",
+   "hand": "AJ32",
+   "dummy": "K54",
+   "needs": [
+    4,
+    3
+   ],
+   "percents": [
+    18,
+    77
+   ],
+   "remark": "Play K then finesse Q | Play K then low to A and finesse Q"
+  },
+  {
+   "number": 45,
+   "split": "4-3",
+   "hand": "K9xx",
+   "dummy": "AJx",
+   "needs": [
+    4,
+    3
+   ],
+   "percents": [
+    21,
+    84
+   ],
+   "remark": "Finesse Q | Play A then finesse Q"
+  },
+  {
+   "number": 46,
+   "split": "4-3",
+   "hand": "JTxx",
+   "dummy": "AKx",
+   "needs": [
+    4
+   ],
+   "percents": [
+    20
+   ],
+   "remark": "Play A then finesse Q"
+  },
+  {
+   "number": 47,
+   "split": "4-3",
+   "hand": "J98x",
+   "dummy": "AKx",
+   "needs": [
+    4,
+    3
+   ],
+   "percents": [
+    11,
+    85
+   ],
+   "remark": "Play A K then finesse Q"
+  },
+  {
+   "number": 48,
+   "split": "4-3",
+   "hand": "Jxxx",
+   "dummy": "AKx",
+   "needs": [
+    3
+   ],
+   "percents": [
+    77
+   ],
+   "remark": "Play A K then finesse Q"
+  },
+  {
+   "number": 49,
+   "split": "7-1",
+   "hand": "AKJT9xx",
+   "dummy": "x",
+   "needs": [
+    7
+   ],
+   "percents": [
+    37
+   ],
+   "remark": "Finesse Q"
+  },
+  {
+   "number": 50,
+   "split": "7-1",
+   "hand": "AKJ987x",
+   "dummy": "x",
+   "needs": [
+    7,
+    6
+   ],
+   "percents": [
+    34,
+    85
+   ],
+   "remark": "Finesse Q | Finesse 10"
+  },
+  {
+   "number": 51,
+   "split": "6-2",
+   "hand": "AKJTxx",
+   "dummy": "xx",
+   "needs": [
+    6,
+    5
+   ],
+   "percents": [
+    48,
+    98
+   ],
+   "remark": "Finesse Q"
+  },
+  {
+   "number": 52,
+   "split": "6-2",
+   "hand": "AKJ9xx",
+   "dummy": "xx",
+   "needs": [
+    6,
+    5,
+    4
+   ],
+   "percents": [
+    37,
+    88,
+    98
+   ],
+   "remark": "Play A then finesse Q, or finesse Q then play A | Play A then finesse Q | Play A then finesse Q, or finesse Q then play A"
+  },
+  {
+   "number": 53,
+   "split": "6-2",
+   "hand": "AKJ9xx",
+   "dummy": "xx",
+   "needs": [
+    6,
+    5,
+    4
+   ],
+   "percents": [
+    37,
+    88,
+    99
+   ],
+   "remark": "Play A then finesse Q, or finesse Q then play A | Play A then finesse Q | Play A then finesse Q, or finesse Q then play A"
+  },
+  {
+   "number": 54,
+   "split": "6-2",
+   "hand": "AK987x",
+   "dummy": "Jx",
+   "needs": [
+    6,
+    5
+   ],
+   "percents": [
+    16,
+    88
+   ],
+   "remark": "Play J then low to 10 or low to A and K | Play A and finesse Q"
+  },
+  {
+   "number": 55,
+   "split": "6-2",
+   "hand": "AK98xx",
+   "dummy": "Jx",
+   "needs": [
+    6,
+    5
+   ],
+   "percents": [
+    16,
+    88
+   ],
+   "remark": "Play J then play K or finesse 10 | Play A and finesse Q"
+  },
+  {
+   "number": 56,
+   "split": "6-2",
+   "hand": "AK9xxx",
+   "dummy": "Jx",
+   "needs": [
+    6,
+    5,
+    4
+   ],
+   "percents": [
+    14,
+    85,
+    100
+   ],
+   "remark": "Play A then J, or J then A, or finesse Q (to 9) then A | Finesse Q 10, finesse Q then play A | Finesse Q (to 9) then play A"
+  },
+  {
+   "number": 57,
+   "split": "6-2",
+   "hand": "AJ8xxx",
+   "dummy": "Kx",
+   "needs": [
+    6,
+    5,
+    4
+   ],
+   "percents": [
+    34,
+    85,
+    99
+   ],
+   "remark": "Play K then finesse Q"
+  },
+  {
+   "number": 58,
+   "split": "5-3",
+   "hand": "AK98x",
+   "dummy": "Jxx",
+   "needs": [
+    5,
+    4
+   ],
+   "percents": [
+    30,
+    96
+   ],
+   "remark": "Play A K | Play A then finesse Q"
+  },
+  {
+   "number": 59,
+   "split": "5-3",
+   "hand": "AK9xx",
+   "dummy": "Jxx",
+   "needs": [
+    5,
+    4
+   ],
+   "percents": [
+    30,
+    96
+   ],
+   "remark": "Play A K | Play A then finesse Q"
+  },
+  {
+   "number": 60,
+   "split": "5-3",
+   "hand": "AK7xx",
+   "dummy": "J98",
+   "needs": [
+    5,
+    4
+   ],
+   "percents": [
+    30,
+    97
+   ],
+   "remark": "Play A K | Finesse 10 then play A"
+  },
+  {
+   "number": 61,
+   "split": "5-3",
+   "hand": "AKxxx",
+   "dummy": "JT9",
+   "needs": [
+    5
+   ],
+   "percents": [
+    48
+   ],
+   "remark": "Finesse Q"
+  },
+  {
+   "number": 62,
+   "split": "5-3",
+   "hand": "AKxxx",
+   "dummy": "J98",
+   "needs": [
+    5,
+    4,
+    3
+   ],
+   "percents": [
+    27,
+    88,
+    100
+   ],
+   "remark": "Play A K | Play A then finesse Q | Play 9 or J or little to 9 then play A"
+  },
+  {
+   "number": 63,
+   "split": "5-3",
+   "hand": "AKxxx",
+   "dummy": "J9x",
+   "needs": [
+    5,
+    4,
+    3
+   ],
+   "percents": [
+    27,
+    88,
+    98
+   ],
+   "remark": "Play A K | Play A then finesse Q | Either above"
+  },
+  {
+   "number": 64,
+   "split": "5-3",
+   "hand": "AJ9xx",
+   "dummy": "Kxx",
+   "needs": [
+    5,
+    4,
+    3
+   ],
+   "percents": [
+    40,
+    90,
+    98
+   ],
+   "remark": "Play A then finesse Q"
+  },
+  {
+   "number": 65,
+   "split": "5-3",
+   "hand": "AJxxx",
+   "dummy": "K9x",
+   "needs": [
+    5,
+    4
+   ],
+   "percents": [
+    34,
+    96
+   ],
+   "remark": "Play K then finesse Q | Play A then finesse 10"
+  },
+  {
+   "number": 66,
+   "split": "5-3",
+   "hand": "A9xxx",
+   "dummy": "KJx",
+   "needs": [
+    5,
+    4
+   ],
+   "percents": [
+    37,
+    96
+   ],
+   "remark": "Finesse Q then play K | Play K then finesse Q"
+  },
+  {
+   "number": 67,
+   "split": "5-3",
+   "hand": "J98xx",
+   "dummy": "AKx",
+   "needs": [
+    5,
+    4
+   ],
+   "percents": [
+    30,
+    96
+   ],
+   "remark": "Play A K | Play A then play 9"
+  },
+  {
+   "number": 68,
+   "split": "4-4",
+   "hand": "AKJT",
+   "dummy": "xxxx",
+   "needs": [
+    4
+   ],
+   "percents": [
+    53
+   ],
+   "remark": "Play A then finesse Q"
+  },
+  {
+   "number": 69,
+   "split": "4-4",
+   "hand": "AK9x",
+   "dummy": "Jxxx",
+   "needs": [
+    4,
+    3
+   ],
+   "percents": [
+    30,
+    100
+   ],
+   "remark": "Play A K | Play A then finesse 10"
+  },
+  {
+   "number": 70,
+   "split": "4-4",
+   "hand": "AK8x",
+   "dummy": "Jxxx",
+   "needs": [
+    4,
+    3
+   ],
+   "percents": [
+    27,
+    92
+   ],
+   "remark": "Play A K | Play A continue K unless East plays 9 or 10"
+  },
+  {
+   "number": 71,
+   "split": "4-4",
+   "hand": "AKxx",
+   "dummy": "J98x",
+   "needs": [
+    4,
+    3
+   ],
+   "percents": [
+    33,
+    100
+   ],
+   "remark": "Play A K | Play A continue K unless East plays 9 or 10"
+  },
+  {
+   "number": 72,
+   "split": "4-4",
+   "hand": "AJxx",
+   "dummy": "K9xx",
+   "needs": [
+    4,
+    3
+   ],
+   "percents": [
+    37,
+    100
+   ],
+   "remark": "Finesse J then play A | Play A then finesse 10"
+  },
+  {
+   "number": 73,
+   "split": "4-4",
+   "hand": "AT8x",
+   "dummy": "KJ9x",
+   "needs": [
+    4
+   ],
+   "percents": [
+    53
+   ],
+   "remark": "Play A then finesse 10, or play K then play low"
+  },
+  {
+   "number": 74,
+   "split": "8-1",
+   "hand": "AKJx...x",
+   "dummy": "x",
+   "needs": [
+    8,
+    7
+   ],
+   "percents": [
+    53,
+    95
+   ],
+   "remark": "Play A K | Finesse Q then finesse 10"
+  },
+  {
+   "number": 75,
+   "split": "7-2",
+   "hand": "AKJx...x",
+   "dummy": "xx",
+   "needs": [
+    7,
+    6
+   ],
+   "percents": [
+    53,
+    95
+   ],
+   "remark": "Play A K"
+  },
+  {
+   "number": 76,
+   "split": "7-2",
+   "hand": "AK9x...x",
+   "dummy": "Jx",
+   "needs": [
+    7,
+    6
+   ],
+   "percents": [
+    53,
+    100
+   ],
+   "remark": "Play A K | Finesse Q"
+  },
+  {
+   "number": 77,
+   "split": "7-2",
+   "hand": "AJx...x",
+   "dummy": "K9",
+   "needs": [
+    7,
+    6
+   ],
+   "percents": [
+    53,
+    100
+   ],
+   "remark": "Play K watch West discard consider East finesse | Finesse Q (toward 9)"
+  },
+  {
+   "number": 78,
+   "split": "6-3",
+   "hand": "AKJTx...x",
+   "dummy": "xxx",
+   "needs": [
+    6
+   ],
+   "percents": [
+    58
+   ],
+   "remark": "Play A K"
+  },
+  {
+   "number": 79,
+   "split": "6-3",
+   "hand": "AK9xxx",
+   "dummy": "Jxx",
+   "needs": [
+    6
+   ],
+   "percents": [
+    53
+   ],
+   "remark": "Play A K"
+  },
+  {
+   "number": 80,
+   "split": "6-3",
+   "hand": "AK8xxx",
+   "dummy": "Jxx",
+   "needs": [
+    6,
+    5
+   ],
+   "percents": [
+    53,
+    100
+   ],
+   "remark": "Play A K | Finesse Q 10 (toward 9)"
+  },
+  {
+   "number": 81,
+   "split": "6-3",
+   "hand": "AKxxxx",
+   "dummy": "JT9",
+   "needs": [
+    6
+   ],
+   "percents": [
+    53
+   ],
+   "remark": "Play A K"
+  },
+  {
+   "number": 82,
+   "split": "6-3",
+   "hand": "AKxxxx",
+   "dummy": "J98",
+   "needs": [
+    6,
+    5
+   ],
+   "percents": [
+    53,
+    100
+   ],
+   "remark": "Play A K | Finesse Q 10 (toward 9)"
+  },
+  {
+   "number": 83,
+   "split": "6-3",
+   "hand": "AJxxxx",
+   "dummy": "K9x",
+   "needs": [
+    6
+   ],
+   "percents": [
+    53
+   ],
+   "remark": "Play A K"
+  },
+  {
+   "number": 84,
+   "split": "5-4",
+   "hand": "AK8xx",
+   "dummy": "Jxxx",
+   "needs": [
+    5,
+    4
+   ],
+   "percents": [
+    53,
+    100
+   ],
+   "remark": "Play A K | Play low then A K"
+  },
+  {
+   "number": 85,
+   "split": "5-4",
+   "hand": "AKxxxx",
+   "dummy": "JT9x",
+   "needs": [
+    6
+   ],
+   "percents": [
+    89
+   ],
+   "remark": "Play A K"
+  },
+  {
+   "number": 86,
+   "split": "5-4",
+   "hand": "AJ9xx",
+   "dummy": "KTxx",
+   "needs": [
+    5
+   ],
+   "percents": [
+    58
+   ],
+   "remark": "Play A K"
+  },
+  {
+   "number": 87,
+   "split": "5-4",
+   "hand": "AJxxx",
+   "dummy": "K987",
+   "needs": [
+    5,
+    4
+   ],
+   "percents": [
+    58,
+    100
+   ],
+   "remark": "Play K A | Play A K"
+  },
+  {
+   "number": 88,
+   "split": "5-4",
+   "hand": "AJxxx",
+   "dummy": "K9xx",
+   "needs": [
+    5
+   ],
+   "percents": [
+    53
+   ],
+   "remark": "Play A K"
+  },
+  {
+   "number": 89,
+   "split": "5-4",
+   "hand": "A9xxx",
+   "dummy": "KJxx",
+   "needs": [
+    5
+   ],
+   "percents": [
+    53
+   ],
+   "remark": "Play A K"
+  },
+  {
+   "number": 90,
+   "split": "5-4",
+   "hand": "Jxxxx",
+   "dummy": "AKxx",
+   "needs": [
+    5,
+    4
+   ],
+   "percents": [
+    53,
+    95
+   ],
+   "remark": "Play A K"
+  },
+  {
+   "number": 91,
+   "split": "5-4",
+   "hand": "JT9xx",
+   "dummy": "AKxx",
+   "needs": [
+    5
+   ],
+   "percents": [
+    58
+   ],
+   "remark": "Play A K"
+  },
+  {
+   "number": 92,
+   "split": "8-1",
+   "hand": "AK9x...x",
+   "dummy": "Jx",
+   "needs": [
+    8
+   ],
+   "percents": [
+    78
+   ],
+   "remark": "Play A K"
+  },
+  {
+   "number": 93,
+   "split": "7-3",
+   "hand": "AK9xxxx",
+   "dummy": "Jxx",
+   "needs": [
+    7
+   ],
+   "percents": [
+    78
+   ],
+   "remark": "Play A K"
+  },
+  {
+   "number": 94,
+   "split": "7-3",
+   "hand": "AJxxxxx",
+   "dummy": "Kxx",
+   "needs": [
+    7
+   ],
+   "percents": [
+    89
+   ],
+   "remark": "Play K A"
+  },
+  {
+   "number": 95,
+   "split": "6-4",
+   "hand": "AK9xxx",
+   "dummy": "Jxxx",
+   "needs": [
+    6
+   ],
+   "percents": [
+    89
+   ],
+   "remark": "Play A K"
+  },
+  {
+   "number": 96,
+   "split": "6-4",
+   "hand": "Kxxxxx",
+   "dummy": "AJ98",
+   "needs": [
+    6
+   ],
+   "percents": [
+    89
+   ],
+   "remark": "Play K, look for drop"
+  },
+  {
+   "number": 97,
+   "split": "6-4",
+   "hand": "K9xxxx",
+   "dummy": "AJTx",
+   "needs": [
+    6
+   ],
+   "percents": [
+    89
+   ],
+   "remark": "Play K A or K A"
+  },
+  {
+   "number": 98,
+   "split": "5-5",
+   "hand": "AK9xx",
+   "dummy": "Jxxxx",
+   "needs": [
+    5
+   ],
+   "percents": [
+    89
+   ],
+   "remark": "Play A K"
+  },
+  {
+   "number": 99,
+   "split": "5-5",
+   "hand": "AJ9xx",
+   "dummy": "KTxxx",
+   "needs": [
+    5
+   ],
+   "percents": [
+    89
+   ],
+   "remark": "Play A K or K A"
+  },
+  {
+   "number": 100,
+   "split": "5-5",
+   "hand": "AJxxx",
+   "dummy": "Kxxxx",
+   "needs": [
+    5
+   ],
+   "percents": [
+    89
+   ],
+   "remark": "Play K, loop for drop"
+  }
+ ]
+}

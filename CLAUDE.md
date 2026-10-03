@@ -79,3 +79,38 @@ Valg, hvor SPEC.md er åben. Spørg, før du ændrer dem.
 - Tasten "10+" er den lange farve; dens længde er 13 minus de tre andre.
 - Kurverne er små multipler med én serie pr. diagram i magenta (`#d55181`, valideret mod begge flader), så familiefarverne ikke får en ny betydning. Træfsikkerhed pr. grad tæller ikke lynrunden med.
 - En ny version vises som en knap på forsiden; appen genindlæser aldrig midt i en session.
+
+## Farvebehandling
+
+Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er tagget `v1-fordeling`). **[SPEC-farvebehandling.md](SPEC-farvebehandling.md) beskriver sporet.** Fordelingssporets adfærd, data og udseende må ikke ændres, SPEC.md røres ikke, og eksisterende kode må kun berøres de steder, specens tabel nævner. Kræver noget alligevel en ændring i eksisterende kode, så spørg først.
+
+**Kort over koden** (`src/farvebehandling/`)
+- `model/`: kort (E K D B 10 i visningen), sidningsberegning med ledige pladser, hyppighed, normalt modspil (kun til Spil den selv) og gætteintervaller.
+- `solver/`: spiltræet (`game.ts`), løseren med optimalt modspil (`cfr.ts`), linjeformatet (`lines.ts`) og det samlede API (`solve.ts`).
+- `source/bridgehands.ts`: læser bridgehands.com's tabeller, sorterer fejl fra og omsætter x til konkrete kort.
+- `precompute.ts`: hyppighed, opgavebank, løsninger og valideringsrapport som rene funktioner.
+- `content/`: kildens cases, `damen-mangler-hyppighed.csv`, `suit-combinations.json`, `solutions.json`, `techniques.json` og `validering-damen-mangler.md`. Alt undtagen `techniques.json` genereres.
+- Scripts: Node 24 kører TypeScript direkte, og kildekoden indlæses med Vites `runnerImport`, så `package.json` er uændret.
+  - `node scripts/bridgehands.ts` henter siden "damen mangler".
+  - `node scripts/solve.ts` regner alt i `content/` (ca. 35 min).
+- Tokens: `design/tokens.json` holdes i takt med `src/ui/styles.css` af `src/tokens.test.ts`. Designsystemet i Claude Design er bygget på filen.
+
+**Beslutninger** (spørg, før du ændrer dem)
+- **Optimalt modspil:** modspillet kender alle kort, også hinandens, og blander sine valg; spilføreren ser kun de spillede kort. Spillet løses med CFR+. Resultatet er en ren linjes eksakte garanti (BigInt): modspillet vælger i hver sidning det værste. Linjen er certificeret, når garantien ligger inden for 0,002 procentpoint af CFR's øvre grænse.
+- **Blandet spil:** nogle delspil kræver, at spilføreren blander, fx når en honnør spilles ud, og modspilleren selv vælger, om den skal dækkes. Løseren stopper, når grænserne er mødtes (0,01 procentpoint) og den bedste rene linje ligger klart under. Værdien er så midten af grænserne, og linjen er ikke certificeret.
+- **Abstraktion:** modpartens kort mellem to af spilførerens kort er ligeværdige, så kun antallet pr. hul tæller. Det ændrer ikke værdien, og begrænset valg følger af tællingen.
+- **Forbindelser og udspil:** forbindelserne er ubegrænsede. Spilføreren spiller altid ud fra den hånd, han vil, og modspillet spiller aldrig farven.
+- **Alternative linjer:** hvert første udspil er et delspil; dets bedste linje er alternativet.
+- **Linjer:**
+  - "low" i `ifSecondPlays` betyder et kort under B.
+  - En `goto` til antal trin + 1 betyder, at linjen slutter.
+  - Faldne modpartskort afgøres ud fra intervallerne for de spillede kort.
+  - **Kendt sidning:** kan en modspiller ikke bekende, slutter linjen med det samme. Reglen stod i specens version 2 og er nødvendig for linje B's 100 %. Den skal bekræftes i specen.
+- **x i kilden:** spilførerens x'er er de laveste kort. Valideringen viser også fortolkningen "høj".
+- **Brugbare cases:** sorteret fra er "…", kortantal, der ikke passer med fordelingen, forskelligt antal mål og procenter og dubletter. Det giver 85 af 100 på siden "damen mangler".
+- **Hyppighed:** navngivne små kort, der er de allerlaveste, regnes som x (E B 3 2 / K 5 4 = E B x x / K x x).
+- **Gætteintervaller:** afgøres ud fra chancen afrundet til én decimal som i visningen.
+
+**Status**
+- [x] Trin 2: Tokens (`design/tokens.json`) og designsystemet i Claude Design.
+- [x] Trin 1: Løser og model, startbank og validering for siden "damen mangler". Løsertestene tager 15–20 s.

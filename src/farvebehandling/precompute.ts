@@ -1,0 +1,319 @@
+import { formatDecimal, formatInt } from '../engine/format';
+import { cardsData, cardsText, rankFromSymbol, rankText, type Rank } from './model/cards';
+import { percentOf, type Fraction } from './model/fraction';
+import { combinationFrequency, eveningText, oncePerDeals } from './model/frequency';
+import { buildGame, type Objective } from './solver/game';
+import type { Line } from './solver/lines';
+import { solveGame, type Solution } from './solver/solve';
+import { concreteHands, frequencyHolding, type ClassifiedCase, type XRule } from './source/bridgehands';
+
+/**
+ * Forberegning til opgavebanken: hyppighed, løsninger og validering mod bridgehands.com.
+ * Rene funktioner; scripts/solve.ts læser og skriver filerne.
+ */
+
+export const MODEL_TEXT =
+  'Optimalt modspil: modspillet kender alle kort og blander sine valg; spilføreren ser kun de spillede kort. ' +
+  'Ubegrænsede forbindelser, chancer a priori.';
+
+// ---------- Hyppighed ----------
+
+export interface FrequencyRow {
+  case: ClassifiedCase;
+  /** Holdingen i x-notation (hånd / bordet). */
+  hand: string;
+  dummy: string;
+  cards: number;
+  frequency: Fraction | null;
+  /** Rang blandt de brugbare cases (1 = hyppigst); 0 for cases, der er sorteret fra. */
+  rank: number;
+}
+
+export function frequencyRows(cases: readonly ClassifiedCase[]): FrequencyRow[] {
+  const rows: FrequencyRow[] = cases.map((c) => {
+    let h = { hand: c.hand, dummy: c.dummy };
+    let frequency: Fraction | null = null;
+    try {
+      h = frequencyHolding(c);
+      frequency = combinationFrequency(h.hand, h.dummy);
+    } catch {
+      // Uklar holding (fx "…"): ingen hyppighed.
+    }
+    return { case: c, hand: h.hand, dummy: h.dummy, cards: c.hand.length + c.dummy.length, frequency, rank: 0 };
+  });
+  const usable = rows.filter((r) => r.case.usable && r.frequency);
+  usable.sort((a, b) => compareFrequency(b.frequency!, a.frequency!) || a.case.number - b.case.number);
+  usable.forEach((r, i) => (r.rank = i + 1));
+  return rows;
+}
+
+function compareFrequency(a: Fraction, b: Fraction): number {
+  const l = a.num * b.den, r = b.num * a.den;
+  return l < r ? -1 : l > r ? 1 : 0;
+}
+
+/** Kildens holding på dansk: "AKxx" → "E K x x". */
+const show = (text: string) =>
+  [...text.replace(/\.\.\./g, '…')].map((s) => (/^[AKQJT2-9]$/.test(s) ? rankText(rankFromSymbol(s)) : s)).join(' ');
+
+/** CSV med semikolon og decimalkomma (åbner direkte i dansk Excel). */
+export function frequencyCsv(rows: readonly FrequencyRow[]): string {
+  const head = 'case;hånd;bordet;kort;hyppighed_pct;én_gang_pr_spil;pr_klubaften;rang;brugbar;bemærkning';
+  const lines = rows.map((r) => {
+    const f = r.frequency;
+    return [
+      r.case.number,
+      show(r.hand),
+      show(r.dummy) || '–',
+      r.cards,
+      f ? formatDecimal(percentOf(f, 4), 4) : '',
+      f ? oncePerDeals(f) : '',
+      f ? eveningText(f) : '',
+      r.rank || '',
+      r.case.usable ? 'ja' : 'nej',
+      r.case.reason ?? '',
+    ].join(';');
+  });
+  return [head, ...lines].join('\n') + '\n';
+}
+
+/** Andel af sidens samlede hyppighed, som de `top` hyppigste brugbare cases dækker. */
+export function coverage(rows: readonly FrequencyRow[], top: number): number {
+  const usable = rows.filter((r) => r.rank > 0).sort((a, b) => a.rank - b.rank);
+  const total = usable.reduce((s, r) => s + Number(r.frequency!.num) / Number(r.frequency!.den), 0);
+  const part = usable.slice(0, top).reduce((s, r) => s + Number(r.frequency!.num) / Number(r.frequency!.den), 0);
+  return part / total;
+}
+
+// ---------- Opgavebanken ----------
+
+export interface Combination {
+  id: string;
+  technique: string;
+  north: string;
+  south: string;
+  goals: number[];
+  entries: 'unlimited';
+  lines: Line[];
+  source?: { name: string; values: Record<string, number> };
+  verified: boolean;
+}
+
+export function bankEntry(c: ClassifiedCase, pageName: string, solution: CombinationSolution): Combination {
+  const { north, south } = concreteHands(c, 'lav');
+  const values: Record<string, number> = {};
+  c.needs.forEach((n, i) => (values[String(n)] = c.percents[i]));
+  const verified = c.needs.every((n, i) => Math.abs(100 * solution.goals[String(n)].value - c.percents[i]) <= 0.5);
+  const firstGoal = solution.goals[String(c.needs[0])];
+  return {
+    id: `${cardsData(north)}-${cardsData(south)}`,
+    technique: '',
+    north: cardsData(north),
+    south: cardsData(south),
+    goals: [...c.needs],
+    entries: 'unlimited',
+    lines: firstGoal.leads.map((l, i) => ({
+      id: String.fromCharCode(65 + i),
+      text: leadText(l.hand, l.high, l.low, north, south),
+      steps: [{ leadFrom: l.hand, card: cardsData([l.high]) }],
+    })),
+    source: { name: `${pageName}, case ${c.number}`, values },
+    verified,
+  };
+}
+
+const HONOR_NAME: Record<number, string> = { 14: 'esset', 13: 'kongen', 12: 'damen', 11: 'knægten', 10: "10'eren" };
+
+/** Kort tekst for et første udspil, fx "Esset fra hånden" eller "Lille fra bordet". */
+export function leadText(hand: 'N' | 'S', high: Rank, low: Rank, north: readonly Rank[], south: readonly Rank[]): string {
+  const cards = hand === 'N' ? north : south;
+  const where = hand === 'N' ? 'fra bordet' : 'fra hånden';
+  const isLowest = low === Math.min(...cards) && high < 10;
+  if (isLowest) return `Lille ${where}`;
+  const name = HONOR_NAME[high] ?? rankText(high);
+  return `${name[0].toUpperCase()}${name.slice(1)} ${where}`;
+}
+
+// ---------- Løsninger ----------
+
+export interface LeadResult {
+  hand: 'N' | 'S';
+  high: number;
+  low: number;
+  value: number;
+  /** Den rene linjes garanti som tæller over kombinationens nævner. */
+  exact: string;
+  upper: number;
+  certified: boolean;
+  /** Garantien pr. abstrakt sidning (samme rækkefølge som `layouts`). */
+  layouts: number[];
+}
+
+export interface GoalResult {
+  value: number;
+  best: number;
+  leads: LeadResult[];
+}
+
+export interface CombinationSolution {
+  north: string;
+  south: string;
+  denominator: string;
+  /** Hullerne mellem spilførerens kort i startpositionen: rangintervallet og antal modpartskort. */
+  gaps: { high: number; low: number; size: number }[];
+  layouts: { west: number[]; weight: string }[];
+  goals: Record<string, GoalResult>;
+  /** Parturnering: flest stik i gennemsnit. */
+  tricks?: GoalResult;
+}
+
+function goalResult(solution: Solution): GoalResult {
+  return {
+    value: solution.value,
+    best: solution.best,
+    leads: solution.leads.map((l) => ({
+      hand: l.lead.hand,
+      high: l.lead.high,
+      low: l.lead.low,
+      value: l.value,
+      exact: l.exact.toString(),
+      upper: l.upper,
+      certified: l.certified,
+      layouts: [...l.layoutValues],
+    })),
+  };
+}
+
+export function solveCombination(
+  north: readonly Rank[],
+  south: readonly Rank[],
+  goals: readonly number[],
+  options: { tricks?: boolean } = {},
+): CombinationSolution {
+  const solve = (objective: Objective) => solveGame(buildGame(north, south, { objective }));
+  const first = buildGame(north, south, { objective: { kind: 'goal', goal: goals[0] } });
+  const declarer = first.declarer;
+  const gaps = first.gaps.map((size, q) => ({
+    high: q === 0 ? 14 : declarer[q - 1].rank - 1,
+    low: q === declarer.length ? 2 : declarer[q].rank + 1,
+    size,
+  }));
+  const result: CombinationSolution = {
+    north: cardsData(north),
+    south: cardsData(south),
+    denominator: first.denominator.toString(),
+    gaps,
+    layouts: first.layouts.map((l) => ({ west: [...l.west], weight: l.weight.toString() })),
+    goals: {},
+  };
+  for (const goal of goals) result.goals[String(goal)] = goalResult(solve({ kind: 'goal', goal }));
+  if (options.tricks) result.tricks = goalResult(solve({ kind: 'tricks' }));
+  return result;
+}
+
+// ---------- Validering ----------
+
+export interface ValidationRow {
+  case: ClassifiedCase;
+  hands: Record<XRule, { north: Rank[]; south: Rank[] }>;
+  goals: { need: number; source: number; app: Record<XRule, number>; certified: Record<XRule, boolean> }[];
+}
+
+const bestLead = (g: GoalResult) => g.leads[g.best];
+
+export function validationRow(c: ClassifiedCase, lav: CombinationSolution, høj: CombinationSolution): ValidationRow {
+  return {
+    case: c,
+    hands: { lav: concreteHands(c, 'lav'), høj: concreteHands(c, 'høj') },
+    goals: c.needs.map((need, i) => ({
+      need,
+      source: c.percents[i],
+      app: { lav: 100 * lav.goals[String(need)].value, høj: 100 * høj.goals[String(need)].value },
+      // Den bedste linje er ren (certificeret) eller kræver, at spilføreren blander.
+      certified: {
+        lav: bestLead(lav.goals[String(need)]).certified,
+        høj: bestLead(høj.goals[String(need)]).certified,
+      },
+    })),
+  };
+}
+
+const pct = (x: number) => `${formatDecimal(x, 1)} %`;
+const holding = (c: ClassifiedCase) => `${show(c.hand)} / ${show(c.dummy) || '–'}`;
+
+export function validationReport(
+  rows: readonly ValidationRow[],
+  excluded: readonly ClassifiedCase[],
+  meta: { page: string; url: string; fetched: string; tolerance: number },
+): string {
+  const goals = rows.flatMap((r) => r.goals.map((g) => ({ row: r, g })));
+  const within = (rule: XRule, tol: number) => goals.filter(({ g }) => Math.abs(g.app[rule] - g.source) <= tol).length;
+  const best = (g: ValidationRow['goals'][number]) =>
+    Math.abs(g.app.lav - g.source) <= Math.abs(g.app.høj - g.source) ? 'lav' : 'høj';
+  const out: string[] = [];
+  out.push(`# Validering: ${meta.page}`);
+  out.push('');
+  out.push(`Kilde: [${meta.url}](${meta.url}), læst ${meta.fetched}. Genereret af \`scripts/solve.ts\`.`);
+  out.push('');
+  out.push(`Model: ${MODEL_TEXT}`);
+  out.push('');
+  out.push(
+    'Fortolkninger af x: **lav** = spilførerens x\'er er de laveste kort (specens regel); ' +
+      '**høj** = spilførerens x\'er er de højeste kort under det laveste navngivne kort, så modpartens små kort er lavere.',
+  );
+  out.push('');
+  out.push(`Kilden har kun hele procenter, så en afvigelse over ${formatDecimal(meta.tolerance, 1)} procentpoint gennemgås.`);
+  out.push('');
+  out.push('## Resultat');
+  out.push('');
+  out.push(`- Brugbare cases: ${rows.length} af ${rows.length + excluded.length}, med ${goals.length} mål.`);
+  for (const rule of ['lav', 'høj'] as const) {
+    out.push(
+      `- Fortolkning "${rule}": ${within(rule, meta.tolerance)} af ${goals.length} mål inden for ${formatDecimal(meta.tolerance, 1)} procentpoint, ` +
+        `${within(rule, 1)} inden for 1 procentpoint.`,
+    );
+  }
+  const either = goals.filter(({ g }) => Math.min(Math.abs(g.app.lav - g.source), Math.abs(g.app.høj - g.source)) <= meta.tolerance).length;
+  out.push(`- Mindst én af fortolkningerne inden for ${formatDecimal(meta.tolerance, 1)} procentpoint: ${either} af ${goals.length} mål.`);
+  const uncertified = goals.filter(({ g }) => !g.certified.lav || !g.certified.høj).length;
+  out.push(`- Mål, hvor den bedste linje kræver, at spilføreren blander (ingen ren linje inden for 0,002 procentpoint): ${uncertified}.`);
+  out.push('');
+  out.push(`## Afvigelser over ${formatDecimal(meta.tolerance, 1)} procentpoint med fortolkningen "lav"`);
+  out.push('');
+  out.push('| Case | Hånd / bordet | Mål | Kilde | Lav | Høj | Nærmest | Kildens bemærkning |');
+  out.push('| --- | --- | --- | --- | --- | --- | --- | --- |');
+  for (const { row, g } of goals) {
+    if (Math.abs(g.app.lav - g.source) <= meta.tolerance) continue;
+    out.push(
+      `| ${row.case.number} | ${holding(row.case)} | ${g.need} | ${g.source} % | ${pct(g.app.lav)} | ${pct(g.app.høj)} | ${best(g)} | ${row.case.remark || '–'} |`,
+    );
+  }
+  out.push('');
+  out.push('## Sorteret fra');
+  out.push('');
+  out.push('| Case | Holding | Grund |');
+  out.push('| --- | --- | --- |');
+  for (const c of excluded) out.push(`| ${c.number} | ${holding(c)} | ${c.reason} |`);
+  out.push('');
+  out.push('## Alle brugbare cases');
+  out.push('');
+  out.push('| Case | Hånd / bordet | Konkret (lav) | Mål | Kilde | Lav | Høj |');
+  out.push('| --- | --- | --- | --- | --- | --- | --- |');
+  for (const { row, g } of goals) {
+    const h = row.hands.lav;
+    out.push(
+      `| ${row.case.number} | ${holding(row.case)} | ${cardsText(h.south)} / ${cardsText(h.north)} | ${g.need} | ${g.source} % | ${pct(g.app.lav)} | ${pct(g.app.høj)} |`,
+    );
+  }
+  out.push('');
+  return out.join('\n');
+}
+
+/** Kort oversigt over hyppigheden til rapporten. */
+export function frequencySummary(rows: readonly FrequencyRow[]): string {
+  const usable = rows.filter((r) => r.rank > 0).length;
+  return (
+    `${formatInt(usable)} brugbare cases. De 10 hyppigste dækker ${formatDecimal(100 * coverage(rows, 10), 0)} % ` +
+    `af sidens samlede hyppighed, de 30 hyppigste ${formatDecimal(100 * coverage(rows, 30), 0)} %.`
+  );
+}

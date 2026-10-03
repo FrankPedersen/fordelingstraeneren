@@ -1,0 +1,47 @@
+{
+ "version": 1,
+ "techniques": [
+  {
+   "id": "enkelt-kipning",
+   "name": "Enkelt kipning",
+   "order": 1,
+   "rule": "Spil mod honnøren, ikke fra den.",
+   "image": "Indbrudstyven, der lister ind bag vagten"
+  },
+  {
+   "id": "fald-eller-kip",
+   "name": "Fald eller kip",
+   "order": 2,
+   "rule": "Med 8 kort kipper man, med 9 slår man.",
+   "image": "Vægten: 8 vipper mod kipning, 9 mod fald"
+  },
+  {
+   "id": "spil-mod-honnoer",
+   "name": "Spil mod honnør",
+   "order": 3,
+   "rule": "Spil mod det kort, du vil gøre til stik.",
+   "image": "Stigen op mod honnøren"
+  },
+  {
+   "id": "dobbelt-kipning",
+   "name": "Dobbelt kipning",
+   "order": 4,
+   "rule": "Kip først mod det laveste hul.",
+   "image": "To låger, hvor den nederste åbnes først"
+  },
+  {
+   "id": "sikkerhedsspil",
+   "name": "Sikkerhedsspil",
+   "order": 5,
+   "rule": "Sikr målet, ikke maksimum.",
+   "image": "Sikkerhedsselen"
+  },
+  {
+   "id": "begraenset-valg",
+   "name": "Begrænset valg",
+   "order": 6,
+   "rule": "Lagde de en honnør, havde de nok ikke valget – kip.",
+   "image": "Gæsten, der kun havde én stol at vælge"
+  }
+ ]
+}

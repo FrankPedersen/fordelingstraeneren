@@ -1,8 +1,8 @@
 # SPEC-farvebehandling
 
-Oct 3, 2026 · @Frank
+3. oktober 2026 · Frank
 
-Farvebehandling bygges som et nyt, selvstændigt spor i fordelingstræneren. Den eksisterende app og dens SPEC.md forbliver uændrede. Version 2, rettet efter Claude Codes tilbagemelding.
+Farvebehandling bygges som et nyt, selvstændigt spor i fordelingstræneren. Den eksisterende app og dens SPEC.md forbliver uændrede. Version 3, rettet efter Claude Codes anden tilbagemelding.
 
 ## Afgrænsning
 
@@ -64,7 +64,7 @@ Alle chancer regnes i koden ved at gennemgå hver konkret sidning af de manglend
 P = \frac{\binom{U-n}{v_V-k}}{\binom{U}{v_V}}, \qquad U = v_V + v_\O
 ```
 
-Her er v\_V og v\_Ø de ledige pladser hos Vest og Øst. Uden anden viden er v\_V = v\_Ø = 13. Med en optælling indsættes de kendte tal. Chancen for en samlet sidning, fx 3-2, fås ved at gange med C(n, k).
+Her er v_V og v_Ø de ledige pladser hos Vest og Øst. Uden anden viden er v_V = v_Ø = 13. Med en optælling indsættes de kendte tal. Chancen for en samlet sidning, fx 3-2, fås ved at gange med C(n, k).
 
 **2. En linje er en strategi.** En linje er en plan med nummererede trin og hvis/så-grene. Appen gennemregner alle 2ⁿ sidninger (typisk højst 128) og giver en fordeling over antal stik. Den bedste linje findes af løseren (se afsnittet Løser).
 
@@ -86,8 +86,8 @@ Forudsætninger, som skal stå synligt ved hvert resultat:
 
 - Chancerne er a priori, medmindre der er ledige pladser fra en optælling.
 - Forbindelser er ubegrænsede, medmindre opgaven siger andet.
-- Normalt modspil: 2. hånd lægger det laveste kort; har den kun honnører, vælges tilfældigt blandt de ligeværdige. Spilles B eller højere, dækker 2. hånd, hvis den kan. 4. hånd vinder stikket så billigt som muligt og lægger ellers det laveste; den holder aldrig tilbage. Kort er ligeværdige, når intet ikke-spillet kort ligger imellem dem. "Drilsk modspil" med falske kort er et senere niveau.
-- Data angiver alle små kort præcist; visningen må samle ligeværdige små kort som x.
+- Løseren regner med optimalt modspil (se Løser). Normalt modspil bruges kun til Spil den selv og til forklaringer: 2. hånd lægger det laveste kort; har den kun honnører, vælges tilfældigt blandt de ligeværdige. Spilles T eller højere, dækker 2. hånd med det billigste kort, der slår det udspillede, hvis den kan. 4. hånd vinder stikket så billigt som muligt, hvis makkers kort ikke allerede vinder, og lægger ellers det laveste; den holder aldrig tilbage. Kort er ligeværdige, når intet ikke-spillet kort ligger imellem dem. "Drilsk modspil" med falske kort er et senere niveau.
+- Data angiver alle små kort præcist; visningen må samle ligeværdige små kort som x. Står der x i en kilde, er spilførerens x'er de laveste kort (2, 3, 4 …), så modparten har de højere små kort.
 
 ## Hyppighed og udvælgelse
 
@@ -144,21 +144,24 @@ Opgaven er et spil under usikkerhed: spilføreren må kun beslutte ud fra de kor
 
 1. **Tilstand:** kortene i Nord og Syd, de kort modparten har vist, hvem der spiller ud, og vundne stik.
 2. **Sidninger:** alle 2ⁿ fordelinger af de n manglende kort med a priori-vægte, eller med ledige pladser fra en optælling.
-3. **Modspil:** normalt modspil som beskrevet under Matematik. Modspillernes tilfældige valg mellem ligeværdige kort indgår som sandsynligheder.
-4. **Søgning:** ved hver beslutning (udspilshånd, kort og 3. hånds kort) afprøves alle muligheder. Hver vurderes over de sidninger, der stadig passer med de sete kort, vægtet efter deres sandsynlighed, og den bedste vælges. Begrænset valg følger automatisk.
+3. **Modspil: optimalt.** Modspillerne vælger og blander deres kort, så spilførerens chance bliver mindst mulig. En fast regelmodel må ikke bruges, fordi løseren så lærer at udnytte faste vaner; fx giver E T 8 x / K B 9 x ellers 100 % i stedet for ca. 53 %.
+4. **Søgning:** spilføreren maksimerer og modspillerne minimerer. Begge beslutter kun ud fra det, de har set. Det er et tospersonersspil med skjult information, der løses eksakt i Node, fx med lineær programmering i sekvensform eller CFR. Begrænset valg følger automatisk af modspillernes blandede valg.
 5. **Beskæring:** ligeværdige kort behandles som ét, og mellemresultater gemmes pr. tilstand.
 6. **Mål:** for hvert mål maksimeres P(stik ≥ mål). Desuden findes linjen med flest stik i gennemsnit (parturnering). Linjer inden for 0,5 procentpoint af den bedste vises alle.
-7. **Forbindelser:** ubegrænsede i første version. Begrænsede forbindelser er en senere udvidelse.
+7. **Kapacitet:** løseren skal klare op til 8 manglende kort.
+8. **Forbindelser:** ubegrænsede i første version. Begrænsede forbindelser er en senere udvidelse.
 
 **Resultat.** Løseren giver et strategitræ. Det gemmes i linjeformatet fra afsnittet Opgavebank og oversættes til dansk med faste sætningsskabeloner: en kort hovedlinje, fx "Slå esset, kip derefter mod damen", og grene, hvor de er nødvendige, fx "Lægger Øst en honnør, …". Frank godkender teksterne for startbanken.
 
-**Drift.** Et Node-script, `scripts/solve.ts`, forudberegner alle kombinationer i banken til `src/farvebehandling/content/solutions.json`, så telefonen ikke selv skal regne i fase 1. I fase 2 kører samme kode i appen i en Web Worker.
+**Alternative linjer.** Opgavetype 1 og 3 skal have 2–4 linjer at vælge imellem. Alternativerne er løserens bedste linje for hvert andet første udspil, højst tre, som hver ligger mere end 0,5 procentpoint under den bedste. For B432 / ET65 og 3 stik er det fx "esset først" og "B'en fra bordet" ved siden af "lille mod T'en"; tallene fastlægges af løseren.
 
-**Validering.** Løseren regner alle 88 brugbare cases fra siden "damen mangler" og laver en rapport pr. case og mål med appens og kildens procent. Afvigelser over 1 procentpoint gennemgås. Mulige årsager er fejl i kilden, en anden modspilsmodel (SuitPlay regner efter alt at dømme med optimalt modspil) eller en anden fortolkning af x.
+**Drift.** Et Node-script, `scripts/solve.ts`, forudberegner alle kombinationer i banken til `src/farvebehandling/content/solutions.json`, så telefonen ikke selv skal regne i fase 1. Hvordan løseren kører i appen i fase 2, afklares senere, fordi optimalt modspil er tungere at regne. "Normalt modspil" bruges kun til Spil den selv og til forklaringer.
+
+**Validering.** Løseren regner alle brugbare cases fra bridgehands.com's side "damen mangler", som Claude Code læser direkte. Rapporten viser pr. case og mål løserens og kildens procent, beregnet med begge fortolkninger af x: spilførerens x'er som de laveste kort og x som uden betydning. Afvigelser over 0,5 procentpoint gennemgås, fordi kilden kun har hele procenter. Kendte fejl i kilden: case 14 og 15 står som 7-0 med kun 6 kort, case 13 (E K x / B x x, 3 stik) står til 10 %, selvom en kipning giver omkring 50 %, og bemærkningen til case 12 er kopieret fra case 8.
 
 ## Opgavebank og linjeformat
 
-Opgavebanken ligger i `src/farvebehandling/content/suit-combinations.json` og teknikkerne i `src/farvebehandling/content/techniques.json`. Alle kort står præcist i data, fx E K B 3 2 / 7 6 5 4; visningen samler ligeværdige små kort som x. Internt bruges A K Q J T, i visningen E K D B T.
+Opgavebanken ligger i `src/farvebehandling/content/suit-combinations.json` og teknikkerne i `src/farvebehandling/content/techniques.json`. Alle kort står præcist i data, fx E K B 3 2 / 7 6 5 4; visningen samler ligeværdige små kort som x. Internt bruges A K Q J T, i visningen E K D B 10. Tieren vises som "10" i hele appen, som fordelingssporet allerede gør; "T" bruges kun i data og spec.
 
 ```ts
 type Combination = {
@@ -185,11 +188,10 @@ Semantik:
 
 - **`low` og `high`:** det laveste eller højeste kort i den hånd, der spiller.
 - **3. hånd uden `third`:** lægger det laveste kort.
-- **`ifSecondPlays: "low"`:** sand, når 2. hånd lægger et kort under B. Kan 2. hånd ikke bekende, er betingelsen ikke opfyldt; sidningen er da kendt (se nedenfor).
+- **`ifSecondPlays: "low"`:** sand, når 2. hånd lægger et kort under B. Kan 2. hånd ikke bekende, er betingelsen ikke opfyldt.
 - **Grene:** `goto` peger altid på et andet trin end det næste.
 - **Umulige trin:** et trin, der kræver et kort, som allerede er spillet, er en fejl i opgaven. Valideringen afviser den.
-- **Kendt sidning:** når en modspiller ikke kan bekende, er sidningen kendt, og appen spiller resten optimalt på de kendte kort.
-- **Dækning:** hver linje skal ende defineret i alle sidninger. En test fejler, hvis en sidning ender et sted, linjen ikke definerer.
+- **Efter sidste trin:** løseren spiller resten optimalt ud fra de kort, der er set. En linje behøver derfor kun at beskrive de første, afgørende runder.
 
 Eksemplet B432 / ET65 har to linjer:
 
@@ -198,7 +200,7 @@ Eksemplet B432 / ET65 har to linjer:
 
 Linjerne genereres af løseren og gemmes i formatet ovenfor. Håndskrevne linjer bruges kun til brugerens egne tilføjelser og til at sammenligne en bestemt linje med løserens. Accepttesten låser tallene for eksemplet: A 37,3 % og 94,3 %, B 6,8 % og 100 % for 3 og 2 stik.
 
-Startbank: de 100 hyppigste kombinationer på tværs af bridgehands.com's sider 0–9 (se Hyppighed og udvælgelse), begyndende med siden "damen mangler". Kildens procent pr. mål står i `source`. En test sætter `verified: true`, når appens tal stemmer med kilden inden for 0,1 procentpoint; afviger de, gennemgås kombinationen, fordi fejlen også kan ligge i kilden. Analyse fase 1 viser kun kombinationer fra banken; brugeren kan tilføje egne linjer i samme format.
+Startbank: de 100 hyppigste kombinationer på tværs af bridgehands.com's sider 0–9 (se Hyppighed og udvælgelse), begyndende med siden "damen mangler". Kildens procent pr. mål står i `source`. En test sætter `verified: true`, når appens tal stemmer med kilden inden for 0,5 procentpoint (kilden har kun hele procenter); afviger de, gennemgås kombinationen, fordi fejlen også kan ligge i kilden. Analyse fase 1 viser kun kombinationer fra banken; brugeren kan tilføje egne linjer i samme format.
 
 ## Session, scoring og progression
 
@@ -263,15 +265,15 @@ Alle skærme følger én læseretning: problem → linjer → forskel → detalj
 ├──────────────────────────────────────────────────────────┤
 │ PROBLEMET                                                │
 │        ♠ B 4 3 2   (bordet)                              │
-│   Vest  ?         ↓ pil mod T        Øst  ?              │
-│        ♠ E T 6 5   (dig)        Mål: [3 stik] [2 stik]    │
+│   Vest  ?         ↓ pil mod 10       Øst  ?              │
+│        ♠ E 10 6 5  (dig)        Mål: [3 stik] [2 stik]    │
 ├──────────────────────────────────────────────────────────┤
 │ LINJERNE                                                 │
 │ ┌ Linje A – 37,3 % ✓ bedst ──┐ ┌ Linje B – 6,8 % ────────┐ │
-│ │ 1. Lille mod T (kip)      │ │ 1. Slå esset           │ │
-│ │ 2. Slå esset              │ │ 2. Lille mod B         │ │
+│ │ 1. Lille mod 10 (kip)     │ │ 1. Slå esset           │ │
+│ │ 2. Slå esset              │ │ 2. Lille mod 10        │ │
 │ └───────────────────────────┘ └────────────────────────┘ │
-│ a priori · ubegrænsede forbindelser · normalt modspil     │
+│ a priori · ubegrænsede forbindelser · optimalt modspil    │
 ├──────────────────────────────────────────────────────────┤
 │ FORSKELLEN – sandsynlighedsbånd                          │
 │ A ████▓▓░░████░░▓▓████░░  (samme rækkefølge for A og B)  │
@@ -290,7 +292,7 @@ Alle skærme følger én læseretning: problem → linjer → forskel → detalj
 ┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐
 │   ♠ B 4 3 2      │ │ Du valgte A ✓    │ │ Huskeregel       │
 │ V ?   ↓   Ø ?    │ │ Bedst: A 37,3 %  │ │ "Kip mod den     │
-│   ♠ E T 6 5      │ │ Dit gæt: 25–50 ✓ │ │  honnør …"       │
+│   ♠ E 10 6 5     │ │ Dit gæt: 25–50 ✓ │ │  honnør …"       │
 │ Mål: 3 stik      │ │ A ███▓░░██░░     │ │ [billede: rum 2] │
 │ Vælg linje:      │ │ B ██░░░░░░░░     │ │                  │
 │ (A) (B) (C)      │ │ Uenige i 3 sidn. │ │ [Vis alle        │
@@ -302,7 +304,7 @@ Alle skærme følger én læseretning: problem → linjer → forskel → detalj
 
 Regler for brugerfladen:
 
-- **Bridgebordet:** Nord (bordet) øverst, Syd (dig) nederst, Vest til venstre, Øst til højre. E K D B T med honnører i fed; ♥ og ♦ i appens eksisterende røde farvetoken, i både lys og mørk tilstand. En pil viser spilleretningen i det aktuelle trin.
+- **Bridgebordet:** Nord (bordet) øverst, Syd (dig) nederst, Vest til venstre, Øst til højre. E K D B 10 med honnører i fed; ♥ og ♦ i appens eksisterende røde farvetoken, i både lys og mørk tilstand. En pil viser spilleretningen i det aktuelle trin.
 - **Linjer:** kort med nummererede trin og hvis/så-grene. Den bedste linje markeres først efter svaret.
 - **Sandsynlighedsbånd:** én vandret søjle pr. linje på 100 %, delt i sidninger efter deres chance. Felterne står i samme rækkefølge for alle linjer, og et tryk åbner sidningen.
 - **Detaljer:** de afgørende sidninger vises først. "Vis alle sidninger" folder hele listen ud, grupperet efter fordeling eller honnørplacering.
@@ -322,8 +324,8 @@ Regler for brugerfladen:
 
 Wireframes og regler i afsnittet Layout er det godkendte designgrundlag, så brugerfladen kan bygges nu. Claude Design bruges bagefter, når designet skal ændres.
 
-- **Tokens:** Claude Code trækker appens nuværende farver, skrift, afstande og radier ud i `tokens.json` med lyse og mørke værdier. Farvebehandlingens nye tokens, fx nås/nås ikke og båndets grå, tilføjes samme fil.
-- **Designsystem:** `tokens.json` bliver grundlaget for et Design System-artefakt i Claude Design. Linket skrives her, når det findes.
+- **Tokens:** `design/tokens.json` indeholder appens farver i lys og mørk tilstand, inklusive ♥♦-rød og mønsterfamilierne, samt skrift, afstande, radier og størrelser. `src/tokens.test.ts` holder filen i takt med `src/ui/styles.css`. Farvebehandlingens nye tokens (nås, nås ikke, båndets grå og Analyses bredde på 1280 px) tilføjes, når komponenterne bygges.
+- **Designsystem:** [Fordelingstræneren](https://claude.ai/artifact/NmcghGRGc1WRhmSMnjwTq3) i Claude Design, bygget på `design/tokens.json`. Det indeholder tokens, en brandbog på dansk og komponenterne Knap, Kort, Svarvalg, Skyline og Spillekort. Nye skærme bygges fra det.
 - **Tegnefladen** [Analysevindue – farvebehandling](https://claude.ai/artifact/S5p4ANVzT2BGLpH98nehwn) er et tidligt udkast og ikke godkendt. Er tegnefladen og specen uenige, gælder specen.
 - **Godkendte artboards:** ingen endnu. Når et artboard godkendes, skrives navnet her, og så gælder det frem for wireframes.
 
@@ -343,14 +345,14 @@ Krav til farvebehandlingens komponenter, så designet kan ændres bagefter:
 
 ## Leverancetrin, accepttest og åbne punkter
 
-Farvebehandling bygges i seks trin. Trin 1 og 2 kan startes med det samme.
+Farvebehandling bygges i seks trin. Trin 2 er færdigt, og trin 1 kan startes.
 
-1. **Løser og model:** sidningsberegning, modspilsmodel, løser, hyppighed og tests. Startbankens resultater forudberegnes i Node, og valideringsrapporten for siden "damen mangler" laves.
-2. **Tokens:** appens nuværende tokens trukket ud i `tokens.json` med lyse og mørke værdier.
+1. **Løser og model:** sidningsberegning, løser med optimalt modspil, hyppighed og tests. Startbankens resultater forudberegnes i Node, og valideringsrapporten for siden "damen mangler" laves.
+2. **Tokens og designsystem:** færdige, se afsnittet Designarbejde.
 3. **Analyse fase 1** efter designgrundlaget i Layout, med startbanken og løserens resultater.
 4. **Træning og Selvvalgt** med session, scoring og palads; opgavetype 1–4, derefter 5–8.
-5. **Spil den selv** med modspilsmodellen.
-6. **Analyse fase 2:** løseren kører direkte i appen for vilkårlige kombinationer.
+5. **Spil den selv** med normalt modspil.
+6. **Analyse fase 2:** løseren i appen; metoden afklares senere.
 
 Accepttest i Vitest:
 
@@ -362,33 +364,30 @@ Accepttest i Vitest:
 - [ ] Ledige pladser 13/13 giver præcis de samme tal som a priori.
 - [ ] B432 / ET65: linje A = 37,3 % for 3 stik og 94,3 % for 2 stik; linje B = 6,8 % for 3 stik og 100 % for 2 stik.
 - [ ] B432 / ET65, sidningen Kxx–Dx: linje A giver 3 stik, linje B giver 2.
-- [ ] E K B x x / x x x x: fald = 53,1 %, esset først og så kipning = 51,4 %.
+- [ ] Bordet E K B 3 2, hånden 7 6 5 4: fald = 53,1 %, esset først og så kipning = 51,4 %.
 - [ ] Begrænset valg: kipning efter Østs dame = 64,7 %.
-- [ ] Dækning: hver linje i banken ender defineret i alle sidninger.
 - [ ] Validering: en opgave med et umuligt trin eller en `goto` til næste trin afvises.
-- [ ] Modspil: 2. hånd lægger lavt, dækker B eller højere, og vælger tilfældigt mellem ligeværdige kort.
+- [ ] Normalt modspil (Spil den selv): 2. hånd lægger lavt, dækker T eller højere med det billigste kort, der slår, og vælger tilfældigt mellem ligeværdige kort; 4. hånd vinder billigst, hvis makkers kort ikke allerede vinder.
 - [ ] Gætteintervaller: 25,0 → 25–50, 50,0 → 50–75, 75,0 → 75–100.
 - [ ] Sandsynlighedsbåndets felter summer til 100 % for hver linje.
 - [ ] Selvvalgt: intet filtervalg med 0 kombinationer kan vælges.
 - [ ] Komponentfilerne indeholder ingen farveværdier og ingen tal med enhed, undtagen 0, 1px-streger og procenter.
-
-* [ ] Hyppighed pr. spil: E K x x / B x x = 0,747 % (1 ud af 134) og E K B x / x x x = 0,498 % (1 ud af 201).
-* [ ] Es og konge uden damen, 8 kort i farven: 10,56 % pr. spil.
-* [ ] Hyppighederne i `damen-mangler-hyppighed.csv` kan genberegnes præcist af appen, og rangordenen er den samme.
-
-- [ ] Løseren vælger fald i E K B x x / x x x x (53,1 %) frem for kipning (51,4 %).
+- [ ] Hyppighed pr. spil: E K x x / B x x = 0,747 % (1 ud af 134) og E K B x / x x x = 0,498 % (1 ud af 201).
+- [ ] Es og konge uden damen, 8 kort i farven: 10,56 % pr. spil.
+- [ ] Hyppighederne i `damen-mangler-hyppighed.csv` kan genberegnes præcist af appen, og rangordenen er den samme.
+- [ ] Løseren vælger fald med bordet E K B 3 2 og hånden 7 6 5 4 (53,1 %) frem for kipning (51,4 %).
 - [ ] Løserens bedste linje i B432 / ET65 giver 37,3 % for 3 stik og 100 % for 2 stik.
-- [ ] Begrænset valg: i E K T x x / x x x x kipper løseren mod knægten, når Øst lægger damen under esset, og omvendt.
+- [ ] Begrænset valg: med bordet E K T 3 2 og hånden 7 6 5 4 kipper løseren mod knægten, når Øst lægger damen under esset eller kongen, og omvendt.
 - [ ] Løseren bruger ikke kort, spilføreren ikke har set: to sidninger, der ser ens ud for spilføreren, får samme beslutning.
-- [ ] Valideringsrapporten dækker alle 88 brugbare cases fra siden "damen mangler".
+- [ ] Valideringsrapporten dækker alle brugbare cases fra siden "damen mangler", med begge fortolkninger af x og også cases med 8 manglende kort.
+- [ ] Optimalt modspil: accepttallene 37,3 %, 53,1 % og 64,7 % holder også med optimalt modspil.
+- [ ] Optimalt modspil: med hånden E T 8 2 og bordet K B 9 3 (case 73, 4 stik) giver løseren ikke 100 %. Resultatet sammenlignes med kildens 53 % i valideringsrapporten.
 
 Åbne punkter:
 
 - **Startbanken:** siden "damen mangler" er beregnet. Kombinationer fra Blakset-videoerne kan tilføjes med kildens procent pr. mål.
-- **Designsystem:** linket skrives ind, når det er lavet ud fra `tokens.json`.
 - **Daglig session:** om farvebehandling senere skal indgå i fordelingssporets session.
-
-* **Teknik pr. case:** hver kombination i startbanken skal have en teknik, før den kan placeres i paladset.
-* **Øvrige sider:** hyppigheden for bridgehands-siderne 0–9 ud over side 2 skal beregnes, før den samlede top 100 kan lægges fast.
-
-- **Modspilsmodel mod SuitPlay:** det skal afklares, om SuitPlay regner med optimalt modspil. Valideringsrapporten viser, hvor meget det betyder.
+- **Teknik pr. case:** hver kombination i startbanken skal have en teknik, før den kan placeres i paladset.
+- **Øvrige sider:** hyppigheden for bridgehands-siderne 0–9 ud over side 2 skal beregnes, før den samlede top 100 kan lægges fast.
+- **Fase 2:** hvordan løseren med optimalt modspil skal køre i appen.
+- **x i kilden:** case 4 tyder på, at kilden ikke altid lader x tabe til modpartens små kort. Valideringsrapporten viser, hvilken fortolkning der passer bedst.

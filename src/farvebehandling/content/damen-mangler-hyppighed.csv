@@ -1,0 +1,101 @@
+case;hånd;bordet;kort;hyppighed_pct;én_gang_pr_spil;pr_klubaften;rang;brugbar;bemærkning
+1;E K B 10 x;–;5;0,0157;6351;ca. hver 254. klubaften;64;ja;
+2;E K B x x;–;5;0,0709;1411;ca. hver 56. klubaften;27;ja;
+3;E K B 10;x;5;0,0227;4397;ca. hver 176. klubaften;56;ja;
+4;E K B 10 x x;–;6;0,0232;4310;ca. hver 172. klubaften;55;ja;
+5;E K B 9 x x;x;7;0,0566;1768;ca. hver 71. klubaften;;nej;holdingen har 6+1 kort, men fordelingen er 5-1
+6;E K B x x x;x;7;0,2715;368;ca. hver 15. klubaften;;nej;holdingen har 6+1 kort, men fordelingen er 5-1
+7;E K B 9;x x;6;0,0377;2652;ca. hver 106. klubaften;41;ja;
+8;E K 9 8;B x;6;0,0108;9282;ca. hver 371. klubaften;71;ja;
+9;E K 9 x;B x;6;0,0754;1326;ca. hver 53. klubaften;25;ja;
+10;E B 9 x;K x;6;0,0754;1326;ca. hver 53. klubaften;26;ja;
+11;E B x x;K 9;6;0,0377;2652;ca. hver 106. klubaften;42;ja;
+12;E K 9;B x x;6;0,0415;2411;ca. hver 96. klubaften;36;ja;
+13;E K x;B x x;6;0,4977;201;ca. hver 8. klubaften;3;ja;
+14;E K B 10 9 x;–;6;0,0058;17239;ca. hver 690. klubaften;;nej;holdingen har 6+0 kort, men fordelingen er 7-0
+15;E K B 9 x x;–;6;0,0174;5746;ca. hver 230. klubaften;;nej;holdingen har 6+0 kort, men fordelingen er 7-0
+16;E K B 8 x x x;–;7;0,0058;17239;ca. hver 690. klubaften;78;ja;
+17;E K B x x x x;–;7;0,0365;2736;ca. hver 109. klubaften;43;ja;
+18;E K B 10 x x;x;7;0,0905;1105;ca. hver 44. klubaften;19;ja;
+19;E K B 9 x x;x;7;0,0566;1768;ca. hver 71. klubaften;33;ja;
+20;E K B x x x;x;7;0,2715;368;ca. hver 15. klubaften;8;ja;
+21;E K B 10 9;x x;7;0,0170;5894;ca. hver 236. klubaften;61;ja;
+22;E K B 9 8;x x;7;0,0121;8251;ca. hver 330. klubaften;69;ja;
+23;E B 10 9 x;K x;7;0,0339;2947;ca. hver 118. klubaften;46;ja;
+24;E B 10 x x;K x;7;0,1357;737;ca. hver 29. klubaften;11;ja;
+25;E K 9 8 x;B x;7;0,0242;4125;ca. hver 165. klubaften;54;ja;
+26;E K 9 x x;B x;7;0,0848;1179;ca. hver 47. klubaften;22;ja;
+27;E B 9 x x;K x;7;0,0848;1179;ca. hver 47. klubaften;23;ja;
+28;E B x x x;K x;7;0,4072;246;ca. hver 10. klubaften;6;ja;
+29;K B 9 x x;E x;7;0,0848;1179;ca. hver 47. klubaften;24;ja;
+30;E K B 10 x;x x;7;0,1357;737;ca. hver 29. klubaften;;nej;1 mål, men 2 procenter
+31;E K B 10;x x x;7;0,0553;1808;ca. hver 72. klubaften;34;ja;
+32;E K B 9;x x x;7;0,0346;2893;ca. hver 116. klubaften;45;ja;
+33;E K B x;x x x;7;0,4977;201;ca. hver 8. klubaften;4;ja;
+34;E K 10 x;x x x;7;0,2765;362;ca. hver 14. klubaften;7;ja;
+35;E K 9 8;B x x;7;0,0148;6751;ca. hver 270. klubaften;65;ja;
+36;E K 9 x;B x x;7;0,1037;964;ca. hver 39. klubaften;13;ja;
+37;E K x x;B 10 9;7;0,0207;4822;ca. hver 193. klubaften;57;ja;
+38;E K x x;B 9 8;7;0,0148;6751;ca. hver 270. klubaften;66;ja;
+39;E K x x;B 9 x;7;0,1037;964;ca. hver 39. klubaften;14;ja;
+40;E K x x;B x x;7;0,7466;134;ca. hver 5. klubaften;1;ja;
+41;E B 9 8;K x x;7;0,0148;6751;ca. hver 270. klubaften;;nej;1 mål, men 2 procenter
+42;E K x x;B x x;7;0,7466;134;ca. hver 5. klubaften;;nej;dublet af case 40
+43;E B 9 x;K x x;7;0,1037;964;ca. hver 39. klubaften;15;ja;
+44;E B x x;K x x;7;0,7466;134;ca. hver 5. klubaften;2;ja;
+45;K 9 x x;E B x;7;0,1037;964;ca. hver 39. klubaften;16;ja;
+46;B 10 x x;E K x;7;0,1659;603;ca. hver 24. klubaften;10;ja;
+47;B 9 8 x;E K x;7;0,0296;3375;ca. hver 135. klubaften;49;ja;
+48;B x x x;E K x;7;0,4977;201;ca. hver 8. klubaften;5;ja;
+49;E K B 10 9 x x;x;8;0,0189;5304;ca. hver 212. klubaften;58;ja;
+50;E K B 9 8 7 x;x;8;0,0036;27847;ca. hver 1.114. klubaften;82;ja;
+51;E K B 10 x x;x x;8;0,1293;774;ca. hver 31. klubaften;12;ja;
+52;E K B 9 x x;x x;8;0,0646;1547;ca. hver 62. klubaften;29;ja;
+53;E K B 9 x x;x x;8;0,0646;1547;ca. hver 62. klubaften;;nej;dublet af case 52
+54;E K 9 8 7 x;B x;8;0,0062;16244;ca. hver 650. klubaften;77;ja;
+55;E K 9 8 x x;B x;8;0,0185;5415;ca. hver 217. klubaften;59;ja;
+56;E K 9 x x x;B x;8;0,0431;2321;ca. hver 93. klubaften;35;ja;
+57;E B 8 x x x;K x;8;0,0185;5415;ca. hver 217. klubaften;60;ja;
+58;E K 9 8 x;B x x;8;0,0254;3938;ca. hver 158. klubaften;52;ja;
+59;E K 9 x x;B x x;8;0,0889;1125;ca. hver 45. klubaften;20;ja;
+60;E K 7 x x;B 9 8;8;0,0042;23628;ca. hver 945. klubaften;81;ja;
+61;E K x x x;B 10 9;8;0,0148;6751;ca. hver 270. klubaften;67;ja;
+62;E K x x x;B 9 8;8;0,0085;11814;ca. hver 473. klubaften;74;ja;
+63;E K x x x;B 9 x;8;0,0593;1688;ca. hver 68. klubaften;30;ja;
+64;E B 9 x x;K x x;8;0,0889;1125;ca. hver 45. klubaften;21;ja;
+65;E B x x x;K 9 x;8;0,0593;1688;ca. hver 68. klubaften;31;ja;
+66;E 9 x x x;K B x;8;0,0593;1688;ca. hver 68. klubaften;32;ja;
+67;B 9 8 x x;E K x;8;0,0254;3938;ca. hver 158. klubaften;53;ja;
+68;E K B 10;x x x x;8;0,0329;3038;ca. hver 122. klubaften;47;ja;
+69;E K 9 x;B x x x;8;0,0658;1519;ca. hver 61. klubaften;28;ja;
+70;E K 8 x;B x x x;8;0,0282;3544;ca. hver 142. klubaften;50;ja;
+71;E K x x;B 9 8 x;8;0,0282;3544;ca. hver 142. klubaften;51;ja;
+72;E B x x;K 9 x x;8;0,0988;1013;ca. hver 41. klubaften;17;ja;
+73;E 10 8 x;K B 9 x;8;0,0141;7088;ca. hver 284. klubaften;68;ja;
+74;E K B x … x;x;9;;;;;nej;uklart antal kort (…)
+75;E K B x … x;x x;10;;;;;nej;uklart antal kort (…)
+76;E K 9 x … x;B x;10;;;;;nej;uklart antal kort (…)
+77;E B x … x;K 9;9;;;;;nej;uklart antal kort (…)
+78;E K B 10 x … x;x x x;12;;;;;nej;uklart antal kort (…)
+79;E K 9 x x x;B x x;9;0,0323;3094;ca. hver 124. klubaften;48;ja;
+80;E K 8 x x x;B x x;9;0,0092;10829;ca. hver 433. klubaften;73;ja;
+81;E K x x x x;B 10 9;9;0,0054;18565;ca. hver 743. klubaften;79;ja;
+82;E K x x x x;B 9 8;9;0,0023;43317;ca. hver 1.733. klubaften;83;ja;
+83;E B x x x x;K 9 x;9;0,0162;6188;ca. hver 248. klubaften;62;ja;
+84;E K 8 x x;B x x x;9;0,0115;8663;ca. hver 347. klubaften;70;ja;
+85;E K x x x x;B 10 9 x;10;0,0070;14233;ca. hver 569. klubaften;;nej;holdingen har 6+4 kort, men fordelingen er 5-4
+86;E B 9 x x;K 10 x x;9;0,0404;2475;ca. hver 99. klubaften;37;ja;
+87;E B x x x;K 9 8 7;9;0,0019;51981;ca. hver 2.079. klubaften;84;ja;
+88;E B x x x;K 9 x x;9;0,0404;2475;ca. hver 99. klubaften;38;ja;
+89;E 9 x x x;K B x x;9;0,0404;2475;ca. hver 99. klubaften;39;ja;
+90;B x x x x;E K x x;9;0,2424;413;ca. hver 17. klubaften;9;ja;
+91;B 10 9 x x;E K x x;9;0,0404;2475;ca. hver 99. klubaften;40;ja;
+92;E K 9 x … x;B x;10;;;;;nej;uklart antal kort (…)
+93;E K 9 x x x x;B x x;10;0,0049;20333;ca. hver 813. klubaften;80;ja;
+94;E B x x x x x;K x x;10;0,0354;2824;ca. hver 113. klubaften;44;ja;
+95;E K 9 x x x;B x x x;10;0,0094;10675;ca. hver 427. klubaften;72;ja;
+96;K x x x x x;E B 9 8;10;0,0004;249075;ca. hver 9.963. klubaften;85;ja;
+97;K 9 x x x x;E B 10 x;10;0,0070;14233;ca. hver 569. klubaften;76;ja;
+98;E K 9 x x;B x x x x;10;0,0079;12651;ca. hver 506. klubaften;75;ja;
+99;E B 9 x x;K 10 x x x;10;0,0158;6326;ca. hver 253. klubaften;63;ja;
+100;E B x x x;K x x x x;10;0,0949;1054;ca. hver 42. klubaften;18;ja;
