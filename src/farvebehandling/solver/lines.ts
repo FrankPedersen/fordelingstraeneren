@@ -6,8 +6,8 @@ import { END, LEAD, THIRD, type Game, type Hand } from './game';
  * løseren resten optimalt ud fra de kort, der er set.
  *
  * Kendt sidning: kan en modspiller ikke bekende, er sidningen kendt, og linjen slutter med det samme; løseren spiller
- * resten optimalt. Reglen stod i specens version 2 og er nødvendig for, at linje B i B432 / E 10 6 5 giver 100 %
- * for 2 stik (uden den lader linjen Vest stikke billigt med 9'eren, når Øst ikke kan bekende). Den skal bekræftes i specen.
+ * resten optimalt (spec 3.1). Uden reglen giver linje B i B432 / E 10 6 5 kun 89,6 % for 2 stik, fordi linjen lader
+ * Vest stikke billigt med 9'eren, når Øst ikke kan bekende.
  */
 export interface LineStep {
   leadFrom: Hand;

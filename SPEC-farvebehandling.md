@@ -2,7 +2,7 @@
 
 3. oktober 2026 · Frank
 
-Farvebehandling bygges som et nyt, selvstændigt spor i fordelingstræneren. Den eksisterende app og dens SPEC.md forbliver uændrede. Version 3, rettet efter Claude Codes anden tilbagemelding.
+Farvebehandling bygges som et nyt, selvstændigt spor i fordelingstræneren. Den eksisterende app og dens SPEC.md forbliver uændrede. Version 3.1: version 3 med Claude Codes rettelser fra trin 1, godkendt af Frank (kendt sidning, modspillets viden, kildens fejl og antal brugbare cases).
 
 ## Afgrænsning
 
@@ -86,7 +86,7 @@ Forudsætninger, som skal stå synligt ved hvert resultat:
 
 - Chancerne er a priori, medmindre der er ledige pladser fra en optælling.
 - Forbindelser er ubegrænsede, medmindre opgaven siger andet.
-- Løseren regner med optimalt modspil (se Løser). Normalt modspil bruges kun til Spil den selv og til forklaringer: 2. hånd lægger det laveste kort; har den kun honnører, vælges tilfældigt blandt de ligeværdige. Spilles T eller højere, dækker 2. hånd med det billigste kort, der slår det udspillede, hvis den kan. 4. hånd vinder stikket så billigt som muligt, hvis makkers kort ikke allerede vinder, og lægger ellers det laveste; den holder aldrig tilbage. Kort er ligeværdige, når intet ikke-spillet kort ligger imellem dem. "Drilsk modspil" med falske kort er et senere niveau.
+- Løseren regner med optimalt modspil (se Løser): modspillet kender alle kort og blander sine valg; spilføreren ser kun de spillede kort. Normalt modspil bruges kun til Spil den selv og til forklaringer: 2. hånd lægger det laveste kort; har den kun honnører, vælges tilfældigt blandt de ligeværdige. Spilles T eller højere, dækker 2. hånd med det billigste kort, der slår det udspillede, hvis den kan. 4. hånd vinder stikket så billigt som muligt, hvis makkers kort ikke allerede vinder, og lægger ellers det laveste; den holder aldrig tilbage. Kort er ligeværdige, når intet ikke-spillet kort ligger imellem dem. "Drilsk modspil" med falske kort er et senere niveau.
 - Data angiver alle små kort præcist; visningen må samle ligeværdige små kort som x. Står der x i en kilde, er spilførerens x'er de laveste kort (2, 3, 4 …), så modparten har de højere små kort.
 
 ## Hyppighed og udvælgelse
@@ -119,7 +119,7 @@ P = \frac{\binom{39}{13-a}\binom{26+a}{13-b}}{\binom{52}{13}\binom{39}{13}} \cdo
 2. Cases med fejl i kilden (forkert kortantal, uklare "…", dubletter) sorteres fra; usikre cases markeres.
 3. De 100 hyppigste på tværs af siderne udgør startbanken, og nye emner introduceres i hyppighedsorden.
 
-**Første levering: damen mangler.** Siden har 100 cases, hvoraf 88 er brugbare. Beregningen ligger i `src/farvebehandling/content/damen-mangler-hyppighed.csv`. De 10 hyppigste dækker 57 % af sidens samlede hyppighed, de 30 hyppigste 82 %.
+**Første levering: damen mangler.** Siden har 100 cases, hvoraf 85 er brugbare. Beregningen ligger i `src/farvebehandling/content/damen-mangler-hyppighed.csv`. De 10 hyppigste dækker 59 % af sidens samlede hyppighed, de 30 hyppigste 83 %. Sorteret fra er cases med "…", kortantal, der ikke passer med fordelingen, forskelligt antal mål og procenter samt dubletter.
 
 | Rang | Case | Hånd / bordet | Kort | Ca. én gang pr. |
 | --- | --- | --- | --- | --- |
@@ -145,7 +145,7 @@ Opgaven er et spil under usikkerhed: spilføreren må kun beslutte ud fra de kor
 1. **Tilstand:** kortene i Nord og Syd, de kort modparten har vist, hvem der spiller ud, og vundne stik.
 2. **Sidninger:** alle 2ⁿ fordelinger af de n manglende kort med a priori-vægte, eller med ledige pladser fra en optælling.
 3. **Modspil: optimalt.** Modspillerne vælger og blander deres kort, så spilførerens chance bliver mindst mulig. En fast regelmodel må ikke bruges, fordi løseren så lærer at udnytte faste vaner; fx giver E T 8 x / K B 9 x ellers 100 % i stedet for ca. 53 %.
-4. **Søgning:** spilføreren maksimerer og modspillerne minimerer. Begge beslutter kun ud fra det, de har set. Det er et tospersonersspil med skjult information, der løses eksakt i Node, fx med lineær programmering i sekvensform eller CFR. Begrænset valg følger automatisk af modspillernes blandede valg.
+4. **Søgning:** spilføreren maksimerer og modspillerne minimerer. Spilføreren beslutter kun ud fra de kort, han har set; modspillet kender alle kort. Det er et tospersonersspil med skjult information, der løses eksakt i Node, fx med lineær programmering i sekvensform eller CFR. Begrænset valg følger automatisk af modspillernes blandede valg.
 5. **Beskæring:** ligeværdige kort behandles som ét, og mellemresultater gemmes pr. tilstand.
 6. **Mål:** for hvert mål maksimeres P(stik ≥ mål). Desuden findes linjen med flest stik i gennemsnit (parturnering). Linjer inden for 0,5 procentpoint af den bedste vises alle.
 7. **Kapacitet:** løseren skal klare op til 8 manglende kort.
@@ -157,7 +157,7 @@ Opgaven er et spil under usikkerhed: spilføreren må kun beslutte ud fra de kor
 
 **Drift.** Et Node-script, `scripts/solve.ts`, forudberegner alle kombinationer i banken til `src/farvebehandling/content/solutions.json`, så telefonen ikke selv skal regne i fase 1. Hvordan løseren kører i appen i fase 2, afklares senere, fordi optimalt modspil er tungere at regne. "Normalt modspil" bruges kun til Spil den selv og til forklaringer.
 
-**Validering.** Løseren regner alle brugbare cases fra bridgehands.com's side "damen mangler", som Claude Code læser direkte. Rapporten viser pr. case og mål løserens og kildens procent, beregnet med begge fortolkninger af x: spilførerens x'er som de laveste kort og x som uden betydning. Afvigelser over 0,5 procentpoint gennemgås, fordi kilden kun har hele procenter. Kendte fejl i kilden: case 14 og 15 står som 7-0 med kun 6 kort, case 13 (E K x / B x x, 3 stik) står til 10 %, selvom en kipning giver omkring 50 %, og bemærkningen til case 12 er kopieret fra case 8.
+**Validering.** Løseren regner alle brugbare cases fra bridgehands.com's side "damen mangler", som Claude Code læser direkte. Rapporten viser pr. case og mål løserens og kildens procent, beregnet med begge fortolkninger af x: spilførerens x'er som de laveste kort og x som uden betydning. Afvigelser over 0,5 procentpoint gennemgås, fordi kilden kun har hele procenter. Kendte fejl i kilden: kortantallet passer ikke med fordelingen i case 5, 6, 14, 15 og 85; case 30 og 41 har ét mål, men to procenter; case 74–78 og 92 har "…"; case 42 og 53 er dubletter af 40 og 52. Case 13 (E K x / B x x, 3 stik, 10 %) er rigtig: spiller man mod knægten, lægger Øst damen.
 
 ## Opgavebank og linjeformat
 
@@ -192,6 +192,7 @@ Semantik:
 - **Grene:** `goto` peger altid på et andet trin end det næste.
 - **Umulige trin:** et trin, der kræver et kort, som allerede er spillet, er en fejl i opgaven. Valideringen afviser den.
 - **Efter sidste trin:** løseren spiller resten optimalt ud fra de kort, der er set. En linje behøver derfor kun at beskrive de første, afgørende runder.
+- **Kendt sidning:** kan en modspiller ikke bekende, er sidningen kendt, og linjen slutter med det samme; løseren spiller resten optimalt. Uden reglen giver linje B i B432 / ET65 kun 89,6 % for 2 stik.
 
 Eksemplet B432 / ET65 har to linjer:
 

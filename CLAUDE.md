@@ -105,7 +105,7 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
   - "low" i `ifSecondPlays` betyder et kort under B.
   - En `goto` til antal trin + 1 betyder, at linjen slutter.
   - Faldne modpartskort afgøres ud fra intervallerne for de spillede kort.
-  - **Kendt sidning:** kan en modspiller ikke bekende, slutter linjen med det samme. Reglen stod i specens version 2 og er nødvendig for linje B's 100 %. Den skal bekræftes i specen.
+  - **Kendt sidning:** kan en modspiller ikke bekende, slutter linjen med det samme. Reglen er nødvendig for linje B's 100 % og er godkendt (spec 3.1).
 - **x i kilden:** spilførerens x'er er de laveste kort. Valideringen viser også fortolkningen "høj".
 - **Brugbare cases:** sorteret fra er "…", kortantal, der ikke passer med fordelingen, forskelligt antal mål og procenter og dubletter. Det giver 85 af 100 på siden "damen mangler".
 - **Hyppighed:** navngivne små kort, der er de allerlaveste, regnes som x (E B 3 2 / K 5 4 = E B x x / K x x).
