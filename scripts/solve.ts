@@ -4,6 +4,7 @@
 //   src/farvebehandling/content/solutions.json                løserens resultater med optimalt modspil
 //   src/farvebehandling/content/validering-damen-mangler.md   sammenligning med kilden, begge fortolkninger af x
 //   src/farvebehandling/content/linjer-damen-mangler.md       linjeteksterne til godkendelse
+//   src/farvebehandling/content/teknikker-damen-mangler.md    teknik pr. kombination til godkendelse
 //
 //   node scripts/solve.ts
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -17,6 +18,7 @@ const load = async <T>(path: string) =>
 
 const pre = await load<typeof import('../src/farvebehandling/precompute.ts')>('src/farvebehandling/precompute.ts');
 const src = await load<typeof import('../src/farvebehandling/source/bridgehands.ts')>('src/farvebehandling/source/bridgehands.ts');
+const tech = await load<typeof import('../src/farvebehandling/techniques.ts')>('src/farvebehandling/techniques.ts');
 
 const page = JSON.parse(readFileSync(`${content}bridgehands-damen-mangler.json`, 'utf8'));
 const cases = src.classifyCases(page.cases);
@@ -58,4 +60,6 @@ const excluded = cases.filter((c) => !c.usable);
 const report = pre.validationReport(validation, excluded, { page: page.page, url: page.url, fetched: page.fetched, tolerance: 0.5 });
 writeFileSync(`${content}validering-damen-mangler.md`, report.replace('## Resultat\n', `## Resultat\n\n${pre.frequencySummary(rows)}\n`));
 writeFileSync(`${content}linjer-damen-mangler.md`, pre.linesReport(bank, solutions as Record<string, any>));
+const techniques = JSON.parse(readFileSync(`${content}techniques.json`, 'utf8')).techniques;
+writeFileSync(`${content}teknikker-damen-mangler.md`, tech.techniquesReport(bank, solutions as Record<string, any>, techniques));
 console.log(`Færdig på ${((Date.now() - started) / 60000).toFixed(1)} min.`);

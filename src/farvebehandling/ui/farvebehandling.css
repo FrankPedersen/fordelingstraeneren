@@ -417,3 +417,172 @@
   margin: 0;
   font-size: var(--type-h3);
 }
+
+/* Træning og Selvvalgt ligger i appens kolonne */
+
+.fb-narrow {
+  display: grid;
+  gap: var(--space-16);
+  width: 100%;
+  max-width: var(--column);
+  margin: 0 auto;
+}
+
+.fb-session {
+  gap: var(--space-14);
+}
+
+.fb-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-10);
+}
+
+.fb-actions > .btn {
+  flex: 1 1 auto;
+}
+
+.fb-push {
+  margin-left: auto;
+}
+
+.fb-label {
+  font-weight: 700;
+}
+
+/* Opgaven */
+
+.fb-task,
+.fb-intro,
+.fb-facit {
+  display: grid;
+  gap: var(--space-12);
+}
+
+.fb-task-heading {
+  margin: 0;
+  font-size: var(--type-h3);
+}
+
+.fb-options {
+  display: grid;
+  gap: var(--space-10);
+}
+
+.fb-line-option {
+  width: 100%;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+
+.fb-line-selected {
+  border-color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--ink);
+}
+
+.fb-line-title {
+  font-weight: 700;
+}
+
+.fb-step {
+  display: block;
+}
+
+.fb-intervals,
+.fb-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+
+.fb-intervals > .btn {
+  flex: 1 1 40%;
+}
+
+.fb-intervals .selected,
+.fb-filter .selected {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--ink-text);
+}
+
+.fb-hole {
+  justify-content: flex-start;
+  font-variant-numeric: tabular-nums;
+}
+
+.fb-counting {
+  display: grid;
+  gap: var(--space-6);
+  padding: var(--space-12);
+  border-radius: var(--radius-12);
+  background: var(--surface-2);
+}
+
+.fb-counting p {
+  margin: 0;
+}
+
+/* Paladset */
+
+.fb-room p {
+  margin: 0;
+}
+
+.fb-rule {
+  font-size: var(--type-h3);
+}
+
+.fb-room-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+}
+
+.fb-room-row > p,
+.fb-room-row > span {
+  flex: 1 1 60%;
+  margin: 0;
+}
+
+.fb-stations,
+.fb-closed {
+  display: grid;
+  gap: var(--space-8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fb-station {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-10) var(--space-12);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-10);
+}
+
+.fb-station-name {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.fb-editor {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.fb-editor textarea {
+  width: 100%;
+  min-height: var(--choice-height);
+  padding: var(--space-8) var(--space-10);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-8);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}

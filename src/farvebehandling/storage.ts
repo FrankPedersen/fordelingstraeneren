@@ -3,8 +3,8 @@ import { emptyStreak, type Streak } from '../engine/streak';
 import type { LineStep } from './solver/lines';
 
 /**
- * UDKAST til godkendelse (SPEC-farvebehandling.md, Data og lagring): farvebehandlingens tilstand under sin egen nøgle.
- * `fordelingstraener:v1` læses og skrives ikke. Typen bruges først, når den er godkendt.
+ * Farvebehandlingens tilstand under sin egen nøgle (SPEC-farvebehandling.md, Data og lagring); typen er godkendt.
+ * `fordelingstraener:v1` læses og skrives ikke.
  */
 export const FB_STORAGE_KEY = 'farvebehandling:v1';
 
@@ -84,4 +84,204 @@ export function defaultFbSaved(): FbSaved {
     xp: 0,
     sessions: [],
   };
+}
+
+export const TASK_TYPES: readonly TaskType[] = [
+  'vælg-linjen',
+  'chancen',
+  'linje-mod-linje',
+  'nyt-mål',
+  'hvad-nu',
+  'find-hullet',
+  'spil-selv',
+  'optælling',
+];
+
+type Raw = Record<string, unknown>;
+
+const isObject = (v: unknown): v is Raw => typeof v === 'object' && v !== null && !Array.isArray(v);
+const isNumber = (v: unknown): v is number => typeof v === 'number' && Number.isFinite(v);
+const isCount = (v: unknown): v is number => Number.isInteger(v) && (v as number) >= 0;
+const isString = (v: unknown): v is string => typeof v === 'string';
+const isDay = (v: unknown): v is string => isString(v) && /^\d{4}-\d{2}-\d{2}$/.test(v);
+const isScore = (v: unknown) => v === 0 || v === 0.5 || v === 1;
+
+const isLogEntry = (v: unknown) =>
+  isObject(v) && isNumber(v.t) && typeof v.ok === 'boolean' && isNumber(v.ms) && (v.sure === undefined || typeof v.sure === 'boolean');
+
+const isItem = (v: unknown): v is Item =>
+  isObject(v) &&
+  [1, 2, 3, 4, 5].includes(v.box as number) &&
+  isDay(v.due) &&
+  [0, 1, 2, 3].includes(v.support as number) &&
+  Array.isArray(v.log) &&
+  v.log.every(isLogEntry);
+
+const isStreak = (v: unknown): v is Streak =>
+  isObject(v) &&
+  isCount(v.current) &&
+  isCount(v.best) &&
+  (v.lastDay === '' || isDay(v.lastDay)) &&
+  (v.jokerWeek === undefined || (isString(v.jokerWeek) && /^\d{4}-W\d{2}$/.test(v.jokerWeek)));
+
+const isSession = (v: unknown): v is FbSessionRecord =>
+  isObject(v) && isDay(v.day) && isCount(v.ms) && isNumber(v.correct) && v.correct >= 0 && isCount(v.total) && isNumber(v.xp);
+
+const isPractice = (v: unknown): v is PracticeEntry =>
+  isObject(v) && isDay(v.day) && isString(v.item) && TASK_TYPES.includes(v.task as TaskType) && isScore(v.score) && isCount(v.ms);
+
+const isStep = (v: unknown) => isObject(v) && (v.leadFrom === 'N' || v.leadFrom === 'S') && isString(v.card);
+
+const isOwnLine = (v: unknown): v is OwnLine =>
+  isObject(v) && isString(v.combination) && isString(v.id) && isString(v.text) && Array.isArray(v.steps) && v.steps.every(isStep);
+
+const isTechniqueOverride = (v: unknown) =>
+  isObject(v) && (v.image === undefined || isString(v.image)) && (v.rule === undefined || isString(v.rule));
+
+const isStation = (v: unknown) =>
+  isObject(v) && isString(v.technique) && isCount(v.order) && (v.scene === undefined || isString(v.scene));
+
+// Ved en ny skemaversion: tilføj et trin, der løfter data fra version n til n + 1 og bevarer ukendte felter.
+const MIGRATIONS: Record<number, (data: Raw) => Raw> = {};
+
+function migrate(data: Raw): Raw {
+  let current = data;
+  while (isNumber(current.version) && current.version < FB_SCHEMA_VERSION) {
+    const step = MIGRATIONS[current.version];
+    if (!step) break;
+    current = step(current);
+  }
+  return current;
+}
+
+/** Læser gemte data. Ugyldige dele erstattes af standardværdier og noteres i `problems`; ukendte felter bevares. */
+export function readFbSaved(input: unknown): { saved: FbSaved; problems: string[] } {
+  const problems: string[] = [];
+  const fallback = defaultFbSaved();
+  if (!isObject(input)) return { saved: fallback, problems: ['data mangler'] };
+  const raw = migrate(input);
+
+  function check<T>(name: string, value: unknown, valid: (v: unknown) => boolean, def: T): T {
+    if (valid(value)) return value as T;
+    problems.push(value === undefined ? `${name} mangler` : `${name} er ugyldig`);
+    return def;
+  }
+  function record<T>(name: string, value: unknown, valid: (v: unknown) => boolean): Record<string, T> {
+    const entries = check<Raw>(name, value, isObject, {});
+    const result: Record<string, T> = {};
+    for (const [key, entry] of Object.entries(entries)) {
+      if (valid(entry)) result[key] = entry as T;
+      else problems.push(`${name}["${key}"] er ugyldig`);
+    }
+    return result;
+  }
+  function list<T>(name: string, value: unknown, valid: (v: unknown) => boolean): T[] {
+    const entries = check<unknown[]>(name, value, Array.isArray, []);
+    entries.forEach((entry, i) => valid(entry) || problems.push(`${name}[${i}] er ugyldig`));
+    return entries.filter(valid) as T[];
+  }
+
+  if (raw.version !== FB_SCHEMA_VERSION) problems.push('version er ugyldig');
+  const settingsIn = check<Raw>('settings', raw.settings, isObject, {});
+  const palaceIn = check<Raw>('palace', raw.palace, isObject, {});
+  const saved: FbSaved = {
+    ...raw,
+    version: 1,
+    settings: {
+      ...settingsIn,
+      sessionSeconds: 300,
+      dayStartsAtHour: 4,
+      fastMs: check('settings.fastMs', settingsIn.fastMs, (v) => isNumber(v) && v > 0, fallback.settings.fastMs),
+      newPerDay: check('settings.newPerDay', settingsIn.newPerDay, (v) => isCount(v) && v <= 10, fallback.settings.newPerDay),
+    },
+    items: record('items', raw.items, isItem),
+    introduced: record('introduced', raw.introduced, isDay),
+    palace: {
+      ...palaceIn,
+      techniques: record('palace.techniques', palaceIn.techniques, isTechniqueOverride),
+      stations: record('palace.stations', palaceIn.stations, isStation),
+    },
+    ownLines: list('ownLines', raw.ownLines, isOwnLine),
+    practice: list('practice', raw.practice, isPractice),
+    streak: check('streak', raw.streak, isStreak, fallback.streak),
+    xp: check('xp', raw.xp, (v) => isNumber(v) && v >= 0, 0),
+    sessions: list('sessions', raw.sessions, isSession),
+  };
+  return { saved, problems };
+}
+
+type Storage = { getItem(key: string): string | null; setItem(key: string, value: string): void };
+
+/** Indlæser tilstanden. Data, der ikke kan læses helt, kopieres til FB_BACKUP_KEY, før noget overskrives. */
+export function loadFbSaved(storage: Storage): FbSaved {
+  const text = storage.getItem(FB_STORAGE_KEY);
+  if (text === null) return defaultFbSaved();
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(text);
+  } catch {
+    storage.setItem(FB_BACKUP_KEY, text);
+    return defaultFbSaved();
+  }
+  const { saved, problems } = readFbSaved(parsed);
+  if (problems.length > 0) {
+    console.warn('Farvebehandlingens gemte data var delvist ugyldige:', problems);
+    storage.setItem(FB_BACKUP_KEY, text);
+  }
+  return saved;
+}
+
+export function saveFbSaved(storage: Storage, saved: FbSaved): boolean {
+  try {
+    storage.setItem(FB_STORAGE_KEY, JSON.stringify(saved));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export type FbImportResult = { ok: true; saved: FbSaved } | { ok: false; error: string };
+
+/** Validerer en eksporteret fil. Intet overskrives her; brugeren ser først et resumé. */
+export function parseFbImport(text: string): FbImportResult {
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(text);
+  } catch {
+    return { ok: false, error: 'Filen er ikke gyldig JSON.' };
+  }
+  if (!isObject(parsed) || !isNumber(parsed.version) || !isObject(parsed.palace) || !Array.isArray(parsed.ownLines)) {
+    return { ok: false, error: 'Filen indeholder ikke data fra farvebehandling.' };
+  }
+  if (parsed.version > FB_SCHEMA_VERSION) return { ok: false, error: 'Filen er fra en nyere version af appen.' };
+  const { saved, problems } = readFbSaved(parsed);
+  if (problems.length > 0) {
+    const shown = problems.slice(0, 3).join('; ');
+    return { ok: false, error: `Filen er ugyldig: ${shown}${problems.length > 3 ? ' …' : ''}` };
+  }
+  return { ok: true, saved };
+}
+
+export interface FbSummary {
+  xp: number;
+  streak: number;
+  best: number;
+  items: number;
+  sessions: number;
+  lastDay: string;
+}
+
+export function fbSummary(saved: FbSaved): FbSummary {
+  return {
+    xp: saved.xp,
+    streak: saved.streak.current,
+    best: saved.streak.best,
+    items: Object.keys(saved.items).length,
+    sessions: saved.sessions.length,
+    lastDay: saved.streak.lastDay,
+  };
+}
+
+export function fbExportFileName(today: string): string {
+  return `farvebehandling-${today}.json`;
 }

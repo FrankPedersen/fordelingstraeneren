@@ -7,6 +7,7 @@ import { describeLine } from './solver/describe';
 import type { Line, LineStep } from './solver/lines';
 import { solveGame, type Solution } from './solver/solve';
 import { concreteHands, frequencyHolding, type ClassifiedCase, type XRule } from './source/bridgehands';
+import { proposeTechnique } from './techniques';
 
 /**
  * Forberegning til opgavebanken: hyppighed, løsninger og validering mod bridgehands.com.
@@ -108,7 +109,7 @@ export function bankEntry(c: ClassifiedCase, pageName: string, solution: Combina
   const firstGoal = solution.goals[String(c.needs[0])];
   return {
     id: `${cardsData(north)}-${cardsData(south)}`,
-    technique: '',
+    technique: proposeTechnique(cardsData(north), cardsData(south), c.needs, solution).technique,
     north: cardsData(north),
     south: cardsData(south),
     goals: [...c.needs],

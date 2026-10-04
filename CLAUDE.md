@@ -90,12 +90,15 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
 - `source/bridgehands.ts`: læser bridgehands.com's tabeller, sorterer fejl fra og omsætter x til konkrete kort.
 - `precompute.ts`: hyppighed, opgavebank, løsninger, valideringsrapport og linjeteksterne til godkendelse som rene funktioner.
 - `analysis.ts`: data til analysevinduet (banken, linjerne, sandsynlighedsbåndet og kortvælgerens opslag).
-- `ui/`: skærmen (`FarvebehandlingScreen.tsx`, indlæses dovent fra `src/app/App.tsx`), `Analysevindue.tsx`, komponenterne Bridgebord, Kortvælger, Linjekort, Resultatkort og Sandsynlighedsbånd, al ordlyd i `texts.ts`, tokens i `tokens.css` og resten i `farvebehandling.css`.
-- `storage.ts`: udkast til skemaet for `farvebehandling:v1`; bruges først, når det er godkendt.
-- `content/`: kildens cases, `damen-mangler-hyppighed.csv`, `suit-combinations.json`, `solutions.json`, `techniques.json`, `validering-damen-mangler.md` og `linjer-damen-mangler.md`. Alt undtagen `techniques.json` genereres.
+- `training/`: opgavetyperne og pointtabellen (`tasks.ts`), progressionen (`progression.ts`), sessionsmotoren (`session.ts`), paladset (`palace.ts`) og Selvvalgts filtre (`practice.ts`).
+- `techniques.ts`: forslaget til teknik pr. kombination og listen til godkendelse.
+- `ui/`: skærmen (`FarvebehandlingScreen.tsx`, indlæses dovent fra `src/app/App.tsx`) med fanerne `Træning.tsx` (forside, session og status), `Selvvalgt.tsx` og `Analysevindue.tsx`; `Opgave.tsx`, `Facit.tsx`, `Introduktion.tsx`, `Rumkort.tsx`, `Palads.tsx` og `Data.tsx` (eksport og import); komponenterne Bridgebord, Kortvælger, Linjekort, Resultatkort og Sandsynlighedsbånd, al ordlyd i `texts.ts`, tokens i `tokens.css` og resten i `farvebehandling.css`.
+- `storage.ts`: skemaet for `farvebehandling:v1` (godkendt) med indlæsning, kopi af ulæselige data, gem, eksport og import.
+- `content/`: kildens cases, `damen-mangler-hyppighed.csv`, `suit-combinations.json`, `solutions.json`, `techniques.json`, `validering-damen-mangler.md`, `linjer-damen-mangler.md` og `teknikker-damen-mangler.md`. Alt undtagen `techniques.json` genereres.
 - Scripts: Node 24 kører TypeScript direkte, og kildekoden indlæses med Vites `runnerImport`, så `package.json` er uændret.
   - `node scripts/bridgehands.ts` henter siden "damen mangler".
-  - `node scripts/solve.ts` regner alt i `content/` (ca. 35 min).
+  - `node scripts/solve.ts` regner alt i `content/` (ca. 45 min).
+  - `node scripts/techniques.ts` sætter teknikken pr. kombination og skriver listen til godkendelse uden at løse igen.
 - Tokens: `design/tokens.json` holdes i takt med `src/ui/styles.css` af `src/tokens.test.ts`. Designsystemet i Claude Design er bygget på filen.
 
 **Beslutninger** (spørg, før du ændrer dem)
@@ -118,8 +121,16 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
 - **Sandsynlighedsbåndet:** et hul, hvor alle modpartens kort er 10 eller højere, vises med de konkrete kort; ellers er kortene små og vises som x. Felterne står efter fordeling (Vests antal kort) eller honnørplacering.
 - **Kortvælgeren:** en kombination findes i banken ud fra strukturen: hvilken hånd hvert af spilførerens kort sidder i, og hvor mange modpartskort der ligger imellem.
 - **Komponentreglen:** farvebehandlingens komponenter og `farvebehandling.css` bruger kun tokens, 0, 1px og procenter. Spalterne laves med flexbox og `var(--column)` i stedet for `fr` og media queries.
+- **Teknik pr. kombination:** et forslag efter reglerne i `techniques.ts` (sikkerhedsspil, når et lavere mål kræver en anden linje end flest stik; ellers hovedlinjens første kipning). Venter på Franks godkendelse (`content/teknikker-damen-mangler.md`).
+- **Sessionen** følger fordelingssporets motor uden at bruge den: repetition til 60 s, niveau til 210 s regnet fra start, lynrunde i 60 s og status. En ny kombination præsenteres med problem, hyppighed, rum og huskeregel, men uden linjer, og øves straks i hvert mål; derefter øves de fire senest introducerede kombinationer. Lynrunden skriver ikke i loggen og flytter kun emner ved fejl. Combo: rigtigt giver +1, halvt og forkert nulstiller. Sessionen tæller i streaken, når status vises.
+- **Opgavevalg:** motoren vælger vægtet blandt de mulige typer (Vælg linjen 4, Chancen, Linje mod linje, Nyt mål og Find hullet 2, Med optælling 1), højst to af samme type i træk.
+- **Svarmuligheder:** Vælg linjen viser den bedste linje og op til tre, der er mere end 0,5 procentpoint dårligere; lige gode linjer udelades, så der er ét rigtigt svar. Nyt mål vælger helst et tidligere mål med en anden bedste linje. Find hullet viser den hyppigste sidning, hvor linjen taber, og op til tre (mindst to), hvor den vinder. Med optælling regnes linjernes chance om med de ledige pladser; resultatet pr. sidning er linjens eget.
+- **Selvvalgt:** alle kombinationer i banken kan vælges, gættet er valgfrit (uden gæt bedømmes linjen alene), og loggen gemmer de seneste 500 svar. Alle seks teknikker står i filtret, også med 0.
+- **Paladset:** stationen oprettes ved introduktionen med teknik og nummer, så paladset bevarer sin orden, selv om banken senere får en anden teknik. Rum uden stationer er lukkede.
+- **Facit:** svaret, bordet, båndet og linjerne; "Hvorfor" viser rummet med huskeregel og billede, alle sidninger og resultatkortet. XP vises kun i Træning.
 
 **Status**
 - [x] Trin 2: Tokens (`design/tokens.json`) og designsystemet i Claude Design.
 - [x] Trin 1: Løser og model, startbank og validering for siden "damen mangler". Løsertestene tager 15–20 s.
-- [x] Trin 3: Analyse fase 1 med banken, kortvælgeren, linjerne på dansk, sandsynlighedsbåndet og sidningerne. Linjeteksterne venter på Franks godkendelse (`content/linjer-damen-mangler.md`).
+- [x] Trin 3: Analyse fase 1 med banken, kortvælgeren, linjerne på dansk, sandsynlighedsbåndet og sidningerne. Linjeteksterne er godkendt.
+- [ ] Trin 4: Træning (session, scoring, Leitner, streak og XP), Selvvalgt, paladset og egen eksport/import. Opgavetype 1–4, 6 og 8 er bygget; type 5 (Hvad nu?) mangler. Teknik pr. kombination venter på godkendelse.

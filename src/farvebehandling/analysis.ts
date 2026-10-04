@@ -142,9 +142,9 @@ const holdingText = (honors: Rank[], small: number) => {
 /**
  * Felterne i båndet: hver abstrakt sidning foldes ud i konkrete honnørplaceringer. Et hul, hvor alle kort er 10 eller
  * højere, vises med de konkrete kort; et hul med små kort samles som x (kortene i et hul er ligeværdige). Rækkefølgen er efter fordeling (Vests antal kort,
- * flest først) og derefter Vests honnører.
+ * flest først) og derefter Vests honnører. `weights` er de abstrakte sidningers chance med ledige pladser (ellers a priori).
  */
-export function bandFields(item: BankItem, lines: readonly LineView[]): BandField[] {
+export function bandFields(item: BankItem, lines: readonly LineView[], weights?: readonly number[]): BandField[] {
   const { gaps, layouts, denominator } = item.solution;
   const den = Number(denominator);
   const fields: BandField[] = [];
@@ -170,7 +170,7 @@ export function bandFields(item: BankItem, lines: readonly LineView[]): BandFiel
         eastSmall += gap.size - w;
       }
     });
-    const probability = Number(layout.weight) / den;
+    const probability = weights ? weights[L] : Number(layout.weight) / den;
     for (const v of variants) {
       fields.push({
         id: `${L}:${v.west.join(',')}`,

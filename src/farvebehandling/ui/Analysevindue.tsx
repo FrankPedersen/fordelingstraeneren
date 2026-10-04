@@ -189,7 +189,8 @@ export function Analysevindue({ bank }: AnalysevindueProps) {
   );
 }
 
-function LayoutList({
+/** Sidningerne som liste med chancen og hver linjes resultat; et tryk vælger sidningen. */
+export function LayoutList({
   fields,
   lines,
   selected,

@@ -1,9 +1,14 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import bankText from '../content/suit-combinations.json?raw';
 import solutionsText from '../content/solutions.json?raw';
+import techniquesFile from '../content/techniques.json';
 import { loadBank } from '../analysis';
+import { FB_STORAGE_KEY, loadFbSaved, saveFbSaved, type FbSaved } from '../storage';
+import { ensureStations } from '../training/palace';
 import { Analysevindue } from './Analysevindue';
+import { Selvvalgt } from './Selvvalgt';
 import { TEXT } from './texts';
+import { Træning } from './Træning';
 import './tokens.css';
 import './farvebehandling.css';
 
@@ -13,10 +18,37 @@ interface FarvebehandlingScreenProps {
   onBack(): void;
 }
 
+type Storage = { getItem(key: string): string | null; setItem(key: string, value: string): void };
+
+/** Browserens lagring; er den spærret (fx privat vindue), bruges en midlertidig i hukommelsen. */
+function browserStorage(): Storage {
+  try {
+    const storage = window.localStorage;
+    storage.getItem(FB_STORAGE_KEY);
+    return storage;
+  } catch {
+    const memory = new Map<string, string>();
+    return { getItem: (k) => memory.get(k) ?? null, setItem: (k, v) => void memory.set(k, v) };
+  }
+}
+
 /** Farvebehandlingens skal: tilbage til forsiden og fanerne Træning, Selvvalgt og Analyse. */
 export default function FarvebehandlingScreen({ onBack }: FarvebehandlingScreenProps) {
-  const [tab, setTab] = useState<Tab>('analysis');
+  const [tab, setTab] = useState<Tab>('training');
   const bank = useMemo(() => loadBank(bankText, solutionsText), []);
+  const techniques = techniquesFile.techniques;
+  const storage = useMemo(browserStorage, []);
+  // Intet skrives, før brugeren gør noget; et kig i Analyse rører ikke lagringen.
+  const [saved, setSaved] = useState<FbSaved>(() => ensureStations(loadFbSaved(storage), bank));
+  const [failed, setFailed] = useState(false);
+  const update = useCallback(
+    (next: FbSaved) => {
+      setSaved(next);
+      setFailed(!saveFbSaved(storage, next));
+    },
+    [storage],
+  );
+
   return (
     <main className="fb-screen">
       <header className="fb-header">
@@ -38,7 +70,14 @@ export default function FarvebehandlingScreen({ onBack }: FarvebehandlingScreenP
           ))}
         </nav>
       </header>
-      {tab === 'analysis' ? <Analysevindue bank={bank} /> : <p className="card">{TEXT.comingSoon(TEXT.tabs[tab])}</p>}
+      {failed && (
+        <p role="alert" className="fb-note">
+          {TEXT.saveFailed}
+        </p>
+      )}
+      {tab === 'training' && <Træning bank={bank} saved={saved} update={update} techniques={techniques} />}
+      {tab === 'practice' && <Selvvalgt bank={bank} saved={saved} update={update} techniques={techniques} />}
+      {tab === 'analysis' && <Analysevindue bank={bank} />}
     </main>
   );
 }
