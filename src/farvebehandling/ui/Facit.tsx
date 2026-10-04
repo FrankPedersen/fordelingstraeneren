@@ -98,14 +98,16 @@ export function Facit({ task, answer, graded, reward, place, onNext }: FacitProp
     );
   }
 
-  if (task.type === 'spil-selv' && answer.play) {
+  if (task.type === 'spil-selv' && answer.play && page === 'facit') {
     return (
       <div className="fb-facit">
-        <section className={`feedback ${graded.score > 0 ? 'ok' : 'bad'}`} role="status">
-          <span className="feedback-title">{title}</span>
-          {reward && reward.xp > 0 && <span className="feedback-meta">{TEXT.gained(reward.xp, reward.combo)}</span>}
-        </section>
-        <PlayResult item={task.bank} goal={task.goal} state={answer.play} />
+        <PlayResult
+          item={task.bank}
+          goal={task.goal}
+          state={answer.play}
+          title={title}
+          meta={reward && reward.xp > 0 ? TEXT.gained(reward.xp, reward.combo) : undefined}
+        />
         <div className="fb-actions">
           <button type="button" className="btn small-btn" onClick={() => setPage('why')}>
             {TEXT.why}

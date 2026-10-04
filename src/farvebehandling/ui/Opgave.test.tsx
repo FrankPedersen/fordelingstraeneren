@@ -2,7 +2,11 @@
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { mulberry32 } from '../../engine/rng';
+import techniquesFile from '../content/techniques.json';
 import { guessInterval } from '../model/guess';
+import { dealCards, finished, playLead, playThird, startPlay } from '../play/play';
+import { defaultFbSaved } from '../storage';
+import { placeOf } from '../training/palace';
 import { grade, makeTask } from '../training/tasks';
 import { bankItem } from '../testBank';
 import { Facit } from './Facit';
@@ -49,5 +53,36 @@ describe('Hvad nu?', () => {
     const rows = task.options.length;
     expect(widths.reduce((a, b) => a + b, 0) / rows).toBeCloseTo(100, 2);
     for (const f of fields) expect(f.getAttribute('aria-label')).toMatch(/Øst D/);
+  });
+});
+
+describe('Spil den selv', () => {
+  // E K 5 4 / B 3 2, 3 stik.
+  const item = bankItem('J32-AK54');
+  const task = makeTask('spil-selv', item, 3, mulberry32(1));
+  if (task.type !== 'spil-selv') throw new Error('forkert type');
+
+  it('samler bedømmelsen i én statusboks, og "Hvorfor" viser rummet og alle sidninger', () => {
+    // Lille fra hånden, til den er tom, og 3. hånd lægger lavt.
+    const rng = mulberry32(2);
+    let play = startPlay(item, dealCards(item, mulberry32(task.seed)));
+    while (!finished(play)) {
+      const hand = play.south.length ? 'S' : 'N';
+      play = playLead(play, hand, Math.min(...(hand === 'S' ? play.south : play.north)), rng);
+      const partner = hand === 'S' ? play.north : play.south;
+      play = playThird(play, partner.length ? Math.min(...partner) : 0, rng);
+    }
+    const id = item.combination.id;
+    const saved = { ...defaultFbSaved(), palace: { techniques: {}, stations: { [id]: { technique: item.combination.technique, order: 1 } } } };
+    const graded = grade(task, { play, ms: 1 }, 20_000);
+    render(<Facit task={task} answer={{ play }} graded={graded} reward={{ xp: 10, combo: 1 }} place={placeOf(saved, [item], techniquesFile.techniques, id)} onNext={() => {}} />);
+    const status = screen.getByRole('status');
+    expect(within(status).getByText(graded.score === 1 ? 'Rigtigt' : 'Forkert')).toBeTruthy();
+    expect(within(status).getByText(`${play.won} stik – målet var 3`)).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: 'Hvorfor →' }));
+    expect(screen.getByText(/^Rum: .+ · station 1$/)).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Alle sidninger' })).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: '← Facit' }));
+    expect(screen.getByRole('status')).toBeTruthy();
   });
 });

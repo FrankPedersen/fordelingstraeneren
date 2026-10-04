@@ -30,6 +30,13 @@ vi.mock('../solver/client', async () => {
   };
 });
 
+// Faste seeds, så sessionens valg af opgavetype er det samme hver gang, uanset hvilke test der kører før.
+const seeds = vi.hoisted(() => ({ next: 1 }));
+vi.mock('../../engine/rng', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../engine/rng')>();
+  return { ...actual, randomSeed: () => seeds.next++ };
+});
+
 const click = (name: string | RegExp) => fireEvent.click(screen.getByRole('button', { name }));
 const stored = (): FbSaved => JSON.parse(localStorage.getItem(FB_STORAGE_KEY)!);
 
@@ -39,6 +46,7 @@ const T0 = new Date(2026, 9, 5, 12, 0).getTime();
 beforeEach(() => {
   localStorage.clear();
   window.scrollTo = vi.fn();
+  seeds.next = 1;
 });
 
 afterEach(() => {
@@ -208,8 +216,9 @@ describe('Farvebehandling', { timeout: 30_000 }, () => {
     expect(stored().introduced).toEqual({ [first.combination.id]: '2026-10-05' });
     expect(stored().palace.stations[first.combination.id]).toEqual({ technique: room.id, order: 1 });
 
-    // Linjerne er skjult, indtil der er svaret.
-    expect(screen.getByText(`Mål: ${first.combination.goals[0]} stik`, { selector: '.prompt' })).toBeTruthy();
+    // Linjerne er skjult, indtil der er svaret (Spil den selv viser bordet med kortene).
+    const prompt = screen.queryByText(`Mål: ${first.combination.goals[0]} stik`, { selector: '.prompt' });
+    expect(prompt ?? screen.queryByRole('region', { name: 'Spil den selv' })).toBeTruthy();
     expect(screen.queryByText('✓ bedst')).toBeNull();
     answerAnything();
     expect(within(screen.getByRole('status')).getByText(/^(Rigtigt|Halvt rigtigt|Forkert)$/)).toBeTruthy();

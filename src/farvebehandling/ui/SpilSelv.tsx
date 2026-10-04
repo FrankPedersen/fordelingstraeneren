@@ -163,8 +163,11 @@ export function SpilSelv({ item, goal, seed, onDone, onClose }: SpilSelvProps) {
   );
 }
 
-/** Resultatet af et spil: stikkene, om en af de bedste linjer blev fulgt, og sidningen i båndet. */
-export function PlayResult({ item, goal, state }: { item: BankItem; goal: number; state: PlayState }) {
+/**
+ * Resultatet af et spil: stikkene, om en af de bedste linjer blev fulgt, og sidningen i båndet. I Træning sættes
+ * opgavens bedømmelse som overskrift (`title`) og XP som `meta`.
+ */
+export function PlayResult({ item, goal, state, title, meta }: { item: BankItem; goal: number; state: PlayState; title?: string; meta?: string }) {
   const lines = useMemo(() => linesForGoal(item, goal), [item, goal]);
   const fields = useMemo(() => bandFields(item, lines), [item, lines]);
   const [selected, setSelected] = useState(() => fieldIdOf(item, state.deal.layout, state.deal.west));
@@ -174,9 +177,11 @@ export function PlayResult({ item, goal, state }: { item: BankItem; goal: number
   return (
     <div className="fb-play-result">
       <div className={`feedback ${followed ? 'ok' : 'bad'}`} role="status">
-        <span className="feedback-title">{TEXT.playResult(state.won, goal, made)}</span>
+        <span className="feedback-title">{title ?? TEXT.playResult(state.won, goal, made)}</span>
+        {title && <span>{TEXT.playResult(state.won, goal, made)}</span>}
         <span>{tone}</span>
         <span>{followed ? TEXT.playFollowed : TEXT.playNotFollowed}</span>
+        {meta && <span className="feedback-meta">{meta}</span>}
       </div>
       <p className="fb-note">{TEXT.playLayoutNote}</p>
       <Sandsynlighedsbånd lines={lines} fields={fields} selected={selected} onSelect={setSelected} />
