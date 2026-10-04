@@ -160,6 +160,36 @@ export function findCombination(bank: readonly BankItem[], north: readonly Rank[
   return bank.find((b) => b.key === key) ?? null;
 }
 
+// ---------- Klubaftenen ----------
+
+/** Klubaftenen viser lige så mange kombinationer, som fordelingstrænerens klubaften har hænder. */
+export const CLUB_SIZE = 100;
+
+export interface ClubEvening {
+  /** De hyppigste kombinationer i rangorden. */
+  items: BankItem[];
+  /** Hyppigheden i forhold til den hyppigste (1 = den hyppigste). */
+  share: number[];
+  /** Antal kombinationer pr. teknik-id. */
+  techniques: Record<string, number>;
+  /** Antal kombinationer pr. antal kort i farven, stigende efter antal kort. */
+  cards: [cards: number, count: number][];
+}
+
+export function clubEvening(bank: readonly BankItem[], size = CLUB_SIZE): ClubEvening {
+  const items = [...bank].sort((a, b) => a.rank - b.rank).slice(0, size);
+  const perDeal = (b: BankItem) => Number(b.frequency.num) / Number(b.frequency.den);
+  const top = items.length ? perDeal(items[0]) : 1;
+  const techniques: Record<string, number> = {};
+  const cards = new Map<number, number>();
+  for (const b of items) {
+    techniques[b.combination.technique] = (techniques[b.combination.technique] ?? 0) + 1;
+    const n = b.north.length + b.south.length;
+    cards.set(n, (cards.get(n) ?? 0) + 1);
+  }
+  return { items, share: items.map((b) => perDeal(b) / top), techniques, cards: [...cards].sort((a, b) => a[0] - b[0]) };
+}
+
 // ---------- Linjerne ----------
 
 export interface LineView {

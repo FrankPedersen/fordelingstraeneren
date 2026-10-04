@@ -21,6 +21,7 @@ import type { FbAnswer } from '../training/tasks';
 import { Data } from './Data';
 import { Facit } from './Facit';
 import { Introduktion } from './Introduktion';
+import { Klubaften } from './Klubaften';
 import { Opgave } from './Opgave';
 import { Palads } from './Palads';
 import { TEXT } from './texts';
@@ -30,14 +31,17 @@ interface TræningProps {
   saved: FbSaved;
   update(next: FbSaved): void;
   techniques: readonly Technique[];
+  /** Åbner en kombination i Analyse (fra klubaftenen). */
+  onOpenAnalysis?(id: string): void;
 }
 
-/** Træning: forsiden med dagens plan, den daglige session, paladset og dine data. */
-export function Træning({ bank, saved, update, techniques }: TræningProps) {
-  const [view, setView] = useState<'home' | 'session' | 'palace' | 'data'>('home');
+/** Træning: forsiden med dagens plan, den daglige session, paladset, klubaftenen og dine data. */
+export function Træning({ bank, saved, update, techniques, onOpenAnalysis }: TræningProps) {
+  const [view, setView] = useState<'home' | 'session' | 'palace' | 'club' | 'data'>('home');
   const home = () => setView('home');
   if (view === 'session') return <SessionView bank={bank} saved={saved} update={update} techniques={techniques} onExit={home} />;
   if (view === 'palace') return <Palads bank={bank} saved={saved} update={update} techniques={techniques} onBack={home} />;
+  if (view === 'club') return <Klubaften bank={bank} techniques={techniques} onOpen={(id) => onOpenAnalysis?.(id)} onBack={home} />;
   if (view === 'data') return <Data saved={saved} update={update} onBack={home} />;
 
   const today = dayOf(Date.now(), saved.settings.dayStartsAtHour);
@@ -68,6 +72,9 @@ export function Træning({ bank, saved, update, techniques }: TræningProps) {
       <div className="fb-actions">
         <button type="button" className="btn" onClick={() => setView('palace')}>
           {TEXT.palace}
+        </button>
+        <button type="button" className="btn" onClick={() => setView('club')}>
+          {TEXT.club}
         </button>
         <button type="button" className="btn" onClick={() => setView('data')}>
           {TEXT.data}

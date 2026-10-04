@@ -232,6 +232,21 @@ export const TEXT = {
   noScene: 'Ingen scene endnu.',
   editLabel: (what: string) => `Ret ${what.toLowerCase()}`,
 
+  // Klubaften
+  club: 'Klubaften',
+  clubIntro: 'En klubaften er 25 spil. Felterne er de 100 kombinationer, du oftest møder, i rangorden.',
+  clubGrid: 'De 100 hyppigste kombinationer',
+  clubCell: (rank: number, holding: string, often: string) => `${rank}. ${holding}: ${often}`,
+  clubHint: 'Tryk på et felt for at se kombinationen og hyppigheden.',
+  clubName: (rank: number, holding: string) => `${rank}. ${holding}`,
+  clubOften: (often: string, deals: string) => `${often} (1 ud af ${deals} spil)`,
+  clubTechnique: (name: string, count: number) => `${name}: ${count} af de 100 kombinationer`,
+  clubChip: (name: string, count: number) => `${name} × ${count}`,
+  clubCards: (cards: readonly (readonly [number, number])[]) => `Kort i farven: ${cards.map(([n, c]) => `${n} kort ${c}`).join(' · ')}.`,
+  clubList: 'Hyppighed',
+  clubListFor: (name: string) => `Hyppighed · ${name}`,
+  openInAnalysis: 'Åbn i Analyse',
+
   // Dine data
   dataHelp: 'Farvebehandling gemmer alt i din browser under sin egen nøgle. Fordelingssporets data røres ikke.',
   exportData: 'Eksportér',

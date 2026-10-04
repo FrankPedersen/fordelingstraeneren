@@ -49,6 +49,8 @@ function loadAppBank(): Promise<BankItem[]> {
 /** Farvebehandlingens skal: tilbage til forsiden og fanerne Træning, Selvvalgt og Analyse. */
 export default function FarvebehandlingScreen({ onBack }: FarvebehandlingScreenProps) {
   const [tab, setTab] = useState<Tab>('training');
+  // Kombinationen, som Analyse åbner med, når den vælges i klubaftenen.
+  const [analysisStart, setAnalysisStart] = useState<string | null>(null);
   const [bank, setBank] = useState<BankItem[] | null>(null);
   const [loadFailed, setLoadFailed] = useState(false);
   const techniques = techniquesFile.techniques;
@@ -63,6 +65,12 @@ export default function FarvebehandlingScreen({ onBack }: FarvebehandlingScreenP
     },
     [storage],
   );
+
+  const openAnalysis = useCallback((id: string) => {
+    setAnalysisStart(id);
+    setTab('analysis');
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     let alive = true;
@@ -93,7 +101,10 @@ export default function FarvebehandlingScreen({ onBack }: FarvebehandlingScreenP
               type="button"
               className={`fb-tab${tab === t ? ' fb-tab-current' : ''}`}
               aria-current={tab === t ? 'page' : undefined}
-              onClick={() => setTab(t)}
+              onClick={() => {
+                setTab(t);
+                setAnalysisStart(null);
+              }}
             >
               {TEXT.tabs[t]}
             </button>
@@ -111,9 +122,9 @@ export default function FarvebehandlingScreen({ onBack }: FarvebehandlingScreenP
         </p>
       ) : (
         <>
-          {tab === 'training' && <Træning bank={bank} saved={saved} update={update} techniques={techniques} />}
+          {tab === 'training' && <Træning bank={bank} saved={saved} update={update} techniques={techniques} onOpenAnalysis={openAnalysis} />}
           {tab === 'practice' && <Selvvalgt bank={bank} saved={saved} update={update} techniques={techniques} />}
-          {tab === 'analysis' && <Analysevindue bank={bank} saved={saved} update={update} />}
+          {tab === 'analysis' && <Analysevindue bank={bank} start={analysisStart ?? undefined} saved={saved} update={update} />}
         </>
       )}
     </main>

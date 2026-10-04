@@ -6,6 +6,8 @@ import { formatDecimal } from '../../engine/format';
 import { STORAGE_KEY } from '../../engine/storage';
 import techniquesFile from '../content/techniques.json';
 import { linesForGoal } from '../analysis';
+import { cardsText } from '../model/cards';
+import { eveningText, oncePerDeals } from '../model/frequency';
 import { defaultFbSaved, FB_STORAGE_KEY, type FbSaved } from '../storage';
 import { filterOptions, NO_FILTER } from '../training/practice';
 import { itemKey, possibleTypes } from '../training/tasks';
@@ -264,6 +266,36 @@ describe('Farvebehandling', { timeout: 30_000 }, () => {
     click('Færdig');
     expect(screen.getByText('Dagens session er gennemført. Du kan tage en til.')).toBeTruthy();
     expect(localStorage.getItem(STORAGE_KEY)).toBe(before);
+  });
+
+  it('viser klubaftenen med de 100 hyppigste og åbner en kombination i Analyse', async () => {
+    await openFarvebehandling();
+    click('Klubaften');
+    const top = TEST_BANK.slice(0, 100);
+    const cells = within(screen.getByRole('group', { name: 'De 100 hyppigste kombinationer' })).getAllByRole('button');
+    expect(cells.map((c) => c.textContent)).toEqual(top.map((b) => String(b.rank)));
+    expect(screen.getByText(/^Kort i farven: 5 kort \d+ · 6 kort \d+ · 7 kort \d+ · 8 kort \d+ · 9 kort \d+\.$/)).toBeTruthy();
+    // En teknik: antallet blandt de 100, dens felter fremhæves, og listen viser kun dem.
+    const safety = top.filter((b) => b.combination.technique === 'sikkerhedsspil').length;
+    click(`Sikkerhedsspil × ${safety}`);
+    expect(screen.getByText(`Sikkerhedsspil: ${safety} af de 100 kombinationer`)).toBeTruthy();
+    expect(cells.filter((c) => c.classList.contains('fb-club-active'))).toHaveLength(safety);
+    expect(within(screen.getByRole('list', { name: 'Hyppighed · Sikkerhedsspil' })).getAllByRole('button')).toHaveLength(safety);
+    // Et felt viser kombinationen og hyppigheden med en knap, der åbner den i Analyse.
+    const third = top[2];
+    fireEvent.click(cells[2]);
+    expect(cells[2].getAttribute('aria-pressed')).toBe('true');
+    expect(screen.getByText(`3. ${cardsText(third.south)} / ${cardsText(third.north)}`, { selector: 'p' })).toBeTruthy();
+    expect(screen.getByText(`${eveningText(third.frequency)} (1 ud af ${oncePerDeals(third.frequency)} spil)`)).toBeTruthy();
+    click('Åbn i Analyse');
+    expect(screen.getByRole('button', { name: 'Analyse' }).getAttribute('aria-current')).toBe('page');
+    const current = within(screen.getByRole('list', { name: 'Banken' })).getByRole('button', { current: true });
+    expect(current.textContent).toMatch(/^3\. /);
+    // Fanen Træning åbner forsiden igen, og Analyse starter så med den hyppigste.
+    click('Træning');
+    expect(screen.getByRole('button', { name: 'Start dagens session' })).toBeTruthy();
+    click('Analyse');
+    expect(within(screen.getByRole('list', { name: 'Banken' })).getByRole('button', { current: true }).textContent).toMatch(/^1\. /);
   });
 
   it('viser paladsets åbne rum og gemmer egen huskeregel og scene', async () => {

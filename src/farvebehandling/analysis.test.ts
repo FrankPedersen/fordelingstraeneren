@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import bankText from './content/suit-combinations.json?raw';
-import { bandFields, disagreements, findCombination, linesForGoal, NEAR_BEST, situationHonors, sortFields, structureKey } from './analysis';
+import { bandFields, clubEvening, disagreements, findCombination, linesForGoal, NEAR_BEST, situationHonors, sortFields, structureKey } from './analysis';
 import { ACE, JACK, KING, parseCards, QUEEN } from './model/cards';
-import { oncePerDeals } from './model/frequency';
+import { eveningText, oncePerDeals } from './model/frequency';
 import { bankItem as byId, TEST_BANK as bank } from './testBank';
 
 describe('Banken i analysevinduet', () => {
@@ -81,5 +81,21 @@ describe('Linjer og sandsynlighedsbånd', () => {
     const byHonors = sortFields(fields, 'honnører');
     expect(byHonors).toHaveLength(fields.length);
     expect(new Set(byHonors.map((f) => f.id))).toEqual(new Set(fields.map((f) => f.id)));
+  });
+});
+
+describe('Klubaftenen', () => {
+  it('har de 100 hyppigste i rangorden med teknik, antal kort og hyppighed i forhold til den hyppigste', () => {
+    const club = clubEvening(bank);
+    expect(club.items.map((b) => b.rank)).toEqual(Array.from({ length: 100 }, (_, i) => i + 1));
+    // Nr. 1 er K 7 6 5 / 4 3 2, ca. én gang pr. 11 spil; nr. 100 kommer ca. hver 17. klubaften.
+    expect(club.items[0].combination.id).toBe('432-K765');
+    expect(oncePerDeals(club.items[0].frequency)).toBe(11);
+    expect(eveningText(club.items[99].frequency)).toBe('ca. hver 17. klubaften');
+    expect(club.share[0]).toBe(1);
+    for (let i = 1; i < 100; i++) expect(club.share[i]).toBeLessThanOrEqual(club.share[i - 1]);
+    expect(Object.values(club.techniques).reduce((a, b) => a + b, 0)).toBe(100);
+    expect(club.cards.reduce((sum, [, count]) => sum + count, 0)).toBe(100);
+    expect(club.cards.map(([cards]) => cards)).toEqual([5, 6, 7, 8, 9]);
   });
 });

@@ -587,6 +587,100 @@
   font: inherit;
 }
 
+/* Klubaften: 10 × 10 felter som i fordelingstræneren; hver spalte er 10 % bred. */
+
+.fb-club-grid {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.fb-club-cell {
+  flex: 0 0 10%;
+  aspect-ratio: 1;
+  padding: var(--space-2);
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: var(--type-eyebrow);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.fb-club-cell > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-4);
+  background: var(--surface);
+}
+
+.fb-club-active > span {
+  border-color: var(--fb-hit);
+  background: var(--fb-hit);
+  color: var(--fb-hit-text);
+}
+
+/* Felter uden den valgte teknik træder tilbage med dæmpet tekst, men holder kontrasten. */
+.fb-club-dim > span {
+  color: var(--muted);
+}
+
+.fb-club-current > span {
+  outline: 1px solid var(--ink);
+  outline-offset: 1px;
+  font-weight: 700;
+}
+
+.fb-club-caption p {
+  margin: 0;
+}
+
+.fb-club-name {
+  font-weight: 600;
+}
+
+.fb-club-list {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fb-club-row {
+  display: grid;
+  gap: var(--space-4);
+  width: 100%;
+  min-height: var(--touch-min);
+  padding: var(--space-8) var(--space-12);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-10);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.fb-club-bar {
+  display: block;
+  height: var(--space-6);
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: var(--line);
+}
+
+.fb-club-bar > span {
+  display: block;
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: var(--fb-bar);
+}
+
 /* Hvad nu?: første runde */
 
 .fb-trick {

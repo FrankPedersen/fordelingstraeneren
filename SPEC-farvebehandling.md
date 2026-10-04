@@ -105,6 +105,14 @@ P = \frac{\binom{39}{13-a}\binom{26+a}{13-b}}{\binom{52}{13}\binom{39}{13}} \cdo
 
 **Visning.** Hyppigheden vises som naturlig frekvens i analysevinduet og på facitskærmen, fx "ca. hver 5. klubaften" eller "ca. 3 gange pr. klubaften". En klubaften er 25 spil.
 
+**Klubaften.** Trænings forside har en knap til klubaftenen som i fordelingstræneren (Franks ønske, 4. oktober 2026):
+
+- Bankens 100 hyppigste kombinationer står som 10 × 10 felter i rangorden med rangnummeret.
+- Et tryk på et felt viser kombinationen, hyppigheden, fx "ca. hver 2. klubaften (1 ud af 40 spil)", og teknikken med en knap, der åbner kombinationen i Analyse.
+- En knap pr. teknik viser, hvor mange af de 100 der har teknikken, fx "Sikkerhedsspil × 41", og fremhæver deres felter. Knapperne står efter antal.
+- En linje viser antal kombinationer pr. antal kort i farven.
+- Nederst står de 100 med hyppighed pr. klubaften og en søjle i forhold til den hyppigste. Listen følger den valgte teknik, og et tryk åbner kombinationen i Analyse.
+
 **Situation frem for kombination.** Hver enkelt kombination er sjælden, men situationen bag er almindelig. Appen viser begge tal. Eksempel, es og konge men ikke damen:
 
 | Kort i farven | Pr. spil | Pr. klubaften |
@@ -319,7 +327,7 @@ Regler for brugerfladen:
 - **Afspilning:** en selvstændig tilstand. Den aktuelle sidning lyser op i båndet.
 - **Træning:** linjer og forskel er skjult, indtil brugeren har valgt linje og gættet en chance.
 - **Tone:** kollegial og adskiller beslutning fra resultat, fx "God beslutning – sidningen var imod dig".
-- **Tilgængelighed:** trykflader mindst 44 px og kontrast mindst 4,5:1.
+- **Tilgængelighed:** trykflader mindst 44 px og kontrast mindst 4,5:1. Undtagelse: klubaftenens 10 × 10 felter er mindre på smalle skærme; listen under dem har trykflader i fuld størrelse.
 
 ## Designarbejde i Claude Design
 

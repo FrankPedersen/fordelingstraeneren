@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { formatDecimal } from '../../engine/format';
 import { randomSeed } from '../../engine/rng';
 import {
@@ -33,6 +33,8 @@ import { TEXT } from './texts';
 
 interface AnalysevindueProps {
   bank: readonly BankItem[];
+  /** Kombinationen, der vises først (fx valgt i klubaftenen); ellers den hyppigste. */
+  start?: string;
   /** Egne linjer gemmes i farvebehandlingens data. */
   saved?: FbSaved;
   update?(next: FbSaved): void;
@@ -62,9 +64,14 @@ function useSeconds(running: boolean): number {
   return now;
 }
 
-export function Analysevindue({ bank, saved, update }: AnalysevindueProps) {
-  const [item, setItem] = useState<BankItem>(bank[0]);
-  const [goal, setGoal] = useState<number>(bank[0].combination.goals[0]);
+export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps) {
+  const [item, setItem] = useState<BankItem>(() => bank.find((b) => b.combination.id === start) ?? bank[0]);
+  const [goal, setGoal] = useState<number>(() => item.combination.goals[0]);
+  const currentRef = useRef<HTMLButtonElement>(null);
+  // Valgt i klubaftenen: banklisten ruller hen til kombinationen.
+  useEffect(() => {
+    if (start) currentRef.current?.scrollIntoView?.({ block: 'nearest' });
+  }, [start]);
   const [mode, setMode] = useState<'bank' | 'picker'>('bank');
   const [picked, setPicked] = useState<{ north: Rank[]; south: Rank[] }>({ north: [], south: [] });
   const [grouping, setGrouping] = useState<Grouping>('fordeling');
@@ -239,6 +246,7 @@ export function Analysevindue({ bank, saved, update }: AnalysevindueProps) {
                 {shown.map((b) => (
                   <li key={b.combination.id}>
                     <button
+                      ref={b === item ? currentRef : undefined}
                       type="button"
                       className={`fb-bank-item${b === item ? ' fb-bank-current' : ''}`}
                       aria-current={b === item}
