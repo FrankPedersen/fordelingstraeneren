@@ -1,9 +1,11 @@
 import { binomial } from '../domain/combinatorics';
 import { ACE, ALL_RANKS, JACK, KING, QUEEN, rankFromSymbol, rankText, TEN, type Rank } from './model/cards';
 import type { Fraction } from './model/fraction';
-import { situationFrequency } from './model/frequency';
+import { combinationFrequency, situationFrequency } from './model/frequency';
 import type { AppEntry, AppLead, Combination, CombinationSolution, GoalResult, LeadResult } from './precompute';
 import type { WhatNowSituation } from './model/whatnow';
+import type { CombinationBase } from './solver/results';
+import { frequencyHolding } from './source/bridgehands';
 
 /** Data til analysevinduet: banken, linjerne, sandsynlighedsbåndet og opslag fra kortvælgeren. */
 
@@ -58,7 +60,7 @@ function bankItem(entry: AppEntry, page: number): BankItem {
     solution,
     rank: entry.rank,
     page,
-    points: [ACE, KING, QUEEN, JACK].filter((r) => !north.includes(r) && !south.includes(r)).reduce((sum, r) => sum + r - 10, 0),
+    points: pointsOf(north, south),
     north,
     south,
     // Hyppigheden er regnet ud fra kildens holding med x (som rangen); de konkrete kort kan ikke give den tilbage.
@@ -67,6 +69,57 @@ function bankItem(entry: AppEntry, page: number): BankItem {
     honors,
     key: structureKey(north, south),
     whatNow: entry.whatNow ?? {},
+  };
+}
+
+/** Modpartens honnørpoint: E 4, K 3, D 2 og B 1 for de honnører, spilføreren ikke har. */
+function pointsOf(north: readonly Rank[], south: readonly Rank[]): number {
+  return [ACE, KING, QUEEN, JACK].filter((r) => !north.includes(r) && !south.includes(r)).reduce((sum, r) => sum + r - 10, 0);
+}
+
+/**
+ * Målene, der er værd at regne for en kombination uden for banken: chancen for mindst så mange stik med linjen for
+ * flest stik ligger mellem 1 % og 99 %. Først regnes det højeste mål med mindst 25 %.
+ */
+export function goalCandidates(base: CombinationBase, tricks: GoalResult): { goals: number[]; preferred: number } {
+  const rounds = Math.max(base.north.length, base.south.length);
+  const best = tricks.leads[tricks.best];
+  if (!best) return { goals: [rounds], preferred: rounds };
+  const den = BigInt(base.denominator);
+  const chance = (g: number) => {
+    let hits = 0n;
+    base.layouts.forEach((l, L) => {
+      if (best.layouts[L] >= g) hits += BigInt(l.weight);
+    });
+    return Number((hits * 1_000_000n) / den) / 1e6;
+  };
+  const goals: number[] = [];
+  for (let g = rounds; g >= 1; g--) {
+    const p = chance(g);
+    if (p > 0.01 && p < 0.99) goals.push(g);
+  }
+  if (!goals.length) goals.push(rounds);
+  return { goals, preferred: goals.find((g) => chance(g) >= 0.25) ?? goals[goals.length - 1] };
+}
+
+/** En kombination uden for banken, regnet i appen (Analyse fase 2). Mål uden løsning endnu mangler i `solved`. */
+export function customItem(base: CombinationBase, goals: number[], solved: Record<string, GoalResult>, tricks?: GoalResult): BankItem {
+  const north = ranksOf(base.north), south = ranksOf(base.south);
+  const x = frequencyHolding({ hand: base.south, dummy: base.north });
+  const honors = situationHonors(north, south);
+  return {
+    combination: { id: `${base.north}-${base.south}`, technique: '', north: base.north, south: base.south, goals, entries: 'unlimited', lines: [], verified: false },
+    solution: { ...base, goals: solved, tricks },
+    rank: 0,
+    page: -1,
+    points: pointsOf(north, south),
+    north,
+    south,
+    frequency: combinationFrequency(x.hand, x.dummy),
+    situation: situationFrequency(honors.ours, honors.theirs, north.length + south.length),
+    honors,
+    key: structureKey(north, south),
+    whatNow: {},
   };
 }
 

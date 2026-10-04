@@ -675,3 +675,48 @@
 .fb-trick-E {
   grid-area: e;
 }
+
+/* Egne linjer */
+
+.fb-editor-card {
+  display: grid;
+  gap: var(--space-10);
+}
+
+.fb-editor-card h3,
+.fb-editor-step h4 {
+  margin: 0;
+}
+
+.fb-editor-steps {
+  display: grid;
+  gap: var(--space-12);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fb-editor-step {
+  display: grid;
+  gap: var(--space-8);
+  padding: var(--space-10) var(--space-12);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-10);
+}
+
+.fb-input {
+  width: 100%;
+  min-height: var(--touch-min);
+  padding: var(--space-8) var(--space-10);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-8);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+
+.fb-errors {
+  margin: 0;
+  padding-left: var(--space-20);
+  color: var(--text);
+}

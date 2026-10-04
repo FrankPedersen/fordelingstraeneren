@@ -113,7 +113,7 @@ export default function FarvebehandlingScreen({ onBack }: FarvebehandlingScreenP
         <>
           {tab === 'training' && <Træning bank={bank} saved={saved} update={update} techniques={techniques} />}
           {tab === 'practice' && <Selvvalgt bank={bank} saved={saved} update={update} techniques={techniques} />}
-          {tab === 'analysis' && <Analysevindue bank={bank} />}
+          {tab === 'analysis' && <Analysevindue bank={bank} saved={saved} update={update} />}
         </>
       )}
     </main>

@@ -346,14 +346,14 @@ Krav til farvebehandlingens komponenter, så designet kan ændres bagefter:
 
 ## Leverancetrin, accepttest og åbne punkter
 
-Farvebehandling bygges i seks trin. Trin 1–5 er færdige; trin 6 mangler.
+Farvebehandling bygges i seks trin. Alle seks er færdige.
 
 1. **Løser og model:** sidningsberegning, løser med optimalt modspil, hyppighed og tests. Startbankens resultater forudberegnes i Node, og valideringsrapporten for siden "damen mangler" laves.
 2. **Tokens og designsystem:** færdige, se afsnittet Designarbejde.
 3. **Analyse fase 1** efter designgrundlaget i Layout, med startbanken og løserens resultater.
 4. **Træning og Selvvalgt** med session, scoring og palads; opgavetype 1–4, derefter 5–8.
 5. **Spil den selv** med normalt modspil.
-6. **Analyse fase 2:** løseren i appen; metoden afklares senere.
+6. **Analyse fase 2:** løseren i appen; den kører i browseren på forespørgsel (se Afklaret).
 
 Accepttest i Vitest:
 
@@ -388,7 +388,8 @@ Accepttest i Vitest:
 
 - **Startbanken:** siderne 0–9 er beregnet (660 kombinationer). Kombinationer fra Blakset-videoerne kan tilføjes med kildens procent pr. mål.
 - **Daglig session:** om farvebehandling senere skal indgå i fordelingssporets session.
-- **Fase 2:** hvordan løseren med optimalt modspil skal køre i appen.
 - **x i kilden:** case 4 tyder på, at kilden ikke altid lader x tabe til modpartens små kort. Valideringsrapporterne viser begge fortolkninger og hvilken der passer bedst; appen bruger "lav".
+
+Afklaret: **Fase 2.** Løseren kører i browseren i baggrunden (en Web Worker) på forespørgsel (Franks valg, 4. oktober 2026). En kombination uden for banken regnes fra kortvælgeren: først flest stik i gennemsnit, så målene, der er værd at regne, ét ad gangen. Egne linjer regnes på samme måde og gemmes under `ownLines`.
 
 Afklaret: **Teknik pr. case.** Hver kombination har en teknik efter reglerne i `src/farvebehandling/techniques.ts` (listen står i `content/teknikker.md`); Frank bad om, at forslaget blev færdiggjort (4. oktober 2026).

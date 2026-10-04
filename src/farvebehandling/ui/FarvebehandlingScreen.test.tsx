@@ -121,6 +121,34 @@ describe('Farvebehandling', { timeout: 30_000 }, () => {
     expect(screen.getByText(/findes ikke i banken/)).toBeTruthy();
   });
 
+  it('regner en kombination uden for banken og en egen linje i appen (fase 2)', async () => {
+    await openFarvebehandling();
+    click('Analyse');
+    click('Kortvælger');
+    const tap = (card: string, times: number) => {
+      for (let i = 0; i < times; i++) fireEvent.click(screen.getByRole('button', { name: new RegExp(`^${card}: `) }));
+    };
+    // Specens eksempel B 4 3 2 / E 10 6 5 er ikke på bridgehands' sider.
+    for (const c of ['B', '4', '3', '2']) tap(c, 1);
+    for (const c of ['E', '10', '6', '5']) tap(c, 2);
+    expect(screen.getByText(/findes ikke i banken/)).toBeTruthy();
+    click('Regn den ud');
+    expect((await screen.findAllByText('37,3 %', {}, { timeout: 20_000 })).length).toBeGreaterThan(0);
+    expect(screen.getByText('Regnet i appen; der er ingen kilde at sammenligne med.')).toBeTruthy();
+    expect(screen.getByRole('button', { name: '3 stik' }).getAttribute('aria-pressed')).toBe('true');
+    // Målet 2 stik regnes, når det vælges.
+    click('2 stik');
+    expect(await screen.findByText('Bedste chance for 2 stik: 100,0 % med linje A.', {}, { timeout: 20_000 })).toBeTruthy();
+    click('3 stik');
+    // En egen linje: lille fra hånden.
+    click('+ Egen linje');
+    click('Gem og regn');
+    const own = await screen.findByRole('article', { name: /^Din linje X: / }, { timeout: 20_000 });
+    expect(stored().ownLines).toEqual([expect.objectContaining({ combination: 'J432-AT65', steps: [{ leadFrom: 'S', card: 'low' }] })]);
+    fireEvent.click(within(own).getByRole('button', { name: 'Slet' }));
+    expect(stored().ownLines).toEqual([]);
+  });
+
   it('spiller kombinationen selv fra analysevinduet mod normalt modspil', async () => {
     await openFarvebehandling();
     click('Analyse');

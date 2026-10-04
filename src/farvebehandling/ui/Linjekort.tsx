@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { formatDecimal } from '../../engine/format';
 import type { LineView } from '../analysis';
 import { TEXT } from './texts';
@@ -11,10 +12,15 @@ interface LinjekortProps {
   /** Som svarmulighed: kortet er en knap. */
   selected?: boolean;
   onSelect?(): void;
+  /** Anden titel end "Linje A", fx "Din linje X". */
+  title?: string;
+  /** En knap i kortets hoved, fx "Slet". */
+  action?: ReactNode;
 }
 
 /** En linje med chancen og de nummererede trin. Den bedste linje markeres, men først efter svaret. */
-export function Linjekort({ line, hideResult = false, chosen = false, selected = false, onSelect }: LinjekortProps) {
+export function Linjekort({ line, hideResult = false, chosen = false, selected = false, onSelect, title, action }: LinjekortProps) {
+  const heading = title ?? TEXT.line(line.letter);
   const badges = (
     <>
       {!hideResult && <span className="fb-line-value">{formatDecimal(100 * line.value, 1)} %</span>}
@@ -47,10 +53,11 @@ export function Linjekort({ line, hideResult = false, chosen = false, selected =
     );
   }
   return (
-    <article className={`fb-line${!hideResult && line.best ? ' fb-line-best' : ''}`} aria-label={TEXT.line(line.letter)}>
+    <article className={`fb-line${!hideResult && line.best ? ' fb-line-best' : ''}`} aria-label={heading}>
       <header className="fb-line-head">
-        <h3>{TEXT.line(line.letter)}</h3>
+        <h3>{heading}</h3>
         {badges}
+        {action}
       </header>
       <ol className="fb-steps">
         {line.lead.steps.map((step, i) => (

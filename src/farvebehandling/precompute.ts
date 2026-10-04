@@ -4,9 +4,9 @@ import { percentOf, type Fraction } from './model/fraction';
 import { combinationFrequency, eveningText, oncePerDeals } from './model/frequency';
 import { solveSubgame } from './solver/cfr';
 import { buildGame, type Objective } from './solver/game';
-import { describeLine } from './solver/describe';
 import type { Line, LineStep } from './solver/lines';
-import { solveGame, type Solution } from './solver/solve';
+import { combinationBase, goalResult } from './solver/results';
+import { solveGame } from './solver/solve';
 import { whatNow, type WhatNowSituation } from './solver/whatnow';
 import { caseLabel, concreteHands, frequencyHolding, type ClassifiedCase, type XRule } from './source/bridgehands';
 import { proposeTechnique } from './techniques';
@@ -172,28 +172,6 @@ export interface CombinationSolution {
   tricks?: GoalResult;
 }
 
-function goalResult(solution: Solution): GoalResult {
-  return {
-    value: solution.value,
-    best: solution.best,
-    leads: solution.leads.map((l) => {
-      const described = describeLine(solution.game, l.strategy, l.slot);
-      return {
-        hand: l.lead.hand,
-        high: l.lead.high,
-        low: l.lead.low,
-        value: l.value,
-        exact: l.exact.toString(),
-        upper: l.upper,
-        certified: l.certified,
-        layouts: [...l.layoutValues],
-        steps: described.steps,
-        line: described.line.steps,
-      };
-    }),
-  };
-}
-
 export function solveCombination(
   north: readonly Rank[],
   south: readonly Rank[],
@@ -212,20 +190,7 @@ export function solveCombination(
     return solution;
   };
   const first = buildGame(north, south, { objective: { kind: 'goal', goal: goals[0] } });
-  const declarer = first.declarer;
-  const gaps = first.gaps.map((size, q) => ({
-    high: q === 0 ? 14 : declarer[q - 1].rank - 1,
-    low: q === declarer.length ? 2 : declarer[q].rank + 1,
-    size,
-  }));
-  const result: CombinationSolution = {
-    north: cardsData(north),
-    south: cardsData(south),
-    denominator: first.denominator.toString(),
-    gaps,
-    layouts: first.layouts.map((l) => ({ west: [...l.west], weight: l.weight.toString() })),
-    goals: {},
-  };
+  const result: CombinationSolution = { ...combinationBase(first), goals: {} };
   for (const goal of goals) result.goals[String(goal)] = goalResult(solve({ kind: 'goal', goal }));
   if (options.tricks) result.tricks = goalResult(solve({ kind: 'tricks' }));
   return options.whatNow ? { ...result, whatNow: situations } : result;

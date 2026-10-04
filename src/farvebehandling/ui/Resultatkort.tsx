@@ -30,7 +30,7 @@ export function Resultatkort({ item, goal, best }: ResultatkortProps) {
           eveningText(item.situation),
         )}
       </p>
-      <p className="fb-note">{verified ? TEXT.verified : TEXT.unverified}</p>
+      <p className="fb-note">{!item.combination.source ? TEXT.computedInApp : verified ? TEXT.verified : TEXT.unverified}</p>
     </section>
   );
 }
