@@ -13,7 +13,8 @@ import { cardName } from './solver/describe';
  *    end den bedste linje for målet. Målet kræver altså en anden linje end maksimum.
  * 2. **Hovedmålet** er det mål, hvor valget betyder mest: størst afstand fra den bedste linje til den bedste forkerte.
  *    Mål under 25 % tæller kun, hvis alle mål ligger under.
- * 3. **Hovedlinjens første kipning** afgør resten: ligger modpartens kort over kortet, der kippes med, i to huller
+ * 3. **Hovedlinjens første kipning** afgør resten (er flere linjer lige gode, vælges den mest lærerige: dobbelt kipning,
+ *    så enkelt kipning, så spil mod honnør, så et sikkerhedsspil og til sidst fald): ligger modpartens kort over kortet, der kippes med, i to huller
  *    (fx K og B over E D 10), er det en dobbelt kipning. Er kortet det højeste, der er tilbage i sin hånd, spilles der
  *    mod en honnør. Ellers er det en enkelt kipning; mod damen eller knægten med 8 kort eller flere fald eller kip.
  * 4. **Små kort fra begge hænder** er en kipning, når håndens laveste kort har en eller to af modpartens kort over sig
@@ -150,7 +151,6 @@ export function proposeTechnique(
   let goal = candidates[0];
   for (const g of candidates) if (decisionGap(s, g) > decisionGap(s, goal) + 1e-12) goal = g;
   const result = s.goals[String(goal)];
-  const text = result.leads[result.best].steps.join(' ');
   const ours = [...n, ...so].sort((a, b) => b - a);
   const above = (r: Rank) => missing.filter((m) => m > r).length;
   const below = (r: Rank) => missing.filter((m) => m < r).length;
@@ -168,35 +168,52 @@ export function proposeTechnique(
       ? { technique: 'dobbelt-kipning', goal, reason: `${why}, og modpartens kort over den ligger i to huller.` }
       : single(r, why);
 
-  // 3.–4. Den første kipning i hovedlinjen.
-  const first = [TOWARD, RUN, DUCK]
-    .map((re) => ({ re, m: re.exec(text) }))
-    .filter((x): x is { re: RegExp; m: RegExpExecArray } => x.m !== null)
-    .sort((a, b) => a.m.index - b.m.index)[0];
-  if (first && first.re !== DUCK) {
-    const f = rankOfName(first.m[1]);
-    const name = cardName(f);
-    if (first.re === RUN) return finesse(f, `${name[0].toUpperCase()}${name.slice(1)} spilles ud og løber`);
-    if (gapsAbove(f) >= 2) return finesse(f, `Der kippes mod ${name}`);
-    const hand = n.includes(f) ? n : so;
-    const played = namedBefore(text, first.m.index);
-    if (!hand.some((r) => r > f && !played.has(r))) {
-      return { technique: 'spil-mod-honnoer', goal, reason: `Der spilles mod ${name}, som er det højeste kort, der er tilbage i hånden.` };
+  // 3.–5. Hver lige god linje til hovedmålet vurderes efter sin første kipning; den mest lærerige vinder.
+  const fromLine = (text: string): TechniqueProposal => {
+    const first = [TOWARD, RUN, DUCK]
+      .map((re) => ({ re, m: re.exec(text) }))
+      .filter((x): x is { re: RegExp; m: RegExpExecArray } => x.m !== null)
+      .sort((a, b) => a.m.index - b.m.index)[0];
+    if (first && first.re !== DUCK) {
+      const f = rankOfName(first.m[1]);
+      const name = cardName(f);
+      if (first.re === RUN) return finesse(f, `${name[0].toUpperCase()}${name.slice(1)} spilles ud og løber`);
+      if (gapsAbove(f) >= 2) return finesse(f, `Der kippes mod ${name}`);
+      const hand = n.includes(f) ? n : so;
+      const played = namedBefore(text, first.m.index);
+      if (!hand.some((r) => r > f && !played.has(r))) {
+        return { technique: 'spil-mod-honnoer', goal, reason: `Der spilles mod ${name}, som er det højeste kort, der er tilbage i hånden.` };
+      }
+      return single(f, `Kipning mod ${name}`);
     }
-    return single(f, `Kipning mod ${name}`);
-  }
-  if (first) {
-    const played = namedBefore(text, first.m.index);
-    const lowest = (hand: Rank[]) => Math.min(...hand.filter((r) => !played.has(r)));
-    const card = Math.max(lowest(n), lowest(so));
-    if (above(card) >= 1 && above(card) <= 2 && below(card) >= 1) {
-      return finesse(card, `Små kort fra begge hænder kipper med ${cardName(card)}`);
+    if (first) {
+      const played = namedBefore(text, first.m.index);
+      const lowest = (hand: Rank[]) => Math.min(...hand.filter((r) => !played.has(r)));
+      const card = Math.max(lowest(n), lowest(so));
+      if (above(card) >= 1 && above(card) <= 2 && below(card) >= 1) {
+        return finesse(card, `Små kort fra begge hænder kipper med ${cardName(card)}`);
+      }
+      return { technique: 'sikkerhedsspil', goal, reason: 'Små kort fra begge hænder giver et stik væk for at sikre resten.' };
     }
-    return { technique: 'sikkerhedsspil', goal, reason: 'Små kort fra begge hænder giver et stik væk for at sikre resten.' };
+    // Ingen kipning: der spilles på fald.
+    return { technique: 'fald-eller-kip', goal, reason: `Linjen spiller på fald med ${count} kort.` };
+  };
+  const priority = (p: TechniqueProposal) =>
+    p.technique === 'dobbelt-kipning' ? 0
+      : p.technique === 'enkelt-kipning' || (p.technique === 'fald-eller-kip' && !p.reason.startsWith('Linjen spiller på fald')) ? 1
+      : p.technique === 'spil-mod-honnoer' ? 2
+      : p.technique === 'sikkerhedsspil' ? 3
+      : 4;
+  const tied = result.leads
+    .map((lead, i) => ({ lead, i }))
+    .filter(({ lead }) => result.value - lead.value <= NEAR_BEST)
+    .sort((a, b) => (a.i === result.best ? -1 : b.i === result.best ? 1 : b.lead.value - a.lead.value));
+  let chosen = fromLine(tied[0].lead.steps.join(' '));
+  for (const { lead } of tied.slice(1)) {
+    const p = fromLine(lead.steps.join(' '));
+    if (priority(p) < priority(chosen)) chosen = p;
   }
-
-  // 5. Ingen kipning: der spilles på fald.
-  return { technique: 'fald-eller-kip', goal, reason: `Linjen spiller på fald med ${count} kort.` };
+  return chosen;
 }
 
 interface TechniqueInfo {
@@ -220,7 +237,7 @@ export function techniquesReport(
     '',
     '0. **Begrænset valg:** i første runde af den bedste linje falder én af to eller flere ligeværdige honnører hos modparten (i mindst 5 % af spillene), og så er kipning klart bedst.',
     '1. **Sikkerhedsspil:** til et lavere mål giver linjen med flest stik i gennemsnit mere end 0,5 procentpoint mindre end den bedste linje.',
-    '2. **Hovedmålet** er det mål, hvor valget af linje betyder mest. Mål under 25 % tæller kun, hvis alle mål ligger under.',
+    '2. **Hovedmålet** er det mål, hvor valget af linje betyder mest. Mål under 25 % tæller kun, hvis alle mål ligger under. Er flere linjer lige gode (inden for 0,5 procentpoint), vælges den mest lærerige: dobbelt kipning, enkelt kipning, spil mod honnør, sikkerhedsspil, fald.',
     '3. **Hovedlinjens første kipning:** modpartens kort over kortet ligger i to huller (fx K og B over E D 10) = dobbelt kipning; spilles der mod det højeste kort, der er tilbage i hånden = spil mod honnør; ellers enkelt kipning, mod damen eller knægten med 8 kort eller flere fald eller kip.',
     '4. **Små kort fra begge hænder** er en kipning (som i punkt 3), når det laveste kort har en eller to af modpartens kort over sig; ellers et sikkerhedsspil.',
     '5. **Ingen kipning:** fald eller kip.',

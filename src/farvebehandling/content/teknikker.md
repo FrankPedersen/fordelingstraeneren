@@ -4,20 +4,22 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 
 0. **Begrænset valg:** i første runde af den bedste linje falder én af to eller flere ligeværdige honnører hos modparten (i mindst 5 % af spillene), og så er kipning klart bedst.
 1. **Sikkerhedsspil:** til et lavere mål giver linjen med flest stik i gennemsnit mere end 0,5 procentpoint mindre end den bedste linje.
-2. **Hovedmålet** er det mål, hvor valget af linje betyder mest. Mål under 25 % tæller kun, hvis alle mål ligger under.
+2. **Hovedmålet** er det mål, hvor valget af linje betyder mest. Mål under 25 % tæller kun, hvis alle mål ligger under. Er flere linjer lige gode (inden for 0,5 procentpoint), vælges den mest lærerige: dobbelt kipning, enkelt kipning, spil mod honnør, sikkerhedsspil, fald.
 3. **Hovedlinjens første kipning:** modpartens kort over kortet ligger i to huller (fx K og B over E D 10) = dobbelt kipning; spilles der mod det højeste kort, der er tilbage i hånden = spil mod honnør; ellers enkelt kipning, mod damen eller knægten med 8 kort eller flere fald eller kip.
 4. **Små kort fra begge hænder** er en kipning (som i punkt 3), når det laveste kort har en eller to af modpartens kort over sig; ellers et sikkerhedsspil.
 5. **Ingen kipning:** fald eller kip.
 
 
-## Enkelt kipning (102)
+## Enkelt kipning (98)
 
 | Rang | Hånd / bordet | Mål | Begrundelse |
 | --- | --- | --- | --- |
 | 40 | E 10 6 5 / 4 3 2 | 2 | Kipning mod 10'eren med 7 kort. |
 | 51 | E D 4 / B 3 2 | 3, 2 | Knægten spilles ud og løber med 6 kort. |
+| 58 | E 10 6 5 4 / 3 2 | 3, 2 | 10'eren spilles ud og løber med 7 kort. |
 | 60 | E 10 5 4 / K 3 2 | 3 | Kipning mod 10'eren med 7 kort. |
 | 65 | E B 5 4 3 / K 2 | 5, 4, 3 | Kipning mod knægten med 7 kort. |
+| 68 | E 10 5 4 3 / 2 | 3, 2 | 10'eren spilles ud og løber med 6 kort. |
 | 75 | E B 4 / 10 3 2 | 2 | Kipning mod knægten med 6 kort. |
 | 89 | E K B 5 4 3 / 2 | 6, 5, 4, 3 | Kipning mod knægten med 7 kort. |
 | 91 | E D 6 5 / 10 4 3 2 | 4, 3 | Kipning mod damen med 8 kort. |
@@ -35,24 +37,21 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 188 | 10 9 4 3 / E D 2 | 4, 3 | Kipning mod damen med 7 kort. |
 | 206 | E 8 7 6 5 / D B 4 3 2 | 5 | Damen spilles ud og løber med 10 kort. |
 | 210 | E D 9 5 4 / B 3 2 | 5, 4, 3 | Kipning mod damen med 8 kort. |
-| 217 | E 10 9 5 4 / D 3 2 | 5, 4, 3 | Damen spilles ud og løber med 8 kort. |
 | 250 | E D B 8 7 6 / 5 4 3 2 | 6 | Kipning mod damen med 10 kort. |
 | 251 | D B 8 7 6 5 / E 4 3 2 | 6 | Damen spilles ud og løber med 10 kort. |
 | 255 | E K D 10 3 / 2 | 5, 4 | Kipning mod 10'eren med 6 kort. |
 | 257 | E B 9 3 / K 2 | 4, 3 | Kipning mod knægten med 6 kort. |
 | 261 | E 10 8 5 4 / 3 2 | 3, 2 | Kipning mod 10'eren med 7 kort. |
 | 277 | E D 9 5 / B 4 3 2 | 4, 3 | Kipning mod damen med 8 kort. |
-| 280 | E 10 9 5 / D 4 3 2 | 3 | Damen spilles ud og løber med 8 kort. |
 | 283 | E D B 9 5 4 / 3 2 | 6, 5, 4 | Kipning mod damen med 8 kort. |
 | 285 | E D 10 9 5 4 / 3 2 | 6, 5, 4 | Kipning mod damen med 8 kort. |
 | 298 | E D 8 4 / B 3 2 | 3 | Kipning mod damen med 7 kort. |
 | 312 | E D B 8 7 / 6 5 4 3 2 | 5 | Kipning mod damen med 10 kort. |
 | 323 | E B 10 9 3 / 2 | 4, 3 | Kipning mod knægten med 6 kort. |
 | 325 | E K B 10 / 4 3 2 | 4 | Små kort fra begge hænder kipper med 10'eren med 7 kort. |
+| 336 | D B 7 6 5 4 3 / E 2 | 7, 6 | Damen spilles ud og løber med 9 kort. |
 | 344 | E K 4 3 2 / D 10 | 5, 4 | Små kort fra begge hænder kipper med 10'eren med 7 kort. |
 | 347 | E D 9 5 4 3 / B 2 | 6, 5, 4 | Knægten spilles ud og løber med 8 kort. |
-| 351 | E 10 9 5 4 3 / D 2 | 5, 4 | Damen spilles ud og løber med 8 kort. |
-| 355 | E K 9 / B 3 2 | 3 | Knægten spilles ud og løber med 6 kort. |
 | 356 | E 3 2 / D B 9 | 3 | Damen spilles ud og løber med 6 kort. |
 | 358 | E 3 2 / B 10 9 | 2 | Knægten spilles ud og løber med 6 kort. |
 | 364 | D B 9 6 5 / E 4 3 2 | 5, 4 | Damen spilles ud og løber med 9 kort. |
@@ -62,20 +61,18 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 381 | E 9 3 2 / K 10 | 3 | Små kort fra begge hænder kipper med 10'eren med 6 kort. |
 | 386 | E B 10 9 / 3 2 | 3 | Små kort fra begge hænder kipper med 9'eren med 6 kort. |
 | 390 | D B 8 7 6 5 4 / E 3 2 | 7 | Damen spilles ud og løber med 10 kort. |
+| 396 | K D 10 9 / 4 3 2 | 3 | Kongen spilles ud og løber med 7 kort. |
 | 398 | E B 10 9 / 4 3 2 | 3 | Små kort fra begge hænder kipper med 9'eren med 7 kort. |
 | 399 | E 4 3 2 / B 10 9 | 3 | Knægten spilles ud og løber med 7 kort. |
 | 405 | E D 9 6 5 4 / B 3 2 | 6, 5 | Kipning mod damen med 9 kort. |
 | 406 | D B 9 6 5 4 / E 3 2 | 6, 5 | Damen spilles ud og løber med 9 kort. |
 | 413 | E B 9 8 4 3 / 2 | 5, 4, 3, 2 | Kipning mod knægten med 7 kort. |
-| 414 | E B 8 5 4 3 / 2 | 4, 3, 2 | Kipning mod knægten med 7 kort. |
 | 421 | E 10 9 3 / K 8 2 | 4, 3 | 10'eren spilles ud og løber med 7 kort. |
 | 422 | E B 8 / 10 3 2 | 2 | 10'eren spilles ud og løber med 6 kort. |
 | 426 | E 10 4 3 2 / K 9 | 4, 3 | Små kort fra begge hænder kipper med 9'eren med 7 kort. |
 | 432 | E D 4 3 / B 9 8 2 | 4, 3 | Kipning mod damen med 8 kort. |
 | 433 | E 9 8 4 / D B 3 2 | 4, 3 | Damen spilles ud og løber med 8 kort. |
-| 460 | D 10 9 4 3 / E 8 2 | 5, 4 | Damen spilles ud og løber med 8 kort. |
 | 464 | E D 10 9 5 4 3 / 2 | 7, 6, 5 | Kipning mod damen med 8 kort. |
-| 471 | E 10 9 / D 2 | 3, 2 | Damen spilles ud og løber med 5 kort. |
 | 475 | E K D 10 / 2 | 4 | Små kort fra begge hænder kipper med 10'eren med 5 kort. |
 | 476 | E K B 10 / 2 | 4 | Små kort fra begge hænder kipper med 10'eren med 5 kort. |
 | 480 | E K 3 2 / B 10 9 | 4 | Knægten spilles ud og løber med 7 kort. |
@@ -84,52 +81,46 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 495 | E B 10 9 / 2 | 3 | Små kort fra begge hænder kipper med 9'eren med 5 kort. |
 | 508 | E D 9 8 4 3 / B 2 | 6, 5, 4 | Knægten spilles ud og løber med 8 kort. |
 | 510 | E 9 8 5 4 / D B 3 2 | 5 | Damen spilles ud og løber med 9 kort. |
+| 511 | B 9 8 5 4 / E D 3 2 | 5 | Kipning mod damen med 9 kort. |
+| 512 | K D 9 5 4 / B 8 3 2 | 4 | Kongen spilles ud og løber med 9 kort. |
 | 520 | E K B 10 9 / 3 2 | 5 | Små kort fra begge hænder kipper med 9'eren med 7 kort. |
 | 530 | E B 10 9 8 3 / 2 | 5, 4 | Kipning mod knægten med 7 kort. |
-| 539 | E D 3 2 / B 9 8 | 4, 3 | Knægten spilles ud og løber med 7 kort. |
 | 541 | B 5 4 3 2 / E D 9 | 5, 4, 3 | Kipning mod damen med 8 kort. |
-| 542 | E 10 9 8 / D 3 2 | 4, 3 | Damen spilles ud og løber med 7 kort. |
+| 550 | K D 7 4 / B 9 3 2 | 3 | Kongen spilles ud og løber med 8 kort. |
 | 557 | E D 10 8 7 / 6 5 4 3 2 | 5, 4 | Kipning mod damen med 10 kort. |
 | 560 | E D B 9 8 / 3 2 | 5, 4 | Kipning mod damen med 7 kort. |
 | 564 | E D 8 6 5 / B 4 3 2 | 5, 4 | Knægten spilles ud og løber med 9 kort. |
 | 566 | K D 8 6 5 / B 4 3 2 | 4 | Knægten spilles ud og løber med 9 kort. |
-| 568 | E K 9 8 / B 2 | 4, 3 | Knægten spilles ud og løber med 6 kort. |
 | 569 | E D 9 8 / B 2 | 4, 3 | Knægten spilles ud og løber med 6 kort. |
 | 570 | E D 8 2 / B 9 | 3 | Knægten spilles ud og løber med 6 kort. |
-| 579 | E 10 9 6 5 4 3 / D 2 | 7, 6 | Damen spilles ud og løber med 9 kort. |
 | 585 | E D 8 7 / B 3 2 | 4, 3 | Knægten spilles ud og løber med 7 kort. |
 | 586 | E 9 8 7 / B 3 2 | 3, 2 | Knægten spilles ud og løber med 7 kort. |
 | 596 | E B 9 7 6 5 / D 4 3 2 | 6 | Damen spilles ud og løber med 10 kort. |
 | 598 | E D 8 6 5 4 / B 3 2 | 6, 5 | Knægten spilles ud og løber med 9 kort. |
+| 599 | B 9 8 5 4 3 / E D 2 | 6 | Kipning mod damen med 9 kort. |
+| 601 | K D 9 5 4 3 / B 8 2 | 5 | Kongen spilles ud og løber med 9 kort. |
 | 602 | K D 8 6 5 4 / B 3 2 | 5 | Knægten spilles ud og løber med 9 kort. |
 | 604 | E D 4 3 2 / B 9 8 | 5, 4 | Knægten spilles ud og løber med 8 kort. |
-| 605 | E 9 4 3 2 / D 10 8 | 5, 4 | Damen spilles ud og løber med 8 kort. |
 | 607 | E K 10 9 8 / 2 | 5, 4 | Små kort fra begge hænder kipper med 8'eren med 6 kort. |
 | 610 | E B 10 9 8 / 2 | 4 | Små kort fra begge hænder kipper med 8'eren med 6 kort. |
 | 612 | E B 9 7 6 / D 5 4 3 2 | 5 | Damen spilles ud og løber med 10 kort. |
-| 622 | E 10 9 8 5 4 3 / D 2 | 7, 6 | Damen spilles ud og løber med 9 kort. |
+| 624 | E D 9 7 4 / B 8 3 2 | 5 | Kipning mod damen med 9 kort. |
 | 631 | E B 9 7 6 5 4 / D 3 2 | 7 | Damen spilles ud og løber med 10 kort. |
 | 638 | B 7 4 3 2 / E D 9 | 5, 4, 3 | Kipning mod damen med 8 kort. |
-| 639 | E 9 7 3 2 / D 10 8 | 5, 4 | Damen spilles ud og løber med 8 kort. |
 | 643 | E 6 5 4 3 2 / D B 9 | 6, 5 | Damen spilles ud og løber med 9 kort. |
 | 651 | E D 5 4 3 2 / B 9 8 | 6, 5 | Kipning mod damen med 9 kort. |
 | 655 | E D 9 7 6 / B 8 2 | 5, 4 | Knægten spilles ud og løber med 8 kort. |
 | 657 | E D 7 4 3 2 / B 9 8 | 6 | Kipning mod damen med 9 kort. |
 | 660 | E D B 5 4 3 2 / 8 7 6 | 7 | Kipning mod damen med 10 kort. |
 
-## Fald eller kip (108)
+## Fald eller kip (96)
 
 | Rang | Hånd / bordet | Mål | Begrundelse |
 | --- | --- | --- | --- |
-| 7 | E D 7 6 5 / 4 3 2 | 4, 3, 2 | Linjen spiller på fald med 8 kort. |
-| 11 | E D 7 6 / 5 4 3 2 | 3, 2 | Linjen spiller på fald med 8 kort. |
 | 20 | E K D 6 5 4 / 3 2 | 6, 5 | Linjen spiller på fald med 8 kort. |
 | 29 | E K D 7 6 5 / 4 3 2 | 6 | Linjen spiller på fald med 9 kort. |
 | 33 | E K D 6 / 5 4 3 2 | 4 | Linjen spiller på fald med 8 kort. |
-| 37 | D 4 3 / 10 2 | 1 | Linjen spiller på fald med 5 kort. |
-| 47 | D 5 4 3 / 10 2 | 1 | Linjen spiller på fald med 6 kort. |
 | 48 | E K 4 / B 3 2 | 3 | Linjen spiller på fald med 6 kort. |
-| 55 | E K D 4 3 / 2 | 4 | Linjen spiller på fald med 6 kort. |
 | 77 | E K D 7 6 5 4 / 3 2 | 7 | Linjen spiller på fald med 9 kort. |
 | 90 | E 10 6 5 / K 4 3 2 | 4, 3 | Kipning mod 10'eren med 8 kort: fald eller kip. |
 | 96 | B 7 6 5 4 / E K 3 2 | 5, 4 | Linjen spiller på fald med 9 kort. |
@@ -147,7 +138,6 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 205 | E B 8 7 6 / K 5 4 3 2 | 5 | Linjen spiller på fald med 10 kort. |
 | 209 | E B 9 5 4 / K 3 2 | 5, 4, 3 | Kipning mod knægten med 8 kort: fald eller kip. |
 | 226 | E K 10 6 5 4 / D 3 2 | 6 | Linjen spiller på fald med 9 kort. |
-| 229 | K D 6 5 4 3 / 10 2 | 5, 4, 3 | Linjen spiller på fald med 8 kort. |
 | 254 | E K 9 3 / D 2 | 4 | Linjen spiller på fald med 6 kort. |
 | 268 | E K B 3 2 / – | 3 | Linjen spiller på fald med 5 kort. |
 | 275 | E K 9 5 / D 4 3 2 | 4 | Linjen spiller på fald med 8 kort. |
@@ -161,7 +151,6 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 327 | E K D 10 6 / 5 4 3 2 | 5 | Linjen spiller på fald med 9 kort. |
 | 333 | E B 10 6 5 4 3 / 2 | 6, 5, 4 | Kipning mod knægten med 8 kort: fald eller kip. |
 | 334 | E K 10 4 / D 9 3 2 | 4 | Linjen spiller på fald med 8 kort. |
-| 336 | D B 7 6 5 4 3 / E 2 | 7, 6 | Linjen spiller på fald med 9 kort. |
 | 359 | E B 9 5 4 / K 10 3 2 | 5 | Linjen spiller på fald med 9 kort. |
 | 360 | E B 6 5 4 / K 9 3 2 | 5 | Linjen spiller på fald med 9 kort. |
 | 361 | E 9 6 5 4 / K B 3 2 | 5 | Linjen spiller på fald med 9 kort. |
@@ -169,7 +158,6 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 365 | E K 9 6 5 / 10 4 3 2 | 5, 4 | Linjen spiller på fald med 9 kort. |
 | 367 | E 10 9 6 5 / D 4 3 2 | 5, 4 | Linjen spiller på fald med 9 kort. |
 | 368 | E 10 6 5 4 / D 9 3 2 | 5, 4 | Linjen spiller på fald med 9 kort. |
-| 369 | K 9 6 5 4 / D 10 3 2 | 4 | Linjen spiller på fald med 9 kort. |
 | 388 | E K B 5 4 3 2 / – | 6, 5, 4 | Linjen spiller på fald med 7 kort. |
 | 389 | E B 8 7 6 5 4 / K 3 2 | 7 | Linjen spiller på fald med 10 kort. |
 | 400 | E K 10 9 3 / D 2 | 5 | Linjen spiller på fald med 7 kort. |
@@ -182,7 +170,6 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 428 | E K 9 4 / D 8 3 2 | 4 | Linjen spiller på fald med 8 kort. |
 | 447 | E 10 7 6 5 / 9 4 3 2 | 4, 3 | 9'eren spilles ud og løber med 9 kort: fald eller kip. |
 | 453 | D 7 6 5 4 3 / E 10 2 | 5 | Linjen spiller på fald med 9 kort. |
-| 458 | K D 9 4 3 / B 8 2 | 4 | Linjen spiller på fald med 8 kort. |
 | 466 | E B 10 9 5 4 3 / 2 | 6, 5 | Kipning mod knægten med 8 kort: fald eller kip. |
 | 468 | E K D B 4 3 2 / – | 7, 6 | Linjen spiller på fald med 7 kort. |
 | 473 | E K D 10 3 2 / – | 6, 5, 4 | Linjen spiller på fald med 6 kort. |
@@ -194,7 +181,6 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 504 | E B 9 6 5 4 3 / 2 | 6, 5, 4 | Kipning mod knægten med 8 kort: fald eller kip. |
 | 507 | E B 8 5 4 3 / K 2 | 6, 5, 4 | Kipning mod knægten med 8 kort: fald eller kip. |
 | 509 | E K D 9 3 2 / – | 6, 5, 4 | Linjen spiller på fald med 6 kort. |
-| 511 | B 9 8 5 4 / E D 3 2 | 5 | Linjen spiller på fald med 9 kort. |
 | 513 | E 10 9 5 4 / D 8 3 2 | 5, 4 | Linjen spiller på fald med 9 kort. |
 | 519 | E K D 10 9 / 3 2 | 5 | Linjen spiller på fald med 7 kort. |
 | 521 | E K 10 9 / 5 4 3 2 | 4, 3 | Små kort fra begge hænder kipper med 9'eren med 8 kort: fald eller kip. |
@@ -204,6 +190,7 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 533 | E B 9 6 5 / K 10 4 3 2 | 5 | Linjen spiller på fald med 10 kort. |
 | 534 | E K B 10 2 / – | 4 | Linjen spiller på fald med 5 kort. |
 | 537 | E K 4 3 2 / B 10 9 | 5 | Knægten spilles ud og løber med 8 kort: fald eller kip. |
+| 549 | E 10 8 3 / K B 9 2 | 4 | Kipning mod 9'eren med 8 kort: fald eller kip. |
 | 556 | E D B 9 8 7 / 6 5 4 3 2 | 6 | Linjen spiller på fald med 11 kort. |
 | 558 | E B 10 8 7 / 6 5 4 3 2 | 4 | Kipning mod knægten med 10 kort: fald eller kip. |
 | 572 | E 10 5 4 3 2 / K 9 | 6, 5, 4 | Små kort fra begge hænder kipper med 9'eren med 8 kort: fald eller kip. |
@@ -212,16 +199,13 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 590 | E K D 10 9 / 2 | 5 | Linjen spiller på fald med 6 kort. |
 | 592 | E 10 9 8 / K 4 3 2 | 4, 3 | Små kort fra begge hænder kipper med 8'eren med 8 kort: fald eller kip. |
 | 595 | E K 9 7 6 5 / B 4 3 2 | 6 | Linjen spiller på fald med 10 kort. |
-| 599 | B 9 8 5 4 3 / E D 2 | 6 | Linjen spiller på fald med 9 kort. |
 | 611 | E K 9 7 6 / B 5 4 3 2 | 5 | Linjen spiller på fald med 10 kort. |
 | 618 | K 9 6 5 4 3 / E B 10 2 | 6 | Linjen spiller på fald med 10 kort. |
 | 621 | E K D 10 9 3 2 / – | 6, 5 | Linjen spiller på fald med 7 kort. |
 | 623 | E K B 8 4 3 2 / – | 6, 5, 4 | Linjen spiller på fald med 7 kort. |
-| 624 | E D 9 7 4 / B 8 3 2 | 5 | Linjen spiller på fald med 9 kort. |
 | 625 | E K 5 4 3 2 / B 10 9 | 6 | Linjen spiller på fald med 9 kort. |
 | 629 | 10 9 8 7 / K D 2 | 3 | Linjen spiller på fald med 7 kort. |
 | 630 | E K 9 7 6 5 4 / B 3 2 | 7 | Linjen spiller på fald med 10 kort. |
-| 632 | D 4 3 2 / E 10 8 7 | 4, 3, 2 | Linjen spiller på fald med 8 kort. |
 | 636 | E K 6 5 4 / 10 9 8 3 2 | 5 | Linjen spiller på fald med 10 kort. |
 | 642 | E K B 9 8 7 3 / 2 | 7, 6 | Kipning mod knægten med 8 kort: fald eller kip. |
 | 645 | E 6 5 4 3 2 / B 10 9 | 5 | Knægten spilles ud og løber med 9 kort: fald eller kip. |
@@ -230,11 +214,10 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 658 | E D 10 9 8 7 / 6 5 4 3 2 | 6 | Linjen spiller på fald med 11 kort. |
 | 659 | K 6 5 4 3 2 / E B 9 8 | 6 | Linjen spiller på fald med 10 kort. |
 
-## Spil mod honnør (71)
+## Spil mod honnør (68)
 
 | Rang | Hånd / bordet | Mål | Begrundelse |
 | --- | --- | --- | --- |
-| 10 | K 5 4 / B 3 2 | 2, 1 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
 | 16 | D 4 3 / B 2 | 1 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
 | 18 | K 7 6 5 / B 4 3 2 | 3, 2, 1 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
 | 22 | B 10 5 4 / 3 2 | 1 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
@@ -243,6 +226,8 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 26 | K D 5 4 / B 3 2 | 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
 | 28 | D B 7 6 5 / 4 3 2 | 3, 2, 1 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
 | 35 | E 6 5 4 / D B 3 2 | 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
+| 37 | D 4 3 / 10 2 | 1 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
+| 47 | D 5 4 3 / 10 2 | 1 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
 | 50 | B 5 4 3 / E K 2 | 3 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
 | 53 | B 5 4 3 / E D 2 | 4, 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
 | 54 | K 5 4 3 / D B 2 | 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
@@ -254,14 +239,12 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 70 | K D B 4 3 / 2 | 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
 | 72 | E D 4 / 10 3 2 | 3, 2 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
 | 73 | E 10 4 / D 3 2 | 2 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
-| 74 | E 4 3 / D 10 2 | 3, 2 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
 | 79 | E B 4 3 / 10 2 | 2 | Der spilles mod 10'eren, som er det højeste kort, der er tilbage i hånden. |
+| 92 | E 10 6 5 / D 4 3 2 | 3, 2 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
 | 105 | E 10 6 5 4 / D 3 2 | 4, 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
 | 106 | K D 10 6 5 / 4 3 2 | 4, 3, 2 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
-| 116 | K 4 3 / B 9 2 | 2, 1 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
 | 117 | D 9 4 / B 3 2 | 1 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
 | 124 | E 10 3 / D 2 | 2 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
-| 125 | K 10 3 / D 2 | 2 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
 | 138 | D B 10 3 / 2 | 2 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
 | 145 | D B 9 5 / 4 3 2 | 2, 1 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
 | 152 | K D 10 6 / 5 4 3 2 | 3, 2 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
@@ -275,6 +258,7 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 190 | K 10 4 3 / D 9 2 | 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
 | 203 | K D 10 / 3 2 | 2 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
 | 214 | K D 9 5 4 / B 3 2 | 4, 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
+| 229 | K D 6 5 4 3 / 10 2 | 5, 4, 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
 | 243 | K D B 9 4 / 3 2 | 4 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
 | 256 | E K 9 3 / B 2 | 3 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
 | 258 | E D 9 3 / B 2 | 3 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
@@ -289,27 +273,25 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 307 | K 9 5 4 3 / D 10 2 | 4, 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
 | 328 | E B 8 3 / 10 2 | 3, 2 | Der spilles mod 10'eren, som er det højeste kort, der er tilbage i hånden. |
 | 345 | D 6 5 4 3 / B 9 2 | 3, 2 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
+| 369 | K 9 6 5 4 / D 10 3 2 | 4 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
 | 372 | K D 8 5 4 / B 3 2 | 4, 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
 | 382 | K D B 9 / 3 2 | 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
 | 392 | K D B 9 / 4 3 2 | 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
-| 396 | K D 10 9 / 4 3 2 | 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
 | 418 | B 9 8 3 / E K 2 | 4, 3 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
 | 435 | K D 8 5 / B 4 3 2 | 3 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
-| 472 | D 10 9 / E 2 | 3, 2 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
+| 458 | K D 9 4 3 / B 8 2 | 4 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
 | 486 | K D 10 9 6 / 5 4 3 2 | 4 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
-| 512 | K D 9 5 4 / B 8 3 2 | 4 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
 | 522 | K D B 9 / 5 4 3 2 | 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
 | 524 | K D 10 9 / 5 4 3 2 | 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
 | 540 | E 5 4 3 2 / D B 9 | 4, 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
-| 550 | K D 7 4 / B 9 3 2 | 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
 | 552 | K D 9 7 4 / B 3 2 | 4 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
 | 561 | K D B 9 8 / 3 2 | 4 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
-| 601 | K D 9 5 4 3 / B 8 2 | 5 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
 
-## Dobbelt kipning (88)
+## Dobbelt kipning (112)
 
 | Rang | Hånd / bordet | Mål | Begrundelse |
 | --- | --- | --- | --- |
+| 10 | K 5 4 / B 3 2 | 2, 1 | Der kippes mod knægten, og modpartens kort over den ligger i to huller. |
 | 15 | K B 5 / 4 3 2 | 2, 1 | Der kippes mod knægten, og modpartens kort over den ligger i to huller. |
 | 21 | D 10 5 4 / 3 2 | 2, 1 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 38 | K 10 4 / 3 2 | 1 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
@@ -317,13 +299,17 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 42 | D 10 5 / 4 3 2 | 1 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 44 | D 6 5 4 / 10 3 2 | 2, 1 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 59 | D 10 6 5 4 / 3 2 | 3, 2, 1 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 74 | E 4 3 / D 10 2 | 3, 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 78 | K D 4 3 / 10 2 | 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 87 | K 5 4 3 / B 10 2 | 2 | Der kippes mod knægten, og modpartens kort over den ligger i to huller. |
 | 93 | E 6 5 4 / D 10 3 2 | 3, 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 99 | K B 8 7 6 / 5 4 3 2 | 4, 3, 2 | Der kippes mod knægten, og modpartens kort over den ligger i to huller. |
 | 110 | D 10 7 6 5 / 4 3 2 | 3, 2, 1 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 112 | E D 5 4 3 / 10 2 | 4, 3, 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 116 | K 4 3 / B 9 2 | 2, 1 | Der kippes mod knægten, og modpartens kort over den ligger i to huller. |
+| 119 | K 10 7 6 / 5 4 3 2 | 2, 1 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
 | 120 | D 10 7 6 / 5 4 3 2 | 2, 1 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 125 | K 10 3 / D 2 | 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 143 | K 5 4 3 / B 9 2 | 2, 1 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
 | 146 | D 10 9 5 / 4 3 2 | 2, 1 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 158 | D B 9 3 / 2 | 2, 1 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
@@ -337,13 +323,16 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 202 | D 3 2 / E 10 | 2 | Små kort fra begge hænder kipper med 10'eren, og modpartens kort over den ligger i to huller. |
 | 204 | K 3 2 / D 10 | 2 | Små kort fra begge hænder kipper med 10'eren, og modpartens kort over den ligger i to huller. |
 | 216 | E D 9 6 5 / 4 3 2 | 4, 3, 2 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 217 | E 10 9 5 4 / D 3 2 | 5, 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 218 | E B 9 6 5 / 4 3 2 | 4, 3, 2 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
 | 222 | D 10 9 6 5 / 4 3 2 | 3, 2, 1 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 232 | E 10 8 3 / 2 | 2 | 8'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
 | 236 | E B 9 4 3 / K 2 | 5, 4, 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
 | 237 | K B 9 4 3 / E 2 | 5, 4, 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
 | 246 | E D 10 9 4 / 3 2 | 5, 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 248 | K D 10 9 4 / 3 2 | 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 264 | K B 9 / 3 2 | 2, 1 | Der kippes mod knægten, og modpartens kort over den ligger i to huller. |
+| 280 | E 10 9 5 / D 4 3 2 | 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 305 | E D 10 9 5 / 4 3 2 | 4, 3, 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 306 | E 9 5 4 3 / D 10 2 | 4, 3 | 9'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
 | 309 | K 10 8 4 / B 3 2 | 4, 3 | Der kippes mod 8'eren, og modpartens kort over den ligger i to huller. |
@@ -352,7 +341,10 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 318 | K D B 9 3 / 2 | 4, 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
 | 321 | D 5 4 3 2 / E 10 | 4, 3, 2 | Små kort fra begge hænder kipper med 10'eren, og modpartens kort over den ligger i to huller. |
 | 332 | K D 10 6 5 4 3 / 2 | 6, 5, 4 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 335 | E D 9 6 / 5 4 3 2 | 3, 2 | 9'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
+| 351 | E 10 9 5 4 3 / D 2 | 5, 4 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 353 | K 10 8 7 6 5 / 4 3 2 | 5, 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 355 | E K 9 / B 3 2 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
 | 357 | E 10 9 / D 3 2 | 3, 2 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
 | 373 | K 10 8 5 4 / B 3 2 | 4, 3, 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 376 | E K B 9 / 3 2 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
@@ -368,13 +360,18 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 397 | K 4 3 2 / D 10 9 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
 | 410 | K D 10 8 4 3 / 2 | 5, 4, 3, 2 | Der kippes mod 8'eren, og modpartens kort over den ligger i to huller. |
 | 412 | E B 10 8 4 3 / 2 | 5, 4, 3, 2 | Der kippes mod 8'eren, og modpartens kort over den ligger i to huller. |
+| 414 | E B 8 5 4 3 / 2 | 4, 3, 2 | 8'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
+| 423 | K 9 8 / B 3 2 | 2, 1 | Knægten spilles ud og løber, og modpartens kort over den ligger i to huller. |
 | 424 | E D 4 3 2 / B 9 | 5, 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
 | 425 | D B 4 3 2 / E 9 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
 | 427 | K D 4 3 2 / B 9 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
 | 437 | K 10 8 5 / B 4 3 2 | 3, 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 449 | D 9 7 6 5 / B 4 3 2 | 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 460 | D 10 9 4 3 / E 8 2 | 5, 4 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
 | 461 | D 9 8 6 5 / 4 3 2 | 3, 2 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
 | 465 | K D 10 9 5 4 3 / 2 | 6, 5 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 471 | E 10 9 / D 2 | 3, 2 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 472 | D 10 9 / E 2 | 3, 2 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
 | 488 | K B 9 7 6 / 5 4 3 2 | 4, 3, 2 | Der kippes mod knægten, og modpartens kort over den ligger i to huller. |
 | 491 | E D B 9 / 2 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
 | 492 | K D B 9 / 2 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
@@ -384,22 +381,30 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 514 | D 6 5 4 3 2 / E 10 | 4, 3, 2 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
 | 523 | E D 10 9 / 5 4 3 2 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
 | 528 | E D B 9 8 3 / 2 | 6, 5, 4 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 539 | E D 3 2 / B 9 8 | 4, 3 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
+| 542 | E 10 9 8 / D 3 2 | 4, 3 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
 | 543 | D 10 9 8 / E 3 2 | 4, 3 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
 | 544 | E 5 4 3 2 / D 10 9 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
 | 545 | K 5 4 3 2 / D 10 9 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 568 | E K 9 8 / B 2 | 4, 3 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
 | 574 | D 10 9 8 / E 2 | 3 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
 | 575 | D 9 5 4 3 2 / E 10 | 5, 4 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
+| 579 | E 10 9 6 5 4 3 / D 2 | 7, 6 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 587 | K 9 8 7 / B 3 2 | 3, 2 | Knægten spilles ud og løber, og modpartens kort over den ligger i to huller. |
 | 593 | E 10 9 8 / D 4 3 2 | 4, 3 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
 | 594 | K 4 3 2 / D 10 9 8 | 3 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
+| 605 | E 9 4 3 2 / D 10 8 | 5, 4 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
 | 606 | E D B 9 8 / 2 | 5, 4 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
 | 608 | E D 10 9 8 / 2 | 5, 4 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
 | 609 | K D 10 9 8 / 2 | 4 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
 | 620 | E K 9 8 7 3 / B 2 | 6, 5 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 622 | E 10 9 8 5 4 3 / D 2 | 7, 6 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 632 | D 4 3 2 / E 10 8 7 | 4, 3, 2 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
+| 639 | E 9 7 3 2 / D 10 8 | 5, 4 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
 | 647 | K 5 4 3 2 / B 10 9 8 | 4 | Knægten spilles ud og løber, og modpartens kort over den ligger i to huller. |
 | 648 | K 7 6 5 4 3 / B 10 9 2 | 5 | Knægten spilles ud og løber, og modpartens kort over den ligger i to huller. |
 
-## Sikkerhedsspil (212)
+## Sikkerhedsspil (207)
 
 | Rang | Hånd / bordet | Mål | Begrundelse |
 | --- | --- | --- | --- |
@@ -409,8 +414,10 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 4 | D 5 4 3 / 2 | 1 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
 | 5 | K 7 6 5 / D 4 3 2 | 3, 2 | Til 2 stik giver den bedste linje 73,5 %, linjen med flest stik kun 70,7 %. |
 | 6 | D 8 7 6 / 5 4 3 2 | 2, 1 | Til 1 stik giver den bedste linje 83,9 %, linjen med flest stik kun 78,3 %. |
+| 7 | E D 7 6 5 / 4 3 2 | 4, 3, 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
 | 8 | D 8 7 6 5 / 4 3 2 | 3, 2, 1 | Til 2 stik giver den bedste linje 82,0 %, linjen med flest stik kun 76,3 %. |
 | 9 | E D 5 / 4 3 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 11 | E D 7 6 / 5 4 3 2 | 3, 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
 | 12 | K 9 8 7 6 5 / 4 3 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 71,8 %, linjen med flest stik kun 65,6 %. |
 | 13 | K 6 5 4 / B 3 2 | 2, 1 | Til 1 stik giver den bedste linje 93,5 %, linjen med flest stik kun 85,9 %. |
 | 14 | D 6 5 4 / B 3 2 | 2, 1 | Til 1 stik giver den bedste linje 87,1 %, linjen med flest stik kun 84,7 %. |
@@ -426,12 +433,11 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 43 | D 10 6 5 / 4 3 2 | 2, 1 | Til 1 stik giver den bedste linje 69,4 %, linjen med flest stik kun 67,8 %. |
 | 49 | E K B 5 / 4 3 2 | 4, 3 | Til 3 stik giver den bedste linje 77,0 %, linjen med flest stik kun 69,0 %. |
 | 52 | E D B 5 / 4 3 2 | 4, 3 | Til 3 stik giver den bedste linje 69,0 %, linjen med flest stik kun 67,8 %. |
+| 55 | E K D 4 3 / 2 | 4 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
 | 56 | E 10 4 3 / 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 58 | E 10 6 5 4 / 3 2 | 3, 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
 | 61 | E D 5 4 / 10 3 2 | 3, 2 | Til 2 stik giver den bedste linje 93,5 %, linjen med flest stik kun 85,9 %. |
 | 64 | K 10 5 4 / B 3 2 | 3, 2 | Til 2 stik giver den bedste linje 69,0 %, linjen med flest stik kun 67,8 %. |
 | 66 | E D 5 4 3 / B 2 | 4, 3 | Til 3 stik giver den bedste linje 86,4 %, linjen med flest stik kun 85,2 %. |
-| 68 | E 10 5 4 3 / 2 | 3, 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
 | 76 | D B 7 6 5 / E 4 3 2 | 5, 4 | Til 4 stik giver den bedste linje 95,2 %, linjen med flest stik kun 90,4 %. |
 | 80 | E D B 6 / 5 4 3 2 | 4, 3 | Til 3 stik giver den bedste linje 86,7 %, linjen med flest stik kun 83,9 %. |
 | 81 | E K 10 5 / 4 3 2 | 4, 3 | Til 3 stik giver den bedste linje 56,5 %, linjen med flest stik kun 52,4 %. |
@@ -440,7 +446,6 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 84 | K 5 4 3 / D 10 2 | 3, 2 | Til 2 stik giver den bedste linje 76,6 %, linjen med flest stik kun 75,4 %. |
 | 85 | E B 10 5 / 4 3 2 | 3, 2 | Til 2 stik giver den bedste linje 84,7 %, linjen med flest stik kun 83,1 %. |
 | 86 | B 5 4 3 / E 10 2 | 3, 2 | Til 2 stik giver den bedste linje 87,1 %, linjen med flest stik kun 84,7 %. |
-| 92 | E 10 6 5 / D 4 3 2 | 3, 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
 | 94 | K 10 6 5 / D 4 3 2 | 3, 2 | Til 2 stik giver den bedste linje 89,6 %, linjen med flest stik kun 86,7 %. |
 | 95 | E B 6 5 / 10 4 3 2 | 3, 2 | Til 2 stik giver den bedste linje 100,0 %, linjen med flest stik kun 94,3 %. |
 | 98 | E 7 6 5 4 / D B 3 2 | 5, 4 | Til 4 stik giver den bedste linje 95,2 %, linjen med flest stik kun 90,4 %. |
@@ -449,7 +454,6 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 108 | E B 6 5 4 / 10 3 2 | 4, 3 | Til 3 stik giver den bedste linje 96,1 %, linjen med flest stik kun 82,0 %. |
 | 113 | K D 5 4 3 / 10 2 | 4, 3, 2 | Til 3 stik giver den bedste linje 61,4 %, linjen med flest stik kun 59,8 %. |
 | 114 | K D 7 6 5 4 3 / 2 | 6, 5, 4 | Til 5 stik giver den bedste linje 73,5 %, linjen med flest stik kun 70,7 %. |
-| 119 | K 10 7 6 / 5 4 3 2 | 2, 1 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
 | 122 | E D 6 5 4 3 / B 2 | 5, 4 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
 | 123 | D B 7 6 5 4 / E 3 2 | 6, 5 | Til 5 stik giver den bedste linje 95,2 %, linjen med flest stik kun 90,4 %. |
 | 131 | D 7 6 5 4 / 10 3 2 | 3, 2, 1 | Til 1 stik giver den bedste linje 100,0 %, linjen med flest stik kun 98,0 %. |
@@ -484,7 +488,6 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 215 | E D 9 5 4 / 10 3 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 71,2 %, linjen med flest stik kun 68,4 %. |
 | 227 | E D 6 5 4 3 / 10 2 | 6, 5, 4 | Til 5 stik giver den bedste linje 37,3 %, linjen med flest stik kun 33,9 %. |
 | 228 | E D 10 7 6 5 / 4 3 2 | 6, 5, 4 | Til 5 stik giver den bedste linje 82,8 %, linjen med flest stik kun 76,6 %. |
-| 232 | E 10 8 3 / 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
 | 233 | E K D 9 4 / 3 2 | 5, 4 | Til 4 stik giver den bedste linje 89,6 %, linjen med flest stik kun 84,0 %. |
 | 234 | E K 9 4 3 / D 2 | 5, 4 | Til 4 stik giver den bedste linje 86,4 %, linjen med flest stik kun 84,0 %. |
 | 235 | E K 9 4 3 / B 2 | 5, 4, 3 | Til 3 stik giver den bedste linje 98,8 %, linjen med flest stik kun 93,9 %. |
@@ -526,7 +529,6 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 322 | K D 10 9 4 3 / 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 87,6 %, linjen med flest stik kun 86,4 %. |
 | 324 | E B 10 9 4 3 / 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 88,8 %, linjen med flest stik kun 86,4 %. |
 | 331 | E K D 10 5 4 3 / 2 | 7, 6 | Til 6 stik giver den bedste linje 98,0 %, linjen med flest stik kun 96,1 %. |
-| 335 | E D 9 6 / 5 4 3 2 | 3, 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
 | 338 | K D 9 8 4 / 3 2 | 4, 3, 2 | Til 2 stik giver den bedste linje 95,6 %, linjen med flest stik kun 94,4 %. |
 | 346 | E K 9 5 4 3 / B 2 | 6, 5, 4 | Til 4 stik giver den bedste linje 100,0 %, linjen med flest stik kun 98,0 %. |
 | 348 | D B 9 5 4 3 / E 2 | 6, 5, 4 | Til 5 stik giver den bedste linje 79,1 %, linjen med flest stik kun 76,3 %. |
@@ -540,7 +542,6 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 411 | K D 9 8 4 3 / 2 | 5, 4, 3, 2 | Til 3 stik giver den bedste linje 92,5 %, linjen med flest stik kun 90,0 %. |
 | 419 | E 9 8 3 / D B 2 | 4, 3 | Til 3 stik giver den bedste linje 82,6 %, linjen med flest stik kun 79,0 %. |
 | 420 | B 9 8 3 / E D 2 | 4, 3 | Til 3 stik giver den bedste linje 77,8 %, linjen med flest stik kun 76,2 %. |
-| 423 | K 9 8 / B 3 2 | 2, 1 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
 | 429 | E K 8 5 / B 4 3 2 | 4, 3 | Til 3 stik giver den bedste linje 92,4 %, linjen med flest stik kun 86,7 %. |
 | 430 | E K 4 3 / B 9 8 2 | 4, 3 | Til 3 stik giver den bedste linje 100,0 %, linjen med flest stik kun 91,5 %. |
 | 431 | E D 8 5 / B 4 3 2 | 4, 3 | Til 3 stik giver den bedste linje 81,1 %, linjen med flest stik kun 76,3 %. |
@@ -578,7 +579,6 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 538 | E D 9 8 / B 3 2 | 4, 3 | Til 3 stik giver den bedste linje 79,0 %, linjen med flest stik kun 77,6 %. |
 | 547 | D B 8 7 / 2 | 2, 1 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
 | 548 | D 10 8 7 / 2 | 2, 1 | Til 1 stik giver den bedste linje 15,1 %, linjen med flest stik kun 14,3 %. |
-| 549 | E 10 8 3 / K B 9 2 | 4 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
 | 551 | E D 7 5 4 / B 3 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 76,3 %, linjen med flest stik kun 70,7 %. |
 | 559 | E K B 9 8 / 3 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 77,0 %, linjen med flest stik kun 75,8 %. |
 | 562 | K D 9 3 2 / B 8 | 4, 3 | Til 3 stik giver den bedste linje 100,0 %, linjen med flest stik kun 95,2 %. |

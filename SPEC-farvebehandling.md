@@ -346,7 +346,7 @@ Krav til farvebehandlingens komponenter, så designet kan ændres bagefter:
 
 ## Leverancetrin, accepttest og åbne punkter
 
-Farvebehandling bygges i seks trin. Trin 2 er færdigt, og trin 1 kan startes.
+Farvebehandling bygges i seks trin. Trin 1–4 er færdige og udgivet; trin 5 og 6 mangler.
 
 1. **Løser og model:** sidningsberegning, løser med optimalt modspil, hyppighed og tests. Startbankens resultater forudberegnes i Node, og valideringsrapporten for siden "damen mangler" laves.
 2. **Tokens og designsystem:** færdige, se afsnittet Designarbejde.
@@ -357,37 +357,38 @@ Farvebehandling bygges i seks trin. Trin 2 er færdigt, og trin 1 kan startes.
 
 Accepttest i Vitest:
 
-- [ ] Alle eksisterende tests for fordelingssporet består uændret.
-- [ ] `fordelingstraener:v1` er uændret efter brug af farvebehandling, også efter eksport og import.
-- [ ] 5 manglende kort, konkret sidning a priori: 5-0 = 1,96 %, 4-1 = 2,83 %, 3-2 = 3,39 %.
-- [ ] 5 manglende kort, samlet: 3-2 = 67,8 %, 4-1 = 28,3 %, 5-0 = 3,9 %.
-- [ ] 4 manglende kort, konkret sidning: 2-2 = 6,78 %, 3-1 = 6,22 %, 4-0 = 4,78 %.
-- [ ] Ledige pladser 13/13 giver præcis de samme tal som a priori.
-- [ ] B432 / ET65: linje A = 37,3 % for 3 stik og 94,3 % for 2 stik; linje B = 6,8 % for 3 stik og 100 % for 2 stik.
-- [ ] B432 / ET65, sidningen Kxx–Dx: linje A giver 3 stik, linje B giver 2.
-- [ ] Bordet E K B 3 2, hånden 7 6 5 4: fald = 53,1 %, esset først og så kipning = 51,4 %.
-- [ ] Begrænset valg: kipning efter Østs dame = 64,7 %.
-- [ ] Validering: en opgave med et umuligt trin eller en `goto` til næste trin afvises.
-- [ ] Normalt modspil (Spil den selv): 2. hånd lægger lavt, dækker T eller højere med det billigste kort, der slår, og vælger tilfældigt mellem ligeværdige kort; 4. hånd vinder billigst, hvis makkers kort ikke allerede vinder.
-- [ ] Gætteintervaller: 25,0 → 25–50, 50,0 → 50–75, 75,0 → 75–100.
-- [ ] Sandsynlighedsbåndets felter summer til 100 % for hver linje.
-- [ ] Selvvalgt: intet filtervalg med 0 kombinationer kan vælges.
-- [ ] Komponentfilerne indeholder ingen farveværdier og ingen tal med enhed, undtagen 0, 1px-streger og procenter.
-- [ ] Hyppighed pr. spil: E K x x / B x x = 0,747 % (1 ud af 134) og E K B x / x x x = 0,498 % (1 ud af 201).
-- [ ] Es og konge uden damen, 8 kort i farven: 10,56 % pr. spil.
-- [ ] Hyppighederne i `damen-mangler-hyppighed.csv` kan genberegnes præcist af appen, og rangordenen er den samme.
-- [ ] Løseren vælger fald med bordet E K B 3 2 og hånden 7 6 5 4 (53,1 %) frem for kipning (51,4 %).
-- [ ] Løserens bedste linje i B432 / ET65 giver 37,3 % for 3 stik og 100 % for 2 stik.
-- [ ] Begrænset valg: med bordet E K T 3 2 og hånden 7 6 5 4 kipper løseren mod knægten, når Øst lægger damen under esset eller kongen, og omvendt.
-- [ ] Løseren bruger ikke kort, spilføreren ikke har set: to sidninger, der ser ens ud for spilføreren, får samme beslutning.
-- [ ] Valideringsrapporten dækker alle brugbare cases fra siden "damen mangler", med begge fortolkninger af x og også cases med 8 manglende kort.
-- [ ] Optimalt modspil: accepttallene 37,3 %, 53,1 % og 64,7 % holder også med optimalt modspil.
-- [ ] Optimalt modspil: med hånden E T 8 2 og bordet K B 9 3 (case 73, 4 stik) giver løseren ikke 100 %. Resultatet sammenlignes med kildens 53 % i valideringsrapporten.
+- [x] Alle eksisterende tests for fordelingssporet består uændret.
+- [x] `fordelingstraener:v1` er uændret efter brug af farvebehandling, også efter eksport og import.
+- [x] 5 manglende kort, konkret sidning a priori: 5-0 = 1,96 %, 4-1 = 2,83 %, 3-2 = 3,39 %.
+- [x] 5 manglende kort, samlet: 3-2 = 67,8 %, 4-1 = 28,3 %, 5-0 = 3,9 %.
+- [x] 4 manglende kort, konkret sidning: 2-2 = 6,78 %, 3-1 = 6,22 %, 4-0 = 4,78 %.
+- [x] Ledige pladser 13/13 giver præcis de samme tal som a priori.
+- [x] B432 / ET65: linje A = 37,3 % for 3 stik og 94,3 % for 2 stik; linje B = 6,8 % for 3 stik og 100 % for 2 stik.
+- [x] B432 / ET65, sidningen Kxx–Dx: linje A giver 3 stik, linje B giver 2.
+- [x] Bordet E K B 3 2, hånden 7 6 5 4: fald = 53,1 %, esset først og så kipning = 51,4 %.
+- [x] Begrænset valg: kipning efter Østs dame = 64,7 %.
+- [x] Validering: en opgave med et umuligt trin eller en `goto` til næste trin afvises.
+- [x] Normalt modspil (Spil den selv): 2. hånd lægger lavt, dækker T eller højere med det billigste kort, der slår, og vælger tilfældigt mellem ligeværdige kort; 4. hånd vinder billigst, hvis makkers kort ikke allerede vinder.
+- [x] Gætteintervaller: 25,0 → 25–50, 50,0 → 50–75, 75,0 → 75–100.
+- [x] Sandsynlighedsbåndets felter summer til 100 % for hver linje.
+- [x] Selvvalgt: intet filtervalg med 0 kombinationer kan vælges.
+- [x] Komponentfilerne indeholder ingen farveværdier og ingen tal med enhed, undtagen 0, 1px-streger og procenter.
+- [x] Hyppighed pr. spil: E K x x / B x x = 0,747 % (1 ud af 134) og E K B x / x x x = 0,498 % (1 ud af 201).
+- [x] Es og konge uden damen, 8 kort i farven: 10,56 % pr. spil.
+- [x] Hyppighederne i `damen-mangler-hyppighed.csv` kan genberegnes præcist af appen, og rangordenen er den samme.
+- [x] Løseren vælger fald med bordet E K B 3 2 og hånden 7 6 5 4 (53,1 %) frem for kipning (51,4 %).
+- [x] Løserens bedste linje i B432 / ET65 giver 37,3 % for 3 stik og 100 % for 2 stik.
+- [x] Begrænset valg: med bordet E K T 3 2 og hånden 7 6 5 4 kipper løseren mod knægten, når Øst lægger damen under esset eller kongen, og omvendt.
+- [x] Løseren bruger ikke kort, spilføreren ikke har set: to sidninger, der ser ens ud for spilføreren, får samme beslutning.
+- [x] Valideringsrapporten dækker alle brugbare cases fra siden "damen mangler", med begge fortolkninger af x og også cases med 8 manglende kort.
+- [x] Optimalt modspil: accepttallene 37,3 %, 53,1 % og 64,7 % holder også med optimalt modspil.
+- [x] Optimalt modspil: med hånden E T 8 2 og bordet K B 9 3 (case 73, 4 stik) giver løseren ikke 100 %. Resultatet sammenlignes med kildens 53 % i valideringsrapporten.
 
 Åbne punkter:
 
-- **Startbanken:** siden "damen mangler" er beregnet. Kombinationer fra Blakset-videoerne kan tilføjes med kildens procent pr. mål.
+- **Startbanken:** siderne 0–9 er beregnet (660 kombinationer). Kombinationer fra Blakset-videoerne kan tilføjes med kildens procent pr. mål.
 - **Daglig session:** om farvebehandling senere skal indgå i fordelingssporets session.
-- **Teknik pr. case:** hver kombination i startbanken skal have en teknik, før den kan placeres i paladset.
 - **Fase 2:** hvordan løseren med optimalt modspil skal køre i appen.
-- **x i kilden:** case 4 tyder på, at kilden ikke altid lader x tabe til modpartens små kort. Valideringsrapporten viser, hvilken fortolkning der passer bedst.
+- **x i kilden:** case 4 tyder på, at kilden ikke altid lader x tabe til modpartens små kort. Valideringsrapporterne viser begge fortolkninger og hvilken der passer bedst; appen bruger "lav".
+
+Afklaret: **Teknik pr. case.** Hver kombination har en teknik efter reglerne i `src/farvebehandling/techniques.ts` (listen står i `content/teknikker.md`); Frank bad om, at forslaget blev færdiggjort (4. oktober 2026).

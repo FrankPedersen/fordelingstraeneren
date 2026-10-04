@@ -298,7 +298,7 @@
   },
   {
    "id": "432-AQ765",
-   "technique": "fald-eller-kip",
+   "technique": "sikkerhedsspil",
    "north": "432",
    "south": "AQ765",
    "goals": [
@@ -468,7 +468,7 @@
   },
   {
    "id": "J32-K54",
-   "technique": "spil-mod-honnoer",
+   "technique": "dobbelt-kipning",
    "north": "J32",
    "south": "K54",
    "goals": [
@@ -519,7 +519,7 @@
   },
   {
    "id": "5432-AQ76",
-   "technique": "fald-eller-kip",
+   "technique": "sikkerhedsspil",
    "north": "5432",
    "south": "AQ76",
    "goals": [
@@ -2164,7 +2164,7 @@
   },
   {
    "id": "T2-Q43",
-   "technique": "fald-eller-kip",
+   "technique": "spil-mod-honnoer",
    "north": "T2",
    "south": "Q43",
    "goals": [
@@ -2742,7 +2742,7 @@
   },
   {
    "id": "T2-Q543",
-   "technique": "fald-eller-kip",
+   "technique": "spil-mod-honnoer",
    "north": "T2",
    "south": "Q543",
    "goals": [
@@ -3339,7 +3339,7 @@
   },
   {
    "id": "2-AKQ43",
-   "technique": "fald-eller-kip",
+   "technique": "sikkerhedsspil",
    "north": "2",
    "south": "AKQ43",
    "goals": [
@@ -3565,7 +3565,7 @@
   },
   {
    "id": "32-AT654",
-   "technique": "sikkerhedsspil",
+   "technique": "enkelt-kipning",
    "north": "32",
    "south": "AT654",
    "goals": [
@@ -4302,7 +4302,7 @@
   },
   {
    "id": "2-AT543",
-   "technique": "sikkerhedsspil",
+   "technique": "enkelt-kipning",
    "north": "2",
    "south": "AT543",
    "goals": [
@@ -4660,7 +4660,7 @@
   },
   {
    "id": "QT2-A43",
-   "technique": "spil-mod-honnoer",
+   "technique": "dobbelt-kipning",
    "north": "QT2",
    "south": "A43",
    "goals": [
@@ -5896,7 +5896,7 @@
   },
   {
    "id": "Q432-AT65",
-   "technique": "sikkerhedsspil",
+   "technique": "spil-mod-honnoer",
    "north": "Q432",
    "south": "AT65",
    "goals": [
@@ -7498,7 +7498,7 @@
   },
   {
    "id": "J92-K43",
-   "technique": "spil-mod-honnoer",
+   "technique": "dobbelt-kipning",
    "north": "J92",
    "south": "K43",
    "goals": [
@@ -7679,7 +7679,7 @@
   },
   {
    "id": "5432-KT76",
-   "technique": "sikkerhedsspil",
+   "technique": "dobbelt-kipning",
    "north": "5432",
    "south": "KT76",
    "goals": [
@@ -8084,7 +8084,7 @@
   },
   {
    "id": "Q2-KT3",
-   "technique": "spil-mod-honnoer",
+   "technique": "dobbelt-kipning",
    "north": "Q2",
    "south": "KT3",
    "goals": [
@@ -14595,7 +14595,7 @@
   },
   {
    "id": "Q32-AT954",
-   "technique": "enkelt-kipning",
+   "technique": "dobbelt-kipning",
    "north": "Q32",
    "south": "AT954",
    "goals": [
@@ -15418,7 +15418,7 @@
   },
   {
    "id": "T2-KQ6543",
-   "technique": "fald-eller-kip",
+   "technique": "spil-mod-honnoer",
    "north": "T2",
    "south": "KQ6543",
    "goals": [
@@ -15628,7 +15628,7 @@
   },
   {
    "id": "2-AT83",
-   "technique": "sikkerhedsspil",
+   "technique": "dobbelt-kipning",
    "north": "2",
    "south": "AT83",
    "goals": [
@@ -19131,7 +19131,7 @@
   },
   {
    "id": "Q432-AT95",
-   "technique": "enkelt-kipning",
+   "technique": "dobbelt-kipning",
    "north": "Q432",
    "south": "AT95",
    "goals": [
@@ -23177,7 +23177,7 @@
   },
   {
    "id": "5432-AQ96",
-   "technique": "sikkerhedsspil",
+   "technique": "dobbelt-kipning",
    "north": "5432",
    "south": "AQ96",
    "goals": [
@@ -23243,7 +23243,7 @@
   },
   {
    "id": "A2-QJ76543",
-   "technique": "fald-eller-kip",
+   "technique": "enkelt-kipning",
    "north": "A2",
    "south": "QJ76543",
    "goals": [
@@ -24389,7 +24389,7 @@
   },
   {
    "id": "Q2-AT9543",
-   "technique": "enkelt-kipning",
+   "technique": "dobbelt-kipning",
    "north": "Q2",
    "south": "AT9543",
    "goals": [
@@ -24685,7 +24685,7 @@
   },
   {
    "id": "J32-AK9",
-   "technique": "enkelt-kipning",
+   "technique": "dobbelt-kipning",
    "north": "J32",
    "south": "AK9",
    "goals": [
@@ -25825,7 +25825,7 @@
   },
   {
    "id": "QT32-K9654",
-   "technique": "fald-eller-kip",
+   "technique": "spil-mod-honnoer",
    "north": "QT32",
    "south": "K9654",
    "goals": [
@@ -27560,7 +27560,7 @@
   },
   {
    "id": "432-KQT9",
-   "technique": "spil-mod-honnoer",
+   "technique": "enkelt-kipning",
    "north": "432",
    "south": "KQT9",
    "goals": [
@@ -28841,7 +28841,7 @@
   },
   {
    "id": "2-AJ8543",
-   "technique": "enkelt-kipning",
+   "technique": "dobbelt-kipning",
    "north": "2",
    "south": "AJ8543",
    "goals": [
@@ -29539,7 +29539,7 @@
   },
   {
    "id": "J32-K98",
-   "technique": "sikkerhedsspil",
+   "technique": "dobbelt-kipning",
    "north": "J32",
    "south": "K98",
    "goals": [
@@ -31986,7 +31986,7 @@
   },
   {
    "id": "J82-KQ943",
-   "technique": "fald-eller-kip",
+   "technique": "spil-mod-honnoer",
    "north": "J82",
    "south": "KQ943",
    "goals": [
@@ -32165,7 +32165,7 @@
   },
   {
    "id": "A82-QT943",
-   "technique": "enkelt-kipning",
+   "technique": "dobbelt-kipning",
    "north": "A82",
    "south": "QT943",
    "goals": [
@@ -32917,7 +32917,7 @@
   },
   {
    "id": "Q2-AT9",
-   "technique": "enkelt-kipning",
+   "technique": "dobbelt-kipning",
    "north": "Q2",
    "south": "AT9",
    "goals": [
@@ -32968,7 +32968,7 @@
   },
   {
    "id": "A2-QT9",
-   "technique": "spil-mod-honnoer",
+   "technique": "dobbelt-kipning",
    "north": "A2",
    "south": "QT9",
    "goals": [
@@ -35454,7 +35454,7 @@
   },
   {
    "id": "AQ32-J9854",
-   "technique": "fald-eller-kip",
+   "technique": "enkelt-kipning",
    "north": "AQ32",
    "south": "J9854",
    "goals": [
@@ -35553,7 +35553,7 @@
   },
   {
    "id": "J832-KQ954",
-   "technique": "spil-mod-honnoer",
+   "technique": "enkelt-kipning",
    "north": "J832",
    "south": "KQ954",
    "goals": [
@@ -37351,7 +37351,7 @@
   },
   {
    "id": "J98-AQ32",
-   "technique": "enkelt-kipning",
+   "technique": "dobbelt-kipning",
    "north": "J98",
    "south": "AQ32",
    "goals": [
@@ -37561,7 +37561,7 @@
   },
   {
    "id": "Q32-AT98",
-   "technique": "enkelt-kipning",
+   "technique": "dobbelt-kipning",
    "north": "Q32",
    "south": "AT98",
    "goals": [
@@ -37918,7 +37918,7 @@
   },
   {
    "id": "KJ92-AT83",
-   "technique": "sikkerhedsspil",
+   "technique": "fald-eller-kip",
    "north": "KJ92",
    "south": "AT83",
    "goals": [
@@ -38017,7 +38017,7 @@
   },
   {
    "id": "J932-KQ74",
-   "technique": "spil-mod-honnoer",
+   "technique": "enkelt-kipning",
    "north": "J932",
    "south": "KQ74",
    "goals": [
@@ -39486,7 +39486,7 @@
   },
   {
    "id": "J2-AK98",
-   "technique": "enkelt-kipning",
+   "technique": "dobbelt-kipning",
    "north": "J2",
    "south": "AK98",
    "goals": [
@@ -40309,7 +40309,7 @@
   },
   {
    "id": "Q2-AT96543",
-   "technique": "enkelt-kipning",
+   "technique": "dobbelt-kipning",
    "north": "Q2",
    "south": "AT96543",
    "goals": [
@@ -41705,7 +41705,7 @@
   },
   {
    "id": "AQ2-J98543",
-   "technique": "fald-eller-kip",
+   "technique": "enkelt-kipning",
    "north": "AQ2",
    "south": "J98543",
    "goals": [
@@ -41907,7 +41907,7 @@
   },
   {
    "id": "J82-KQ9543",
-   "technique": "spil-mod-honnoer",
+   "technique": "enkelt-kipning",
    "north": "J82",
    "south": "KQ9543",
    "goals": [
@@ -42234,7 +42234,7 @@
   },
   {
    "id": "QT8-A9432",
-   "technique": "enkelt-kipning",
+   "technique": "dobbelt-kipning",
    "north": "QT8",
    "south": "A9432",
    "goals": [
@@ -43313,7 +43313,7 @@
   },
   {
    "id": "Q2-AT98543",
-   "technique": "enkelt-kipning",
+   "technique": "dobbelt-kipning",
    "north": "Q2",
    "south": "AT98543",
    "goals": [
@@ -43470,7 +43470,7 @@
   },
   {
    "id": "J832-AQ974",
-   "technique": "fald-eller-kip",
+   "technique": "enkelt-kipning",
    "north": "J832",
    "south": "AQ974",
    "goals": [
@@ -44090,7 +44090,7 @@
   },
   {
    "id": "AT87-Q432",
-   "technique": "fald-eller-kip",
+   "technique": "dobbelt-kipning",
    "north": "AT87",
    "south": "Q432",
    "goals": [
@@ -44557,7 +44557,7 @@
   },
   {
    "id": "QT8-A9732",
-   "technique": "enkelt-kipning",
+   "technique": "dobbelt-kipning",
    "north": "QT8",
    "south": "A9732",
    "goals": [
