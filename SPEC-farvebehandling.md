@@ -19,7 +19,7 @@ Før arbejdet starter:
 | Navigation | ét nyt menupunkt: Farvebehandling | ændre eksisterende menupunkter eller ruter |
 | Motor (`engine/`) | bruges som bibliotek uden ændringer: Leitner, streak, XP, datoer, PRNG og kombinatorik | ændre noget i src/engine/ eller src/app/session.ts |
 | Lagring | ny nøgle `farvebehandling:v1` | ændre `fordelingstraener:v1` eller dens skema |
-| Daglig session | farvebehandling får sin egen session indtil videre | erstatte 13-sudokuen (udskudt til en senere beslutning) |
+| Daglig session | farvebehandling har sin egen daglige session (Franks valg, 4. oktober 2026) | indgå i fordelingssporets session eller erstatte 13-sudokuen |
 | Designtokens | gælder de nye komponenter | ombygge eksisterende komponenter |
 
 Farvebehandling har egen lagring, egen sessionsstyring og egen eksport/import i src/farvebehandling/. Kræver noget alligevel en ændring i eksisterende kode, skal Claude Code stoppe og spørge.
@@ -384,12 +384,12 @@ Accepttest i Vitest:
 - [x] Optimalt modspil: accepttallene 37,3 %, 53,1 % og 64,7 % holder også med optimalt modspil.
 - [x] Optimalt modspil: med hånden E T 8 2 og bordet K B 9 3 (case 73, 4 stik) giver løseren ikke 100 %. Resultatet sammenlignes med kildens 53 % i valideringsrapporten.
 
-Åbne punkter:
+Åbne punkter: ingen.
 
-- **Startbanken:** siderne 0–9 er beregnet (660 kombinationer). Kombinationer fra Blakset-videoerne kan tilføjes med kildens procent pr. mål.
-- **Daglig session:** om farvebehandling senere skal indgå i fordelingssporets session.
-- **x i kilden:** case 4 tyder på, at kilden ikke altid lader x tabe til modpartens små kort. Valideringsrapporterne viser begge fortolkninger og hvilken der passer bedst; appen bruger "lav".
+Afklaret:
 
-Afklaret: **Fase 2.** Løseren kører i browseren i baggrunden (en Web Worker) på forespørgsel (Franks valg, 4. oktober 2026). En kombination uden for banken regnes fra kortvælgeren: først flest stik i gennemsnit, så målene, der er værd at regne, ét ad gangen. Egne linjer regnes på samme måde og gemmes under `ownLines`.
-
-Afklaret: **Teknik pr. case.** Hver kombination har en teknik efter reglerne i `src/farvebehandling/techniques.ts` (listen står i `content/teknikker.md`); Frank bad om, at forslaget blev færdiggjort (4. oktober 2026).
+- **Startbanken:** alle brugbare cases fra siderne 0–9 (660 kombinationer). Blakset-videoerne bruges ikke (Franks valg, 4. oktober 2026).
+- **Daglig session:** farvebehandling har sin egen daglige session og indgår ikke i fordelingssporets (Franks valg, 4. oktober 2026).
+- **x i kilden:** case 4 tyder på, at kilden ikke altid lader x tabe til modpartens små kort. Appen bruger "lav", og valideringsrapporterne viser begge fortolkninger og hvilken der passer bedst (godkendt af Frank, 4. oktober 2026).
+- **Fase 2:** løseren kører i browseren i baggrunden (en Web Worker) på forespørgsel (Franks valg, 4. oktober 2026). En kombination uden for banken regnes fra kortvælgeren: først flest stik i gennemsnit, så målene, der er værd at regne, ét ad gangen. Egne linjer regnes på samme måde og gemmes under `ownLines`.
+- **Teknik pr. case:** hver kombination har en teknik efter reglerne i `src/farvebehandling/techniques.ts` (listen står i `content/teknikker.md`); Frank bad om, at forslaget blev færdiggjort (4. oktober 2026).
