@@ -1,10 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { mulberry32 } from '../../engine/rng';
-import bankText from '../content/suit-combinations.json?raw';
-import solutionsText from '../content/solutions.json?raw';
-import whatNowText from '../content/hvad-nu.json?raw';
 import techniquesFile from '../content/techniques.json';
-import { loadBank, type BankItem } from '../analysis';
+import type { BankItem } from '../analysis';
 import { guessInterval } from '../model/guess';
 import { defaultFbSaved, type FbSaved } from '../storage';
 import { ensureStations, palaceRooms, placeOf, setScene, setTechniqueText } from './palace';
@@ -20,10 +17,9 @@ import {
   startFbSession,
   type FbSession,
 } from './session';
-import { grade, makeTask, outcomeOf, possibleTypes, vacantWeights, type FbAnswer, type FbTask, type LineOption } from './tasks';
+import { grade, itemKey, makeTask, outcomeOf, possibleTypes, vacantWeights, type FbAnswer, type FbTask, type LineOption } from './tasks';
+import { bankItem as byId, TEST_BANK as bank } from '../testBank';
 
-const bank = loadBank(bankText, solutionsText, whatNowText);
-const byId = (id: string) => bank.find((b) => b.combination.id === id)!;
 const techniques = techniquesFile.techniques;
 
 /** Middag lokal tid den 5. oktober 2026. */
@@ -214,30 +210,40 @@ describe('Sessionen', () => {
     expect(saved.introduced[bank[0].combination.id]).toBe('2026-10-05');
 
     // Hvert mål øves straks.
-    const asked: string[] = [];
+    const goalsOf = (item: BankItem) => item.combination.goals.map((g) => itemKey(item.combination.id, g));
     let t = T0 + 2000;
-    for (;;) {
-      s = nextFbStep(s, saved, bank, t);
-      if (s.step?.kind !== 'task') break;
-      asked.push(s.step.task.item);
-      ({ session: s, saved } = answerFb(s, saved, rightAnswer(s.step.task), t + 3000));
-      t += 5000;
-    }
-    expect(asked).toEqual(['J32-AK54:3']);
+    const practise = () => {
+      const asked: string[] = [];
+      for (;;) {
+        s = nextFbStep(s, saved, bank, t);
+        if (s.step?.kind !== 'task') return asked;
+        asked.push(s.step.task.item);
+        ({ session: s, saved } = answerFb(s, saved, rightAnswer(s.step.task), t + 3000));
+        t += 5000;
+      }
+    };
+    expect(practise()).toEqual(goalsOf(bank[0]));
     expect(s.step).toEqual({ kind: 'intro', combination: bank[1].combination.id });
     ({ session: s, saved } = introduceFb(s, saved, bank, bank[1].combination.id, t));
+    // Den næste kombination øves i alle sine mål; derefter øver niveauet de introducerede emner, indtil tiden er gået.
+    const second: string[] = [];
+    for (let k = 0; k < bank[1].combination.goals.length; k++) {
+      s = nextFbStep(s, saved, bank, t);
+      second.push(taskOf(s).item);
+      ({ session: s, saved } = answerFb(s, saved, rightAnswer(taskOf(s)), t + 3000));
+      t += 5000;
+    }
+    expect(second).toEqual(goalsOf(bank[1]));
     s = nextFbStep(s, saved, bank, t);
-    expect(taskOf(s).item).toBe('K54-AJ32:4');
-    ({ session: s, saved } = answerFb(s, saved, rightAnswer(taskOf(s)), t + 3000));
-    s = nextFbStep(s, saved, bank, t + 4000);
-    expect(taskOf(s).item).toBe('K54-AJ32:3');
-
-    // Ingen nye i dag: niveauet øver de introducerede emner, indtil tiden er gået.
-    ({ session: s, saved } = answerFb(s, saved, rightAnswer(taskOf(s)), t + 6000));
-    s = nextFbStep(s, saved, bank, t + 7000);
     expect(s.phase).toBe('niveau');
     expect(s.step?.kind).toBe('task');
+    s = nextFbStep(s, saved, bank, T0 + NIVEAU_END);
+    expect(s.phase === 'lynrunde' || s.step?.kind === 'status').toBe(true);
+  });
 
+  it('kører lynrunden med linje mod linje i 60 s og slutter med status', () => {
+    const saved = introduceAll(defaultFbSaved(), [byId('J32-AK54'), byId('432-AKJ5')], '2026-10-04');
+    let s: FbSession = { ...startFbSession(saved, bank, T0, 5), due: [], phase: 'niveau' };
     s = nextFbStep(s, saved, bank, T0 + NIVEAU_END);
     expect(s.phase).toBe('lynrunde');
     expect(taskOf(s).type).toBe('linje-mod-linje');
@@ -355,9 +361,8 @@ describe('Selvvalgt', () => {
     expect(all.cards.reduce((n, o) => n + o.count, 0)).toBe(bank.length);
     expect(all.missing.reduce((n, o) => n + o.count, 0)).toBe(bank.length);
     expect(all.missing.map((o) => o.value)).toContain('D');
-    // Begrænset valg findes ikke på siden; valget står med 0 og er gråt.
+    // Alle seks teknikker står i filtret i rækkefølge, også en teknik uden kombinationer.
     expect(all.technique.map((o) => o.value)).toEqual(order);
-    expect(all.technique.find((o) => o.value === 'begraenset-valg')?.count).toBe(0);
 
     const filter = { ...NO_FILTER, technique: 'fald-eller-kip', cards: 9 };
     const options = filterOptions(bank, filter, order);

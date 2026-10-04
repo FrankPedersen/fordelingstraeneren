@@ -1,4 +1,4 @@
-# Linjetekster: damen mangler
+# Linjetekster: Side 2: modparten har 2 honnørpoint
 
 Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert mål står den bedste linje og alternativerne (løserens bedste linje for hvert andet første udspil) med chancen. "Blandet" betyder, at spilføreren skal blande mellem to linjer for at nå chancen.
 

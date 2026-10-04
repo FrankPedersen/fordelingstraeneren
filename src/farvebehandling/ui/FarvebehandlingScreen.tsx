@@ -1,9 +1,6 @@
-import { useCallback, useMemo, useState } from 'react';
-import bankText from '../content/suit-combinations.json?raw';
-import solutionsText from '../content/solutions.json?raw';
-import whatNowText from '../content/hvad-nu.json?raw';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import techniquesFile from '../content/techniques.json';
-import { loadBank } from '../analysis';
+import { loadBank, type BankItem } from '../analysis';
 import { FB_STORAGE_KEY, loadFbSaved, saveFbSaved, type FbSaved } from '../storage';
 import { ensureStations } from '../training/palace';
 import { Analysevindue } from './Analysevindue';
@@ -33,14 +30,31 @@ function browserStorage(): Storage {
   }
 }
 
+/** Banken ligger i én fil pr. side, så hver fil er lille nok til, at appen kan gemme den offline. */
+const pageFiles = import.meta.glob<string>('../content/app/side-*.json', { query: '?raw', import: 'default' });
+
+let loading: Promise<BankItem[]> | null = null;
+
+/** Henter banken én gang; mislykkes det, prøves der igen næste gang. */
+function loadAppBank(): Promise<BankItem[]> {
+  loading ??= Promise.all(Object.values(pageFiles).map((load) => load()))
+    .then(loadBank)
+    .catch((error: unknown) => {
+      loading = null;
+      throw error;
+    });
+  return loading;
+}
+
 /** Farvebehandlingens skal: tilbage til forsiden og fanerne Træning, Selvvalgt og Analyse. */
 export default function FarvebehandlingScreen({ onBack }: FarvebehandlingScreenProps) {
   const [tab, setTab] = useState<Tab>('training');
-  const bank = useMemo(() => loadBank(bankText, solutionsText, whatNowText), []);
+  const [bank, setBank] = useState<BankItem[] | null>(null);
+  const [loadFailed, setLoadFailed] = useState(false);
   const techniques = techniquesFile.techniques;
   const storage = useMemo(browserStorage, []);
   // Intet skrives, før brugeren gør noget; et kig i Analyse rører ikke lagringen.
-  const [saved, setSaved] = useState<FbSaved>(() => ensureStations(loadFbSaved(storage), bank));
+  const [saved, setSaved] = useState<FbSaved>(() => loadFbSaved(storage));
   const [failed, setFailed] = useState(false);
   const update = useCallback(
     (next: FbSaved) => {
@@ -49,6 +63,21 @@ export default function FarvebehandlingScreen({ onBack }: FarvebehandlingScreenP
     },
     [storage],
   );
+
+  useEffect(() => {
+    let alive = true;
+    loadAppBank().then(
+      (loaded) => {
+        if (!alive) return;
+        setBank(loaded);
+        setSaved((current) => ensureStations(current, loaded));
+      },
+      () => alive && setLoadFailed(true),
+    );
+    return () => {
+      alive = false;
+    };
+  }, []);
 
   return (
     <main className="fb-screen">
@@ -76,9 +105,17 @@ export default function FarvebehandlingScreen({ onBack }: FarvebehandlingScreenP
           {TEXT.saveFailed}
         </p>
       )}
-      {tab === 'training' && <Træning bank={bank} saved={saved} update={update} techniques={techniques} />}
-      {tab === 'practice' && <Selvvalgt bank={bank} saved={saved} update={update} techniques={techniques} />}
-      {tab === 'analysis' && <Analysevindue bank={bank} />}
+      {!bank ? (
+        <p role="status" className="fb-note">
+          {loadFailed ? TEXT.loadFailed : TEXT.loading}
+        </p>
+      ) : (
+        <>
+          {tab === 'training' && <Træning bank={bank} saved={saved} update={update} techniques={techniques} />}
+          {tab === 'practice' && <Selvvalgt bank={bank} saved={saved} update={update} techniques={techniques} />}
+          {tab === 'analysis' && <Analysevindue bank={bank} />}
+        </>
+      )}
     </main>
   );
 }

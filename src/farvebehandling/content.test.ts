@@ -1,32 +1,40 @@
 import { describe, expect, it } from 'vitest';
-import page from './content/bridgehands-damen-mangler.json';
+import page2 from './content/bridgehands-side-2.json';
 import csv from './content/damen-mangler-hyppighed.csv?raw';
+import allCsv from './content/hyppighed.csv?raw';
+import whatNowText from './content/hvad-nu.json?raw';
+import whatNowMd from './content/hvad-nu.md?raw';
 import solutionsText from './content/solutions.json?raw';
 import bankText from './content/suit-combinations.json?raw';
 import techniquesFile from './content/techniques.json';
-import techniquesText from './content/teknikker-damen-mangler.md?raw';
-import whatNowText from './content/hvad-nu.json?raw';
-import whatNowMd from './content/hvad-nu-damen-mangler.md?raw';
-import report from './content/validering-damen-mangler.md?raw';
+import techniquesText from './content/teknikker.md?raw';
 import { formatDecimal } from '../engine/format';
 import { percentOf } from './model/fraction';
 import { oncePerDeals } from './model/frequency';
-import { frequencyRows, type Combination, type CombinationSolution } from './precompute';
-import { classifyCases, type SourceCase } from './source/bridgehands';
 import { plausible } from './model/whatnow';
+import { frequencyCsv, frequencyRows, type AppEntry, type Combination, type CombinationSolution } from './precompute';
+import { caseLabel, classifyCases, classifyPages, type SourceCase, type SourcePage } from './source/bridgehands';
 import { proposeTechnique, techniquesReport } from './techniques';
 import { whatNowReport, type WhatNowData } from './whatnowReport';
 
-const cases = classifyCases(page.cases as SourceCase[]);
+const sourcePages = Object.values(
+  import.meta.glob<SourcePage>('./content/bridgehands-side-*.json', { eager: true, import: 'default' }),
+).sort((a, b) => a.number - b.number);
+const reports = import.meta.glob<string>('./content/validering-side-*.md', { eager: true, query: '?raw', import: 'default' });
+const appFiles = import.meta.glob<string>('./content/app/side-*.json', { eager: true, query: '?raw', import: 'default' });
+
+const cases = classifyCases(page2.cases as SourceCase[]);
 const rows = frequencyRows(cases);
 const csvRows = csv
   .trim()
   .split('\n')
   .slice(1)
   .map((line) => line.split(';'));
+const allRows = frequencyRows(classifyPages(sourcePages));
 // De store filer læses som tekst, så tsc ikke skal udlede en type for dem.
 const solutions = (JSON.parse(solutionsText) as { combinations: Record<string, CombinationSolution> }).combinations;
 const bank = (JSON.parse(bankText) as { combinations: Combination[] }).combinations;
+const whatNow = (JSON.parse(whatNowText) as { combinations: WhatNowData }).combinations;
 
 describe('Hyppighed for siden "damen mangler"', () => {
   it('kan genberegnes præcist af appen, og rangordenen er den samme', () => {
@@ -47,10 +55,24 @@ describe('Hyppighed for siden "damen mangler"', () => {
   });
 });
 
+describe('Hyppighed på tværs af siderne 0–9', () => {
+  it('har alle ti sider fra bridgehands.com', () => {
+    expect(sourcePages.map((p) => p.number)).toEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]);
+    expect(sourcePages[2].cases).toEqual(page2.cases);
+  });
+
+  it('kan genberegnes præcist af appen', () => {
+    expect(frequencyCsv(allRows, { pages: true })).toBe(allCsv);
+  });
+});
+
 describe('Opgavebanken', () => {
-  it('indeholder de brugbare cases i hyppighedsorden', () => {
-    const usable = rows.filter((r) => r.rank > 0).sort((a, b) => a.rank - b.rank);
-    expect(bank.map((b) => b.source?.name)).toEqual(usable.map((r) => `bridgehands.com, Suit Combinations 2, case ${r.case.number}`));
+  it('indeholder alle brugbare cases fra siderne 0–9 i hyppighedsorden', () => {
+    const usable = allRows.filter((r) => r.rank > 0).sort((a, b) => a.rank - b.rank);
+    expect(bank.map((b) => b.source?.name)).toEqual(
+      usable.map((r) => `bridgehands.com, Suit Combinations ${r.case.page}, case ${caseLabel(r.case)}`),
+    );
+    expect(new Set(bank.map((b) => b.id)).size).toBe(bank.length);
   });
 
   it('har en løsning for hvert mål', () => {
@@ -83,9 +105,9 @@ describe('Opgavebanken', () => {
     const ids = techniquesFile.techniques.map((t) => t.id);
     for (const b of bank) {
       expect(ids, b.id).toContain(b.technique);
-      expect(b.technique, b.id).toBe(proposeTechnique(b.north, b.south, b.goals, solutions[b.id]).technique);
+      expect(b.technique, b.id).toBe(proposeTechnique(b.north, b.south, b.goals, solutions[b.id], whatNow[b.id]).technique);
     }
-    expect(techniquesReport(bank, solutions, techniquesFile.techniques)).toBe(techniquesText);
+    expect(techniquesReport(bank, solutions, techniquesFile.techniques, whatNow)).toBe(techniquesText);
   });
 
   it('foreslår teknikker, der passer med linjerne', () => {
@@ -103,12 +125,25 @@ describe('Opgavebanken', () => {
   });
 });
 
-describe('Hvad nu?', () => {
-  const data = (JSON.parse(whatNowText) as { combinations: WhatNowData }).combinations;
+describe('Appens data', () => {
+  const entries = Object.values(appFiles).flatMap((text) => (JSON.parse(text) as { combinations: AppEntry[] }).combinations);
 
+  it('har hele banken med samme rang, fordelt på én fil pr. side', () => {
+    expect(entries).toHaveLength(bank.length);
+    const sorted = [...entries].sort((a, b) => a.rank - b.rank);
+    expect(sorted.map((e) => e.combination.id)).toEqual(bank.map((b) => b.id));
+    expect(sorted.map((e) => e.rank)).toEqual(bank.map((_, i) => i + 1));
+  });
+
+  it('holder hver fil under 2 MB, så appen kan gemme den offline', () => {
+    for (const [file, text] of Object.entries(appFiles)) expect(new TextEncoder().encode(text).length, file).toBeLessThan(2 * 1024 * 1024);
+  });
+});
+
+describe('Hvad nu?', () => {
   it('har situationer med chancer, der summerer til 1, og et rimeligt forkert valg', () => {
     let count = 0;
-    for (const [id, goals] of Object.entries(data)) {
+    for (const [id, goals] of Object.entries(whatNow)) {
       const combination = bank.find((b) => b.id === id)!;
       expect(combination, id).toBeDefined();
       for (const [goal, situations] of Object.entries(goals)) {
@@ -128,12 +163,13 @@ describe('Hvad nu?', () => {
   });
 
   it('listen til godkendelse er opdateret', () => {
-    expect(whatNowReport(bank, data)).toBe(whatNowMd);
+    expect(whatNowReport(bank, whatNow)).toBe(whatNowMd);
   });
 });
 
-describe('Valideringsrapporten', () => {
-  it('dækker alle brugbare cases med begge fortolkninger af x, også med 8 manglende kort', () => {
+describe('Valideringsrapporterne', () => {
+  it('dækker alle brugbare cases fra siden "damen mangler" med begge fortolkninger af x, også med 8 manglende kort', () => {
+    const report = reports['./content/validering-side-2.md'];
     const all = report.split('## Alle brugbare cases')[1];
     const usable = cases.filter((c) => c.usable);
     const goals = usable.reduce((n, c) => n + c.needs.length, 0);
@@ -143,5 +179,19 @@ describe('Valideringsrapporten', () => {
     expect(usable.some((c) => c.hand.length + c.dummy.length === 5)).toBe(true);
     expect(report).toMatch(/Fortolkning "lav"/);
     expect(report).toMatch(/Fortolkning "høj"/);
+  });
+
+  it('har en rapport for hver side med brugbare cases, der dækker alle dens mål', () => {
+    for (const page of sourcePages) {
+      // Samme kort på tværs af siderne tæller kun én gang, så sorteringen er den samlede.
+      const usable = classifyPages(sourcePages).filter((c) => c.page === page.number && c.usable);
+      if (!usable.length) continue;
+      const report = reports[`./content/validering-side-${page.number}.md`];
+      expect(report, `side ${page.number}`).toBeDefined();
+      const all = report.split('## Alle brugbare cases')[1];
+      expect(all.split('\n').filter((l) => /^\| [\d.]+ \|/.test(l)), `side ${page.number}`).toHaveLength(
+        usable.reduce((n, c) => n + c.needs.length, 0),
+      );
+    }
   });
 });

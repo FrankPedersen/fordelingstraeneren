@@ -1,0 +1,832 @@
+{
+ "number": 1,
+ "page": "Suit Combinations 1 – 1 High Card Point held by opponents - The Jack",
+ "sections": [
+  "1 High Card Point held by opponents - The Jack"
+ ],
+ "url": "https://www.bridgehands.com/S/Suit_Combination_1.htm",
+ "fetched": "2026-10-04",
+ "cases": [
+  {
+   "number": 1,
+   "section": 1,
+   "split": "4-1",
+   "hand": "AKQT",
+   "dummy": "x",
+   "needs": [
+    4
+   ],
+   "percents": [
+    50
+   ],
+   "remark": "Finesse 10"
+  },
+  {
+   "number": 2,
+   "section": 1,
+   "split": "4-1",
+   "hand": "AKQ9",
+   "dummy": "x",
+   "needs": [
+    4
+   ],
+   "percents": [
+    6
+   ],
+   "remark": "Finesse 9"
+  },
+  {
+   "number": 3,
+   "section": 1,
+   "split": "4-2",
+   "hand": "AKQ9",
+   "dummy": "xx",
+   "needs": [
+    4
+   ],
+   "percents": [
+    24
+   ],
+   "remark": "Drop J 10"
+  },
+  {
+   "number": 4,
+   "section": 1,
+   "split": "4-2",
+   "hand": "AK9x",
+   "dummy": "Qx",
+   "needs": [
+    4
+   ],
+   "percents": [
+    10
+   ],
+   "remark": "Drop J 10"
+  },
+  {
+   "number": 5,
+   "section": 1,
+   "split": "5-1",
+   "hand": "AKQT9",
+   "dummy": "x",
+   "needs": [
+    5
+   ],
+   "percents": [
+    36
+   ],
+   "remark": "Finesse 9"
+  },
+  {
+   "number": 6,
+   "section": 1,
+   "split": "5-1",
+   "hand": "AKQTx",
+   "dummy": "x",
+   "needs": [
+    5,
+    4
+   ],
+   "percents": [
+    31,
+    81
+   ],
+   "remark": "Finesse 10"
+  },
+  {
+   "number": 7,
+   "section": 1,
+   "split": "5-1",
+   "hand": "AKQ9x",
+   "dummy": "x",
+   "needs": [
+    5,
+    4
+   ],
+   "percents": [
+    9,
+    64
+   ],
+   "remark": "Drop J 10"
+  },
+  {
+   "number": 8,
+   "section": 1,
+   "split": "5-1",
+   "hand": "AKQxx",
+   "dummy": "x",
+   "needs": [
+    4
+   ],
+   "percents": [
+    62
+   ],
+   "remark": "Drop J 10"
+  },
+  {
+   "number": 9,
+   "section": 1,
+   "split": "6-0",
+   "hand": "AKQTxx",
+   "dummy": "",
+   "needs": [
+    6,
+    5,
+    4
+   ],
+   "percents": [
+    27,
+    71,
+    94
+   ],
+   "remark": ""
+  },
+  {
+   "number": 10,
+   "section": 1,
+   "split": "6-0",
+   "hand": "AKQ9xx",
+   "dummy": "",
+   "needs": [
+    6,
+    5,
+    4
+   ],
+   "percents": [
+    9,
+    64,
+    93
+   ],
+   "remark": ""
+  },
+  {
+   "number": 11,
+   "section": 1,
+   "split": "6-0",
+   "hand": "AKQxxx",
+   "dummy": "",
+   "needs": [
+    5,
+    4
+   ],
+   "percents": [
+    62,
+    93
+   ],
+   "remark": ""
+  },
+  {
+   "number": 12,
+   "section": 1,
+   "split": "7-0",
+   "hand": "AKQT9xx",
+   "dummy": "",
+   "needs": [
+    6,
+    5
+   ],
+   "percents": [
+    54,
+    99
+   ],
+   "remark": ""
+  },
+  {
+   "number": 13,
+   "section": 1,
+   "split": "7-0",
+   "hand": "AKQ9xxx",
+   "dummy": "",
+   "needs": [
+    7,
+    6,
+    5
+   ],
+   "percents": [
+    39,
+    84,
+    99
+   ],
+   "remark": ""
+  },
+  {
+   "number": 14,
+   "section": 1,
+   "split": "7-0",
+   "hand": "AKQxxxx",
+   "dummy": "",
+   "needs": [
+    7,
+    6,
+    5
+   ],
+   "percents": [
+    36,
+    84,
+    99
+   ],
+   "remark": ""
+  },
+  {
+   "number": 15,
+   "section": 1,
+   "split": "6-1",
+   "hand": "AKQT9x",
+   "dummy": "x",
+   "needs": [
+    6,
+    5
+   ],
+   "percents": [
+    54,
+    99
+   ],
+   "remark": "Drop J"
+  },
+  {
+   "number": 16,
+   "section": 1,
+   "split": "6-1",
+   "hand": "AKQ9xx",
+   "dummy": "x",
+   "needs": [
+    6,
+    5,
+    4
+   ],
+   "percents": [
+    39,
+    84,
+    99
+   ],
+   "remark": "Drop J"
+  },
+  {
+   "number": 17,
+   "section": 1,
+   "split": "5-2",
+   "hand": "AKQT9",
+   "dummy": "xx",
+   "needs": [
+    5
+   ],
+   "percents": [
+    54
+   ],
+   "remark": "Play A then finesse J"
+  },
+  {
+   "number": 18,
+   "section": 1,
+   "split": "5-2",
+   "hand": "AKQTx",
+   "dummy": "xx",
+   "needs": [
+    5,
+    4
+   ],
+   "percents": [
+    52,
+    93
+   ],
+   "remark": "Play A then finesse J 10"
+  },
+  {
+   "number": 19,
+   "section": 1,
+   "split": "5-2",
+   "hand": "AKQ9x",
+   "dummy": "xx",
+   "needs": [
+    5,
+    4
+   ],
+   "percents": [
+    39,
+    90
+   ],
+   "remark": "Play A then finesse J 10 | Finesse J 10 if covered play drop"
+  },
+  {
+   "number": 20,
+   "section": 1,
+   "split": "5-2",
+   "hand": "AKT9x",
+   "dummy": "Qx",
+   "needs": [
+    5
+   ],
+   "percents": [
+    54
+   ],
+   "remark": "Drop J (Q first)"
+  },
+  {
+   "number": 21,
+   "section": 1,
+   "split": "5-2",
+   "hand": "AK9xx",
+   "dummy": "Qx",
+   "needs": [
+    5,
+    4
+   ],
+   "percents": [
+    39,
+    86
+   ],
+   "remark": "Drop J 10 (Q first)"
+  },
+  {
+   "number": 22,
+   "section": 1,
+   "split": "5-2",
+   "hand": "AKxxx",
+   "dummy": "QT",
+   "needs": [
+    5,
+    4
+   ],
+   "percents": [
+    42,
+    92
+   ],
+   "remark": "Finesse J"
+  },
+  {
+   "number": 23,
+   "section": 1,
+   "split": "5-2",
+   "hand": "AKQT",
+   "dummy": "xxx",
+   "needs": [
+    4
+   ],
+   "percents": [
+    61
+   ],
+   "remark": "Drop J"
+  },
+  {
+   "number": 24,
+   "section": 1,
+   "split": "5-2",
+   "hand": "AKQ9",
+   "dummy": "xxx",
+   "needs": [
+    4
+   ],
+   "percents": [
+    48
+   ],
+   "remark": "Drop J"
+  },
+  {
+   "number": 25,
+   "section": 1,
+   "split": "5-2",
+   "hand": "AKTx",
+   "dummy": "Qxx",
+   "needs": [
+    4
+   ],
+   "percents": [
+    61
+   ],
+   "remark": "Drop J"
+  },
+  {
+   "number": 26,
+   "section": 1,
+   "split": "5-2",
+   "hand": "AK9x",
+   "dummy": "Qxx",
+   "needs": [
+    4
+   ],
+   "percents": [
+    48
+   ],
+   "remark": "Drop J"
+  },
+  {
+   "number": 27,
+   "section": 1,
+   "split": "5-2",
+   "hand": "AKxx",
+   "dummy": "QTx",
+   "needs": [
+    4
+   ],
+   "percents": [
+    54
+   ],
+   "remark": "Drop J"
+  },
+  {
+   "number": 28,
+   "section": 1,
+   "split": "5-2",
+   "hand": "ATxx",
+   "dummy": "KQx",
+   "needs": [
+    4
+   ],
+   "percents": [
+    61
+   ],
+   "remark": "Drop J"
+  },
+  {
+   "number": 29,
+   "section": 1,
+   "split": "5-2",
+   "hand": "A9xx",
+   "dummy": "KQx",
+   "needs": [
+    4
+   ],
+   "percents": [
+    47
+   ],
+   "remark": "Drop J"
+  },
+  {
+   "number": 30,
+   "section": 1,
+   "split": "5-2",
+   "hand": "Axxx",
+   "dummy": "KQT",
+   "needs": [
+    4
+   ],
+   "percents": [
+    55
+   ],
+   "remark": "Drop J"
+  },
+  {
+   "number": 31,
+   "section": 1,
+   "split": "8-0",
+   "hand": "AKQTx...x",
+   "dummy": "",
+   "needs": [
+    8,
+    7
+   ],
+   "percents": [
+    73,
+    96
+   ],
+   "remark": ""
+  },
+  {
+   "number": 32,
+   "section": 1,
+   "split": "8-0",
+   "hand": "AKQx...x",
+   "dummy": "",
+   "needs": [
+    8,
+    7
+   ],
+   "percents": [
+    68,
+    96
+   ],
+   "remark": ""
+  },
+  {
+   "number": 33,
+   "section": 1,
+   "split": "7-1",
+   "hand": "AKQTxxx",
+   "dummy": "x",
+   "needs": [
+    7,
+    6
+   ],
+   "percents": [
+    73,
+    98
+   ],
+   "remark": "Drop J | Finesse J"
+  },
+  {
+   "number": 34,
+   "section": 1,
+   "split": "7-1",
+   "hand": "AKQxxxx",
+   "dummy": "x",
+   "needs": [
+    7,
+    6
+   ],
+   "percents": [
+    68,
+    96
+   ],
+   "remark": "Drop J"
+  },
+  {
+   "number": 35,
+   "section": 1,
+   "split": "6-2",
+   "hand": "AKQTxx",
+   "dummy": "xx",
+   "needs": [
+    6,
+    5
+   ],
+   "percents": [
+    74,
+    98
+   ],
+   "remark": "Drop J",
+   "note": "Kilden skriver T/9 som T."
+  },
+  {
+   "number": 36,
+   "section": 1,
+   "split": "6-3",
+   "hand": "AKQxxx",
+   "dummy": "xxx",
+   "needs": [
+    6
+   ],
+   "percents": [
+    90
+   ],
+   "remark": "Drop J"
+  },
+  {
+   "number": 37,
+   "section": 1,
+   "split": "5-3",
+   "hand": "AKQTx",
+   "dummy": "xxx",
+   "needs": [
+    5,
+    4
+   ],
+   "percents": [
+    85,
+    98
+   ],
+   "remark": "Drop J",
+   "note": "Kilden skriver T/9 som T."
+  },
+  {
+   "number": 38,
+   "section": 1,
+   "split": "5-3",
+   "hand": "AKQxx",
+   "dummy": "xxx",
+   "needs": [
+    5,
+    96
+   ],
+   "percents": [
+    68,
+    96
+   ],
+   "remark": "Drop J"
+  },
+  {
+   "number": 39,
+   "section": 1,
+   "split": "4-4",
+   "hand": "AKQT",
+   "dummy": "xxxx",
+   "needs": [
+    4
+   ],
+   "percents": [
+    87
+   ],
+   "remark": "Drop J"
+  },
+  {
+   "number": 40,
+   "section": 1,
+   "split": "4-4",
+   "hand": "AKQx",
+   "dummy": "xxxx",
+   "needs": [
+    4
+   ],
+   "percents": [
+    68
+   ],
+   "remark": "Drop J"
+  },
+  {
+   "number": 41,
+   "section": 1,
+   "split": "4-4",
+   "hand": "AKTx",
+   "dummy": "Q9xx",
+   "needs": [
+    4
+   ],
+   "percents": [
+    89
+   ],
+   "remark": "Drop J",
+   "note": "Kilden skriver T/9 som T og T/9 som 9."
+  },
+  {
+   "number": 42,
+   "section": 1,
+   "split": "4-4",
+   "hand": "AK9x",
+   "dummy": "Q8xx",
+   "needs": [
+    4
+   ],
+   "percents": [
+    79
+   ],
+   "remark": "Drop J",
+   "note": "Kilden skriver 9/8 som 9 og 9/8 som 8."
+  },
+  {
+   "number": 43,
+   "section": 1,
+   "split": "4-4",
+   "hand": "AK9x",
+   "dummy": "Qxxx",
+   "needs": [
+    4
+   ],
+   "percents": [
+    75
+   ],
+   "remark": "Drop J"
+  },
+  {
+   "number": 44,
+   "section": 1,
+   "split": "9-0",
+   "hand": "AKQTx...x",
+   "dummy": "",
+   "needs": [
+    8,
+    7
+   ],
+   "percents": [
+    73,
+    96
+   ],
+   "remark": ""
+  },
+  {
+   "number": 45,
+   "section": 1,
+   "split": "9-0",
+   "hand": "AKQx...x",
+   "dummy": "",
+   "needs": [
+    8,
+    7
+   ],
+   "percents": [
+    68,
+    96
+   ],
+   "remark": ""
+  },
+  {
+   "number": 47,
+   "section": 1,
+   "split": "8-1",
+   "hand": "AKQx...x",
+   "dummy": "x",
+   "needs": [
+    8
+   ],
+   "percents": [
+    90
+   ],
+   "remark": "Drop J"
+  },
+  {
+   "number": 48,
+   "section": 1,
+   "split": "7-2",
+   "hand": "AKQTxxx",
+   "dummy": "xx",
+   "needs": [
+    7
+   ],
+   "percents": [
+    95
+   ],
+   "remark": "Drop J"
+  },
+  {
+   "number": 49,
+   "section": 1,
+   "split": "6-2",
+   "hand": "AKQxxx",
+   "dummy": "xx",
+   "needs": [
+    6,
+    5
+   ],
+   "percents": [
+    68,
+    96
+   ],
+   "remark": "Drop J"
+  },
+  {
+   "number": 50,
+   "section": 1,
+   "split": "7-2",
+   "hand": "AKQxxxx",
+   "dummy": "xx",
+   "needs": [
+    7
+   ],
+   "percents": [
+    90
+   ],
+   "remark": "Drop J"
+  },
+  {
+   "number": 51,
+   "section": 1,
+   "split": "7-2",
+   "hand": "AKxxxxx",
+   "dummy": "Qx",
+   "needs": [
+    7
+   ],
+   "percents": [
+    95
+   ],
+   "remark": "Drop J (Q first)"
+  },
+  {
+   "number": 52,
+   "section": 1,
+   "split": "6-3",
+   "hand": "AKQxxx",
+   "dummy": "xxx",
+   "needs": [
+    6
+   ],
+   "percents": [
+    90
+   ],
+   "remark": "Drop J"
+  },
+  {
+   "number": 53,
+   "section": 1,
+   "split": "6-3",
+   "hand": "AKTxxx",
+   "dummy": "Qxx",
+   "needs": [
+    6
+   ],
+   "percents": [
+    95
+   ],
+   "remark": "Drop J (Q first)",
+   "note": "Kilden skriver T/9 som T."
+  },
+  {
+   "number": 54,
+   "section": 1,
+   "split": "5-4",
+   "hand": "AKQTx",
+   "dummy": "xxxx",
+   "needs": [
+    5
+   ],
+   "percents": [
+    95
+   ],
+   "remark": "Drop J",
+   "note": "Kilden skriver T/9 som T."
+  },
+  {
+   "number": 55,
+   "section": 1,
+   "split": "5-4",
+   "hand": "AKTxx",
+   "dummy": "Qxxx",
+   "needs": [
+    5
+   ],
+   "percents": [
+    95
+   ],
+   "remark": "Drop J (Q first)",
+   "note": "Kilden skriver T/9 som T."
+  }
+ ]
+}

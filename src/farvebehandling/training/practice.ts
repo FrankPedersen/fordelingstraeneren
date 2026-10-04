@@ -25,6 +25,11 @@ export interface FilterOption<T> {
   count: number;
 }
 
+const POINTS: Record<string, number> = { E: 4, K: 3, D: 2, B: 1 };
+
+/** Honnørpoint i en tekst som "D B 10". */
+const honorPoints = (text: string) => text.split(' ').reduce((sum, card) => sum + (POINTS[card] ?? 0), 0);
+
 /** Højst så mange svar gemmes i loggen. */
 export const PRACTICE_LOG_SIZE = 500;
 
@@ -74,7 +79,7 @@ export function filterOptions(bank: readonly BankItem[], filter: PracticeFilter,
   return {
     technique: optionsFor(bank, filter, 'technique', (a, b) => rank(a) - rank(b), techniqueOrder),
     cards: optionsFor(bank, filter, 'cards', (a, b) => a - b),
-    missing: optionsFor(bank, filter, 'missing', (a, b) => a.length - b.length || a.localeCompare(b)),
+    missing: optionsFor(bank, filter, 'missing', (a, b) => honorPoints(a) - honorPoints(b) || a.length - b.length || a.localeCompare(b)),
     goal: optionsFor(bank, filter, 'goal', (a, b) => a - b),
   };
 }

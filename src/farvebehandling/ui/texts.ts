@@ -4,6 +4,7 @@ export const TEXT = {
   back: 'Tilbage til forsiden',
   backToTraining: 'Tilbage til Træning',
   loading: 'Indlæser farvebehandling …',
+  loadFailed: 'Banken kunne ikke hentes. Prøv igen, når du er online.',
   tabs: { training: 'Træning', practice: 'Selvvalgt', analysis: 'Analyse' },
 
   problem: 'Problemet',
@@ -50,13 +51,25 @@ export const TEXT = {
   pairs: (tricks: string, text: string) => `Bedst i parturnering: ${text} (${tricks} stik i gennemsnit).`,
   frequency: 'Hvor tit?',
   combination: (text: string) => `Kombinationen: ${text}.`,
-  situation: (cards: number, text: string) => `Es og konge uden damen med ${cards} kort: ${text}.`,
+  situation: (label: string, cards: number, text: string) => `${label} med ${cards} kort: ${text}.`,
+  /** Situationen bag kombinationen, fx "Es og konge uden damen" eller "Uden esset". */
+  situationLabel: (ours: readonly number[], theirs: readonly number[]) => {
+    const some: Record<number, string> = { 14: 'es', 13: 'konge', 12: 'dame', 11: 'knægt' };
+    const the: Record<number, string> = { 14: 'esset', 13: 'kongen', 12: 'damen', 11: 'knægten' };
+    const names = ours.map((r) => some[r]);
+    const list = names.length > 1 ? `${names.slice(0, -1).join(', ')} og ${names[names.length - 1]}` : (names[0] ?? '');
+    const capital = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
+    if (!theirs.length) return capital(list);
+    return list ? `${capital(list)} uden ${the[theirs[0]]}` : `Uden ${the[theirs[0]]}`;
+  },
   verified: 'Tallene stemmer med bridgehands.com.',
   unverified: 'Tallene afviger fra bridgehands.com; se valideringsrapporten.',
 
   choose: 'Vælg kombination',
   bank: 'Banken',
-  bankHelp: 'Damen mangler. Hyppigste først.',
+  bankHelp: 'Alle sider fra bridgehands.com, hyppigste først.',
+  pageFilter: 'Modpartens honnørpoint',
+  hp: (points: number) => (points === 0 ? 'ingen' : `${points} hp`),
   picker: 'Kortvælger',
   pickerHelp: 'Tryk på et kort én gang for bordet, to gange for din hånd og tre gange for at fjerne det.',
   pickerCard: (card: string, owner: string) => `${card}: ${owner}`,
@@ -150,6 +163,7 @@ export const TEXT = {
   option: (label: string, count: number) => `${label} (${count})`,
   cardsOption: (n: number) => `${n} kort`,
   goalOption: (n: number) => `${n} stik`,
+  noHonors: 'ingen',
   startPractice: (n: number) => `Start · ${n === 1 ? '1 kombination' : `${n} kombinationer`}`,
   changeFilter: 'Skift filter',
 

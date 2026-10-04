@@ -2,7 +2,7 @@
 
 3. oktober 2026 · Frank
 
-Farvebehandling bygges som et nyt, selvstændigt spor i fordelingstræneren. Den eksisterende app og dens SPEC.md forbliver uændrede. Version 3.1: version 3 med Claude Codes rettelser fra trin 1, godkendt af Frank (kendt sidning, modspillets viden, kildens fejl og antal brugbare cases).
+Farvebehandling bygges som et nyt, selvstændigt spor i fordelingstræneren. Den eksisterende app og dens SPEC.md forbliver uændrede. Version 3.1: version 3 med Claude Codes rettelser fra trin 1, godkendt af Frank (kendt sidning, modspillets viden, kildens fejl og antal brugbare cases). Version 3.2: startbanken er alle brugbare cases fra siderne 0–9, ikke kun de 100 hyppigste (Franks valg, 4. oktober 2026).
 
 ## Afgrænsning
 
@@ -91,7 +91,7 @@ Forudsætninger, som skal stå synligt ved hvert resultat:
 
 ## Hyppighed og udvælgelse
 
-Kombinationerne trænes i rækkefølge efter, hvor tit de opstår ved bordet. Startbanken er de 100 hyppigste kombinationer på tværs af bridgehands.com's sider 0–9. Første levering er siden "damen mangler" (modparten har 2 hp).
+Kombinationerne trænes i rækkefølge efter, hvor tit de opstår ved bordet. Startbanken er alle brugbare kombinationer på bridgehands.com's sider 0–9 (side N: modparten har N honnørpoint i farven), rangordnet efter hyppighed på tværs af siderne. Første levering var siden "damen mangler" (modparten har 2 hp).
 
 **Definition.** Hyppighed er chancen pr. spil for, at du og makker har kombinationen i en af de fire farver, uanset om kortene sidder i hånden eller på bordet.
 
@@ -117,7 +117,7 @@ P = \frac{\binom{39}{13-a}\binom{26+a}{13-b}}{\binom{52}{13}\binom{39}{13}} \cdo
 
 1. Hver case på bridgehands-siderne 0–9 får sin hyppighed beregnet.
 2. Cases med fejl i kilden (forkert kortantal, uklare "…", dubletter) sorteres fra; usikre cases markeres.
-3. De 100 hyppigste på tværs af siderne udgør startbanken, og nye emner introduceres i hyppighedsorden.
+3. Alle brugbare cases udgør startbanken, og nye emner introduceres i hyppighedsorden på tværs af siderne.
 
 **Første levering: damen mangler.** Siden har 100 cases, hvoraf 85 er brugbare. Beregningen ligger i `src/farvebehandling/content/damen-mangler-hyppighed.csv`. De 10 hyppigste dækker 59 % af sidens samlede hyppighed, de 30 hyppigste 83 %. Sorteret fra er cases med "…", kortantal, der ikke passer med fordelingen, forskelligt antal mål og procenter samt dubletter.
 
@@ -201,7 +201,7 @@ Eksemplet B432 / ET65 har to linjer:
 
 Linjerne genereres af løseren og gemmes i formatet ovenfor. Håndskrevne linjer bruges kun til brugerens egne tilføjelser og til at sammenligne en bestemt linje med løserens. Accepttesten låser tallene for eksemplet: A 37,3 % og 94,3 %, B 6,8 % og 100 % for 3 og 2 stik.
 
-Startbank: de 100 hyppigste kombinationer på tværs af bridgehands.com's sider 0–9 (se Hyppighed og udvælgelse), begyndende med siden "damen mangler". Kildens procent pr. mål står i `source`. En test sætter `verified: true`, når appens tal stemmer med kilden inden for 0,5 procentpoint (kilden har kun hele procenter); afviger de, gennemgås kombinationen, fordi fejlen også kan ligge i kilden. Analyse fase 1 viser kun kombinationer fra banken; brugeren kan tilføje egne linjer i samme format.
+Startbank: alle brugbare kombinationer på bridgehands.com's sider 0–9 (se Hyppighed og udvælgelse). Kildens procent pr. mål står i `source`. En test sætter `verified: true`, når appens tal stemmer med kilden inden for 0,5 procentpoint (kilden har kun hele procenter); afviger de, gennemgås kombinationen, fordi fejlen også kan ligge i kilden. Analyse fase 1 viser kun kombinationer fra banken; brugeren kan tilføje egne linjer i samme format.
 
 ## Session, scoring og progression
 
@@ -389,6 +389,5 @@ Accepttest i Vitest:
 - **Startbanken:** siden "damen mangler" er beregnet. Kombinationer fra Blakset-videoerne kan tilføjes med kildens procent pr. mål.
 - **Daglig session:** om farvebehandling senere skal indgå i fordelingssporets session.
 - **Teknik pr. case:** hver kombination i startbanken skal have en teknik, før den kan placeres i paladset.
-- **Øvrige sider:** hyppigheden for bridgehands-siderne 0–9 ud over side 2 skal beregnes, før den samlede top 100 kan lægges fast.
 - **Fase 2:** hvordan løseren med optimalt modspil skal køre i appen.
 - **x i kilden:** case 4 tyder på, at kilden ikke altid lader x tabe til modpartens små kort. Valideringsrapporten viser, hvilken fortolkning der passer bedst.

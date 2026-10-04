@@ -1,0 +1,100 @@
+{
+ "number": 0,
+ "page": "Suit Combinations 0 – Zero High Card Points held by opponents",
+ "sections": [
+  "Zero High Card Points held by opponents"
+ ],
+ "url": "https://www.bridgehands.com/S/Suit_Combination_0.htm",
+ "fetched": "2026-10-04",
+ "cases": [
+  {
+   "number": 1,
+   "section": 1,
+   "split": "6-0",
+   "hand": "AKQJxx",
+   "dummy": "",
+   "needs": [
+    6,
+    5
+   ],
+   "percents": [
+    62,
+    93
+   ],
+   "remark": "Run tricks"
+  },
+  {
+   "number": 2,
+   "section": 1,
+   "split": "5-1",
+   "hand": "AKQJx",
+   "dummy": "x",
+   "needs": [
+    5
+   ],
+   "percents": [
+    62
+   ],
+   "remark": "Run tricks"
+  },
+  {
+   "number": 3,
+   "section": 1,
+   "split": "7-0",
+   "hand": "AKQJxxx",
+   "dummy": "",
+   "needs": [
+    7,
+    6
+   ],
+   "percents": [
+    84,
+    99
+   ],
+   "remark": "Run tricks"
+  },
+  {
+   "number": 4,
+   "section": 1,
+   "split": "6-1",
+   "hand": "",
+   "dummy": "AKQJxx",
+   "needs": [
+    6
+   ],
+   "percents": [
+    84,
+    99
+   ],
+   "remark": "Run tricks"
+  },
+  {
+   "number": 5,
+   "section": 1,
+   "split": "5-2",
+   "hand": "",
+   "dummy": "AKQJx",
+   "needs": [
+    5
+   ],
+   "percents": [
+    84
+   ],
+   "remark": "Run tricks"
+  },
+  {
+   "number": 6,
+   "section": 1,
+   "split": "8",
+   "hand": "AKQJx",
+   "dummy": "xxx",
+   "needs": [
+    5
+   ],
+   "percents": [
+    96
+   ],
+   "remark": "Run tricks"
+  }
+ ]
+}

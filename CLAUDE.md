@@ -87,19 +87,17 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
 **Kort over koden** (`src/farvebehandling/`)
 - `model/`: kort (E K D B 10 i visningen), sidningsberegning med ledige pladser, hyppighed, normalt modspil (kun til Spil den selv) og gætteintervaller.
 - `solver/`: spiltræet (`game.ts`), løseren med optimalt modspil (`cfr.ts`), naturlige valg mellem lige gode træk (`natural.ts`), linjerne på dansk (`describe.ts`), linjeformatet (`lines.ts`), det samlede API (`solve.ts`) og Hvad nu? (`whatnow.ts`; datatyperne ligger i `model/whatnow.ts`, så appen ikke henter løseren).
-- `source/bridgehands.ts`: læser bridgehands.com's tabeller, sorterer fejl fra og omsætter x til konkrete kort.
-- `precompute.ts`: hyppighed, opgavebank, løsninger, valideringsrapport og linjeteksterne til godkendelse som rene funktioner.
-- `analysis.ts`: data til analysevinduet (banken, linjerne, sandsynlighedsbåndet og kortvælgerens opslag).
+- `source/bridgehands.ts`: læser bridgehands.com's tabeller (siderne 0–9), tolker kildens notation, sorterer fejl fra og omsætter x til konkrete kort.
+- `precompute.ts`: hyppighed, opgavebank, løsninger (med Hvad nu?), appens kompakte data, valideringsrapport og linjeteksterne til godkendelse som rene funktioner.
+- `analysis.ts`: data til analysevinduet (banken fra appens filer, linjerne, sandsynlighedsbåndet, situationen bag en kombination og kortvælgerens opslag). `testBank.ts` giver testene hele banken.
 - `training/`: opgavetyperne og pointtabellen (`tasks.ts`), progressionen (`progression.ts`), sessionsmotoren (`session.ts`), paladset (`palace.ts`) og Selvvalgts filtre (`practice.ts`).
 - `techniques.ts`: forslaget til teknik pr. kombination og listen til godkendelse. `whatnowReport.ts`: listen over Hvad nu?-situationerne.
 - `ui/`: skærmen (`FarvebehandlingScreen.tsx`, indlæses dovent fra `src/app/App.tsx`) med fanerne `Træning.tsx` (forside, session og status), `Selvvalgt.tsx` og `Analysevindue.tsx`; `Opgave.tsx`, `Facit.tsx`, `Introduktion.tsx`, `Rumkort.tsx`, `Palads.tsx` og `Data.tsx` (eksport og import); komponenterne Bridgebord, Kortvælger, Linjekort, Resultatkort og Sandsynlighedsbånd, al ordlyd i `texts.ts`, tokens i `tokens.css` og resten i `farvebehandling.css`.
 - `storage.ts`: skemaet for `farvebehandling:v1` (godkendt) med indlæsning, kopi af ulæselige data, gem, eksport og import.
-- `content/`: kildens cases, `damen-mangler-hyppighed.csv`, `suit-combinations.json`, `solutions.json`, `techniques.json`, `validering-damen-mangler.md`, `linjer-damen-mangler.md`, `teknikker-damen-mangler.md`, `hvad-nu.json` og `hvad-nu-damen-mangler.md`. Alt undtagen `techniques.json` genereres.
+- `content/`: kildens sider `bridgehands-side-N.json` (N = 0–9), `damen-mangler-hyppighed.csv` (side 2, specens accepttest), `hyppighed.csv` (alle sider), `suit-combinations.json`, `solutions.json`, `hvad-nu.json`, appens data `app/side-N.json`, `validering-side-N.md`, `linjer-side-N.md`, `teknikker.md`, `hvad-nu.md` og `techniques.json`. Alt undtagen `techniques.json` genereres.
 - Scripts: Node 24 kører TypeScript direkte, og kildekoden indlæses med Vites `runnerImport`, så `package.json` er uændret.
-  - `node scripts/bridgehands.ts` henter siden "damen mangler".
-  - `node scripts/solve.ts` regner alt i `content/` (ca. 45 min).
-  - `node scripts/techniques.ts` sætter teknikken pr. kombination og skriver listen til godkendelse uden at løse igen.
-  - `node scripts/whatnow.ts` regner Hvad nu?-situationerne (ca. 3 min); kør den efter `solve.ts`.
+  - `node scripts/bridgehands.ts` henter siderne 0–9 (eller de sider, der står som argumenter).
+  - `node scripts/solve.ts` løser det, der mangler i mellemlageret, og samler alle filer i `content/`. Med `--shard i/n` løser flere processer samtidig (10 processer tager ca. 1 time for alle sider); `--assemble` samler uden at løse. Mellemlageret har én fil pr. case i `FB_SOLVE_CACHE` (ellers `<tmp>/fordelingstraeneren-solve`). Ændres løseren, tælles `LINES_VERSION` op; ændres kun Hvad nu?, tælles `WHAT_NOW_VERSION` op.
 - Tokens: `design/tokens.json` holdes i takt med `src/ui/styles.css` af `src/tokens.test.ts`. Designsystemet i Claude Design er bygget på filen.
 
 **Beslutninger** (spørg, før du ændrer dem)
@@ -114,7 +112,12 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
   - Faldne modpartskort afgøres ud fra intervallerne for de spillede kort.
   - **Kendt sidning:** kan en modspiller ikke bekende, slutter linjen med det samme. Reglen er nødvendig for linje B's 100 % og er godkendt (spec 3.1).
 - **x i kilden:** spilførerens x'er er de laveste kort. Valideringen viser også fortolkningen "høj".
-- **Brugbare cases:** sorteret fra er "…", kortantal, der ikke passer med fordelingen, forskelligt antal mål og procenter og dubletter. Det giver 85 af 100 på siden "damen mangler".
+- **Brugbare cases:** sorteret fra er "…", kortantal, der ikke passer med fordelingen, forskelligt antal mål og procenter, mål over antal runder, et kort to gange, flere x'er end kort under det laveste navngivne kort (hyppigheden kan ikke regnes) og dubletter. Det giver 85 af 100 på siden "damen mangler" og 660 af 740 på siderne 0–9.
+- **Afsnit og sider:** siderne 3–6 har to afsnit, der hver nummererer fra 1; en case i andet afsnit hedder fx "2.12". Har to cases de samme konkrete kort (fx Q 10 9 / x x på side 7 og 8, eller K D 8 x x x og K D x x x x), bliver den, hvis side passer med modpartens honnørpoint, ellers den hyppigste. Cases på en side, der ikke passer med honnørpointene (fx E K 10 x / x x x på "damen mangler"), bruges som de er; Analyse filtrerer efter modpartens faktiske honnørpoint.
+- **Hyppighed i appen:** regnes i scriptet ud fra kildens holding med x (som rangen) og gemmes i appens data, fordi de konkrete kort ikke kan give den tilbage (E D B x x x x / 8 7 6 betyder, at modparten har 10 og 9).
+- **Kildens notation:** "T/9" er ét kort, der kan være 10'eren eller 9'eren; det første ledige kort bruges, og casen markeres som usikker. "5_3" læses som 5-3, "X" som x og "-" som renonce.
+- **Banken:** alle brugbare cases fra siderne 0–9 i hyppighedsorden på tværs af siderne (Franks valg, spec 3.2). Appen henter dem som én fil pr. side (`content/app/side-N.json`) uden eksakte tællere, øvre grænser og linjeformat, så hver fil er under PWA'ens grænse på 2 MB for offline-filer, og `vite.config.ts` er uændret.
+- **Situationen bag en kombination:** den højeste honnør, modparten har, og vores honnører over den, fx "Es og konge uden damen" eller "Uden esset".
 - **Hyppighed:** navngivne små kort, der er de allerlaveste, regnes som x (E B 3 2 / K 5 4 = E B x x / K x x).
 - **Gætteintervaller:** afgøres ud fra chancen afrundet til én decimal som i visningen.
 - **Naturlige valg:** er flere træk lige gode, vælger løseren tilfældigt. Bagefter skiftes et træk kun ud, når det nye er mindst lige så godt i alle sidninger, så garantien aldrig falder. 3. hånd tager en honnør fra 2. hånd med det billigste kort, der slår den, og lægger ellers lavt. Udspil foretrækkes som sikker vinder, dernæst som lille kort.
@@ -122,7 +125,7 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
 - **Sandsynlighedsbåndet:** et hul, hvor alle modpartens kort er 10 eller højere, vises med de konkrete kort; ellers er kortene små og vises som x. Felterne står efter fordeling (Vests antal kort) eller honnørplacering.
 - **Kortvælgeren:** en kombination findes i banken ud fra strukturen: hvilken hånd hvert af spilførerens kort sidder i, og hvor mange modpartskort der ligger imellem.
 - **Komponentreglen:** farvebehandlingens komponenter og `farvebehandling.css` bruger kun tokens, 0, 1px og procenter. Spalterne laves med flexbox og `var(--column)` i stedet for `fr` og media queries.
-- **Teknik pr. kombination:** et forslag efter reglerne i `techniques.ts` (sikkerhedsspil, når et lavere mål kræver en anden linje end flest stik; ellers hovedlinjens første kipning). Venter på Franks godkendelse (`content/teknikker-damen-mangler.md`).
+- **Teknik pr. kombination:** et forslag efter reglerne i `techniques.ts` (begrænset valg, når en af to ligeværdige honnører falder i første runde og kipning så er klart bedst; sikkerhedsspil, når et lavere mål kræver en anden linje end flest stik; ellers hovedlinjens første kipning). Venter på Franks godkendelse (`content/teknikker.md`).
 - **Sessionen** følger fordelingssporets motor uden at bruge den: repetition til 60 s, niveau til 210 s regnet fra start, lynrunde i 60 s og status. En ny kombination præsenteres med problem, hyppighed, rum og huskeregel, men uden linjer, og øves straks i hvert mål; derefter øves de fire senest introducerede kombinationer. Lynrunden skriver ikke i loggen og flytter kun emner ved fejl. Combo: rigtigt giver +1, halvt og forkert nulstiller. Sessionen tæller i streaken, når status vises.
 - **Opgavevalg:** motoren vælger vægtet blandt de mulige typer (Vælg linjen 4, Chancen, Linje mod linje, Nyt mål og Find hullet 2, Med optælling 1), højst to af samme type i træk.
 - **Svarmuligheder:** Vælg linjen viser den bedste linje og op til tre, der er mere end 0,5 procentpoint dårligere; lige gode linjer udelades, så der er ét rigtigt svar. Nyt mål vælger helst et tidligere mål med en anden bedste linje. Find hullet viser den hyppigste sidning, hvor linjen taber, og op til tre (mindst to), hvor den vinder. Med optælling regnes linjernes chance om med de ledige pladser; resultatet pr. sidning er linjens eget.
@@ -135,4 +138,5 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
 - [x] Trin 2: Tokens (`design/tokens.json`) og designsystemet i Claude Design.
 - [x] Trin 1: Løser og model, startbank og validering for siden "damen mangler". Løsertestene tager 15–20 s.
 - [x] Trin 3: Analyse fase 1 med banken, kortvælgeren, linjerne på dansk, sandsynlighedsbåndet og sidningerne. Linjeteksterne er godkendt.
-- [x] Trin 4: Træning (session, scoring, Leitner, streak og XP), Selvvalgt, paladset og egen eksport/import med opgavetype 1–6 og 8. Teknik pr. kombination (`content/teknikker-damen-mangler.md`) og Hvad nu?-situationerne (`content/hvad-nu-damen-mangler.md`) venter på Franks godkendelse.
+- [x] Trin 4: Træning (session, scoring, Leitner, streak og XP), Selvvalgt, paladset og egen eksport/import med opgavetype 1–6 og 8. Teknik pr. kombination (`content/teknikker.md`) og Hvad nu?-situationerne (`content/hvad-nu.md`) venter på Franks godkendelse.
+- [x] Banken dækker alle honnørkort: siderne 0–9 med 660 kombinationer. Linjeteksterne for de nye sider (`content/linjer-side-N.md`) venter på Franks godkendelse.

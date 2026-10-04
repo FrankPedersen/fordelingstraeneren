@@ -34,6 +34,9 @@ export function Analysevindue({ bank }: AnalysevindueProps) {
   const [grouping, setGrouping] = useState<Grouping>('fordeling');
   const [showAll, setShowAll] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
+  const [points, setPoints] = useState<number | null>(null);
+  const pointValues = useMemo(() => [...new Set(bank.map((b) => b.points))].sort((a, b) => a - b), [bank]);
+  const shown = points === null ? bank : bank.filter((b) => b.points === points);
 
   const lines = useMemo(() => linesForGoal(item, goal), [item, goal]);
   const fields = useMemo(() => sortFields(bandFields(item, lines), grouping), [item, lines, grouping]);
@@ -74,8 +77,30 @@ export function Analysevindue({ bank }: AnalysevindueProps) {
           {mode === 'bank' ? (
             <>
               <p className="fb-note">{TEXT.bankHelp}</p>
+              <div className="fb-filter" role="group" aria-label={TEXT.pageFilter}>
+                <span>{TEXT.pageFilter}:</span>
+                <button
+                  type="button"
+                  className={`btn small-btn${points === null ? ' selected' : ''}`}
+                  aria-pressed={points === null}
+                  onClick={() => setPoints(null)}
+                >
+                  {TEXT.option(TEXT.all, bank.length)}
+                </button>
+                {pointValues.map((p) => (
+                  <button
+                    key={p}
+                    type="button"
+                    className={`btn small-btn${points === p ? ' selected' : ''}`}
+                    aria-pressed={points === p}
+                    onClick={() => setPoints(p)}
+                  >
+                    {TEXT.option(TEXT.hp(p), bank.filter((b) => b.points === p).length)}
+                  </button>
+                ))}
+              </div>
               <ul className="fb-bank" aria-label={TEXT.bank}>
-                {bank.map((b) => (
+                {shown.map((b) => (
                   <li key={b.combination.id}>
                     <button
                       type="button"

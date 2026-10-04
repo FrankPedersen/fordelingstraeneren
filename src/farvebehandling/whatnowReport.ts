@@ -18,9 +18,9 @@ const pct = (v: number) => `${formatDecimal(100 * v, 1)} %`;
 /** Listen til godkendelse: hver situation med fortsættelserne og deres chance. */
 export function whatNowReport(bank: readonly Combination[], data: WhatNowData): string {
   const out = [
-    '# Hvad nu?: damen mangler',
+    '# Hvad nu?',
     '',
-    'Genereret af `scripts/whatnow.ts` til godkendelse. Første runde følger løserens bedste linje, og modspillerne lægger normalt: 2. hånd lavt, men dækker en udspillet honnør; 4. hånd vinder billigst, hvis makker ikke vinder; ligeværdige kort vælges tilfældigt (begrænset valg). Hver fortsættelse er derefter løst med optimalt modspil og sidningernes chance efter første runde. En situation kommer med, når en honnør falder eller en modspiller ikke kan bekende, den sker i mindst 1 % af spillene, og en rimelig fortsættelse (mindst en tredjedel af den bedstes chance) er mere end 0,5 procentpoint dårligere.',
+    'Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens bedste linje, og modspillerne lægger normalt: 2. hånd lavt, men dækker en udspillet honnør; 4. hånd vinder billigst, hvis makker ikke vinder; ligeværdige kort vælges tilfældigt (begrænset valg). Hver fortsættelse er derefter løst med optimalt modspil og sidningernes chance efter første runde. En situation kommer med, når en honnør falder eller en modspiller ikke kan bekende, den sker i mindst 1 % af spillene, og en rimelig fortsættelse (mindst en tredjedel af den bedstes chance) er mere end 0,5 procentpoint dårligere.',
     '',
   ];
   let total = 0;

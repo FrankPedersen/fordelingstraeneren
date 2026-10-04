@@ -1,25 +1,37 @@
 import { describe, expect, it } from 'vitest';
 import bankText from './content/suit-combinations.json?raw';
-import solutionsText from './content/solutions.json?raw';
-import { bandFields, disagreements, findCombination, linesForGoal, loadBank, NEAR_BEST, sortFields, structureKey } from './analysis';
-import { parseCards } from './model/cards';
+import { bandFields, disagreements, findCombination, linesForGoal, NEAR_BEST, situationHonors, sortFields, structureKey } from './analysis';
+import { ACE, JACK, KING, parseCards, QUEEN } from './model/cards';
 import { oncePerDeals } from './model/frequency';
-
-const bank = loadBank(bankText, solutionsText);
-const byId = (id: string) => bank.find((b) => b.combination.id === id)!;
+import { bankItem as byId, TEST_BANK as bank } from './testBank';
 
 describe('Banken i analysevinduet', () => {
-  it('har de 85 kombinationer i hyppighedsorden', () => {
-    expect(bank).toHaveLength(85);
-    expect(bank[0].combination.id).toBe('J32-AK54');
-    expect(oncePerDeals(bank[0].frequency)).toBe(134);
+  it('har alle kombinationer fra siderne 0–9 i hyppighedsorden', () => {
+    const combinations = (JSON.parse(bankText) as { combinations: { id: string }[] }).combinations;
+    expect(bank.map((b) => b.combination.id)).toEqual(combinations.map((c) => c.id));
     expect(bank.map((b) => b.rank)).toEqual(bank.map((_, i) => i + 1));
+    expect(new Set(bank.map((b) => b.page))).toEqual(new Set([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]));
+    // E K x x / B x x fra "damen mangler" er ca. én gang pr. 134 spil.
+    expect(oncePerDeals(byId('J32-AK54').frequency)).toBe(134);
+    // Rangen følger hyppigheden: ingen kombination er hyppigere end den foregående.
+    for (let i = 1; i < bank.length; i++) {
+      const [a, b] = [bank[i - 1].frequency, bank[i].frequency];
+      expect(b.num * a.den <= a.num * b.den, bank[i].combination.id).toBe(true);
+    }
+  });
+
+  it('beskriver situationen bag kombinationen', () => {
+    // E K x x / B x x: es og konge uden damen.
+    expect(byId('J32-AK54').honors).toEqual({ ours: [ACE, KING], theirs: [QUEEN] });
+    expect(situationHonors(parseCards('432'), parseCards('AQ65'))).toEqual({ ours: [ACE], theirs: [KING] });
+    expect(situationHonors(parseCards('432'), parseCards('KQ65'))).toEqual({ ours: [], theirs: [ACE] });
+    expect(situationHonors(parseCards('J32'), parseCards('AKQ5'))).toEqual({ ours: [ACE, KING, QUEEN, JACK], theirs: [] });
   });
 
   it('finder en kombination ud fra kortvælgerens kort', () => {
     expect(findCombination(bank, parseCards('J32'), parseCards('AK54'))).toBe(byId('J32-AK54'));
-    // B432 / E 10 6 5 er ikke på siden "damen mangler".
-    expect(findCombination(bank, parseCards('J432'), parseCards('AT65'))).toBeNull();
+    // Tre kort over for renonce findes ikke på bridgehands' sider.
+    expect(findCombination(bank, parseCards('AK2'), [])).toBeNull();
   });
 
   it('skelner strukturer, der er forskellige spil', () => {

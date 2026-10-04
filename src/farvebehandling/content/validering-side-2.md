@@ -1,6 +1,6 @@
 # Validering: Suit Combinations 2 – 2 High Card Point held by opponents - The Queen
 
-Kilde: [https://www.bridgehands.com/S/Suit_Combination_2.htm](https://www.bridgehands.com/S/Suit_Combination_2.htm), læst 2026-10-03. Genereret af `scripts/solve.ts`.
+Kilde: [https://www.bridgehands.com/S/Suit_Combination_2.htm](https://www.bridgehands.com/S/Suit_Combination_2.htm), læst 2026-10-04. Genereret af `scripts/solve.ts`.
 
 Model: Optimalt modspil: modspillet kender alle kort og blander sine valg; spilføreren ser kun de spillede kort. Ubegrænsede forbindelser, chancer a priori.
 

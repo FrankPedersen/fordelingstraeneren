@@ -1,65 +1,170 @@
-// Forberegner farvebehandlingens opgavebank ud fra bridgehands-siden "damen mangler":
-//   src/farvebehandling/content/damen-mangler-hyppighed.csv   hyppighed og rang for alle cases
-//   src/farvebehandling/content/suit-combinations.json        opgavebanken (brugbare cases i hyppighedsorden)
+// Forberegner farvebehandlingens opgavebank for bridgehands.com's sider 0–9 (node scripts/bridgehands.ts henter dem):
+//   src/farvebehandling/content/damen-mangler-hyppighed.csv   hyppighed og rang for siden "damen mangler" (specens accepttest)
+//   src/farvebehandling/content/hyppighed.csv                 hyppighed og rang på tværs af alle sider
+//   src/farvebehandling/content/suit-combinations.json        opgavebanken: alle brugbare cases i hyppighedsorden
 //   src/farvebehandling/content/solutions.json                løserens resultater med optimalt modspil
-//   src/farvebehandling/content/validering-damen-mangler.md   sammenligning med kilden, begge fortolkninger af x
-//   src/farvebehandling/content/linjer-damen-mangler.md       linjeteksterne til godkendelse
-//   src/farvebehandling/content/teknikker-damen-mangler.md    teknik pr. kombination til godkendelse
+//   src/farvebehandling/content/hvad-nu.json                  Hvad nu?-situationerne
+//   src/farvebehandling/content/app/side-N.json               appens kompakte data, én fil pr. side
+//   src/farvebehandling/content/validering-side-N.md          sammenligning med kilden, begge fortolkninger af x
+//   src/farvebehandling/content/linjer-side-N.md              linjeteksterne til godkendelse
+//   src/farvebehandling/content/teknikker.md                  teknik pr. kombination til godkendelse
+//   src/farvebehandling/content/hvad-nu.md                    Hvad nu?-situationerne til godkendelse
 //
-//   node scripts/solve.ts
-import { readFileSync, writeFileSync } from 'node:fs';
+//   node scripts/solve.ts                  løser det, der mangler i mellemlageret, og samler filerne
+//   node scripts/solve.ts --shard 2/8      løser hver 8. case fra nr. 2 (kør flere samtidig), uden at samle
+//   node scripts/solve.ts --assemble       samler filerne fra mellemlageret uden at løse
+//
+// Mellemlageret (én fil pr. case) ligger i FB_SOLVE_CACHE, ellers i <tmp>/fordelingstraeneren-solve. Ændres løseren,
+// tælles LINES_VERSION op; ændres kun reglerne for Hvad nu?, tælles WHAT_NOW_VERSION op (så løses kun den bedste linje).
+import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { runnerImport } from 'vite';
 
+const LINES_VERSION = 1;
+const WHAT_NOW_VERSION = 1;
+const PAGES = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+
 const root = fileURLToPath(new URL('..', import.meta.url));
 const content = `${root}src/farvebehandling/content/`;
+const cache = process.env.FB_SOLVE_CACHE ?? join(tmpdir(), 'fordelingstraeneren-solve');
+mkdirSync(cache, { recursive: true });
 const load = async <T>(path: string) =>
   (await runnerImport<T>(`${root}${path}`, { configFile: false, logLevel: 'error' })).module;
 
 const pre = await load<typeof import('../src/farvebehandling/precompute.ts')>('src/farvebehandling/precompute.ts');
 const src = await load<typeof import('../src/farvebehandling/source/bridgehands.ts')>('src/farvebehandling/source/bridgehands.ts');
 const tech = await load<typeof import('../src/farvebehandling/techniques.ts')>('src/farvebehandling/techniques.ts');
+const wnr = await load<typeof import('../src/farvebehandling/whatnowReport.ts')>('src/farvebehandling/whatnowReport.ts');
 
-const page = JSON.parse(readFileSync(`${content}bridgehands-damen-mangler.json`, 'utf8'));
-const cases = src.classifyCases(page.cases);
-const rows = pre.frequencyRows(cases);
-writeFileSync(`${content}damen-mangler-hyppighed.csv`, pre.frequencyCsv(rows));
-console.log(pre.frequencySummary(rows));
-
-const usable = rows.filter((r) => r.rank > 0).sort((a, b) => a.rank - b.rank);
-const pageName = 'bridgehands.com, Suit Combinations 2';
-const solutions: Record<string, unknown> = {};
-const bank = [];
-const validation = [];
-const started = Date.now();
-for (const [i, row] of usable.entries()) {
-  const c = row.case;
-  const t0 = Date.now();
-  const lav = src.concreteHands(c, 'lav');
-  const høj = src.concreteHands(c, 'høj');
-  const lavSolution = pre.solveCombination(lav.north, lav.south, c.needs, { tricks: true });
-  const højSolution = pre.solveCombination(høj.north, høj.south, c.needs);
-  const entry = pre.bankEntry(c, pageName, lavSolution);
-  bank.push(entry);
-  solutions[entry.id] = lavSolution;
-  const v = pre.validationRow(c, lavSolution, højSolution);
-  validation.push(v);
-  const goals = v.goals.map((g) => `${g.need}: ${g.app.lav.toFixed(1)}/${g.app.høj.toFixed(1)} (kilde ${g.source})`).join(', ');
-  console.log(`${i + 1}/${usable.length} case ${c.number} ${entry.id} ${goals}  ${((Date.now() - t0) / 1000).toFixed(1)} s`);
+type Solution = import('../src/farvebehandling/precompute.ts').CombinationSolution;
+type Situations = Record<string, import('../src/farvebehandling/model/whatnow.ts').WhatNowSituation[]>;
+interface Cached {
+  lines: number;
+  whatNowVersion: number;
+  key: string;
+  lav: Solution;
+  høj: Solution;
+  whatNow: Situations;
 }
 
-writeFileSync(
-  `${content}suit-combinations.json`,
-  JSON.stringify({ version: 1, source: page.url, combinations: bank }, null, 1) + '\n',
-);
-writeFileSync(
-  `${content}solutions.json`,
-  JSON.stringify({ version: 1, model: pre.MODEL_TEXT, combinations: solutions }) + '\n',
-);
-const excluded = cases.filter((c) => !c.usable);
-const report = pre.validationReport(validation, excluded, { page: page.page, url: page.url, fetched: page.fetched, tolerance: 0.5 });
-writeFileSync(`${content}validering-damen-mangler.md`, report.replace('## Resultat\n', `## Resultat\n\n${pre.frequencySummary(rows)}\n`));
-writeFileSync(`${content}linjer-damen-mangler.md`, pre.linesReport(bank, solutions as Record<string, any>));
+const pages = PAGES.map((n) => JSON.parse(readFileSync(`${content}bridgehands-side-${n}.json`, 'utf8')));
+const cases = src.classifyPages(pages);
+const rows = pre.frequencyRows(cases);
+const usable = rows.filter((r) => r.rank > 0).sort((a, b) => a.rank - b.rank);
+
+const keyOf = (c: (typeof cases)[number]) => `${c.hand}/${c.dummy}:${c.needs.join(',')}`;
+// Afsnit 1 beholder det korte navn, så mellemlageret fra sider med ét afsnit kan genbruges.
+const fileOf = (c: (typeof cases)[number]) =>
+  join(cache, (c.section ?? 1) > 1 ? `side-${c.page}-afsnit-${c.section}-case-${c.number}.json` : `side-${c.page}-case-${c.number}.json`);
+function readCached(c: (typeof cases)[number]): Cached | null {
+  const file = fileOf(c);
+  if (!existsSync(file)) return null;
+  const entry = JSON.parse(readFileSync(file, 'utf8')) as Cached;
+  return entry.key === keyOf(c) && entry.lines === LINES_VERSION ? entry : null;
+}
+
+/** Løser en case (begge fortolkninger af x) og gemmer den i mellemlageret. */
+function solveCase(c: (typeof cases)[number]): 'løst' | 'hvad nu' | 'gemt' {
+  const cached = readCached(c);
+  if (cached && cached.whatNowVersion === WHAT_NOW_VERSION) return 'gemt';
+  const lav = src.concreteHands(c, 'lav');
+  if (cached) {
+    const whatNow = pre.whatNowFor(lav.north, lav.south, c.needs, cached.lav);
+    writeFileSync(fileOf(c), JSON.stringify({ ...cached, whatNowVersion: WHAT_NOW_VERSION, whatNow }));
+    return 'hvad nu';
+  }
+  const høj = pre.handsFor(c, 'høj');
+  const { whatNow = {}, ...lavSolution } = pre.solveCombination(lav.north, lav.south, c.needs, { tricks: true, whatNow: true });
+  const same = lav.north.join() === høj.north.join() && lav.south.join() === høj.south.join();
+  const højSolution = same ? { ...lavSolution, tricks: undefined } : pre.solveCombination(høj.north, høj.south, c.needs);
+  const entry: Cached = { lines: LINES_VERSION, whatNowVersion: WHAT_NOW_VERSION, key: keyOf(c), lav: lavSolution, høj: højSolution, whatNow };
+  writeFileSync(fileOf(c), JSON.stringify(entry));
+  return 'løst';
+}
+
+const shardArg = process.argv.indexOf('--shard');
+const assembleOnly = process.argv.includes('--assemble');
+const [shard, shards] = shardArg >= 0 ? process.argv[shardArg + 1].split('/').map(Number) : [0, 1];
+const started = Date.now();
+
+if (!assembleOnly) {
+  // Kun de cases, der mangler, fordeles på processerne.
+  const todo = usable.filter((r) => readCached(r.case)?.whatNowVersion !== WHAT_NOW_VERSION);
+  const mine = todo.filter((_, i) => i % shards === shard);
+  for (const [i, row] of mine.entries()) {
+    const t0 = Date.now();
+    const label = `[${shard}/${shards}] ${i + 1}/${mine.length} side ${row.case.page} case ${row.case.number}`;
+    try {
+      const result = solveCase(row.case);
+      if (result !== 'gemt') console.log(`${label} (${result}) ${((Date.now() - t0) / 1000).toFixed(1)} s`);
+    } catch (error) {
+      // En fejl i én case stopper ikke resten; samlingen nævner de cases, der mangler.
+      console.error(`${label} FEJL: ${(error as Error).message}`);
+    }
+  }
+  console.log(`[${shard}/${shards}] færdig på ${((Date.now() - started) / 60000).toFixed(1)} min.`);
+  if (shardArg >= 0) process.exit(0);
+}
+
+// ---------- Saml filerne ----------
+const missing = usable.filter((r) => !readCached(r.case) || readCached(r.case)!.whatNowVersion !== WHAT_NOW_VERSION);
+if (missing.length) {
+  console.error(`${missing.length} cases mangler i mellemlageret, fx side ${missing[0].case.page} case ${missing[0].case.number}.`);
+  process.exit(1);
+}
+
+// Specens accepttest: siden "damen mangler" for sig.
+writeFileSync(`${content}damen-mangler-hyppighed.csv`, pre.frequencyCsv(pre.frequencyRows(src.classifyCases(pages[2].cases))));
+writeFileSync(`${content}hyppighed.csv`, pre.frequencyCsv(rows, { pages: true }));
+
+const bank = [];
+const solutions: Record<string, Solution> = {};
+const situations: Record<string, Situations> = {};
+const validation = new Map<number, ReturnType<typeof pre.validationRow>[]>();
+const app = new Map<number, unknown[]>();
+for (const row of usable) {
+  const c = row.case;
+  const entry = readCached(c)!;
+  const page = pages[c.page!];
+  const combination = pre.bankEntry(c, `bridgehands.com, Suit Combinations ${c.page}`, entry.lav, entry.whatNow);
+  if (solutions[combination.id]) throw new Error(`${combination.id} findes to gange`);
+  bank.push(combination);
+  solutions[combination.id] = entry.lav;
+  if (Object.keys(entry.whatNow).length) situations[combination.id] = entry.whatNow;
+  if (!validation.has(c.page!)) validation.set(c.page!, []);
+  validation.get(c.page!)!.push(pre.validationRow(c, entry.lav, entry.høj));
+  if (!app.has(c.page!)) app.set(c.page!, []);
+  app.get(c.page!)!.push(pre.appEntry(row.rank, row.frequency!, combination, entry.lav, entry.whatNow));
+  void page;
+}
+
+writeFileSync(`${content}suit-combinations.json`, JSON.stringify({ version: 1, source: 'https://www.bridgehands.com/S/', combinations: bank }, null, 1) + '\n');
+writeFileSync(`${content}solutions.json`, JSON.stringify({ version: 1, model: pre.MODEL_TEXT, combinations: solutions }) + '\n');
+const whatNowModel = (await load<typeof import('../src/farvebehandling/model/whatnow.ts')>('src/farvebehandling/model/whatnow.ts')).WHAT_NOW_MODEL;
+writeFileSync(`${content}hvad-nu.json`, JSON.stringify({ version: 1, model: whatNowModel, combinations: situations }) + '\n');
+
+rmSync(`${content}app`, { recursive: true, force: true });
+mkdirSync(`${content}app`);
 const techniques = JSON.parse(readFileSync(`${content}techniques.json`, 'utf8')).techniques;
-writeFileSync(`${content}teknikker-damen-mangler.md`, tech.techniquesReport(bank, solutions as Record<string, any>, techniques));
-console.log(`Færdig på ${((Date.now() - started) / 60000).toFixed(1)} min.`);
+for (const n of PAGES) {
+  const page = pages[n];
+  const pageCases = cases.filter((c) => c.page === n);
+  const rowsHere = validation.get(n) ?? [];
+  if (rowsHere.length) {
+    const report = pre.validationReport(rowsHere, pageCases.filter((c) => !c.usable), { page: page.page, url: page.url, fetched: page.fetched, tolerance: 0.5 });
+    const pageRows = pre.frequencyRows(pageCases);
+    writeFileSync(`${content}validering-side-${n}.md`, report.replace('## Resultat\n', `## Resultat\n\n${pre.frequencySummary(pageRows)}\n`));
+    const pageBank = bank.filter((b) => b.source?.name.startsWith(`bridgehands.com, Suit Combinations ${n},`));
+    writeFileSync(`${content}linjer-side-${n}.md`, pre.linesReport(pageBank, solutions, pre.pageTitle(n)));
+  }
+  writeFileSync(`${content}app/side-${n}.json`, JSON.stringify({ version: 1, page: n, combinations: app.get(n) ?? [] }) + '\n');
+}
+writeFileSync(`${content}teknikker.md`, tech.techniquesReport(bank, solutions, techniques, situations));
+writeFileSync(`${content}hvad-nu.md`, wnr.whatNowReport(bank, situations));
+
+const counts: Record<string, number> = {};
+for (const b of bank) counts[b.technique] = (counts[b.technique] ?? 0) + 1;
+console.log(`${bank.length} kombinationer, ${Object.keys(situations).length} med Hvad nu?, teknikker ${JSON.stringify(counts)}`);
+console.log(`Samlet på ${((Date.now() - started) / 1000).toFixed(0)} s.`);

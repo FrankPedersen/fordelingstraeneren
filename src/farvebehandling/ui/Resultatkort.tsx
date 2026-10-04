@@ -23,7 +23,13 @@ export function Resultatkort({ item, goal, best }: ResultatkortProps) {
       )}
       <h3>{TEXT.frequency}</h3>
       <p className="fb-note">{TEXT.combination(eveningText(item.frequency))}</p>
-      <p className="fb-note">{TEXT.situation(item.north.length + item.south.length, eveningText(item.situation))}</p>
+      <p className="fb-note">
+        {TEXT.situation(
+          TEXT.situationLabel(item.honors.ours, item.honors.theirs),
+          item.north.length + item.south.length,
+          eveningText(item.situation),
+        )}
+      </p>
       <p className="fb-note">{verified ? TEXT.verified : TEXT.unverified}</p>
     </section>
   );

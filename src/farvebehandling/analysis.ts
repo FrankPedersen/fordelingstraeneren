@@ -1,50 +1,83 @@
 import { binomial } from '../domain/combinatorics';
-import { ACE, ALL_RANKS, KING, QUEEN, rankFromSymbol, rankText, TEN, type Rank } from './model/cards';
+import { ACE, ALL_RANKS, JACK, KING, QUEEN, rankFromSymbol, rankText, TEN, type Rank } from './model/cards';
 import type { Fraction } from './model/fraction';
-import { combinationFrequency, situationFrequency } from './model/frequency';
-import type { Combination, CombinationSolution, LeadResult } from './precompute';
+import { situationFrequency } from './model/frequency';
+import type { AppEntry, AppLead, Combination, CombinationSolution, GoalResult, LeadResult } from './precompute';
 import type { WhatNowSituation } from './model/whatnow';
-import { frequencyHolding } from './source/bridgehands';
 
 /** Data til analysevinduet: banken, linjerne, sandsynlighedsbåndet og opslag fra kortvælgeren. */
 
 export interface BankItem {
   combination: Combination;
   solution: CombinationSolution;
-  /** Rang efter hyppighed (1 = hyppigst). */
+  /** Rang efter hyppighed på tværs af siderne (1 = hyppigst). */
   rank: number;
+  /** bridgehands-siden (0–9), som kombinationen står på i kilden. */
+  page: number;
+  /** Modpartens honnørpoint i farven ud fra kortene (E 4, K 3, D 2, B 1); kilden har enkelte cases på en anden side. */
+  points: number;
   north: Rank[];
   south: Rank[];
   /** Hyppighed pr. spil for kombinationen. */
   frequency: Fraction;
-  /** Hyppighed for situationen: es og konge uden damen med samme antal kort. */
+  /** Hyppighed for situationen bag, fx es og konge uden damen med samme antal kort. */
   situation: Fraction;
+  /** Situationens honnører: vores over den højeste manglende, og den højeste manglende. */
+  honors: { ours: Rank[]; theirs: Rank[] };
   key: string;
-  /** Hvad nu?: situationerne efter første runde pr. mål (fra hvad-nu.json). */
+  /** Hvad nu?: situationerne efter første runde pr. mål. */
   whatNow: Readonly<Record<string, readonly WhatNowSituation[]>>;
 }
 
 const ranksOf = (data: string) => [...data].map(rankFromSymbol).sort((a, b) => b - a);
 
-export function loadBank(bankText: string, solutionsText: string, whatNowText?: string): BankItem[] {
-  const bank = (JSON.parse(bankText) as { combinations: Combination[] }).combinations;
-  const solutions = (JSON.parse(solutionsText) as { combinations: Record<string, CombinationSolution> }).combinations;
-  const whatNow = whatNowText ? (JSON.parse(whatNowText) as { combinations: Record<string, Record<string, WhatNowSituation[]>> }).combinations : {};
-  return bank.map((combination, i) => {
-    const north = ranksOf(combination.north), south = ranksOf(combination.south);
-    const x = frequencyHolding({ hand: combination.south, dummy: combination.north });
-    return {
-      combination,
-      solution: solutions[combination.id],
-      rank: i + 1,
-      north,
-      south,
-      frequency: combinationFrequency(x.hand, x.dummy),
-      situation: situationFrequency([ACE, KING], [QUEEN], north.length + south.length),
-      key: structureKey(north, south),
-      whatNow: whatNow[combination.id] ?? {},
-    };
-  });
+const HONORS: readonly Rank[] = [ACE, KING, QUEEN, JACK];
+
+/**
+ * Situationen bag en kombination: den højeste honnør, modparten har, og vores honnører over den. E K B x / D … giver
+ * "es og konge uden damen"; har modparten ingen af E K D B, er situationen alle fire honnører.
+ */
+export function situationHonors(north: readonly Rank[], south: readonly Rank[]): { ours: Rank[]; theirs: Rank[] } {
+  const ours = HONORS.filter((r) => north.includes(r) || south.includes(r));
+  const top = HONORS.find((r) => !ours.includes(r));
+  return top === undefined ? { ours, theirs: [] } : { ours: ours.filter((r) => r > top), theirs: [top] };
+}
+
+const lead = (l: AppLead): LeadResult => ({ ...l, exact: '', upper: l.value, line: [] });
+const goalOf = (g: { value: number; best: number; leads: AppLead[] }): GoalResult => ({ ...g, leads: g.leads.map(lead) });
+
+function bankItem(entry: AppEntry, page: number): BankItem {
+  const combination: Combination = { ...entry.combination, lines: [] };
+  const goals: Record<string, GoalResult> = {};
+  for (const [goal, g] of Object.entries(entry.solution.goals)) goals[goal] = goalOf(g);
+  const solution: CombinationSolution = { ...entry.solution, goals, tricks: entry.solution.tricks && goalOf(entry.solution.tricks) };
+  const north = ranksOf(combination.north), south = ranksOf(combination.south);
+  const honors = situationHonors(north, south);
+  return {
+    combination,
+    solution,
+    rank: entry.rank,
+    page,
+    points: [ACE, KING, QUEEN, JACK].filter((r) => !north.includes(r) && !south.includes(r)).reduce((sum, r) => sum + r - 10, 0),
+    north,
+    south,
+    // Hyppigheden er regnet ud fra kildens holding med x (som rangen); de konkrete kort kan ikke give den tilbage.
+    frequency: { num: BigInt(entry.frequency[0]), den: BigInt(entry.frequency[1]) },
+    situation: situationFrequency(honors.ours, honors.theirs, north.length + south.length),
+    honors,
+    key: structureKey(north, south),
+    whatNow: entry.whatNow ?? {},
+  };
+}
+
+/** Banken fra appens filer (content/app/side-N.json, én pr. side) i hyppighedsorden. */
+export function loadBank(pageTexts: readonly string[]): BankItem[] {
+  const items: BankItem[] = [];
+  for (const text of pageTexts) {
+    const file = JSON.parse(text) as { page: number; combinations: AppEntry[] };
+    for (const entry of file.combinations) items.push(bankItem(entry, file.page));
+  }
+  return items.sort((a, b) => a.rank - b.rank);
 }
 
 /**

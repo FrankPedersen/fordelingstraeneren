@@ -2,22 +2,17 @@
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { mulberry32 } from '../../engine/rng';
-import bankText from '../content/suit-combinations.json?raw';
-import solutionsText from '../content/solutions.json?raw';
-import whatNowText from '../content/hvad-nu.json?raw';
-import { loadBank } from '../analysis';
 import { guessInterval } from '../model/guess';
 import { grade, makeTask } from '../training/tasks';
+import { bankItem } from '../testBank';
 import { Facit } from './Facit';
 import { Opgave } from './Opgave';
 
 afterEach(cleanup);
 
-const bank = loadBank(bankText, solutionsText, whatNowText);
-
 describe('Hvad nu?', () => {
   // E K 9 3 / B 2, 3 stik: lille fra hånden mod knægten, og Øst tager med damen.
-  const item = bank.find((b) => b.combination.id === 'J2-AK93')!;
+  const item = bankItem('J2-AK93');
   const task = makeTask('hvad-nu', item, 3, mulberry32(3));
   if (task.type !== 'hvad-nu') throw new Error('forkert type');
 

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { classifyCases, concreteHands, frequencyHolding, parseBridgehands } from './bridgehands';
+import { caseLabel, classifyCases, concreteHands, frequencyHolding, parseBridgehands, sectionTitles } from './bridgehands';
 
 const row = (n: number, split: string, holding: string, need: string, pct: string, remark = '') =>
   `<tr><td><b>${n}</b></td><td>${split}</td><td>${holding}</td><td>${need}</td><td>${pct}</td><td>${remark}</td></tr>`;
@@ -35,6 +35,44 @@ describe('bridgehands.com', () => {
     expect(reason(42)).toBe('dublet af case 40');
     expect(reason(44)).toBeNull();
     expect(reason(74)).toMatch(/uklart/);
+  });
+
+  it('tolker kildens notation på de andre sider: T/9, 5_3, X og - som renonce', () => {
+    const other = parseBridgehands(
+      [
+        '<table>',
+        row(41, '4-4', 'A K T/9 x<br>Q T/9 x x', '4', '89', 'Drop J'),
+        row(56, '5_3', 'A Q 7 x x<br>J x x', '5<br>4<br>3', '14<br>76<br>96'),
+        row(10, '6-1', 'K Q T 9 x x<br>X', '5', '26'),
+        row(1, '6-0', 'A K Q J x x<br>-', '6', '62'),
+        '</table>',
+      ].join(''),
+    );
+    expect(other[0]).toMatchObject({ hand: 'AKTx', dummy: 'Q9xx', note: 'Kilden skriver T/9 som T og T/9 som 9.' });
+    expect(other[1].split).toBe('5-3');
+    expect(other[2].dummy).toBe('x');
+    expect(other[3].dummy).toBe('');
+    expect(other[3].note).toBeUndefined();
+    expect(classifyCases(other).map((c) => c.reason)).toEqual([null, null, null, null]);
+  });
+
+  it('kender sidens afsnit, der hver nummererer deres cases fra 1', () => {
+    const heading = (text: string) => `<tr><td colspan="6"><b>${text}</b></td></tr>`;
+    const page = [
+      '<table>',
+      heading('3 High Card Point held by opponents - The King'),
+      row(1, '4-3', 'A Q x x<br>x x x', '3', '50'),
+      heading('3 High Card Point held by opponents - The Queen and Jack'),
+      row(1, '4-3', 'A K T x<br>x x x', '4', '24'),
+      '</table>',
+    ].join('');
+    expect(sectionTitles(page)).toEqual([
+      '3 High Card Point held by opponents - The King',
+      '3 High Card Point held by opponents - The Queen and Jack',
+    ]);
+    const parsed = parseBridgehands(page);
+    expect(parsed.map((c) => [c.section, c.number])).toEqual([[1, 1], [2, 1]]);
+    expect(parsed.map(caseLabel)).toEqual(['1', '2.1']);
   });
 
   it('omsætter x efter begge fortolkninger', () => {

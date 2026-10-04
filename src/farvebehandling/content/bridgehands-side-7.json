@@ -1,0 +1,1175 @@
+{
+ "number": 7,
+ "page": "Suit Combinations 7 – 7 High Card Point held by opponents - The Ace and King",
+ "sections": [
+  "7 High Card Point held by opponents - The Ace and King"
+ ],
+ "url": "https://www.bridgehands.com/S/Suit_Combination_7.htm",
+ "fetched": "2026-10-04",
+ "cases": [
+  {
+   "number": 1,
+   "section": 1,
+   "split": "4-1",
+   "hand": "QJTx",
+   "dummy": "x",
+   "needs": [
+    2
+   ],
+   "percents": [
+    7
+   ],
+   "remark": "Finesse A K"
+  },
+  {
+   "number": 2,
+   "section": 1,
+   "split": "4-1",
+   "hand": "QJ87",
+   "dummy": "x",
+   "needs": [
+    2,
+    1
+   ],
+   "percents": [
+    0.6,
+    44
+   ],
+   "remark": "Finesse 10 9, or finesse A K"
+  },
+  {
+   "number": 3,
+   "section": 1,
+   "split": "4-1",
+   "hand": "QT9x",
+   "dummy": "x",
+   "needs": [
+    2,
+    1
+   ],
+   "percents": [
+    0.6,
+    35
+   ],
+   "remark": "Finesse A K"
+  },
+  {
+   "number": 4,
+   "section": 1,
+   "split": "4-1",
+   "hand": "QT87",
+   "dummy": "x",
+   "needs": [
+    2,
+    1
+   ],
+   "percents": [
+    0.3,
+    14
+   ],
+   "remark": "Finesse A K"
+  },
+  {
+   "number": 5,
+   "section": 1,
+   "split": "4-1",
+   "hand": "QJ98",
+   "dummy": "x",
+   "needs": [
+    2
+   ],
+   "percents": [
+    11
+   ],
+   "remark": "Finesse 10"
+  },
+  {
+   "number": 6,
+   "section": 1,
+   "split": "4-1",
+   "hand": "QJ9x",
+   "dummy": "x",
+   "needs": [
+    2,
+    1
+   ],
+   "percents": [
+    1,
+    57
+   ],
+   "remark": "Finesse 10"
+  },
+  {
+   "number": 7,
+   "section": 1,
+   "split": "3-2",
+   "hand": "QJ9",
+   "dummy": "xx",
+   "needs": [
+    1
+   ],
+   "percents": [
+    78
+   ],
+   "remark": "Finesse A K then finesse 10"
+  },
+  {
+   "number": 8,
+   "section": 1,
+   "split": "3-2",
+   "hand": "QT9",
+   "dummy": "xx",
+   "needs": [
+    1
+   ],
+   "percents": [
+    50
+   ],
+   "remark": "Finesse J"
+  },
+  {
+   "number": 9,
+   "section": 1,
+   "split": "3-2",
+   "hand": "Q9x",
+   "dummy": "xx",
+   "needs": [
+    1
+   ],
+   "percents": [
+    24
+   ],
+   "remark": "Finesse A K then low to low"
+  },
+  {
+   "number": 10,
+   "section": 1,
+   "split": "3-2",
+   "hand": "Qxx",
+   "dummy": "Jx",
+   "needs": [
+    1
+   ],
+   "percents": [
+    48
+   ],
+   "remark": "Play low to J then low to Q"
+  },
+  {
+   "number": 11,
+   "section": 1,
+   "split": "3-2",
+   "hand": "Qxx",
+   "dummy": "Tx",
+   "needs": [
+    1
+   ],
+   "percents": [
+    24
+   ],
+   "remark": "Finesse A K then low to low"
+  },
+  {
+   "number": 12,
+   "section": 1,
+   "split": "4-1",
+   "hand": "QJT8",
+   "dummy": "x",
+   "needs": [
+    2
+   ],
+   "percents": [
+    51
+   ],
+   "remark": "Finesse 9"
+  },
+  {
+   "number": 13,
+   "section": 1,
+   "split": "4-1",
+   "hand": "QT9x",
+   "dummy": "x",
+   "needs": [
+    2,
+    1
+   ],
+   "percents": [
+    0.6,
+    35
+   ],
+   "remark": "Finesse A K"
+  },
+  {
+   "number": 14,
+   "section": 1,
+   "split": "4-1",
+   "hand": "Qxxx",
+   "dummy": "x",
+   "needs": [
+    1
+   ],
+   "percents": [
+    6
+   ],
+   "remark": "Finesse A K"
+  },
+  {
+   "number": 15,
+   "section": 1,
+   "split": "4-2",
+   "hand": "QJ98",
+   "dummy": "xx",
+   "needs": [
+    2
+   ],
+   "percents": [
+    51
+   ],
+   "remark": "Finesse 10"
+  },
+  {
+   "number": 16,
+   "section": 1,
+   "split": "4-2",
+   "hand": "QJ8x",
+   "dummy": "xx",
+   "needs": [
+    2,
+    1
+   ],
+   "percents": [
+    7,
+    85
+   ],
+   "remark": "Finesse 10 9"
+  },
+  {
+   "number": 17,
+   "section": 1,
+   "split": "4-2",
+   "hand": "Qxxx",
+   "dummy": "J9",
+   "needs": [
+    2,
+    1
+   ],
+   "percents": [
+    32,
+    97
+   ],
+   "remark": "Finesse 10"
+  },
+  {
+   "number": 18,
+   "section": 1,
+   "split": "4-2",
+   "hand": "Qxxx",
+   "dummy": "Tx",
+   "needs": [
+    1
+   ],
+   "percents": [
+    24
+   ],
+   "remark": "Play 10 to Q"
+  },
+  {
+   "number": 19,
+   "section": 1,
+   "split": "3-3",
+   "hand": "QJ9",
+   "dummy": "xxx",
+   "needs": [
+    1
+   ],
+   "percents": [
+    79
+   ],
+   "remark": "Finesse A K"
+  },
+  {
+   "number": 20,
+   "section": 1,
+   "split": "3-3",
+   "hand": "QTx",
+   "dummy": "xxx",
+   "needs": [
+    1
+   ],
+   "percents": [
+    38
+   ],
+   "remark": "Finesse J"
+  },
+  {
+   "number": 21,
+   "section": 1,
+   "split": "3-3",
+   "hand": "Q9x",
+   "dummy": "Jxx",
+   "needs": [
+    1
+   ],
+   "percents": [
+    64
+   ],
+   "remark": "Play low to J then low to Q"
+  },
+  {
+   "number": 22,
+   "section": 1,
+   "split": "5-2",
+   "hand": "QJTxx",
+   "dummy": "xx",
+   "needs": [
+    3,
+    2
+   ],
+   "percents": [
+    60,
+    92
+   ],
+   "remark": "Finesse A K repeatedly"
+  },
+  {
+   "number": 23,
+   "section": 1,
+   "split": "5-2",
+   "hand": "QJ9xx",
+   "dummy": "xx",
+   "needs": [
+    3,
+    2,
+    1
+   ],
+   "percents": [
+    38,
+    80,
+    96
+   ],
+   "remark": "Finesse A K repeatedly | Finesse 10 | Either of the above"
+  },
+  {
+   "number": 24,
+   "section": 1,
+   "split": "5-2",
+   "hand": "QJxxx",
+   "dummy": "9x",
+   "needs": [
+    3,
+    2,
+    1
+   ],
+   "percents": [
+    30,
+    74,
+    99
+   ],
+   "remark": "Finesse A K then play J | Finesse 10 then finesse A K | Finesse 10 then finesse A K"
+  },
+  {
+   "number": 25,
+   "section": 1,
+   "split": "4-3",
+   "hand": "QJTx",
+   "dummy": "xxx",
+   "needs": [
+    2
+   ],
+   "percents": [
+    83
+   ],
+   "remark": "Finesse A K repeatedy"
+  },
+  {
+   "number": 26,
+   "section": 1,
+   "split": "4-3",
+   "hand": "QJ9x",
+   "dummy": "xxx",
+   "needs": [
+    2,
+    1
+   ],
+   "percents": [
+    52,
+    91
+   ],
+   "remark": "Finesse A K repeatedy"
+  },
+  {
+   "number": 27,
+   "section": 1,
+   "split": "4-3",
+   "hand": "QT9x",
+   "dummy": "xxx",
+   "needs": [
+    2,
+    1
+   ],
+   "percents": [
+    42,
+    91
+   ],
+   "remark": "Finesse J repeatedly"
+  },
+  {
+   "number": 28,
+   "section": 1,
+   "split": "4-3",
+   "hand": "Q98x",
+   "dummy": "xxx",
+   "needs": [
+    2,
+    1
+   ],
+   "percents": [
+    7,
+    76
+   ],
+   "remark": "Finesse A K then low to low"
+  },
+  {
+   "number": 29,
+   "section": 1,
+   "split": "4-3",
+   "hand": "Qxxx",
+   "dummy": "J9x",
+   "needs": [
+    2,
+    1
+   ],
+   "percents": [
+    32,
+    97
+   ],
+   "remark": "Finesse 10 then play low to J"
+  },
+  {
+   "number": 30,
+   "section": 1,
+   "split": "4-3",
+   "hand": "Qxxx",
+   "dummy": "Jxx",
+   "needs": [
+    2,
+    1
+   ],
+   "percents": [
+    16,
+    88
+   ],
+   "remark": "Finesse A K towards either Q or J then play to honor | Play low to low then low to J"
+  },
+  {
+   "number": 31,
+   "section": 1,
+   "split": "6-2",
+   "hand": "QJTxxx",
+   "dummy": "xx",
+   "needs": [
+    4,
+    3
+   ],
+   "percents": [
+    82,
+    98
+   ],
+   "remark": "Finesse A K repeatedly"
+  },
+  {
+   "number": 32,
+   "section": 1,
+   "split": "6-2",
+   "hand": "QJ9xxx",
+   "dummy": "xx",
+   "needs": [
+    4,
+    3,
+    2
+   ],
+   "percents": [
+    64,
+    93,
+    98
+   ],
+   "remark": "Finesse A K then low to low | Finesse 10 then finesse A K | Either of the above"
+  },
+  {
+   "number": 33,
+   "section": 1,
+   "split": "6-2",
+   "hand": "QJxxxx",
+   "dummy": "xx",
+   "needs": [
+    4,
+    3,
+    2
+   ],
+   "percents": [
+    54,
+    88,
+    98
+   ],
+   "remark": "Finesse A K then low to low"
+  },
+  {
+   "number": 34,
+   "section": 1,
+   "split": "5-3",
+   "hand": "QJTxx",
+   "dummy": "xxx",
+   "needs": [
+    3,
+    2
+   ],
+   "percents": [
+    88,
+    98
+   ],
+   "remark": "Finesse A K then play J"
+  },
+  {
+   "number": 35,
+   "section": 1,
+   "split": "5-3",
+   "hand": "QJ9xx",
+   "dummy": "xxx",
+   "needs": [
+    3,
+    2
+   ],
+   "percents": [
+    72,
+    95
+   ],
+   "remark": "Finesse A K repeatedly"
+  },
+  {
+   "number": 36,
+   "section": 1,
+   "split": "5-3",
+   "hand": "QJxxx",
+   "dummy": "xxx",
+   "needs": [
+    3,
+    2,
+    1
+   ],
+   "percents": [
+    63,
+    90,
+    98
+   ],
+   "remark": "Finesse A K repeatedly"
+  },
+  {
+   "number": 37,
+   "section": 1,
+   "split": "5-3",
+   "hand": "QT9xx",
+   "dummy": "xxx",
+   "needs": [
+    3,
+    2,
+    1
+   ],
+   "percents": [
+    49,
+    92,
+    98
+   ],
+   "remark": "Finesse J then low to Q"
+  },
+  {
+   "number": 38,
+   "section": 1,
+   "split": "5-3",
+   "hand": "Q98xx",
+   "dummy": "xxx",
+   "needs": [
+    3,
+    2
+   ],
+   "percents": [
+    14,
+    90
+   ],
+   "remark": "Finesse A K | Play low to low then low to Q"
+  },
+  {
+   "number": 39,
+   "section": 1,
+   "split": "5-3",
+   "hand": "QT9xx",
+   "dummy": "Jxx",
+   "needs": [
+    3
+   ],
+   "percents": [
+    96
+   ],
+   "remark": "Play 10 then play 9"
+  },
+  {
+   "number": 40,
+   "section": 1,
+   "split": "5-3",
+   "hand": "Qxxxx",
+   "dummy": "J9x",
+   "needs": [
+    3,
+    2
+   ],
+   "percents": [
+    50,
+    98
+   ],
+   "remark": "Play low to J then low to Q | Play low to 9 then low to J"
+  },
+  {
+   "number": 41,
+   "section": 1,
+   "split": "5-3",
+   "hand": "QJTx",
+   "dummy": "xxxx",
+   "needs": [
+    2
+   ],
+   "percents": [
+    90
+   ],
+   "remark": "Play low to Q"
+  },
+  {
+   "number": 42,
+   "section": 1,
+   "split": "5-3",
+   "hand": "QJxx",
+   "dummy": "xxxx",
+   "needs": [
+    2,
+    1
+   ],
+   "percents": [
+    65,
+    90
+   ],
+   "remark": "Finesse A K repeatedly"
+  },
+  {
+   "number": 43,
+   "section": 1,
+   "split": "5-3",
+   "hand": "QT98",
+   "dummy": "xxxx",
+   "needs": [
+    2
+   ],
+   "percents": [
+    53
+   ],
+   "remark": "Finesse J"
+  },
+  {
+   "number": 44,
+   "section": 1,
+   "split": "5-3",
+   "hand": "QTxx",
+   "dummy": "xxxx",
+   "needs": [
+    2,
+    1
+   ],
+   "percents": [
+    35,
+    84
+   ],
+   "remark": "Finesse J then finesse A K"
+  },
+  {
+   "number": 45,
+   "section": 1,
+   "split": "4-4",
+   "hand": "Q987",
+   "dummy": "Jxxx",
+   "needs": [
+    2
+   ],
+   "percents": [
+    66
+   ],
+   "remark": "Play low to J then low to Q or vice versa"
+  },
+  {
+   "number": 47,
+   "section": 1,
+   "split": "4-4",
+   "hand": "Q9xx",
+   "dummy": "Jxxx",
+   "needs": [
+    2,
+    1
+   ],
+   "percents": [
+    64,
+    100
+   ],
+   "remark": "Play low to J then low to Q | Play low to Q then low to J"
+  },
+  {
+   "number": 48,
+   "section": 1,
+   "split": "4-4",
+   "hand": "Qxxx",
+   "dummy": "Jxxx",
+   "needs": [
+    2,
+    1
+   ],
+   "percents": [
+    37,
+    100
+   ],
+   "remark": "Play low to Q then low to J, or vice versa | Play low to low then low to J"
+  },
+  {
+   "number": 49,
+   "section": 1,
+   "split": "7-2",
+   "hand": "QJ9xxxx",
+   "dummy": "xx",
+   "needs": [
+    5,
+    4
+   ],
+   "percents": [
+    84,
+    95
+   ],
+   "remark": "Play low to Q then low to low"
+  },
+  {
+   "number": 50,
+   "section": 1,
+   "split": "7-2",
+   "hand": "Qxxxxxx",
+   "dummy": "Jx",
+   "needs": [
+    5
+   ],
+   "percents": [
+    78
+   ],
+   "remark": "Play low to J then low to low"
+  },
+  {
+   "number": 51,
+   "section": 1,
+   "split": "6-3",
+   "hand": "QJTxx",
+   "dummy": "8xx",
+   "needs": [
+    3
+   ],
+   "percents": [
+    90
+   ],
+   "remark": "Play low to Q then J to low"
+  },
+  {
+   "number": 52,
+   "section": 1,
+   "split": "5-4",
+   "hand": "QJ8xx",
+   "dummy": "Txxx",
+   "needs": [
+    3
+   ],
+   "percents": [
+    95
+   ],
+   "remark": "Play 10 then low to low"
+  },
+  {
+   "number": 53,
+   "section": 1,
+   "split": "5-4",
+   "hand": "QJxxx",
+   "dummy": "xxxx",
+   "needs": [
+    3,
+    2
+   ],
+   "percents": [
+    83,
+    95
+   ],
+   "remark": "Play low to Q then low to low"
+  },
+  {
+   "number": 54,
+   "section": 1,
+   "split": "5-4",
+   "hand": "Q9xxx",
+   "dummy": "Jxxx",
+   "needs": [
+    3
+   ],
+   "percents": [
+    83
+   ],
+   "remark": "Play low to low or 9 or J"
+  },
+  {
+   "number": 55,
+   "section": 1,
+   "split": "5-4",
+   "hand": "Qxxxx",
+   "dummy": "Jxxx",
+   "needs": [
+    3
+   ],
+   "percents": [
+    78
+   ],
+   "remark": "Play low to Q then low to J, or vice versa"
+  },
+  {
+   "number": 56,
+   "section": 1,
+   "split": "3-2",
+   "hand": "KT9",
+   "dummy": "xx",
+   "needs": [
+    1
+   ],
+   "percents": [
+    78
+   ],
+   "remark": "Play low to 9 then low to King"
+  },
+  {
+   "number": 57,
+   "section": 1,
+   "split": "3-2",
+   "hand": "KTx",
+   "dummy": "xx",
+   "needs": [
+    1
+   ],
+   "percents": [
+    63
+   ],
+   "remark": "Play low to 9 then low to King"
+  },
+  {
+   "number": 58,
+   "section": 1,
+   "split": "4-2",
+   "hand": "KT98",
+   "dummy": "xx",
+   "needs": [
+    2
+   ],
+   "percents": [
+    50
+   ],
+   "remark": "Play low to 8 then low to 10"
+  },
+  {
+   "number": 59,
+   "section": 1,
+   "split": "3-3",
+   "hand": "KT9",
+   "dummy": "xxx",
+   "needs": [
+    1
+   ],
+   "percents": [
+    79
+   ],
+   "remark": "Play low to 9 then low to King"
+  },
+  {
+   "number": 60,
+   "section": 1,
+   "split": "4-3",
+   "hand": "KT98",
+   "dummy": "xxx",
+   "needs": [
+    2
+   ],
+   "percents": [
+    76
+   ],
+   "remark": "Play low to 8 then low to 9"
+  },
+  {
+   "number": 61,
+   "section": 1,
+   "split": "4-3",
+   "hand": "KT9x",
+   "dummy": "xxx",
+   "needs": [
+    2,
+    1
+   ],
+   "percents": [
+    61,
+    93
+   ],
+   "remark": "Play low to 9 then low to 10"
+  },
+  {
+   "number": 62,
+   "section": 1,
+   "split": "4-3",
+   "hand": "KTxx",
+   "dummy": "xxx",
+   "needs": [
+    2,
+    1
+   ],
+   "percents": [
+    32,
+    79
+   ],
+   "remark": "Play low to 10 then low to King"
+  },
+  {
+   "number": 63,
+   "section": 1,
+   "split": "4-3",
+   "hand": "K987",
+   "dummy": "xxx",
+   "needs": [
+    2,
+    1
+   ],
+   "percents": [
+    18,
+    95
+   ],
+   "remark": "Play low to low then low to King | Play low to low then low to low"
+  },
+  {
+   "number": 64,
+   "section": 1,
+   "split": "4-3",
+   "hand": "Kxxx",
+   "dummy": "xxx",
+   "needs": [
+    2,
+    1
+   ],
+   "percents": [
+    18,
+    77
+   ],
+   "remark": "Play low to low then low to King | Play low to low then low to low"
+  },
+  {
+   "number": 65,
+   "section": 1,
+   "split": "5-3",
+   "hand": "KT9xx",
+   "dummy": "xxx",
+   "needs": [
+    3,
+    2
+   ],
+   "percents": [
+    75,
+    95
+   ],
+   "remark": "Play low to low then low to low"
+  },
+  {
+   "number": 66,
+   "section": 1,
+   "split": "5-3",
+   "hand": "KTxxx",
+   "dummy": "9xx",
+   "needs": [
+    3,
+    2
+   ],
+   "percents": [
+    67,
+    98
+   ],
+   "remark": "Play low to 10 then low to low in long suit | Play low to 10 then low to 9 in short suit"
+  },
+  {
+   "number": 67,
+   "section": 1,
+   "split": "4-4",
+   "hand": "KT98",
+   "dummy": "xxxx",
+   "needs": [
+    2
+   ],
+   "percents": [
+    83
+   ],
+   "remark": "Play low to low then low to low"
+  },
+  {
+   "number": 68,
+   "section": 1,
+   "split": "4-4",
+   "hand": "KTxx",
+   "dummy": "xxxx",
+   "needs": [
+    2,
+    1
+   ],
+   "percents": [
+    52,
+    86
+   ],
+   "remark": "Play low to low then low to low"
+  },
+  {
+   "number": 69,
+   "section": 1,
+   "split": "4-4",
+   "hand": "Kxxx",
+   "dummy": "xxxx",
+   "needs": [
+    2,
+    1
+   ],
+   "percents": [
+    34,
+    86
+   ],
+   "remark": "Play low to low then low to King"
+  },
+  {
+   "number": 70,
+   "section": 1,
+   "split": "6-3",
+   "hand": "KT9xxx",
+   "dummy": "xxx",
+   "needs": [
+    5,
+    4,
+    3
+   ],
+   "percents": [
+    20,
+    89,
+    95
+   ],
+   "remark": "Low to King | Low to 10 | Either of the above"
+  },
+  {
+   "number": 71,
+   "section": 1,
+   "split": "6-3",
+   "hand": "KTxxxx",
+   "dummy": "xxx",
+   "needs": [
+    5,
+    4,
+    3
+   ],
+   "percents": [
+    20,
+    89,
+    95
+   ],
+   "remark": "Low to King | Low to 10 | Either of the above"
+  },
+  {
+   "number": 72,
+   "section": 1,
+   "split": "6-3",
+   "hand": "K8xxxx",
+   "dummy": "xxx",
+   "needs": [
+    5,
+    4,
+    3
+   ],
+   "percents": [
+    20,
+    71,
+    95
+   ],
+   "remark": "Low to King | Low to 10 | Either of the above"
+  },
+  {
+   "number": 73,
+   "section": 1,
+   "split": "6-3",
+   "hand": "Kxxxxx",
+   "dummy": "Txx",
+   "needs": [
+    5,
+    4,
+    3
+   ],
+   "percents": [
+    20,
+    78,
+    100
+   ],
+   "remark": "Low to King | Low to short side covering if possible | Either of above"
+  },
+  {
+   "number": 74,
+   "section": 1,
+   "split": "6-3",
+   "hand": "Kxxxxx",
+   "dummy": "xxx",
+   "needs": [
+    5,
+    4,
+    3
+   ],
+   "percents": [
+    20,
+    72,
+    95
+   ],
+   "remark": "Low to King | Low to short side covering if possible | Either of above"
+  },
+  {
+   "number": 75,
+   "section": 1,
+   "split": "5-4",
+   "hand": "K9xxx",
+   "dummy": "xxxx",
+   "needs": [
+    4,
+    3,
+    2
+   ],
+   "percents": [
+    20,
+    72,
+    95
+   ],
+   "remark": "Low to King | Low to low | Either of the above"
+  },
+  {
+   "number": 76,
+   "section": 1,
+   "split": "5-4",
+   "hand": "Kxxxx",
+   "dummy": "Txxx",
+   "needs": [
+    4,
+    3
+   ],
+   "percents": [
+    20,
+    78
+   ],
+   "remark": "Low to King | Low to low"
+  }
+ ]
+}

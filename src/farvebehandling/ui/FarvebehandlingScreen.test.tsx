@@ -2,8 +2,14 @@
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import App from '../../app/App';
+import { formatDecimal } from '../../engine/format';
 import { STORAGE_KEY } from '../../engine/storage';
+import techniquesFile from '../content/techniques.json';
+import { linesForGoal } from '../analysis';
 import { defaultFbSaved, FB_STORAGE_KEY, type FbSaved } from '../storage';
+import { filterOptions, NO_FILTER } from '../training/practice';
+import { itemKey, possibleTypes } from '../training/tasks';
+import { TEST_BANK } from '../testBank';
 
 const click = (name: string | RegExp) => fireEvent.click(screen.getByRole('button', { name }));
 const stored = (): FbSaved => JSON.parse(localStorage.getItem(FB_STORAGE_KEY)!);
@@ -21,10 +27,12 @@ afterEach(() => {
   vi.useRealTimers();
 });
 
+/** Åbner farvebehandling og venter, til banken er hentet. */
 async function openFarvebehandling() {
   render(<App />);
   click('Farvebehandling');
   await screen.findByRole('heading', { name: 'Farvebehandling' }, { timeout: 10_000 });
+  await screen.findByRole('button', { name: 'Start dagens session' }, { timeout: 10_000 });
 }
 
 /** Svarer på den opgave, der står på skærmen, uanset type. */
@@ -39,27 +47,36 @@ function answerAnything() {
   click('Svar');
 }
 
+const percent = (v: number) => `${formatDecimal(100 * v, 1)} %`;
+
 describe('Farvebehandling', { timeout: 30_000 }, () => {
   it('åbner analysevinduet med den hyppigste kombination', async () => {
     await openFarvebehandling();
     click('Analyse');
     expect(screen.getByRole('heading', { name: 'Linjerne' })).toBeTruthy();
-    const best = screen.getByRole('article', { name: 'Linje A' });
-    expect(within(best).getByText('69,0 %')).toBeTruthy();
-    expect(within(best).getByText('✓ bedst')).toBeTruthy();
+    const first = TEST_BANK[0];
+    const best = linesForGoal(first, first.combination.goals[0])[0];
+    const article = screen.getByRole('article', { name: 'Linje A' });
+    expect(within(article).getByText(percent(best.value))).toBeTruthy();
+    expect(within(article).getByText('✓ bedst')).toBeTruthy();
     expect(screen.getByRole('group', { name: 'Forskellen' })).toBeTruthy();
     expect(screen.getByRole('figure', { name: /Første udspil/ })).toBeTruthy();
     expect(screen.getByText('a priori · ubegrænsede forbindelser · optimalt modspil')).toBeTruthy();
+    expect(screen.getByRole('button', { name: `Alle (${TEST_BANK.length})` })).toBeTruthy();
   });
 
-  it('skifter kombination og mål og viser den valgte sidning ved bordet', async () => {
+  it('filtrerer efter modpartens honnørpoint, skifter kombination og mål og viser sidningen ved bordet', async () => {
     await openFarvebehandling();
     click('Analyse');
-    // Case 44: E B 3 2 / K 5 4 med målene 4 og 3 stik.
-    click(/^2\. E B 3 2 \/ K 5 4/);
+    // Modparten har 2 hp (damen), case 44: E B 3 2 / K 5 4 med målene 4 og 3 stik.
+    click(/^2 hp \(\d+\)$/);
+    const list = screen.getByRole('list', { name: 'Banken' });
+    expect(within(list).getAllByRole('button')).toHaveLength(TEST_BANK.filter((b) => b.points === 2).length);
+    fireEvent.click(within(list).getByRole('button', { name: /^\d+\. E B 3 2 \/ K 5 4 ·/ }));
     click('3 stik');
     expect(screen.getByRole('button', { name: '3 stik' }).getAttribute('aria-pressed')).toBe('true');
     expect(within(screen.getByRole('article', { name: 'Linje A' })).getByText('77,0 %')).toBeTruthy();
+    expect(screen.getByText(/^Es og konge uden damen med 7 kort/)).toBeTruthy();
     const firstField = within(screen.getByRole('group', { name: 'Forskellen' })).getAllByRole('button')[0];
     fireEvent.click(firstField);
     expect(firstField.getAttribute('aria-pressed')).toBe('true');
@@ -83,68 +100,72 @@ describe('Farvebehandling', { timeout: 30_000 }, () => {
     expect(screen.getByRole('button', { name: 'B: bordet' })).toBeTruthy();
     expect(screen.getByRole('button', { name: 'E: din hånd' })).toBeTruthy();
     expect(screen.queryByText(/findes ikke i banken/)).toBeNull();
-    // Ikke i banken: B 4 3 2 / E 10 6 5.
+    // Ikke i banken: 2 over for 3.
     click('Ryd');
-    tap('B', 1);
-    tap('4', 1);
-    tap('3', 1);
     tap('2', 1);
-    tap('E', 2);
-    tap('10', 2);
-    tap('6', 2);
-    tap('5', 2);
+    tap('3', 2);
     expect(screen.getByText(/findes ikke i banken/)).toBeTruthy();
   });
 
   it('kører dagens session: introduktion, opgaver med facit, lynrunde og status', async () => {
     vi.useFakeTimers({ toFake: ['Date'] });
     vi.setSystemTime(T0);
+    const [first, second] = TEST_BANK;
     render(<App />);
     const before = localStorage.getItem(STORAGE_KEY);
     click('Farvebehandling');
-    await screen.findByRole('heading', { name: 'Farvebehandling' }, { timeout: 10_000 });
+    await screen.findByRole('button', { name: 'Start dagens session' }, { timeout: 10_000 });
     expect(screen.getByText('0 emner til repetition · 2 nye kombinationer')).toBeTruthy();
     // Et kig rører ikke lagringen.
     expect(localStorage.getItem(FB_STORAGE_KEY)).toBeNull();
 
     click('Start dagens session');
     expect(screen.getByText('Ny kombination')).toBeTruthy();
-    expect(screen.getByText('Rum: Spil mod honnør · ny station 1')).toBeTruthy();
-    expect(screen.getByText('Spil mod det kort, du vil gøre til stik.')).toBeTruthy();
+    const room = techniquesFile.techniques.find((t) => t.id === first.combination.technique)!;
+    expect(screen.getByText(`Rum: ${room.name} · ny station 1`)).toBeTruthy();
+    expect(screen.getByText(room.rule)).toBeTruthy();
     click('Prøv den');
-    expect(stored().introduced).toEqual({ 'J32-AK54': '2026-10-05' });
-    expect(stored().palace.stations['J32-AK54']).toEqual({ technique: 'spil-mod-honnoer', order: 1 });
+    expect(stored().introduced).toEqual({ [first.combination.id]: '2026-10-05' });
+    expect(stored().palace.stations[first.combination.id]).toEqual({ technique: room.id, order: 1 });
 
     // Linjerne er skjult, indtil der er svaret.
-    expect(screen.getByText('Mål: 3 stik', { selector: '.prompt' })).toBeTruthy();
+    expect(screen.getByText(`Mål: ${first.combination.goals[0]} stik`, { selector: '.prompt' })).toBeTruthy();
     expect(screen.queryByText('✓ bedst')).toBeNull();
     answerAnything();
     expect(within(screen.getByRole('status')).getByText(/^(Rigtigt|Halvt rigtigt|Forkert)$/)).toBeTruthy();
     expect(screen.getByRole('group', { name: 'Forskellen' })).toBeTruthy();
-    expect(stored().items['J32-AK54:3'].log).toHaveLength(1);
+    expect(stored().items[itemKey(first.combination.id, first.combination.goals[0])].log).toHaveLength(1);
     click('Hvorfor →');
-    expect(screen.getByText('Rum: Spil mod honnør · station 1')).toBeTruthy();
+    expect(screen.getByText(`Rum: ${room.name} · station 1`)).toBeTruthy();
     expect(screen.getByRole('heading', { name: 'Alle sidninger' })).toBeTruthy();
     click('Næste opgave');
+    for (let k = 1; k < first.combination.goals.length; k++) {
+      answerAnything();
+      click('Næste opgave');
+    }
 
-    // Den næste kombination introduceres og øves i begge mål.
+    // Den næste kombination introduceres og øves i alle sine mål.
     expect(screen.getByText('Ny kombination')).toBeTruthy();
     click('Prøv den');
-    answerAnything();
-    click('Næste opgave');
-    answerAnything();
-    click('Næste opgave');
-    expect(Object.keys(stored().items).sort()).toEqual(['J32-AK54:3', 'K54-AJ32:3', 'K54-AJ32:4']);
+    for (const _ of second.combination.goals) {
+      answerAnything();
+      click('Næste opgave');
+    }
+    const keys = [first, second].flatMap((b) => b.combination.goals.map((g) => itemKey(b.combination.id, g)));
+    expect(Object.keys(stored().items).sort()).toEqual(keys.sort());
 
-    // Efter niveauet kommer lynrunden: linje mod linje.
+    // Efter niveauet kommer lynrunden med linje mod linje, hvis et af emnerne har den opgave; ellers status.
     vi.setSystemTime(T0 + 211_000);
     answerAnything();
     click('Næste opgave');
-    expect(screen.getByText('Lynrunde')).toBeTruthy();
-    expect(screen.getByText('Tryk på den bedste linje')).toBeTruthy();
-    vi.setSystemTime(T0 + 275_000);
-    answerAnything();
-    click('Næste opgave');
+    const lightning = [first, second].some((b) => b.combination.goals.some((g) => possibleTypes(b, g).includes('linje-mod-linje')));
+    if (lightning) {
+      expect(screen.getByText('Lynrunde')).toBeTruthy();
+      expect(screen.getByText('Tryk på den bedste linje')).toBeTruthy();
+      vi.setSystemTime(T0 + 275_000);
+      answerAnything();
+      click('Næste opgave');
+    }
 
     expect(screen.getByRole('heading', { name: 'Dagens session er færdig' })).toBeTruthy();
     const after = stored();
@@ -180,14 +201,21 @@ describe('Farvebehandling', { timeout: 30_000 }, () => {
   it('Selvvalgt viser antal pr. filtervalg, grår valg med 0 ud og logger uden at røre dagsplanen', async () => {
     await openFarvebehandling();
     click('Selvvalgt');
-    const all = within(screen.getByRole('group', { name: 'Teknik' })).getByRole('button', { name: 'Alle (85)' });
+    const all = within(screen.getByRole('group', { name: 'Teknik' })).getByRole('button', { name: `Alle (${TEST_BANK.length})` });
     expect(all.getAttribute('aria-pressed')).toBe('true');
-    click(/^Dobbelt kipning \(\d+\)$/);
+    // En teknik, hvor nogle kortantal har 0 kombinationer.
+    const order = techniquesFile.techniques.map((t) => t.id);
+    const technique = filterOptions(TEST_BANK, NO_FILTER, order).technique.find(
+      (t) => t.count > 0 && filterOptions(TEST_BANK, { ...NO_FILTER, technique: t.value }, order).cards.some((c) => c.count === 0),
+    )!;
+    const name = techniquesFile.techniques.find((t) => t.id === technique.value)!.name;
+    click(new RegExp(`^${name} \\(\\d+\\)$`));
     const cards = screen.getByRole('group', { name: 'Antal kort' });
     const disabled = within(cards).getAllByRole('button').filter((b) => (b as HTMLButtonElement).disabled);
     expect(disabled.length).toBeGreaterThan(0);
     for (const b of disabled) expect(b.textContent).toMatch(/\(0\)$/);
-    click(/^7 kort \([1-9]\d*\)$/);
+    const enabled = within(cards).getAllByRole('button').filter((b) => !(b as HTMLButtonElement).disabled && /kort/.test(b.textContent!));
+    fireEvent.click(enabled[0]);
     click(/^Start · \d+ kombinationer?$/);
     answerAnything();
     expect(screen.getByRole('status')).toBeTruthy();

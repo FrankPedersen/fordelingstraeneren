@@ -1,0 +1,139 @@
+{
+ "number": 9,
+ "page": "Suit Combinations 9 – 9 High Card Point held by opponents - The Ace, King, and Queen",
+ "sections": [
+  "9 High Card Point held by opponents - The Ace, King, and Queen"
+ ],
+ "url": "https://www.bridgehands.com/S/Suit_Combination_9.htm",
+ "fetched": "2026-10-04",
+ "cases": [
+  {
+   "number": 1,
+   "section": 1,
+   "split": "5-1",
+   "hand": "JT9xx",
+   "dummy": "x",
+   "needs": [
+    2,
+    1
+   ],
+   "percents": [
+    16,
+    87
+   ],
+   "remark": "Play low to J | Play low to low"
+  },
+  {
+   "number": 2,
+   "section": 1,
+   "split": "4-2",
+   "hand": "JT9x",
+   "dummy": "xx",
+   "needs": [
+    1
+   ],
+   "percents": [
+    77
+   ],
+   "remark": "Play low to J then low to low"
+  },
+  {
+   "number": 3,
+   "section": 1,
+   "split": "4-2",
+   "hand": "JT8x",
+   "dummy": "xx",
+   "needs": [
+    1
+   ],
+   "percents": [
+    37
+   ],
+   "remark": "Play low to 8 then low to low"
+  },
+  {
+   "number": 4,
+   "section": 1,
+   "split": "4-2",
+   "hand": "JTxx",
+   "dummy": "xx",
+   "needs": [
+    1
+   ],
+   "percents": [
+    25
+   ],
+   "remark": "Play low to J then low to low"
+  },
+  {
+   "number": 5,
+   "section": 1,
+   "split": "4-3",
+   "hand": "JT8x",
+   "dummy": "xxx",
+   "needs": [
+    1
+   ],
+   "percents": [
+    73
+   ],
+   "remark": "Play low to J then 10 to low"
+  },
+  {
+   "number": 6,
+   "section": 1,
+   "split": "4-3",
+   "hand": "JTxx",
+   "dummy": "xxx",
+   "needs": [
+    1
+   ],
+   "percents": [
+    68
+   ],
+   "remark": "Play low to J then 10 to low"
+  },
+  {
+   "number": 7,
+   "section": 1,
+   "split": "4-3",
+   "hand": "Jxxx",
+   "dummy": "Txx",
+   "needs": [
+    1
+   ],
+   "percents": [
+    69
+   ],
+   "remark": "Play low to 10 then low to J"
+  },
+  {
+   "number": 8,
+   "section": 1,
+   "split": "4-4",
+   "hand": "JTxx",
+   "dummy": "xxxx",
+   "needs": [
+    1
+   ],
+   "percents": [
+    84
+   ],
+   "remark": "Play J to low then low to low"
+  },
+  {
+   "number": 9,
+   "section": 1,
+   "split": "4-4",
+   "hand": "Jxxx",
+   "dummy": "xxxx",
+   "needs": [
+    1
+   ],
+   "percents": [
+    76
+   ],
+   "remark": "Play low to low repeatedly"
+  }
+ ]
+}

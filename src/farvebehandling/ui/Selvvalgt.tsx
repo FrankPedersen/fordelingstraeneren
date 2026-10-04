@@ -88,7 +88,7 @@ export function Selvvalgt({ bank, saved, update, techniques }: SelvvalgtProps) {
     if (key === 'technique') return techniques.find((t) => t.id === value)?.name ?? String(value);
     if (key === 'cards') return TEXT.cardsOption(value as number);
     if (key === 'goal') return TEXT.goalOption(value as number);
-    return String(value);
+    return value === '' ? TEXT.noHonors : String(value);
   };
 
   return (
