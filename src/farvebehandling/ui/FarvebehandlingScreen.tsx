@@ -1,6 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import bankText from '../content/suit-combinations.json?raw';
 import solutionsText from '../content/solutions.json?raw';
+import whatNowText from '../content/hvad-nu.json?raw';
 import techniquesFile from '../content/techniques.json';
 import { loadBank } from '../analysis';
 import { FB_STORAGE_KEY, loadFbSaved, saveFbSaved, type FbSaved } from '../storage';
@@ -35,7 +36,7 @@ function browserStorage(): Storage {
 /** Farvebehandlingens skal: tilbage til forsiden og fanerne Træning, Selvvalgt og Analyse. */
 export default function FarvebehandlingScreen({ onBack }: FarvebehandlingScreenProps) {
   const [tab, setTab] = useState<Tab>('training');
-  const bank = useMemo(() => loadBank(bankText, solutionsText), []);
+  const bank = useMemo(() => loadBank(bankText, solutionsText, whatNowText), []);
   const techniques = techniquesFile.techniques;
   const storage = useMemo(browserStorage, []);
   // Intet skrives, før brugeren gør noget; et kig i Analyse rører ikke lagringen.

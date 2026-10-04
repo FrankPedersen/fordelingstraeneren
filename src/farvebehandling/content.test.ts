@@ -5,13 +5,17 @@ import solutionsText from './content/solutions.json?raw';
 import bankText from './content/suit-combinations.json?raw';
 import techniquesFile from './content/techniques.json';
 import techniquesText from './content/teknikker-damen-mangler.md?raw';
+import whatNowText from './content/hvad-nu.json?raw';
+import whatNowMd from './content/hvad-nu-damen-mangler.md?raw';
 import report from './content/validering-damen-mangler.md?raw';
 import { formatDecimal } from '../engine/format';
 import { percentOf } from './model/fraction';
 import { oncePerDeals } from './model/frequency';
 import { frequencyRows, type Combination, type CombinationSolution } from './precompute';
 import { classifyCases, type SourceCase } from './source/bridgehands';
+import { plausible } from './model/whatnow';
 import { proposeTechnique, techniquesReport } from './techniques';
+import { whatNowReport, type WhatNowData } from './whatnowReport';
 
 const cases = classifyCases(page.cases as SourceCase[]);
 const rows = frequencyRows(cases);
@@ -96,6 +100,35 @@ describe('Opgavebanken', () => {
     expect(technique('32-AKJ9')).toBe('dobbelt-kipning');
     // E K 3 2 / B 10 9: knægten løber.
     expect(technique('JT9-AK32')).toBe('enkelt-kipning');
+  });
+});
+
+describe('Hvad nu?', () => {
+  const data = (JSON.parse(whatNowText) as { combinations: WhatNowData }).combinations;
+
+  it('har situationer med chancer, der summerer til 1, og et rimeligt forkert valg', () => {
+    let count = 0;
+    for (const [id, goals] of Object.entries(data)) {
+      const combination = bank.find((b) => b.id === id)!;
+      expect(combination, id).toBeDefined();
+      for (const [goal, situations] of Object.entries(goals)) {
+        expect(combination.goals).toContain(Number(goal));
+        for (const s of situations) {
+          count++;
+          expect(s.trick).toHaveLength(4);
+          expect(s.probability).toBeGreaterThanOrEqual(0.01);
+          expect(s.posterior.reduce((a, b) => a + b, 0)).toBeCloseTo(1, 4);
+          const values = s.options.map((o) => o.value);
+          expect(values).toEqual([...values].sort((a, b) => b - a));
+          expect(s.options.some((o) => plausible(o, values[0]) && values[0] - o.value > 0.005), `${id} ${goal}`).toBe(true);
+        }
+      }
+    }
+    expect(count).toBeGreaterThan(0);
+  });
+
+  it('listen til godkendelse er opdateret', () => {
+    expect(whatNowReport(bank, data)).toBe(whatNowMd);
   });
 });
 

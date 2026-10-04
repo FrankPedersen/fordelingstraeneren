@@ -16,13 +16,14 @@ export interface LineDescription {
   line: Line;
 }
 
-interface WalkState {
+/** Stillingen undervejs: spilførerens abstrakte kort, hullerne og de fysiske kort i hver hånd. */
+export interface WalkState {
   decl: { rank: Rank; hand: Hand }[];
   gaps: number[];
   physical: Record<Hand, Rank[]>;
 }
 
-interface Choice {
+export interface Choice {
   rank: Rank; // fysisk kort
   winner: boolean;
   lowest: boolean;
@@ -45,7 +46,7 @@ function group(state: WalkState, hand: Hand, rank: Rank): number[] {
   return g;
 }
 
-function choice(state: WalkState, hand: Hand, abstractLow: Rank): Choice {
+export function choice(state: WalkState, hand: Hand, abstractLow: Rank): Choice {
   const g = group(state, hand, abstractLow);
   const abstract = state.decl.filter((d) => d.hand === hand).map((d) => d.rank);
   const phys = [...state.physical[hand]].sort((a, b) => b - a);
@@ -77,13 +78,41 @@ function decided(game: Game, node: number, values: Int32Array): boolean {
   return true;
 }
 
-export function describeLine(game: Game, strategy: Int8Array, leadSlot: number): LineDescription {
-  const values = itemValues(game, game.root, strategy);
-  const state: WalkState = {
+export function initialState(game: Game): WalkState {
+  return {
     decl: game.declarer.map((d) => ({ ...d })),
     gaps: [...game.gaps],
     physical: { N: [...game.north], S: [...game.south] },
   };
+}
+
+/**
+ * Spiller et stik i stillingen: udspillet (`slot` ved en LEAD-knude), 2. hånd (`s2`), 3. hånd (`s3`) og 4. hånd (`s4`).
+ * Giver de fysiske kort, spilføreren lagde.
+ */
+export function playTrick(game: Game, state: WalkState, slot: number, s2: number, s3: number, s4: number): { led: Choice; third: Choice | null } {
+  const hand: Hand = game.slotHand[slot] === 0 ? 'N' : 'S';
+  const partner = other(hand);
+  const led = choice(state, hand, game.slotLow[slot]);
+  const third = game.slotHigh[s3] === 0 ? null : choice(state, partner, game.slotLow[s3]);
+  const q2 = gapIndex(state, game.slotHigh[s2]);
+  const q4 = gapIndex(state, game.slotHigh[s4]);
+  if (q2 >= 0) state.gaps[q2]--;
+  if (q4 >= 0) state.gaps[q4]--;
+  state.physical[hand] = state.physical[hand].filter((r) => r !== led.rank);
+  if (third) state.physical[partner] = state.physical[partner].filter((r) => r !== third.rank);
+  for (const r of [game.slotLow[slot], third ? game.slotLow[s3] : 0].filter((r) => r > 0).sort((a, b) => a - b)) {
+    removeDeclarer(state, r);
+  }
+  return { led, third };
+}
+
+export function describeLine(game: Game, strategy: Int8Array, leadSlot: number): LineDescription {
+  return describeFrom(game, strategy, leadSlot, initialState(game), itemValues(game, game.root, strategy));
+}
+
+/** Beskriver linjen fra udspillet `leadSlot` i stillingen `state`; `values` er strategiens værdi pr. item. */
+export function describeFrom(game: Game, strategy: Int8Array, leadSlot: number, state: WalkState, values: Int32Array): LineDescription {
   const parts: { text: string; cash: Rank | null }[] = [];
   const lineSteps: LineStep[] = [];
   let lineOpen = true;
@@ -170,15 +199,7 @@ export function describeLine(game: Game, strategy: Int8Array, leadSlot: number):
     if (lineOpen && !sameNextLead(game, strategy, second)) lineOpen = false;
 
     // Opdater tilstanden efter stikket.
-    const q2 = gapIndex(state, game.slotHigh[mainSlot]);
-    const q4 = gapIndex(state, game.slotHigh[s4]);
-    if (q2 >= 0) state.gaps[q2]--;
-    if (q4 >= 0) state.gaps[q4]--;
-    state.physical[hand] = state.physical[hand].filter((r) => r !== led.rank);
-    if (thirdChoice) state.physical[partner] = state.physical[partner].filter((r) => r !== thirdChoice.rank);
-    for (const r of [game.slotLow[slot], thirdChoice ? game.slotLow[s3] : 0].filter((r) => r > 0).sort((a, b) => a - b)) {
-      removeDeclarer(state, r);
-    }
+    playTrick(game, state, slot, mainSlot, s3, s4);
 
     if (game.kind[next] !== LEAD || decided(game, next, values)) break;
     slot = game.childStart[next] + strategy[next];

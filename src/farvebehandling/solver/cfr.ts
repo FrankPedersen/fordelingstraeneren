@@ -24,6 +24,11 @@ export interface SubgameOptions {
    */
   gapTolerance?: number;
   maxIterations?: number;
+  /**
+   * Sidningernes vægt i delspillet, fx chancen for hver sidning efter det, der er set i første runde (Hvad nu?).
+   * Udeladt = a priori (`game.layouts[L].weight`).
+   */
+  weights?: readonly bigint[];
 }
 
 export interface SubgameSolution {
@@ -64,11 +69,14 @@ export function solveSubgame(game: Game, root: number, options: SubgameOptions =
   const q = new Float64Array(itemsN), W = new Float64Array(nodesN), piD = new Float64Array(nodesN);
   const piO = new Float64Array(itemsN), piF = new Float64Array(itemsN), u = new Float64Array(itemsN);
   const ok = (slot: number) => !allowed || allowed[slot] === 1;
+  // Sidningernes vægt: a priori eller de givne vægte. Værdierne normaliseres med rodens samlede vægt.
+  const weightE = options.weights ?? game.layouts.map((l) => l.weight);
+  const weightF = options.weights ? Float64Array.from(options.weights, Number) : layoutWeight;
 
   let rootWeight = 0, rootExactWeight = 0n;
   for (let x = 0; x < rC; x++) {
-    rootWeight += layoutWeight[itemLayout[rS + x]];
-    rootExactWeight += game.layouts[itemLayout[rS + x]].weight;
+    rootWeight += weightF[itemLayout[rS + x]];
+    rootExactWeight += weightE[itemLayout[rS + x]];
   }
 
   function declarerStrategy(source: Float64Array, target: Float64Array) {
@@ -96,7 +104,7 @@ export function solveSubgame(game: Game, root: number, options: SubgameOptions =
     defenderStrategy(regF, sigF);
     declarerStrategy(regD, sigD);
     for (let i = i0; i < i1; i++) q[i] = 0;
-    for (let x = 0; x < rC; x++) q[rS + x] = layoutWeight[itemLayout[rS + x]];
+    for (let x = 0; x < rC; x++) q[rS + x] = weightF[itemLayout[rS + x]];
     for (let i = i0; i < i1; i++) {
       const qi = q[i];
       if (qi === 0) continue;
@@ -147,7 +155,7 @@ export function solveSubgame(game: Game, root: number, options: SubgameOptions =
     // Modspillet opdaterer mod spilførerens nye strategi.
     declarerStrategy(regD, sigD);
     for (let i = i0; i < i1; i++) { piO[i] = 0; piF[i] = 0; }
-    for (let x = 0; x < rC; x++) { piO[rS + x] = layoutWeight[itemLayout[rS + x]]; piF[rS + x] = 1; }
+    for (let x = 0; x < rC; x++) { piO[rS + x] = weightF[itemLayout[rS + x]]; piF[rS + x] = 1; }
     for (let i = i0; i < i1; i++) {
       const po = piO[i], pf = piF[i];
       if (po === 0 && pf === 0) continue;
@@ -217,10 +225,10 @@ export function solveSubgame(game: Game, root: number, options: SubgameOptions =
       }
     }
     let lower = 0;
-    for (let x = 0; x < rC; x++) lower += layoutWeight[itemLayout[rS + x]] * v[rS + x];
+    for (let x = 0; x < rC; x++) lower += weightF[itemLayout[rS + x]] * v[rS + x];
     // Øvre grænse: spilføreren svarer bedst på modspillets gennemsnit.
     for (let i = i0; i < i1; i++) rw[i] = 0;
-    for (let x = 0; x < rC; x++) rw[rS + x] = layoutWeight[itemLayout[rS + x]];
+    for (let x = 0; x < rC; x++) rw[rS + x] = weightF[itemLayout[rS + x]];
     for (let i = i0; i < i1; i++) {
       const r = rw[i];
       if (r === 0) continue;
@@ -275,7 +283,7 @@ export function solveSubgame(game: Game, root: number, options: SubgameOptions =
       } else exactValues[i] = exactValues[itemChildren[cs + pure[node]]];
     }
     let num = 0n;
-    for (let x = 0; x < rC; x++) num += game.layouts[itemLayout[rS + x]].weight * BigInt(exactValues[rS + x]);
+    for (let x = 0; x < rC; x++) num += weightE[itemLayout[rS + x]] * BigInt(exactValues[rS + x]);
     return num;
   }
 
@@ -313,7 +321,7 @@ export function solveSubgame(game: Game, root: number, options: SubgameOptions =
   for (let x = 0; x < rC; x++) {
     const v = natural.values[rS + x];
     layoutValues[itemLayout[rS + x]] = v;
-    exact += game.layouts[itemLayout[rS + x]].weight * BigInt(v);
+    exact += weightE[itemLayout[rS + x]] * BigInt(v);
   }
   const pureValue = Number(exact) / Number(rootExactWeight);
   const lower = Math.max(cfrLower, pureValue);

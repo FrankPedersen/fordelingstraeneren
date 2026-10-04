@@ -86,19 +86,20 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
 
 **Kort over koden** (`src/farvebehandling/`)
 - `model/`: kort (E K D B 10 i visningen), sidningsberegning med ledige pladser, hyppighed, normalt modspil (kun til Spil den selv) og gætteintervaller.
-- `solver/`: spiltræet (`game.ts`), løseren med optimalt modspil (`cfr.ts`), naturlige valg mellem lige gode træk (`natural.ts`), linjerne på dansk (`describe.ts`), linjeformatet (`lines.ts`) og det samlede API (`solve.ts`).
+- `solver/`: spiltræet (`game.ts`), løseren med optimalt modspil (`cfr.ts`), naturlige valg mellem lige gode træk (`natural.ts`), linjerne på dansk (`describe.ts`), linjeformatet (`lines.ts`), det samlede API (`solve.ts`) og Hvad nu? (`whatnow.ts`; datatyperne ligger i `model/whatnow.ts`, så appen ikke henter løseren).
 - `source/bridgehands.ts`: læser bridgehands.com's tabeller, sorterer fejl fra og omsætter x til konkrete kort.
 - `precompute.ts`: hyppighed, opgavebank, løsninger, valideringsrapport og linjeteksterne til godkendelse som rene funktioner.
 - `analysis.ts`: data til analysevinduet (banken, linjerne, sandsynlighedsbåndet og kortvælgerens opslag).
 - `training/`: opgavetyperne og pointtabellen (`tasks.ts`), progressionen (`progression.ts`), sessionsmotoren (`session.ts`), paladset (`palace.ts`) og Selvvalgts filtre (`practice.ts`).
-- `techniques.ts`: forslaget til teknik pr. kombination og listen til godkendelse.
+- `techniques.ts`: forslaget til teknik pr. kombination og listen til godkendelse. `whatnowReport.ts`: listen over Hvad nu?-situationerne.
 - `ui/`: skærmen (`FarvebehandlingScreen.tsx`, indlæses dovent fra `src/app/App.tsx`) med fanerne `Træning.tsx` (forside, session og status), `Selvvalgt.tsx` og `Analysevindue.tsx`; `Opgave.tsx`, `Facit.tsx`, `Introduktion.tsx`, `Rumkort.tsx`, `Palads.tsx` og `Data.tsx` (eksport og import); komponenterne Bridgebord, Kortvælger, Linjekort, Resultatkort og Sandsynlighedsbånd, al ordlyd i `texts.ts`, tokens i `tokens.css` og resten i `farvebehandling.css`.
 - `storage.ts`: skemaet for `farvebehandling:v1` (godkendt) med indlæsning, kopi af ulæselige data, gem, eksport og import.
-- `content/`: kildens cases, `damen-mangler-hyppighed.csv`, `suit-combinations.json`, `solutions.json`, `techniques.json`, `validering-damen-mangler.md`, `linjer-damen-mangler.md` og `teknikker-damen-mangler.md`. Alt undtagen `techniques.json` genereres.
+- `content/`: kildens cases, `damen-mangler-hyppighed.csv`, `suit-combinations.json`, `solutions.json`, `techniques.json`, `validering-damen-mangler.md`, `linjer-damen-mangler.md`, `teknikker-damen-mangler.md`, `hvad-nu.json` og `hvad-nu-damen-mangler.md`. Alt undtagen `techniques.json` genereres.
 - Scripts: Node 24 kører TypeScript direkte, og kildekoden indlæses med Vites `runnerImport`, så `package.json` er uændret.
   - `node scripts/bridgehands.ts` henter siden "damen mangler".
   - `node scripts/solve.ts` regner alt i `content/` (ca. 45 min).
   - `node scripts/techniques.ts` sætter teknikken pr. kombination og skriver listen til godkendelse uden at løse igen.
+  - `node scripts/whatnow.ts` regner Hvad nu?-situationerne (ca. 3 min); kør den efter `solve.ts`.
 - Tokens: `design/tokens.json` holdes i takt med `src/ui/styles.css` af `src/tokens.test.ts`. Designsystemet i Claude Design er bygget på filen.
 
 **Beslutninger** (spørg, før du ændrer dem)
@@ -128,9 +129,10 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
 - **Selvvalgt:** alle kombinationer i banken kan vælges, gættet er valgfrit (uden gæt bedømmes linjen alene), og loggen gemmer de seneste 500 svar. Alle seks teknikker står i filtret, også med 0.
 - **Paladset:** stationen oprettes ved introduktionen med teknik og nummer, så paladset bevarer sin orden, selv om banken senere får en anden teknik. Rum uden stationer er lukkede.
 - **Facit:** svaret, bordet, båndet og linjerne; "Hvorfor" viser rummet med huskeregel og billede, alle sidninger og resultatkortet. XP vises kun i Træning.
+- **Hvad nu?:** første runde følger løserens bedste linje med normalt modspil (2. hånd lavt, men dækker en udspillet honnør; 4. hånd vinder billigst, hvis makker ikke vinder; ligeværdige kort tilfældigt), så begrænset valg giver lærebogens tal (kipning 64,7 % mod fald 35,3 %). Med optimalt modspil også i første runde flytter modspillets ligegyldige valg (fx damen fra D x, når alt alligevel vinder) chancerne vilkårligt. Hver fortsættelse løses derefter med optimalt modspil og sidningernes chance efter første runde (løseren tager vægte pr. sidning). En situation kommer med, når en honnør falder eller en modspiller ikke kan bekende, den sker i mindst 1 % af spillene, og en rimelig fortsættelse (mindst en tredjedel af den bedstes chance) er mere end 0,5 procentpoint dårligere; højst to pr. emne. Opgaven viser bordet efter første runde, den bedste og op til tre rimelige fortsættelser og et gæt af chancen nu. I første trin skrives "Lille fra begge hænder" med, hvem der spiller ud.
 
 **Status**
 - [x] Trin 2: Tokens (`design/tokens.json`) og designsystemet i Claude Design.
 - [x] Trin 1: Løser og model, startbank og validering for siden "damen mangler". Løsertestene tager 15–20 s.
 - [x] Trin 3: Analyse fase 1 med banken, kortvælgeren, linjerne på dansk, sandsynlighedsbåndet og sidningerne. Linjeteksterne er godkendt.
-- [ ] Trin 4: Træning (session, scoring, Leitner, streak og XP), Selvvalgt, paladset og egen eksport/import. Opgavetype 1–4, 6 og 8 er bygget; type 5 (Hvad nu?) mangler. Teknik pr. kombination venter på godkendelse.
+- [x] Trin 4: Træning (session, scoring, Leitner, streak og XP), Selvvalgt, paladset og egen eksport/import med opgavetype 1–6 og 8. Teknik pr. kombination (`content/teknikker-damen-mangler.md`) og Hvad nu?-situationerne (`content/hvad-nu-damen-mangler.md`) venter på Franks godkendelse.

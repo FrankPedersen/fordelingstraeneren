@@ -1,6 +1,8 @@
 import { useState, type ReactNode } from 'react';
 import { SuitText } from '../../ui/SuitText';
 import type { LineView } from '../analysis';
+import { rankFromSymbol, type Rank } from '../model/cards';
+import type { TrickCard } from '../model/whatnow';
 import type { FbAnswer, FbTask, LineOption } from '../training/tasks';
 import { Bridgebord } from './Bridgebord';
 import { Linjekort } from './Linjekort';
@@ -18,11 +20,38 @@ export function letteredLines(options: readonly LineOption[]): LineView[] {
   return options.map((o, i) => ({ ...o.line, letter: String.fromCharCode(65 + i), value: o.value }));
 }
 
+const HONORS = new Set(['E', 'K', 'D', 'B', '10']);
+const DISPLAY_SYMBOL: Record<string, string> = { E: 'A', K: 'K', D: 'Q', B: 'J' };
+
+/** Bordet og hånden, som de står i opgaven: i Hvad nu? uden kortene fra første runde. */
+export function handsOf(task: FbTask): { north: Rank[]; south: Rank[] } {
+  const { north, south } = task.bank;
+  if (task.type !== 'hvad-nu') return { north, south };
+  const played = (seat: 'N' | 'S') =>
+    task.situation.trick.filter((t) => t.seat === seat && t.card !== '–').map((t) => rankFromSymbol(DISPLAY_SYMBOL[t.card] ?? t.card));
+  return { north: north.filter((r) => !played('N').includes(r)), south: south.filter((r) => !played('S').includes(r)) };
+}
+
+/** Første runde i spillerækkefølge, fx "Nord E · Øst D · Syd 7 · Vest x"; honnører står med fed. */
+export function FørsteRunde({ trick }: { trick: readonly TrickCard[] }) {
+  return (
+    <p className="fb-trick" aria-label={`${TEXT.firstRound}: ${trick.map((t) => `${TEXT.seats[t.seat]} ${t.card}`).join(', ')}`}>
+      <span className="fb-label">{TEXT.firstRound}:</span>
+      {trick.map((t) => (
+        <span key={t.seat} className="fb-trick-card">
+          <span className="fb-seat-name">{TEXT.seats[t.seat]}</span> <span className={HONORS.has(t.card) ? 'fb-honor' : undefined}>{t.card}</span>
+        </span>
+      ))}
+    </p>
+  );
+}
+
 /** Opgaven: problemet, linjerne uden chancer og svarfelterne. Linjer og forskel er skjult indtil svaret. */
 export function Opgave({ task, optionalGuess = false, onAnswer }: OpgaveProps) {
   const [line, setLine] = useState<number | null>(null);
   const [guess, setGuess] = useState<number | null>(null);
-  const { bank, goal } = task;
+  const { goal } = task;
+  const hands = handsOf(task);
 
   const guessGroup = (label: string) => (
     <>
@@ -53,11 +82,13 @@ export function Opgave({ task, optionalGuess = false, onAnswer }: OpgaveProps) {
   switch (task.type) {
     case 'vælg-linjen':
     case 'nyt-mål':
+    case 'hvad-nu':
     case 'optælling': {
       const lines = letteredLines(task.options);
       body = (
         <>
           {task.type === 'nyt-mål' && <p>{TEXT.newGoal(task.previousGoal, goal)}</p>}
+          {task.type === 'hvad-nu' && <FørsteRunde trick={task.situation.trick} />}
           {task.type === 'optælling' && (
             <section className="fb-counting" aria-label={TEXT.counting}>
               <h2 className="fb-task-heading">{TEXT.counting}</h2>
@@ -76,13 +107,13 @@ export function Opgave({ task, optionalGuess = false, onAnswer }: OpgaveProps) {
               <p className="fb-note">{TEXT.countingNote}</p>
             </section>
           )}
-          <h2 className="fb-task-heading">{TEXT.chooseLine}</h2>
+          <h2 className="fb-task-heading">{task.type === 'hvad-nu' ? TEXT.whatNow : TEXT.chooseLine}</h2>
           <div className="fb-options">
             {lines.map((l, i) => (
               <Linjekort key={l.letter} line={l} hideResult selected={line === i} onSelect={() => setLine(i)} />
             ))}
           </div>
-          {guessGroup(optionalGuess ? TEXT.guessOptional : TEXT.guessPrompt(goal))}
+          {guessGroup(optionalGuess ? TEXT.guessOptional : task.type === 'hvad-nu' ? TEXT.guessNow(goal) : TEXT.guessPrompt(goal))}
           {submit(line !== null && (guess !== null || optionalGuess), {
             line: line ?? undefined,
             ...(guess !== null ? { guess } : {}),
@@ -133,7 +164,7 @@ export function Opgave({ task, optionalGuess = false, onAnswer }: OpgaveProps) {
 
   return (
     <section className="card fb-task" aria-label={TEXT.goalPrompt(goal)}>
-      <Bridgebord north={bank.north} south={bank.south} />
+      <Bridgebord north={hands.north} south={hands.south} />
       <p className="prompt">{TEXT.goalPrompt(goal)}</p>
       {body}
     </section>

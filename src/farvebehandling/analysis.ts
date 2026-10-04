@@ -3,6 +3,7 @@ import { ACE, ALL_RANKS, KING, QUEEN, rankFromSymbol, rankText, TEN, type Rank }
 import type { Fraction } from './model/fraction';
 import { combinationFrequency, situationFrequency } from './model/frequency';
 import type { Combination, CombinationSolution, LeadResult } from './precompute';
+import type { WhatNowSituation } from './model/whatnow';
 import { frequencyHolding } from './source/bridgehands';
 
 /** Data til analysevinduet: banken, linjerne, sandsynlighedsbåndet og opslag fra kortvælgeren. */
@@ -19,13 +20,16 @@ export interface BankItem {
   /** Hyppighed for situationen: es og konge uden damen med samme antal kort. */
   situation: Fraction;
   key: string;
+  /** Hvad nu?: situationerne efter første runde pr. mål (fra hvad-nu.json). */
+  whatNow: Readonly<Record<string, readonly WhatNowSituation[]>>;
 }
 
 const ranksOf = (data: string) => [...data].map(rankFromSymbol).sort((a, b) => b - a);
 
-export function loadBank(bankText: string, solutionsText: string): BankItem[] {
+export function loadBank(bankText: string, solutionsText: string, whatNowText?: string): BankItem[] {
   const bank = (JSON.parse(bankText) as { combinations: Combination[] }).combinations;
   const solutions = (JSON.parse(solutionsText) as { combinations: Record<string, CombinationSolution> }).combinations;
+  const whatNow = whatNowText ? (JSON.parse(whatNowText) as { combinations: Record<string, Record<string, WhatNowSituation[]>> }).combinations : {};
   return bank.map((combination, i) => {
     const north = ranksOf(combination.north), south = ranksOf(combination.south);
     const x = frequencyHolding({ hand: combination.south, dummy: combination.north });
@@ -38,6 +42,7 @@ export function loadBank(bankText: string, solutionsText: string): BankItem[] {
       frequency: combinationFrequency(x.hand, x.dummy),
       situation: situationFrequency([ACE, KING], [QUEEN], north.length + south.length),
       key: structureKey(north, south),
+      whatNow: whatNow[combination.id] ?? {},
     };
   });
 }

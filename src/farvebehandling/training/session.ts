@@ -60,12 +60,13 @@ export interface FbSession {
   shownAt: number;
 }
 
-/** Opgavetypernes vægt, når motoren vælger. Hvad nu? og Spil den selv kommer senere. */
+/** Opgavetypernes vægt, når motoren vælger. Spil den selv kommer i trin 5. */
 const WEIGHT: Partial<Record<TaskType, number>> = {
   'vælg-linjen': 4,
   chancen: 2,
   'linje-mod-linje': 2,
   'nyt-mål': 2,
+  'hvad-nu': 2,
   'find-hullet': 2,
   optælling: 1,
 };

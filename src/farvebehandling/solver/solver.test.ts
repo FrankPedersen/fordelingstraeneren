@@ -3,6 +3,7 @@ import { parseCards } from '../model/cards';
 import { buildGame, FOURTH, LEAD, layoutOf, SECOND, THIRD, type Game } from './game';
 import { validateLine, type Line } from './lines';
 import { solve, solveGame, solveLine } from './solve';
+import { whatNow } from './whatnow';
 
 const goal = (n: number) => ({ kind: 'goal', goal: n }) as const;
 const percent = (x: number) => Math.round(x * 1000) / 10;
@@ -169,6 +170,25 @@ describe('Løseren med optimalt modspil', { timeout: 120_000 }, () => {
     const singleton = Number(game.layouts[layoutOf(game, parseCards('J98'))].weight);
     const doubleton = Number(game.layouts[layoutOf(game, parseCards('98'))].weight);
     expect(percent(singleton / (singleton + doubleton))).toBe(64.7);
+  });
+
+  it('Hvad nu?: efter Østs dame under esset vinder kipningen 64,7 % og fald 35,3 % (begrænset valg)', () => {
+    const game = buildGame(parseCards('AKT32'), parseCards('7654'), { objective: goal(5) });
+    const solution = solveGame(game);
+    const top = solution.leads.find((l) => l.lead.hand === 'N' && l.lead.high === 14)!;
+    const situations = whatNow(game, top.slot, top.strategy);
+    const queen = situations.find((s) => s.trick[1].seat === 'Ø' && s.trick[1].card === 'D')!;
+    expect(queen.trick.map((t) => `${t.seat} ${t.card}`)).toEqual(['N E', 'Ø D', 'S 7', 'V x']);
+    // Singleton D eller B hos Øst (2 × 6,22 %) eller D B (6,78 %): 19,22 % af spillene.
+    expect(percent(queen.probability)).toBe(19.2);
+    expect(queen.posterior.reduce((a, b) => a + b, 0)).toBeCloseTo(1, 12);
+    const [finesse, drop] = queen.options;
+    expect(finesse.steps[0]).toMatch(/^Lille fra hånden mod 10'eren \(kip\)/);
+    expect(percent(finesse.value)).toBe(64.7);
+    expect(drop.steps).toEqual(['Slå kongen.']);
+    expect(percent(drop.value)).toBe(35.3);
+    // Vest lægger en honnør: ingen kipning er mulig mod Øst, så der er intet rimeligt valg, og situationen udelades.
+    expect(situations.some((s) => s.trick[3].card === 'D')).toBe(false);
   });
 
   it('giver ikke 100 % med hånden E 10 8 2 og bordet K B 9 3 (case 73, 4 stik)', () => {

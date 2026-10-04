@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { mulberry32 } from '../../engine/rng';
 import bankText from '../content/suit-combinations.json?raw';
 import solutionsText from '../content/solutions.json?raw';
+import whatNowText from '../content/hvad-nu.json?raw';
 import techniquesFile from '../content/techniques.json';
 import { loadBank, type BankItem } from '../analysis';
 import { guessInterval } from '../model/guess';
@@ -21,7 +22,7 @@ import {
 } from './session';
 import { grade, makeTask, outcomeOf, possibleTypes, vacantWeights, type FbAnswer, type FbTask, type LineOption } from './tasks';
 
-const bank = loadBank(bankText, solutionsText);
+const bank = loadBank(bankText, solutionsText, whatNowText);
 const byId = (id: string) => bank.find((b) => b.combination.id === id)!;
 const techniques = techniquesFile.techniques;
 
@@ -136,6 +137,27 @@ describe('Opgaverne', () => {
     expect(w.reduce((a, b) => a + b, 0)).toBeCloseTo(1, 12);
     for (const o of task.options) expect(o.value).toBeCloseTo(o.line.lead.layouts.reduce((s, x, L) => s + x * w[L], 0), 12);
     expect(task.options.filter((o) => o.correct)).toHaveLength(1);
+  });
+
+  it('Hvad nu? viser første runde og 2–4 fortsættelser med netop én rigtig', () => {
+    let tasks = 0;
+    for (const item of bank) {
+      for (const goal of item.combination.goals) {
+        if (!possibleTypes(item, goal).includes('hvad-nu')) continue;
+        const task = makeTask('hvad-nu', item, goal, mulberry32(goal));
+        if (task.type !== 'hvad-nu') throw new Error('forkert type');
+        tasks++;
+        expect(task.situation.trick).toHaveLength(4);
+        expect(task.options.length, task.item).toBeGreaterThanOrEqual(2);
+        expect(task.options.length, task.item).toBeLessThanOrEqual(4);
+        expect(task.options.filter((o) => o.correct), task.item).toHaveLength(1);
+        const best = task.options.findIndex((o) => o.correct);
+        expect(grade(task, { line: best, guess: intervalOf(task.options[best]), ms: 1 }, 20_000).score).toBe(1);
+        expect(grade(task, { line: best, guess: (intervalOf(task.options[best]) + 1) % 4, ms: 1 }, 20_000).score).toBe(0.5);
+        expect(grade(task, { line: (best + 1) % task.options.length, guess: 0, ms: 1 }, 20_000).score).toBe(0);
+      }
+    }
+    expect(tasks).toBeGreaterThan(0);
   });
 
   it('Samme farve, nyt mål: det tidligere mål har helst en anden bedste linje', () => {

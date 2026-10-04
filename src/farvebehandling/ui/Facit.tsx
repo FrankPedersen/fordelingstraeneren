@@ -7,7 +7,7 @@ import { bestOption, vacantWeights, type FbAnswer, type FbTask, type Graded } fr
 import { LayoutList } from './Analysevindue';
 import { Bridgebord } from './Bridgebord';
 import { Linjekort } from './Linjekort';
-import { letteredLines } from './Opgave';
+import { FørsteRunde, handsOf, letteredLines } from './Opgave';
 import { Resultatkort } from './Resultatkort';
 import { Rumkort } from './Rumkort';
 import { Sandsynlighedsbånd } from './Sandsynlighedsbånd';
@@ -40,8 +40,15 @@ export function Facit({ task, answer, graded, reward, place, onNext }: FacitProp
   const [page, setPage] = useState<'facit' | 'why'>('facit');
   const [grouping, setGrouping] = useState<Grouping>('fordeling');
   const lines = useMemo(() => facitLines(task), [task]);
-  const weights = useMemo(() => (task.type === 'optælling' ? vacantWeights(task.bank, task.vacant) : undefined), [task]);
-  const fields = useMemo(() => sortFields(bandFields(task.bank, lines, weights), grouping), [task, lines, weights, grouping]);
+  // Med optælling regnes sidningerne med de ledige pladser; i Hvad nu? med chancen efter første runde.
+  const weights = useMemo(
+    () => (task.type === 'optælling' ? vacantWeights(task.bank, task.vacant) : task.type === 'hvad-nu' ? task.situation.posterior : undefined),
+    [task],
+  );
+  const fields = useMemo(
+    () => sortFields(bandFields(task.bank, lines, weights), grouping).filter((f) => f.probability > 0),
+    [task, lines, weights, grouping],
+  );
   const failing = task.type === 'find-hullet' ? task.fields.find((f) => f.outcomes[0] === 0) ?? null : null;
   const [selected, setSelected] = useState<string | null>(failing?.id ?? null);
   const field = fields.find((f) => f.id === selected) ?? null;
@@ -112,7 +119,15 @@ export function Facit({ task, answer, graded, reward, place, onNext }: FacitProp
 
       <section className="card" aria-labelledby="fb-facit-problem">
         <h2 id="fb-facit-problem">{TEXT.goalPrompt(task.goal)}</h2>
-        <Bridgebord north={task.bank.north} south={task.bank.south} west={field?.west} east={field?.east} />
+        {task.type === 'hvad-nu' ? (
+          <>
+            <Bridgebord north={handsOf(task).north} south={handsOf(task).south} />
+            <FørsteRunde trick={task.situation.trick} />
+            {field && <p className="fb-note">{TEXT.layout(field.west, field.east)}</p>}
+          </>
+        ) : (
+          <Bridgebord north={task.bank.north} south={task.bank.south} west={field?.west} east={field?.east} />
+        )}
       </section>
 
       <section className="card" aria-labelledby="fb-facit-difference">
@@ -126,6 +141,7 @@ export function Facit({ task, answer, graded, reward, place, onNext }: FacitProp
           </p>
         )}
         {task.type === 'optælling' && <p className="fb-note">{TEXT.countingNote}</p>}
+        {task.type === 'hvad-nu' && <p className="fb-note">{TEXT.posteriorNote}</p>}
       </section>
 
       <section className="card" aria-labelledby="fb-facit-lines">

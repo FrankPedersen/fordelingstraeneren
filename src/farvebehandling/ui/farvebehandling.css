@@ -586,3 +586,21 @@
   color: var(--text);
   font: inherit;
 }
+
+/* Hvad nu?: første runde */
+
+.fb-trick {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-6) var(--space-12);
+  margin: 0;
+  padding: var(--space-10) var(--space-12);
+  border-radius: var(--radius-10);
+  background: var(--surface-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.fb-trick-card {
+  white-space: nowrap;
+}

@@ -5,11 +5,12 @@ import { makeSudoku } from '../../modes/sudoku/task';
 import { bandFields, linesForGoal, NEAR_BEST, type BandField, type BankItem, type LineView } from '../analysis';
 import { guessInterval } from '../model/guess';
 import type { Vacant } from '../model/layouts';
+import { plausible, type WhatNowSituation } from '../model/whatnow';
 import type { TaskType } from '../storage';
 
 /**
  * Opgavetyperne i Træning og Selvvalgt (SPEC-farvebehandling.md). Et emne er en kombination × et mål.
- * Type 5 (Hvad nu?) og 7 (Spil den selv) kommer senere.
+ * Type 7 (Spil den selv) kommer i trin 5.
  */
 
 export interface TaskBase {
@@ -31,6 +32,7 @@ export type FbTask =
   | (TaskBase & { type: 'chancen'; line: LineOption })
   | (TaskBase & { type: 'linje-mod-linje'; options: [LineOption, LineOption] })
   | (TaskBase & { type: 'nyt-mål'; previousGoal: number; options: LineOption[] })
+  | (TaskBase & { type: 'hvad-nu'; situation: WhatNowSituation; options: LineOption[] })
   | (TaskBase & { type: 'find-hullet'; line: LineOption; fields: BandField[] })
   | (TaskBase & { type: 'optælling'; vacant: Vacant; shown: Counting; options: LineOption[] });
 
@@ -85,6 +87,7 @@ export function possibleTypes(bank: BankItem, goal: number): TaskType[] {
   const wrong = opts.some((o) => !o.correct);
   if (wrong) types.push('vælg-linjen', 'linje-mod-linje', 'optælling');
   if (wrong && bank.combination.goals.length > 1) types.push('nyt-mål');
+  if (bank.whatNow[String(goal)]?.length) types.push('hvad-nu');
   // Find hullet: én sidning, hvor linjen taber, mod mindst to, hvor den vinder.
   const fields = bandFields(bank, lines);
   if (fields.some((f) => f.outcomes[0] === 0) && fields.filter((f) => f.outcomes[0] > 0).length >= 2) types.push('find-hullet');
@@ -123,9 +126,33 @@ export function makeTask(type: TaskType, bank: BankItem, goal: number, rng: Rng)
     }
     case 'optælling':
       return countingTask(base, bank, lines, rng) ?? makeTask('vælg-linjen', bank, goal, rng);
+    case 'hvad-nu': {
+      const situations = bank.whatNow[String(goal)] ?? [];
+      const situation = situations[rng.int(situations.length)];
+      return { ...base, type, situation, options: shuffle(whatNowOptions(situation), rng) };
+    }
     default:
       throw new Error(`Opgavetypen ${type} er ikke bygget endnu`);
   }
+}
+
+/** Hvad nu?: fortsættelserne som linjer, den bedste og op til tre rimelige, der er mere end 0,5 procentpoint dårligere. */
+export function whatNowOptions(situation: WhatNowSituation): LineOption[] {
+  const best = situation.options[0].value;
+  const all = situation.options.map((o) => ({
+    line: {
+      letter: '',
+      lead: { hand: o.hand, high: o.high, low: o.low, value: o.value, exact: '', upper: o.value, certified: o.certified, layouts: o.layouts, steps: o.steps, line: [] },
+      value: o.value,
+      best: false,
+      nearBest: false,
+      mixed: !o.certified,
+    },
+    value: o.value,
+    correct: best - o.value <= NEAR_BEST,
+    plausible: plausible(o, best),
+  }));
+  return [all[0], ...all.filter((o) => !o.correct && o.plausible).slice(0, MAX_OPTIONS - 1)].map(({ plausible: _, ...o }) => o);
 }
 
 /**
@@ -176,6 +203,7 @@ export function grade(task: FbTask, answer: FbAnswer, fastMs: number, { optional
   switch (task.type) {
     case 'vælg-linjen':
     case 'nyt-mål':
+    case 'hvad-nu':
     case 'optælling': {
       const chosen = task.options[answer.line ?? -1];
       const lineCorrect = !!chosen?.correct;
