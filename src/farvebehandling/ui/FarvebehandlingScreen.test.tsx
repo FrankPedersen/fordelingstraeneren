@@ -11,6 +11,25 @@ import { filterOptions, NO_FILTER } from '../training/practice';
 import { itemKey, possibleTypes } from '../training/tasks';
 import { TEST_BANK } from '../testBank';
 
+// Løseren testes for sig i solver/results.test.ts. Her svarer en hurtig løser med E K B 5 / 4 3 2 fra banken, så testene
+// af brugerfladen ikke afhænger af maskinens hastighed.
+vi.mock('../solver/client', async () => {
+  const { TEST_BANK: bank } = await import('../testBank');
+  const source = bank.find((b) => b.combination.id === '432-AKJ5')!;
+  const { goals, tricks, ...base } = source.solution;
+  return {
+    SolveCancelled: class extends Error {},
+    createSolver: () => ({
+      async solve(request: { kind: string; goal?: number }) {
+        if (request.kind === 'tricks') return { kind: 'tricks', base, result: tricks };
+        if (request.kind === 'goal') return { kind: 'goal', base, result: goals[String(request.goal)] };
+        return { kind: 'line', lead: goals['3'].leads[0], errors: [] };
+      },
+      cancel() {},
+    }),
+  };
+});
+
 const click = (name: string | RegExp) => fireEvent.click(screen.getByRole('button', { name }));
 const stored = (): FbSaved => JSON.parse(localStorage.getItem(FB_STORAGE_KEY)!);
 
@@ -133,18 +152,18 @@ describe('Farvebehandling', { timeout: 30_000 }, () => {
     for (const c of ['E', '10', '6', '5']) tap(c, 2);
     expect(screen.getByText(/findes ikke i banken/)).toBeTruthy();
     click('Regn den ud');
-    expect((await screen.findAllByText('37,3 %', {}, { timeout: 20_000 })).length).toBeGreaterThan(0);
-    expect(screen.getByText('Regnet i appen; der er ingen kilde at sammenligne med.')).toBeTruthy();
-    expect(screen.getByRole('button', { name: '3 stik' }).getAttribute('aria-pressed')).toBe('true');
-    // Målet 2 stik regnes, når det vælges.
-    click('2 stik');
-    expect(await screen.findByText('Bedste chance for 2 stik: 100,0 % med linje A.', {}, { timeout: 20_000 })).toBeTruthy();
-    click('3 stik');
+    expect(await screen.findByText('Regnet i appen; der er ingen kilde at sammenligne med.')).toBeTruthy();
+    // De foreslåede mål; et nyt mål regnes, når man vælger det.
+    const goals = within(screen.getByRole('group', { name: 'Mål' })).getAllByRole('button');
+    expect(goals.length).toBeGreaterThanOrEqual(2);
+    const other = goals.find((b) => b.getAttribute('aria-pressed') === 'false')!;
+    fireEvent.click(other);
+    expect(await screen.findByText(new RegExp(`^Bedste chance for ${other.textContent!.replace(' stik', '')} stik`))).toBeTruthy();
     // En egen linje: lille fra hånden.
     click('+ Egen linje');
     click('Gem og regn');
-    const own = await screen.findByRole('article', { name: /^Din linje X: / }, { timeout: 20_000 });
-    expect(stored().ownLines).toEqual([expect.objectContaining({ combination: 'J432-AT65', steps: [{ leadFrom: 'S', card: 'low' }] })]);
+    const own = await screen.findByRole('article', { name: /^Din linje X: / });
+    expect(stored().ownLines).toEqual([expect.objectContaining({ steps: [{ leadFrom: 'S', card: 'low' }] })]);
     fireEvent.click(within(own).getByRole('button', { name: 'Slet' }));
     expect(stored().ownLines).toEqual([]);
   });
