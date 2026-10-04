@@ -346,7 +346,7 @@ Krav til farvebehandlingens komponenter, så designet kan ændres bagefter:
 
 ## Leverancetrin, accepttest og åbne punkter
 
-Farvebehandling bygges i seks trin. Trin 1–4 er færdige og udgivet; trin 5 og 6 mangler.
+Farvebehandling bygges i seks trin. Trin 1–5 er færdige; trin 6 mangler.
 
 1. **Løser og model:** sidningsberegning, løser med optimalt modspil, hyppighed og tests. Startbankens resultater forudberegnes i Node, og valideringsrapporten for siden "damen mangler" laves.
 2. **Tokens og designsystem:** færdige, se afsnittet Designarbejde.

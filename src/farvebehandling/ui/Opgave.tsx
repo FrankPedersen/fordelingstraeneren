@@ -6,6 +6,7 @@ import type { TrickCard } from '../model/whatnow';
 import type { FbAnswer, FbTask, LineOption } from '../training/tasks';
 import { Bridgebord } from './Bridgebord';
 import { Linjekort } from './Linjekort';
+import { SpilSelv } from './SpilSelv';
 import { TEXT } from './texts';
 
 interface OpgaveProps {
@@ -52,6 +53,9 @@ export function Opgave({ task, optionalGuess = false, onAnswer }: OpgaveProps) {
   const [guess, setGuess] = useState<number | null>(null);
   const { goal } = task;
   const hands = handsOf(task);
+  if (task.type === 'spil-selv') {
+    return <SpilSelv item={task.bank} goal={goal} seed={task.seed} onDone={(play) => onAnswer({ play })} />;
+  }
 
   const guessGroup = (label: string) => (
     <>

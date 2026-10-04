@@ -19,6 +19,9 @@ import {
 } from './session';
 import { grade, itemKey, makeTask, outcomeOf, possibleTypes, vacantWeights, type FbAnswer, type FbTask, type LineOption } from './tasks';
 import { bankItem as byId, TEST_BANK as bank } from '../testBank';
+import { linesForGoal } from '../analysis';
+import { rankFromSymbol, type Rank } from '../model/cards';
+import { dealCards, finished, playLead, playThird, startPlay, thirdHandEmpty, type PlayState } from '../play/play';
 
 const techniques = techniquesFile.techniques;
 
@@ -28,9 +31,45 @@ const DAY = 24 * 3600_000;
 
 const intervalOf = (o: LineOption) => guessInterval(100 * o.value);
 
+/** Spiller en opgave i Spil den selv efter den bedste linjes trin og lægger ellers lavt. */
+function autoPlay(item: BankItem, goal: number, seed: number): PlayState {
+  const rng = mulberry32(seed);
+  let state = startPlay(item, dealCards(item, rng));
+  const best = linesForGoal(item, goal)[0].lead;
+  const pick = (cards: Rank[], card: string) =>
+    card === 'low' ? Math.min(...cards) : card === 'high' ? Math.max(...cards) : rankFromSymbol(card);
+  let step = 0;
+  while (!finished(state)) {
+    const s = best.line[step];
+    let hand: 'N' | 'S';
+    let card: Rank;
+    if (s) {
+      hand = s.leadFrom;
+      card = pick(hand === 'N' ? state.north : state.south, s.card);
+    } else if (step === 0) {
+      hand = best.hand;
+      card = best.low;
+    } else {
+      hand = state.north.length ? 'N' : 'S';
+      card = Math.min(...(hand === 'N' ? state.north : state.south));
+    }
+    state = playLead(state, hand, card, rng);
+    if (thirdHandEmpty(state)) state = playThird(state, 0, rng);
+    else {
+      const partner = hand === 'N' ? state.south : state.north;
+      const want = s?.third ? (state.current!.second < 11 ? s.third.play : s.third.else) : 'low';
+      state = playThird(state, pick(partner, want), rng);
+    }
+    step++;
+  }
+  return state;
+}
+
 /** Det rigtige svar på en opgave. */
 function rightAnswer(task: FbTask): Omit<FbAnswer, 'ms'> {
   switch (task.type) {
+    case 'spil-selv':
+      return { play: autoPlay(task.bank, task.goal, task.seed) };
     case 'chancen':
       return { guess: intervalOf(task.line) };
     case 'find-hullet':
@@ -47,6 +86,9 @@ function rightAnswer(task: FbTask): Omit<FbAnswer, 'ms'> {
 /** Et forkert svar på en opgave. */
 function wrongAnswer(task: FbTask): Omit<FbAnswer, 'ms'> {
   switch (task.type) {
+    case 'spil-selv':
+      // Et spil uden stik følger ingen linje.
+      return { play: startPlay(task.bank, dealCards(task.bank, mulberry32(task.seed))) };
     case 'chancen':
       return { guess: (intervalOf(task.line) + 2) % 4 };
     case 'find-hullet':
@@ -154,6 +196,25 @@ describe('Opgaverne', () => {
       }
     }
     expect(tasks).toBeGreaterThan(0);
+  });
+
+  it('Spil den selv bedømmer beslutningen: den bedste linje er rigtig, også når sidningen er imod', () => {
+    const item = byId('J32-AK54');
+    expect(possibleTypes(item, 3)).toContain('spil-selv');
+    let wins = 0, losses = 0;
+    for (let seed = 1; seed <= 40; seed++) {
+      const task = makeTask('spil-selv', item, 3, mulberry32(seed));
+      if (task.type !== 'spil-selv') throw new Error('forkert type');
+      const play = autoPlay(item, 3, task.seed);
+      const graded = grade(task, { play, ms: 30_000 }, 20_000);
+      expect(graded, `seed ${seed}`).toMatchObject({ score: 1, lineCorrect: true, guessCorrect: null, fast: false });
+      if (play.won >= 3) wins++;
+      else losses++;
+      expect(grade(task, { ...wrongAnswer(task), ms: 1 }, 20_000).score).toBe(0);
+    }
+    // Linjen vinder ca. 69 % af gangene, men bedømmelsen er den samme.
+    expect(wins).toBeGreaterThan(0);
+    expect(losses).toBeGreaterThan(0);
   });
 
   it('Samme farve, nyt mål: det tidligere mål har helst en anden bedste linje', () => {

@@ -43,7 +43,7 @@ export function situationHonors(north: readonly Rank[], south: readonly Rank[]):
   return top === undefined ? { ours, theirs: [] } : { ours: ours.filter((r) => r > top), theirs: [top] };
 }
 
-const lead = (l: AppLead): LeadResult => ({ ...l, exact: '', upper: l.value, line: [] });
+const lead = (l: AppLead): LeadResult => ({ ...l, exact: '', upper: l.value });
 const goalOf = (g: { value: number; best: number; leads: AppLead[] }): GoalResult => ({ ...g, leads: g.leads.map(lead) });
 
 function bankItem(entry: AppEntry, page: number): BankItem {
@@ -223,6 +223,14 @@ export function bandFields(item: BankItem, lines: readonly LineView[], weights?:
     }
   });
   return sortFields(fields, 'fordeling');
+}
+
+/** Feltets id i båndet for en konkret sidning: den abstrakte sidning og Vests kort i huller, hvor alle kort er 10 eller højere. */
+export function fieldIdOf(item: BankItem, layout: number, west: readonly Rank[]): string {
+  const honors = item.solution.gaps.flatMap((gap) =>
+    gap.size && gap.low >= TEN ? west.filter((r) => r <= gap.high && r >= gap.low).sort((x, y) => y - x) : [],
+  );
+  return `${layout}:${honors.join(',')}`;
 }
 
 export type Grouping = 'fordeling' | 'honnører';

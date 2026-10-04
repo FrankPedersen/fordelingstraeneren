@@ -35,8 +35,22 @@ async function openFarvebehandling() {
   await screen.findByRole('button', { name: 'Start dagens session' }, { timeout: 10_000 });
 }
 
+/** Spiller alle kort i Spil den selv ved at trykke på det første kort, der kan spilles. */
+function playOut() {
+  for (let i = 0; i < 40; i++) {
+    const region = screen.queryByRole('region', { name: 'Spil den selv' });
+    if (!region) return;
+    const cards = within(region)
+      .queryAllByRole('button')
+      .filter((b) => /^(bordet|din hånd): /.test(b.getAttribute('aria-label') ?? '') && !(b as HTMLButtonElement).disabled);
+    if (!cards.length) return;
+    fireEvent.click(cards[0]);
+  }
+}
+
 /** Svarer på den opgave, der står på skærmen, uanset type. */
 function answerAnything() {
+  if (screen.queryByRole('region', { name: 'Spil den selv' })) return playOut();
   const holes = screen.queryByRole('group', { name: 'Hvor taber linjen? Vælg sidningen.' });
   if (holes) return fireEvent.click(within(holes).getAllByRole('button')[0]);
   const lines = screen.queryAllByRole('button', { name: /^Linje [A-D]: / });
@@ -105,6 +119,25 @@ describe('Farvebehandling', { timeout: 30_000 }, () => {
     tap('2', 1);
     tap('3', 2);
     expect(screen.getByText(/findes ikke i banken/)).toBeTruthy();
+  });
+
+  it('spiller kombinationen selv fra analysevinduet mod normalt modspil', async () => {
+    await openFarvebehandling();
+    click('Analyse');
+    click('Spil den selv ▶');
+    const region = screen.getByRole('region', { name: 'Spil den selv' });
+    expect(within(region).getByText('Spil ud fra bordet eller hånden.')).toBeTruthy();
+    expect(within(region).getAllByText(/^\? \(\d+ kort\)$/)).toHaveLength(2);
+    playOut();
+    expect(within(region).getByText(/stik – målet/)).toBeTruthy();
+    expect(within(region).getByText('Fordelingen, du spillede mod, lyser op i båndet.')).toBeTruthy();
+    const band = within(region).getByRole('group', { name: 'Forskellen' });
+    expect(within(band).getAllByRole('button').some((b) => b.getAttribute('aria-pressed') === 'true')).toBe(true);
+    expect(within(region).queryAllByText(/^\? \(/)).toHaveLength(0);
+    fireEvent.click(within(region).getByRole('button', { name: 'Ny fordeling' }));
+    expect(within(region).getByText('Spil ud fra bordet eller hånden.')).toBeTruthy();
+    fireEvent.click(within(region).getByRole('button', { name: 'Luk' }));
+    expect(screen.queryByRole('region', { name: 'Spil den selv' })).toBeNull();
   });
 
   it('kører dagens session: introduktion, opgaver med facit, lynrunde og status', async () => {

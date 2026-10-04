@@ -18,6 +18,8 @@ import { Kortvælger } from './Kortvælger';
 import { Linjekort } from './Linjekort';
 import { Resultatkort } from './Resultatkort';
 import { Sandsynlighedsbånd } from './Sandsynlighedsbånd';
+import { SpilSelv } from './SpilSelv';
+import { randomSeed } from '../../engine/rng';
 import { TEXT } from './texts';
 
 interface AnalysevindueProps {
@@ -35,6 +37,7 @@ export function Analysevindue({ bank }: AnalysevindueProps) {
   const [showAll, setShowAll] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
   const [points, setPoints] = useState<number | null>(null);
+  const [playSeed, setPlaySeed] = useState<number | null>(null);
   const pointValues = useMemo(() => [...new Set(bank.map((b) => b.points))].sort((a, b) => a - b), [bank]);
   const shown = points === null ? bank : bank.filter((b) => b.points === points);
 
@@ -49,6 +52,7 @@ export function Analysevindue({ bank }: AnalysevindueProps) {
     setGoal(next.combination.goals[0]);
     setSelected(null);
     setShowAll(false);
+    setPlaySeed(null);
   }
 
   function pick(north: Rank[], south: Rank[]) {
@@ -145,13 +149,23 @@ export function Analysevindue({ bank }: AnalysevindueProps) {
                 onClick={() => {
                   setGoal(g);
                   setSelected(null);
+                  setPlaySeed(null);
                 }}
               >
                 {TEXT.goal(g)}
               </button>
             ))}
           </div>
+          {playSeed === null && (
+            <button type="button" className="btn small-btn" onClick={() => setPlaySeed(randomSeed())}>
+              {TEXT.playButton}
+            </button>
+          )}
         </section>
+
+        {playSeed !== null && (
+          <SpilSelv key={`${item.combination.id}:${goal}:${playSeed}`} item={item} goal={goal} seed={playSeed} onClose={() => setPlaySeed(null)} />
+        )}
 
         <section className="card" aria-labelledby="fb-lines">
           <h2 id="fb-lines">{TEXT.lines}</h2>

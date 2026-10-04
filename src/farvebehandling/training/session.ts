@@ -60,7 +60,7 @@ export interface FbSession {
   shownAt: number;
 }
 
-/** Opgavetypernes vægt, når motoren vælger. Spil den selv kommer i trin 5. */
+/** Opgavetypernes vægt, når motoren vælger. Spil den selv tager længst og kommer sjældnest. */
 const WEIGHT: Partial<Record<TaskType, number>> = {
   'vælg-linjen': 4,
   chancen: 2,
@@ -69,6 +69,7 @@ const WEIGHT: Partial<Record<TaskType, number>> = {
   'hvad-nu': 2,
   'find-hullet': 2,
   optælling: 1,
+  'spil-selv': 1,
 };
 
 const todayOf = (saved: FbSaved, now: number) => dayOf(now, saved.settings.dayStartsAtHour);

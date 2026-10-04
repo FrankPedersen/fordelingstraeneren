@@ -267,8 +267,8 @@ export function pageTitle(page: number): string {
 
 // ---------- Appens data ----------
 
-/** En linje i appens data: uden den eksakte tæller, den øvre grænse og linjeformatet, som appen ikke bruger. */
-export type AppLead = Pick<LeadResult, 'hand' | 'high' | 'low' | 'value' | 'certified' | 'layouts' | 'steps'>;
+/** En linje i appens data: uden den eksakte tæller og den øvre grænse, som appen ikke bruger. */
+export type AppLead = Pick<LeadResult, 'hand' | 'high' | 'low' | 'value' | 'certified' | 'layouts' | 'steps' | 'line'>;
 
 export interface AppEntry {
   /** Rang efter hyppighed på tværs af siderne (1 = hyppigst). */
@@ -293,6 +293,8 @@ const appLead = (l: LeadResult): AppLead => ({
   certified: l.certified,
   layouts: l.layouts,
   steps: l.steps,
+  // Linjeformatet til Spil den selv: dine stik sammenlignes med løserens linjer.
+  line: l.line,
 });
 
 /** Kombinationen i appens kompakte form (én fil pr. side, så hver fil kan gemmes offline). */

@@ -142,6 +142,26 @@ export const TEXT = {
   scene: 'Din scene',
   allLayouts: 'Alle sidninger',
 
+  // Spil den selv
+  playTitle: 'Spil den selv',
+  playTrick: 'Stikket',
+  playButton: 'Spil den selv ▶',
+  playLeadPrompt: 'Spil ud fra bordet eller hånden.',
+  playThirdPrompt: (hand: string) => `Læg et kort fra ${hand === 'bordet' ? 'bordet' : 'hånden'}.`,
+  playHidden: (n: number) => (n === 1 ? '? (1 kort)' : `? (${n} kort)`),
+  playScore: (won: number, goal: number) => `Dine stik: ${won} · mål ${goal}`,
+  playTrickWon: (n: number, seat: string) => `Stik ${n}: ${seat} vandt.`,
+  playResult: (won: number, goal: number, made: boolean) =>
+    made ? `${won} stik – målet på ${goal} er nået` : `${won} stik – målet var ${goal}`,
+  playGoodMade: 'God beslutning – og målet blev nået.',
+  playGoodUnlucky: 'God beslutning – sidningen var imod dig.',
+  playLuckyMade: 'Målet blev nået, men en anden linje giver mere.',
+  playFollowed: 'Du fulgte en af de bedste linjer ✓',
+  playNotFollowed: 'Du fulgte ikke en af de bedste linjer ✕',
+  playLayoutNote: 'Fordelingen, du spillede mod, lyser op i båndet.',
+  playAgain: 'Ny fordeling',
+  close: 'Luk',
+
   // Introduktion
   newCombination: 'Ny kombination',
   goalsText: (goals: readonly number[]) => `Mål: ${goals.map((g) => `${g} stik`).join(' og ')}`,

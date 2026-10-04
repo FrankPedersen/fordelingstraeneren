@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { formatDecimal } from '../../engine/format';
-import { bandFields, compactLayout, disagreements, sortFields, type Grouping, type LineView } from '../analysis';
+import { bandFields, compactLayout, disagreements, linesForGoal, sortFields, type Grouping, type LineView } from '../analysis';
+import { randomSeed } from '../../engine/rng';
 import { guessInterval } from '../model/guess';
 import type { Room, Station } from '../training/palace';
 import { bestOption, vacantWeights, type FbAnswer, type FbTask, type Graded } from '../training/tasks';
@@ -11,6 +12,7 @@ import { FørsteRunde, handsOf, letteredLines } from './Opgave';
 import { Resultatkort } from './Resultatkort';
 import { Rumkort } from './Rumkort';
 import { Sandsynlighedsbånd } from './Sandsynlighedsbånd';
+import { PlayResult, SpilSelv } from './SpilSelv';
 import { TEXT } from './texts';
 
 interface FacitProps {
@@ -27,6 +29,7 @@ const percent = (p: number) => `${formatDecimal(100 * p, 1)} %`;
 
 /** Opgavens linjer med bogstaverne fra opgaven; den bedste markeres. */
 function facitLines(task: FbTask): LineView[] {
+  if (task.type === 'spil-selv') return linesForGoal(task.bank, task.goal);
   const best = bestOption(task);
   const options = task.type === 'chancen' || task.type === 'find-hullet' ? [task.line] : task.options;
   return letteredLines(options).map((l, i) => ({ ...l, best: options[i] === best, nearBest: false }));
@@ -37,7 +40,7 @@ function facitLines(task: FbTask): LineView[] {
  * "Hvorfor" viser huskeregel, billede og alle sidninger. Tonen skiller beslutning fra resultat.
  */
 export function Facit({ task, answer, graded, reward, place, onNext }: FacitProps) {
-  const [page, setPage] = useState<'facit' | 'why'>('facit');
+  const [page, setPage] = useState<'facit' | 'why' | 'play'>('facit');
   const [grouping, setGrouping] = useState<Grouping>('fordeling');
   const lines = useMemo(() => facitLines(task), [task]);
   // Med optælling regnes sidningerne med de ledige pladser; i Hvad nu? med chancen efter første runde.
@@ -85,6 +88,33 @@ export function Facit({ task, answer, graded, reward, place, onNext }: FacitProp
       {TEXT.next}
     </button>
   );
+
+  if (page === 'play') {
+    return (
+      <div className="fb-facit">
+        <SpilSelv item={task.bank} goal={task.goal} seed={randomSeed()} onClose={() => setPage('facit')} />
+        {next}
+      </div>
+    );
+  }
+
+  if (task.type === 'spil-selv' && answer.play) {
+    return (
+      <div className="fb-facit">
+        <section className={`feedback ${graded.score > 0 ? 'ok' : 'bad'}`} role="status">
+          <span className="feedback-title">{title}</span>
+          {reward && reward.xp > 0 && <span className="feedback-meta">{TEXT.gained(reward.xp, reward.combo)}</span>}
+        </section>
+        <PlayResult item={task.bank} goal={task.goal} state={answer.play} />
+        <div className="fb-actions">
+          <button type="button" className="btn small-btn" onClick={() => setPage('why')}>
+            {TEXT.why}
+          </button>
+          {next}
+        </div>
+      </div>
+    );
+  }
 
   if (page === 'why') {
     return (
@@ -157,6 +187,9 @@ export function Facit({ task, answer, graded, reward, place, onNext }: FacitProp
       <div className="fb-actions">
         <button type="button" className="btn small-btn" onClick={() => setPage('why')}>
           {TEXT.why}
+        </button>
+        <button type="button" className="btn small-btn" onClick={() => setPage('play')}>
+          {TEXT.playButton}
         </button>
         {next}
       </div>

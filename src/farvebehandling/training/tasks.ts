@@ -6,11 +6,11 @@ import { bandFields, linesForGoal, NEAR_BEST, type BandField, type BankItem, typ
 import { guessInterval } from '../model/guess';
 import type { Vacant } from '../model/layouts';
 import { plausible, type WhatNowSituation } from '../model/whatnow';
+import { followsBestLine, type PlayState } from '../play/play';
 import type { TaskType } from '../storage';
 
 /**
  * Opgavetyperne i Træning og Selvvalgt (SPEC-farvebehandling.md). Et emne er en kombination × et mål.
- * Type 7 (Spil den selv) kommer i trin 5.
  */
 
 export interface TaskBase {
@@ -33,6 +33,8 @@ export type FbTask =
   | (TaskBase & { type: 'linje-mod-linje'; options: [LineOption, LineOption] })
   | (TaskBase & { type: 'nyt-mål'; previousGoal: number; options: LineOption[] })
   | (TaskBase & { type: 'hvad-nu'; situation: WhatNowSituation; options: LineOption[] })
+  /** Spil den selv: kortene gives ud fra `seed`, og modspillet er normalt. */
+  | (TaskBase & { type: 'spil-selv'; seed: number })
   | (TaskBase & { type: 'find-hullet'; line: LineOption; fields: BandField[] })
   | (TaskBase & { type: 'optælling'; vacant: Vacant; shown: Counting; options: LineOption[] });
 
@@ -50,6 +52,8 @@ export interface FbAnswer {
   guess?: number;
   /** Den valgte sidning (feltets id). */
   field?: string;
+  /** Spil den selv: spillet, som det endte. */
+  play?: PlayState;
   ms: number;
 }
 
@@ -85,7 +89,7 @@ export function possibleTypes(bank: BankItem, goal: number): TaskType[] {
   const opts = options(lines);
   const types: TaskType[] = ['chancen'];
   const wrong = opts.some((o) => !o.correct);
-  if (wrong) types.push('vælg-linjen', 'linje-mod-linje', 'optælling');
+  if (wrong) types.push('vælg-linjen', 'linje-mod-linje', 'optælling', 'spil-selv');
   if (wrong && bank.combination.goals.length > 1) types.push('nyt-mål');
   if (bank.whatNow[String(goal)]?.length) types.push('hvad-nu');
   // Find hullet: én sidning, hvor linjen taber, mod mindst to, hvor den vinder.
@@ -126,6 +130,8 @@ export function makeTask(type: TaskType, bank: BankItem, goal: number, rng: Rng)
     }
     case 'optælling':
       return countingTask(base, bank, lines, rng) ?? makeTask('vælg-linjen', bank, goal, rng);
+    case 'spil-selv':
+      return { ...base, type, seed: rng.uint32() };
     case 'hvad-nu': {
       const situations = bank.whatNow[String(goal)] ?? [];
       const situation = situations[rng.int(situations.length)];
@@ -226,6 +232,11 @@ export function grade(task: FbTask, answer: FbAnswer, fastMs: number, { optional
       const lineCorrect = field ? field.outcomes[0] === 0 : false;
       return { score: lineCorrect ? 1 : 0, lineCorrect, guessCorrect: null, fast };
     }
+    case 'spil-selv': {
+      // Beslutningen bedømmes, ikke resultatet: fulgte spillet en af de bedste linjer?
+      const lineCorrect = !!answer.play && followsBestLine(task.bank, task.goal, answer.play);
+      return { score: lineCorrect ? 1 : 0, lineCorrect, guessCorrect: null, fast };
+    }
   }
 }
 
@@ -241,6 +252,10 @@ export function bestOption(task: FbTask): LineOption {
     case 'chancen':
     case 'find-hullet':
       return task.line;
+    case 'spil-selv': {
+      const best = linesForGoal(task.bank, task.goal)[0];
+      return { line: best, value: best.value, correct: true };
+    }
     default:
       return [...task.options].sort((a, b) => b.value - a.value)[0];
   }
