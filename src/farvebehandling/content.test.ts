@@ -23,6 +23,9 @@ const sourcePages = Object.values(
 const reports = import.meta.glob<string>('./content/validering-side-*.md', { eager: true, query: '?raw', import: 'default' });
 const appFiles = import.meta.glob<string>('./content/app/side-*.json', { eager: true, query: '?raw', import: 'default' });
 
+/** Git kan skrive filerne med CRLF på Windows; rapporterne laves med LF. */
+const lf = (text: string) => text.replace(/\r\n/g, '\n');
+
 const cases = classifyCases(page2.cases as SourceCase[]);
 const rows = frequencyRows(cases);
 const csvRows = csv
@@ -62,7 +65,7 @@ describe('Hyppighed på tværs af siderne 0–9', () => {
   });
 
   it('kan genberegnes præcist af appen', () => {
-    expect(frequencyCsv(allRows, { pages: true })).toBe(allCsv);
+    expect(frequencyCsv(allRows, { pages: true })).toBe(lf(allCsv));
   });
 });
 
@@ -107,7 +110,7 @@ describe('Opgavebanken', () => {
       expect(ids, b.id).toContain(b.technique);
       expect(b.technique, b.id).toBe(proposeTechnique(b.north, b.south, b.goals, solutions[b.id], whatNow[b.id]).technique);
     }
-    expect(techniquesReport(bank, solutions, techniquesFile.techniques, whatNow)).toBe(techniquesText);
+    expect(techniquesReport(bank, solutions, techniquesFile.techniques, whatNow)).toBe(lf(techniquesText));
   });
 
   it('foreslår teknikker, der passer med linjerne', () => {
@@ -163,7 +166,7 @@ describe('Hvad nu?', () => {
   });
 
   it('listen til godkendelse er opdateret', () => {
-    expect(whatNowReport(bank, whatNow)).toBe(whatNowMd);
+    expect(whatNowReport(bank, whatNow)).toBe(lf(whatNowMd));
   });
 });
 
