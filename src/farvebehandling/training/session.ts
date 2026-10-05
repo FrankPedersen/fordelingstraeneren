@@ -70,9 +70,13 @@ const WEIGHT: Partial<Record<TaskType, number>> = {
   'find-hullet': 2,
   optælling: 1,
   'spil-selv': 1,
+  'hold-eller-par': 2,
 };
 
 const todayOf = (saved: FbSaved, now: number) => dayOf(now, saved.settings.dayStartsAtHour);
+
+/** Træningens svar til statistikken: de seneste så mange. */
+export const TRAINING_LOG_SIZE = 2000;
 
 const inBank = (bank: readonly BankItem[], key: string) => bank.some((b) => b.combination.id === parseItemKey(key).id);
 
@@ -227,9 +231,13 @@ export function answerFb(session: FbSession, saved: FbSaved, answer: Omit<FbAnsw
   }
   const xp = answerXp({ score: graded.score, fast: false, levelAccuracy: null, comboBefore: session.combo });
   const combo = ok ? session.combo + 1 : 0;
+  // Statistikken: repetition og niveau logges, lynrunden ikke (som i fordelingssporet).
+  const training = lightning
+    ? saved.training
+    : [...(saved.training ?? []), { day: todayOf(saved, now), item: step.task.item, task: step.task.type, score: graded.score, ms }].slice(-TRAINING_LOG_SIZE);
   return {
     session: { ...session, combo, xp: session.xp + xp, correct: session.correct + graded.score, total: session.total + 1 },
-    saved: { ...saved, items, xp: addXp(saved.xp, xp) },
+    saved: { ...saved, items, xp: addXp(saved.xp, xp), ...(training ? { training } : {}) },
     feedback: { graded, xp, ms, combo },
   };
 }

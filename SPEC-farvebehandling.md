@@ -53,6 +53,7 @@ Opgavetyper i Træning og Selvvalgt:
 6. **Find hullet:** vis sidningen, hvor en given linje taber.
 7. **Spil den selv:** interaktivt, stik for stik.
 8. **Med optælling:** en ny 13-sudoku fra generatoren giver kun Vests og Østs længder i de tre andre farver. Vest har så 13 minus sine kendte kort som ledige pladser, Øst tilsvarende, og chancerne regnes om. Dagens sudoku og fordelingssporets data røres ikke.
+9. **Hold eller par:** to linjer til samme mål: målets bedste linje (holdkamp) og linjen med flest stik i gennemsnit (parturnering). Brugeren vælger linjen til holdkamp og linjen til parturnering. Facit viser begge linjers chance for målet og stik i gennemsnit, og hvad sikkerhedsspillet koster i stik (Franks ønske, 5. oktober 2026).
 
 ## Matematik
 
@@ -155,7 +156,7 @@ Opgaven er et spil under usikkerhed: spilføreren må kun beslutte ud fra de kor
 3. **Modspil: optimalt.** Modspillerne vælger og blander deres kort, så spilførerens chance bliver mindst mulig. En fast regelmodel må ikke bruges, fordi løseren så lærer at udnytte faste vaner; fx giver E T 8 x / K B 9 x ellers 100 % i stedet for ca. 53 %.
 4. **Søgning:** spilføreren maksimerer og modspillerne minimerer. Spilføreren beslutter kun ud fra de kort, han har set; modspillet kender alle kort. Det er et tospersonersspil med skjult information, der løses eksakt i Node, fx med lineær programmering i sekvensform eller CFR. Begrænset valg følger automatisk af modspillernes blandede valg.
 5. **Beskæring:** ligeværdige kort behandles som ét, og mellemresultater gemmes pr. tilstand.
-6. **Mål:** for hvert mål maksimeres P(stik ≥ mål). Desuden findes linjen med flest stik i gennemsnit (parturnering). Linjer inden for 0,5 procentpoint af den bedste vises alle.
+6. **Mål:** for hvert mål maksimeres P(stik ≥ mål). Desuden findes linjen med flest stik i gennemsnit (parturnering). Linjer inden for 0,5 procentpoint af den bedste vises alle. Til Hold eller par: når parturneringens linje når målet mere end 0,5 procentpoint sjældnere end målets bedste linje, regnes målets bedste linje også som parturnering (dens trin, derefter flest stik). Målet kommer med, når linjen stadig når målet lige så tit (inden for 0,5 procentpoint) og giver mindst 0,005 stik færre i gennemsnit.
 7. **Kapacitet:** løseren skal klare op til 8 manglende kort.
 8. **Forbindelser:** ubegrænsede i første version. Begrænsede forbindelser er en senere udvidelse.
 
@@ -235,15 +236,19 @@ Startbank: alle brugbare kombinationer på bridgehands.com's sider 0–9 (se Hyp
 - **Oplåsning:** i hyppighedsorden, så de kombinationer, der opstår oftest ved bordet, kommer først, uanset teknik. En tekniks rum i paladset åbner, når dens første kombination dukker op.
 - **Streak og XP** er adskilt fra fordelingssporet. En dag med kun farvebehandling holder ikke fordelingssporets streak i live. Det er et bevidst valg.
 - **Selvvalgt:** hvert filtervalg viser antallet af kombinationer, og valg med 0 er grået ud. Et filter kan derfor aldrig ramme ingenting.
+- **Hold eller par:** svaret er rigtigt, når begge valg er rigtige, ellers forkert. Samme linje begge steder er forkert, for pointen er, at turneringsformen afgør linjen.
+- **Statistik** (Franks ønske, 5. oktober 2026): Trænings forside har en knap til statistikken. Den viser træfsikkerheden pr. teknik og pr. opgavetype, alle svar og de seneste 30 dage, svageste først. Svar i Træning (repetition og niveau, ikke lynrunden) og Selvvalgt tæller med, og et halvt rigtigt svar tæller som et halvt. Det svageste punkt er tekniken med lavest træfsikkerhed blandt dem med mindst 5 svar og under 100 %. Statistikken og Selvvalgt foreslår at øve det, og et tryk åbner Selvvalgt med tekniken valgt.
 
 ## Data og lagring
 
 Al farvebehandlingens tilstand ligger i ét JSON-objekt under nøglen `farvebehandling:v1`. `fordelingstraener:v1` læses og skrives ikke.
 
-- **Indhold:** version, indstillinger, emner (kasse, forfaldsdato, støtteniveau og de seneste 20 svar), XP, streak, sessioner, palads (rum, stationer, egne billeder og huskeregler) og egne linjer.
+- **Indhold:** version, indstillinger, emner (kasse, forfaldsdato, støtteniveau og de seneste 20 svar), XP, streak, sessioner, palads (rum, stationer, egne billeder og huskeregler) og egne linjer. Valgfrie felter: Træningens svar til statistikken (de seneste 2000, samme form som Selvvalgts log) og dagen for den seneste eksport.
 - **Skema:** Claude Code skriver det som en TypeScript-type i samme stil som fordelingssporets `Saved`. Typen godkendes, før brugerfladen bygges.
 - **Eksport og import:** farvebehandling har sin egen eksport og import under sine egne indstillinger. Fordelingssporets eksport ændres ikke.
 - **Versioner:** ved en ny skemaversion migreres data, og ukendte felter bevares.
+- **Fast lagring** (Franks ønske, 5. oktober 2026): første gang brugeren gemmer noget, beder appen browseren om fast lagring (`navigator.storage.persist()`), så dataene ikke ryddes, fx når telefonen mangler plads. Det gælder hele appen, også fordelingssporets data, men ændrer ikke dem. "Dine data" viser, om lagringen er fast, og hvornår der sidst blev eksporteret.
+- **Påmindelse om eksport:** er den seneste eksport, eller den første session eller det første svar i Selvvalgt, mindst 30 dage gammel, viser Trænings forside en påmindelse med en knap, der eksporterer.
 
 ## Huskepalads og huskeregler
 

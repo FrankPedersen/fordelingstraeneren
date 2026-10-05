@@ -51,6 +51,7 @@ export function FørsteRunde({ trick }: { trick: readonly TrickCard[] }) {
 export function Opgave({ task, optionalGuess = false, onAnswer }: OpgaveProps) {
   const [line, setLine] = useState<number | null>(null);
   const [guess, setGuess] = useState<number | null>(null);
+  const [forms, setForms] = useState<{ hold?: number; par?: number }>({});
   const { goal } = task;
   const hands = handsOf(task);
   if (task.type === 'spil-selv') {
@@ -148,6 +149,37 @@ export function Opgave({ task, optionalGuess = false, onAnswer }: OpgaveProps) {
         </>
       );
       break;
+    case 'hold-eller-par': {
+      const lines = letteredLines(task.options);
+      body = (
+        <>
+          <p>{TEXT.formsHelp}</p>
+          <div className="fb-options">
+            {lines.map((l) => (
+              <Linjekort key={l.letter} line={l} hideResult />
+            ))}
+          </div>
+          {(['hold', 'par'] as const).map((form) => (
+            <div key={form} className="fb-filter" role="group" aria-label={TEXT.formName(form, goal)}>
+              <span>{TEXT.formName(form, goal)}:</span>
+              {lines.map((l, i) => (
+                <button
+                  key={l.letter}
+                  type="button"
+                  className={`btn small-btn${forms[form] === i ? ' selected' : ''}`}
+                  aria-pressed={forms[form] === i}
+                  onClick={() => setForms({ ...forms, [form]: i })}
+                >
+                  {TEXT.lineName(l.letter)}
+                </button>
+              ))}
+            </div>
+          ))}
+          {submit(forms.hold !== undefined && forms.par !== undefined, { forms: { hold: forms.hold ?? -1, par: forms.par ?? -1 } })}
+        </>
+      );
+      break;
+    }
     case 'find-hullet':
       body = (
         <>

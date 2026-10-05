@@ -2,7 +2,7 @@ import { binomial } from '../../domain/combinatorics';
 import type { Outcome } from '../../engine/leitner';
 import { shuffle, type Rng } from '../../engine/rng';
 import { makeSudoku } from '../../modes/sudoku/task';
-import { bandFields, linesForGoal, NEAR_BEST, type BandField, type BankItem, type LineView } from '../analysis';
+import { bandFields, linesForGoal, NEAR_BEST, pairsLines, type BandField, type BankItem, type LineView } from '../analysis';
 import { guessInterval } from '../model/guess';
 import type { Vacant } from '../model/layouts';
 import { plausible, type WhatNowSituation } from '../model/whatnow';
@@ -36,7 +36,16 @@ export type FbTask =
   /** Spil den selv: kortene gives ud fra `seed`, og modspillet er normalt. */
   | (TaskBase & { type: 'spil-selv'; seed: number })
   | (TaskBase & { type: 'find-hullet'; line: LineOption; fields: BandField[] })
-  | (TaskBase & { type: 'optælling'; vacant: Vacant; shown: Counting; options: LineOption[] });
+  | (TaskBase & { type: 'optælling'; vacant: Vacant; shown: Counting; options: LineOption[] })
+  /** Hold eller par: målets bedste linje og linjen med flest stik i gennemsnit; hvilken spilles hvor? */
+  | (TaskBase & { type: 'hold-eller-par'; options: [PairsOption, PairsOption] });
+
+/** En linje i Hold eller par: `value` er chancen for målet; `correct` = den bedste i holdkamp. */
+export interface PairsOption extends LineOption {
+  /** Stik i gennemsnit. */
+  tricks: number;
+  bestFor: 'hold' | 'par';
+}
 
 /** Optællingen fra 13-sudokuen: Vests og Østs længder i de tre andre farver (♠ ♥ ♦ ♣ = 0–3). */
 export interface Counting {
@@ -54,6 +63,8 @@ export interface FbAnswer {
   field?: string;
   /** Spil den selv: spillet, som det endte. */
   play?: PlayState;
+  /** Hold eller par: den valgte linje (indeks) i holdkamp og i parturnering. */
+  forms?: { hold: number; par: number };
   ms: number;
 }
 
@@ -95,6 +106,7 @@ export function possibleTypes(bank: BankItem, goal: number): TaskType[] {
   // Find hullet: én sidning, hvor linjen taber, mod mindst to, hvor den vinder.
   const fields = bandFields(bank, lines);
   if (fields.some((f) => f.outcomes[0] === 0) && fields.filter((f) => f.outcomes[0] > 0).length >= 2) types.push('find-hullet');
+  if (pairsLines(bank, goal)) types.push('hold-eller-par');
   return types;
 }
 
@@ -132,6 +144,13 @@ export function makeTask(type: TaskType, bank: BankItem, goal: number, rng: Rng)
       return countingTask(base, bank, lines, rng) ?? makeTask('vælg-linjen', bank, goal, rng);
     case 'spil-selv':
       return { ...base, type, seed: rng.uint32() };
+    case 'hold-eller-par': {
+      const [hold, par] = pairsLines(bank, goal) ?? [];
+      if (!hold || !par) return makeTask('vælg-linjen', bank, goal, rng);
+      const option = (p: typeof hold): PairsOption => ({ line: p.line, value: p.chance, correct: p.bestFor === 'hold', tricks: p.tricks, bestFor: p.bestFor });
+      const pair: [PairsOption, PairsOption] = [option(hold), option(par)];
+      return { ...base, type, options: rng.next() < 0.5 ? pair : [pair[1], pair[0]] };
+    }
     case 'hvad-nu': {
       const situations = bank.whatNow[String(goal)] ?? [];
       const situation = situations[rng.int(situations.length)];
@@ -231,6 +250,12 @@ export function grade(task: FbTask, answer: FbAnswer, fastMs: number, { optional
       const field = task.fields.find((f) => f.id === answer.field);
       const lineCorrect = field ? field.outcomes[0] === 0 : false;
       return { score: lineCorrect ? 1 : 0, lineCorrect, guessCorrect: null, fast };
+    }
+    case 'hold-eller-par': {
+      // Begge valg skal være rigtige: holdkampens linje og parturneringens linje er forskellige.
+      const hold = task.options[answer.forms?.hold ?? -1]?.bestFor === 'hold';
+      const par = task.options[answer.forms?.par ?? -1]?.bestFor === 'par';
+      return { score: hold && par ? 1 : 0, lineCorrect: hold && par, guessCorrect: null, fast };
     }
     case 'spil-selv': {
       // Beslutningen bedømmes, ikke resultatet: fulgte spillet en af de bedste linjer?

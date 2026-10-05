@@ -104,7 +104,7 @@ export function Klubaften({ bank, techniques, onOpen, onBack }: KlubaftenProps) 
               <button type="button" className="fb-club-row" onClick={() => onOpen(b.combination.id)}>
                 <span className="fb-club-name">{TEXT.clubName(b.rank, holdingOf(b))}</span>
                 <span className="fb-note">{eveningText(b.frequency)}</span>
-                <span className="fb-club-bar" aria-hidden="true">
+                <span className="fb-bar" aria-hidden="true">
                   <span style={{ width: `${Math.max(1, Math.round(1000 * share) / 10)}%` }} />
                 </span>
               </button>

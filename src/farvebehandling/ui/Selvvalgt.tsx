@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { dayOf } from '../../engine/dates';
+import { formatInt } from '../../engine/format';
 import { mulberry32, randomSeed } from '../../engine/rng';
 import type { BankItem } from '../analysis';
 import type { FbSaved, TaskType } from '../storage';
@@ -7,6 +8,7 @@ import { placeOf, type Technique } from '../training/palace';
 import { filterOptions, logPractice, matchCount, NO_FILTER, practiceItems, type FilterKey, type PracticeFilter } from '../training/practice';
 import { parseItemKey } from '../training/progression';
 import { chooseType } from '../training/session';
+import { accuracy, techniqueStats, weakest } from '../training/stats';
 import { grade, makeTask, type FbAnswer, type FbTask, type Graded } from '../training/tasks';
 import { Facit } from './Facit';
 import { Opgave } from './Opgave';
@@ -17,6 +19,8 @@ interface SelvvalgtProps {
   saved: FbSaved;
   update(next: FbSaved): void;
   techniques: readonly Technique[];
+  /** Tekniken, der er valgt fra start (fra statistikken). */
+  startTechnique?: string;
 }
 
 interface Run {
@@ -29,13 +33,19 @@ interface Run {
 const KEYS: readonly FilterKey[] = ['technique', 'cards', 'missing', 'goal'];
 
 /** Selvvalgt: filtrene med antal kombinationer, derefter opgaver uden XP. Facit vises efter valg af linje. */
-export function Selvvalgt({ bank, saved, update, techniques }: SelvvalgtProps) {
-  const [filter, setFilter] = useState<PracticeFilter>(NO_FILTER);
+export function Selvvalgt({ bank, saved, update, techniques, startTechnique }: SelvvalgtProps) {
+  const [filter, setFilter] = useState<PracticeFilter>(() => (startTechnique ? { ...NO_FILTER, technique: startTechnique } : NO_FILTER));
   const [run, setRun] = useState<Run | null>(null);
   const [result, setResult] = useState<{ answer: Omit<FbAnswer, 'ms'>; graded: Graded } | null>(null);
   const order = useMemo(() => [...techniques].sort((a, b) => a.order - b.order).map((t) => t.id), [techniques]);
   const options = useMemo(() => filterOptions(bank, filter, order), [bank, filter, order]);
   const count = matchCount(bank, filter);
+  // Forslaget: tekniken med lavest træfsikkerhed (mindst 5 svar).
+  const weak = useMemo(() => {
+    const today = dayOf(Date.now(), saved.settings.dayStartsAtHour);
+    return weakest(techniqueStats(saved, bank, order, today));
+  }, [saved, bank, order]);
+  const nameOf = (id: string) => techniques.find((t) => t.id === id)?.name ?? id;
 
   function nextTask(previous: Run | null) {
     const items = practiceItems(bank, filter);
@@ -97,6 +107,14 @@ export function Selvvalgt({ bank, saved, update, techniques }: SelvvalgtProps) {
         <h2>{TEXT.practiceTitle}</h2>
         <p className="fb-note">{TEXT.practiceHelp}</p>
       </section>
+      {weak && filter.technique !== weak.key && (
+        <section className="card">
+          <p className="fb-note">{TEXT.practiceSuggestion(nameOf(weak.key), `${formatInt(100 * accuracy(weak.all)!)} %`, weak.all.answers)}</p>
+          <button type="button" className="btn small-btn" onClick={() => setFilter({ ...NO_FILTER, technique: weak.key })}>
+            {TEXT.practiceSuggestionPick(nameOf(weak.key))}
+          </button>
+        </section>
+      )}
       {KEYS.map((key) => {
         const all = matchCount(bank, { ...filter, [key]: null });
         return (

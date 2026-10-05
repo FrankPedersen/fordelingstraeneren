@@ -4,7 +4,7 @@ import { formatDecimal } from '../../engine/format';
 import { randomSeed } from '../../engine/rng';
 import { streakOn } from '../../engine/streak';
 import type { BankItem } from '../analysis';
-import type { FbSaved } from '../storage';
+import { exportDue, type FbSaved } from '../storage';
 import { placeOf, type Technique } from '../training/palace';
 import { dueItems, dueTomorrow, freshToday, parseItemKey } from '../training/progression';
 import {
@@ -18,12 +18,13 @@ import {
   type FbSession,
 } from '../training/session';
 import type { FbAnswer } from '../training/tasks';
-import { Data } from './Data';
+import { Data, downloadFbExport } from './Data';
 import { Facit } from './Facit';
 import { Introduktion } from './Introduktion';
 import { Klubaften } from './Klubaften';
 import { Opgave } from './Opgave';
 import { Palads } from './Palads';
+import { Statistik } from './Statistik';
 import { TEXT } from './texts';
 
 interface TræningProps {
@@ -33,15 +34,20 @@ interface TræningProps {
   techniques: readonly Technique[];
   /** Åbner en kombination i Analyse (fra klubaftenen). */
   onOpenAnalysis?(id: string): void;
+  /** Åbner Selvvalgt med en teknik valgt (fra statistikken). */
+  onOpenPractice?(technique: string): void;
 }
 
-/** Træning: forsiden med dagens plan, den daglige session, paladset, klubaftenen og dine data. */
-export function Træning({ bank, saved, update, techniques, onOpenAnalysis }: TræningProps) {
-  const [view, setView] = useState<'home' | 'session' | 'palace' | 'club' | 'data'>('home');
+/** Træning: forsiden med dagens plan, den daglige session, paladset, klubaftenen, statistikken og dine data. */
+export function Træning({ bank, saved, update, techniques, onOpenAnalysis, onOpenPractice }: TræningProps) {
+  const [view, setView] = useState<'home' | 'session' | 'palace' | 'club' | 'stats' | 'data'>('home');
   const home = () => setView('home');
   if (view === 'session') return <SessionView bank={bank} saved={saved} update={update} techniques={techniques} onExit={home} />;
   if (view === 'palace') return <Palads bank={bank} saved={saved} update={update} techniques={techniques} onBack={home} />;
   if (view === 'club') return <Klubaften bank={bank} techniques={techniques} onOpen={(id) => onOpenAnalysis?.(id)} onBack={home} />;
+  if (view === 'stats') {
+    return <Statistik bank={bank} saved={saved} techniques={techniques} onPractice={(t) => onOpenPractice?.(t)} onBack={home} />;
+  }
   if (view === 'data') return <Data saved={saved} update={update} onBack={home} />;
 
   const today = dayOf(Date.now(), saved.settings.dayStartsAtHour);
@@ -69,12 +75,23 @@ export function Træning({ bank, saved, update, techniques, onOpenAnalysis }: Tr
         </button>
         <p className="fb-note">{TEXT.ownTrack}</p>
       </section>
+      {exportDue(saved, today) && (
+        <section className="card" aria-label={TEXT.data}>
+          <p className="fb-note">{TEXT.exportReminder}</p>
+          <button type="button" className="btn small-btn" onClick={() => update({ ...saved, lastExport: downloadFbExport(saved) })}>
+            {TEXT.exportNow}
+          </button>
+        </section>
+      )}
       <div className="fb-actions">
         <button type="button" className="btn" onClick={() => setView('palace')}>
           {TEXT.palace}
         </button>
         <button type="button" className="btn" onClick={() => setView('club')}>
           {TEXT.club}
+        </button>
+        <button type="button" className="btn" onClick={() => setView('stats')}>
+          {TEXT.stats}
         </button>
         <button type="button" className="btn" onClick={() => setView('data')}>
           {TEXT.data}

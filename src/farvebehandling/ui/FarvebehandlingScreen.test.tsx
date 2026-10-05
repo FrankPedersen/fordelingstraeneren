@@ -2,6 +2,7 @@
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import App from '../../app/App';
+import { dayOf } from '../../engine/dates';
 import { formatDecimal } from '../../engine/format';
 import { STORAGE_KEY } from '../../engine/storage';
 import techniquesFile from '../content/techniques.json';
@@ -87,6 +88,8 @@ function answerAnything() {
   if (lines.length) fireEvent.click(lines[0]);
   const guess = screen.queryByRole('group', { name: /^Hvor stor er chancen|^Gæt chancen/ });
   if (guess) fireEvent.click(within(guess).getAllByRole('button')[1]);
+  // Hold eller par: en linje til holdkamp og en til parturnering.
+  for (const form of screen.queryAllByRole('group', { name: /^(Holdkamp|Parturnering)/ })) fireEvent.click(within(form).getAllByRole('button')[0]);
   click('Svar');
 }
 
@@ -361,9 +364,16 @@ describe('Farvebehandling', { timeout: 30_000 }, () => {
     URL.revokeObjectURL = vi.fn();
     await openFarvebehandling();
     click('Dine data');
+    expect(screen.getByText('Du har ikke eksporteret dine data endnu.')).toBeTruthy();
+    // jsdom kan ikke oplyse om fast lagring.
+    expect(await screen.findByText('Browseren oplyser ikke, om dine data gemmes fast. Eksportér jævnligt.')).toBeTruthy();
     click('Eksportér');
     expect(JSON.parse(await created[0].text())).toEqual(defaultFbSaved());
     expect(screen.getByText('Filen er gemt.')).toBeTruthy();
+    // Eksporten gemmer dagen til påmindelsen.
+    expect(stored().lastExport).toBe(dayOf(Date.now(), 4));
+    expect(screen.getByText(/^Seneste eksport: \d+\. [a-z]+ \d{4}\.$/)).toBeTruthy();
+    const afterExport = localStorage.getItem(FB_STORAGE_KEY);
 
     const input = document.querySelector('input[type="file"]')!;
     // En fil fra fordelingssporet afvises.
@@ -372,11 +382,73 @@ describe('Farvebehandling', { timeout: 30_000 }, () => {
     const file = new File([JSON.stringify({ ...defaultFbSaved(), xp: 321 })], 'farvebehandling.json', { type: 'application/json' });
     fireEvent.change(input, { target: { files: [file] } });
     expect(await screen.findByText('Filen har 321 XP, 0 emner, 0 sessioner og en streak på 0.')).toBeTruthy();
-    expect(localStorage.getItem(FB_STORAGE_KEY)).toBeNull();
+    // Resuméet rører ikke lagringen.
+    expect(localStorage.getItem(FB_STORAGE_KEY)).toBe(afterExport);
     click('Erstat mine data');
     expect(stored().xp).toBe(321);
     expect(screen.getByText('Dine data er importeret.')).toBeTruthy();
     expect(localStorage.getItem(STORAGE_KEY)).toBe(fordeling);
+  });
+
+  it('minder om eksport efter en måned og gemmer dagen, når der eksporteres', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(T0);
+    const created: Blob[] = [];
+    URL.createObjectURL = vi.fn((blob: Blob) => {
+      created.push(blob);
+      return 'blob:fb';
+    }) as typeof URL.createObjectURL;
+    URL.revokeObjectURL = vi.fn();
+    const session = { day: '2026-09-01', ms: 300_000, correct: 3, total: 4, xp: 30 };
+    localStorage.setItem(FB_STORAGE_KEY, JSON.stringify({ ...defaultFbSaved(), sessions: [session] }));
+    await openFarvebehandling();
+    expect(screen.getByText(/^Det er over en måned siden/)).toBeTruthy();
+    click('Eksportér nu');
+    expect(created).toHaveLength(1);
+    expect(stored().lastExport).toBe('2026-10-05');
+    expect(screen.queryByText(/^Det er over en måned siden/)).toBeNull();
+  });
+
+  describe('statistikken', () => {
+    // Sikkerhedsspil (K 7 6 5 / 4 3 2): 1 af 5 rigtige; spil mod honnør (E K 5 4 / B 3 2): 5 af 5.
+    const answer = (item: string, task: string, score: number) => ({ day: '2026-10-04', item, task, score, ms: 1000 });
+    const training = [
+      ...Array.from({ length: 5 }, (_, i) => answer('432-K765:2', 'vælg-linjen', i === 0 ? 1 : 0)),
+      ...Array.from({ length: 5 }, () => answer('J32-AK54:3', 'chancen', 1)),
+    ];
+    const pressed = (name: RegExp) =>
+      within(screen.getByRole('group', { name: 'Teknik' })).getByRole('button', { name }).getAttribute('aria-pressed');
+
+    it('viser træfsikkerhed pr. teknik og opgavetype og åbner Selvvalgt med tekniken valgt', async () => {
+      localStorage.setItem(FB_STORAGE_KEY, JSON.stringify({ ...defaultFbSaved(), training }));
+      await openFarvebehandling();
+      click('Statistik');
+      expect(screen.getByText('Dit svageste punkt: Sikkerhedsspil med 20 % rigtige af 5 svar.')).toBeTruthy();
+      const techniques = within(screen.getByRole('list', { name: 'Teknik' })).getAllByRole('listitem');
+      expect(techniques[0].textContent).toContain('Sikkerhedsspil');
+      expect(techniques[0].textContent).toContain('20 % af 5 svar');
+      expect(techniques[1].textContent).toContain('100 % af 5 svar');
+      expect(within(screen.getByRole('list', { name: 'Opgavetype' })).getAllByRole('listitem')).toHaveLength(9);
+      click('Øv sikkerhedsspil i Selvvalgt');
+      expect(screen.getByRole('button', { name: 'Selvvalgt' }).getAttribute('aria-current')).toBe('page');
+      expect(pressed(/^Sikkerhedsspil \(\d+\)$/)).toBe('true');
+    });
+
+    it('foreslår det svageste punkt i Selvvalgt', async () => {
+      localStorage.setItem(FB_STORAGE_KEY, JSON.stringify({ ...defaultFbSaved(), training }));
+      await openFarvebehandling();
+      click('Selvvalgt');
+      expect(screen.getByText('Forslag: Sikkerhedsspil er dit svageste punkt med 20 % rigtige af 5 svar.')).toBeTruthy();
+      click('Vælg sikkerhedsspil');
+      expect(pressed(/^Sikkerhedsspil \(\d+\)$/)).toBe('true');
+      expect(screen.queryByText(/^Forslag:/)).toBeNull();
+    });
+
+    it('har ingen tal, før der er svar', async () => {
+      await openFarvebehandling();
+      click('Statistik');
+      expect(screen.getByText('Ingen svar endnu. Statistikken tæller dine svar i Træning og Selvvalgt.')).toBeTruthy();
+    });
   });
 
   it('går tilbage til forsiden', async () => {

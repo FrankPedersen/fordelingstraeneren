@@ -1,3 +1,4 @@
+import { daysBetween } from '../engine/dates';
 import type { Item } from '../engine/leitner';
 import { emptyStreak, type Streak } from '../engine/streak';
 import type { LineStep } from './solver/lines';
@@ -13,8 +14,17 @@ export const FB_BACKUP_KEY = `${FB_STORAGE_KEY}:kopi`;
 
 export const FB_SCHEMA_VERSION = 1;
 
-/** Opgavetyperne 1–8 fra specen. */
-export type TaskType = 'vælg-linjen' | 'chancen' | 'linje-mod-linje' | 'nyt-mål' | 'hvad-nu' | 'find-hullet' | 'spil-selv' | 'optælling';
+/** Opgavetyperne 1–9 fra specen. */
+export type TaskType =
+  | 'vælg-linjen'
+  | 'chancen'
+  | 'linje-mod-linje'
+  | 'nyt-mål'
+  | 'hvad-nu'
+  | 'find-hullet'
+  | 'spil-selv'
+  | 'optælling'
+  | 'hold-eller-par';
 
 export interface FbSessionRecord {
   day: string;
@@ -25,7 +35,7 @@ export interface FbSessionRecord {
   xp: number;
 }
 
-/** Et svar i Selvvalgt: logges, men ændrer ikke dagsplanen. */
+/** Et svar i Selvvalgt (logges, men ændrer ikke dagsplanen) eller i Træning (til statistikken). */
 export interface PracticeEntry {
   day: string;
   /** Emne: `${kombination}:${mål}`. */
@@ -66,6 +76,10 @@ export interface FbSaved {
   };
   ownLines: OwnLine[];
   practice: PracticeEntry[];
+  /** Svar i Træning (repetition og niveau, ikke lynrunden), de seneste 2000; til statistikken. Valgfrit felt. */
+  training?: PracticeEntry[];
+  /** Dagen for den seneste eksport; til påmindelsen om at gemme en kopi. Valgfrit felt. */
+  lastExport?: string;
   streak: Streak;
   xp: number;
   sessions: FbSessionRecord[];
@@ -95,6 +109,7 @@ export const TASK_TYPES: readonly TaskType[] = [
   'find-hullet',
   'spil-selv',
   'optælling',
+  'hold-eller-par',
 ];
 
 type Raw = Record<string, unknown>;
@@ -184,8 +199,12 @@ export function readFbSaved(input: unknown): { saved: FbSaved; problems: string[
   if (raw.version !== FB_SCHEMA_VERSION) problems.push('version er ugyldig');
   const settingsIn = check<Raw>('settings', raw.settings, isObject, {});
   const palaceIn = check<Raw>('palace', raw.palace, isObject, {});
+  // Valgfrie felter: de kontrolleres kun, når de findes.
+  const { training: trainingIn, lastExport: lastExportIn, ...rest } = raw;
+  const training = trainingIn === undefined ? undefined : list<PracticeEntry>('training', trainingIn, isPractice);
+  const lastExport = lastExportIn === undefined ? undefined : check<string | undefined>('lastExport', lastExportIn, isDay, undefined);
   const saved: FbSaved = {
-    ...raw,
+    ...rest,
     version: 1,
     settings: {
       ...settingsIn,
@@ -203,6 +222,8 @@ export function readFbSaved(input: unknown): { saved: FbSaved; problems: string[
     },
     ownLines: list('ownLines', raw.ownLines, isOwnLine),
     practice: list('practice', raw.practice, isPractice),
+    ...(training ? { training } : {}),
+    ...(lastExport ? { lastExport } : {}),
     streak: check('streak', raw.streak, isStreak, fallback.streak),
     xp: check('xp', raw.xp, (v) => isNumber(v) && v >= 0, 0),
     sessions: list('sessions', raw.sessions, isSession),
@@ -284,4 +305,50 @@ export function fbSummary(saved: FbSaved): FbSummary {
 
 export function fbExportFileName(today: string): string {
   return `farvebehandling-${today}.json`;
+}
+
+// ---------- Fast lagring og påmindelse om eksport ----------
+
+/** Påmindelsen om eksport kommer, når den seneste eksport (eller den første aktivitet) er så mange dage gammel. */
+export const EXPORT_REMINDER_DAYS = 30;
+
+/** Skal brugeren mindes om at gemme en kopi? Kun når der er noget at miste: en session eller et svar i Selvvalgt. */
+export function exportDue(saved: FbSaved, today: string): boolean {
+  const activity = [...saved.sessions.map((s) => s.day), ...saved.practice.map((p) => p.day)].sort();
+  if (!activity.length) return false;
+  return daysBetween(saved.lastExport ?? activity[0], today) >= EXPORT_REMINDER_DAYS;
+}
+
+/** Fast lagring: browseren rydder ikke dataene af sig selv. "ukendt", når browseren ikke kan oplyse det. */
+export type Persistence = 'fast' | 'midlertidig' | 'ukendt';
+
+interface StorageManagerLike {
+  persisted?(): Promise<boolean>;
+  persist?(): Promise<boolean>;
+}
+
+const storageManager = (): StorageManagerLike | undefined =>
+  typeof navigator === 'undefined' ? undefined : (navigator as { storage?: StorageManagerLike }).storage;
+
+export async function persistence(manager = storageManager()): Promise<Persistence> {
+  try {
+    if (!manager?.persisted) return 'ukendt';
+    return (await manager.persisted()) ? 'fast' : 'midlertidig';
+  } catch {
+    return 'ukendt';
+  }
+}
+
+/**
+ * Beder browseren om fast lagring, så den ikke rydder data, fx når telefonen mangler plads. Det gælder hele appen,
+ * også fordelingssporets data. Svaret er resultatet; en browser uden funktionen giver "ukendt".
+ */
+export async function requestPersistence(manager = storageManager()): Promise<Persistence> {
+  try {
+    if (!manager?.persist) return 'ukendt';
+    if (manager.persisted && (await manager.persisted())) return 'fast';
+    return (await manager.persist()) ? 'fast' : 'midlertidig';
+  } catch {
+    return 'ukendt';
+  }
 }

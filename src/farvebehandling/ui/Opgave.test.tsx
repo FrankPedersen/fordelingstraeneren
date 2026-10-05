@@ -86,3 +86,37 @@ describe('Spil den selv', () => {
     expect(screen.getByRole('status')).toBeTruthy();
   });
 });
+
+describe('Hold eller par', () => {
+  // K 5 4 / E B 3 2, 3 stik: slå kongen og esset (holdkamp) eller kip (parturnering).
+  const item = bankItem('K54-AJ32');
+  const task = makeTask('hold-eller-par', item, 3, mulberry32(1));
+  if (task.type !== 'hold-eller-par') throw new Error('forkert type');
+  const hold = task.options.findIndex((o) => o.bestFor === 'hold');
+  const par = 1 - hold;
+  const letter = (i: number) => String.fromCharCode(65 + i);
+
+  it('spørger om linjen i holdkamp og i parturnering', () => {
+    const onAnswer = vi.fn();
+    render(<Opgave task={task} onAnswer={onAnswer} />);
+    const submit = screen.getByRole('button', { name: 'Svar' }) as HTMLButtonElement;
+    fireEvent.click(within(screen.getByRole('group', { name: 'Holdkamp, 3 stik' })).getByRole('button', { name: `Linje ${letter(hold)}` }));
+    expect(submit.disabled).toBe(true);
+    fireEvent.click(within(screen.getByRole('group', { name: 'Parturnering, flest stik' })).getByRole('button', { name: `Linje ${letter(par)}` }));
+    fireEvent.click(submit);
+    expect(onAnswer).toHaveBeenCalledWith({ forms: { hold, par } });
+  });
+
+  it('viser i facit chancen for målet og stik i gennemsnit for begge linjer', () => {
+    const answer = { forms: { hold: par, par: hold } };
+    render(<Facit task={task} answer={answer} graded={grade(task, { ...answer, ms: 1 }, 20_000)} place={null} onNext={() => {}} />);
+    expect(within(screen.getByRole('status')).getByText('Forkert')).toBeTruthy();
+    expect(screen.getByText(`Holdkamp, 3 stik: du valgte linje ${letter(par)} ✗ – linje ${letter(hold)} er bedst`)).toBeTruthy();
+    const rows = within(screen.getByRole('table')).getAllByRole('row');
+    expect(rows[1 + hold].textContent).toBe(`Linje ${letter(hold)}77,0 % ✓2,77`);
+    expect(rows[1 + par].textContent).toBe(`Linje ${letter(par)}69,0 %2,87 ✓`);
+    expect(
+      screen.getByText(`Linje ${letter(hold)} er sikkerhedsspillet: den giver 3 stik 8,1 procentpoint oftere, men koster 0,10 stik i gennemsnit.`),
+    ).toBeTruthy();
+  });
+});

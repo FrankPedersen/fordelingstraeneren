@@ -16,6 +16,7 @@
 //
 // Mellemlageret (én fil pr. case) ligger i FB_SOLVE_CACHE, ellers i <tmp>/fordelingstraeneren-solve. Ændres løseren,
 // tælles LINES_VERSION op; ændres kun reglerne for Hvad nu?, tælles WHAT_NOW_VERSION op (så løses kun den bedste linje).
+// Ændres kun Hold eller par (pairsFor), tælles PAIRS_VERSION op; så regnes kun målenes bedste linjer som parturnering.
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -24,6 +25,7 @@ import { runnerImport } from 'vite';
 
 const LINES_VERSION = 1;
 const WHAT_NOW_VERSION = 1;
+const PAIRS_VERSION = 1;
 const PAGES = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const root = fileURLToPath(new URL('..', import.meta.url));
@@ -43,6 +45,8 @@ type Situations = Record<string, import('../src/farvebehandling/model/whatnow.ts
 interface Cached {
   lines: number;
   whatNowVersion: number;
+  /** Hold eller par er regnet ind i lav.goals[mål].pairs. */
+  pairsVersion?: number;
   key: string;
   lav: Solution;
   høj: Solution;
@@ -65,21 +69,43 @@ function readCached(c: (typeof cases)[number]): Cached | null {
   return entry.key === keyOf(c) && entry.lines === LINES_VERSION ? entry : null;
 }
 
+const current = (entry: Cached | null) => !!entry && entry.whatNowVersion === WHAT_NOW_VERSION && entry.pairsVersion === PAIRS_VERSION;
+
+/** Hold eller par skrives ind i målene i den løsning, appen bruger. */
+function withPairs(north: Parameters<typeof pre.pairsFor>[0], south: Parameters<typeof pre.pairsFor>[1], solution: Solution): Solution {
+  const pairs = pre.pairsFor(north, south, solution);
+  const goals = Object.fromEntries(
+    Object.entries(solution.goals).map(([goal, { pairs: _old, ...g }]) => [goal, pairs[goal] === undefined ? g : { ...g, pairs: pairs[goal] }]),
+  );
+  return { ...solution, goals };
+}
+
 /** Løser en case (begge fortolkninger af x) og gemmer den i mellemlageret. */
-function solveCase(c: (typeof cases)[number]): 'løst' | 'hvad nu' | 'gemt' {
+function solveCase(c: (typeof cases)[number]): 'løst' | 'hvad nu' | 'par' | 'gemt' {
   const cached = readCached(c);
-  if (cached && cached.whatNowVersion === WHAT_NOW_VERSION) return 'gemt';
+  if (current(cached)) return 'gemt';
   const lav = src.concreteHands(c, 'lav');
   if (cached) {
-    const whatNow = pre.whatNowFor(lav.north, lav.south, c.needs, cached.lav);
-    writeFileSync(fileOf(c), JSON.stringify({ ...cached, whatNowVersion: WHAT_NOW_VERSION, whatNow }));
-    return 'hvad nu';
+    const whatNow = cached.whatNowVersion === WHAT_NOW_VERSION ? cached.whatNow : pre.whatNowFor(lav.north, lav.south, c.needs, cached.lav);
+    const lavSolution = cached.pairsVersion === PAIRS_VERSION ? cached.lav : withPairs(lav.north, lav.south, cached.lav);
+    const entry: Cached = { ...cached, whatNowVersion: WHAT_NOW_VERSION, pairsVersion: PAIRS_VERSION, whatNow, lav: lavSolution };
+    writeFileSync(fileOf(c), JSON.stringify(entry));
+    return cached.whatNowVersion === WHAT_NOW_VERSION ? 'par' : 'hvad nu';
   }
   const høj = pre.handsFor(c, 'høj');
-  const { whatNow = {}, ...lavSolution } = pre.solveCombination(lav.north, lav.south, c.needs, { tricks: true, whatNow: true });
+  const { whatNow = {}, ...solved } = pre.solveCombination(lav.north, lav.south, c.needs, { tricks: true, whatNow: true });
+  const lavSolution = withPairs(lav.north, lav.south, solved);
   const same = lav.north.join() === høj.north.join() && lav.south.join() === høj.south.join();
   const højSolution = same ? { ...lavSolution, tricks: undefined } : pre.solveCombination(høj.north, høj.south, c.needs);
-  const entry: Cached = { lines: LINES_VERSION, whatNowVersion: WHAT_NOW_VERSION, key: keyOf(c), lav: lavSolution, høj: højSolution, whatNow };
+  const entry: Cached = {
+    lines: LINES_VERSION,
+    whatNowVersion: WHAT_NOW_VERSION,
+    pairsVersion: PAIRS_VERSION,
+    key: keyOf(c),
+    lav: lavSolution,
+    høj: højSolution,
+    whatNow,
+  };
   writeFileSync(fileOf(c), JSON.stringify(entry));
   return 'løst';
 }
@@ -91,7 +117,7 @@ const started = Date.now();
 
 if (!assembleOnly) {
   // Kun de cases, der mangler, fordeles på processerne.
-  const todo = usable.filter((r) => readCached(r.case)?.whatNowVersion !== WHAT_NOW_VERSION);
+  const todo = usable.filter((r) => !current(readCached(r.case)));
   const mine = todo.filter((_, i) => i % shards === shard);
   for (const [i, row] of mine.entries()) {
     const t0 = Date.now();
@@ -109,7 +135,7 @@ if (!assembleOnly) {
 }
 
 // ---------- Saml filerne ----------
-const missing = usable.filter((r) => !readCached(r.case) || readCached(r.case)!.whatNowVersion !== WHAT_NOW_VERSION);
+const missing = usable.filter((r) => !current(readCached(r.case)));
 if (missing.length) {
   console.error(`${missing.length} cases mangler i mellemlageret, fx side ${missing[0].case.page} case ${missing[0].case.number}.`);
   process.exit(1);

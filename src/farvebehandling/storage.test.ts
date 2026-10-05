@@ -3,14 +3,18 @@ import type { Item } from '../engine/leitner';
 import { STORAGE_KEY } from '../engine/storage';
 import {
   defaultFbSaved,
+  exportDue,
   FB_BACKUP_KEY,
   FB_STORAGE_KEY,
   fbExportFileName,
   fbSummary,
   loadFbSaved,
   parseFbImport,
+  persistence,
   readFbSaved,
+  requestPersistence,
   saveFbSaved,
+  type PracticeEntry,
 } from './storage';
 
 function memoryStorage(initial: Record<string, string> = {}) {
@@ -66,5 +70,44 @@ describe('Farvebehandlingens lagring', () => {
     const { saved } = readFbSaved({ ...defaultFbSaved(), xp: 15, items: { a: item } });
     expect(fbSummary(saved)).toEqual({ xp: 15, streak: 0, best: 0, items: 1, sessions: 0, lastDay: '' });
     expect(fbExportFileName('2026-10-04')).toBe('farvebehandling-2026-10-04.json');
+  });
+});
+
+describe('Valgfrie felter, fast lagring og påmindelse om eksport', () => {
+  const entry: PracticeEntry = { day: '2026-10-04', item: 'J32-AK54:3', task: 'hold-eller-par', score: 0.5, ms: 1000 };
+
+  it('bevarer gyldige valgfrie felter og fjerner ugyldige', () => {
+    const ok = readFbSaved({ ...defaultFbSaved(), training: [entry], lastExport: '2026-10-01' });
+    expect(ok.problems).toEqual([]);
+    expect(ok.saved.training).toEqual([entry]);
+    expect(ok.saved.lastExport).toBe('2026-10-01');
+    const bad = readFbSaved({ ...defaultFbSaved(), training: [{ ...entry, score: 2 }], lastExport: 'i går' });
+    expect(bad.problems).toEqual(['training[0] er ugyldig', 'lastExport er ugyldig']);
+    expect(bad.saved.training).toEqual([]);
+    expect('lastExport' in bad.saved).toBe(false);
+    expect(readFbSaved(defaultFbSaved()).problems).toEqual([]);
+  });
+
+  it('minder om eksport, når den seneste eksport eller den første aktivitet er 30 dage gammel', () => {
+    const session = { day: '2026-09-04', ms: 300_000, correct: 3, total: 4, xp: 30 };
+    expect(exportDue(defaultFbSaved(), '2026-10-04')).toBe(false);
+    expect(exportDue({ ...defaultFbSaved(), sessions: [session] }, '2026-10-03')).toBe(false);
+    expect(exportDue({ ...defaultFbSaved(), sessions: [session] }, '2026-10-04')).toBe(true);
+    expect(exportDue({ ...defaultFbSaved(), sessions: [session], lastExport: '2026-09-20' }, '2026-10-04')).toBe(false);
+    expect(exportDue({ ...defaultFbSaved(), practice: [{ ...entry, day: '2026-09-01' }] }, '2026-10-01')).toBe(true);
+  });
+
+  it('beder om fast lagring og fortæller resultatet', async () => {
+    let persisted = false;
+    const manager = { persisted: async () => persisted, persist: async () => (persisted = true) };
+    expect(await persistence(manager)).toBe('midlertidig');
+    expect(await requestPersistence(manager)).toBe('fast');
+    expect(await persistence(manager)).toBe('fast');
+    expect(await requestPersistence({ persisted: async () => false, persist: async () => false })).toBe('midlertidig');
+    expect(await requestPersistence({})).toBe('ukendt');
+    const blocked = async (): Promise<boolean> => {
+      throw new Error('spærret');
+    };
+    expect(await persistence({ persisted: blocked })).toBe('ukendt');
   });
 });

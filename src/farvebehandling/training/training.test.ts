@@ -68,6 +68,8 @@ function autoPlay(item: BankItem, goal: number, seed: number): PlayState {
 /** Det rigtige svar på en opgave. */
 function rightAnswer(task: FbTask): Omit<FbAnswer, 'ms'> {
   switch (task.type) {
+    case 'hold-eller-par':
+      return { forms: { hold: task.options.findIndex((o) => o.bestFor === 'hold'), par: task.options.findIndex((o) => o.bestFor === 'par') } };
     case 'spil-selv':
       return { play: autoPlay(task.bank, task.goal, task.seed) };
     case 'chancen':
@@ -86,6 +88,8 @@ function rightAnswer(task: FbTask): Omit<FbAnswer, 'ms'> {
 /** Et forkert svar på en opgave. */
 function wrongAnswer(task: FbTask): Omit<FbAnswer, 'ms'> {
   switch (task.type) {
+    case 'hold-eller-par':
+      return { forms: { hold: task.options.findIndex((o) => o.bestFor === 'par'), par: task.options.findIndex((o) => o.bestFor === 'hold') } };
     case 'spil-selv':
       // Et spil uden stik følger ingen linje.
       return { play: startPlay(task.bank, dealCards(task.bank, mulberry32(task.seed))) };
@@ -217,6 +221,30 @@ describe('Opgaverne', () => {
     expect(losses).toBeGreaterThan(0);
   });
 
+  it('Hold eller par: holdkampens og parturneringens linje skal begge vælges rigtigt', () => {
+    // K 5 4 / E B 3 2, 3 stik: slå kongen og esset (77,0 %, 2,77 stik) mod kipning (69,0 %, 2,87 stik).
+    const item = byId('K54-AJ32');
+    expect(possibleTypes(item, 3)).toContain('hold-eller-par');
+    expect(possibleTypes(item, 4)).not.toContain('hold-eller-par');
+    expect(possibleTypes(byId('J32-AK54'), 3)).not.toContain('hold-eller-par');
+    const task = makeTask('hold-eller-par', item, 3, mulberry32(1));
+    if (task.type !== 'hold-eller-par') throw new Error('forkert type');
+    const hold = task.options.findIndex((o) => o.bestFor === 'hold');
+    const par = task.options.findIndex((o) => o.bestFor === 'par');
+    expect(task.options[hold]).toMatchObject({ value: 0.770497, tricks: 2.770497, correct: true });
+    expect(task.options[par].tricks).toBeCloseTo(2.867391, 6);
+    expect(task.options[par].value).toBeCloseTo(0.6898, 4);
+    expect(task.options[hold].line.lead.steps[0]).toBe('Slå kongen og esset.');
+    // Parturneringens linje står i båndet som målet nået (1) eller ej (0).
+    expect(new Set(task.options[par].line.lead.layouts)).toEqual(new Set([0, 1]));
+    expect(grade(task, { forms: { hold, par }, ms: 1 }, 20_000)).toMatchObject({ score: 1, lineCorrect: true, fast: true });
+    expect(grade(task, { forms: { hold: par, par: hold }, ms: 1 }, 20_000).score).toBe(0);
+    // Samme linje begge steder er forkert: pointen er, at formen afgør linjen.
+    expect(grade(task, { forms: { hold, par: hold }, ms: 1 }, 20_000).score).toBe(0);
+    const eligible = bank.flatMap((b) => b.combination.goals.filter((g) => possibleTypes(b, g).includes('hold-eller-par')));
+    expect(eligible.length).toBeGreaterThanOrEqual(100);
+  });
+
   it('Samme farve, nyt mål: det tidligere mål har helst en anden bedste linje', () => {
     const task = makeTask('nyt-mål', byId('432-AKJ5'), 4, mulberry32(6));
     if (task.type !== 'nyt-mål') throw new Error('forkert type');
@@ -323,6 +351,18 @@ describe('Sessionen', () => {
     expect(taskOf(s).item).toBe(dueItems(saved, '2026-10-05')[0]);
     s = nextFbStep(s, saved, bank, T0 + REPETITION_END);
     expect(s.phase).toBe('niveau');
+  });
+
+  it('logger svar i repetition og niveau til statistikken, men ikke i lynrunden', () => {
+    const saved = introduce(defaultFbSaved(), byId('J32-AK54'), '2026-10-05');
+    const base = startFbSession(saved, bank, T0, 1);
+    const task = makeTask('vælg-linjen', byId('J32-AK54'), 3, mulberry32(1));
+    if (task.type !== 'vælg-linjen') throw new Error('forkert type');
+    const best = task.options.findIndex((o) => o.correct);
+    const asked = (phase: 'niveau' | 'lynrunde'): FbSession => ({ ...base, step: { kind: 'task', phase, task }, shownAt: T0 });
+    const niveau = answerFb(asked('niveau'), saved, { line: best, guess: 1 }, T0 + 4000).saved;
+    expect(niveau.training).toEqual([{ day: '2026-10-05', item: 'J32-AK54:3', task: 'vælg-linjen', score: 0.5, ms: 4000 }]);
+    expect(answerFb(asked('lynrunde'), saved, { line: best }, T0 + 4000).saved.training).toBeUndefined();
   });
 
   it('giver 10, 5 og 0 XP, ganger combo på og nulstiller den ved halvt eller forkert', () => {

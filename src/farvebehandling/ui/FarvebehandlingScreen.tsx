@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import techniquesFile from '../content/techniques.json';
 import { loadBank, type BankItem } from '../analysis';
-import { FB_STORAGE_KEY, loadFbSaved, saveFbSaved, type FbSaved } from '../storage';
+import { FB_STORAGE_KEY, loadFbSaved, requestPersistence, saveFbSaved, type FbSaved } from '../storage';
 import { ensureStations } from '../training/palace';
 import { Analysevindue } from './Analysevindue';
 import { Selvvalgt } from './Selvvalgt';
@@ -35,6 +35,9 @@ const pageFiles = import.meta.glob<string>('../content/app/side-*.json', { query
 
 let loading: Promise<BankItem[]> | null = null;
 
+/** Første gang brugeren gemmer noget, beder appen browseren om fast lagring (én gang pr. indlæsning). */
+let persistenceRequested = false;
+
 /** Henter banken én gang; mislykkes det, prøves der igen næste gang. */
 function loadAppBank(): Promise<BankItem[]> {
   loading ??= Promise.all(Object.values(pageFiles).map((load) => load()))
@@ -51,6 +54,8 @@ export default function FarvebehandlingScreen({ onBack }: FarvebehandlingScreenP
   const [tab, setTab] = useState<Tab>('training');
   // Kombinationen, som Analyse åbner med, når den vælges i klubaftenen.
   const [analysisStart, setAnalysisStart] = useState<string | null>(null);
+  // Tekniken, som Selvvalgt åbner med, når den vælges i statistikken.
+  const [practiceStart, setPracticeStart] = useState<string | null>(null);
   const [bank, setBank] = useState<BankItem[] | null>(null);
   const [loadFailed, setLoadFailed] = useState(false);
   const techniques = techniquesFile.techniques;
@@ -62,6 +67,10 @@ export default function FarvebehandlingScreen({ onBack }: FarvebehandlingScreenP
     (next: FbSaved) => {
       setSaved(next);
       setFailed(!saveFbSaved(storage, next));
+      if (!persistenceRequested) {
+        persistenceRequested = true;
+        void requestPersistence();
+      }
     },
     [storage],
   );
@@ -69,6 +78,11 @@ export default function FarvebehandlingScreen({ onBack }: FarvebehandlingScreenP
   const openAnalysis = useCallback((id: string) => {
     setAnalysisStart(id);
     setTab('analysis');
+    window.scrollTo(0, 0);
+  }, []);
+  const openPractice = useCallback((technique: string) => {
+    setPracticeStart(technique);
+    setTab('practice');
     window.scrollTo(0, 0);
   }, []);
 
@@ -104,6 +118,7 @@ export default function FarvebehandlingScreen({ onBack }: FarvebehandlingScreenP
               onClick={() => {
                 setTab(t);
                 setAnalysisStart(null);
+                setPracticeStart(null);
               }}
             >
               {TEXT.tabs[t]}
@@ -122,8 +137,12 @@ export default function FarvebehandlingScreen({ onBack }: FarvebehandlingScreenP
         </p>
       ) : (
         <>
-          {tab === 'training' && <Træning bank={bank} saved={saved} update={update} techniques={techniques} onOpenAnalysis={openAnalysis} />}
-          {tab === 'practice' && <Selvvalgt bank={bank} saved={saved} update={update} techniques={techniques} />}
+          {tab === 'training' && (
+            <Træning bank={bank} saved={saved} update={update} techniques={techniques} onOpenAnalysis={openAnalysis} onOpenPractice={openPractice} />
+          )}
+          {tab === 'practice' && (
+            <Selvvalgt bank={bank} saved={saved} update={update} techniques={techniques} startTechnique={practiceStart ?? undefined} />
+          )}
           {tab === 'analysis' && <Analysevindue bank={bank} start={analysisStart ?? undefined} saved={saved} update={update} />}
         </>
       )}

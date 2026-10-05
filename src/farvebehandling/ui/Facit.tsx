@@ -4,7 +4,7 @@ import { bandFields, compactLayout, disagreements, linesForGoal, sortFields, typ
 import { randomSeed } from '../../engine/rng';
 import { guessInterval } from '../model/guess';
 import type { Room, Station } from '../training/palace';
-import { bestOption, vacantWeights, type FbAnswer, type FbTask, type Graded } from '../training/tasks';
+import { bestOption, vacantWeights, type FbAnswer, type FbTask, type Graded, type PairsOption } from '../training/tasks';
 import { LayoutList } from './Analysevindue';
 import { Bridgebord } from './Bridgebord';
 import { Linjekort } from './Linjekort';
@@ -65,6 +65,13 @@ export function Facit({ task, answer, graded, reward, place, onNext }: FacitProp
       details.push(TEXT.chanceIs(percent(best.value), TEXT.intervals[guessInterval(100 * best.value)]));
       details.push(TEXT.yourGuess(TEXT.intervals[answer.guess ?? 0], !!graded.guessCorrect));
       break;
+    case 'hold-eller-par':
+      for (const form of ['hold', 'par'] as const) {
+        const chosen = answer.forms?.[form] ?? -1;
+        const right = task.options.findIndex((o) => o.bestFor === form);
+        details.push(TEXT.yourForm(TEXT.formName(form, task.goal), lines[chosen]?.letter ?? '–', lines[right].letter, chosen === right));
+      }
+      break;
     case 'find-hullet': {
       const chosen = task.fields.find((f) => f.id === answer.field);
       if (failing) details.push(TEXT.holeIs(TEXT.layout(failing.west, failing.east)));
@@ -81,7 +88,13 @@ export function Facit({ task, answer, graded, reward, place, onNext }: FacitProp
     }
   }
   const tone =
-    graded.score === 1 ? TEXT.goodDecision : graded.score === 0.5 ? TEXT.halfDecision : task.type === 'chancen' || task.type === 'find-hullet' ? null : TEXT.betterLine(best.letter);
+    graded.score === 1
+      ? TEXT.goodDecision
+      : graded.score === 0.5
+        ? TEXT.halfDecision
+        : task.type === 'chancen' || task.type === 'find-hullet' || task.type === 'hold-eller-par'
+          ? null
+          : TEXT.betterLine(best.letter);
 
   const next = (
     <button type="button" className="btn primary wide" onClick={onNext}>
@@ -149,6 +162,8 @@ export function Facit({ task, answer, graded, reward, place, onNext }: FacitProp
         {reward && reward.xp > 0 && <span className="feedback-meta">{TEXT.gained(reward.xp, reward.combo)}</span>}
       </section>
 
+      {task.type === 'hold-eller-par' && <Turneringsformer goal={task.goal} options={task.options} letters={lines.map((l) => l.letter)} />}
+
       <section className="card" aria-labelledby="fb-facit-problem">
         <h2 id="fb-facit-problem">{TEXT.goalPrompt(task.goal)}</h2>
         {task.type === 'hvad-nu' ? (
@@ -196,6 +211,44 @@ export function Facit({ task, answer, graded, reward, place, onNext }: FacitProp
         {next}
       </div>
     </div>
+  );
+}
+
+/** Hold eller par: begge linjer med chancen for målet og stik i gennemsnit; den bedste i hver form er markeret. */
+function Turneringsformer({ goal, options, letters }: { goal: number; options: readonly PairsOption[]; letters: readonly string[] }) {
+  const hold = options.findIndex((o) => o.bestFor === 'hold');
+  const par = options.findIndex((o) => o.bestFor === 'par');
+  const gain = formatDecimal(100 * (options[hold].value - options[par].value), 1);
+  const cost = formatDecimal(options[par].tricks - options[hold].tricks, 2);
+  return (
+    <section className="card" aria-labelledby="fb-facit-forms">
+      <h2 id="fb-facit-forms">{TEXT.formsTitle}</h2>
+      <table className="fb-forms">
+        <thead>
+          <tr>
+            <th scope="col">{TEXT.formsLine}</th>
+            <th scope="col">{TEXT.formsChance(goal)}</th>
+            <th scope="col">{TEXT.formsTricks}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {options.map((o, i) => (
+            <tr key={letters[i]}>
+              <th scope="row">{TEXT.lineName(letters[i])}</th>
+              <td>
+                {percent(o.value)}
+                {i === hold ? ' ✓' : ''}
+              </td>
+              <td>
+                {formatDecimal(o.tricks, 2)}
+                {i === par ? ' ✓' : ''}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <p>{TEXT.safetyCost(letters[hold], goal, gain, cost)}</p>
+    </section>
   );
 }
 

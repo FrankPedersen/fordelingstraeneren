@@ -6,9 +6,10 @@ import { solveSubgame } from './solver/cfr';
 import { buildGame, type Objective } from './solver/game';
 import type { Line, LineStep } from './solver/lines';
 import { combinationBase, goalResult } from './solver/results';
-import { solveGame } from './solver/solve';
+import { solveGame, solveLine } from './solver/solve';
 import { whatNow, type WhatNowSituation } from './solver/whatnow';
 import { caseLabel, concreteHands, frequencyHolding, type ClassifiedCase, type XRule } from './source/bridgehands';
+import { NEAR_BEST, tricksChance } from './analysis';
 import { proposeTechnique } from './techniques';
 
 /**
@@ -158,6 +159,11 @@ export interface GoalResult {
   value: number;
   best: number;
   leads: LeadResult[];
+  /**
+   * Hold eller par: stik i gennemsnit med målets bedste linje (dens trin, derefter flest stik). Findes kun, hvor
+   * parturneringens linje når målet mere end 0,5 procentpoint sjældnere (se pairsFor).
+   */
+  pairs?: number;
 }
 
 export interface CombinationSolution {
@@ -194,6 +200,33 @@ export function solveCombination(
   for (const goal of goals) result.goals[String(goal)] = goalResult(solve({ kind: 'goal', goal }));
   if (options.tricks) result.tricks = goalResult(solve({ kind: 'tricks' }));
   return options.whatNow ? { ...result, whatNow: situations } : result;
+}
+
+/**
+ * Hold eller par: målene, hvor holdkamp og parturnering kræver hver sin linje. Parturneringens linje (flest stik i
+ * gennemsnit) skal nå målet mere end 0,5 procentpoint sjældnere end målets bedste linje. Så regnes målets bedste linje
+ * som parturnering: dens trin, og derefter spiller løseren for flest stik. Målet kommer med, når linjen stadig når målet
+ * lige så tit (inden for 0,5 procentpoint) og giver færre stik i gennemsnit (mindst 0,005). Værdien er stik i gennemsnit.
+ */
+export function pairsFor(north: readonly Rank[], south: readonly Rank[], solution: CombinationSolution): Record<string, number> {
+  const tricks = solution.tricks;
+  if (!tricks || tricks.best < 0) return {};
+  const par = tricks.leads[tricks.best];
+  const out: Record<string, number> = {};
+  let game: ReturnType<typeof buildGame> | null = null;
+  for (const [goal, g] of Object.entries(solution.goals)) {
+    if (g.best < 0) continue;
+    const n = Number(goal);
+    if (g.value - tricksChance(solution, par.layouts, n) <= NEAR_BEST) continue;
+    const hold = g.leads[g.best];
+    const steps: LineStep[] = hold.line.length ? hold.line : [{ leadFrom: hold.hand, card: cardsData([hold.high as Rank]) }];
+    game ??= buildGame(north, south, { objective: { kind: 'tricks' } });
+    const asPairs = solveLine(game, { id: 'hold', text: '', steps });
+    if (g.value - tricksChance(solution, asPairs.layoutValues, n) > NEAR_BEST) continue;
+    if (tricks.value - asPairs.value < 0.005) continue;
+    out[goal] = round6(asPairs.value);
+  }
+  return out;
 }
 
 /**
@@ -242,7 +275,7 @@ export interface AppEntry {
   frequency: [string, string];
   combination: Omit<Combination, 'lines'>;
   solution: Omit<CombinationSolution, 'goals' | 'tricks'> & {
-    goals: Record<string, { value: number; best: number; leads: AppLead[] }>;
+    goals: Record<string, { value: number; best: number; leads: AppLead[]; pairs?: number }>;
     /** Parturnering: kun den bedste linje. */
     tricks?: { value: number; best: number; leads: AppLead[] };
   };
@@ -272,7 +305,9 @@ export function appEntry(
 ): AppEntry {
   const { lines: _lines, ...meta } = combination;
   const goals: AppEntry['solution']['goals'] = {};
-  for (const [goal, g] of Object.entries(solution.goals)) goals[goal] = { value: round6(g.value), best: g.best, leads: g.leads.map(appLead) };
+  for (const [goal, g] of Object.entries(solution.goals)) {
+    goals[goal] = { value: round6(g.value), best: g.best, leads: g.leads.map(appLead), ...(g.pairs !== undefined ? { pairs: g.pairs } : {}) };
+  }
   const tricks = solution.tricks && {
     value: round6(solution.tricks.value),
     best: 0,

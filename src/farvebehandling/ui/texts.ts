@@ -1,3 +1,7 @@
+import type { TaskType } from '../storage';
+
+const MONTHS = ['januar', 'februar', 'marts', 'april', 'maj', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'december'];
+
 /** Al ordlyd i farvebehandlingens brugerflade. Ret her uden at røre layoutet. */
 export const TEXT = {
   title: 'Farvebehandling',
@@ -247,7 +251,61 @@ export const TEXT = {
   clubListFor: (name: string) => `Hyppighed · ${name}`,
   openInAnalysis: 'Åbn i Analyse',
 
+  // Hold eller par
+  formsHelp: 'I holdkamp gælder det om at nå målet, i parturnering om flest stik i gennemsnit. Hvilken linje spiller du hvor?',
+  formName: (form: 'hold' | 'par', goal: number) => (form === 'hold' ? `Holdkamp, ${goal} stik` : 'Parturnering, flest stik'),
+  lineName: (letter: string) => `Linje ${letter}`,
+  yourForm: (form: string, chosen: string, right: string, ok: boolean) =>
+    `${form}: du valgte linje ${chosen} ${ok ? '✓' : `✗ – linje ${right} er bedst`}`,
+  formsTitle: 'Holdkamp og parturnering',
+  formsLine: 'Linje',
+  formsChance: (goal: number) => `${goal} stik`,
+  formsTricks: 'Stik i gennemsnit',
+  safetyCost: (letter: string, goal: number, gain: string, cost: string) =>
+    `Linje ${letter} er sikkerhedsspillet: den giver ${goal} stik ${gain} procentpoint oftere, men koster ${cost} stik i gennemsnit.`,
+
+  // Statistik
+  stats: 'Statistik',
+  statsHelp: 'Træfsikkerhed i Træning og Selvvalgt. Lynrunden tæller ikke med, og et halvt rigtigt svar tæller som et halvt.',
+  statsEmpty: 'Ingen svar endnu. Statistikken tæller dine svar i Træning og Selvvalgt.',
+  statsWeakest: (name: string, pct: string, n: number) => `Dit svageste punkt: ${name} med ${pct} rigtige af ${n} svar.`,
+  statsPractice: 'Øv i Selvvalgt',
+  statsPracticeOne: (name: string) => `Øv ${name.toLowerCase()} i Selvvalgt`,
+  statsTechniques: 'Teknik',
+  statsTasks: 'Opgavetype',
+  statsAll: (pct: string, n: number) => `${pct} af ${n === 1 ? '1 svar' : `${n} svar`}`,
+  statsNone: 'Ingen svar',
+  statsRecent: (pct: string, n: number) => (n ? `Seneste 30 dage: ${pct} af ${n}` : 'Seneste 30 dage: ingen svar'),
+  statsFew: (min: number) => `For få svar til at vurdere (mindst ${min}).`,
+  taskNames: {
+    'vælg-linjen': 'Vælg linjen',
+    chancen: 'Hvor stor er chancen?',
+    'linje-mod-linje': 'Linje mod linje',
+    'nyt-mål': 'Samme farve, nyt mål',
+    'hvad-nu': 'Hvad nu?',
+    'find-hullet': 'Find hullet',
+    'spil-selv': 'Spil den selv',
+    optælling: 'Med optælling',
+    'hold-eller-par': 'Hold eller par',
+  } satisfies Record<TaskType, string>,
+  practiceSuggestion: (name: string, pct: string, n: number) => `Forslag: ${name} er dit svageste punkt med ${pct} rigtige af ${n} svar.`,
+  practiceSuggestionPick: (name: string) => `Vælg ${name.toLowerCase()}`,
+
   // Dine data
+  /** En dag som "4. oktober 2026". */
+  dateText: (day: string) => {
+    const [y, m, d] = day.split('-').map(Number);
+    return `${d}. ${MONTHS[m - 1]} ${y}`;
+  },
+  persistTitle: 'Fast lagring',
+  persistFast: 'Fast lagring: ja. Browseren rydder ikke dine data af sig selv.',
+  persistTemporary: 'Fast lagring: nej. Browseren kan rydde dine data, fx hvis telefonen mangler plads. Eksportér jævnligt.',
+  persistUnknown: 'Browseren oplyser ikke, om dine data gemmes fast. Eksportér jævnligt.',
+  persistAsk: 'Bed om fast lagring',
+  lastExport: (date: string) => `Seneste eksport: ${date}.`,
+  neverExported: 'Du har ikke eksporteret dine data endnu.',
+  exportReminder: 'Det er over en måned siden, du sidst gemte en kopi af dine data. En kopi beskytter dem, hvis browseren rydder op.',
+  exportNow: 'Eksportér nu',
   dataHelp: 'Farvebehandling gemmer alt i din browser under sin egen nøgle. Fordelingssporets data røres ikke.',
   exportData: 'Eksportér',
   importData: 'Importér',

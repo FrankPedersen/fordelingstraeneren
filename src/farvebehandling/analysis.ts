@@ -230,6 +230,54 @@ export function linesForGoal(item: BankItem, goal: number): LineView[] {
   }));
 }
 
+// ---------- Hold eller par ----------
+
+/** Chancen for mindst `goal` stik med en linje, der har stik pr. sidning (parturnering). */
+export function tricksChance(solution: Pick<CombinationSolution, 'layouts' | 'denominator'>, tricks: ArrayLike<number>, goal: number): number {
+  let hits = 0n;
+  solution.layouts.forEach((l, L) => {
+    if (tricks[L] >= goal - 1e-9) hits += BigInt(l.weight);
+  });
+  return Number((hits * 1_000_000_000n) / BigInt(solution.denominator)) / 1e9;
+}
+
+export interface PairsLine {
+  /** Linjen med målet nået (1) eller ej (0) pr. sidning, så båndet viser forskellen til målet. */
+  line: LineView;
+  /** Chancen for målet. */
+  chance: number;
+  /** Stik i gennemsnit. */
+  tricks: number;
+  /** Den bedste linje i holdkamp (målet) eller i parturnering (flest stik). */
+  bestFor: 'hold' | 'par';
+}
+
+/**
+ * Hold eller par: målets bedste linje (holdkamp) og linjen med flest stik i gennemsnit (parturnering), når de er
+ * forskellige (se precompute.pairsFor). `null`, når målet ikke har en sådan forskel, eller linjerne lyder ens.
+ */
+export function pairsLines(item: BankItem, goal: number): [PairsLine, PairsLine] | null {
+  const g = item.solution.goals[String(goal)];
+  const tricks = item.solution.tricks;
+  if (g?.pairs === undefined || !tricks || tricks.best < 0) return null;
+  const hold = linesForGoal(item, goal)[0];
+  const par = tricks.leads[tricks.best];
+  if (!hold || hold.lead.steps.join(' ') === par.steps.join(' ')) return null;
+  const chance = tricksChance(item.solution, par.layouts, goal);
+  const parLine: LineView = {
+    letter: 'B',
+    lead: { ...par, value: chance, layouts: par.layouts.map((t) => (t >= goal - 1e-9 ? 1 : 0)) },
+    value: chance,
+    best: false,
+    nearBest: false,
+    mixed: !par.certified,
+  };
+  return [
+    { line: hold, chance: hold.value, tricks: g.pairs, bestFor: 'hold' },
+    { line: parLine, chance, tricks: tricks.value, bestFor: 'par' },
+  ];
+}
+
 // ---------- Sandsynlighedsbåndet ----------
 
 export interface BandField {

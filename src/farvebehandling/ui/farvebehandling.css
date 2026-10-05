@@ -666,7 +666,8 @@
   cursor: pointer;
 }
 
-.fb-club-bar {
+/* En vandret søjle: klubaftenens hyppighed og statistikkens træfsikkerhed. */
+.fb-bar {
   display: block;
   height: var(--space-6);
   overflow: hidden;
@@ -674,11 +675,62 @@
   background: var(--line);
 }
 
-.fb-club-bar > span {
+.fb-bar > span {
   display: block;
   height: 100%;
   border-radius: var(--radius-pill);
   background: var(--fb-bar);
+}
+
+/* Hold eller par: tabellen med chancen for målet og stik i gennemsnit */
+
+.fb-forms {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.fb-forms th,
+.fb-forms td {
+  padding: var(--space-6) var(--space-8);
+  border-bottom: 1px solid var(--line);
+  text-align: right;
+}
+
+.fb-forms th:first-child {
+  text-align: left;
+}
+
+.fb-forms thead th {
+  color: var(--muted);
+  font-size: var(--type-small);
+  font-weight: 600;
+}
+
+/* Statistik */
+
+.fb-stats {
+  display: grid;
+  gap: var(--space-12);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fb-stat {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.fb-stat-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-8);
+}
+
+.fb-stat > .btn {
+  justify-self: start;
 }
 
 /* Hvad nu?: første runde */
