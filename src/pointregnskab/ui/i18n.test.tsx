@@ -100,6 +100,14 @@ describe('Pointregnskab på dansk og engelsk', () => {
       expectEnglish(`${exercise} ${level}: facit`);
       cleanup();
     }
+    // Niveau 5: facit med længdeskabelonerne.
+    for (let seed = 1; seed <= 8; seed++) {
+      const task = makeTask('who', 5, seed);
+      const answer = correctAnswer(task);
+      render(<Facit task={task} answer={answer} graded={grade(task, answer, 1_000)} onNext={() => {}} />);
+      expectEnglish(`niveau 5, seed ${seed}: facit`);
+      cleanup();
+    }
     for (const key of ['blok:EKD', RANGE_CARDS[0].key, 'interval:two-suited']) {
       const task = deckTask(key, mulberry32(1));
       render(<Opvarmning task={task} onAnswer={() => {}} onNext={() => {}} />);

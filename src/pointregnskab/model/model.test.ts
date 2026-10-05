@@ -5,7 +5,8 @@ import { suitLengths } from '../../domain/cards';
 import { makeSudoku } from '../../modes/sudoku/task';
 import { chooseCall, hcpOf, SYSTEM } from '../../system/interpreter';
 import { allowedFor, bid, isDefender, limitAllowed, OPENING_PASS, PASS_RULES, passRule } from './bidding';
-import { directlyReadable, explain } from './explain';
+import { directlyReadable, explain, lengthFacts, lengthsDecide } from './explain';
+import { correctAnswer } from '../training/scoring';
 import { makeTask, type Exercise, type Level, type PlacementTask } from './generator';
 import { allowedOf, allows, ANY, intersect, limits, opponentsPoints, panelRest } from './points';
 import { solve, type Ledger } from './solver';
@@ -100,6 +101,7 @@ describe('Løseren', () => {
       holder: 'W',
       rest: [[5, 7]],
       cards: [card('♣', 'D'), card('♦', 'E')],
+      facts: [],
     });
   });
 
@@ -274,6 +276,60 @@ function tasks(count: number): PlacementTask[] {
   const exercises: Exercise[] = ['can', 'who', 'finesse'];
   return Array.from({ length: count }, (_, i) => makeTask(exercises[i % 3], ((i % 4) + 1) as Level, i + 1) as PlacementTask);
 }
+
+describe('Længdeskabelonerne (Fuldt regnskab)', () => {
+  it('"Farven er brugt op": Øst har vist alle sine 2 spar, så ♠E sidder hos Vest; uden længder kan det ikke afgøres', () => {
+    const ledger: Ledger = {
+      W: { allowed: ANY, shown: [], lengths: [4, 3, 3, 3] },
+      E: { allowed: ANY, shown: [card('♠', 'K'), card('♠', 'D')], lengths: [2, 4, 4, 3] },
+      unseen: [card('♠', 'E'), card('♥', 'D')],
+    };
+    expect(solve(ledger).answer.get(card('♠', 'E'))).toBe('W');
+    expect(lengthsDecide(ledger, card('♠', 'E'))).toBe(true);
+    expect(explain(ledger, card('♠', 'E'))).toEqual({
+      kind: 'used-up',
+      card: card('♠', 'E'),
+      holder: 'W',
+      fact: { kind: 'used-up', defender: 'E', suit: 0, length: 2, cards: [card('♠', 'E')] },
+    });
+    // ♥D kan stadig sidde hos begge.
+    expect(solve(ledger).answer.get(card('♥', 'D'))).toBe('open');
+  });
+
+  it('"Ikke plads": Øst har kun 1 spar tilbage til 2 usete spar-honnører, og med Vests point sidder ♠E hos Vest', () => {
+    // Vest åbnede 2NT (20–21) og har vist 17, så han mangler 3–4. Uden længder kunne han have ♥K (3) i stedet.
+    const ledger: Ledger = {
+      W: {
+        allowed: allowedOf(rule('opening', '2NT').hcp),
+        shown: [card('♣', 'E'), card('♣', 'K'), card('♣', 'B'), card('♦', 'E'), card('♦', 'K'), card('♦', 'D')],
+        lengths: [2, 3, 4, 4],
+      },
+      E: { allowed: ANY, shown: [], lengths: [1, 4, 4, 4] },
+      unseen: [card('♠', 'E'), card('♠', 'D'), card('♥', 'K')],
+    };
+    expect(lengthFacts(ledger)).toEqual([{ kind: 'no-room', defender: 'E', suit: 0, room: 1, cards: [card('♠', 'E'), card('♠', 'D')] }]);
+    expect(solve(ledger).answer.get(card('♠', 'E'))).toBe('W');
+    expect(lengthsDecide(ledger, card('♠', 'E'))).toBe(true);
+    const e = explain(ledger, card('♠', 'E'));
+    expect(e).toMatchObject({ kind: 'must-have', holder: 'W', rest: [[3, 4]], cards: [card('♠', 'E')] });
+    // Facit nævner både længderne og pointene.
+    expect(e?.kind === 'must-have' && e.facts).toEqual(lengthFacts(ledger));
+  });
+
+  it('på niveau 5 ændrer længderne svaret i mindst halvdelen af 200 opgaver (uden længder ville facit være et andet)', () => {
+    const exercises = ['can', 'who', 'finesse', 'full'] as const;
+    let changed = 0;
+    for (let seed = 1; seed <= 200; seed++) {
+      const t = makeTask(exercises[seed % 4], 5, seed) as PlacementTask;
+      const without = solve({ ...t.ledger, W: { ...t.ledger.W, lengths: undefined }, E: { ...t.ledger.E, lengths: undefined } });
+      const facit = correctAnswer({ ...t, placement: without.answer.get(t.card)! });
+      if (JSON.stringify(facit) !== JSON.stringify(correctAnswer(t))) changed++;
+      // Facit bruger længderne, når de ændrer svaret.
+      if (lengthsDecide(t.ledger, t.card)) expect(t.explanation.kind === 'used-up' || ('facts' in t.explanation && t.explanation.facts.length > 0)).toBe(true);
+    }
+    expect(changed).toBeGreaterThanOrEqual(100);
+  }, 30_000);
+});
 
 describe('Generatoren', () => {
   const all = tasks(1000);

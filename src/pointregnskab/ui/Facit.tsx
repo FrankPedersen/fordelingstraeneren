@@ -2,9 +2,9 @@ import { useMemo } from 'react';
 import { hcpOf } from '../../system/interpreter';
 import { Info } from '../../ui/Info';
 import { SuitText } from '../../ui/SuitText';
-import type { Explanation } from '../model/explain';
+import type { Explanation, LengthFact } from '../model/explain';
 import type { PlacementTask, PointTask } from '../model/generator';
-import { honorPoints } from '../model/points';
+import { honorPoints, otherDefender } from '../model/points';
 import { shownPoints, solve, type Placement } from '../model/solver';
 import type { Graded, PointAnswer } from '../training/scoring';
 import { rangeText, spanText } from './format';
@@ -13,17 +13,33 @@ import { TEXT } from './texts';
 /** Facit viser de mulige placeringer, når der er så få. */
 export const MAX_PLACEMENTS = 4;
 
-/** Skabelonens sætning, bygget af løserens facit (SPEC-pointregnskab.md, Layout, Facit). */
+/** Længdeskabelonens sætning: farven er brugt op, eller der er ikke plads. */
+function factSentence(f: LengthFact): string {
+  const other = TEXT.seat[otherDefender(f.defender)];
+  const cards = f.cards.map(TEXT.card);
+  return f.kind === 'used-up'
+    ? TEXT.usedUp(TEXT.seat[f.defender], f.length, f.suit, cards, other)
+    : TEXT.noRoom(TEXT.seat[f.defender], f.room, f.suit, cards, other);
+}
+
+/**
+ * Skabelonens sætning, bygget af løserens facit (SPEC-pointregnskab.md, Layout, Facit). Bruges både længder og point,
+ * kommer længderne først og pointene bagefter.
+ */
 export function facitSentence(task: PlacementTask, e: Explanation): string {
   const card = TEXT.card(e.card);
   const shown = (d: 'W' | 'E') => shownPoints(task.ledger[d].shown);
   switch (e.kind) {
-    case 'other-cannot':
-      return e.gap
+    case 'other-cannot': {
+      const points = e.gap
         ? TEXT.otherCannotGap(TEXT.seat[e.other], rangeText(e.rest, 40 - shown(e.other)), card, honorPoints(e.card), TEXT.seat[e.holder], task.ledger.unseen.length === 1)
         : TEXT.otherCannot(TEXT.seat[e.other], e.rest[e.rest.length - 1]?.[1] ?? 0, card, honorPoints(e.card), TEXT.seat[e.holder]);
+      return [...e.facts.map(factSentence), points].join(' ');
+    }
     case 'must-have':
-      return TEXT.mustHave(TEXT.seat[e.holder], rangeText(e.rest, 40 - shown(e.holder)), e.cards.map(TEXT.card));
+      return [...e.facts.map(factSentence), TEXT.mustHave(TEXT.seat[e.holder], rangeText(e.rest, 40 - shown(e.holder)), e.cards.map(TEXT.card))].join(' ');
+    case 'used-up':
+      return factSentence(e.fact);
     case 'open':
       return TEXT.bothFit(card, e.west, e.east);
   }

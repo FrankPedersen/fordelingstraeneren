@@ -4,7 +4,7 @@ import { mulberry32, shuffle, type Rng } from '../../engine/rng';
 import { makeSudoku } from '../../modes/sudoku/task';
 import { hcpOf } from '../../system/interpreter';
 import { allowedFor, bid, type Auction } from './bidding';
-import { directlyReadable, explain, type Explanation } from './explain';
+import { directlyReadable, explain, lengthsDecide, type Explanation } from './explain';
 import { isHonor, limits, opponentsPoints, otherDefender, type Defender } from './points';
 import { shownPoints, solve, type Ledger, type Placement } from './solver';
 
@@ -73,6 +73,15 @@ export type PointTask = SumTask | RunningTask | PlacementTask;
 /** Hvor ofte facit skal være "kan ikke afgøres" (specen: ca. hver fjerde). */
 export const OPEN_SHARE = 0.25;
 
+/**
+ * Med længder (niveau 5 og Fuldt regnskab) skal mindst halvdelen af opgaverne være nogle, hvor længderne ændrer svaret
+ * (Franks afgørelse); generatoren sigter efter 60 %, så kravet holder med god margin.
+ */
+export const LENGTHS_SHARE = 0.6;
+
+/** Med længder prøves så mange opdelinger i viste og usete honnører pr. fordeling. */
+const LENGTH_SPLITS = 12;
+
 /** Nord–Syd er spilførersiden og har mindst så mange hp, så kontrakten er rimelig. */
 export const MIN_NS_HCP = 20;
 
@@ -133,11 +142,12 @@ export const hasLengths = (exercise: Exercise, level: Level): boolean => exercis
  * og får længderne fra 13-sudokuens generator med et nyt seed: fordelingen er sudokuens egen, så længderne passer.
  * Kvalitetskravene: fra niveau 3 kan svaret ikke aflæses direkte (på niveau 1–2 må en modspiller have vist alt, han
  * kan have; Franks afgørelse), fra niveau 2 er mindst én honnør sikkert placeret uden at være set, og facit har en
- * skabelon.
+ * skabelon. Med længder er ca. 25 % "kan ikke afgøres", 60 % afgøres af længderne og resten af pointene alene.
  */
 function placementTask(exercise: PlacementTask['exercise'], seed: number, level: Level, rng: Rng): PlacementTask {
-  const wantOpen = rng.next() < OPEN_SHARE;
+  const draw = rng.next();
   const lengths = hasLengths(exercise, level);
+  const mode = draw < OPEN_SHARE ? 'open' : lengths && draw < OPEN_SHARE + LENGTHS_SHARE ? 'lengths' : 'sure';
   // Fuldt regnskab følger reglerne fra niveau 3.
   const rules: Level = exercise === 'full' ? (Math.max(level, 3) as Level) : level;
   for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
@@ -154,52 +164,56 @@ function placementTask(exercise: PlacementTask['exercise'], seed: number, level:
     const limited = (['W', 'E'] as const).filter((d) => limits(allowed[d], m)).length;
     if (rules <= 2 ? limited !== 1 : limited !== 2) continue;
 
-    const honors = shuffle(defenderHonors(hands), rng);
-    const unseenCount = rules === 1 ? 1 : 2 + rng.int(4);
-    if (honors.length <= unseenCount) continue;
-    const unseen = honors.slice(0, unseenCount).map((h) => h.card);
-    const clues = honors.slice(unseenCount);
-    const ledger: Ledger = {
-      W: { allowed: allowed.W, shown: clues.filter((c) => c.seat === 'W').map((c) => c.card), ...(lengths ? { lengths: suitLengths(hands.W) } : {}) },
-      E: { allowed: allowed.E, shown: clues.filter((c) => c.seat === 'E').map((c) => c.card), ...(lengths ? { lengths: suitLengths(hands.E) } : {}) },
-      unseen,
-    };
-    if (rules >= DIRECT_READ_REJECTED_FROM && directlyReadable(ledger)) continue;
-    const solution = solve(ledger);
-    if (rules >= 2 && ![...solution.answer.values()].some((p) => p !== 'open')) continue;
+    // Med længder prøves flere opdelinger af samme fordeling; uden længder én, som før.
+    for (let split = 0; split < (lengths ? LENGTH_SPLITS : 1); split++) {
+      const honors = shuffle(defenderHonors(hands), rng);
+      const unseenCount = rules === 1 ? 1 : 2 + rng.int(4);
+      if (honors.length <= unseenCount) continue;
+      const unseen = honors.slice(0, unseenCount).map((h) => h.card);
+      const clues = honors.slice(unseenCount);
+      const ledger: Ledger = {
+        W: { allowed: allowed.W, shown: clues.filter((c) => c.seat === 'W').map((c) => c.card), ...(lengths ? { lengths: suitLengths(hands.W) } : {}) },
+        E: { allowed: allowed.E, shown: clues.filter((c) => c.seat === 'E').map((c) => c.card), ...(lengths ? { lengths: suitLengths(hands.E) } : {}) },
+        unseen,
+      };
+      if (rules >= DIRECT_READ_REJECTED_FROM && directlyReadable(ledger)) continue;
+      const solution = solve(ledger);
+      if (rules >= 2 && ![...solution.answer.values()].some((p) => p !== 'open')) continue;
 
-    const candidates = unseen.filter(
-      (card) =>
-        (solution.answer.get(card) === 'open') === wantOpen &&
-        (exercise !== 'finesse' || canFinesse(hands, card)) &&
-        explain(ledger, card, solution) !== null,
-    );
-    if (!candidates.length) continue;
-    const card = candidates[rng.int(candidates.length)];
-    const placement = solution.answer.get(card)!;
-    const asked: Defender | undefined = exercise === 'can' ? (rng.int(2) ? 'W' : 'E') : undefined;
-    if (sudokuSeed !== undefined) {
-      // Længderne kommer fra 13-sudokuens generator, kaldt som bibliotek; dagens sudoku påvirkes ikke.
-      const sudoku = makeSudoku(sudokuSeed);
-      for (const d of ['W', 'E'] as const) {
-        if (sudoku.lengths[d].join() !== ledger[d].lengths!.join()) throw new Error(`13-sudokuens længder passer ikke (seed ${sudokuSeed})`);
+      const candidates = unseen.filter((card) => {
+        if ((solution.answer.get(card) === 'open') !== (mode === 'open')) return false;
+        if (mode === 'lengths' && !lengthsDecide(ledger, card, solution)) return false;
+        return (exercise !== 'finesse' || canFinesse(hands, card)) && explain(ledger, card, solution) !== null;
+      });
+      if (!candidates.length) continue;
+      const card = candidates[rng.int(candidates.length)];
+      const placement = solution.answer.get(card)!;
+      // Afgør længderne svaret, spørges der om den anden, så også ja/nej-svaret ændres af længderne.
+      const asked: Defender | undefined =
+        exercise !== 'can' ? undefined : mode === 'lengths' ? otherDefender(placement as Defender) : rng.int(2) ? 'W' : 'E';
+      if (sudokuSeed !== undefined) {
+        // Længderne kommer fra 13-sudokuens generator, kaldt som bibliotek; dagens sudoku påvirkes ikke.
+        const sudoku = makeSudoku(sudokuSeed);
+        for (const d of ['W', 'E'] as const) {
+          if (sudoku.lengths[d].join() !== ledger[d].lengths!.join()) throw new Error(`13-sudokuens længder passer ikke (seed ${sudokuSeed})`);
+        }
       }
+      return {
+        exercise,
+        seed,
+        level,
+        hands,
+        m,
+        auction,
+        clues,
+        ledger,
+        card,
+        ...(asked ? { asked } : {}),
+        placement,
+        explanation: explain(ledger, card, solution)!,
+        ...(sudokuSeed !== undefined ? { sudokuSeed } : {}),
+      };
     }
-    return {
-      exercise,
-      seed,
-      level,
-      hands,
-      m,
-      auction,
-      clues,
-      ledger,
-      card,
-      ...(asked ? { asked } : {}),
-      placement,
-      explanation: explain(ledger, card, solution)!,
-      ...(sudokuSeed !== undefined ? { sudokuSeed } : {}),
-    };
   }
   throw new Error(`Ingen opgave fundet for seed ${seed}`);
 }

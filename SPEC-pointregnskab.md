@@ -133,7 +133,7 @@ Opgaverne genereres fra tilfældige fordelinger, og facit beregnes altid af løs
 5. **Ledetrådsstrøm:** i første version vises en tilfældig delmængde af modspillernes honnører i tilfældig rækkefølge. Et rigtigt spilforløb, hvor honnører falder, når de vinder, dækker eller er tvunget, er en senere udvidelse.
 6. **Spørgsmålet:** en uset honnør vælges, og løseren giver facit. Ca. hver fjerde opgave skal have facit "kan ikke afgøres".
 7. **Kvalitet:** fra niveau 2 skal mindst én honnør være sikkert placeret uden at være set. Opgaver, hvor svaret kan aflæses direkte (en modspiller har vist alt, han kan have), bruges på niveau 1–2 og forkastes fra niveau 3.
-8. **Fuldt regnskab:** længderne kommer fra 13-sudokuens generator, kaldt som bibliotek med et nyt seed, aldrig dagens sudoku. Kun Vests og Østs længder bruges.
+8. **Fuldt regnskab:** længderne kommer fra 13-sudokuens generator, kaldt som bibliotek med et nyt seed, aldrig dagens sudoku. Kun Vests og Østs længder bruges. På niveau 5 (og i Fuldt regnskab) skal mindst halvdelen af opgaverne være nogle, hvor længderne ændrer svaret: uden længder ville facit være et andet. Generatoren sigter efter ca. 60 %, ca. hver fjerde er stadig "kan ikke afgøres", og resten afgøres af pointene alene.
 9. **Genskabelse:** hver opgave har et seed og kan genskabes præcist. Opgavens tekster bygges på det sprog, der gælder, når opgaven vises.
 
 ## Session, scoring, progression og data
@@ -237,6 +237,9 @@ Pointregnskabet ligger i appens 480 px-kolonne og følger samme læseretning som
   - *Han skal have den:* "Vest mangler 5–7 og kan kun nå det med både ♣D og ♦E." ("West needs 5–7 more and can only get there with both ♣Q and ♦A.") Bruges, når modspilleren kun kan nå sit minimum med honnøren.
   - *Kan ikke afgøres:* "Begge placeringer passer: ♣D hos Vest giver Vest 12 hp, ♣D hos Øst giver Øst 5 hp." ("Both placements fit: ♣Q with West gives West 12 HCP, ♣Q with East gives East 5 HCP.") Viser en mulig placering for hver side.
   - *Overmod:* "Det kunne du ikke vide endnu." ("You couldn't know that yet.") efterfulgt af sætningen for "kan ikke afgøres".
+  - *Farven er brugt op* (kun med længder): "Øst har vist alle sine 2 spar, så ♠E sidder hos Vest." ("East has shown all 2 of his spades, so ♠A is with West.") Bruges, når modspilleren har vist alle sine kort i farven (eller er renonce), så farvens usete honnører sidder hos den anden.
+  - *Ikke plads* (kun med længder): "Øst har kun 1 spar tilbage, men der er 2 usete spar-honnører (♠E ♠D), så mindst én af dem sidder hos Vest." ("East has only 1 spade left, but there are 2 unseen spade honours (♠A ♠Q), so at least one of them is with West.") Bruges, når modspilleren har færre kort tilbage i farven end de usete honnører i den; sætningen afgør ikke alene, hvilken honnør det er, og følges derfor af en pointsætning.
+  - *Point og længder:* bruges begge, nævner facit begge, først længderne og så pointene, fx "Øst har kun 1 spar tilbage, men der er 2 usete spar-honnører (♠E ♠D), så mindst én af dem sidder hos Vest. Vest mangler 3–4 og kan kun nå det med ♠E." Facit nævner de færrest mulige længder.
 - **Øvrigt:** samme tone, mørk tilstand, systemskrift, trykflader på mindst 44 px (ⓘ har en trykflade på ca. 44 px, selv om cirklen er mindre) og kontrast på mindst 4,5:1 som resten af appen.
 
 ## Designarbejde i Claude Design
@@ -275,6 +278,9 @@ Accepttest i Vitest:
 - [ ] Meldeforløbet: hvert vist pas passer med sin regel (pas i åbningsposition højst 11 hp, svarerens pas i pas-reglens interval), og Nord–Syds meldinger indgår ikke i regnskabet.
 - [ ] Har Nord eller Syd meldt ind eller doblet efter Øst–Vests åbning, giver svarerens pas tilladte point \[0, M\].
 - [ ] Fuldt regnskab: en modspiller med 1 kort i en farve kan ikke få to honnører i den.
+- [ ] Farven er brugt op: Øst har vist ♠K og ♠D og har 2 spar, og ♠E er uset: ♠E sidder sikkert hos Vest, uden længder kan det ikke afgøres, og facit er "Øst har vist alle sine 2 spar, så ♠E sidder hos Vest." (også på engelsk).
+- [ ] Ikke plads: Øst har 1 spar, ♠E, ♠D og ♥K er usete, og Vest (2NT, 20–21) har vist 17: ♠E sidder sikkert hos Vest, uden længder kan det ikke afgøres, og facit nævner først Østs plads i spar og så Vests point (også på engelsk).
+- [ ] Niveau 5: i mindst halvdelen af 200 opgaver ændrer længderne svaret (uden længder ville facit være et andet), og facit bruger da længderne.
 - [ ] Generatoren: 20–30 % af 1.000 opgaver har facit "kan ikke afgøres", ingen opgave fra niveau 3 kan aflæses direkte, og samme seed giver samme opgave.
 - [ ] Regnskabspanelets "Rest" er altid de tilladte point minus det viste, aldrig løserens slutning.
 - [ ] Løbende tælling: ét af to tal rigtigt giver halvt. Visningstiden bliver 10 % kortere efter rigtigt og 15 % længere efter forkert, inden for 800–4.000 ms pr. kort.
@@ -306,3 +312,4 @@ Afklaret (5. oktober 2026, Franks afgørelser):
 10. **Fælles menu:** besluttes i en særskilt navigationsopgave (SPEC-navigation.md), før næste spor bygges. Pointregnskabet bygges med sit eget menupunkt, som navigationsopgaven derefter placerer i gruppen Optælling.
 11. **Aflæses direkte:** opgaver, hvor en modspiller har vist alt, han kan have, bruges på niveau 1–2 og forkastes først fra niveau 3 (Generator punkt 7).
 12. **Skemaet:** har de valgfrie felter `lastExport` og en svarlog som i farvebehandling; sproget gemmes ikke (Data).
+13. **Længdeskabeloner:** "Farven er brugt op" og "Ikke plads" kommer til, og på niveau 5 skal mindst halvdelen af opgaverne være nogle, hvor længderne ændrer svaret. Facit nævner både point og længder, når begge er brugt (Layout, Facit; Generator punkt 8). Franks afgørelse, 6. oktober 2026.

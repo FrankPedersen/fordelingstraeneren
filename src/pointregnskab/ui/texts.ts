@@ -21,6 +21,9 @@ const listWith = (and: string) => (items: readonly string[]) =>
 const listDa = listWith('og');
 const listEn = listWith('and');
 
+const SUIT_DA = ['spar', 'hjerter', 'ruder', 'klør'];
+const SUIT_EN = ['spade', 'heart', 'diamond', 'club'];
+
 const MONTHS_DA = ['januar', 'februar', 'marts', 'april', 'maj', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'december'];
 const MONTHS_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const dayParts = (day: string) => day.split('-').map(Number);
@@ -154,6 +157,12 @@ const DA = {
   /** Kan ikke afgøres. */
   bothFit: (card: string, west: number, east: number) =>
     `Begge placeringer passer: ${card} hos Vest giver Vest ${west} hp, ${card} hos Øst giver Øst ${east} hp.`,
+  /** Farven er brugt op. */
+  usedUp: (seat: string, length: number, suit: number, cards: readonly string[], other: string) =>
+    `${seat} ${length === 0 ? `har ingen ${SUIT_DA[suit]}` : length === 1 ? `har vist sin eneste ${SUIT_DA[suit]}` : `har vist alle sine ${length} ${SUIT_DA[suit]}`}, så ${listDa(cards)} sidder hos ${other}.`,
+  /** Ikke plads. */
+  noRoom: (seat: string, room: number, suit: number, cards: readonly string[], other: string) =>
+    `${seat} har kun ${room} ${SUIT_DA[suit]} tilbage, men der er ${cards.length} usete ${SUIT_DA[suit]}-honnører (${cards.join(' ')}), så mindst ${cards.length - room === 1 ? 'én' : cards.length - room} af dem sidder hos ${other}.`,
   placements: 'De mulige placeringer',
   placementLine: (west: string, east: string) => `Vest: ${west} · Øst: ${east}`,
   nothing: 'ingen',
@@ -377,6 +386,10 @@ const EN: Texts = {
     `${holder} needs ${rest} more and can only get there with ${cards.length > 1 ? 'both ' : ''}${listEn(cards)}.`,
   bothFit: (card: string, west: number, east: number) =>
     `Both placements fit: ${card} with West gives West ${west} HCP, ${card} with East gives East ${east} HCP.`,
+  usedUp: (seat: string, length: number, suit: number, cards: readonly string[], other: string) =>
+    `${seat} ${length === 0 ? `has no ${SUIT_EN[suit]}s` : length === 1 ? `has shown his only ${SUIT_EN[suit]}` : `has shown all ${length} of his ${SUIT_EN[suit]}s`}, so ${listEn(cards)} ${cards.length === 1 ? 'is' : 'are'} with ${other}.`,
+  noRoom: (seat: string, room: number, suit: number, cards: readonly string[], other: string) =>
+    `${seat} has only ${room} ${SUIT_EN[suit]}${room === 1 ? '' : 's'} left, but there are ${cards.length} unseen ${SUIT_EN[suit]} honours (${cards.join(' ')}), so at least ${cards.length - room === 1 ? 'one' : cards.length - room} of them ${cards.length - room === 1 ? 'is' : 'are'} with ${other}.`,
   placements: 'The possible placements',
   placementLine: (west: string, east: string) => `West: ${west} · East: ${east}`,
   nothing: 'none',
