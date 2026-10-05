@@ -162,7 +162,7 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
 
 ## Pointregnskab
 
-Et nyt, selvstændigt spor på grenen `pointregnskab` (appen før sporet er tagget `v3-tosproget`). **[SPEC-pointregnskab.md](SPEC-pointregnskab.md) beskriver sporet.** Eksisterende spor, systemfilen, meldegiveren og 13-sudokuens generator ændres ikke; kun stederne i specens tabel må berøres. Kræver noget alligevel en ændring i eksisterende kode, så spørg først.
+Et nyt, selvstændigt spor, bygget på grenen `pointregnskab` og flettet ind på `main` (appen før sporet er tagget `v3-tosproget`). **[SPEC-pointregnskab.md](SPEC-pointregnskab.md) beskriver sporet.** Eksisterende spor, systemfilen, meldegiveren og 13-sudokuens generator ændres ikke; kun stederne i specens tabel må berøres. Kræver noget alligevel en ændring i eksisterende kode, så spørg først.
 
 **Kort over koden** (`src/pointregnskab/`)
 - `model/`: point og tilladte point som mængder (`points.ts`), løseren (`solver.ts`), meldeforløbet med pas-reglerne (`bidding.ts`), facit-skabelonerne (`explain.ts`) og generatoren (`generator.ts`).
@@ -190,4 +190,4 @@ Et nyt, selvstændigt spor på grenen `pointregnskab` (appen før sporet er tagg
 - [x] Trin 2: generator med meldeforløb, kvalitetskrav og seeds.
 - [x] Logik uden brugerflade for session, scoring og Leitner-bunken; skemaet for `pointregnskab:v1` som TypeScript-type.
 - [x] Franks godkendelse af skemaet (6. oktober 2026).
-- [x] Trin 3–5: brugerfladen på dansk og engelsk med ⓘ, menupunktet på forsiden, afsnittet i vejledningen, Kipningsretning, Løbende tælling med tilpasset visningstid og Fuldt regnskab med længder fra 13-sudokuens generator. Venter på Franks godkendelse, før grenen flettes ind.
+- [x] Trin 3–5: brugerfladen på dansk og engelsk med ⓘ, menupunktet på forsiden, afsnittet i vejledningen, Kipningsretning, Løbende tælling med tilpasset visningstid og Fuldt regnskab med længder fra 13-sudokuens generator. Godkendt og udgivet på `main` (6. oktober 2026).
