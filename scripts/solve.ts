@@ -9,6 +9,7 @@
 //   src/farvebehandling/content/linjer-side-N.md              linjeteksterne til godkendelse
 //   src/farvebehandling/content/teknikker.md                  teknik pr. kombination til godkendelse
 //   src/farvebehandling/content/hvad-nu.md                    Hvad nu?-situationerne til godkendelse
+//   src/farvebehandling/content/kildefejl.json                mål, der fjernes, fordi kildens procent er forkert
 //
 //   node scripts/solve.ts                  løser det, der mangler i mellemlageret, og samler filerne
 //   node scripts/solve.ts --shard 2/8      løser hver 8. case fra nr. 2 (kør flere samtidig), uden at samle
@@ -143,28 +144,41 @@ if (missing.length) {
 
 // Specens accepttest: siden "damen mangler" for sig.
 writeFileSync(`${content}damen-mangler-hyppighed.csv`, pre.frequencyCsv(pre.frequencyRows(src.classifyCases(pages[2].cases))));
-writeFileSync(`${content}hyppighed.csv`, pre.frequencyCsv(rows, { pages: true }));
+
+// Fejl i kilden: mål uden beslutning, hvor kildens procent er forkert, fjernes, og en case uden mål sorteres fra.
+// Listen gemmes, så appens test kan regne banken og rangen igen; rapporterne viser alle kildens mål.
+const validationOf = new Map(usable.map((r) => [r.case, pre.validationRow(r.case, readCached(r.case)!.lav, readCached(r.case)!.høj)]));
+const pageRows = (n: number) => usable.filter((r) => r.case.page === n).map((r) => validationOf.get(r.case)!);
+const errors = PAGES.flatMap((n) =>
+  pageRows(n).flatMap((v) => pre.removedGoals(v, pageRows(n)).map((x) => ({ page: n, case: src.caseLabel(v.case), need: x.need, cause: x.cause }))),
+);
+writeFileSync(`${content}kildefejl.json`, JSON.stringify({ version: 1, goals: errors }, null, 1) + '\n');
+const finalCases = pre.applySourceErrors(cases, errors);
+const originalOf = new Map(finalCases.map((c, i) => [c, cases[i]]));
+const finalRows = pre.frequencyRows(finalCases);
+const finalUsable = finalRows.filter((r) => r.rank > 0).sort((a, b) => a.rank - b.rank);
+writeFileSync(`${content}hyppighed.csv`, pre.frequencyCsv(finalRows, { pages: true }));
 
 const bank = [];
 const solutions: Record<string, Solution> = {};
 const situations: Record<string, Situations> = {};
-const validation = new Map<number, ReturnType<typeof pre.validationRow>[]>();
 const app = new Map<number, unknown[]>();
-for (const row of usable) {
+for (const row of finalUsable) {
   const c = row.case;
-  const entry = readCached(c)!;
-  const page = pages[c.page!];
-  const combination = pre.bankEntry(c, `bridgehands.com, Suit Combinations ${c.page}`, entry.lav, entry.whatNow);
+  const entry = readCached(originalOf.get(c)!)!;
+  // Kun de mål, der er tilbage efter kildefejlene.
+  const keep = <T>(record: Record<string, T>) => Object.fromEntries(Object.entries(record).filter(([goal]) => c.needs.includes(Number(goal))));
+  const lav: Solution = { ...entry.lav, goals: keep(entry.lav.goals) };
+  const whatNow: Situations = keep(entry.whatNow);
+  const combination = pre.bankEntry(c, `bridgehands.com, Suit Combinations ${c.page}`, lav, whatNow);
   if (solutions[combination.id]) throw new Error(`${combination.id} findes to gange`);
   bank.push(combination);
-  solutions[combination.id] = entry.lav;
-  if (Object.keys(entry.whatNow).length) situations[combination.id] = entry.whatNow;
-  if (!validation.has(c.page!)) validation.set(c.page!, []);
-  validation.get(c.page!)!.push(pre.validationRow(c, entry.lav, entry.høj));
+  solutions[combination.id] = lav;
+  if (Object.keys(whatNow).length) situations[combination.id] = whatNow;
   if (!app.has(c.page!)) app.set(c.page!, []);
-  app.get(c.page!)!.push(pre.appEntry(row.rank, row.frequency!, combination, entry.lav, entry.whatNow));
-  void page;
+  app.get(c.page!)!.push(pre.appEntry(row.rank, row.frequency!, combination, lav, whatNow));
 }
+console.log(`Kildefejl: ${errors.length} mål fjernet, ${finalCases.filter((c, i) => !c.usable && cases[i].usable).length} cases uden mål.`);
 
 writeFileSync(`${content}suit-combinations.json`, JSON.stringify({ version: 1, source: 'https://www.bridgehands.com/S/', combinations: bank }, null, 1) + '\n');
 writeFileSync(`${content}solutions.json`, JSON.stringify({ version: 1, model: pre.MODEL_TEXT, combinations: solutions }) + '\n');
@@ -177,7 +191,7 @@ const techniques = JSON.parse(readFileSync(`${content}techniques.json`, 'utf8'))
 for (const n of PAGES) {
   const page = pages[n];
   const pageCases = cases.filter((c) => c.page === n);
-  const rowsHere = validation.get(n) ?? [];
+  const rowsHere = pageRows(n);
   if (rowsHere.length) {
     const report = pre.validationReport(rowsHere, pageCases.filter((c) => !c.usable), { page: page.page, url: page.url, fetched: page.fetched, tolerance: 0.5 });
     const pageRows = pre.frequencyRows(pageCases);

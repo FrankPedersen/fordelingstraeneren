@@ -3185,14 +3185,13 @@
    "north": "AQ2",
    "south": "J543",
    "goals": [
-    4,
     3
    ],
    "entries": "unlimited",
    "lines": [
     {
      "id": "A",
-     "text": "Slå esset.",
+     "text": "Slå esset. Lille fra hånden mod damen (kip); lægger Vest en honnør, lægges der lille. Slå knægten.",
      "steps": [
       {
        "leadFrom": "N",
@@ -3202,8 +3201,39 @@
     },
     {
      "id": "B",
-     "text": "Damen fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.",
+     "text": "Damen fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Slå esset og knægten.",
      "steps": [
+      {
+       "leadFrom": "N",
+       "card": "Q"
+      },
+      {
+       "leadFrom": "N",
+       "card": "A"
+      },
+      {
+       "leadFrom": "S",
+       "card": "J"
+      }
+     ]
+    },
+    {
+     "id": "C",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille. Slå esset og damen.",
+     "steps": [
+      {
+       "leadFrom": "N",
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "J",
+        "else": "low"
+       }
+      },
+      {
+       "leadFrom": "N",
+       "card": "A"
+      },
       {
        "leadFrom": "N",
        "card": "Q"
@@ -3211,18 +3241,8 @@
      ]
     },
     {
-     "id": "C",
-     "text": "Lille fra begge hænder.",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "low"
-      }
-     ]
-    },
-    {
      "id": "D",
-     "text": "Knægten fra hånden; dækker Vest, tages stikket med esset, ellers lad den løbe.",
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med esset, ellers lad den løbe. Slå esset og damen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -3237,14 +3257,14 @@
     },
     {
      "id": "E",
-     "text": "Lille fra begge hænder; lægger Vest en honnør, tages den med esset.",
+     "text": "Lille fra hånden til esset. Lille fra hånden mod damen (kip); lægger Vest en honnør, lægges der lille. Slå knægten.",
      "steps": [
       {
        "leadFrom": "S",
        "card": "low",
        "third": {
         "ifSecondPlays": "low",
-        "play": "low",
+        "play": "A",
         "else": "A"
        }
       }
@@ -3254,8 +3274,7 @@
    "source": {
     "name": "bridgehands.com, Suit Combinations 3, case 38",
     "values": {
-     "3": 71,
-     "4": 9
+     "3": 71
     }
    },
    "verified": false
@@ -4302,12 +4321,11 @@
   },
   {
    "id": "2-AT543",
-   "technique": "enkelt-kipning",
+   "technique": "sikkerhedsspil",
    "north": "2",
    "south": "AT543",
    "goals": [
-    3,
-    2
+    3
    ],
    "entries": "unlimited",
    "lines": [
@@ -4360,11 +4378,10 @@
    "source": {
     "name": "bridgehands.com, Suit Combinations 6, case 2.6",
     "values": {
-     "2": 67,
      "3": 2
     }
    },
-   "verified": false
+   "verified": true
   },
   {
    "id": "32-Q94",
@@ -10017,75 +10034,6 @@
    "verified": true
   },
   {
-   "id": "Q2-AK76543",
-   "technique": "fald-eller-kip",
-   "north": "Q2",
-   "south": "AK76543",
-   "goals": [
-    7
-   ],
-   "entries": "unlimited",
-   "lines": [
-    {
-     "id": "A",
-     "text": "Slå damen.",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "Q"
-      }
-     ]
-    },
-    {
-     "id": "B",
-     "text": "Lille fra bordet til esset.",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "low",
-       "third": {
-        "ifSecondPlays": "low",
-        "play": "low",
-        "else": "A"
-       }
-      }
-     ]
-    },
-    {
-     "id": "C",
-     "text": "Slå esset.",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "A"
-      }
-     ]
-    },
-    {
-     "id": "D",
-     "text": "Lille fra hånden til damen.",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "low",
-       "third": {
-        "ifSecondPlays": "low",
-        "play": "low",
-        "else": "Q"
-       }
-      }
-     ]
-    }
-   ],
-   "source": {
-    "name": "bridgehands.com, Suit Combinations 1, case 51",
-    "values": {
-     "7": 95
-    }
-   },
-   "verified": false
-  },
-  {
    "id": "2-AT93",
    "technique": "sikkerhedsspil",
    "north": "2",
@@ -15287,11 +15235,10 @@
   },
   {
    "id": "T2-AQ6543",
-   "technique": "sikkerhedsspil",
+   "technique": "dobbelt-kipning",
    "north": "T2",
    "south": "AQ6543",
    "goals": [
-    6,
     5,
     4
    ],
@@ -15299,17 +15246,27 @@
    "lines": [
     {
      "id": "A",
-     "text": "10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
+     "text": "10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra bordet til esset.",
      "steps": []
     },
     {
      "id": "B",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
-     "steps": []
+     "text": "Lille fra bordet til esset. 10'eren fra bordet; dækker Øst, lægges der lille, ellers læg damen.",
+     "steps": [
+      {
+       "leadFrom": "N",
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "A",
+        "else": "A"
+       }
+      }
+     ]
     },
     {
      "id": "C",
-     "text": "Slå esset.",
+     "text": "Slå esset. 10'eren fra bordet; dækker Øst, lægges der lille, ellers læg damen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -15329,11 +15286,16 @@
     },
     {
      "id": "E",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, lægges der lille. Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
-       "card": "low"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "T",
+        "else": "low"
+       }
       }
      ]
     }
@@ -15342,8 +15304,7 @@
     "name": "bridgehands.com, Suit Combinations 4, case 2.49",
     "values": {
      "4": 100,
-     "5": 93,
-     "6": 37
+     "5": 93
     }
    },
    "verified": false
@@ -20011,14 +19972,13 @@
    "north": "J9",
    "south": "Q432",
    "goals": [
-    2,
     1
    ],
    "entries": "unlimited",
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.",
+     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "N",
@@ -20028,11 +19988,16 @@
     },
     {
      "id": "B",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "N",
-       "card": "low"
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "Q",
+        "else": "low"
+       }
       }
      ]
     },
@@ -20048,15 +20013,14 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra begge hænder. Lille fra begge hænder. Lille fra hånden.",
      "steps": []
     }
    ],
    "source": {
     "name": "bridgehands.com, Suit Combinations 7, case 17",
     "values": {
-     "1": 97,
-     "2": 32
+     "1": 97
     }
    },
    "verified": false
@@ -21029,8 +20993,7 @@
    "south": "AQT95",
    "goals": [
     4,
-    3,
-    2
+    3
    ],
    "entries": "unlimited",
    "lines": [
@@ -21083,7 +21046,6 @@
    "source": {
     "name": "bridgehands.com, Suit Combinations 4, case 2.53",
     "values": {
-     "2": 94,
      "3": 68,
      "4": 18
     }
@@ -21324,19 +21286,18 @@
    "north": "J32",
    "south": "KT84",
    "goals": [
-    4,
     3
    ],
    "entries": "unlimited",
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.",
+     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers læg 8'eren.",
      "steps": []
     },
     {
      "id": "B",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra bordet mod 8'eren (kip); lægger Øst en honnør, lægges der lille.",
      "steps": []
     },
     {
@@ -21383,8 +21344,7 @@
    "source": {
     "name": "bridgehands.com, Suit Combinations 6, case 10",
     "values": {
-     "3": 2,
-     "4": 3
+     "3": 2
     }
    },
    "verified": false
@@ -29589,7 +29549,6 @@
    "north": "J9",
    "south": "AQ432",
    "goals": [
-    5,
     4,
     3
    ],
@@ -29597,7 +29556,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Slå esset og damen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -29612,14 +29571,14 @@
     },
     {
      "id": "B",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset. Slå knægten og esset.",
      "steps": [
       {
        "leadFrom": "N",
        "card": "low",
        "third": {
         "ifSecondPlays": "low",
-        "play": "low",
+        "play": "Q",
         "else": "A"
        }
       }
@@ -29627,7 +29586,7 @@
     },
     {
      "id": "C",
-     "text": "Slå esset.",
+     "text": "Slå esset. Lille fra begge hænder. Slå damen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -29637,7 +29596,7 @@
     },
     {
      "id": "D",
-     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
+     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå knægten og esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -29647,21 +29606,15 @@
     },
     {
      "id": "E",
-     "text": "Lille fra begge hænder.",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "low"
-      }
-     ]
+     "text": "Lille fra begge hænder. Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
+     "steps": []
     }
    ],
    "source": {
     "name": "bridgehands.com, Suit Combinations 3, case 18",
     "values": {
      "3": 93,
-     "4": 58,
-     "5": 7
+     "4": 58
     }
    },
    "verified": false
@@ -34380,50 +34333,6 @@
    "verified": false
   },
   {
-   "id": "2-KQT9",
-   "technique": "dobbelt-kipning",
-   "north": "2",
-   "south": "KQT9",
-   "goals": [
-    2
-   ],
-   "entries": "unlimited",
-   "lines": [
-    {
-     "id": "A",
-     "text": "Lille fra begge hænder.",
-     "steps": []
-    },
-    {
-     "id": "B",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "K"
-      }
-     ]
-    },
-    {
-     "id": "C",
-     "text": "10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "T"
-      }
-     ]
-    }
-   ],
-   "source": {
-    "name": "bridgehands.com, Suit Combinations 5, case 1",
-    "values": {
-     "2": 11
-    }
-   },
-   "verified": false
-  },
-  {
    "id": "2-AJT9",
    "technique": "enkelt-kipning",
    "north": "2",
@@ -35240,8 +35149,7 @@
    "south": "AQ9843",
    "goals": [
     6,
-    5,
-    4
+    5
    ],
    "entries": "unlimited",
    "lines": [
@@ -35309,7 +35217,6 @@
    "source": {
     "name": "bridgehands.com, Suit Combinations 3, case 41",
     "values": {
-     "4": 98,
      "5": 85,
      "6": 34
     }
@@ -35728,8 +35635,7 @@
    "south": "Q65432",
    "goals": [
     4,
-    3,
-    2
+    3
    ],
    "entries": "unlimited",
    "lines": [
@@ -35772,7 +35678,6 @@
    "source": {
     "name": "bridgehands.com, Suit Combinations 4, case 2.52",
     "values": {
-     "2": 94,
      "3": 68,
      "4": 18
     }
@@ -36855,87 +36760,6 @@
     }
    },
    "verified": true
-  },
-  {
-   "id": "932-AT7654",
-   "technique": "fald-eller-kip",
-   "north": "932",
-   "south": "AT7654",
-   "goals": [
-    6,
-    5
-   ],
-   "entries": "unlimited",
-   "lines": [
-    {
-     "id": "A",
-     "text": "9'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "9",
-       "third": {
-        "ifSecondPlays": "low",
-        "play": "low",
-        "else": "A"
-       }
-      }
-     ]
-    },
-    {
-     "id": "B",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "low",
-       "third": {
-        "ifSecondPlays": "low",
-        "play": "low",
-        "else": "A"
-       }
-      }
-     ]
-    },
-    {
-     "id": "C",
-     "text": "Slå esset.",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "A"
-      }
-     ]
-    },
-    {
-     "id": "D",
-     "text": "10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "T"
-      }
-     ]
-    },
-    {
-     "id": "E",
-     "text": "Lille fra begge hænder.",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "low"
-      }
-     ]
-    }
-   ],
-   "source": {
-    "name": "bridgehands.com, Suit Combinations 6, case 2.29",
-    "values": {
-     "5": 95,
-     "6": 41
-    }
-   },
-   "verified": false
   },
   {
    "id": "KT432-AJ965",
@@ -38760,8 +38584,7 @@
    "south": "AKJ98",
    "goals": [
     5,
-    4,
-    3
+    4
    ],
    "entries": "unlimited",
    "lines": [
@@ -38814,7 +38637,6 @@
    "source": {
     "name": "bridgehands.com, Suit Combinations 2, case 22",
     "values": {
-     "3": 94,
      "4": 74,
      "5": 19
     }

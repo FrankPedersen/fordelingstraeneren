@@ -17,16 +17,17 @@ Kilden har kun hele procenter, så en afvigelse over 0,5 procentpoint gennemgås
 - Fortolkning "høj": 63 af 209 mål inden for 0,5 procentpoint, 73 inden for 1 procentpoint.
 - Mindst én af fortolkningerne inden for 0,5 procentpoint: 204 af 209 mål.
 - Mål, hvor den bedste linje kræver, at spilføreren blander (ingen ren linje inden for 0,002 procentpoint): 0.
+- Fejl i kilden, fjernet fra appen: 1 mål, hvor kildens procent afviger mere end 1,5 procentpoint med begge fortolkninger, og alle linjer giver det samme; 1 case har ikke flere mål og er ikke med.
 
 ## Afvigelser over 0,5 procentpoint med fortolkningen "lav"
 
-| Case | Hånd / bordet | Mål | Kilde | Lav | Høj | Nærmest | Kildens bemærkning |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 21 | K x x x / D 10 x | 2 | 76 % | 76,6 % | 100,0 % | lav | Finesse J (low toward 10) then low toward K | Play low to Q then finesse J (low to 10) |
-| 6 | K D 10 9 / x x | 3 | 3 % | 50,0 % | 50,0 % | lav | Finesse J 10 then low to 9 |
-| 2.15 | E B 8 / 10 x x | 2 | 24 % | 39,7 % | 39,7 % | lav | Finesse 9 |
-| 7 | K D 9 8 / x x | 3 | 50 % | 5,2 % | 5,2 % | lav | Finesse J 10 then low to 9 |
-| 1 | K D 10 9 / x | 2 | 11 % | 100,0 % | 100,0 % | lav | Finesse J |
+| Case | Hånd / bordet | Mål | Kilde | Lav | Høj | Nærmest | Årsag | Kildens bemærkning |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 21 | K x x x / D 10 x | 2 | 76 % | 76,6 % | 100,0 % | lav | lille afvigelse | Finesse J (low toward 10) then low toward K | Play low to Q then finesse J (low to 10) |
+| 6 | K D 10 9 / x x | 3 | 3 % | 50,0 % | 50,0 % | lav | passer ikke med nogen fortolkning | Finesse J 10 then low to 9 |
+| 2.15 | E B 8 / 10 x x | 2 | 24 % | 39,7 % | 39,7 % | lav | passer ikke med nogen fortolkning | Finesse 9 |
+| 7 | K D 9 8 / x x | 3 | 50 % | 5,2 % | 5,2 % | lav | samme mål og procenter som case 2.9, der passer | Finesse J 10 then low to 9 |
+| 1 | K D 10 9 / x | 2 | 11 % | 100,0 % | 100,0 % | lav | målet er sikkert med begge fortolkninger; **fjernet** (alle linjer giver det samme) | Finesse J |
 
 ## Sorteret fra
 

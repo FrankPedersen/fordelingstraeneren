@@ -17,25 +17,26 @@ Kilden har kun hele procenter, så en afvigelse over 0,5 procentpoint gennemgås
 - Fortolkning "høj": 36 af 118 mål inden for 0,5 procentpoint, 37 inden for 1 procentpoint.
 - Mindst én af fortolkningerne inden for 0,5 procentpoint: 108 af 118 mål.
 - Mål, hvor den bedste linje kræver, at spilføreren blander (ingen ren linje inden for 0,002 procentpoint): 2.
+- Fejl i kilden, fjernet fra appen: 1 mål, hvor kildens procent afviger mere end 1,5 procentpoint med begge fortolkninger, og alle linjer giver det samme.
 
 ## Afvigelser over 0,5 procentpoint med fortolkningen "lav"
 
-| Case | Hånd / bordet | Mål | Kilde | Lav | Høj | Nærmest | Kildens bemærkning |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 69 | K x x x / x x x x | 1 | 86 % | 86,7 % | 100,0 % | lav | Play low to low then low to King |
-| 30 | D x x x / B x x | 1 | 88 % | 87,1 % | 100,0 % | lav | Finesse A K towards either Q or J then play to honor | Play low to low then low to J |
-| 68 | K 10 x x / x x x x | 1 | 86 % | 86,7 % | 100,0 % | lav | Play low to low then low to low |
-| 61 | K 10 9 x / x x x | 1 | 93 % | 90,8 % | 100,0 % | lav | Play low to 9 then low to 10 |
-| 16 | D B 8 x / x x | 2 | 7 % | 5,9 % | 6,6 % | høj | Finesse 10 9 |
-| 16 | D B 8 x / x x | 1 | 85 % | 79,4 % | 84,7 % | høj | Finesse 10 9 |
-| 35 | D B 9 x x / x x x | 2 | 95 % | 92,4 % | 100,0 % | lav | Finesse A K repeatedly |
-| 65 | K 10 9 x x / x x x | 2 | 95 % | 92,4 % | 100,0 % | lav | Play low to low then low to low |
-| 32 | D B 9 x x x / x x | 3 | 93 % | 92,4 % | 100,0 % | lav | Finesse A K then low to low | Finesse 10 then finesse A K | Either of the above |
-| 17 | D x x x / B 9 | 2 | 32 % | 0,0 % | 21,0 % | høj | Finesse 10 |
-| 17 | D x x x / B 9 | 1 | 97 % | 56,4 % | 100,0 % | høj | Finesse 10 |
-| 71 | K 10 x x x x / x x x | 4 | 89 % | 76,6 % | 89,0 % | høj | Low to King | Low to 10 | Either of the above |
-| 38 | D 9 8 x x / x x x | 2 | 90 % | 83,9 % | 89,6 % | høj | Finesse A K | Play low to low then low to Q |
-| 4 | D 10 8 7 / x | 1 | 14 % | 15,1 % | 15,1 % | lav | Finesse A K |
+| Case | Hånd / bordet | Mål | Kilde | Lav | Høj | Nærmest | Årsag | Kildens bemærkning |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 69 | K x x x / x x x x | 1 | 86 % | 86,7 % | 100,0 % | lav | lille afvigelse | Play low to low then low to King |
+| 30 | D x x x / B x x | 1 | 88 % | 87,1 % | 100,0 % | lav | lille afvigelse | Finesse A K towards either Q or J then play to honor | Play low to low then low to J |
+| 68 | K 10 x x / x x x x | 1 | 86 % | 86,7 % | 100,0 % | lav | lille afvigelse | Play low to low then low to low |
+| 61 | K 10 9 x / x x x | 1 | 93 % | 90,8 % | 100,0 % | lav | passer ikke med nogen fortolkning | Play low to 9 then low to 10 |
+| 16 | D B 8 x / x x | 2 | 7 % | 5,9 % | 6,6 % | høj | passer med "høj" | Finesse 10 9 |
+| 16 | D B 8 x / x x | 1 | 85 % | 79,4 % | 84,7 % | høj | passer med "høj" | Finesse 10 9 |
+| 35 | D B 9 x x / x x x | 2 | 95 % | 92,4 % | 100,0 % | lav | passer ikke med nogen fortolkning | Finesse A K repeatedly |
+| 65 | K 10 9 x x / x x x | 2 | 95 % | 92,4 % | 100,0 % | lav | passer ikke med nogen fortolkning | Play low to low then low to low |
+| 32 | D B 9 x x x / x x | 3 | 93 % | 92,4 % | 100,0 % | lav | lille afvigelse | Finesse A K then low to low | Finesse 10 then finesse A K | Either of the above |
+| 17 | D x x x / B 9 | 2 | 32 % | 0,0 % | 21,0 % | høj | samme mål og procenter som case 29, der passer; **fjernet** (alle linjer giver det samme) | Finesse 10 |
+| 17 | D x x x / B 9 | 1 | 97 % | 56,4 % | 100,0 % | høj | samme mål og procenter som case 29, der passer | Finesse 10 |
+| 71 | K 10 x x x x / x x x | 4 | 89 % | 76,6 % | 89,0 % | høj | passer med "høj" | Low to King | Low to 10 | Either of the above |
+| 38 | D 9 8 x x / x x x | 2 | 90 % | 83,9 % | 89,6 % | høj | passer med "høj" | Finesse A K | Play low to low then low to Q |
+| 4 | D 10 8 7 / x | 1 | 14 % | 15,1 % | 15,1 % | lav | lille afvigelse | Finesse A K |
 
 ## Sorteret fra
 

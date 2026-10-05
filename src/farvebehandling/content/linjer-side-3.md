@@ -74,14 +74,6 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 ## 6. B 5 4 3 / E D 2
 
-**4 stik**
-
-- 0,0 % (bedst): Slå esset.
-- 0,0 %: Damen fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
-- 0,0 %: Lille fra begge hænder.
-- 0,0 %: Knægten fra hånden; dækker Vest, tages stikket med esset, ellers lad den løbe.
-- 0,0 %: Lille fra begge hænder; lægger Vest en honnør, tages den med esset.
-
 **3 stik**
 
 - 46,0 % (bedst): Slå esset. Lille fra hånden mod damen (kip); lægger Vest en honnør, lægges der lille. Slå knægten.
@@ -1468,14 +1460,6 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 ## 78. E D 4 3 2 / B 9
 
-**5 stik**
-
-- 0,0 % (bedst): Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.
-- 0,0 %: Lille fra begge hænder; lægger Øst en honnør, tages den med esset.
-- 0,0 %: Slå esset.
-- 0,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
-- 0,0 %: Lille fra begge hænder.
-
 **4 stik**
 
 - 49,1 % (bedst): Lille fra begge hænder. Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.
@@ -1746,15 +1730,6 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 76,3 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers læg knægten. Slå esset.
 - 76,3 %: Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Slå esset.
 - 73,5 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå knægten.
-
-**4 stik**
-
-- 100,0 % (bedst): Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.
-- 100,0 %: Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, tages den med esset.
-- 100,0 %: Slå esset.
-- 100,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
-- 100,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
-- 100,0 %: Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.
 
 ## 92. E 9 8 5 4 / D B 3 2
 

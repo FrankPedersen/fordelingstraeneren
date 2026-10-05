@@ -1120,13 +1120,6 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 54,1 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset og kongen.
 - 51,7 %: Lille fra begge hænder. Slå esset og kongen.
 
-**3 stik**
-
-- 100,0 % (bedst): Lille fra begge hænder; lægger Øst en honnør, tages den med esset.
-- 100,0 %: Slå esset.
-- 100,0 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
-- 100,0 %: Lille fra begge hænder.
-
 ## 70. E K 8 6 5 / B 4 3 2
 
 **5 stik**

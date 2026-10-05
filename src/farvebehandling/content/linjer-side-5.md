@@ -1425,15 +1425,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 95,2 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 95,2 %: Lille fra begge hænder.
 
-## 85. K D 10 9 / 2
-
-**2 stik**
-
-- 100,0 % (bedst): Lille fra begge hænder.
-- 100,0 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
-- 100,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
-
-## 86. E B 10 9 / 2
+## 85. E B 10 9 / 2
 
 **3 stik**
 
@@ -1441,7 +1433,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 1,3 %: Slå esset.
 - 0,6 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset.
 
-## 87. K D 9 8 / 4 3 2
+## 86. K D 9 8 / 4 3 2
 
 **3 stik**
 
@@ -1455,7 +1447,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 77,6 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med damen. Lille fra begge hænder; lægger Øst en honnør, tages den med damen.
 - 72,0 %: Lille fra begge hænder. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Slå damen.
 
-## 88. E B 9 8 / 4 3 2
+## 87. E B 9 8 / 4 3 2
 
 **3 stik**
 
@@ -1471,7 +1463,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 68,4 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset. Lille fra begge hænder.
 - 65,5 %: Lille fra begge hænder. Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.
 
-## 89. B 10 9 4 3 2 / E
+## 88. B 10 9 4 3 2 / E
 
 **5 stik**
 
@@ -1491,7 +1483,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 98,5 %: Lille fra hånden til esset.
 - 88,8 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra hånden.
 
-## 90. E B 9 6 5 4 3 / 2
+## 89. E B 9 6 5 4 3 / 2
 
 **6 stik**
 
@@ -1517,7 +1509,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 96,1 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 96,1 %: Lille fra begge hænder.
 
-## 91. K D 10 9 / 5 4 3 2
+## 90. K D 10 9 / 5 4 3 2
 
 **3 stik**
 
@@ -1525,7 +1517,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 52,8 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med damen.
 - 2,8 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 92. E B 10 9 / 5 4 3 2
+## 91. E B 10 9 / 5 4 3 2
 
 **3 stik**
 
@@ -1533,7 +1525,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 31,3 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset.
 - 18,1 %: Slå esset.
 
-## 93. E B 10 9 8 3 / 2
+## 92. E B 10 9 8 3 / 2
 
 **5 stik**
 
@@ -1549,7 +1541,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 98,5 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 69,4 %: Lille fra begge hænder. Slå esset. Knægten fra hånden.
 
-## 94. E 9 7 6 5 4 / B 3 2
+## 93. E 9 7 6 5 4 / B 3 2
 
 **5 stik**
 
@@ -1567,7 +1559,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 95,2 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 90,4 %: Slå esset.
 
-## 95. K 5 4 3 2 / D 10 9
+## 94. K 5 4 3 2 / D 10 9
 
 **4 stik**
 
@@ -1583,7 +1575,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 96,1 %: 10'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
 - 84,8 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Vest en honnør, tages den med damen.
 
-## 96. E 5 4 3 2 / B 10 9
+## 95. E 5 4 3 2 / B 10 9
 
 **4 stik**
 
@@ -1597,7 +1589,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 96,1 %: Lille fra begge hænder.
 - 79,1 %: Slå esset. 10'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
 
-## 97. E B 8 7 4 / 10 3 2
+## 96. E B 8 7 4 / 10 3 2
 
 **4 stik**
 
@@ -1617,7 +1609,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 92,4 %: 10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Slå esset.
 - 92,4 %: Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, lægges der lille. Slå esset.
 
-## 98. E 9 8 7 4 / B 3 2
+## 97. E 9 8 7 4 / B 3 2
 
 **4 stik**
 
@@ -1635,7 +1627,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 92,4 %: Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder.
 - 84,8 %: Slå esset. Lille fra begge hænder.
 
-## 99. E B 10 8 7 / 6 5 4 3 2
+## 98. E B 10 8 7 / 6 5 4 3 2
 
 **4 stik**
 
@@ -1644,7 +1636,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 78,0 %: Slå esset.
 - 78,0 %: Lille fra begge hænder.
 
-## 100. E B 10 8 5 4 3 / 2
+## 99. E B 10 8 5 4 3 / 2
 
 **6 stik**
 
@@ -1670,7 +1662,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 96,1 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 96,1 %: Lille fra begge hænder.
 
-## 101. E B 9 7 6 5 4 / 3 2
+## 100. E B 9 7 6 5 4 / 3 2
 
 **6 stik**
 
@@ -1688,7 +1680,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 90,4 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 90,4 %: Lille fra begge hænder.
 
-## 102. E 9 8 7 / B 3 2
+## 101. E 9 8 7 / B 3 2
 
 **3 stik**
 
@@ -1704,7 +1696,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 82,2 %: Lille fra begge hænder. Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.
 - 62,2 %: Slå esset. Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder.
 
-## 103. K 4 3 2 / D 10 9 8
+## 102. K 4 3 2 / D 10 9 8
 
 **3 stik**
 
@@ -1713,7 +1705,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 52,8 %: Damen fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. 10'eren fra bordet; dækker Øst, tages stikket med kongen, ellers lad den løbe.
 - 52,8 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Vest en honnør, tages den med damen.
 
-## 104. K D 10 9 8 / 2
+## 103. K D 10 9 8 / 2
 
 **4 stik**
 
@@ -1721,7 +1713,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 9,7 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå damen.
 - 0,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 105. E B 10 9 8 / 2
+## 104. E B 10 9 8 / 2
 
 **4 stik**
 
@@ -1729,7 +1721,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 3,4 %: Slå esset.
 - 1,5 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset.
 
-## 106. 10 9 8 7 / K D 2
+## 105. 10 9 8 7 / K D 2
 
 **3 stik**
 
@@ -1737,7 +1729,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 28,3 %: Kongen fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Vest en honnør, tages den med damen.
 - 0,0 %: Lille fra begge hænder.
 
-## 107. E 9 8 7 / B 4 3 2
+## 106. E 9 8 7 / B 4 3 2
 
 **3 stik**
 
@@ -1753,7 +1745,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 92,4 %: Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra begge hænder.
 - 92,4 %: Slå esset. Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.
 
-## 108. E 6 5 4 3 2 / B 10 9
+## 107. E 6 5 4 3 2 / B 10 9
 
 **5 stik**
 
@@ -1761,7 +1753,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 65,6 %: Slå esset. 10'eren fra bordet; dækker Øst, lægges der lille.
 - 46,3 %: Lille fra begge hænder. Slå esset.
 
-## 109. E 5 4 3 2 / B 10 9 8
+## 108. E 5 4 3 2 / B 10 9 8
 
 **4 stik**
 

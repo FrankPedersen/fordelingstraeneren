@@ -652,21 +652,21 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 0,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 157. D 10 9 3 / 2
+## 156. D 10 9 3 / 2
 
 **1 stik** · første runde: Nord 2 · Øst x · Syd D · Vest E (74,8 % af spillene)
 
 - 13,6 % (bedst): Lille fra hånden.
 - 6,2 %: 10'eren fra hånden. Lille fra hånden.
 
-## 158. D B 9 3 / 2
+## 157. D B 9 3 / 2
 
 **1 stik** · første runde: Nord 2 · Øst x · Syd 9 · Vest 10 (49,3 % af spillene)
 
 - 12,6 % (bedst): Lille fra hånden.
 - 5,1 %: Damen fra hånden. Lille fra hånden.
 
-## 160. E 6 5 4 3 / D 10 2
+## 159. E 6 5 4 3 / D 10 2
 
 **3 stik** · første runde: Syd 6 · Vest x · Nord 10 · Øst B (45,2 % af spillene)
 
@@ -675,7 +675,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 75,0 %: Lille fra bordet til esset.
 - 75,0 %: Slå esset.
 
-## 162. K 6 5 4 3 / D 10 2
+## 161. K 6 5 4 3 / D 10 2
 
 **3 stik** · første runde: Syd 6 · Vest x · Nord D · Øst E (45,2 % af spillene)
 
@@ -684,7 +684,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 75,0 %: Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med kongen.
 - 75,0 %: Slå kongen.
 
-## 163. K 6 5 4 3 / B 10 2
+## 162. K 6 5 4 3 / B 10 2
 
 **3 stik** · første runde: Syd 6 · Vest x · Nord B · Øst E (23,2 % af spillene)
 
@@ -699,7 +699,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 54,5 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 164. D B 5 4 3 / 9 2
+## 163. D B 5 4 3 / 9 2
 
 **2 stik** · første runde: Syd 5 · Vest x · Nord 9 · Øst 10 (45,2 % af spillene)
 
@@ -725,7 +725,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 80,5 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 171. D B 8 4 / 3 2
+## 170. D B 8 4 / 3 2
 
 **1 stik** · første runde: Nord 3 · Øst x · Syd D · Vest E (68,4 % af spillene)
 
@@ -741,7 +741,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 73,4 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra hånden.
 - 39,2 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra hånden.
 
-## 172. D 10 8 4 / 3 2
+## 171. D 10 8 4 / 3 2
 
 **1 stik** · første runde: Nord 3 · Øst x · Syd 10 · Vest B (45,2 % af spillene)
 
@@ -757,7 +757,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 27,8 %: Lille fra hånden og lille fra bordet. Lille fra hånden.
 - 7,7 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 173. B 10 8 4 / 3 2
+## 172. B 10 8 4 / 3 2
 
 **1 stik** · første runde: Nord 3 · Øst x · Syd B · Vest E (5,3 % af spillene)
 
@@ -765,7 +765,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 90,9 %: Lille fra hånden og lille fra bordet.
 - 50,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra hånden.
 
-## 175. E K 4 3 / B 9 2
+## 174. E K 4 3 / B 9 2
 
 **3 stik** · første runde: Nord 2 · Øst 10 · Syd E · Vest x (2,8 % af spillene)
 
@@ -779,7 +779,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 57,1 %: Slå kongen. Lille fra begge hænder.
 
-## 178. E D 9 4 / B 3 2
+## 177. E D 9 4 / B 3 2
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd D · Vest K (48,0 % af spillene)
 
@@ -789,7 +789,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 53,8 %: Slå esset og knægten.
 - 37,0 %: 9'eren fra hånden; læg knægten. Slå esset.
 
-## 180. E 9 4 3 / D B 2
+## 179. E 9 4 3 / D B 2
 
 **3 stik** · første runde: Syd 4 · Vest x · Nord D · Øst K (48,0 % af spillene)
 
@@ -799,7 +799,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 53,8 %: Slå esset og knægten.
 - 37,0 %: 9'eren fra hånden; dækker Vest, tages stikket med knægten, ellers læg knægten. Slå esset.
 
-## 183. E 10 4 3 / K 9 2
+## 182. E 10 4 3 / K 9 2
 
 **3 stik** · første runde: Syd 4 · Vest x · Nord 9 · Øst D (72,8 % af spillene)
 
@@ -809,7 +809,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 59,0 %: Slå esset og kongen.
 - 39,0 %: 10'eren fra hånden; dækker Vest, tages stikket med kongen, ellers læg kongen. Slå esset.
 
-## 184. K D 4 3 / B 9 2
+## 183. K D 4 3 / B 9 2
 
 **3 stik** · første runde: Nord 2 · Øst x · Syd K · Vest E (48,0 % af spillene)
 
@@ -818,7 +818,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 37,0 %: Lille fra bordet til damen. Slå knægten.
 - 37,0 %: Slå damen og knægten.
 
-## 185. K 9 4 3 / D B 2
+## 184. K 9 4 3 / D B 2
 
 **3 stik** · første runde: Syd 4 · Vest x · Nord D · Øst E (48,0 % af spillene)
 
@@ -828,7 +828,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 53,8 %: Slå kongen og knægten.
 - 37,0 %: 9'eren fra hånden; dækker Vest, tages stikket med knægten, ellers læg knægten. Slå kongen.
 
-## 186. E 10 9 4 / D 3 2
+## 185. E 10 9 4 / D 3 2
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd 10 · Vest B (48,0 % af spillene)
 
@@ -846,7 +846,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 69,1 %: Slå esset og damen.
 - 43,0 %: 9'eren fra hånden; dækker Vest, tages stikket med damen, ellers læg damen. Slå esset.
 
-## 187. E 10 4 3 / D 9 2
+## 186. E 10 4 3 / D 9 2
 
 **3 stik** · første runde: Syd 4 · Vest x · Nord 9 · Øst B (48,0 % af spillene)
 
@@ -864,7 +864,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 69,1 %: Lille fra hånden til damen. Slå esset.
 - 43,0 %: 10'eren fra hånden; dækker Vest, tages stikket med damen, ellers lad den løbe.
 
-## 188. 10 9 4 3 / E D 2
+## 187. 10 9 4 3 / E D 2
 
 **3 stik** · første runde: Syd 4 · Vest x · Nord D · Øst K (48,0 % af spillene)
 
@@ -873,7 +873,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 16,8 %: Lille fra hånden til esset.
 - 0,0 %: Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, lægges der lille.
 
-## 189. K 10 9 4 / D 3 2
+## 188. K 10 9 4 / D 3 2
 
 **3 stik** · første runde: Syd 4 · Vest x · Nord D · Øst E (48,0 % af spillene)
 
@@ -881,7 +881,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 16,8 %: Slå kongen.
 - 0,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 190. K 10 4 3 / D 9 2
+## 189. K 10 4 3 / D 9 2
 
 **3 stik** · første runde: Syd 4 · Vest x · Nord D · Øst E (48,0 % af spillene)
 
@@ -891,7 +891,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 0,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 0,0 %: Lille fra hånden mod 9'eren (kip); lægger Vest en honnør, lægges der lille.
 
-## 195. D B 5 4 / E 9 3 2
+## 194. D B 5 4 / E 9 3 2
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd D · Vest K (45,2 % af spillene)
 
@@ -901,7 +901,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 75,0 %: 9'eren fra bordet; dækker Øst, tages stikket med knægten, ellers læg knægten.
 - 75,0 %: Lille fra hånden til esset.
 
-## 196. E 10 5 4 / K 9 3 2
+## 195. E 10 5 4 / K 9 3 2
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd 10 · Vest D (68,4 % af spillene)
 
@@ -911,7 +911,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 79,3 %: 9'eren fra bordet; dækker Øst, tages stikket med esset, ellers læg esset.
 - 79,3 %: Lille fra hånden til kongen.
 
-## 198. K 6 5 4 / B 9 3 2
+## 197. K 6 5 4 / B 9 3 2
 
 **2 stik** · første runde: Nord 3 · Øst x · Syd K · Vest E (39,0 % af spillene)
 
@@ -940,7 +940,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden mod 9'eren (kip); lægger Vest en honnør, lægges der lille.
 - 70,6 %: 9'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
 
-## 199. D 9 6 5 / B 4 3 2
+## 198. D 9 6 5 / B 4 3 2
 
 **2 stik** · første runde: Syd 6 · Vest x · Nord B · Øst E (58,8 % af spillene)
 
@@ -955,7 +955,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 70,6 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 70,6 %: Lille fra hånden og lille fra bordet.
 
-## 209. E B 9 5 4 / K 3 2
+## 208. E B 9 5 4 / K 3 2
 
 **4 stik** · første runde: Nord K · Øst 10 · Syd 5 · Vest x (6,2 % af spillene)
 
@@ -964,7 +964,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 54,5 %: Lille fra hånden og lille fra bordet.
 
-## 210. E D 9 5 4 / B 3 2
+## 209. E D 9 5 4 / B 3 2
 
 **4 stik** · første runde: Nord 3 · Øst x · Syd D · Vest K (45,2 % af spillene)
 
@@ -974,7 +974,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 75,0 %: Slå esset.
 - 75,0 %: 9'eren fra hånden; læg knægten.
 
-## 211. D B 9 5 4 / E 3 2
+## 210. D B 9 5 4 / E 3 2
 
 **5 stik** · første runde: Syd D · Vest K · Nord E · Øst x (45,2 % af spillene)
 
@@ -995,7 +995,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 54,5 %: Lille fra hånden og lille fra bordet.
 
-## 213. E 10 9 5 4 / K 3 2
+## 212. E 10 9 5 4 / K 3 2
 
 **5 stik** · første runde: Nord K · Øst x · Syd 5 · Vest D (9,0 % af spillene)
 
@@ -1011,7 +1011,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 37,5 %: Lille fra hånden og lille fra bordet.
 
-## 214. K D 9 5 4 / B 3 2
+## 213. K D 9 5 4 / B 3 2
 
 **4 stik** · første runde: Nord 3 · Øst x · Syd K · Vest E (45,2 % af spillene)
 
@@ -1021,7 +1021,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 75,0 %: Slå damen.
 - 75,0 %: 9'eren fra hånden; læg knægten.
 
-## 215. E D 9 5 4 / 10 3 2
+## 214. E D 9 5 4 / 10 3 2
 
 **4 stik** · første runde: Nord 3 · Øst x · Syd D · Vest K (45,2 % af spillene)
 
@@ -1038,7 +1038,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 61,5 %: Lille fra hånden og lille fra bordet.
 
-## 216. E D 9 6 5 / 4 3 2
+## 215. E D 9 6 5 / 4 3 2
 
 **4 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest B (58,8 % af spillene)
 
@@ -1054,7 +1054,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 90,4 %: Lille fra hånden og lille fra bordet.
 - 80,8 %: Damen fra hånden; dækker Vest, lægges der lille.
 
-## 217. E 10 9 5 4 / D 3 2
+## 216. E 10 9 5 4 / D 3 2
 
 **4 stik** · første runde: Nord D · Øst K · Syd E · Vest x (45,2 % af spillene)
 
@@ -1076,7 +1076,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 81,3 %: Lille fra hånden og lille fra bordet.
 
-## 218. E B 9 6 5 / 4 3 2
+## 217. E B 9 6 5 / 4 3 2
 
 **3 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest 10 (39,0 % af spillene)
 
@@ -1092,7 +1092,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 80,8 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 219. B 10 9 5 4 / E 3 2
+## 218. B 10 9 5 4 / E 3 2
 
 **4 stik** · første runde: Syd B · Vest K · Nord E · Øst x (68,4 % af spillene)
 
@@ -1100,7 +1100,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 79,3 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 34,7 %: Lille fra hånden og lille fra bordet.
 
-## 220. E 10 6 5 4 / 9 3 2
+## 219. E 10 6 5 4 / 9 3 2
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd 6 · Vest K (22,0 % af spillene)
 
@@ -1117,7 +1117,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 61,5 %: Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, lægges der lille.
 - 61,5 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 221. D B 9 6 5 / 4 3 2
+## 220. D B 9 6 5 / 4 3 2
 
 **3 stik** · første runde: Nord 4 · Øst x · Syd D · Vest E (58,8 % af spillene)
 
@@ -1138,7 +1138,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 78,3 %: Lille fra hånden og lille fra bordet.
 
-## 222. D 10 9 6 5 / 4 3 2
+## 221. D 10 9 6 5 / 4 3 2
 
 **2 stik** · første runde: Nord 4 · Øst x · Syd 10 · Vest B (39,0 % af spillene)
 
@@ -1153,7 +1153,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 37,5 %: Lille fra hånden og lille fra bordet.
 
-## 223. D 10 9 5 4 / B 3 2
+## 222. D 10 9 5 4 / B 3 2
 
 **3 stik** · første runde: Nord B · Øst E · Syd 5 · Vest x (68,4 % af spillene)
 
@@ -1161,7 +1161,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 34,7 %: Lille fra hånden og lille fra bordet.
 
-## 224. K 10 9 6 5 / 4 3 2
+## 223. K 10 9 6 5 / 4 3 2
 
 **3 stik** · første runde: Nord 4 · Øst x · Syd 10 · Vest D (58,8 % af spillene)
 
@@ -1177,7 +1177,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 70,6 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 70,6 %: Lille fra hånden og lille fra bordet.
 
-## 225. K 10 6 5 4 / 9 3 2
+## 224. K 10 6 5 4 / 9 3 2
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd 10 · Vest D (58,8 % af spillene)
 
@@ -1193,7 +1193,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 90,4 %: Lille fra bordet og lille fra hånden.
 - 80,8 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 227. E D 6 5 4 3 / 10 2
+## 226. E D 6 5 4 3 / 10 2
 
 **4 stik** · første runde: Syd 6 · Vest x · Nord 10 · Øst B (45,2 % af spillene)
 
@@ -1209,7 +1209,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 54,5 %: Slå esset.
 - 54,5 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 228. E D 10 7 6 5 / 4 3 2
+## 227. E D 10 7 6 5 / 4 3 2
 
 **5 stik** · første runde: Nord 4 · Øst x · Syd E · Vest B (13,0 % af spillene)
 
@@ -1217,7 +1217,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 52,2 %: Lille fra hånden og lille fra bordet.
 
-## 230. E B 6 5 4 3 / 10 2
+## 229. E B 6 5 4 3 / 10 2
 
 **4 stik** · første runde: Syd 6 · Vest x · Nord 10 · Øst K (68,4 % af spillene)
 
@@ -1233,7 +1233,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 37,5 %: Slå esset.
 - 37,5 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 231. E B 10 7 6 5 / 4 3 2
+## 230. E B 10 7 6 5 / 4 3 2
 
 **5 stik** · første runde: Nord 4 · Øst x · Syd B · Vest K (58,8 % af spillene)
 
@@ -1248,7 +1248,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 35,3 %: Lille fra hånden og lille fra bordet.
 
-## 234. E K 9 4 3 / D 2
+## 233. E K 9 4 3 / D 2
 
 **4 stik** · første runde: Nord D · Øst x · Syd 4 · Vest B (4,0 % af spillene)
 
@@ -1257,7 +1257,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 40,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 40,0 %: Lille fra hånden og lille fra bordet.
 
-## 235. E K 9 4 3 / B 2
+## 234. E K 9 4 3 / B 2
 
 **3 stik** · første runde: Syd 4 · Vest x · Nord B · Øst D (48,0 % af spillene)
 
@@ -1273,7 +1273,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 57,1 %: Slå esset.
 - 57,1 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 238. E D B 9 4 / 3 2
+## 237. E D B 9 4 / 3 2
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd D · Vest K (48,0 % af spillene)
 
@@ -1282,7 +1282,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 87,4 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 87,4 %: Lille fra hånden og lille fra bordet.
 
-## 239. E D 9 4 3 / B 2
+## 238. E D 9 4 3 / B 2
 
 **3 stik** · første runde: Nord B · Øst K · Syd E · Vest x (48,0 % af spillene)
 
@@ -1298,7 +1298,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 87,4 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 87,4 %: Lille fra hånden og lille fra bordet.
 
-## 241. E K 10 9 4 / 3 2
+## 240. E K 10 9 4 / 3 2
 
 **4 stik** · første runde: Nord 3 · Øst x · Syd 10 · Vest D (72,8 % af spillene)
 
@@ -1307,7 +1307,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 0,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 244. K D B 4 3 / 9 2
+## 243. K D B 4 3 / 9 2
 
 **3 stik** · første runde: Syd 4 · Vest 10 · Nord 2 · Øst x (2,8 % af spillene)
 
@@ -1315,7 +1315,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 57,1 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 245. K D 9 4 3 / B 2
+## 244. K D 9 4 3 / B 2
 
 **3 stik** · første runde: Nord B · Øst E · Syd 4 · Vest x (48,0 % af spillene)
 
@@ -1331,7 +1331,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 87,4 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 87,4 %: Lille fra hånden og lille fra bordet.
 
-## 246. E D 10 9 4 / 3 2
+## 245. E D 10 9 4 / 3 2
 
 **4 stik** · første runde: Nord 3 · Øst x · Syd 10 · Vest B (48,0 % af spillene)
 
@@ -1354,7 +1354,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 87,4 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 53,8 %: Lille fra hånden og lille fra bordet. Slå esset.
 
-## 247. E 10 9 4 3 / D 2
+## 246. E 10 9 4 3 / D 2
 
 **4 stik** · første runde: Nord D · Øst K · Syd E · Vest x (48,0 % af spillene)
 
@@ -1381,7 +1381,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 57,1 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 248. K D 10 9 4 / 3 2
+## 247. K D 10 9 4 / 3 2
 
 **4 stik** · første runde: Nord 3 · Øst x · Syd 10 · Vest E (24,8 % af spillene)
 
@@ -1397,7 +1397,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 95,1 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 95,1 %: Lille fra hånden og lille fra bordet.
 
-## 249. E B 10 9 4 / 3 2
+## 248. E B 10 9 4 / 3 2
 
 **4 stik** · første runde: Nord 3 · Øst x · Syd B · Vest K (72,8 % af spillene)
 
@@ -1413,7 +1413,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 90,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 59,0 %: Lille fra hånden og lille fra bordet. Slå esset.
 
-## 252. E D 10 7 6 / 5 4 3 2
+## 251. E D 10 7 6 / 5 4 3 2
 
 **4 stik** · første runde: Nord 5 · Øst x · Syd E · Vest B (13,0 % af spillene)
 
@@ -1421,7 +1421,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 52,2 %: Lille fra hånden og lille fra bordet.
 
-## 254. E K 9 3 / D 2
+## 253. E K 9 3 / D 2
 
 **4 stik** · første runde: Nord D · Øst x · Syd 3 · Vest B (1,7 % af spillene)
 
@@ -1429,7 +1429,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 42,9 %: Slå esset og kongen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 256. E K 9 3 / B 2
+## 255. E K 9 3 / B 2
 
 **3 stik** · første runde: Syd 3 · Vest x · Nord B · Øst D (49,3 % af spillene)
 
@@ -1437,7 +1437,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 35,9 %: Slå esset og kongen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 258. E D 9 3 / B 2
+## 257. E D 9 3 / B 2
 
 **3 stik** · første runde: Syd 3 · Vest x · Nord B · Øst K (49,3 % af spillene)
 
@@ -1445,7 +1445,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 35,9 %: Slå esset og damen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 259. K D 9 3 / B 2
+## 258. K D 9 3 / B 2
 
 **3 stik** · første runde: Syd 3 · Vest x · Nord B · Øst E (49,3 % af spillene)
 
@@ -1453,7 +1453,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 35,9 %: Slå kongen og damen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 260. E 10 9 3 / D 2
+## 259. E 10 9 3 / D 2
 
 **3 stik** · første runde: Syd 3 · Vest x · Nord D · Øst K (49,3 % af spillene)
 
@@ -1461,7 +1461,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 8,9 %: Slå esset.
 - 0,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 277. E D 9 5 / B 4 3 2
+## 276. E D 9 5 / B 4 3 2
 
 **3 stik** · første runde: Nord 4 · Øst x · Syd D · Vest K (45,2 % af spillene)
 
@@ -1471,7 +1471,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 75,0 %: Slå esset.
 - 75,0 %: 9'eren fra hånden; læg knægten.
 
-## 278. D B 9 5 / E 4 3 2
+## 277. D B 9 5 / E 4 3 2
 
 **4 stik** · første runde: Syd D · Vest K · Nord E · Øst x (45,2 % af spillene)
 
@@ -1480,7 +1480,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 0,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 279. K D 9 5 / B 4 3 2
+## 278. K D 9 5 / B 4 3 2
 
 **3 stik** · første runde: Nord 4 · Øst x · Syd K · Vest E (45,2 % af spillene)
 
@@ -1490,7 +1490,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 75,0 %: Slå damen.
 - 75,0 %: 9'eren fra hånden; læg knægten.
 
-## 280. E 10 9 5 / D 4 3 2
+## 279. E 10 9 5 / D 4 3 2
 
 **3 stik** · første runde: Nord D · Øst K · Syd E · Vest x (45,2 % af spillene)
 
@@ -1504,7 +1504,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 30,0 %: Slå esset.
 - 0,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 282. E K B 9 5 4 / 3 2
+## 281. E K B 9 5 4 / 3 2
 
 **5 stik** · første runde: Nord 3 · Øst x · Syd E · Vest 10 (6,2 % af spillene)
 
@@ -1513,7 +1513,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 54,5 %: Lille fra hånden og lille fra bordet.
 
-## 283. E D B 9 5 4 / 3 2
+## 282. E D B 9 5 4 / 3 2
 
 **4 stik** · første runde: Nord 3 · Øst x · Syd 9 · Vest 10 (45,2 % af spillene)
 
@@ -1529,7 +1529,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 54,5 %: Lille fra hånden og lille fra bordet.
 
-## 284. E K 10 9 5 4 / 3 2
+## 283. E K 10 9 5 4 / 3 2
 
 **5 stik** · første runde: Nord 3 · Øst D · Syd E · Vest x (9,0 % af spillene)
 
@@ -1545,7 +1545,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 37,5 %: Lille fra hånden og lille fra bordet.
 
-## 285. E D 10 9 5 4 / 3 2
+## 284. E D 10 9 5 4 / 3 2
 
 **5 stik** · første runde: Nord 3 · Øst x · Syd D · Vest K (45,2 % af spillene)
 
@@ -1561,7 +1561,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 75,0 %: Lille fra hånden og lille fra bordet.
 
-## 288. K D 10 9 5 4 / 3 2
+## 287. K D 10 9 5 4 / 3 2
 
 **5 stik** · første runde: Nord 3 · Øst x · Syd K · Vest E (45,2 % af spillene)
 
@@ -1570,7 +1570,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 0,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 290. E B 9 6 5 4 / 3 2
+## 289. E B 9 6 5 4 / 3 2
 
 **4 stik** · første runde: Nord 3 · Øst x · Syd 9 · Vest K (29,4 % af spillene)
 
@@ -1579,7 +1579,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 80,8 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 80,8 %: Lille fra hånden og lille fra bordet.
 
-## 292. D B 9 6 5 4 / 3 2
+## 291. D B 9 6 5 4 / 3 2
 
 **4 stik** · første runde: Nord 3 · Øst x · Syd D · Vest E (58,8 % af spillene)
 
@@ -1594,7 +1594,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 78,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 78,3 %: Lille fra hånden og lille fra bordet.
 
-## 295. E K 5 4 3 / B 9 2
+## 294. E K 5 4 3 / B 9 2
 
 **4 stik** · første runde: Nord 2 · Øst 10 · Syd E · Vest x (6,2 % af spillene)
 
@@ -1608,7 +1608,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 54,5 %: Slå kongen.
 
-## 296. E B 5 4 3 / K 9 2
+## 295. E B 5 4 3 / K 9 2
 
 **4 stik** · første runde: Nord 2 · Øst x · Syd E · Vest 10 (6,2 % af spillene)
 
@@ -1617,7 +1617,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet; lægger Vest en honnør, tages den med kongen.
 - 54,5 %: Knægten fra hånden; dækker Vest, tages stikket med kongen, ellers lad den løbe.
 
-## 298. E D 8 4 / B 3 2
+## 297. E D 8 4 / B 3 2
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd D · Vest K (45,2 % af spillene)
 
@@ -1627,7 +1627,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 39,3 %: Slå esset og knægten.
 - 39,3 %: 8'eren fra hånden; læg knægten. Slå esset.
 
-## 299. E D 5 4 3 / B 9 2
+## 298. E D 5 4 3 / B 9 2
 
 **4 stik** · første runde: Nord 2 · Øst x · Syd E · Vest 10 (6,2 % af spillene)
 
@@ -1635,7 +1635,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 54,5 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 300. E 9 5 4 3 / D B 2
+## 299. E 9 5 4 3 / D B 2
 
 **4 stik** · første runde: Syd 5 · Vest x · Nord D · Øst K (45,2 % af spillene)
 
@@ -1645,7 +1645,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 75,0 %: Slå esset.
 - 75,0 %: 9'eren fra hånden; dækker Vest, tages stikket med knægten, ellers læg knægten.
 
-## 302. E K 10 9 5 / 4 3 2
+## 301. E K 10 9 5 / 4 3 2
 
 **4 stik** · første runde: Nord 4 · Øst D · Syd E · Vest x (9,0 % af spillene)
 
@@ -1654,7 +1654,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 37,5 %: Lille fra hånden og lille fra bordet.
 
-## 303. E 10 5 4 3 / K 9 2
+## 302. E 10 5 4 3 / K 9 2
 
 **4 stik** · første runde: Syd 5 · Vest x · Nord 9 · Øst D (68,4 % af spillene)
 
@@ -1664,7 +1664,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 79,3 %: Slå esset.
 - 79,3 %: 10'eren fra hånden; dækker Vest, tages stikket med kongen, ellers læg kongen.
 
-## 305. E D 10 9 5 / 4 3 2
+## 304. E D 10 9 5 / 4 3 2
 
 **4 stik** · første runde: Nord 4 · Øst x · Syd 10 · Vest B (45,2 % af spillene)
 
@@ -1680,7 +1680,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 81,3 %: Lille fra hånden og lille fra bordet.
 
-## 306. E 9 5 4 3 / D 10 2
+## 305. E 9 5 4 3 / D 10 2
 
 **3 stik** · første runde: Syd 9 · Vest x · Nord 2 · Øst B (45,2 % af spillene)
 
@@ -1688,7 +1688,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 75,0 %: Slå esset.
 
-## 310. D 9 8 5 / 4 3 2
+## 309. D 9 8 5 / 4 3 2
 
 **1 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest B (58,8 % af spillene)
 
@@ -1697,7 +1697,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 53,3 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder.
 - 45,1 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
 
-## 311. B 10 8 5 / 4 3 2
+## 310. B 10 8 5 / 4 3 2
 
 **1 stik** · første runde: Nord 4 · Øst x · Syd B · Vest E (68,4 % af spillene)
 
@@ -1712,7 +1712,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 89,4 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder.
 - 46,8 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod 8'eren (kip); lægger Øst en honnør, lægges der lille.
 
-## 315. E K B 9 4 3 / 2
+## 314. E K B 9 4 3 / 2
 
 **4 stik** · første runde: Nord 2 · Øst 10 · Syd 4 · Vest x (2,8 % af spillene)
 
@@ -1720,7 +1720,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Knægten fra hånden.
 - 57,1 %: Lille fra hånden.
 
-## 316. E D B 9 3 / 2
+## 315. E D B 9 3 / 2
 
 **3 stik** · første runde: Nord 2 · Øst x · Syd 9 · Vest 10 (49,3 % af spillene)
 
@@ -1728,7 +1728,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 63,1 %: Damen fra hånden. Slå esset.
 - 35,9 %: Lille fra hånden. Slå esset.
 
-## 317. E D B 9 4 3 / 2
+## 316. E D B 9 4 3 / 2
 
 **4 stik** · første runde: Nord 2 · Øst x · Syd 9 · Vest 10 (48,0 % af spillene)
 
@@ -1742,14 +1742,14 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Damen fra hånden.
 - 57,1 %: Lille fra hånden. Slå esset.
 
-## 319. K D B 9 4 3 / 2
+## 318. K D B 9 4 3 / 2
 
 **4 stik** · første runde: Nord 2 · Øst 10 · Syd 4 · Vest x (2,8 % af spillene)
 
 - 100,0 % (bedst): Kongen fra hånden.
 - 57,1 %: Lille fra hånden.
 
-## 321. D 5 4 3 2 / E 10
+## 320. D 5 4 3 2 / E 10
 
 **3 stik** · første runde: Syd 5 · Vest x · Nord 10 · Øst B (48,0 % af spillene)
 
@@ -1775,7 +1775,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 57,1 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 322. K D 10 9 4 3 / 2
+## 321. K D 10 9 4 3 / 2
 
 **4 stik** · første runde: Nord 2 · Øst x · Syd K · Vest E (48,0 % af spillene)
 
@@ -1783,7 +1783,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 87,4 %: 10'eren fra hånden.
 - 53,8 %: Lille fra hånden. Slå damen.
 
-## 323. E B 10 9 3 / 2
+## 322. E B 10 9 3 / 2
 
 **3 stik** · første runde: Nord 2 · Øst x · Syd B · Vest K (74,8 % af spillene)
 
@@ -1791,7 +1791,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 65,3 %: 10'eren fra hånden. Slå esset.
 - 40,4 %: Lille fra hånden. Slå esset.
 
-## 328. E B 8 3 / 10 2
+## 327. E B 8 3 / 10 2
 
 **2 stik** · første runde: Syd 3 · Vest x · Nord 10 · Øst K (72,8 % af spillene)
 
@@ -1807,7 +1807,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 42,9 %: Slå esset. Knægten fra hånden.
 - 0,0 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset.
 
-## 329. E 9 8 3 / 10 2
+## 328. E 9 8 3 / 10 2
 
 **2 stik** · første runde: Nord 10 · Øst K · Syd E · Vest x (85,1 % af spillene)
 
@@ -1815,7 +1815,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 26,4 %: Lille fra hånden og lille fra bordet.
 - 13,6 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra hånden.
 
-## 330. K 8 7 6 5 / 10 4 3 2
+## 329. K 8 7 6 5 / 10 4 3 2
 
 **3 stik** · første runde: Nord 4 · Øst x · Syd 8 · Vest D (39,0 % af spillene)
 
@@ -1829,14 +1829,14 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 35,3 %: 10'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
 - 35,3 %: Lille fra bordet og lille fra hånden.
 
-## 332. K D 10 6 5 4 3 / 2
+## 331. K D 10 6 5 4 3 / 2
 
 **5 stik** · første runde: Nord 2 · Øst x · Syd 10 · Vest B (45,2 % af spillene)
 
 - 75,0 % (bedst): Kongen fra hånden.
 - 30,0 %: Lille fra hånden.
 
-## 335. E D 9 6 / 5 4 3 2
+## 334. E D 9 6 / 5 4 3 2
 
 **3 stik** · første runde: Nord 5 · Øst x · Syd 9 · Vest B (58,8 % af spillene)
 
@@ -1845,7 +1845,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 0,0 %: Damen fra hånden; dækker Vest, lægges der lille.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 337. E D 9 8 4 / 3 2
+## 336. E D 9 8 4 / 3 2
 
 **4 stik** · første runde: Nord 3 · Øst B · Syd D · Vest x (5,0 % af spillene)
 
@@ -1862,7 +1862,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 53,4 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset.
 - 53,4 %: Lille fra hånden og lille fra bordet. Slå esset.
 
-## 338. K D 9 8 4 / 3 2
+## 337. K D 9 8 4 / 3 2
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd K · Vest E (45,2 % af spillene)
 
@@ -1871,7 +1871,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 39,3 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå damen.
 - 39,3 %: Lille fra hånden og lille fra bordet. Slå damen.
 
-## 339. E B 10 8 4 / 3 2
+## 338. E B 10 8 4 / 3 2
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd 8 · Vest K (34,6 % af spillene)
 
@@ -1880,7 +1880,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 93,0 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 50,9 %: Lille fra hånden og lille fra bordet. Slå esset.
 
-## 340. E B 9 8 4 / 3 2
+## 339. E B 9 8 4 / 3 2
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd 9 · Vest 10 (45,2 % af spillene)
 
@@ -1897,7 +1897,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 50,9 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset.
 - 50,9 %: Lille fra hånden og lille fra bordet. Slå esset.
 
-## 341. E B 8 4 3 / 10 2
+## 340. E B 8 4 3 / 10 2
 
 **3 stik** · første runde: Syd 4 · Vest x · Nord 10 · Øst K (68,4 % af spillene)
 
@@ -1921,7 +1921,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 72,7 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 72,7 %: Lille fra hånden og lille fra bordet.
 
-## 342. E B 8 4 3 / 9 2
+## 341. E B 8 4 3 / 9 2
 
 **3 stik** · første runde: Nord 9 · Øst x · Syd 4 · Vest 10 (45,2 % af spillene)
 
@@ -1952,7 +1952,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 80,5 %: Slå esset.
 - 80,5 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 343. E 10 9 8 4 / 3 2
+## 342. E 10 9 8 4 / 3 2
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd 10 · Vest K (79,8 % af spillene)
 
@@ -1961,7 +1961,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 42,3 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset.
 - 42,3 %: Lille fra hånden og lille fra bordet. Slå esset.
 
-## 344. E K 4 3 2 / D 10
+## 343. E K 4 3 2 / D 10
 
 **4 stik** · første runde: Syd 4 · Vest x · Nord 10 · Øst B (49,3 % af spillene)
 
@@ -1969,7 +1969,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 85,2 %: Lille fra hånden til damen.
 - 36,1 %: Slå esset og kongen.
 
-## 345. D 6 5 4 3 / B 9 2
+## 344. D 6 5 4 3 / B 9 2
 
 **3 stik** · første runde: Syd 6 · Vest x · Nord B · Øst E (58,8 % af spillene)
 
@@ -1985,7 +1985,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 92,8 %: Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
 - 78,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 346. E K 9 5 4 3 / B 2
+## 345. E K 9 5 4 3 / B 2
 
 **5 stik** · første runde: Nord 2 · Øst x · Syd 9 · Vest D (23,2 % af spillene)
 
@@ -2000,7 +2000,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 54,5 %: Slå kongen.
 - 54,5 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 347. E D 9 5 4 3 / B 2
+## 346. E D 9 5 4 3 / B 2
 
 **5 stik** · første runde: Nord B · Øst K · Syd E · Vest x (45,2 % af spillene)
 
@@ -2009,7 +2009,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 75,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 75,0 %: Lille fra hånden og lille fra bordet.
 
-## 348. D B 9 5 4 3 / E 2
+## 347. D B 9 5 4 3 / E 2
 
 **6 stik** · første runde: Syd D · Vest K · Nord E · Øst x (45,2 % af spillene)
 
@@ -2030,7 +2030,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 54,5 %: Lille fra hånden og lille fra bordet.
 
-## 349. E 10 9 5 4 3 / K 2
+## 348. E 10 9 5 4 3 / K 2
 
 **5 stik** · første runde: Nord K · Øst D · Syd 5 · Vest x (9,0 % af spillene)
 
@@ -2046,7 +2046,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 37,5 %: Lille fra hånden og lille fra bordet.
 
-## 351. E 10 9 5 4 3 / D 2
+## 350. E 10 9 5 4 3 / D 2
 
 **5 stik** · første runde: Nord D · Øst K · Syd E · Vest x (45,2 % af spillene)
 
@@ -2068,7 +2068,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 75,0 %: Lille fra hånden og lille fra bordet.
 
-## 352. E B 10 5 4 3 / 9 2
+## 351. E B 10 5 4 3 / 9 2
 
 **5 stik** · første runde: Nord 2 · Øst x · Syd B · Vest K (68,4 % af spillene)
 
@@ -2090,7 +2090,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 79,3 %: Lille fra hånden og lille fra bordet.
 
-## 353. K 10 8 7 6 5 / 4 3 2
+## 352. K 10 8 7 6 5 / 4 3 2
 
 **4 stik** · første runde: Nord 4 · Øst x · Syd 10 · Vest D (39,0 % af spillene)
 
@@ -2098,7 +2098,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 52,2 %: Kongen fra hånden; dækker Vest, lægges der lille.
 - 52,2 %: Lille fra hånden og lille fra bordet.
 
-## 354. E 10 5 4 / K 8 3 2
+## 353. E 10 5 4 / K 8 3 2
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd 10 · Vest D (9,6 % af spillene)
 
@@ -2116,7 +2116,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 37,5 %: Slå kongen.
 - 37,5 %: 8'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
 
-## 364. D B 9 6 5 / E 4 3 2
+## 363. D B 9 6 5 / E 4 3 2
 
 **4 stik** · første runde: Nord E · Øst 10 · Syd 6 · Vest x (13,0 % af spillene)
 
@@ -2130,7 +2130,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 52,2 %: Lille fra hånden og lille fra bordet.
 
-## 366. E 10 6 5 4 / K 9 3 2
+## 365. E 10 6 5 4 / K 9 3 2
 
 **5 stik** · første runde: Nord K · Øst x · Syd 6 · Vest D (19,2 % af spillene)
 
@@ -2140,7 +2140,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 0,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 0,0 %: Lille fra hånden mod 9'eren (kip); lægger Vest en honnør, lægges der lille.
 
-## 370. E D 8 5 4 / B 3 2
+## 369. E D 8 5 4 / B 3 2
 
 **4 stik** · første runde: Nord B · Øst K · Syd E · Vest x (39,0 % af spillene)
 
@@ -2156,7 +2156,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 37,5 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 371. E K 8 5 4 / 10 3 2
+## 370. E K 8 5 4 / 10 3 2
 
 **4 stik** · første runde: Nord 3 · Øst D · Syd E · Vest x (9,0 % af spillene)
 
@@ -2174,7 +2174,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 37,5 %: Slå kongen.
 - 37,5 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 373. K 10 8 5 4 / B 3 2
+## 372. K 10 8 5 4 / B 3 2
 
 **4 stik** · første runde: Nord 3 · Øst x · Syd 10 · Vest E (19,8 % af spillene)
 
@@ -2200,7 +2200,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 85,7 %: Slå kongen.
 - 85,7 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 374. K 9 8 5 4 / B 3 2
+## 373. K 9 8 5 4 / B 3 2
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd 9 · Vest 10 (39,0 % af spillene)
 
@@ -2225,7 +2225,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 70,6 %: Lille fra hånden og lille fra bordet.
 
-## 376. E K B 9 / 3 2
+## 375. E K B 9 / 3 2
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd 9 · Vest 10 (49,3 % af spillene)
 
@@ -2233,7 +2233,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 35,9 %: Slå esset og kongen.
 - 0,0 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 377. E B 3 2 / K 9
+## 376. E B 3 2 / K 9
 
 **3 stik** · første runde: Syd 3 · Vest 10 · Nord K · Øst x (1,2 % af spillene)
 
@@ -2242,7 +2242,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 60,0 %: Slå esset. Lille fra hånden.
 - 0,0 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 378. E D B 9 / 3 2
+## 377. E D B 9 / 3 2
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd D · Vest K (49,3 % af spillene)
 
@@ -2250,7 +2250,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 35,9 %: Slå esset og knægten.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 380. E K 10 9 / 3 2
+## 379. E K 10 9 / 3 2
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd 10 · Vest D (74,8 % af spillene)
 
@@ -2258,7 +2258,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 40,4 %: Slå esset og kongen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 381. E 9 3 2 / K 10
+## 380. E 9 3 2 / K 10
 
 **3 stik** · første runde: Syd 3 · Vest D · Nord K · Øst x (1,7 % af spillene)
 
@@ -2267,7 +2267,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 42,9 %: Slå esset. Lille fra hånden.
 - 0,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 382. K D B 9 / 3 2
+## 381. K D B 9 / 3 2
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd K · Vest E (49,3 % af spillene)
 
@@ -2275,7 +2275,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 35,9 %: Slå damen og knægten.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 383. E D 10 9 / 3 2
+## 382. E D 10 9 / 3 2
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd 10 · Vest B (49,3 % af spillene)
 
@@ -2289,7 +2289,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 49,1 %: Slå esset og damen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 385. K D 10 9 / 3 2
+## 384. K D 10 9 / 3 2
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd 10 · Vest E (25,5 % af spillene)
 
@@ -2297,7 +2297,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 49,1 %: Slå kongen og damen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 394. E 4 3 2 / D 10 9
+## 393. E 4 3 2 / D 10 9
 
 **3 stik** · første runde: Syd 4 · Vest x · Nord 10 · Øst K (24,8 % af spillene)
 
@@ -2306,7 +2306,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 43,0 %: Lille fra bordet til esset. Slå damen.
 - 43,0 %: Slå esset og damen.
 
-## 395. D 4 3 2 / E 10 9
+## 394. D 4 3 2 / E 10 9
 
 **3 stik** · første runde: Syd 4 · Vest x · Nord 10 · Øst B (48,0 % af spillene)
 
@@ -2322,7 +2322,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 43,0 %: Lille fra bordet til damen. Slå esset.
 - 43,0 %: Slå damen og esset.
 
-## 397. K 4 3 2 / D 10 9
+## 396. K 4 3 2 / D 10 9
 
 **3 stik** · første runde: Syd 4 · Vest x · Nord 10 · Øst E (24,8 % af spillene)
 
@@ -2331,7 +2331,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 43,0 %: Lille fra bordet til kongen. Slå damen.
 - 43,0 %: Slå kongen og damen.
 
-## 406. D B 9 6 5 4 / E 3 2
+## 405. D B 9 6 5 4 / E 3 2
 
 **5 stik** · første runde: Nord E · Øst 10 · Syd 6 · Vest x (13,0 % af spillene)
 
@@ -2345,7 +2345,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 52,2 %: Lille fra hånden og lille fra bordet.
 
-## 407. E K 10 9 6 5 / 4 3 2
+## 406. E K 10 9 6 5 / 4 3 2
 
 **6 stik** · første runde: Nord 4 · Øst x · Syd E · Vest D (19,2 % af spillene)
 
@@ -2354,7 +2354,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 0,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 409. D 10 9 6 5 4 / E 3 2
+## 408. D 10 9 6 5 4 / E 3 2
 
 **5 stik** · første runde: Nord E · Øst B · Syd D · Vest x (13,0 % af spillene)
 
@@ -2368,7 +2368,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 52,2 %: Lille fra hånden og lille fra bordet.
 
-## 411. K D 9 8 4 3 / 2
+## 410. K D 9 8 4 3 / 2
 
 **4 stik** · første runde: Nord 2 · Øst x · Syd K · Vest E (45,2 % af spillene)
 
@@ -2376,7 +2376,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 39,3 %: 9'eren fra hånden. Slå damen.
 - 39,3 %: Lille fra hånden. Slå damen.
 
-## 412. E B 10 8 4 3 / 2
+## 411. E B 10 8 4 3 / 2
 
 **4 stik** · første runde: Nord 2 · Øst x · Syd 8 · Vest K (34,6 % af spillene)
 
@@ -2384,7 +2384,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 93,0 %: Knægten fra hånden.
 - 50,9 %: Lille fra hånden. Slå esset.
 
-## 413. E B 9 8 4 3 / 2
+## 412. E B 9 8 4 3 / 2
 
 **4 stik** · første runde: Nord 2 · Øst x · Syd B · Vest K (68,4 % af spillene)
 
@@ -2398,7 +2398,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Knægten fra hånden.
 - 80,5 %: Lille fra hånden.
 
-## 415. E 9 6 5 4 3 / B 2
+## 414. E 9 6 5 4 3 / B 2
 
 **4 stik** · første runde: Syd 6 · Vest 10 · Nord B · Øst K (9,6 % af spillene)
 
@@ -2407,7 +2407,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 70,6 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 70,6 %: Lille fra hånden og lille fra bordet.
 
-## 419. E 9 8 3 / D B 2
+## 418. E 9 8 3 / D B 2
 
 **4 stik** · første runde: Nord D · Øst K · Syd E · Vest x (48,0 % af spillene)
 
@@ -2424,7 +2424,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 53,8 %: Slå esset og knægten.
 - 37,0 %: 8'eren fra hånden; dækker Vest, tages stikket med knægten, ellers læg knægten. Slå esset.
 
-## 420. B 9 8 3 / E D 2
+## 419. B 9 8 3 / E D 2
 
 **3 stik** · første runde: Syd 3 · Vest x · Nord D · Øst K (48,0 % af spillene)
 
@@ -2433,7 +2433,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 53,8 %: Lille fra bordet til knægten. Slå esset.
 - 53,8 %: Slå knægten og esset.
 
-## 421. E 10 9 3 / K 8 2
+## 420. E 10 9 3 / K 8 2
 
 **4 stik** · første runde: Nord K · Øst x · Syd 3 · Vest D (4,0 % af spillene)
 
@@ -2450,7 +2450,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 37,5 %: Slå esset og kongen.
 - 37,5 %: 9'eren fra hånden; dækker Vest, tages stikket med kongen, ellers læg kongen. Slå esset.
 
-## 424. E D 4 3 2 / B 9
+## 423. E D 4 3 2 / B 9
 
 **4 stik** · første runde: Syd 4 · Vest x · Nord 9 · Øst K (24,8 % af spillene)
 
@@ -2471,7 +2471,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden til knægten.
 - 95,1 %: Slå esset.
 
-## 425. D B 4 3 2 / E 9
+## 424. D B 4 3 2 / E 9
 
 **4 stik** · første runde: Syd 4 · Vest x · Nord 9 · Øst K (24,8 % af spillene)
 
@@ -2491,7 +2491,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden til esset.
 - 95,1 %: Slå damen.
 
-## 426. E 10 4 3 2 / K 9
+## 425. E 10 4 3 2 / K 9
 
 **4 stik** · første runde: Syd 4 · Vest x · Nord 9 · Øst D (72,8 % af spillene)
 
@@ -2514,7 +2514,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 40,0 %: Slå esset.
 - 40,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 427. K D 4 3 2 / B 9
+## 426. K D 4 3 2 / B 9
 
 **4 stik** · første runde: Syd 4 · Vest x · Nord 9 · Øst E (24,8 % af spillene)
 
@@ -2534,7 +2534,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden til knægten.
 - 95,1 %: Slå kongen.
 
-## 428. E K 9 4 / D 8 3 2
+## 427. E K 9 4 / D 8 3 2
 
 **4 stik** · første runde: Nord 3 · Øst B · Syd E · Vest x (9,0 % af spillene)
 
@@ -2554,7 +2554,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 37,5 %: Slå kongen.
 - 37,5 %: 9'eren fra hånden; dækker Vest, tages stikket med damen, ellers læg damen.
 
-## 431. E D 8 5 / B 4 3 2
+## 430. E D 8 5 / B 4 3 2
 
 **3 stik** · første runde: Nord B · Øst K · Syd E · Vest x (39,0 % af spillene)
 
@@ -2570,7 +2570,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 37,5 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 432. E D 4 3 / B 9 8 2
+## 431. E D 4 3 / B 9 8 2
 
 **3 stik** · første runde: Nord 2 · Øst x · Syd D · Vest K (45,2 % af spillene)
 
@@ -2579,7 +2579,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 81,3 %: Slå knægten.
 - 81,3 %: Lille fra hånden til knægten.
 
-## 433. E 9 8 4 / D B 3 2
+## 432. E 9 8 4 / D B 3 2
 
 **4 stik** · første runde: Nord D · Øst K · Syd E · Vest x (45,2 % af spillene)
 
@@ -2595,7 +2595,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 81,3 %: Slå knægten.
 - 81,3 %: Lille fra hånden til knægten.
 
-## 434. E K 8 5 / 10 4 3 2
+## 433. E K 8 5 / 10 4 3 2
 
 **3 stik** · første runde: Nord 4 · Øst D · Syd E · Vest x (9,0 % af spillene)
 
@@ -2613,7 +2613,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 37,5 %: Slå kongen.
 - 37,5 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 436. E B 8 5 / 10 4 3 2
+## 435. E B 8 5 / 10 4 3 2
 
 **3 stik** · første runde: Nord 10 · Øst K · Syd E · Vest x (58,8 % af spillene)
 
@@ -2636,7 +2636,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 90,4 %: Slå esset.
 - 90,4 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 437. K 10 8 5 / B 4 3 2
+## 436. K 10 8 5 / B 4 3 2
 
 **3 stik** · første runde: Nord B · Øst D · Syd K · Vest E (26,0 % af spillene)
 
@@ -2668,7 +2668,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 85,7 %: Slå kongen.
 - 85,7 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 438. K 5 4 3 / B 10 8 2
+## 437. K 5 4 3 / B 10 8 2
 
 **3 stik** · første runde: Nord B · Øst D · Syd K · Vest E (26,0 % af spillene)
 
@@ -2700,7 +2700,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden mod 8'eren (kip); lægger Vest en honnør, lægges der lille.
 - 85,7 %: 10'eren fra bordet; dækker Øst, tages stikket med kongen, ellers lad den løbe.
 
-## 439. E 10 9 8 5 4 / 3 2
+## 438. E 10 9 8 5 4 / 3 2
 
 **4 stik** · første runde: Nord 3 · Øst x · Syd 10 · Vest K (68,4 % af spillene)
 
@@ -2715,7 +2715,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 61,5 %: Lille fra hånden og lille fra bordet.
 
-## 440. E D 10 8 / 3 2
+## 439. E D 10 8 / 3 2
 
 **2 stik** · første runde: Nord 3 · Øst x · Syd 10 · Vest B (48,0 % af spillene)
 
@@ -2724,7 +2724,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 35,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset.
 - 35,3 %: Lille fra hånden og lille fra bordet. Slå esset.
 
-## 441. E D 9 8 / 3 2
+## 440. E D 9 8 / 3 2
 
 **3 stik** · første runde: Nord 3 · Øst B · Syd D · Vest x (2,3 % af spillene)
 
@@ -2739,7 +2739,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 39,5 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset.
 - 34,0 %: Lille fra hånden og lille fra bordet. Slå esset.
 
-## 443. K 9 7 6 5 / D 4 3 2
+## 442. K 9 7 6 5 / D 4 3 2
 
 **4 stik** · første runde: Syd 7 · Vest B · Nord D · Øst E (19,2 % af spillene)
 
@@ -2748,7 +2748,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 0,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 444. E 9 7 6 5 / B 4 3 2
+## 443. E 9 7 6 5 / B 4 3 2
 
 **4 stik** · første runde: Nord 4 · Øst K · Syd E · Vest x (19,2 % af spillene)
 
@@ -2756,7 +2756,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 35,3 %: Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
 - 35,3 %: Lille fra bordet og lille fra hånden.
 
-## 445. E B 9 8 / 3 2
+## 444. E B 9 8 / 3 2
 
 **2 stik** · første runde: Nord 3 · Øst x · Syd 9 · Vest 10 (48,0 % af spillene)
 
@@ -2771,7 +2771,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 41,4 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset.
 - 30,7 %: Lille fra hånden og lille fra bordet. Slå esset.
 
-## 446. E 10 9 8 / 3 2
+## 445. E 10 9 8 / 3 2
 
 **2 stik** · første runde: Nord 3 · Øst x · Syd 10 · Vest K (85,1 % af spillene)
 
@@ -2779,7 +2779,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 26,4 %: Slå esset.
 - 13,6 %: Lille fra hånden og lille fra bordet. Slå esset.
 
-## 448. D B 9 8 / 3 2
+## 447. D B 9 8 / 3 2
 
 **2 stik** · første runde: Nord 3 · Øst x · Syd 9 · Vest E (37,1 % af spillene)
 
@@ -2787,7 +2787,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 41,4 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå knægten.
 - 2,0 %: Lille fra hånden og lille fra bordet.
 
-## 454. K 8 7 6 5 4 / 10 3 2
+## 453. K 8 7 6 5 4 / 10 3 2
 
 **4 stik** · første runde: Nord 3 · Øst x · Syd 8 · Vest D (39,0 % af spillene)
 
@@ -2801,7 +2801,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 35,3 %: 10'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
 - 35,3 %: Lille fra bordet og lille fra hånden.
 
-## 457. E 10 5 4 3 / K 8 2
+## 456. E 10 5 4 3 / K 8 2
 
 **4 stik** · første runde: Nord K · Øst x · Syd 5 · Vest D (9,0 % af spillene)
 
@@ -2811,7 +2811,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden mod 8'eren (kip); lægger Vest en honnør, lægges der lille.
 - 37,5 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 458. K D 9 4 3 / B 8 2
+## 457. K D 9 4 3 / B 8 2
 
 **4 stik** · første runde: Nord 8 · Øst x · Syd K · Vest E (45,2 % af spillene)
 
@@ -2821,7 +2821,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 75,0 %: Slå damen.
 - 75,0 %: 9'eren fra hånden; læg knægten.
 
-## 459. E D 10 8 5 / 4 3 2
+## 458. E D 10 8 5 / 4 3 2
 
 **4 stik** · første runde: Nord 4 · Øst x · Syd D · Vest K (39,0 % af spillene)
 
@@ -2838,7 +2838,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 54,5 %: Lille fra hånden og lille fra bordet.
 
-## 460. D 10 9 4 3 / E 8 2
+## 459. D 10 9 4 3 / E 8 2
 
 **4 stik** · første runde: Syd D · Vest x · Nord 2 · Øst K (45,2 % af spillene)
 
@@ -2847,7 +2847,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 30,0 %: Slå esset.
 - 0,0 %: Lille fra bordet og lille fra hånden.
 
-## 461. D 9 8 6 5 / 4 3 2
+## 460. D 9 8 6 5 / 4 3 2
 
 **2 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest B (39,0 % af spillene)
 
@@ -2861,7 +2861,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 37,5 %: Damen fra hånden; dækker Vest, lægges der lille.
 
-## 462. E D B 9 5 4 3 / 2
+## 461. E D B 9 5 4 3 / 2
 
 **6 stik** · første runde: Nord 2 · Øst x · Syd E · Vest 10 (6,2 % af spillene)
 
@@ -2880,14 +2880,14 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Damen fra hånden.
 - 54,5 %: Lille fra hånden.
 
-## 463. K D B 9 5 4 3 / 2
+## 462. K D B 9 5 4 3 / 2
 
 **5 stik** · første runde: Nord 2 · Øst 10 · Syd 5 · Vest x (6,2 % af spillene)
 
 - 100,0 % (bedst): Kongen fra hånden.
 - 54,5 %: Lille fra hånden.
 
-## 464. E D 10 9 5 4 3 / 2
+## 463. E D 10 9 5 4 3 / 2
 
 **5 stik** · første runde: Nord 2 · Øst x · Syd 10 · Vest B (45,2 % af spillene)
 
@@ -2895,7 +2895,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Damen fra hånden.
 - 75,0 %: Lille fra hånden.
 
-## 466. E B 10 9 5 4 3 / 2
+## 465. E B 10 9 5 4 3 / 2
 
 **6 stik** · første runde: Nord 2 · Øst K · Syd E · Vest x (9,0 % af spillene)
 
@@ -2908,7 +2908,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: 10'eren fra hånden.
 - 79,3 %: Lille fra hånden.
 
-## 467. D 8 7 6 5 4 3 / B 2
+## 466. D 8 7 6 5 4 3 / B 2
 
 **5 stik** · første runde: Syd 8 · Vest x · Nord B · Øst E (58,8 % af spillene)
 
@@ -2922,7 +2922,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 35,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 469. E K 9 8 3 / B 2
+## 468. E K 9 8 3 / B 2
 
 **5 stik** · første runde: Nord B · Øst D · Syd E · Vest x (48,0 % af spillene)
 
@@ -2945,7 +2945,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 57,1 %: Slå kongen.
 - 57,1 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 470. E D 9 8 3 / B 2
+## 469. E D 9 8 3 / B 2
 
 **5 stik** · første runde: Nord B · Øst K · Syd E · Vest x (48,0 % af spillene)
 
@@ -2954,7 +2954,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 0,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 478. E B 9 7 6 5 / 4 3 2
+## 477. E B 9 7 6 5 / 4 3 2
 
 **5 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest K (19,2 % af spillene)
 
@@ -2963,7 +2963,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 0,0 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 479. K 10 9 7 6 5 / 4 3 2
+## 478. K 10 9 7 6 5 / 4 3 2
 
 **4 stik** · første runde: Nord 4 · Øst x · Syd 10 · Vest D (39,0 % af spillene)
 
@@ -2977,7 +2977,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 35,3 %: Lille fra hånden og lille fra bordet.
 
-## 480. E K 3 2 / B 10 9
+## 479. E K 3 2 / B 10 9
 
 **4 stik** · første runde: Nord B · Øst D · Syd E · Vest x (49,3 % af spillene)
 
@@ -2985,7 +2985,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden til 10'eren.
 - 36,1 %: Slå kongen. Lille fra bordet.
 
-## 481. E B 10 9 6 5 4 / 3 2
+## 480. E B 10 9 6 5 4 / 3 2
 
 **6 stik** · første runde: Nord 3 · Øst x · Syd B · Vest K (58,8 % af spillene)
 
@@ -3000,7 +3000,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 35,3 %: Lille fra hånden og lille fra bordet.
 
-## 484. E K 10 9 6 / 5 4 3 2
+## 483. E K 10 9 6 / 5 4 3 2
 
 **5 stik** · første runde: Nord 5 · Øst x · Syd E · Vest D (19,2 % af spillene)
 
@@ -3009,7 +3009,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 0,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 485. E 6 5 4 3 / D 10 9 2
+## 484. E 6 5 4 3 / D 10 9 2
 
 **4 stik** · første runde: Nord 10 · Øst B · Syd E · Vest x (39,0 % af spillene)
 
@@ -3017,7 +3017,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden mod damen (kip); lægger Vest en honnør, lægges der lille.
 - 52,2 %: Lille fra bordet og lille fra hånden.
 
-## 487. E B 9 7 6 / 5 4 3 2
+## 486. E B 9 7 6 / 5 4 3 2
 
 **4 stik** · første runde: Nord 5 · Øst x · Syd 9 · Vest K (19,2 % af spillene)
 
@@ -3026,7 +3026,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 0,0 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 488. K B 9 7 6 / 5 4 3 2
+## 487. K B 9 7 6 / 5 4 3 2
 
 **3 stik** · første runde: Nord 5 · Øst x · Syd 7 · Vest 10 (26,0 % af spillene)
 
@@ -3040,7 +3040,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 52,2 %: Lille fra hånden og lille fra bordet.
 
-## 489. D 10 9 7 6 / 5 4 3 2
+## 488. D 10 9 7 6 / 5 4 3 2
 
 **3 stik** · første runde: Nord 5 · Øst B · Syd D · Vest E (19,8 % af spillene)
 
@@ -3054,7 +3054,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 35,3 %: Damen fra hånden; dækker Vest, lægges der lille.
 - 35,3 %: Lille fra hånden og lille fra bordet.
 
-## 497. E D 9 8 / 4 3 2
+## 495. E D 9 8 / 4 3 2
 
 **3 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest K (11,4 % af spillene)
 
@@ -3075,7 +3075,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 70,1 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.
 - 56,9 %: Lille fra hånden og lille fra bordet. Slå esset.
 
-## 498. K D 9 8 / 4 3 2
+## 496. K D 9 8 / 4 3 2
 
 **3 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest E (11,4 % af spillene)
 
@@ -3089,7 +3089,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 70,1 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med damen.
 - 11,8 %: Lille fra hånden og lille fra bordet.
 
-## 499. E B 9 8 / 4 3 2
+## 497. E B 9 8 / 4 3 2
 
 **2 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest 10 (45,2 % af spillene)
 
@@ -3104,7 +3104,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.
 - 70,6 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.
 
-## 501. K 10 9 8 / 4 3 2
+## 499. K 10 9 8 / 4 3 2
 
 **2 stik** · første runde: Nord 4 · Øst x · Syd 10 · Vest E (11,4 % af spillene)
 
@@ -3112,7 +3112,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder; lægger Øst en honnør, tages den med kongen.
 - 46,8 %: Slå kongen. Lille fra begge hænder.
 
-## 506. E K 9 8 4 3 / B 2
+## 504. E K 9 8 4 3 / B 2
 
 **5 stik** · første runde: Nord B · Øst D · Syd E · Vest x (45,2 % af spillene)
 
@@ -3121,7 +3121,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 75,0 %: Lille fra hånden og lille fra bordet.
 
-## 508. E D 9 8 4 3 / B 2
+## 506. E D 9 8 4 3 / B 2
 
 **5 stik** · første runde: Nord B · Øst K · Syd E · Vest x (45,2 % af spillene)
 
@@ -3130,7 +3130,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 75,0 %: Lille fra hånden og lille fra bordet.
 
-## 514. D 6 5 4 3 2 / E 10
+## 512. D 6 5 4 3 2 / E 10
 
 **4 stik** · første runde: Nord E · Øst B · Syd 6 · Vest x (6,2 % af spillene)
 
@@ -3144,14 +3144,14 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 54,5 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 515. E 10 9 8 / 2
+## 513. E 10 9 8 / 2
 
 **2 stik** · første runde: Nord 2 · Øst x · Syd 10 · Vest K (87,5 % af spillene)
 
 - 14,0 % (bedst): Slå esset.
 - 7,7 %: Lille fra hånden. Slå esset.
 
-## 523. E D 10 9 / 5 4 3 2
+## 521. E D 10 9 / 5 4 3 2
 
 **3 stik** · første runde: Nord 5 · Øst x · Syd 10 · Vest B (45,2 % af spillene)
 
@@ -3159,7 +3159,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 30,0 %: Slå esset.
 - 0,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 524. K D 10 9 / 5 4 3 2
+## 522. K D 10 9 / 5 4 3 2
 
 **3 stik** · første runde: Nord 5 · Øst x · Syd K · Vest E (45,2 % af spillene)
 
@@ -3167,7 +3167,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 30,0 %: Slå damen.
 - 0,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 525. E B 10 9 / 5 4 3 2
+## 523. E B 10 9 / 5 4 3 2
 
 **3 stik** · første runde: Nord 5 · Øst x · Syd B · Vest K (68,4 % af spillene)
 
@@ -3175,7 +3175,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 34,7 %: Slå esset.
 - 0,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 526. E D 7 6 5 4 3 / 10 2
+## 524. E D 7 6 5 4 3 / 10 2
 
 **6 stik** · første runde: Nord 2 · Øst x · Syd E · Vest B (13,0 % af spillene)
 
@@ -3183,7 +3183,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 52,2 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 528. E D B 9 8 3 / 2
+## 526. E D B 9 8 3 / 2
 
 **4 stik** · første runde: Nord 2 · Øst x · Syd 9 · Vest 10 (48,0 % af spillene)
 
@@ -3191,7 +3191,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Damen fra hånden.
 - 53,8 %: Lille fra hånden. Slå esset.
 
-## 529. E 10 6 5 4 3 / K 9 2
+## 527. E 10 6 5 4 3 / K 9 2
 
 **6 stik** · første runde: Nord K · Øst x · Syd 6 · Vest D (19,2 % af spillene)
 
@@ -3201,7 +3201,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 0,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 0,0 %: Lille fra hånden mod 9'eren (kip); lægger Vest en honnør, lægges der lille.
 
-## 530. E B 10 9 8 3 / 2
+## 528. E B 10 9 8 3 / 2
 
 **5 stik** · første runde: Nord 2 · Øst K · Syd E · Vest x (4,0 % af spillene)
 
@@ -3214,7 +3214,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: 10'eren fra hånden.
 - 59,0 %: Lille fra hånden. Slå esset.
 
-## 531. E 9 7 6 5 4 / B 3 2
+## 529. E 9 7 6 5 4 / B 3 2
 
 **5 stik** · første runde: Nord 3 · Øst K · Syd E · Vest x (19,2 % af spillene)
 
@@ -3222,7 +3222,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 35,3 %: Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
 - 35,3 %: Lille fra bordet og lille fra hånden.
 
-## 535. E K 9 8 / B 3 2
+## 532. E K 9 8 / B 3 2
 
 **4 stik** · første runde: Nord B · Øst D · Syd E · Vest x (48,0 % af spillene)
 
@@ -3230,7 +3230,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 16,8 %: Slå kongen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 536. E K 3 2 / B 9 8
+## 533. E K 3 2 / B 9 8
 
 **3 stik** · første runde: Nord 9 · Øst 10 · Syd E · Vest x (2,8 % af spillene)
 
@@ -3244,7 +3244,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 57,1 %: Slå kongen. Lille fra begge hænder.
 
-## 537. E K 4 3 2 / B 10 9
+## 534. E K 4 3 2 / B 10 9
 
 **5 stik** · første runde: Nord B · Øst D · Syd E · Vest x (48,0 % af spillene)
 
@@ -3252,7 +3252,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden til 10'eren.
 - 70,6 %: Slå kongen.
 
-## 538. E D 9 8 / B 3 2
+## 535. E D 9 8 / B 3 2
 
 **4 stik** · første runde: Nord B · Øst K · Syd E · Vest x (48,0 % af spillene)
 
@@ -3267,7 +3267,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 53,8 %: Lille fra bordet til esset. Slå knægten.
 - 53,8 %: Slå esset og knægten.
 
-## 539. E D 3 2 / B 9 8
+## 536. E D 3 2 / B 9 8
 
 **3 stik** · første runde: Nord B · Øst K · Syd E · Vest x (48,0 % af spillene)
 
@@ -3275,7 +3275,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 53,8 %: Slå damen. Lille fra begge hænder.
 
-## 544. E 5 4 3 2 / D 10 9
+## 541. E 5 4 3 2 / D 10 9
 
 **4 stik** · første runde: Nord D · Øst x · Syd 5 · Vest K (45,2 % af spillene)
 
@@ -3289,7 +3289,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 75,0 %: Slå esset.
 
-## 545. K 5 4 3 2 / D 10 9
+## 542. K 5 4 3 2 / D 10 9
 
 **4 stik** · første runde: Syd 5 · Vest x · Nord 10 · Øst E (23,2 % af spillene)
 
@@ -3304,7 +3304,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 75,0 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 546. E 5 4 3 2 / B 10 9
+## 543. E 5 4 3 2 / B 10 9
 
 **3 stik** · første runde: Nord B · Øst x · Syd 5 · Vest K (22,0 % af spillene)
 
@@ -3312,14 +3312,14 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 61,5 %: Slå esset.
 
-## 548. D 10 8 7 / 2
+## 545. D 10 8 7 / 2
 
 **1 stik** · første runde: Nord 2 · Øst x · Syd D · Vest E (72,8 % af spillene)
 
 - 5,2 % (bedst): Lille fra hånden.
 - 2,5 %: 10'eren fra hånden.
 
-## 550. K D 7 4 / B 9 3 2
+## 547. K D 7 4 / B 9 3 2
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd K · Vest E (39,0 % af spillene)
 
@@ -3339,7 +3339,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 54,5 %: 7'eren fra hånden; læg knægten.
 - 54,5 %: Lille fra hånden til knægten.
 
-## 551. E D 7 5 4 / B 3 2
+## 548. E D 7 5 4 / B 3 2
 
 **4 stik** · første runde: Nord B · Øst K · Syd E · Vest x (22,0 % af spillene)
 
@@ -3348,7 +3348,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 61,5 %: 7'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 61,5 %: Lille fra hånden og lille fra bordet.
 
-## 552. K D 9 7 4 / B 3 2
+## 549. K D 9 7 4 / B 3 2
 
 **4 stik** · første runde: Nord 3 · Øst x · Syd K · Vest E (39,0 % af spillene)
 
@@ -3359,7 +3359,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 78,3 %: Slå damen.
 - 78,3 %: 9'eren fra hånden; læg knægten.
 
-## 553. E B 8 7 4 / 10 3 2
+## 550. E B 8 7 4 / 10 3 2
 
 **4 stik** · første runde: Nord 10 · Øst K · Syd E · Vest x (58,8 % af spillene)
 
@@ -3382,7 +3382,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 90,4 %: Lille fra bordet mod 8'eren (kip); lægger Øst en honnør, tages den med esset.
 - 80,8 %: Slå esset.
 
-## 554. E 9 8 7 4 / B 3 2
+## 551. E 9 8 7 4 / B 3 2
 
 **4 stik** · første runde: Syd 9 · Vest x · Nord 3 · Øst K (29,4 % af spillene)
 
@@ -3408,7 +3408,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 80,8 %: Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med esset.
 - 80,8 %: Slå esset.
 
-## 555. E 8 7 5 4 / 10 3 2
+## 552. E 8 7 5 4 / 10 3 2
 
 **3 stik** · første runde: Nord 10 · Øst K · Syd E · Vest x (23,2 % af spillene)
 
@@ -3422,7 +3422,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 54,5 %: Lille fra hånden og lille fra bordet.
 
-## 562. K D 9 3 2 / B 8
+## 559. K D 9 3 2 / B 8
 
 **3 stik** · første runde: Nord B · Øst E · Syd 3 · Vest x (48,0 % af spillene)
 
@@ -3438,7 +3438,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 87,4 %: Slå kongen.
 - 87,4 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 567. D B 8 6 5 / 10 4 3 2
+## 564. D B 8 6 5 / 10 4 3 2
 
 **3 stik** · første runde: Nord 10 · Øst E · Syd 6 · Vest x (39,0 % af spillene)
 
@@ -3452,7 +3452,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 68,6 %: Lille fra hånden og lille fra bordet.
 
-## 568. E K 9 8 / B 2
+## 565. E K 9 8 / B 2
 
 **4 stik** · første runde: Nord B · Øst D · Syd E · Vest x (49,3 % af spillene)
 
@@ -3466,7 +3466,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 35,9 %: Slå esset og kongen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 569. E D 9 8 / B 2
+## 566. E D 9 8 / B 2
 
 **4 stik** · første runde: Nord B · Øst K · Syd E · Vest x (49,3 % af spillene)
 
@@ -3480,7 +3480,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 35,9 %: Slå esset og damen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 570. E D 8 2 / B 9
+## 567. E D 8 2 / B 9
 
 **3 stik** · første runde: Nord B · Øst x · Syd 2 · Vest K (49,3 % af spillene)
 
@@ -3495,7 +3495,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 35,9 %: Slå damen. Lille fra hånden.
 - 0,0 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 571. E D 5 4 3 2 / B 9
+## 568. E D 5 4 3 2 / B 9
 
 **4 stik** · første runde: Syd 5 · Vest x · Nord 9 · Øst 10 (45,2 % af spillene)
 
@@ -3504,7 +3504,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 75,0 %: Slå esset.
 - 75,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 572. E 10 5 4 3 2 / K 9
+## 569. E 10 5 4 3 2 / K 9
 
 **5 stik** · første runde: Syd 5 · Vest x · Nord 9 · Øst D (68,4 % af spillene)
 
@@ -3527,7 +3527,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden til kongen.
 - 79,3 %: Slå esset.
 
-## 573. K D 5 4 3 2 / B 9
+## 570. K D 5 4 3 2 / B 9
 
 **4 stik** · første runde: Syd 5 · Vest x · Nord 9 · Øst 10 (45,2 % af spillene)
 
@@ -3535,7 +3535,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 75,0 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 575. D 9 5 4 3 2 / E 10
+## 572. D 9 5 4 3 2 / E 10
 
 **5 stik** · første runde: Nord E · Øst B · Syd 5 · Vest x (6,2 % af spillene)
 
@@ -3549,7 +3549,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 54,5 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 576. E B 10 8 5 4 3 / 2
+## 573. E B 10 8 5 4 3 / 2
 
 **5 stik** · første runde: Nord 2 · Øst x · Syd 8 · Vest K (29,4 % af spillene)
 
@@ -3563,7 +3563,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: 10'eren fra hånden.
 - 70,6 %: Lille fra hånden.
 
-## 577. E 10 9 8 5 4 3 / 2
+## 574. E 10 9 8 5 4 3 / 2
 
 **5 stik** · første runde: Nord 2 · Øst x · Syd E · Vest K (22,0 % af spillene)
 
@@ -3575,7 +3575,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 % (bedst): 10'eren fra hånden.
 - 61,5 %: Lille fra hånden.
 
-## 579. E 10 9 6 5 4 3 / D 2
+## 576. E 10 9 6 5 4 3 / D 2
 
 **6 stik** · første runde: Nord D · Øst K · Syd E · Vest x (39,0 % af spillene)
 
@@ -3583,7 +3583,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 52,2 %: Lille fra hånden og lille fra bordet.
 
-## 580. D 10 9 6 5 4 3 / E 2
+## 577. D 10 9 6 5 4 3 / E 2
 
 **6 stik** · første runde: Nord E · Øst B · Syd 6 · Vest x (13,0 % af spillene)
 
@@ -3597,7 +3597,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 52,2 %: Lille fra hånden og lille fra bordet.
 
-## 581. E B 9 7 6 5 4 / 3 2
+## 578. E B 9 7 6 5 4 / 3 2
 
 **6 stik** · første runde: Nord 3 · Øst x · Syd E · Vest K (19,2 % af spillene)
 
@@ -3605,7 +3605,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 35,3 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 35,3 %: Lille fra hånden og lille fra bordet.
 
-## 583. D B 9 7 6 5 4 / 3 2
+## 580. D B 9 7 6 5 4 / 3 2
 
 **5 stik** · første runde: Nord 3 · Øst x · Syd D · Vest E (39,0 % af spillene)
 
@@ -3619,7 +3619,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 68,6 %: Lille fra hånden og lille fra bordet.
 
-## 585. E D 8 7 / B 3 2
+## 582. E D 8 7 / B 3 2
 
 **4 stik** · første runde: Nord B · Øst K · Syd E · Vest x (4,0 % af spillene)
 
@@ -3633,7 +3633,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 67,9 %: Slå damen. Lille fra begge hænder.
 - 57,0 %: Lille fra hånden og lille fra bordet. Slå damen.
 
-## 586. E 9 8 7 / B 3 2
+## 583. E 9 8 7 / B 3 2
 
 **2 stik** · første runde: Nord B · Øst x · Syd 9 · Vest K (22,0 % af spillene)
 
@@ -3641,7 +3641,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 61,5 %: Slå esset. Lille fra begge hænder.
 - 32,2 %: Lille fra hånden og lille fra bordet. Slå esset.
 
-## 587. K 9 8 7 / B 3 2
+## 584. K 9 8 7 / B 3 2
 
 **2 stik** · første runde: Nord B · Øst E · Syd 9 · Vest x (23,2 % af spillene)
 
@@ -3655,7 +3655,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 22,0 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 7,3 %: Lille fra hånden og lille fra bordet.
 
-## 588. K 9 8 7 / 4 3 2
+## 585. K 9 8 7 / 4 3 2
 
 **1 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest D (68,4 % af spillene)
 
@@ -3663,7 +3663,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 79,9 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder.
 - 62,8 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
 
-## 589. D 9 8 7 / 4 3 2
+## 586. D 9 8 7 / 4 3 2
 
 **1 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest B (58,8 % af spillene)
 
@@ -3671,7 +3671,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 56,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
 - 53,3 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder.
 
-## 591. E D 9 8 / B 4 3 2
+## 588. E D 9 8 / B 4 3 2
 
 **4 stik** · første runde: Nord B · Øst K · Syd E · Vest x (45,2 % af spillene)
 
@@ -3686,7 +3686,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 81,3 %: Slå knægten.
 - 81,3 %: Lille fra hånden til knægten.
 
-## 592. E 10 9 8 / K 4 3 2
+## 589. E 10 9 8 / K 4 3 2
 
 **4 stik** · første runde: Nord K · Øst x · Syd 10 · Vest D (9,0 % af spillene)
 
@@ -3701,7 +3701,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 87,6 %: Slå kongen.
 - 87,6 %: Lille fra hånden til kongen.
 
-## 593. E 10 9 8 / D 4 3 2
+## 590. E 10 9 8 / D 4 3 2
 
 **3 stik** · første runde: Nord 4 · Øst x · Syd 10 · Vest B (45,2 % af spillene)
 
@@ -3717,7 +3717,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden til damen.
 - 87,8 %: Slå esset.
 
-## 594. K 4 3 2 / D 10 9 8
+## 591. K 4 3 2 / D 10 9 8
 
 **3 stik** · første runde: Nord 10 · Øst E · Syd 4 · Vest x (23,2 % af spillene)
 
@@ -3726,7 +3726,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet; lægger Vest en honnør, tages den med damen.
 - 87,8 %: Slå damen.
 
-## 603. E K 4 3 2 / B 9 8
+## 600. E K 4 3 2 / B 9 8
 
 **4 stik** · første runde: Nord 9 · Øst 10 · Syd E · Vest x (6,2 % af spillene)
 
@@ -3740,7 +3740,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 54,5 %: Slå kongen.
 
-## 604. E D 4 3 2 / B 9 8
+## 601. E D 4 3 2 / B 9 8
 
 **4 stik** · første runde: Nord B · Øst K · Syd E · Vest x (45,2 % af spillene)
 
@@ -3748,7 +3748,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 75,0 %: Slå damen.
 
-## 605. E 9 4 3 2 / D 10 8
+## 602. E 9 4 3 2 / D 10 8
 
 **4 stik** · første runde: Nord D · Øst K · Syd E · Vest x (45,2 % af spillene)
 
@@ -3763,7 +3763,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 0,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 614. E D 10 8 / 5 4 3 2
+## 611. E D 10 8 / 5 4 3 2
 
 **3 stik** · første runde: Nord 5 · Øst x · Syd D · Vest K (39,0 % af spillene)
 
@@ -3772,7 +3772,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 0,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 615. K B 9 8 / 5 4 3 2
+## 612. K B 9 8 / 5 4 3 2
 
 **2 stik** · første runde: Nord 5 · Øst x · Syd 9 · Vest 10 (39,0 % af spillene)
 
@@ -3780,7 +3780,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 26,1 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 26,1 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 616. E 10 9 8 / 5 4 3 2
+## 613. E 10 9 8 / 5 4 3 2
 
 **2 stik** · første runde: Nord 5 · Øst x · Syd 10 · Vest K (68,4 % af spillene)
 
@@ -3788,7 +3788,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 91,7 %: Lille fra hånden og lille fra bordet.
 - 79,3 %: Slå esset.
 
-## 617. K 10 9 8 / 5 4 3 2
+## 614. K 10 9 8 / 5 4 3 2
 
 **2 stik** · første runde: Nord 5 · Øst x · Syd 10 · Vest D (58,8 % af spillene)
 
@@ -3802,7 +3802,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 70,6 %: Slå kongen.
 
-## 619. K 9 8 7 6 / 5 4 3 2
+## 616. K 9 8 7 6 / 5 4 3 2
 
 **3 stik** · første runde: Nord 5 · Øst D · Syd 9 · Vest B (78,0 % af spillene)
 
@@ -3810,7 +3810,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 52,2 %: Kongen fra hånden; dækker Vest, lægges der lille.
 - 52,2 %: Lille fra hånden og lille fra bordet.
 
-## 620. E K 9 8 7 3 / B 2
+## 617. E K 9 8 7 3 / B 2
 
 **5 stik** · første runde: Nord B · Øst D · Syd E · Vest x (45,2 % af spillene)
 
@@ -3819,7 +3819,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 75,0 %: Lille fra hånden og lille fra bordet.
 
-## 622. E 10 9 8 5 4 3 / D 2
+## 619. E 10 9 8 5 4 3 / D 2
 
 **6 stik** · første runde: Nord D · Øst K · Syd E · Vest x (39,0 % af spillene)
 
@@ -3827,7 +3827,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 52,2 %: Lille fra hånden og lille fra bordet.
 
-## 626. E D 6 4 3 / B 9 2
+## 623. E D 6 4 3 / B 9 2
 
 **5 stik** · første runde: Nord B · Øst K · Syd E · Vest x (19,2 % af spillene)
 
@@ -3852,7 +3852,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 70,6 %: Slå damen.
 - 70,6 %: 6'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 627. B 9 8 7 / E D 2
+## 624. B 9 8 7 / E D 2
 
 **3 stik** · første runde: Syd 9 · Vest x · Nord D · Øst K (48,0 % af spillene)
 
@@ -3861,7 +3861,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 53,8 %: Lille fra bordet til knægten. Slå esset.
 - 53,8 %: Slå knægten og esset.
 
-## 632. D 4 3 2 / E 10 8 7
+## 629. D 4 3 2 / E 10 8 7
 
 **3 stik** · første runde: Nord E · Øst B · Syd 4 · Vest x (6,2 % af spillene)
 
@@ -3877,7 +3877,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, lægges der lille.
 - 54,5 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 633. E 9 8 7 / B 4 3 2
+## 630. E 9 8 7 / B 4 3 2
 
 **3 stik** · første runde: Syd 9 · Vest x · Nord 4 · Øst K (29,4 % af spillene)
 
@@ -3900,7 +3900,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 80,8 %: Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.
 
-## 634. K 9 8 7 / B 4 3 2
+## 631. K 9 8 7 / B 4 3 2
 
 **2 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest 10 (39,0 % af spillene)
 
@@ -3916,7 +3916,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.
 - 85,7 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 635. D 9 8 7 / B 4 3 2
+## 632. D 9 8 7 / B 4 3 2
 
 **2 stik** · første runde: Nord 4 · Øst x · Syd D · Vest E (58,8 % af spillene)
 
@@ -3931,7 +3931,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 37,5 %: Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
 
-## 638. B 7 4 3 2 / E D 9
+## 635. B 7 4 3 2 / E D 9
 
 **4 stik** · første runde: Syd 4 · Vest x · Nord D · Øst K (6,2 % af spillene)
 
@@ -3941,7 +3941,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 54,5 %: Slå knægten.
 - 54,5 %: 7'eren fra hånden; læg esset.
 
-## 639. E 9 7 3 2 / D 10 8
+## 636. E 9 7 3 2 / D 10 8
 
 **4 stik** · første runde: Nord D · Øst x · Syd 3 · Vest K (45,2 % af spillene)
 
@@ -3950,7 +3950,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 0,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 640. D B 9 8 7 / E 2
+## 637. D B 9 8 7 / E 2
 
 **5 stik** · første runde: Syd D · Vest K · Nord E · Øst x (48,0 % af spillene)
 
@@ -3958,7 +3958,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 16,8 %: Slå knægten.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 641. K 9 8 7 5 / B 4 3 2
+## 638. K 9 8 7 5 / B 4 3 2
 
 **3 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest 10 (26,0 % af spillene)
 
@@ -3966,7 +3966,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 52,2 %: Kongen fra hånden; dækker Vest, lægges der lille.
 - 52,2 %: Lille fra hånden og lille fra bordet.
 
-## 649. D 7 6 5 4 3 2 / E 10
+## 646. D 7 6 5 4 3 2 / E 10
 
 **6 stik** · første runde: Nord E · Øst B · Syd 7 · Vest x (13,0 % af spillene)
 
@@ -3980,7 +3980,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 %: Lille fra hånden og lille fra bordet.
 - 52,2 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
-## 655. E D 9 7 6 / B 8 2
+## 652. E D 9 7 6 / B 8 2
 
 **5 stik** · første runde: Nord B · Øst K · Syd E · Vest x (45,2 % af spillene)
 
@@ -3989,7 +3989,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 30,0 %: Slå damen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
-## 656. B 7 4 3 2 / E D 6
+## 653. B 7 4 3 2 / E D 6
 
 **4 stik** · første runde: Syd B · Vest K · Nord E · Øst x (22,0 % af spillene)
 

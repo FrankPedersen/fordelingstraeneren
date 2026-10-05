@@ -1,0 +1,89 @@
+{
+ "version": 1,
+ "goals": [
+  {
+   "page": 1,
+   "case": "51",
+   "need": 7,
+   "cause": "kopi"
+  },
+  {
+   "page": 2,
+   "case": "22",
+   "need": 3,
+   "cause": "sikkert"
+  },
+  {
+   "page": 3,
+   "case": "38",
+   "need": 4,
+   "cause": "uforklaret"
+  },
+  {
+   "page": 3,
+   "case": "18",
+   "need": 5,
+   "cause": "kopi"
+  },
+  {
+   "page": 3,
+   "case": "41",
+   "need": 4,
+   "cause": "kopi"
+  },
+  {
+   "page": 4,
+   "case": "2.49",
+   "need": 6,
+   "cause": "uforklaret"
+  },
+  {
+   "page": 4,
+   "case": "2.53",
+   "need": 2,
+   "cause": "kopi"
+  },
+  {
+   "page": 4,
+   "case": "2.52",
+   "need": 2,
+   "cause": "kopi"
+  },
+  {
+   "page": 5,
+   "case": "1",
+   "need": 2,
+   "cause": "sikkert"
+  },
+  {
+   "page": 6,
+   "case": "2.6",
+   "need": 2,
+   "cause": "uforklaret"
+  },
+  {
+   "page": 6,
+   "case": "10",
+   "need": 4,
+   "cause": "modsigelse"
+  },
+  {
+   "page": 6,
+   "case": "2.29",
+   "need": 6,
+   "cause": "kopi"
+  },
+  {
+   "page": 6,
+   "case": "2.29",
+   "need": 5,
+   "cause": "kopi"
+  },
+  {
+   "page": 7,
+   "case": "17",
+   "need": 2,
+   "cause": "kopi"
+  }
+ ]
+}

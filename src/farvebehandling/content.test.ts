@@ -3,6 +3,7 @@ import page2 from './content/bridgehands-side-2.json';
 import csv from './content/damen-mangler-hyppighed.csv?raw';
 import allCsv from './content/hyppighed.csv?raw';
 import whatNowText from './content/hvad-nu.json?raw';
+import sourceErrorsText from './content/kildefejl.json?raw';
 import whatNowMd from './content/hvad-nu.md?raw';
 import solutionsText from './content/solutions.json?raw';
 import bankText from './content/suit-combinations.json?raw';
@@ -12,7 +13,7 @@ import { formatDecimal } from '../engine/format';
 import { percentOf } from './model/fraction';
 import { oncePerDeals } from './model/frequency';
 import { plausible } from './model/whatnow';
-import { frequencyCsv, frequencyRows, type AppEntry, type Combination, type CombinationSolution } from './precompute';
+import { applySourceErrors, frequencyCsv, frequencyRows, type AppEntry, type Combination, type CombinationSolution, type SourceError } from './precompute';
 import { caseLabel, classifyCases, classifyPages, type SourceCase, type SourcePage } from './source/bridgehands';
 import { proposeTechnique, techniquesReport } from './techniques';
 import { whatNowReport, type WhatNowData } from './whatnowReport';
@@ -33,7 +34,9 @@ const csvRows = csv
   .split('\n')
   .slice(1)
   .map((line) => line.split(';'));
-const allRows = frequencyRows(classifyPages(sourcePages));
+// Fejl i kilden (genereret af scripts/solve.ts): målene fjernes, og en case uden mål sorteres fra.
+const sourceErrors = (JSON.parse(sourceErrorsText) as { goals: SourceError[] }).goals;
+const allRows = frequencyRows(applySourceErrors(classifyPages(sourcePages), sourceErrors));
 // De store filer læses som tekst, så tsc ikke skal udlede en type for dem.
 const solutions = (JSON.parse(solutionsText) as { combinations: Record<string, CombinationSolution> }).combinations;
 const bank = (JSON.parse(bankText) as { combinations: Combination[] }).combinations;
@@ -196,5 +199,29 @@ describe('Valideringsrapporterne', () => {
         usable.reduce((n, c) => n + c.needs.length, 0),
       );
     }
+  });
+});
+
+describe('Fejl i kilden', () => {
+  it('fjerner de listede mål fra banken, og en case uden mål tilbage er sorteret fra', () => {
+    expect(sourceErrors).toHaveLength(14);
+    for (const e of sourceErrors) {
+      const b = bank.find((x) => x.source?.name === `bridgehands.com, Suit Combinations ${e.page}, case ${e.case}`);
+      if (b) expect(b.goals, `side ${e.page} case ${e.case}`).not.toContain(e.need);
+    }
+    const dropped = allRows.filter((r) => r.case.reason?.startsWith('Fejl i kilden'));
+    expect(dropped.map((r) => `${r.case.page}:${caseLabel(r.case)}`)).toEqual(['1:51', '5:1', '6:2.29']);
+    expect(bank).toHaveLength(657);
+  });
+
+  it('giver hver afvigelse en årsag i rapporterne', () => {
+    for (const [file, report] of Object.entries(reports)) {
+      const table = lf(report).split('## Afvigelser')[1].split('\n## ')[0];
+      for (const line of table.split('\n').filter((l) => /^\| [\d.]+ \|/.test(l))) expect(line.split('|')[8].trim(), file).not.toBe('');
+    }
+    // K D 10 9 / x: kildens 11 % for 2 stik er forkert; 2 stik er sikre, og alle linjer giver det samme.
+    expect(lf(reports['./content/validering-side-5.md'])).toContain(
+      '| 1 | K D 10 9 / x | 2 | 11 % | 100,0 % | 100,0 % | lav | målet er sikkert med begge fortolkninger; **fjernet** (alle linjer giver det samme) |',
+    );
   });
 });

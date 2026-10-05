@@ -749,14 +749,6 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 ## 44. E D 6 5 4 3 / 10 2
 
-**6 stik**
-
-- 0,0 % (bedst): 10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.
-- 0,0 %: Lille fra begge hænder; lægger Øst en honnør, tages den med esset.
-- 0,0 %: Slå esset.
-- 0,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
-- 0,0 %: Lille fra begge hænder.
-
 **5 stik**
 
 - 37,3 % (bedst): Lille fra bordet til esset. 10'eren fra bordet; dækker Øst, lægges der lille, ellers læg damen.
@@ -1077,14 +1069,6 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 98,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 98,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 89,6 %: Lille fra begge hænder. Slå esset.
-
-**2 stik**
-
-- 100,0 % (bedst): Lille fra begge hænder; lægger Øst en honnør, tages den med esset.
-- 100,0 %: Slå esset.
-- 100,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
-- 100,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
-- 100,0 %: Lille fra begge hænder.
 
 ## 64. E 9 5 4 3 / D 10 2
 
@@ -1841,13 +1825,6 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 98,0 %: Slå esset.
 - 98,0 %: 10'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
 - 96,1 %: Damen fra hånden; dækker Vest, tages stikket med esset, ellers lad den løbe.
-
-**2 stik**
-
-- 100,0 % (bedst): Slå esset.
-- 100,0 %: 10'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
-- 100,0 %: Damen fra hånden; dækker Vest, tages stikket med esset, ellers lad den løbe.
-- 100,0 %: Lille fra begge hænder; lægger Vest en honnør, tages den med esset.
 
 ## 107. K D B 9 / 5 4 3 2
 

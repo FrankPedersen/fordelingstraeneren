@@ -6,7 +6,7 @@ import { completeDay } from '../../engine/streak';
 import { addXp, answerXp } from '../../engine/xp';
 import type { BankItem } from '../analysis';
 import type { FbSaved, TaskType } from '../storage';
-import { dueItems, freshToday, introduce, parseItemKey } from './progression';
+import { dueItems, freshToday, inBank, introduce, parseItemKey } from './progression';
 import { grade, itemKey, makeTask, outcomeOf, possibleTypes, type FbAnswer, type FbTask, type Graded } from './tasks';
 
 /**
@@ -78,7 +78,6 @@ const todayOf = (saved: FbSaved, now: number) => dayOf(now, saved.settings.daySt
 /** Træningens svar til statistikken: de seneste så mange. */
 export const TRAINING_LOG_SIZE = 2000;
 
-const inBank = (bank: readonly BankItem[], key: string) => bank.some((b) => b.combination.id === parseItemKey(key).id);
 
 export function startFbSession(saved: FbSaved, bank: readonly BankItem[], now: number, seed: number): FbSession {
   return {

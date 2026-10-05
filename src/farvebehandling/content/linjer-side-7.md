@@ -615,13 +615,6 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 ## 44. D 4 3 2 / B 9
 
-**2 stik**
-
-- 0,0 % (bedst): Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
-- 0,0 %: Lille fra begge hænder.
-- 0,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
-- 0,0 %: Lille fra begge hænder.
-
 **1 stik**
 
 - 56,4 % (bedst): Lille fra begge hænder. Lille fra begge hænder. Lille fra hånden.

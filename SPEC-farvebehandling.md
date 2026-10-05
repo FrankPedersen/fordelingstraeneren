@@ -168,6 +168,17 @@ Opgaven er et spil under usikkerhed: spilføreren må kun beslutte ud fra de kor
 
 **Validering.** Løseren regner alle brugbare cases fra bridgehands.com's side "damen mangler", som Claude Code læser direkte. Rapporten viser pr. case og mål løserens og kildens procent, beregnet med begge fortolkninger af x: spilførerens x'er som de laveste kort og x som uden betydning. Afvigelser over 0,5 procentpoint gennemgås, fordi kilden kun har hele procenter. Kendte fejl i kilden: kortantallet passer ikke med fordelingen i case 5, 6, 14, 15 og 85; case 30 og 41 har ét mål, men to procenter; case 74–78 og 92 har "…"; case 42 og 53 er dubletter af 40 og 52. Case 13 (E K x / B x x, 3 stik, 10 %) er rigtig: spiller man mod knægten, lægger Øst damen.
 
+**Fejl i kilden** (Franks ønske, 5. oktober 2026). Hver afvigelse over 0,5 procentpoint får en årsag i valideringsrapporten:
+
+- passer med fortolkningen "høj";
+- lille afvigelse (højst 1,5 procentpoint fra den nærmeste fortolkning);
+- kilden modsiger sig selv (et højere mål har en større procent end et lavere);
+- samme mål og procenter som en anden case på siden, der passer (kopieret);
+- målet er sikkert eller umuligt med begge fortolkninger;
+- ellers passer kilden ikke med nogen fortolkning.
+
+Et mål fjernes fra appen, når kildens procent afviger mere end 1,5 procentpoint med begge fortolkninger (og ikke passer med "høj"), og alle linjer giver det samme, så opgaven ingen beslutning har. Så er målet næppe det, kilden mente; fx K D 10 9 / x, hvor kilden giver 2 stik 11 %, men 2 stik er sikre. En case uden mål tilbage sorteres fra. Det giver 14 fjernede mål og 3 cases færre: banken har 657 kombinationer. Listen står i `content/kildefejl.json`; de øvrige afvigende mål bliver, og appen bruger løserens tal.
+
 ## Opgavebank og linjeformat
 
 Opgavebanken ligger i `src/farvebehandling/content/suit-combinations.json` og teknikkerne i `src/farvebehandling/content/techniques.json`. Alle kort står præcist i data, fx E K B 3 2 / 7 6 5 4; visningen samler ligeværdige små kort som x. Internt bruges A K Q J T, i visningen E K D B 10. Tieren vises som "10" i hele appen, som fordelingssporet allerede gør; "T" bruges kun i data og spec.
@@ -401,7 +412,7 @@ Accepttest i Vitest:
 
 Afklaret:
 
-- **Startbanken:** alle brugbare cases fra siderne 0–9 (660 kombinationer). Blakset-videoerne bruges ikke (Franks valg, 4. oktober 2026).
+- **Startbanken:** alle brugbare cases fra siderne 0–9 (657 kombinationer, når fejlene i kilden er fjernet; se Validering). Blakset-videoerne bruges ikke (Franks valg, 4. oktober 2026).
 - **Daglig session:** farvebehandling har sin egen daglige session og indgår ikke i fordelingssporets (Franks valg, 4. oktober 2026).
 - **x i kilden:** case 4 tyder på, at kilden ikke altid lader x tabe til modpartens små kort. Appen bruger "lav", og valideringsrapporterne viser begge fortolkninger og hvilken der passer bedst (godkendt af Frank, 4. oktober 2026).
 - **Fase 2:** løseren kører i browseren i baggrunden (en Web Worker) på forespørgsel (Franks valg, 4. oktober 2026). En kombination uden for banken regnes fra kortvælgeren: først flest stik i gennemsnit, så målene, der er værd at regne, ét ad gangen. Egne linjer regnes på samme måde og gemmes under `ownLines`.

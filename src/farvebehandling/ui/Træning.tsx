@@ -6,7 +6,7 @@ import { streakOn } from '../../engine/streak';
 import type { BankItem } from '../analysis';
 import { exportDue, type FbSaved } from '../storage';
 import { placeOf, type Technique } from '../training/palace';
-import { dueItems, dueTomorrow, freshToday, parseItemKey } from '../training/progression';
+import { dueItems, dueTomorrow, freshToday, inBank } from '../training/progression';
 import {
   answerFb,
   finishFbSession,
@@ -51,7 +51,7 @@ export function Træning({ bank, saved, update, techniques, onOpenAnalysis, onOp
   if (view === 'data') return <Data saved={saved} update={update} onBack={home} />;
 
   const today = dayOf(Date.now(), saved.settings.dayStartsAtHour);
-  const due = dueItems(saved, today).filter((k) => bank.some((b) => b.combination.id === parseItemKey(k).id)).length;
+  const due = dueItems(saved, today).filter((k) => inBank(bank, k)).length;
   const fresh = freshToday(saved, bank, today).length;
   const streak = streakOn(saved.streak, today).current;
   return (

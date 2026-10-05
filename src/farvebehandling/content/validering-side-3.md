@@ -17,27 +17,28 @@ Kilden har kun hele procenter, så en afvigelse over 0,5 procentpoint gennemgås
 - Fortolkning "høj": 134 af 278 mål inden for 0,5 procentpoint, 138 inden for 1 procentpoint.
 - Mindst én af fortolkningerne inden for 0,5 procentpoint: 265 af 278 mål.
 - Mål, hvor den bedste linje kræver, at spilføreren blander (ingen ren linje inden for 0,002 procentpoint): 3.
+- Fejl i kilden, fjernet fra appen: 3 mål, hvor kildens procent afviger mere end 1,5 procentpoint med begge fortolkninger, og alle linjer giver det samme.
 
 ## Afvigelser over 0,5 procentpoint med fortolkningen "lav"
 
-| Case | Hånd / bordet | Mål | Kilde | Lav | Høj | Nærmest | Kildens bemærkning |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 10 | E D x / B x x | 3 | 25 % | 4,8 % | 50,0 % | lav | Same as below, or finesse 10 then K | Play J then finesse K, if K initially then finesse 10 |
-| 38 | B x x x / E D x | 4 | 9 % | 0,0 % | 27,0 % | lav | Finesse 10 (toward 9) then low to Q | Finesse K then finesse 10 (toward 9) |
-| 38 | B x x x / E D x | 3 | 71 % | 46,0 % | 100,0 % | lav | Finesse 10 (toward 9) then low to Q | Finesse K then finesse 10 (toward 9) |
-| 32 | E 9 x x / D B x | 4 | 9 % | 0,0 % | 9,3 % | høj | Play low to Q then low to J |
-| 60 | B 9 x x x / E D x | 3 | 100 % | 98,0 % | 100,0 % | høj | Finesse K then play J, or finesse K then play A | Play low to A then play Q | Play low |
-| 51 | E D 8 x x / B x x | 3 | 100 % | 98,0 % | 100,0 % | høj | Finesse K (low to Q) then play A | J then finesse K (low to Q), or low to A then Q | Play low then play J |
-| 18 | E D x x x / B 9 | 5 | 7 % | 0,0 % | 8,7 % | høj | Finesse 10 then play J |
-| 18 | E D x x x / B 9 | 4 | 58 % | 49,1 % | 71,5 % | lav | Finesse 10 then play J |
-| 41 | E D 9 8 x x / B x | 6 | 34 % | 13,6 % | 13,6 % | lav | Finesse K then play J |
-| 41 | E D 9 8 x x / B x | 4 | 98 % | 100,0 % | 100,0 % | lav | Finesse K then play J |
-| 58 | E x x x x / D B 9 | 4 | 82 % | 84,8 % | 93,3 % | lav | Finesse K (low to Q) repeatedly (low to J) | Finesse K (low to Q) repeatedly (low to J) |
-| 61 | B x x x x / E D 9 | 4 | 88 % | 84,8 % | 93,3 % | lav | Play J then low to 9 or Q, or finesse K then play J | Finesse K then play J | Any of the above |
-| 5 | E D 9 8 / B x | 4 | 4 % | 5,2 % | 5,2 % | lav | Play J then finesse K, if K initially then finesse 10 |
-| 5 | E D 9 8 / B x | 3 | 3 % | 68,2 % | 68,2 % | lav | Play J then finesse K, if K initially then finesse 10 |
-| 63 | B 7 x x x / E D 6 | 4 | 73 % | 76,3 % | 76,3 % | lav | Finesse K (low to Q) then play A | Play A then Q | Any of the above |
-| 63 | B 7 x x x / E D 6 | 3 | 96 % | 98,0 % | 98,0 % | lav | Finesse K (low to Q) then play A | Play A then Q | Any of the above |
+| Case | Hånd / bordet | Mål | Kilde | Lav | Høj | Nærmest | Årsag | Kildens bemærkning |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 10 | E D x / B x x | 3 | 25 % | 4,8 % | 50,0 % | lav | passer ikke med nogen fortolkning | Same as below, or finesse 10 then K | Play J then finesse K, if K initially then finesse 10 |
+| 38 | B x x x / E D x | 4 | 9 % | 0,0 % | 27,0 % | lav | passer ikke med nogen fortolkning; **fjernet** (alle linjer giver det samme) | Finesse 10 (toward 9) then low to Q | Finesse K then finesse 10 (toward 9) |
+| 38 | B x x x / E D x | 3 | 71 % | 46,0 % | 100,0 % | lav | passer ikke med nogen fortolkning | Finesse 10 (toward 9) then low to Q | Finesse K then finesse 10 (toward 9) |
+| 32 | E 9 x x / D B x | 4 | 9 % | 0,0 % | 9,3 % | høj | passer med "høj" | Play low to Q then low to J |
+| 60 | B 9 x x x / E D x | 3 | 100 % | 98,0 % | 100,0 % | høj | passer med "høj" | Finesse K then play J, or finesse K then play A | Play low to A then play Q | Play low |
+| 51 | E D 8 x x / B x x | 3 | 100 % | 98,0 % | 100,0 % | høj | passer med "høj" | Finesse K (low to Q) then play A | J then finesse K (low to Q), or low to A then Q | Play low then play J |
+| 18 | E D x x x / B 9 | 5 | 7 % | 0,0 % | 8,7 % | høj | samme mål og procenter som case 17, der passer; **fjernet** (alle linjer giver det samme) | Finesse 10 then play J |
+| 18 | E D x x x / B 9 | 4 | 58 % | 49,1 % | 71,5 % | lav | samme mål og procenter som case 17, der passer | Finesse 10 then play J |
+| 41 | E D 9 8 x x / B x | 6 | 34 % | 13,6 % | 13,6 % | lav | samme mål og procenter som case 40, der passer | Finesse K then play J |
+| 41 | E D 9 8 x x / B x | 4 | 98 % | 100,0 % | 100,0 % | lav | samme mål og procenter som case 40, der passer; **fjernet** (alle linjer giver det samme) | Finesse K then play J |
+| 58 | E x x x x / D B 9 | 4 | 82 % | 84,8 % | 93,3 % | lav | passer ikke med nogen fortolkning | Finesse K (low to Q) repeatedly (low to J) | Finesse K (low to Q) repeatedly (low to J) |
+| 61 | B x x x x / E D 9 | 4 | 88 % | 84,8 % | 93,3 % | lav | samme mål og procenter som case 50, der passer | Play J then low to 9 or Q, or finesse K then play J | Finesse K then play J | Any of the above |
+| 5 | E D 9 8 / B x | 4 | 4 % | 5,2 % | 5,2 % | lav | lille afvigelse | Play J then finesse K, if K initially then finesse 10 |
+| 5 | E D 9 8 / B x | 3 | 3 % | 68,2 % | 68,2 % | lav | kilden modsiger sig selv: et højere mål har en større procent | Play J then finesse K, if K initially then finesse 10 |
+| 63 | B 7 x x x / E D 6 | 4 | 73 % | 76,3 % | 76,3 % | lav | passer ikke med nogen fortolkning | Finesse K (low to Q) then play A | Play A then Q | Any of the above |
+| 63 | B 7 x x x / E D 6 | 3 | 96 % | 98,0 % | 98,0 % | lav | passer ikke med nogen fortolkning | Finesse K (low to Q) then play A | Play A then Q | Any of the above |
 
 ## Sorteret fra
 

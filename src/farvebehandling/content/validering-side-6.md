@@ -17,19 +17,20 @@ Kilden har kun hele procenter, så en afvigelse over 0,5 procentpoint gennemgås
 - Fortolkning "høj": 39 af 98 mål inden for 0,5 procentpoint, 39 inden for 1 procentpoint.
 - Mindst én af fortolkningerne inden for 0,5 procentpoint: 91 af 98 mål.
 - Mål, hvor den bedste linje kræver, at spilføreren blander (ingen ren linje inden for 0,002 procentpoint): 1.
+- Fejl i kilden, fjernet fra appen: 4 mål, hvor kildens procent afviger mere end 1,5 procentpoint med begge fortolkninger, og alle linjer giver det samme; 1 case har ikke flere mål og er ikke med.
 
 ## Afvigelser over 0,5 procentpoint med fortolkningen "lav"
 
-| Case | Hånd / bordet | Mål | Kilde | Lav | Høj | Nærmest | Kildens bemærkning |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 2.4 | E 10 x x / x | 2 | 3 % | 0,8 % | 24,7 % | lav | Play low to low |
-| 2.6 | E 10 x x x / x | 2 | 67 % | 62,2 % | 100,0 % | lav | Play low to low |
-| 1 | K B 9 / x x | 2 | 27 % | 24,3 % | 24,3 % | lav | Finesse Q then finesse A, or finesse 10 then Q |
-| 10 | K 10 8 x / B x x | 4 | 3 % | 0,0 % | 0,0 % | lav | Finesse 9 then play low to 10 | Play low to 10 then low to 8 |
-| 10 | K 10 8 x / B x x | 3 | 2 % | 19,6 % | 25,6 % | lav | Finesse 9 then play low to 10 | Play low to 10 then low to 8 |
-| 2.12 | E 10 9 8 x / x x | 3 | 82 % | 74,3 % | 82,3 % | høj | Play low to 10 |
-| 2.29 | E 10 x x x x / 9 x x | 6 | 41 % | 0,0 % | 0,0 % | lav | Play low to 10 then play A |
-| 2.29 | E 10 x x x x / 9 x x | 5 | 95 % | 40,7 % | 40,7 % | lav | Play low to 10 then play A |
+| Case | Hånd / bordet | Mål | Kilde | Lav | Høj | Nærmest | Årsag | Kildens bemærkning |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 2.4 | E 10 x x / x | 2 | 3 % | 0,8 % | 24,7 % | lav | samme mål og procenter som case 2.2, der passer | Play low to low |
+| 2.6 | E 10 x x x / x | 2 | 67 % | 62,2 % | 100,0 % | lav | passer ikke med nogen fortolkning; **fjernet** (alle linjer giver det samme) | Play low to low |
+| 1 | K B 9 / x x | 2 | 27 % | 24,3 % | 24,3 % | lav | passer ikke med nogen fortolkning | Finesse Q then finesse A, or finesse 10 then Q |
+| 10 | K 10 8 x / B x x | 4 | 3 % | 0,0 % | 0,0 % | lav | kilden modsiger sig selv: et højere mål har en større procent; **fjernet** (alle linjer giver det samme) | Finesse 9 then play low to 10 | Play low to 10 then low to 8 |
+| 10 | K 10 8 x / B x x | 3 | 2 % | 19,6 % | 25,6 % | lav | kilden modsiger sig selv: et højere mål har en større procent | Finesse 9 then play low to 10 | Play low to 10 then low to 8 |
+| 2.12 | E 10 9 8 x / x x | 3 | 82 % | 74,3 % | 82,3 % | høj | passer med "høj" | Play low to 10 |
+| 2.29 | E 10 x x x x / 9 x x | 6 | 41 % | 0,0 % | 0,0 % | lav | samme mål og procenter som case 2.28, der passer; **fjernet** (alle linjer giver det samme) | Play low to 10 then play A |
+| 2.29 | E 10 x x x x / 9 x x | 5 | 95 % | 40,7 % | 40,7 % | lav | samme mål og procenter som case 2.28, der passer; **fjernet** (alle linjer giver det samme) | Play low to 10 then play A |
 
 ## Sorteret fra
 

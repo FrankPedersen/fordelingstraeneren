@@ -20,9 +20,9 @@ Kilden har kun hele procenter, så en afvigelse over 0,5 procentpoint gennemgås
 
 ## Afvigelser over 0,5 procentpoint med fortolkningen "lav"
 
-| Case | Hånd / bordet | Mål | Kilde | Lav | Høj | Nærmest | Kildens bemærkning |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 11 | D 10 x x / x x x | 1 | 70 % | 69,4 % | 100,0 % | lav | Finesse J then low to Q |
+| Case | Hånd / bordet | Mål | Kilde | Lav | Høj | Nærmest | Årsag | Kildens bemærkning |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 11 | D 10 x x / x x x | 1 | 70 % | 69,4 % | 100,0 % | lav | lille afvigelse | Finesse J then low to Q |
 
 ## Sorteret fra
 

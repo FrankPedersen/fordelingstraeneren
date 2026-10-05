@@ -328,7 +328,14 @@ export function appEntry(
 export interface ValidationRow {
   case: ClassifiedCase;
   hands: Record<XRule, { north: Rank[]; south: Rank[] }>;
-  goals: { need: number; source: number; app: Record<XRule, number>; certified: Record<XRule, boolean> }[];
+  goals: {
+    need: number;
+    source: number;
+    app: Record<XRule, number>;
+    certified: Record<XRule, boolean>;
+    /** Med "lav": er der en linje, der er mere end 0,5 procentpoint dårligere end den bedste? Ellers ingen beslutning. */
+    decision: boolean;
+  }[];
 }
 
 const bestLead = (g: GoalResult): LeadResult | undefined => g.leads[g.best];
@@ -357,8 +364,100 @@ export function validationRow(c: ClassifiedCase, lav: CombinationSolution, høj:
         lav: bestLead(lav.goals[String(need)])?.certified ?? true,
         høj: bestLead(høj.goals[String(need)])?.certified ?? true,
       },
+      decision: hasDecision(lav.goals[String(need)]),
     })),
   };
+}
+
+/** Et mål med en beslutning: målet kan nås, og mindst én linje er mere end 0,5 procentpoint dårligere end den bedste. */
+function hasDecision(g: GoalResult | undefined): boolean {
+  if (!g || g.value <= 0 || !g.leads.length) return false;
+  return g.leads.some((l) => g.value - l.value > NEAR_BEST);
+}
+
+// ---------- Fejl i kilden ----------
+
+/** Afvigelser på højst så mange procentpoint fra den nærmeste fortolkning af x kaldes små. */
+export const SMALL_DEVIATION = 1.5;
+
+/**
+ * Hvorfor kildens procent afviger (mere end tolerancen med "lav"): passer med "høj", lille afvigelse, kilden modsiger
+ * sig selv (et højere mål har en større procent end et lavere), samme mål og procenter som en anden case, der passer
+ * (kopieret), målet er sikkert eller umuligt med begge fortolkninger, eller uforklaret.
+ */
+export type DeviationCause = 'høj' | 'lille' | 'modsigelse' | 'kopi' | 'sikkert' | 'umuligt' | 'uforklaret';
+
+const nearest = (g: ValidationRow['goals'][number]) => Math.min(Math.abs(g.app.lav - g.source), Math.abs(g.app.høj - g.source));
+
+export function deviationCause(
+  row: ValidationRow,
+  need: number,
+  pageRows: readonly ValidationRow[],
+  tolerance = 0.5,
+): { cause: DeviationCause; copyOf?: string } | null {
+  const g = row.goals.find((x) => x.need === need);
+  if (!g || Math.abs(g.app.lav - g.source) <= tolerance) return null;
+  if (Math.abs(g.app.høj - g.source) <= tolerance) return { cause: 'høj' };
+  if (nearest(g) <= SMALL_DEVIATION) return { cause: 'lille' };
+  if (row.goals.some((o) => (o.need > need && o.source > g.source) || (o.need < need && o.source < g.source))) return { cause: 'modsigelse' };
+  const key = (r: ValidationRow) => r.goals.map((o) => `${o.need}:${o.source}`).join(',');
+  const copy = pageRows.find(
+    (r) => r !== row && holding(r.case) !== holding(row.case) && key(r) === key(row) && r.goals.every((o) => nearest(o) <= SMALL_DEVIATION),
+  );
+  if (copy) return { cause: 'kopi', copyOf: caseLabel(copy.case) };
+  if (g.app.lav >= 99.95 && g.app.høj >= 99.95) return { cause: 'sikkert' };
+  if (g.app.lav <= 0.05 && g.app.høj <= 0.05) return { cause: 'umuligt' };
+  return { cause: 'uforklaret' };
+}
+
+/**
+ * Målene, der fjernes fra appen: kildens procent er forkert (afviger mere end SMALL_DEVIATION med begge fortolkninger),
+ * og målet har ingen beslutning, fordi alle linjer giver det samme. Så er målet næppe det, kilden mente.
+ */
+export function removedGoals(row: ValidationRow, pageRows: readonly ValidationRow[], tolerance = 0.5): { need: number; cause: DeviationCause }[] {
+  return row.goals.flatMap((g) => {
+    const found = deviationCause(row, g.need, pageRows, tolerance);
+    return found && found.cause !== 'høj' && found.cause !== 'lille' && !g.decision ? [{ need: g.need, cause: found.cause }] : [];
+  });
+}
+
+/** Et fjernet mål i content/kildefejl.json. */
+export interface SourceError {
+  page: number;
+  case: string;
+  need: number;
+  cause: DeviationCause;
+}
+
+/**
+ * Kildefejlene fjernes fra cases: målene fjernes, og en case uden mål tilbage sorteres fra. Rangen regnes derefter
+ * igen med frequencyRows. Cases kopieres; de oprindelige ændres ikke.
+ */
+export function applySourceErrors(cases: readonly ClassifiedCase[], errors: readonly SourceError[]): ClassifiedCase[] {
+  return cases.map((c) => {
+    const drop = errors.filter((e) => e.page === c.page && e.case === caseLabel(c)).map((e) => e.need);
+    if (!c.usable || !drop.length) return c;
+    const keep = c.needs.map((n) => !drop.includes(n));
+    const needs = c.needs.filter((_, i) => keep[i]);
+    const percents = c.percents.filter((_, i) => keep[i]);
+    if (!needs.length) return { ...c, needs, percents, usable: false, reason: 'Fejl i kilden: alle mål er forkerte (se valideringsrapporten)' };
+    return { ...c, needs, percents };
+  });
+}
+
+const CAUSE_TEXT: Record<DeviationCause, string> = {
+  høj: 'passer med "høj"',
+  lille: 'lille afvigelse',
+  modsigelse: 'kilden modsiger sig selv: et højere mål har en større procent',
+  kopi: 'samme mål og procenter som case',
+  sikkert: 'målet er sikkert med begge fortolkninger',
+  umuligt: 'målet kan ikke nås med begge fortolkninger',
+  uforklaret: 'passer ikke med nogen fortolkning',
+};
+
+function causeText(found: { cause: DeviationCause; copyOf?: string }, removed: boolean): string {
+  const text = found.cause === 'kopi' ? `${CAUSE_TEXT.kopi} ${found.copyOf}, der passer` : CAUSE_TEXT[found.cause];
+  return removed ? `${text}; **fjernet** (alle linjer giver det samme)` : text;
 }
 
 const pct = (x: number) => `${formatDecimal(x, 1)} %`;
@@ -400,15 +499,26 @@ export function validationReport(
   out.push(`- Mindst én af fortolkningerne inden for ${formatDecimal(meta.tolerance, 1)} procentpoint: ${either} af ${goals.length} mål.`);
   const uncertified = goals.filter(({ g }) => !g.certified.lav || !g.certified.høj).length;
   out.push(`- Mål, hvor den bedste linje kræver, at spilføreren blander (ingen ren linje inden for 0,002 procentpoint): ${uncertified}.`);
+  const removed = rows.flatMap((r) => removedGoals(r, rows, meta.tolerance).map((x) => ({ row: r, need: x.need })));
+  const isRemoved = (row: ValidationRow, need: number) => removed.some((x) => x.row === row && x.need === need);
+  const empty = rows.filter((r) => r.goals.every((g) => isRemoved(r, g.need))).length;
+  if (removed.length) {
+    out.push(
+      `- Fejl i kilden, fjernet fra appen: ${removed.length} mål, hvor kildens procent afviger mere end ${formatDecimal(SMALL_DEVIATION, 1)} ` +
+        `procentpoint med begge fortolkninger, og alle linjer giver det samme${empty ? `; ${empty} ${empty === 1 ? 'case har' : 'cases har'} ikke flere mål og er ikke med` : ''}.`,
+    );
+  }
   out.push('');
   out.push(`## Afvigelser over ${formatDecimal(meta.tolerance, 1)} procentpoint med fortolkningen "lav"`);
   out.push('');
-  out.push('| Case | Hånd / bordet | Mål | Kilde | Lav | Høj | Nærmest | Kildens bemærkning |');
-  out.push('| --- | --- | --- | --- | --- | --- | --- | --- |');
+  out.push('| Case | Hånd / bordet | Mål | Kilde | Lav | Høj | Nærmest | Årsag | Kildens bemærkning |');
+  out.push('| --- | --- | --- | --- | --- | --- | --- | --- | --- |');
   for (const { row, g } of goals) {
-    if (Math.abs(g.app.lav - g.source) <= meta.tolerance) continue;
+    const found = deviationCause(row, g.need, rows, meta.tolerance);
+    if (!found) continue;
     out.push(
-      `| ${caseLabel(row.case)} | ${holding(row.case)} | ${g.need} | ${g.source} % | ${pct(g.app.lav)} | ${pct(g.app.høj)} | ${best(g)} | ${row.case.remark || '–'} |`,
+      `| ${caseLabel(row.case)} | ${holding(row.case)} | ${g.need} | ${g.source} % | ${pct(g.app.lav)} | ${pct(g.app.høj)} | ${best(g)} | ` +
+        `${causeText(found, isRemoved(row, g.need))} | ${row.case.remark || '–'} |`,
     );
   }
   out.push('');

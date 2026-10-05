@@ -17,15 +17,16 @@ Kilden har kun hele procenter, så en afvigelse over 0,5 procentpoint gennemgås
 - Fortolkning "høj": 18 af 63 mål inden for 0,5 procentpoint, 24 inden for 1 procentpoint.
 - Mindst én af fortolkningerne inden for 0,5 procentpoint: 59 af 63 mål.
 - Mål, hvor den bedste linje kræver, at spilføreren blander (ingen ren linje inden for 0,002 procentpoint): 0.
+- Fejl i kilden, fjernet fra appen: 1 mål, hvor kildens procent afviger mere end 1,5 procentpoint med begge fortolkninger, og alle linjer giver det samme; 1 case har ikke flere mål og er ikke med.
 
 ## Afvigelser over 0,5 procentpoint med fortolkningen "lav"
 
-| Case | Hånd / bordet | Mål | Kilde | Lav | Høj | Nærmest | Kildens bemærkning |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 35 | E K D 10 x x / x x | 6 | 74 % | 73,5 % | 73,5 % | lav | Drop J |
-| 51 | E K x x x x x / D x | 7 | 95 % | 90,4 % | 100,0 % | lav | Drop J (Q first) |
-| 12 | E K D 10 9 x x / – | 6 | 54 % | 98,5 % | 100,0 % | lav | – |
-| 12 | E K D 10 9 x x / – | 5 | 99 % | 100,0 % | 100,0 % | lav | – |
+| Case | Hånd / bordet | Mål | Kilde | Lav | Høj | Nærmest | Årsag | Kildens bemærkning |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 35 | E K D 10 x x / x x | 6 | 74 % | 73,5 % | 73,5 % | lav | lille afvigelse | Drop J |
+| 51 | E K x x x x x / D x | 7 | 95 % | 90,4 % | 100,0 % | lav | samme mål og procenter som case 48, der passer; **fjernet** (alle linjer giver det samme) | Drop J (Q first) |
+| 12 | E K D 10 9 x x / – | 6 | 54 % | 98,5 % | 100,0 % | lav | samme mål og procenter som case 15, der passer | – |
+| 12 | E K D 10 9 x x / – | 5 | 99 % | 100,0 % | 100,0 % | lav | lille afvigelse | – |
 
 ## Sorteret fra
 

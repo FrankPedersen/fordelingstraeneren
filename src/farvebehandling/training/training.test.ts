@@ -342,6 +342,15 @@ describe('Sessionen', () => {
     expect(s.step).toEqual({ kind: 'status' });
   });
 
+  it('springer forfaldne emner over, hvis målet er fjernet som fejl i kilden', () => {
+    // B 5 4 3 / E D 2: 4 stik er fjernet (kildens 9 % passer ikke, og alle linjer giver det samme); 3 stik er tilbage.
+    expect(byId('AQ2-J543').combination.goals).toEqual([3]);
+    const saved = introduce(defaultFbSaved(), byId('AQ2-J543'), '2026-10-04');
+    const items = { ...saved.items, 'AQ2-J543:4': { ...saved.items['AQ2-J543:3'] } };
+    const s = startFbSession({ ...saved, items }, bank, T0, 3);
+    expect(s.due).toEqual(['AQ2-J543:3']);
+  });
+
   it('stiller forfaldne emner i repetitionen, højst 60 s', () => {
     const saved = introduceAll(defaultFbSaved(), bank.slice(0, 4), '2026-10-04');
     let s = startFbSession(saved, bank, T0, 3);

@@ -10,7 +10,7 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 5. **Ingen kipning:** fald eller kip.
 
 
-## Enkelt kipning (98)
+## Enkelt kipning (97)
 
 | Rang | Hånd / bordet | Mål | Begrundelse |
 | --- | --- | --- | --- |
@@ -19,7 +19,6 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 58 | E 10 6 5 4 / 3 2 | 3, 2 | 10'eren spilles ud og løber med 7 kort. |
 | 60 | E 10 5 4 / K 3 2 | 3 | Kipning mod 10'eren med 7 kort. |
 | 65 | E B 5 4 3 / K 2 | 5, 4, 3 | Kipning mod knægten med 7 kort. |
-| 68 | E 10 5 4 3 / 2 | 3, 2 | 10'eren spilles ud og løber med 6 kort. |
 | 75 | E B 4 / 10 3 2 | 2 | Kipning mod knægten med 6 kort. |
 | 89 | E K B 5 4 3 / 2 | 6, 5, 4, 3 | Kipning mod knægten med 7 kort. |
 | 91 | E D 6 5 / 10 4 3 2 | 4, 3 | Kipning mod damen med 8 kort. |
@@ -31,89 +30,89 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 137 | E B 10 3 / 2 | 3, 2 | Kipning mod knægten med 5 kort. |
 | 144 | E 5 4 3 / 10 9 2 | 2 | 10'eren spilles ud og løber med 7 kort. |
 | 151 | E B 10 4 3 / K 2 | 5, 4 | Kipning mod knægten med 7 kort. |
-| 166 | E B 10 / 4 3 2 | 2 | Små kort fra begge hænder kipper med 10'eren med 6 kort. |
-| 170 | E 10 8 4 / 3 2 | 2 | Kipning mod 10'eren med 6 kort. |
-| 183 | E 10 4 3 / K 9 2 | 4, 3 | Kipning mod 9'eren med 7 kort. |
-| 188 | 10 9 4 3 / E D 2 | 4, 3 | Kipning mod damen med 7 kort. |
-| 206 | E 8 7 6 5 / D B 4 3 2 | 5 | Damen spilles ud og løber med 10 kort. |
-| 210 | E D 9 5 4 / B 3 2 | 5, 4, 3 | Kipning mod damen med 8 kort. |
-| 250 | E D B 8 7 6 / 5 4 3 2 | 6 | Kipning mod damen med 10 kort. |
-| 251 | D B 8 7 6 5 / E 4 3 2 | 6 | Damen spilles ud og løber med 10 kort. |
-| 255 | E K D 10 3 / 2 | 5, 4 | Kipning mod 10'eren med 6 kort. |
-| 257 | E B 9 3 / K 2 | 4, 3 | Kipning mod knægten med 6 kort. |
-| 261 | E 10 8 5 4 / 3 2 | 3, 2 | Kipning mod 10'eren med 7 kort. |
-| 277 | E D 9 5 / B 4 3 2 | 4, 3 | Kipning mod damen med 8 kort. |
-| 283 | E D B 9 5 4 / 3 2 | 6, 5, 4 | Kipning mod damen med 8 kort. |
-| 285 | E D 10 9 5 4 / 3 2 | 6, 5, 4 | Kipning mod damen med 8 kort. |
-| 298 | E D 8 4 / B 3 2 | 3 | Kipning mod damen med 7 kort. |
-| 312 | E D B 8 7 / 6 5 4 3 2 | 5 | Kipning mod damen med 10 kort. |
-| 323 | E B 10 9 3 / 2 | 4, 3 | Kipning mod knægten med 6 kort. |
-| 325 | E K B 10 / 4 3 2 | 4 | Små kort fra begge hænder kipper med 10'eren med 7 kort. |
-| 336 | D B 7 6 5 4 3 / E 2 | 7, 6 | Damen spilles ud og løber med 9 kort. |
-| 344 | E K 4 3 2 / D 10 | 5, 4 | Små kort fra begge hænder kipper med 10'eren med 7 kort. |
-| 347 | E D 9 5 4 3 / B 2 | 6, 5, 4 | Knægten spilles ud og løber med 8 kort. |
-| 356 | E 3 2 / D B 9 | 3 | Damen spilles ud og løber med 6 kort. |
-| 358 | E 3 2 / B 10 9 | 2 | Knægten spilles ud og løber med 6 kort. |
-| 364 | D B 9 6 5 / E 4 3 2 | 5, 4 | Damen spilles ud og løber med 9 kort. |
-| 375 | E K D 9 / 3 2 | 4 | Små kort fra begge hænder kipper med 9'eren med 6 kort. |
-| 378 | E D B 9 / 3 2 | 4, 3 | Kipning mod damen med 6 kort. |
-| 380 | E K 10 9 / 3 2 | 4, 3 | Små kort fra begge hænder kipper med 9'eren med 6 kort. |
-| 381 | E 9 3 2 / K 10 | 3 | Små kort fra begge hænder kipper med 10'eren med 6 kort. |
-| 386 | E B 10 9 / 3 2 | 3 | Små kort fra begge hænder kipper med 9'eren med 6 kort. |
-| 390 | D B 8 7 6 5 4 / E 3 2 | 7 | Damen spilles ud og løber med 10 kort. |
-| 396 | K D 10 9 / 4 3 2 | 3 | Kongen spilles ud og løber med 7 kort. |
-| 398 | E B 10 9 / 4 3 2 | 3 | Små kort fra begge hænder kipper med 9'eren med 7 kort. |
-| 399 | E 4 3 2 / B 10 9 | 3 | Knægten spilles ud og løber med 7 kort. |
-| 405 | E D 9 6 5 4 / B 3 2 | 6, 5 | Kipning mod damen med 9 kort. |
-| 406 | D B 9 6 5 4 / E 3 2 | 6, 5 | Damen spilles ud og løber med 9 kort. |
-| 413 | E B 9 8 4 3 / 2 | 5, 4, 3, 2 | Kipning mod knægten med 7 kort. |
-| 421 | E 10 9 3 / K 8 2 | 4, 3 | 10'eren spilles ud og løber med 7 kort. |
-| 422 | E B 8 / 10 3 2 | 2 | 10'eren spilles ud og løber med 6 kort. |
-| 426 | E 10 4 3 2 / K 9 | 4, 3 | Små kort fra begge hænder kipper med 9'eren med 7 kort. |
-| 432 | E D 4 3 / B 9 8 2 | 4, 3 | Kipning mod damen med 8 kort. |
-| 433 | E 9 8 4 / D B 3 2 | 4, 3 | Damen spilles ud og løber med 8 kort. |
-| 464 | E D 10 9 5 4 3 / 2 | 7, 6, 5 | Kipning mod damen med 8 kort. |
-| 475 | E K D 10 / 2 | 4 | Små kort fra begge hænder kipper med 10'eren med 5 kort. |
-| 476 | E K B 10 / 2 | 4 | Små kort fra begge hænder kipper med 10'eren med 5 kort. |
-| 480 | E K 3 2 / B 10 9 | 4 | Knægten spilles ud og løber med 7 kort. |
-| 482 | E B 8 / 10 2 | 2 | 10'eren spilles ud og løber med 5 kort. |
-| 483 | E 6 5 4 3 / D B 9 2 | 5, 4 | Damen spilles ud og løber med 9 kort. |
-| 495 | E B 10 9 / 2 | 3 | Små kort fra begge hænder kipper med 9'eren med 5 kort. |
-| 508 | E D 9 8 4 3 / B 2 | 6, 5, 4 | Knægten spilles ud og løber med 8 kort. |
-| 510 | E 9 8 5 4 / D B 3 2 | 5 | Damen spilles ud og løber med 9 kort. |
-| 511 | B 9 8 5 4 / E D 3 2 | 5 | Kipning mod damen med 9 kort. |
-| 512 | K D 9 5 4 / B 8 3 2 | 4 | Kongen spilles ud og løber med 9 kort. |
-| 520 | E K B 10 9 / 3 2 | 5 | Små kort fra begge hænder kipper med 9'eren med 7 kort. |
-| 530 | E B 10 9 8 3 / 2 | 5, 4 | Kipning mod knægten med 7 kort. |
-| 541 | B 5 4 3 2 / E D 9 | 5, 4, 3 | Kipning mod damen med 8 kort. |
-| 550 | K D 7 4 / B 9 3 2 | 3 | Kongen spilles ud og løber med 8 kort. |
-| 557 | E D 10 8 7 / 6 5 4 3 2 | 5, 4 | Kipning mod damen med 10 kort. |
-| 560 | E D B 9 8 / 3 2 | 5, 4 | Kipning mod damen med 7 kort. |
-| 564 | E D 8 6 5 / B 4 3 2 | 5, 4 | Knægten spilles ud og løber med 9 kort. |
-| 566 | K D 8 6 5 / B 4 3 2 | 4 | Knægten spilles ud og løber med 9 kort. |
-| 569 | E D 9 8 / B 2 | 4, 3 | Knægten spilles ud og løber med 6 kort. |
-| 570 | E D 8 2 / B 9 | 3 | Knægten spilles ud og løber med 6 kort. |
-| 585 | E D 8 7 / B 3 2 | 4, 3 | Knægten spilles ud og løber med 7 kort. |
-| 586 | E 9 8 7 / B 3 2 | 3, 2 | Knægten spilles ud og løber med 7 kort. |
-| 596 | E B 9 7 6 5 / D 4 3 2 | 6 | Damen spilles ud og løber med 10 kort. |
-| 598 | E D 8 6 5 4 / B 3 2 | 6, 5 | Knægten spilles ud og løber med 9 kort. |
-| 599 | B 9 8 5 4 3 / E D 2 | 6 | Kipning mod damen med 9 kort. |
-| 601 | K D 9 5 4 3 / B 8 2 | 5 | Kongen spilles ud og løber med 9 kort. |
-| 602 | K D 8 6 5 4 / B 3 2 | 5 | Knægten spilles ud og løber med 9 kort. |
-| 604 | E D 4 3 2 / B 9 8 | 5, 4 | Knægten spilles ud og løber med 8 kort. |
-| 607 | E K 10 9 8 / 2 | 5, 4 | Små kort fra begge hænder kipper med 8'eren med 6 kort. |
-| 610 | E B 10 9 8 / 2 | 4 | Små kort fra begge hænder kipper med 8'eren med 6 kort. |
-| 612 | E B 9 7 6 / D 5 4 3 2 | 5 | Damen spilles ud og løber med 10 kort. |
-| 624 | E D 9 7 4 / B 8 3 2 | 5 | Kipning mod damen med 9 kort. |
-| 631 | E B 9 7 6 5 4 / D 3 2 | 7 | Damen spilles ud og løber med 10 kort. |
-| 638 | B 7 4 3 2 / E D 9 | 5, 4, 3 | Kipning mod damen med 8 kort. |
-| 643 | E 6 5 4 3 2 / D B 9 | 6, 5 | Damen spilles ud og løber med 9 kort. |
-| 651 | E D 5 4 3 2 / B 9 8 | 6, 5 | Kipning mod damen med 9 kort. |
-| 655 | E D 9 7 6 / B 8 2 | 5, 4 | Knægten spilles ud og løber med 8 kort. |
-| 657 | E D 7 4 3 2 / B 9 8 | 6 | Kipning mod damen med 9 kort. |
-| 660 | E D B 5 4 3 2 / 8 7 6 | 7 | Kipning mod damen med 10 kort. |
+| 165 | E B 10 / 4 3 2 | 2 | Små kort fra begge hænder kipper med 10'eren med 6 kort. |
+| 169 | E 10 8 4 / 3 2 | 2 | Kipning mod 10'eren med 6 kort. |
+| 182 | E 10 4 3 / K 9 2 | 4, 3 | Kipning mod 9'eren med 7 kort. |
+| 187 | 10 9 4 3 / E D 2 | 4, 3 | Kipning mod damen med 7 kort. |
+| 205 | E 8 7 6 5 / D B 4 3 2 | 5 | Damen spilles ud og løber med 10 kort. |
+| 209 | E D 9 5 4 / B 3 2 | 5, 4, 3 | Kipning mod damen med 8 kort. |
+| 249 | E D B 8 7 6 / 5 4 3 2 | 6 | Kipning mod damen med 10 kort. |
+| 250 | D B 8 7 6 5 / E 4 3 2 | 6 | Damen spilles ud og løber med 10 kort. |
+| 254 | E K D 10 3 / 2 | 5, 4 | Kipning mod 10'eren med 6 kort. |
+| 256 | E B 9 3 / K 2 | 4, 3 | Kipning mod knægten med 6 kort. |
+| 260 | E 10 8 5 4 / 3 2 | 3, 2 | Kipning mod 10'eren med 7 kort. |
+| 276 | E D 9 5 / B 4 3 2 | 4, 3 | Kipning mod damen med 8 kort. |
+| 282 | E D B 9 5 4 / 3 2 | 6, 5, 4 | Kipning mod damen med 8 kort. |
+| 284 | E D 10 9 5 4 / 3 2 | 6, 5, 4 | Kipning mod damen med 8 kort. |
+| 297 | E D 8 4 / B 3 2 | 3 | Kipning mod damen med 7 kort. |
+| 311 | E D B 8 7 / 6 5 4 3 2 | 5 | Kipning mod damen med 10 kort. |
+| 322 | E B 10 9 3 / 2 | 4, 3 | Kipning mod knægten med 6 kort. |
+| 324 | E K B 10 / 4 3 2 | 4 | Små kort fra begge hænder kipper med 10'eren med 7 kort. |
+| 335 | D B 7 6 5 4 3 / E 2 | 7, 6 | Damen spilles ud og løber med 9 kort. |
+| 343 | E K 4 3 2 / D 10 | 5, 4 | Små kort fra begge hænder kipper med 10'eren med 7 kort. |
+| 346 | E D 9 5 4 3 / B 2 | 6, 5, 4 | Knægten spilles ud og løber med 8 kort. |
+| 355 | E 3 2 / D B 9 | 3 | Damen spilles ud og løber med 6 kort. |
+| 357 | E 3 2 / B 10 9 | 2 | Knægten spilles ud og løber med 6 kort. |
+| 363 | D B 9 6 5 / E 4 3 2 | 5, 4 | Damen spilles ud og løber med 9 kort. |
+| 374 | E K D 9 / 3 2 | 4 | Små kort fra begge hænder kipper med 9'eren med 6 kort. |
+| 377 | E D B 9 / 3 2 | 4, 3 | Kipning mod damen med 6 kort. |
+| 379 | E K 10 9 / 3 2 | 4, 3 | Små kort fra begge hænder kipper med 9'eren med 6 kort. |
+| 380 | E 9 3 2 / K 10 | 3 | Små kort fra begge hænder kipper med 10'eren med 6 kort. |
+| 385 | E B 10 9 / 3 2 | 3 | Små kort fra begge hænder kipper med 9'eren med 6 kort. |
+| 389 | D B 8 7 6 5 4 / E 3 2 | 7 | Damen spilles ud og løber med 10 kort. |
+| 395 | K D 10 9 / 4 3 2 | 3 | Kongen spilles ud og løber med 7 kort. |
+| 397 | E B 10 9 / 4 3 2 | 3 | Små kort fra begge hænder kipper med 9'eren med 7 kort. |
+| 398 | E 4 3 2 / B 10 9 | 3 | Knægten spilles ud og løber med 7 kort. |
+| 404 | E D 9 6 5 4 / B 3 2 | 6, 5 | Kipning mod damen med 9 kort. |
+| 405 | D B 9 6 5 4 / E 3 2 | 6, 5 | Damen spilles ud og løber med 9 kort. |
+| 412 | E B 9 8 4 3 / 2 | 5, 4, 3, 2 | Kipning mod knægten med 7 kort. |
+| 420 | E 10 9 3 / K 8 2 | 4, 3 | 10'eren spilles ud og løber med 7 kort. |
+| 421 | E B 8 / 10 3 2 | 2 | 10'eren spilles ud og løber med 6 kort. |
+| 425 | E 10 4 3 2 / K 9 | 4, 3 | Små kort fra begge hænder kipper med 9'eren med 7 kort. |
+| 431 | E D 4 3 / B 9 8 2 | 4, 3 | Kipning mod damen med 8 kort. |
+| 432 | E 9 8 4 / D B 3 2 | 4, 3 | Damen spilles ud og løber med 8 kort. |
+| 463 | E D 10 9 5 4 3 / 2 | 7, 6, 5 | Kipning mod damen med 8 kort. |
+| 474 | E K D 10 / 2 | 4 | Små kort fra begge hænder kipper med 10'eren med 5 kort. |
+| 475 | E K B 10 / 2 | 4 | Små kort fra begge hænder kipper med 10'eren med 5 kort. |
+| 479 | E K 3 2 / B 10 9 | 4 | Knægten spilles ud og løber med 7 kort. |
+| 481 | E B 8 / 10 2 | 2 | 10'eren spilles ud og løber med 5 kort. |
+| 482 | E 6 5 4 3 / D B 9 2 | 5, 4 | Damen spilles ud og løber med 9 kort. |
+| 493 | E B 10 9 / 2 | 3 | Små kort fra begge hænder kipper med 9'eren med 5 kort. |
+| 506 | E D 9 8 4 3 / B 2 | 6, 5 | Knægten spilles ud og løber med 8 kort. |
+| 508 | E 9 8 5 4 / D B 3 2 | 5 | Damen spilles ud og løber med 9 kort. |
+| 509 | B 9 8 5 4 / E D 3 2 | 5 | Kipning mod damen med 9 kort. |
+| 510 | K D 9 5 4 / B 8 3 2 | 4 | Kongen spilles ud og løber med 9 kort. |
+| 518 | E K B 10 9 / 3 2 | 5 | Små kort fra begge hænder kipper med 9'eren med 7 kort. |
+| 528 | E B 10 9 8 3 / 2 | 5, 4 | Kipning mod knægten med 7 kort. |
+| 538 | B 5 4 3 2 / E D 9 | 5, 4, 3 | Kipning mod damen med 8 kort. |
+| 547 | K D 7 4 / B 9 3 2 | 3 | Kongen spilles ud og løber med 8 kort. |
+| 554 | E D 10 8 7 / 6 5 4 3 2 | 5, 4 | Kipning mod damen med 10 kort. |
+| 557 | E D B 9 8 / 3 2 | 5, 4 | Kipning mod damen med 7 kort. |
+| 561 | E D 8 6 5 / B 4 3 2 | 5, 4 | Knægten spilles ud og løber med 9 kort. |
+| 563 | K D 8 6 5 / B 4 3 2 | 4 | Knægten spilles ud og løber med 9 kort. |
+| 566 | E D 9 8 / B 2 | 4, 3 | Knægten spilles ud og løber med 6 kort. |
+| 567 | E D 8 2 / B 9 | 3 | Knægten spilles ud og løber med 6 kort. |
+| 582 | E D 8 7 / B 3 2 | 4, 3 | Knægten spilles ud og løber med 7 kort. |
+| 583 | E 9 8 7 / B 3 2 | 3, 2 | Knægten spilles ud og løber med 7 kort. |
+| 593 | E B 9 7 6 5 / D 4 3 2 | 6 | Damen spilles ud og løber med 10 kort. |
+| 595 | E D 8 6 5 4 / B 3 2 | 6, 5 | Knægten spilles ud og løber med 9 kort. |
+| 596 | B 9 8 5 4 3 / E D 2 | 6 | Kipning mod damen med 9 kort. |
+| 598 | K D 9 5 4 3 / B 8 2 | 5 | Kongen spilles ud og løber med 9 kort. |
+| 599 | K D 8 6 5 4 / B 3 2 | 5 | Knægten spilles ud og løber med 9 kort. |
+| 601 | E D 4 3 2 / B 9 8 | 5, 4 | Knægten spilles ud og løber med 8 kort. |
+| 604 | E K 10 9 8 / 2 | 5, 4 | Små kort fra begge hænder kipper med 8'eren med 6 kort. |
+| 607 | E B 10 9 8 / 2 | 4 | Små kort fra begge hænder kipper med 8'eren med 6 kort. |
+| 609 | E B 9 7 6 / D 5 4 3 2 | 5 | Damen spilles ud og løber med 10 kort. |
+| 621 | E D 9 7 4 / B 8 3 2 | 5 | Kipning mod damen med 9 kort. |
+| 628 | E B 9 7 6 5 4 / D 3 2 | 7 | Damen spilles ud og løber med 10 kort. |
+| 635 | B 7 4 3 2 / E D 9 | 5, 4, 3 | Kipning mod damen med 8 kort. |
+| 640 | E 6 5 4 3 2 / D B 9 | 6, 5 | Damen spilles ud og løber med 9 kort. |
+| 648 | E D 5 4 3 2 / B 9 8 | 6, 5 | Kipning mod damen med 9 kort. |
+| 652 | E D 9 7 6 / B 8 2 | 5, 4 | Knægten spilles ud og løber med 8 kort. |
+| 654 | E D 7 4 3 2 / B 9 8 | 6 | Kipning mod damen med 9 kort. |
+| 657 | E D B 5 4 3 2 / 8 7 6 | 7 | Kipning mod damen med 10 kort. |
 
-## Fald eller kip (96)
+## Fald eller kip (94)
 
 | Rang | Hånd / bordet | Mål | Begrundelse |
 | --- | --- | --- | --- |
@@ -128,91 +127,89 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 111 | E K D 6 5 4 3 / 2 | 7, 6 | Linjen spiller på fald med 8 kort. |
 | 153 | E K D 10 5 4 / 3 2 | 6, 5 | Linjen spiller på fald med 8 kort. |
 | 154 | E K B 10 5 4 / 3 2 | 6, 5 | Kipning mod knægten med 8 kort: fald eller kip. |
-| 155 | E K 7 6 5 4 3 / D 2 | 7 | Linjen spiller på fald med 9 kort. |
-| 159 | E K D 10 5 / 4 3 2 | 5, 4 | Linjen spiller på fald med 8 kort. |
-| 167 | E K 10 6 5 / D 4 3 2 | 5 | Linjen spiller på fald med 9 kort. |
-| 169 | E B 7 6 5 / 10 4 3 2 | 4 | Linjen spiller på fald med 9 kort. |
-| 192 | E K D 4 3 2 / – | 5, 4 | Linjen spiller på fald med 6 kort. |
-| 196 | E 10 5 4 / K 9 3 2 | 4, 3 | Kipning mod 10'eren med 8 kort: fald eller kip. |
-| 200 | E K D B 3 / 2 | 5 | Linjen spiller på fald med 6 kort. |
-| 205 | E B 8 7 6 / K 5 4 3 2 | 5 | Linjen spiller på fald med 10 kort. |
-| 209 | E B 9 5 4 / K 3 2 | 5, 4, 3 | Kipning mod knægten med 8 kort: fald eller kip. |
-| 226 | E K 10 6 5 4 / D 3 2 | 6 | Linjen spiller på fald med 9 kort. |
-| 254 | E K 9 3 / D 2 | 4 | Linjen spiller på fald med 6 kort. |
-| 268 | E K B 3 2 / – | 3 | Linjen spiller på fald med 5 kort. |
-| 275 | E K 9 5 / D 4 3 2 | 4 | Linjen spiller på fald med 8 kort. |
-| 282 | E K B 9 5 4 / 3 2 | 6, 5, 4 | Kipning mod knægten med 8 kort: fald eller kip. |
-| 287 | E 10 7 6 5 4 / D 3 2 | 5 | Linjen spiller på fald med 9 kort. |
-| 291 | E B 7 6 5 4 / 10 3 2 | 5 | Linjen spiller på fald med 9 kort. |
-| 294 | E K D 5 4 3 2 / – | 7, 6, 5 | Linjen spiller på fald med 7 kort. |
-| 302 | E K 10 9 5 / 4 3 2 | 5, 4, 3 | Kipning mod 10'eren med 8 kort: fald eller kip. |
-| 314 | E K D 9 4 3 / 2 | 6, 5, 4 | Linjen spiller på fald med 7 kort. |
-| 326 | E K D 10 6 5 4 / 3 2 | 7 | Linjen spiller på fald med 9 kort. |
-| 327 | E K D 10 6 / 5 4 3 2 | 5 | Linjen spiller på fald med 9 kort. |
-| 333 | E B 10 6 5 4 3 / 2 | 6, 5, 4 | Kipning mod knægten med 8 kort: fald eller kip. |
-| 334 | E K 10 4 / D 9 3 2 | 4 | Linjen spiller på fald med 8 kort. |
-| 359 | E B 9 5 4 / K 10 3 2 | 5 | Linjen spiller på fald med 9 kort. |
-| 360 | E B 6 5 4 / K 9 3 2 | 5 | Linjen spiller på fald med 9 kort. |
-| 361 | E 9 6 5 4 / K B 3 2 | 5 | Linjen spiller på fald med 9 kort. |
-| 362 | B 10 9 5 4 / E K 3 2 | 5 | Linjen spiller på fald med 9 kort. |
-| 365 | E K 9 6 5 / 10 4 3 2 | 5, 4 | Linjen spiller på fald med 9 kort. |
-| 367 | E 10 9 6 5 / D 4 3 2 | 5, 4 | Linjen spiller på fald med 9 kort. |
-| 368 | E 10 6 5 4 / D 9 3 2 | 5, 4 | Linjen spiller på fald med 9 kort. |
-| 388 | E K B 5 4 3 2 / – | 6, 5, 4 | Linjen spiller på fald med 7 kort. |
-| 389 | E B 8 7 6 5 4 / K 3 2 | 7 | Linjen spiller på fald med 10 kort. |
-| 400 | E K 10 9 3 / D 2 | 5 | Linjen spiller på fald med 7 kort. |
-| 402 | E K D 10 / 5 4 3 2 | 4 | Linjen spiller på fald med 8 kort. |
-| 403 | E K B 10 / 5 4 3 2 | 4 | Små kort fra begge hænder kipper med 10'eren med 8 kort: fald eller kip. |
-| 404 | E K 9 6 5 4 / B 3 2 | 6 | Linjen spiller på fald med 9 kort. |
-| 408 | E 10 9 6 5 4 / D 3 2 | 6, 5 | Linjen spiller på fald med 9 kort. |
-| 416 | E 10 7 6 5 4 3 / 2 | 5, 4 | Kipning mod 10'eren med 8 kort: fald eller kip. |
-| 417 | E K D B 3 2 / – | 6, 5 | Linjen spiller på fald med 6 kort. |
-| 428 | E K 9 4 / D 8 3 2 | 4 | Linjen spiller på fald med 8 kort. |
-| 447 | E 10 7 6 5 / 9 4 3 2 | 4, 3 | 9'eren spilles ud og løber med 9 kort: fald eller kip. |
-| 453 | D 7 6 5 4 3 / E 10 2 | 5 | Linjen spiller på fald med 9 kort. |
-| 466 | E B 10 9 5 4 3 / 2 | 6, 5 | Kipning mod knægten med 8 kort: fald eller kip. |
-| 468 | E K D B 4 3 2 / – | 7, 6 | Linjen spiller på fald med 7 kort. |
-| 473 | E K D 10 3 2 / – | 6, 5, 4 | Linjen spiller på fald med 6 kort. |
-| 474 | E K B 10 3 2 / – | 6, 5 | Linjen spiller på fald med 6 kort. |
-| 477 | E K D 10 9 3 / 2 | 6, 5 | Linjen spiller på fald med 7 kort. |
-| 490 | E K D 9 / 2 | 4 | Linjen spiller på fald med 5 kort. |
-| 502 | E K B 10 9 4 3 / 2 | 7 | Kipning mod knægten med 8 kort: fald eller kip. |
-| 503 | B 10 9 4 3 2 / E | 5, 4, 3 | Linjen spiller på fald med 7 kort. |
-| 504 | E B 9 6 5 4 3 / 2 | 6, 5, 4 | Kipning mod knægten med 8 kort: fald eller kip. |
-| 507 | E B 8 5 4 3 / K 2 | 6, 5, 4 | Kipning mod knægten med 8 kort: fald eller kip. |
-| 509 | E K D 9 3 2 / – | 6, 5, 4 | Linjen spiller på fald med 6 kort. |
-| 513 | E 10 9 5 4 / D 8 3 2 | 5, 4 | Linjen spiller på fald med 9 kort. |
-| 519 | E K D 10 9 / 3 2 | 5 | Linjen spiller på fald med 7 kort. |
-| 521 | E K 10 9 / 5 4 3 2 | 4, 3 | Små kort fra begge hænder kipper med 9'eren med 8 kort: fald eller kip. |
-| 525 | E B 10 9 / 5 4 3 2 | 3 | Små kort fra begge hænder kipper med 9'eren med 8 kort: fald eller kip. |
-| 527 | E B 6 5 4 3 / K 9 2 | 6 | Linjen spiller på fald med 9 kort. |
-| 532 | E 10 7 6 5 4 / 9 3 2 | 6, 5 | 9'eren spilles ud og løber med 9 kort: fald eller kip. |
-| 533 | E B 9 6 5 / K 10 4 3 2 | 5 | Linjen spiller på fald med 10 kort. |
-| 534 | E K B 10 2 / – | 4 | Linjen spiller på fald med 5 kort. |
-| 537 | E K 4 3 2 / B 10 9 | 5 | Knægten spilles ud og løber med 8 kort: fald eller kip. |
-| 549 | E 10 8 3 / K B 9 2 | 4 | Kipning mod 9'eren med 8 kort: fald eller kip. |
-| 556 | E D B 9 8 7 / 6 5 4 3 2 | 6 | Linjen spiller på fald med 11 kort. |
-| 558 | E B 10 8 7 / 6 5 4 3 2 | 4 | Kipning mod knægten med 10 kort: fald eller kip. |
-| 572 | E 10 5 4 3 2 / K 9 | 6, 5, 4 | Små kort fra begge hænder kipper med 9'eren med 8 kort: fald eller kip. |
-| 582 | E 10 9 7 6 5 4 / 3 2 | 6, 5 | Kipning mod 10'eren med 9 kort: fald eller kip. |
-| 584 | E K D 9 4 3 2 / – | 7, 6, 5 | Linjen spiller på fald med 7 kort. |
-| 590 | E K D 10 9 / 2 | 5 | Linjen spiller på fald med 6 kort. |
-| 592 | E 10 9 8 / K 4 3 2 | 4, 3 | Små kort fra begge hænder kipper med 8'eren med 8 kort: fald eller kip. |
-| 595 | E K 9 7 6 5 / B 4 3 2 | 6 | Linjen spiller på fald med 10 kort. |
-| 611 | E K 9 7 6 / B 5 4 3 2 | 5 | Linjen spiller på fald med 10 kort. |
-| 618 | K 9 6 5 4 3 / E B 10 2 | 6 | Linjen spiller på fald med 10 kort. |
-| 621 | E K D 10 9 3 2 / – | 6, 5 | Linjen spiller på fald med 7 kort. |
-| 623 | E K B 8 4 3 2 / – | 6, 5, 4 | Linjen spiller på fald med 7 kort. |
-| 625 | E K 5 4 3 2 / B 10 9 | 6 | Linjen spiller på fald med 9 kort. |
-| 629 | 10 9 8 7 / K D 2 | 3 | Linjen spiller på fald med 7 kort. |
-| 630 | E K 9 7 6 5 4 / B 3 2 | 7 | Linjen spiller på fald med 10 kort. |
-| 636 | E K 6 5 4 / 10 9 8 3 2 | 5 | Linjen spiller på fald med 10 kort. |
-| 642 | E K B 9 8 7 3 / 2 | 7, 6 | Kipning mod knægten med 8 kort: fald eller kip. |
-| 645 | E 6 5 4 3 2 / B 10 9 | 5 | Knægten spilles ud og løber med 9 kort: fald eller kip. |
-| 646 | E 5 4 3 2 / B 10 9 8 | 4 | Knægten spilles ud og løber med 9 kort: fald eller kip. |
-| 652 | D 8 5 4 3 2 / E 10 9 | 6, 5 | Linjen spiller på fald med 9 kort. |
-| 658 | E D 10 9 8 7 / 6 5 4 3 2 | 6 | Linjen spiller på fald med 11 kort. |
-| 659 | K 6 5 4 3 2 / E B 9 8 | 6 | Linjen spiller på fald med 10 kort. |
+| 158 | E K D 10 5 / 4 3 2 | 5, 4 | Linjen spiller på fald med 8 kort. |
+| 166 | E K 10 6 5 / D 4 3 2 | 5 | Linjen spiller på fald med 9 kort. |
+| 168 | E B 7 6 5 / 10 4 3 2 | 4 | Linjen spiller på fald med 9 kort. |
+| 191 | E K D 4 3 2 / – | 5, 4 | Linjen spiller på fald med 6 kort. |
+| 195 | E 10 5 4 / K 9 3 2 | 4, 3 | Kipning mod 10'eren med 8 kort: fald eller kip. |
+| 199 | E K D B 3 / 2 | 5 | Linjen spiller på fald med 6 kort. |
+| 204 | E B 8 7 6 / K 5 4 3 2 | 5 | Linjen spiller på fald med 10 kort. |
+| 208 | E B 9 5 4 / K 3 2 | 5, 4, 3 | Kipning mod knægten med 8 kort: fald eller kip. |
+| 225 | E K 10 6 5 4 / D 3 2 | 6 | Linjen spiller på fald med 9 kort. |
+| 253 | E K 9 3 / D 2 | 4 | Linjen spiller på fald med 6 kort. |
+| 267 | E K B 3 2 / – | 3 | Linjen spiller på fald med 5 kort. |
+| 274 | E K 9 5 / D 4 3 2 | 4 | Linjen spiller på fald med 8 kort. |
+| 281 | E K B 9 5 4 / 3 2 | 6, 5, 4 | Kipning mod knægten med 8 kort: fald eller kip. |
+| 286 | E 10 7 6 5 4 / D 3 2 | 5 | Linjen spiller på fald med 9 kort. |
+| 290 | E B 7 6 5 4 / 10 3 2 | 5 | Linjen spiller på fald med 9 kort. |
+| 293 | E K D 5 4 3 2 / – | 7, 6, 5 | Linjen spiller på fald med 7 kort. |
+| 301 | E K 10 9 5 / 4 3 2 | 5, 4, 3 | Kipning mod 10'eren med 8 kort: fald eller kip. |
+| 313 | E K D 9 4 3 / 2 | 6, 5, 4 | Linjen spiller på fald med 7 kort. |
+| 325 | E K D 10 6 5 4 / 3 2 | 7 | Linjen spiller på fald med 9 kort. |
+| 326 | E K D 10 6 / 5 4 3 2 | 5 | Linjen spiller på fald med 9 kort. |
+| 332 | E B 10 6 5 4 3 / 2 | 6, 5, 4 | Kipning mod knægten med 8 kort: fald eller kip. |
+| 333 | E K 10 4 / D 9 3 2 | 4 | Linjen spiller på fald med 8 kort. |
+| 358 | E B 9 5 4 / K 10 3 2 | 5 | Linjen spiller på fald med 9 kort. |
+| 359 | E B 6 5 4 / K 9 3 2 | 5 | Linjen spiller på fald med 9 kort. |
+| 360 | E 9 6 5 4 / K B 3 2 | 5 | Linjen spiller på fald med 9 kort. |
+| 361 | B 10 9 5 4 / E K 3 2 | 5 | Linjen spiller på fald med 9 kort. |
+| 364 | E K 9 6 5 / 10 4 3 2 | 5, 4 | Linjen spiller på fald med 9 kort. |
+| 366 | E 10 9 6 5 / D 4 3 2 | 5, 4 | Linjen spiller på fald med 9 kort. |
+| 367 | E 10 6 5 4 / D 9 3 2 | 5, 4 | Linjen spiller på fald med 9 kort. |
+| 387 | E K B 5 4 3 2 / – | 6, 5, 4 | Linjen spiller på fald med 7 kort. |
+| 388 | E B 8 7 6 5 4 / K 3 2 | 7 | Linjen spiller på fald med 10 kort. |
+| 399 | E K 10 9 3 / D 2 | 5 | Linjen spiller på fald med 7 kort. |
+| 401 | E K D 10 / 5 4 3 2 | 4 | Linjen spiller på fald med 8 kort. |
+| 402 | E K B 10 / 5 4 3 2 | 4 | Små kort fra begge hænder kipper med 10'eren med 8 kort: fald eller kip. |
+| 403 | E K 9 6 5 4 / B 3 2 | 6 | Linjen spiller på fald med 9 kort. |
+| 407 | E 10 9 6 5 4 / D 3 2 | 6, 5 | Linjen spiller på fald med 9 kort. |
+| 415 | E 10 7 6 5 4 3 / 2 | 5, 4 | Kipning mod 10'eren med 8 kort: fald eller kip. |
+| 416 | E K D B 3 2 / – | 6, 5 | Linjen spiller på fald med 6 kort. |
+| 427 | E K 9 4 / D 8 3 2 | 4 | Linjen spiller på fald med 8 kort. |
+| 446 | E 10 7 6 5 / 9 4 3 2 | 4, 3 | 9'eren spilles ud og løber med 9 kort: fald eller kip. |
+| 452 | D 7 6 5 4 3 / E 10 2 | 5 | Linjen spiller på fald med 9 kort. |
+| 465 | E B 10 9 5 4 3 / 2 | 6, 5 | Kipning mod knægten med 8 kort: fald eller kip. |
+| 467 | E K D B 4 3 2 / – | 7, 6 | Linjen spiller på fald med 7 kort. |
+| 472 | E K D 10 3 2 / – | 6, 5, 4 | Linjen spiller på fald med 6 kort. |
+| 473 | E K B 10 3 2 / – | 6, 5 | Linjen spiller på fald med 6 kort. |
+| 476 | E K D 10 9 3 / 2 | 6, 5 | Linjen spiller på fald med 7 kort. |
+| 489 | E K D 9 / 2 | 4 | Linjen spiller på fald med 5 kort. |
+| 500 | E K B 10 9 4 3 / 2 | 7 | Kipning mod knægten med 8 kort: fald eller kip. |
+| 501 | B 10 9 4 3 2 / E | 5, 4, 3 | Linjen spiller på fald med 7 kort. |
+| 502 | E B 9 6 5 4 3 / 2 | 6, 5, 4 | Kipning mod knægten med 8 kort: fald eller kip. |
+| 505 | E B 8 5 4 3 / K 2 | 6, 5, 4 | Kipning mod knægten med 8 kort: fald eller kip. |
+| 507 | E K D 9 3 2 / – | 6, 5, 4 | Linjen spiller på fald med 6 kort. |
+| 511 | E 10 9 5 4 / D 8 3 2 | 5, 4 | Linjen spiller på fald med 9 kort. |
+| 517 | E K D 10 9 / 3 2 | 5 | Linjen spiller på fald med 7 kort. |
+| 519 | E K 10 9 / 5 4 3 2 | 4, 3 | Små kort fra begge hænder kipper med 9'eren med 8 kort: fald eller kip. |
+| 523 | E B 10 9 / 5 4 3 2 | 3 | Små kort fra begge hænder kipper med 9'eren med 8 kort: fald eller kip. |
+| 525 | E B 6 5 4 3 / K 9 2 | 6 | Linjen spiller på fald med 9 kort. |
+| 530 | E B 9 6 5 / K 10 4 3 2 | 5 | Linjen spiller på fald med 10 kort. |
+| 531 | E K B 10 2 / – | 4 | Linjen spiller på fald med 5 kort. |
+| 534 | E K 4 3 2 / B 10 9 | 5 | Knægten spilles ud og løber med 8 kort: fald eller kip. |
+| 546 | E 10 8 3 / K B 9 2 | 4 | Kipning mod 9'eren med 8 kort: fald eller kip. |
+| 553 | E D B 9 8 7 / 6 5 4 3 2 | 6 | Linjen spiller på fald med 11 kort. |
+| 555 | E B 10 8 7 / 6 5 4 3 2 | 4 | Kipning mod knægten med 10 kort: fald eller kip. |
+| 569 | E 10 5 4 3 2 / K 9 | 6, 5, 4 | Små kort fra begge hænder kipper med 9'eren med 8 kort: fald eller kip. |
+| 579 | E 10 9 7 6 5 4 / 3 2 | 6, 5 | Kipning mod 10'eren med 9 kort: fald eller kip. |
+| 581 | E K D 9 4 3 2 / – | 7, 6, 5 | Linjen spiller på fald med 7 kort. |
+| 587 | E K D 10 9 / 2 | 5 | Linjen spiller på fald med 6 kort. |
+| 589 | E 10 9 8 / K 4 3 2 | 4, 3 | Små kort fra begge hænder kipper med 8'eren med 8 kort: fald eller kip. |
+| 592 | E K 9 7 6 5 / B 4 3 2 | 6 | Linjen spiller på fald med 10 kort. |
+| 608 | E K 9 7 6 / B 5 4 3 2 | 5 | Linjen spiller på fald med 10 kort. |
+| 615 | K 9 6 5 4 3 / E B 10 2 | 6 | Linjen spiller på fald med 10 kort. |
+| 618 | E K D 10 9 3 2 / – | 6, 5 | Linjen spiller på fald med 7 kort. |
+| 620 | E K B 8 4 3 2 / – | 6, 5, 4 | Linjen spiller på fald med 7 kort. |
+| 622 | E K 5 4 3 2 / B 10 9 | 6 | Linjen spiller på fald med 9 kort. |
+| 626 | 10 9 8 7 / K D 2 | 3 | Linjen spiller på fald med 7 kort. |
+| 627 | E K 9 7 6 5 4 / B 3 2 | 7 | Linjen spiller på fald med 10 kort. |
+| 633 | E K 6 5 4 / 10 9 8 3 2 | 5 | Linjen spiller på fald med 10 kort. |
+| 639 | E K B 9 8 7 3 / 2 | 7, 6 | Kipning mod knægten med 8 kort: fald eller kip. |
+| 642 | E 6 5 4 3 2 / B 10 9 | 5 | Knægten spilles ud og løber med 9 kort: fald eller kip. |
+| 643 | E 5 4 3 2 / B 10 9 8 | 4 | Knægten spilles ud og løber med 9 kort: fald eller kip. |
+| 649 | D 8 5 4 3 2 / E 10 9 | 6, 5 | Linjen spiller på fald med 9 kort. |
+| 655 | E D 10 9 8 7 / 6 5 4 3 2 | 6 | Linjen spiller på fald med 11 kort. |
+| 656 | K 6 5 4 3 2 / E B 9 8 | 6 | Linjen spiller på fald med 10 kort. |
 
 ## Spil mod honnør (68)
 
@@ -229,7 +226,7 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 37 | D 4 3 / 10 2 | 1 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
 | 47 | D 5 4 3 / 10 2 | 1 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
 | 50 | B 5 4 3 / E K 2 | 3 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
-| 53 | B 5 4 3 / E D 2 | 4, 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
+| 53 | B 5 4 3 / E D 2 | 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
 | 54 | K 5 4 3 / D B 2 | 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
 | 57 | E D 4 3 / B 2 | 3 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
 | 62 | E 10 5 4 / D 3 2 | 3, 2 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
@@ -248,44 +245,44 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 138 | D B 10 3 / 2 | 2 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
 | 145 | D B 9 5 / 4 3 2 | 2, 1 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
 | 152 | K D 10 6 / 5 4 3 2 | 3, 2 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
-| 157 | D 10 9 3 / 2 | 2, 1 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
-| 174 | E K 9 4 / B 3 2 | 4, 3 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
-| 179 | E D 4 3 / B 9 2 | 4, 3 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
-| 180 | E 9 4 3 / D B 2 | 4, 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
-| 184 | K D 4 3 / B 9 2 | 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
-| 185 | K 9 4 3 / D B 2 | 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
-| 189 | K 10 9 4 / D 3 2 | 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
-| 190 | K 10 4 3 / D 9 2 | 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
-| 203 | K D 10 / 3 2 | 2 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
-| 214 | K D 9 5 4 / B 3 2 | 4, 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
-| 229 | K D 6 5 4 3 / 10 2 | 5, 4, 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
-| 243 | K D B 9 4 / 3 2 | 4 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
-| 256 | E K 9 3 / B 2 | 3 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
-| 258 | E D 9 3 / B 2 | 3 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
-| 259 | K D 9 3 / B 2 | 3 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
-| 260 | E 10 9 3 / D 2 | 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
-| 265 | D B 9 / 3 2 | 1 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
-| 271 | K B 9 / 4 3 2 | 2, 1 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
-| 272 | D B 9 / 4 3 2 | 1 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
-| 279 | K D 9 5 / B 4 3 2 | 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
-| 289 | K D 7 6 5 4 / 10 3 2 | 5 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
-| 304 | K D 5 4 3 / B 9 2 | 4, 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
-| 307 | K 9 5 4 3 / D 10 2 | 4, 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
-| 328 | E B 8 3 / 10 2 | 3, 2 | Der spilles mod 10'eren, som er det højeste kort, der er tilbage i hånden. |
-| 345 | D 6 5 4 3 / B 9 2 | 3, 2 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
-| 369 | K 9 6 5 4 / D 10 3 2 | 4 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
-| 372 | K D 8 5 4 / B 3 2 | 4, 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
-| 382 | K D B 9 / 3 2 | 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
-| 392 | K D B 9 / 4 3 2 | 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
-| 418 | B 9 8 3 / E K 2 | 4, 3 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
-| 435 | K D 8 5 / B 4 3 2 | 3 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
-| 458 | K D 9 4 3 / B 8 2 | 4 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
-| 486 | K D 10 9 6 / 5 4 3 2 | 4 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
-| 522 | K D B 9 / 5 4 3 2 | 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
-| 524 | K D 10 9 / 5 4 3 2 | 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
-| 540 | E 5 4 3 2 / D B 9 | 4, 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
-| 552 | K D 9 7 4 / B 3 2 | 4 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
-| 561 | K D B 9 8 / 3 2 | 4 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
+| 156 | D 10 9 3 / 2 | 2, 1 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
+| 173 | E K 9 4 / B 3 2 | 4, 3 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
+| 178 | E D 4 3 / B 9 2 | 4, 3 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
+| 179 | E 9 4 3 / D B 2 | 4, 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
+| 183 | K D 4 3 / B 9 2 | 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
+| 184 | K 9 4 3 / D B 2 | 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
+| 188 | K 10 9 4 / D 3 2 | 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
+| 189 | K 10 4 3 / D 9 2 | 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
+| 202 | K D 10 / 3 2 | 2 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
+| 213 | K D 9 5 4 / B 3 2 | 4, 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
+| 228 | K D 6 5 4 3 / 10 2 | 5, 4, 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
+| 242 | K D B 9 4 / 3 2 | 4 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
+| 255 | E K 9 3 / B 2 | 3 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
+| 257 | E D 9 3 / B 2 | 3 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
+| 258 | K D 9 3 / B 2 | 3 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
+| 259 | E 10 9 3 / D 2 | 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
+| 264 | D B 9 / 3 2 | 1 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
+| 270 | K B 9 / 4 3 2 | 2, 1 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
+| 271 | D B 9 / 4 3 2 | 1 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
+| 278 | K D 9 5 / B 4 3 2 | 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
+| 288 | K D 7 6 5 4 / 10 3 2 | 5 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
+| 303 | K D 5 4 3 / B 9 2 | 4, 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
+| 306 | K 9 5 4 3 / D 10 2 | 4, 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
+| 327 | E B 8 3 / 10 2 | 3, 2 | Der spilles mod 10'eren, som er det højeste kort, der er tilbage i hånden. |
+| 344 | D 6 5 4 3 / B 9 2 | 3, 2 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
+| 368 | K 9 6 5 4 / D 10 3 2 | 4 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
+| 371 | K D 8 5 4 / B 3 2 | 4, 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
+| 381 | K D B 9 / 3 2 | 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
+| 391 | K D B 9 / 4 3 2 | 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
+| 417 | B 9 8 3 / E K 2 | 4, 3 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
+| 434 | K D 8 5 / B 4 3 2 | 3 | Der spilles mod knægten, som er det højeste kort, der er tilbage i hånden. |
+| 457 | K D 9 4 3 / B 8 2 | 4 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
+| 485 | K D 10 9 6 / 5 4 3 2 | 4 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
+| 520 | K D B 9 / 5 4 3 2 | 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
+| 522 | K D 10 9 / 5 4 3 2 | 3 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
+| 537 | E 5 4 3 2 / D B 9 | 4, 3 | Der spilles mod damen, som er det højeste kort, der er tilbage i hånden. |
+| 549 | K D 9 7 4 / B 3 2 | 4 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
+| 558 | K D B 9 8 / 3 2 | 4 | Der spilles mod kongen, som er det højeste kort, der er tilbage i hånden. |
 
 ## Dobbelt kipning (112)
 
@@ -312,97 +309,97 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 125 | K 10 3 / D 2 | 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 143 | K 5 4 3 / B 9 2 | 2, 1 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
 | 146 | D 10 9 5 / 4 3 2 | 2, 1 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 158 | D B 9 3 / 2 | 2, 1 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 163 | K 6 5 4 3 / B 10 2 | 4, 3, 2 | Der kippes mod knægten, og modpartens kort over den ligger i to huller. |
-| 165 | E D 10 / 4 3 2 | 3, 2 | Små kort fra begge hænder kipper med 10'eren, og modpartens kort over den ligger i to huller. |
-| 186 | E 10 9 4 / D 3 2 | 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 187 | E 10 4 3 / D 9 2 | 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 191 | D 4 3 2 / E 10 | 2 | Små kort fra begge hænder kipper med 10'eren, og modpartens kort over den ligger i to huller. |
-| 197 | E 10 5 4 / D 9 3 2 | 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 201 | E D 10 / 3 2 | 3, 2 | Små kort fra begge hænder kipper med 10'eren, og modpartens kort over den ligger i to huller. |
-| 202 | D 3 2 / E 10 | 2 | Små kort fra begge hænder kipper med 10'eren, og modpartens kort over den ligger i to huller. |
-| 204 | K 3 2 / D 10 | 2 | Små kort fra begge hænder kipper med 10'eren, og modpartens kort over den ligger i to huller. |
-| 216 | E D 9 6 5 / 4 3 2 | 4, 3, 2 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 217 | E 10 9 5 4 / D 3 2 | 5, 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 218 | E B 9 6 5 / 4 3 2 | 4, 3, 2 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 222 | D 10 9 6 5 / 4 3 2 | 3, 2, 1 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 232 | E 10 8 3 / 2 | 2 | 8'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 236 | E B 9 4 3 / K 2 | 5, 4, 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 237 | K B 9 4 3 / E 2 | 5, 4, 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 246 | E D 10 9 4 / 3 2 | 5, 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 248 | K D 10 9 4 / 3 2 | 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 264 | K B 9 / 3 2 | 2, 1 | Der kippes mod knægten, og modpartens kort over den ligger i to huller. |
-| 280 | E 10 9 5 / D 4 3 2 | 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 305 | E D 10 9 5 / 4 3 2 | 4, 3, 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 306 | E 9 5 4 3 / D 10 2 | 4, 3 | 9'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 309 | K 10 8 4 / B 3 2 | 4, 3 | Der kippes mod 8'eren, og modpartens kort over den ligger i to huller. |
-| 315 | E K B 9 4 3 / 2 | 6, 5, 4, 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 316 | E D B 9 3 / 2 | 4, 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 318 | K D B 9 3 / 2 | 4, 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 321 | D 5 4 3 2 / E 10 | 4, 3, 2 | Små kort fra begge hænder kipper med 10'eren, og modpartens kort over den ligger i to huller. |
-| 332 | K D 10 6 5 4 3 / 2 | 6, 5, 4 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 335 | E D 9 6 / 5 4 3 2 | 3, 2 | 9'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 351 | E 10 9 5 4 3 / D 2 | 5, 4 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 353 | K 10 8 7 6 5 / 4 3 2 | 5, 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 355 | E K 9 / B 3 2 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 357 | E 10 9 / D 3 2 | 3, 2 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 373 | K 10 8 5 4 / B 3 2 | 4, 3, 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 376 | E K B 9 / 3 2 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 377 | E B 3 2 / K 9 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 379 | E D 3 2 / B 9 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 383 | E D 10 9 / 3 2 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 384 | D 9 3 2 / E 10 | 3 | Små kort fra begge hænder kipper med 10'eren, og modpartens kort over den ligger i to huller. |
-| 385 | K D 10 9 / 3 2 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 387 | K B 10 9 / 3 2 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 393 | E D 10 9 / 4 3 2 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 394 | E 4 3 2 / D 10 9 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 395 | D 4 3 2 / E 10 9 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 397 | K 4 3 2 / D 10 9 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 410 | K D 10 8 4 3 / 2 | 5, 4, 3, 2 | Der kippes mod 8'eren, og modpartens kort over den ligger i to huller. |
-| 412 | E B 10 8 4 3 / 2 | 5, 4, 3, 2 | Der kippes mod 8'eren, og modpartens kort over den ligger i to huller. |
-| 414 | E B 8 5 4 3 / 2 | 4, 3, 2 | 8'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 423 | K 9 8 / B 3 2 | 2, 1 | Knægten spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 424 | E D 4 3 2 / B 9 | 5, 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 425 | D B 4 3 2 / E 9 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 427 | K D 4 3 2 / B 9 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 437 | K 10 8 5 / B 4 3 2 | 3, 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 449 | D 9 7 6 5 / B 4 3 2 | 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 460 | D 10 9 4 3 / E 8 2 | 5, 4 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 461 | D 9 8 6 5 / 4 3 2 | 3, 2 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 465 | K D 10 9 5 4 3 / 2 | 6, 5 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 471 | E 10 9 / D 2 | 3, 2 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 472 | D 10 9 / E 2 | 3, 2 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 488 | K B 9 7 6 / 5 4 3 2 | 4, 3, 2 | Der kippes mod knægten, og modpartens kort over den ligger i to huller. |
-| 491 | E D B 9 / 2 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 492 | K D B 9 / 2 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 493 | E D 10 9 / 2 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 494 | K D 10 9 / 2 | 2 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 505 | K B 8 7 6 5 / 10 4 3 2 | 5 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 514 | D 6 5 4 3 2 / E 10 | 4, 3, 2 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 523 | E D 10 9 / 5 4 3 2 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 528 | E D B 9 8 3 / 2 | 6, 5, 4 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 539 | E D 3 2 / B 9 8 | 4, 3 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
-| 542 | E 10 9 8 / D 3 2 | 4, 3 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
-| 543 | D 10 9 8 / E 3 2 | 4, 3 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 544 | E 5 4 3 2 / D 10 9 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 545 | K 5 4 3 2 / D 10 9 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 568 | E K 9 8 / B 2 | 4, 3 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
-| 574 | D 10 9 8 / E 2 | 3 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 575 | D 9 5 4 3 2 / E 10 | 5, 4 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 579 | E 10 9 6 5 4 3 / D 2 | 7, 6 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 587 | K 9 8 7 / B 3 2 | 3, 2 | Knægten spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 593 | E 10 9 8 / D 4 3 2 | 4, 3 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
-| 594 | K 4 3 2 / D 10 9 8 | 3 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
-| 605 | E 9 4 3 2 / D 10 8 | 5, 4 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 606 | E D B 9 8 / 2 | 5, 4 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
-| 608 | E D 10 9 8 / 2 | 5, 4 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
-| 609 | K D 10 9 8 / 2 | 4 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
-| 620 | E K 9 8 7 3 / B 2 | 6, 5 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 622 | E 10 9 8 5 4 3 / D 2 | 7, 6 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 632 | D 4 3 2 / E 10 8 7 | 4, 3, 2 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 639 | E 9 7 3 2 / D 10 8 | 5, 4 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 647 | K 5 4 3 2 / B 10 9 8 | 4 | Knægten spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 648 | K 7 6 5 4 3 / B 10 9 2 | 5 | Knægten spilles ud og løber, og modpartens kort over den ligger i to huller. |
+| 157 | D B 9 3 / 2 | 2, 1 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 162 | K 6 5 4 3 / B 10 2 | 4, 3, 2 | Der kippes mod knægten, og modpartens kort over den ligger i to huller. |
+| 164 | E D 10 / 4 3 2 | 3, 2 | Små kort fra begge hænder kipper med 10'eren, og modpartens kort over den ligger i to huller. |
+| 185 | E 10 9 4 / D 3 2 | 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 186 | E 10 4 3 / D 9 2 | 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 190 | D 4 3 2 / E 10 | 2 | Små kort fra begge hænder kipper med 10'eren, og modpartens kort over den ligger i to huller. |
+| 196 | E 10 5 4 / D 9 3 2 | 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 200 | E D 10 / 3 2 | 3, 2 | Små kort fra begge hænder kipper med 10'eren, og modpartens kort over den ligger i to huller. |
+| 201 | D 3 2 / E 10 | 2 | Små kort fra begge hænder kipper med 10'eren, og modpartens kort over den ligger i to huller. |
+| 203 | K 3 2 / D 10 | 2 | Små kort fra begge hænder kipper med 10'eren, og modpartens kort over den ligger i to huller. |
+| 215 | E D 9 6 5 / 4 3 2 | 4, 3, 2 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 216 | E 10 9 5 4 / D 3 2 | 5, 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 217 | E B 9 6 5 / 4 3 2 | 4, 3, 2 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 221 | D 10 9 6 5 / 4 3 2 | 3, 2, 1 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 226 | E D 6 5 4 3 / 10 2 | 5, 4 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 231 | E 10 8 3 / 2 | 2 | 8'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
+| 235 | E B 9 4 3 / K 2 | 5, 4, 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 236 | K B 9 4 3 / E 2 | 5, 4, 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 245 | E D 10 9 4 / 3 2 | 5, 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 247 | K D 10 9 4 / 3 2 | 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 263 | K B 9 / 3 2 | 2, 1 | Der kippes mod knægten, og modpartens kort over den ligger i to huller. |
+| 279 | E 10 9 5 / D 4 3 2 | 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 304 | E D 10 9 5 / 4 3 2 | 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 305 | E 9 5 4 3 / D 10 2 | 4, 3 | 9'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
+| 308 | K 10 8 4 / B 3 2 | 3 | Der kippes mod 8'eren, og modpartens kort over den ligger i to huller. |
+| 314 | E K B 9 4 3 / 2 | 6, 5, 4, 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 315 | E D B 9 3 / 2 | 4, 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 317 | K D B 9 3 / 2 | 4, 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 320 | D 5 4 3 2 / E 10 | 4, 3, 2 | Små kort fra begge hænder kipper med 10'eren, og modpartens kort over den ligger i to huller. |
+| 331 | K D 10 6 5 4 3 / 2 | 6, 5, 4 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 334 | E D 9 6 / 5 4 3 2 | 3, 2 | 9'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
+| 350 | E 10 9 5 4 3 / D 2 | 5, 4 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 352 | K 10 8 7 6 5 / 4 3 2 | 5, 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 354 | E K 9 / B 3 2 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 356 | E 10 9 / D 3 2 | 3, 2 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 372 | K 10 8 5 4 / B 3 2 | 4, 3, 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 375 | E K B 9 / 3 2 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 376 | E B 3 2 / K 9 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 378 | E D 3 2 / B 9 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 382 | E D 10 9 / 3 2 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 383 | D 9 3 2 / E 10 | 3 | Små kort fra begge hænder kipper med 10'eren, og modpartens kort over den ligger i to huller. |
+| 384 | K D 10 9 / 3 2 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 386 | K B 10 9 / 3 2 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 392 | E D 10 9 / 4 3 2 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 393 | E 4 3 2 / D 10 9 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 394 | D 4 3 2 / E 10 9 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 396 | K 4 3 2 / D 10 9 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 409 | K D 10 8 4 3 / 2 | 5, 4, 3, 2 | Der kippes mod 8'eren, og modpartens kort over den ligger i to huller. |
+| 411 | E B 10 8 4 3 / 2 | 5, 4, 3, 2 | Der kippes mod 8'eren, og modpartens kort over den ligger i to huller. |
+| 413 | E B 8 5 4 3 / 2 | 4, 3, 2 | 8'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
+| 422 | K 9 8 / B 3 2 | 2, 1 | Knægten spilles ud og løber, og modpartens kort over den ligger i to huller. |
+| 423 | E D 4 3 2 / B 9 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 424 | D B 4 3 2 / E 9 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 426 | K D 4 3 2 / B 9 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 436 | K 10 8 5 / B 4 3 2 | 3, 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 448 | D 9 7 6 5 / B 4 3 2 | 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 459 | D 10 9 4 3 / E 8 2 | 5, 4 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
+| 460 | D 9 8 6 5 / 4 3 2 | 3, 2 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 464 | K D 10 9 5 4 3 / 2 | 6, 5 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 470 | E 10 9 / D 2 | 3, 2 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 471 | D 10 9 / E 2 | 3, 2 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 487 | K B 9 7 6 / 5 4 3 2 | 4, 3, 2 | Der kippes mod knægten, og modpartens kort over den ligger i to huller. |
+| 490 | E D B 9 / 2 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 491 | K D B 9 / 2 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 492 | E D 10 9 / 2 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 503 | K B 8 7 6 5 / 10 4 3 2 | 5 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
+| 512 | D 6 5 4 3 2 / E 10 | 4, 3 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
+| 521 | E D 10 9 / 5 4 3 2 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 526 | E D B 9 8 3 / 2 | 6, 5, 4 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 536 | E D 3 2 / B 9 8 | 4, 3 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
+| 539 | E 10 9 8 / D 3 2 | 4, 3 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
+| 540 | D 10 9 8 / E 3 2 | 4, 3 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
+| 541 | E 5 4 3 2 / D 10 9 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 542 | K 5 4 3 2 / D 10 9 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
+| 565 | E K 9 8 / B 2 | 4, 3 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
+| 571 | D 10 9 8 / E 2 | 3 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
+| 572 | D 9 5 4 3 2 / E 10 | 5, 4 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
+| 576 | E 10 9 6 5 4 3 / D 2 | 7, 6 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 584 | K 9 8 7 / B 3 2 | 3, 2 | Knægten spilles ud og løber, og modpartens kort over den ligger i to huller. |
+| 590 | E 10 9 8 / D 4 3 2 | 4, 3 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
+| 591 | K 4 3 2 / D 10 9 8 | 3 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
+| 602 | E 9 4 3 2 / D 10 8 | 5, 4 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
+| 603 | E D B 9 8 / 2 | 5, 4 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
+| 605 | E D 10 9 8 / 2 | 5, 4 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
+| 606 | K D 10 9 8 / 2 | 4 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
+| 617 | E K 9 8 7 3 / B 2 | 6, 5 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 619 | E 10 9 8 5 4 3 / D 2 | 7, 6 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 629 | D 4 3 2 / E 10 8 7 | 4, 3, 2 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
+| 636 | E 9 7 3 2 / D 10 8 | 5, 4 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
+| 644 | K 5 4 3 2 / B 10 9 8 | 4 | Knægten spilles ud og løber, og modpartens kort over den ligger i to huller. |
+| 645 | K 7 6 5 4 3 / B 10 9 2 | 5 | Knægten spilles ud og løber, og modpartens kort over den ligger i to huller. |
 
 ## Sikkerhedsspil (207)
 
@@ -438,6 +435,7 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 61 | E D 5 4 / 10 3 2 | 3, 2 | Til 2 stik giver den bedste linje 93,5 %, linjen med flest stik kun 85,9 %. |
 | 64 | K 10 5 4 / B 3 2 | 3, 2 | Til 2 stik giver den bedste linje 69,0 %, linjen med flest stik kun 67,8 %. |
 | 66 | E D 5 4 3 / B 2 | 4, 3 | Til 3 stik giver den bedste linje 86,4 %, linjen med flest stik kun 85,2 %. |
+| 68 | E 10 5 4 3 / 2 | 3 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
 | 76 | D B 7 6 5 / E 4 3 2 | 5, 4 | Til 4 stik giver den bedste linje 95,2 %, linjen med flest stik kun 90,4 %. |
 | 80 | E D B 6 / 5 4 3 2 | 4, 3 | Til 3 stik giver den bedste linje 86,7 %, linjen med flest stik kun 83,9 %. |
 | 81 | E K 10 5 / 4 3 2 | 4, 3 | Til 3 stik giver den bedste linje 56,5 %, linjen med flest stik kun 52,4 %. |
@@ -465,156 +463,155 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 141 | E D 9 5 / 4 3 2 | 3, 2 | Til 2 stik giver den bedste linje 78,7 %, linjen med flest stik kun 75,4 %. |
 | 142 | E B 9 5 / 4 3 2 | 3, 2 | Til 2 stik giver den bedste linje 69,4 %, linjen med flest stik kun 67,8 %. |
 | 150 | E K D 10 4 / 3 2 | 5, 4 | Til 4 stik giver den bedste linje 93,2 %, linjen med flest stik kun 87,1 %. |
-| 156 | E 10 9 3 / 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 160 | E 6 5 4 3 / D 10 2 | 4, 3, 2 | Til 3 stik giver den bedste linje 89,6 %, linjen med flest stik kun 87,6 %. |
-| 161 | D 6 5 4 3 / E 10 2 | 4, 3 | Til 3 stik giver den bedste linje 96,1 %, linjen med flest stik kun 93,3 %. |
-| 162 | K 6 5 4 3 / D 10 2 | 4, 3, 2 | Til 3 stik giver den bedste linje 87,6 %, linjen med flest stik kun 84,8 %. |
-| 164 | D B 5 4 3 / 9 2 | 3, 2, 1 | Til 2 stik giver den bedste linje 74,3 %, linjen med flest stik kun 72,7 %. |
-| 168 | E D 7 6 5 / 10 4 3 2 | 5, 4 | Til 4 stik giver den bedste linje 78,0 %, linjen med flest stik kun 71,8 %. |
-| 175 | E K 4 3 / B 9 2 | 4, 3 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 176 | E B 9 4 / K 3 2 | 4, 3 | Til 3 stik giver den bedste linje 84,7 %, linjen med flest stik kun 78,3 %. |
-| 177 | K 9 4 3 / E B 2 | 4, 3 | Til 3 stik giver den bedste linje 83,9 %, linjen med flest stik kun 82,6 %. |
-| 178 | E D 9 4 / B 3 2 | 4, 3 | Til 3 stik giver den bedste linje 71,8 %, linjen med flest stik kun 68,3 %. |
-| 181 | B 9 4 3 / E D 2 | 4, 3 | Til 3 stik giver den bedste linje 68,6 %, linjen med flest stik kun 67,4 %. |
-| 182 | E K 9 4 / 10 3 2 | 4, 3 | Til 3 stik giver den bedste linje 71,8 %, linjen med flest stik kun 69,4 %. |
-| 193 | E B 5 4 / K 9 3 2 | 4, 3 | Til 3 stik giver den bedste linje 100,0 %, linjen med flest stik kun 97,2 %. |
-| 194 | E D 5 4 / B 9 3 2 | 4, 3 | Til 3 stik giver den bedste linje 89,6 %, linjen med flest stik kun 86,7 %. |
-| 195 | D B 5 4 / E 9 3 2 | 4, 3 | Til 3 stik giver den bedste linje 97,2 %, linjen med flest stik kun 86,7 %. |
-| 198 | K 6 5 4 / B 9 3 2 | 3, 2, 1 | Til 1 stik giver den bedste linje 100,0 %, linjen med flest stik kun 97,2 %. |
-| 207 | E K B 10 4 3 / 2 | 6, 5, 4 | Til 5 stik giver den bedste linje 86,4 %, linjen med flest stik kun 85,2 %. |
-| 208 | E K 9 5 4 / B 3 2 | 5, 4 | Til 4 stik giver den bedste linje 96,1 %, linjen med flest stik kun 79,1 %. |
-| 211 | D B 9 5 4 / E 3 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 87,6 %, linjen med flest stik kun 84,8 %. |
-| 212 | E K 9 5 4 / 10 3 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 87,6 %, linjen med flest stik kun 82,0 %. |
-| 215 | E D 9 5 4 / 10 3 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 71,2 %, linjen med flest stik kun 68,4 %. |
-| 227 | E D 6 5 4 3 / 10 2 | 6, 5, 4 | Til 5 stik giver den bedste linje 37,3 %, linjen med flest stik kun 33,9 %. |
-| 228 | E D 10 7 6 5 / 4 3 2 | 6, 5, 4 | Til 5 stik giver den bedste linje 82,8 %, linjen med flest stik kun 76,6 %. |
-| 233 | E K D 9 4 / 3 2 | 5, 4 | Til 4 stik giver den bedste linje 89,6 %, linjen med flest stik kun 84,0 %. |
-| 234 | E K 9 4 3 / D 2 | 5, 4 | Til 4 stik giver den bedste linje 86,4 %, linjen med flest stik kun 84,0 %. |
-| 235 | E K 9 4 3 / B 2 | 5, 4, 3 | Til 3 stik giver den bedste linje 98,8 %, linjen med flest stik kun 93,9 %. |
-| 238 | E D B 9 4 / 3 2 | 5, 4, 3 | Til 3 stik giver den bedste linje 94,4 %, linjen med flest stik kun 93,2 %. |
-| 239 | E D 9 4 3 / B 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 58,1 %, linjen med flest stik kun 54,9 %. |
-| 240 | D B 9 4 3 / E 2 | 4, 3 | Til 3 stik giver den bedste linje 94,4 %, linjen med flest stik kun 89,6 %. |
-| 242 | E 10 9 4 3 / K 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 64,6 %, linjen med flest stik kun 61,4 %. |
-| 244 | K D B 4 3 / 9 2 | 4, 3 | Til 3 stik giver den bedste linje 93,2 %, linjen med flest stik kun 87,6 %. |
-| 245 | K D 9 4 3 / B 2 | 4, 3 | Til 3 stik giver den bedste linje 93,2 %, linjen med flest stik kun 88,4 %. |
-| 247 | E 10 9 4 3 / D 2 | 4, 3 | Til 3 stik giver den bedste linje 88,8 %, linjen med flest stik kun 86,4 %. |
-| 252 | E D 10 7 6 / 5 4 3 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 82,8 %, linjen med flest stik kun 76,6 %. |
-| 253 | E 7 6 5 4 3 / D B 2 | 6, 5 | Til 5 stik giver den bedste linje 95,2 %, linjen med flest stik kun 90,4 %. |
-| 262 | E D 9 / 3 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 263 | E B 9 / 3 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 266 | K 10 9 / 3 2 | 1 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 267 | D 10 9 / 3 2 | 1 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 269 | E D 9 / 4 3 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 270 | E B 9 / 4 3 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 273 | K 10 9 / 4 3 2 | 1 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 274 | D 10 9 / 4 3 2 | 1 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 276 | E K 9 5 / B 4 3 2 | 4, 3 | Til 3 stik giver den bedste linje 100,0 %, linjen med flest stik kun 91,5 %. |
-| 278 | D B 9 5 / E 4 3 2 | 4, 3 | Til 3 stik giver den bedste linje 89,6 %, linjen med flest stik kun 86,7 %. |
-| 281 | E 5 4 3 / D 10 9 2 | 4, 3 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 286 | E D 7 6 5 4 / 10 3 2 | 6, 5 | Til 5 stik giver den bedste linje 78,0 %, linjen med flest stik kun 71,8 %. |
-| 288 | K D 10 9 5 4 / 3 2 | 5, 4 | Til 4 stik giver den bedste linje 98,0 %, linjen med flest stik kun 96,1 %. |
-| 293 | D 4 3 2 / B 9 | 2, 1 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 295 | E K 5 4 3 / B 9 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 87,6 %, linjen med flest stik kun 76,3 %. |
-| 296 | E B 5 4 3 / K 9 2 | 5, 4 | Til 4 stik giver den bedste linje 96,1 %, linjen med flest stik kun 87,6 %. |
-| 297 | E 9 5 4 3 / K B 2 | 5, 4 | Til 4 stik giver den bedste linje 96,1 %, linjen med flest stik kun 93,3 %. |
-| 299 | E D 5 4 3 / B 9 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 79,1 %, linjen med flest stik kun 76,3 %. |
-| 300 | E 9 5 4 3 / D B 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 93,3 %, linjen med flest stik kun 84,8 %. |
-| 301 | B 9 5 4 3 / E D 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 87,6 %, linjen med flest stik kun 84,8 %. |
-| 303 | E 10 5 4 3 / K 9 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 90,4 %, linjen med flest stik kun 87,6 %. |
-| 308 | E B 8 4 / 10 3 2 | 3, 2 | Til 2 stik giver den bedste linje 90,3 %, linjen med flest stik kun 88,3 %. |
-| 313 | E K D 9 3 / 2 | 5, 4 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 317 | E D B 9 4 3 / 2 | 6, 5, 4, 3 | Til 4 stik giver den bedste linje 92,5 %, linjen med flest stik kun 87,6 %. |
-| 319 | K D B 9 4 3 / 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 92,5 %, linjen med flest stik kun 87,6 %. |
-| 320 | E D 10 9 4 3 / 2 | 6, 5, 4, 3 | Til 4 stik giver den bedste linje 88,8 %, linjen med flest stik kun 87,6 %. |
-| 322 | K D 10 9 4 3 / 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 87,6 %, linjen med flest stik kun 86,4 %. |
-| 324 | E B 10 9 4 3 / 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 88,8 %, linjen med flest stik kun 86,4 %. |
-| 331 | E K D 10 5 4 3 / 2 | 7, 6 | Til 6 stik giver den bedste linje 98,0 %, linjen med flest stik kun 96,1 %. |
-| 338 | K D 9 8 4 / 3 2 | 4, 3, 2 | Til 2 stik giver den bedste linje 95,6 %, linjen med flest stik kun 94,4 %. |
-| 346 | E K 9 5 4 3 / B 2 | 6, 5, 4 | Til 4 stik giver den bedste linje 100,0 %, linjen med flest stik kun 98,0 %. |
-| 348 | D B 9 5 4 3 / E 2 | 6, 5, 4 | Til 5 stik giver den bedste linje 79,1 %, linjen med flest stik kun 76,3 %. |
-| 350 | K D B 5 4 3 / 9 2 | 5, 4 | Til 4 stik giver den bedste linje 98,0 %, linjen med flest stik kun 96,1 %. |
-| 363 | E 9 6 5 4 / D B 3 2 | 5, 4 | Til 4 stik giver den bedste linje 100,0 %, linjen med flest stik kun 95,2 %. |
-| 370 | E D 8 5 4 / B 3 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 79,1 %, linjen med flest stik kun 76,3 %. |
-| 374 | K 9 8 5 4 / B 3 2 | 4, 3, 2 | Til 3 stik giver den bedste linje 83,7 %, linjen med flest stik kun 80,8 %. |
-| 391 | E K B 9 / 4 3 2 | 4, 3 | Til 3 stik giver den bedste linje 84,7 %, linjen med flest stik kun 78,3 %. |
-| 401 | E B 10 9 3 / K 2 | 5 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 409 | D 10 9 6 5 4 / E 3 2 | 6, 5 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 411 | K D 9 8 4 3 / 2 | 5, 4, 3, 2 | Til 3 stik giver den bedste linje 92,5 %, linjen med flest stik kun 90,0 %. |
-| 419 | E 9 8 3 / D B 2 | 4, 3 | Til 3 stik giver den bedste linje 82,6 %, linjen med flest stik kun 79,0 %. |
-| 420 | B 9 8 3 / E D 2 | 4, 3 | Til 3 stik giver den bedste linje 77,8 %, linjen med flest stik kun 76,2 %. |
-| 429 | E K 8 5 / B 4 3 2 | 4, 3 | Til 3 stik giver den bedste linje 92,4 %, linjen med flest stik kun 86,7 %. |
-| 430 | E K 4 3 / B 9 8 2 | 4, 3 | Til 3 stik giver den bedste linje 100,0 %, linjen med flest stik kun 91,5 %. |
-| 431 | E D 8 5 / B 4 3 2 | 4, 3 | Til 3 stik giver den bedste linje 81,1 %, linjen med flest stik kun 76,3 %. |
-| 438 | K 5 4 3 / B 10 8 2 | 3, 2 | Til 2 stik giver den bedste linje 92,4 %, linjen med flest stik kun 83,9 %. |
-| 440 | E D 10 8 / 3 2 | 4, 3, 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 441 | E D 9 8 / 3 2 | 3, 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 442 | K D 9 8 / 3 2 | 3 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 445 | E B 9 8 / 3 2 | 3, 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 446 | E 10 9 8 / 3 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 448 | D B 9 8 / 3 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 450 | K 10 9 8 / 3 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 451 | D 10 9 8 / 3 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 452 | E 7 6 5 4 3 / D 10 2 | 6, 5, 4 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 455 | E K 9 8 4 / B 3 2 | 5, 4 | Til 4 stik giver den bedste linje 96,1 %, linjen med flest stik kun 89,6 %. |
-| 456 | B 9 8 4 3 / E K 2 | 5, 4 | Til 4 stik giver den bedste linje 96,1 %, linjen med flest stik kun 87,6 %. |
-| 459 | E D 10 8 5 / 4 3 2 | 5, 4, 3, 2 | Til 4 stik giver den bedste linje 65,6 %, linjen med flest stik kun 62,7 %. |
-| 462 | E D B 9 5 4 3 / 2 | 7, 6, 5 | Til 6 stik giver den bedste linje 79,1 %, linjen med flest stik kun 76,3 %. |
-| 463 | K D B 9 5 4 3 / 2 | 6, 5 | Til 5 stik giver den bedste linje 98,0 %, linjen med flest stik kun 96,1 %. |
-| 469 | E K 9 8 3 / B 2 | 5, 4 | Til 4 stik giver den bedste linje 72,7 %, linjen med flest stik kun 70,2 %. |
-| 470 | E D 9 8 3 / B 2 | 5, 4 | Til 4 stik giver den bedste linje 71,5 %, linjen med flest stik kun 70,2 %. |
-| 485 | E 6 5 4 3 / D 10 9 2 | 5, 4 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 496 | E D 10 8 / 4 3 2 | 4, 3, 2 | Til 3 stik giver den bedste linje 53,0 %, linjen med flest stik kun 50,9 %. |
-| 497 | E D 9 8 / 4 3 2 | 3, 2 | Til 2 stik giver den bedste linje 90,8 %, linjen med flest stik kun 89,2 %. |
-| 499 | E B 9 8 / 4 3 2 | 3, 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 500 | K B 9 8 / 4 3 2 | 3, 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 501 | K 10 9 8 / 4 3 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 506 | E K 9 8 4 3 / B 2 | 6, 5 | Til 5 stik giver den bedste linje 87,6 %, linjen med flest stik kun 84,8 %. |
-| 515 | E 10 9 8 / 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 516 | D B 9 8 / 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 517 | D B 10 8 / 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 518 | D 10 9 8 / 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 526 | E D 7 6 5 4 3 / 10 2 | 7, 6, 5 | Til 6 stik giver den bedste linje 78,0 %, linjen med flest stik kun 71,8 %. |
-| 535 | E K 9 8 / B 3 2 | 4, 3 | Til 3 stik giver den bedste linje 83,9 %, linjen med flest stik kun 78,3 %. |
-| 536 | E K 3 2 / B 9 8 | 4, 3 | Til 3 stik giver den bedste linje 78,3 %, linjen med flest stik kun 77,0 %. |
-| 538 | E D 9 8 / B 3 2 | 4, 3 | Til 3 stik giver den bedste linje 79,0 %, linjen med flest stik kun 77,6 %. |
-| 547 | D B 8 7 / 2 | 2, 1 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 548 | D 10 8 7 / 2 | 2, 1 | Til 1 stik giver den bedste linje 15,1 %, linjen med flest stik kun 14,3 %. |
-| 551 | E D 7 5 4 / B 3 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 76,3 %, linjen med flest stik kun 70,7 %. |
-| 559 | E K B 9 8 / 3 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 77,0 %, linjen med flest stik kun 75,8 %. |
-| 562 | K D 9 3 2 / B 8 | 4, 3 | Til 3 stik giver den bedste linje 100,0 %, linjen med flest stik kun 95,2 %. |
-| 563 | E K 8 6 5 / B 4 3 2 | 5, 4 | Til 4 stik giver den bedste linje 100,0 %, linjen med flest stik kun 95,2 %. |
-| 565 | E K 8 6 5 / 10 4 3 2 | 5, 4 | Til 4 stik giver den bedste linje 95,2 %, linjen med flest stik kun 90,4 %. |
-| 571 | E D 5 4 3 2 / B 9 | 5, 4 | Til 4 stik giver den bedste linje 98,0 %, linjen med flest stik kun 96,1 %. |
-| 573 | K D 5 4 3 2 / B 9 | 5, 4 | Til 4 stik giver den bedste linje 98,0 %, linjen med flest stik kun 96,1 %. |
-| 576 | E B 10 8 5 4 3 / 2 | 6, 5, 4 | Til 5 stik giver den bedste linje 87,6 %, linjen med flest stik kun 84,8 %. |
-| 577 | E 10 9 8 5 4 3 / 2 | 5, 4 | Til 4 stik giver den bedste linje 98,0 %, linjen med flest stik kun 96,1 %. |
-| 578 | E D 9 6 5 4 3 / B 2 | 7, 6 | Til 6 stik giver den bedste linje 95,2 %, linjen med flest stik kun 90,4 %. |
-| 580 | D 10 9 6 5 4 3 / E 2 | 7, 6 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 588 | K 9 8 7 / 4 3 2 | 2, 1 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 589 | D 9 8 7 / 4 3 2 | 2, 1 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 591 | E D 9 8 / B 4 3 2 | 4, 3 | Til 3 stik giver den bedste linje 97,2 %, linjen med flest stik kun 89,6 %. |
-| 597 | E K 8 6 5 4 / B 3 2 | 6, 5 | Til 5 stik giver den bedste linje 100,0 %, linjen med flest stik kun 95,2 %. |
-| 600 | E K 8 6 5 4 / 10 3 2 | 6, 5 | Til 5 stik giver den bedste linje 95,2 %, linjen med flest stik kun 90,4 %. |
-| 603 | E K 4 3 2 / B 9 8 | 5, 4, 3 | Til 4 stik giver den bedste linje 87,6 %, linjen med flest stik kun 76,3 %. |
-| 613 | E 10 9 7 6 / D 5 4 3 2 | 5, 4 | Til 4 stik giver den bedste linje 100,0 %, linjen med flest stik kun 89,0 %. |
-| 614 | E D 10 8 / 5 4 3 2 | 4, 3, 2 | Til 3 stik giver den bedste linje 67,5 %, linjen med flest stik kun 64,7 %. |
-| 615 | K B 9 8 / 5 4 3 2 | 3, 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 616 | E 10 9 8 / 5 4 3 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 617 | K 10 9 8 / 5 4 3 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 619 | K 9 8 7 6 / 5 4 3 2 | 4, 3, 2 | Til 3 stik giver den bedste linje 71,8 %, linjen med flest stik kun 65,6 %. |
-| 626 | E D 6 4 3 / B 9 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 82,0 %, linjen med flest stik kun 76,3 %. |
-| 627 | B 9 8 7 / E D 2 | 4, 3 | Til 3 stik giver den bedste linje 77,8 %, linjen med flest stik kun 77,0 %. |
-| 628 | 10 9 8 7 / E D 2 | 4, 3 | Til 3 stik giver den bedste linje 61,9 %, linjen med flest stik kun 60,7 %. |
-| 634 | K 9 8 7 / B 4 3 2 | 3, 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
-| 637 | E K 7 3 2 / B 9 8 | 5, 4 | Til 4 stik giver den bedste linje 97,2 %, linjen med flest stik kun 89,6 %. |
-| 640 | D B 9 8 7 / E 2 | 5, 4 | Til 4 stik giver den bedste linje 63,0 %, linjen med flest stik kun 61,8 %. |
-| 641 | K 9 8 7 5 / B 4 3 2 | 4, 3 | Til 3 stik giver den bedste linje 93,8 %, linjen med flest stik kun 89,0 %. |
-| 644 | E 6 5 4 3 2 / D 10 9 | 6, 5, 4 | Til 5 stik giver den bedste linje 78,0 %, linjen med flest stik kun 75,4 %. |
-| 649 | D 7 6 5 4 3 2 / E 10 | 6, 5 | Til 5 stik giver den bedste linje 100,0 %, linjen med flest stik kun 95,2 %. |
-| 650 | E K 5 4 3 2 / B 9 8 | 6, 5 | Til 5 stik giver den bedste linje 100,0 %, linjen med flest stik kun 95,2 %. |
-| 653 | E B 4 3 2 / K 9 8 7 | 5, 4 | Til 4 stik giver den bedste linje 100,0 %, linjen med flest stik kun 95,2 %. |
-| 654 | 9 8 7 6 4 3 / E K 2 | 6, 5 | Til 5 stik giver den bedste linje 95,2 %, linjen med flest stik kun 90,4 %. |
-| 656 | B 7 4 3 2 / E D 6 | 5, 4, 3 | Til 4 stik giver den bedste linje 76,3 %, linjen med flest stik kun 70,7 %. |
+| 155 | E 10 9 3 / 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 159 | E 6 5 4 3 / D 10 2 | 4, 3, 2 | Til 3 stik giver den bedste linje 89,6 %, linjen med flest stik kun 87,6 %. |
+| 160 | D 6 5 4 3 / E 10 2 | 4, 3 | Til 3 stik giver den bedste linje 96,1 %, linjen med flest stik kun 93,3 %. |
+| 161 | K 6 5 4 3 / D 10 2 | 4, 3, 2 | Til 3 stik giver den bedste linje 87,6 %, linjen med flest stik kun 84,8 %. |
+| 163 | D B 5 4 3 / 9 2 | 3, 2, 1 | Til 2 stik giver den bedste linje 74,3 %, linjen med flest stik kun 72,7 %. |
+| 167 | E D 7 6 5 / 10 4 3 2 | 5, 4 | Til 4 stik giver den bedste linje 78,0 %, linjen med flest stik kun 71,8 %. |
+| 174 | E K 4 3 / B 9 2 | 4, 3 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 175 | E B 9 4 / K 3 2 | 4, 3 | Til 3 stik giver den bedste linje 84,7 %, linjen med flest stik kun 78,3 %. |
+| 176 | K 9 4 3 / E B 2 | 4, 3 | Til 3 stik giver den bedste linje 83,9 %, linjen med flest stik kun 82,6 %. |
+| 177 | E D 9 4 / B 3 2 | 4, 3 | Til 3 stik giver den bedste linje 71,8 %, linjen med flest stik kun 68,3 %. |
+| 180 | B 9 4 3 / E D 2 | 4, 3 | Til 3 stik giver den bedste linje 68,6 %, linjen med flest stik kun 67,4 %. |
+| 181 | E K 9 4 / 10 3 2 | 4, 3 | Til 3 stik giver den bedste linje 71,8 %, linjen med flest stik kun 69,4 %. |
+| 192 | E B 5 4 / K 9 3 2 | 4, 3 | Til 3 stik giver den bedste linje 100,0 %, linjen med flest stik kun 97,2 %. |
+| 193 | E D 5 4 / B 9 3 2 | 4, 3 | Til 3 stik giver den bedste linje 89,6 %, linjen med flest stik kun 86,7 %. |
+| 194 | D B 5 4 / E 9 3 2 | 4, 3 | Til 3 stik giver den bedste linje 97,2 %, linjen med flest stik kun 86,7 %. |
+| 197 | K 6 5 4 / B 9 3 2 | 3, 2, 1 | Til 1 stik giver den bedste linje 100,0 %, linjen med flest stik kun 97,2 %. |
+| 206 | E K B 10 4 3 / 2 | 6, 5, 4 | Til 5 stik giver den bedste linje 86,4 %, linjen med flest stik kun 85,2 %. |
+| 207 | E K 9 5 4 / B 3 2 | 5, 4 | Til 4 stik giver den bedste linje 96,1 %, linjen med flest stik kun 79,1 %. |
+| 210 | D B 9 5 4 / E 3 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 87,6 %, linjen med flest stik kun 84,8 %. |
+| 211 | E K 9 5 4 / 10 3 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 87,6 %, linjen med flest stik kun 82,0 %. |
+| 214 | E D 9 5 4 / 10 3 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 71,2 %, linjen med flest stik kun 68,4 %. |
+| 227 | E D 10 7 6 5 / 4 3 2 | 6, 5, 4 | Til 5 stik giver den bedste linje 82,8 %, linjen med flest stik kun 76,6 %. |
+| 232 | E K D 9 4 / 3 2 | 5, 4 | Til 4 stik giver den bedste linje 89,6 %, linjen med flest stik kun 84,0 %. |
+| 233 | E K 9 4 3 / D 2 | 5, 4 | Til 4 stik giver den bedste linje 86,4 %, linjen med flest stik kun 84,0 %. |
+| 234 | E K 9 4 3 / B 2 | 5, 4, 3 | Til 3 stik giver den bedste linje 98,8 %, linjen med flest stik kun 93,9 %. |
+| 237 | E D B 9 4 / 3 2 | 5, 4, 3 | Til 3 stik giver den bedste linje 94,4 %, linjen med flest stik kun 93,2 %. |
+| 238 | E D 9 4 3 / B 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 58,1 %, linjen med flest stik kun 54,9 %. |
+| 239 | D B 9 4 3 / E 2 | 4, 3 | Til 3 stik giver den bedste linje 94,4 %, linjen med flest stik kun 89,6 %. |
+| 241 | E 10 9 4 3 / K 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 64,6 %, linjen med flest stik kun 61,4 %. |
+| 243 | K D B 4 3 / 9 2 | 4, 3 | Til 3 stik giver den bedste linje 93,2 %, linjen med flest stik kun 87,6 %. |
+| 244 | K D 9 4 3 / B 2 | 4, 3 | Til 3 stik giver den bedste linje 93,2 %, linjen med flest stik kun 88,4 %. |
+| 246 | E 10 9 4 3 / D 2 | 4, 3 | Til 3 stik giver den bedste linje 88,8 %, linjen med flest stik kun 86,4 %. |
+| 251 | E D 10 7 6 / 5 4 3 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 82,8 %, linjen med flest stik kun 76,6 %. |
+| 252 | E 7 6 5 4 3 / D B 2 | 6, 5 | Til 5 stik giver den bedste linje 95,2 %, linjen med flest stik kun 90,4 %. |
+| 261 | E D 9 / 3 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 262 | E B 9 / 3 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 265 | K 10 9 / 3 2 | 1 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 266 | D 10 9 / 3 2 | 1 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 268 | E D 9 / 4 3 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 269 | E B 9 / 4 3 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 272 | K 10 9 / 4 3 2 | 1 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 273 | D 10 9 / 4 3 2 | 1 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 275 | E K 9 5 / B 4 3 2 | 4, 3 | Til 3 stik giver den bedste linje 100,0 %, linjen med flest stik kun 91,5 %. |
+| 277 | D B 9 5 / E 4 3 2 | 4, 3 | Til 3 stik giver den bedste linje 89,6 %, linjen med flest stik kun 86,7 %. |
+| 280 | E 5 4 3 / D 10 9 2 | 4, 3 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 285 | E D 7 6 5 4 / 10 3 2 | 6, 5 | Til 5 stik giver den bedste linje 78,0 %, linjen med flest stik kun 71,8 %. |
+| 287 | K D 10 9 5 4 / 3 2 | 5, 4 | Til 4 stik giver den bedste linje 98,0 %, linjen med flest stik kun 96,1 %. |
+| 292 | D 4 3 2 / B 9 | 1 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 294 | E K 5 4 3 / B 9 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 87,6 %, linjen med flest stik kun 76,3 %. |
+| 295 | E B 5 4 3 / K 9 2 | 5, 4 | Til 4 stik giver den bedste linje 96,1 %, linjen med flest stik kun 87,6 %. |
+| 296 | E 9 5 4 3 / K B 2 | 5, 4 | Til 4 stik giver den bedste linje 96,1 %, linjen med flest stik kun 93,3 %. |
+| 298 | E D 5 4 3 / B 9 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 79,1 %, linjen med flest stik kun 76,3 %. |
+| 299 | E 9 5 4 3 / D B 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 93,3 %, linjen med flest stik kun 84,8 %. |
+| 300 | B 9 5 4 3 / E D 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 87,6 %, linjen med flest stik kun 84,8 %. |
+| 302 | E 10 5 4 3 / K 9 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 90,4 %, linjen med flest stik kun 87,6 %. |
+| 307 | E B 8 4 / 10 3 2 | 3, 2 | Til 2 stik giver den bedste linje 90,3 %, linjen med flest stik kun 88,3 %. |
+| 312 | E K D 9 3 / 2 | 5, 4 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 316 | E D B 9 4 3 / 2 | 6, 5, 4, 3 | Til 4 stik giver den bedste linje 92,5 %, linjen med flest stik kun 87,6 %. |
+| 318 | K D B 9 4 3 / 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 92,5 %, linjen med flest stik kun 87,6 %. |
+| 319 | E D 10 9 4 3 / 2 | 6, 5, 4, 3 | Til 4 stik giver den bedste linje 88,8 %, linjen med flest stik kun 87,6 %. |
+| 321 | K D 10 9 4 3 / 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 87,6 %, linjen med flest stik kun 86,4 %. |
+| 323 | E B 10 9 4 3 / 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 88,8 %, linjen med flest stik kun 86,4 %. |
+| 330 | E K D 10 5 4 3 / 2 | 7, 6 | Til 6 stik giver den bedste linje 98,0 %, linjen med flest stik kun 96,1 %. |
+| 337 | K D 9 8 4 / 3 2 | 4, 3, 2 | Til 2 stik giver den bedste linje 95,6 %, linjen med flest stik kun 94,4 %. |
+| 345 | E K 9 5 4 3 / B 2 | 6, 5, 4 | Til 4 stik giver den bedste linje 100,0 %, linjen med flest stik kun 98,0 %. |
+| 347 | D B 9 5 4 3 / E 2 | 6, 5, 4 | Til 5 stik giver den bedste linje 79,1 %, linjen med flest stik kun 76,3 %. |
+| 349 | K D B 5 4 3 / 9 2 | 5, 4 | Til 4 stik giver den bedste linje 98,0 %, linjen med flest stik kun 96,1 %. |
+| 362 | E 9 6 5 4 / D B 3 2 | 5, 4 | Til 4 stik giver den bedste linje 100,0 %, linjen med flest stik kun 95,2 %. |
+| 369 | E D 8 5 4 / B 3 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 79,1 %, linjen med flest stik kun 76,3 %. |
+| 373 | K 9 8 5 4 / B 3 2 | 4, 3, 2 | Til 3 stik giver den bedste linje 83,7 %, linjen med flest stik kun 80,8 %. |
+| 390 | E K B 9 / 4 3 2 | 4, 3 | Til 3 stik giver den bedste linje 84,7 %, linjen med flest stik kun 78,3 %. |
+| 400 | E B 10 9 3 / K 2 | 5 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 408 | D 10 9 6 5 4 / E 3 2 | 6, 5 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 410 | K D 9 8 4 3 / 2 | 5, 4, 3, 2 | Til 3 stik giver den bedste linje 92,5 %, linjen med flest stik kun 90,0 %. |
+| 418 | E 9 8 3 / D B 2 | 4, 3 | Til 3 stik giver den bedste linje 82,6 %, linjen med flest stik kun 79,0 %. |
+| 419 | B 9 8 3 / E D 2 | 4, 3 | Til 3 stik giver den bedste linje 77,8 %, linjen med flest stik kun 76,2 %. |
+| 428 | E K 8 5 / B 4 3 2 | 4, 3 | Til 3 stik giver den bedste linje 92,4 %, linjen med flest stik kun 86,7 %. |
+| 429 | E K 4 3 / B 9 8 2 | 4, 3 | Til 3 stik giver den bedste linje 100,0 %, linjen med flest stik kun 91,5 %. |
+| 430 | E D 8 5 / B 4 3 2 | 4, 3 | Til 3 stik giver den bedste linje 81,1 %, linjen med flest stik kun 76,3 %. |
+| 437 | K 5 4 3 / B 10 8 2 | 3, 2 | Til 2 stik giver den bedste linje 92,4 %, linjen med flest stik kun 83,9 %. |
+| 439 | E D 10 8 / 3 2 | 4, 3, 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 440 | E D 9 8 / 3 2 | 3, 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 441 | K D 9 8 / 3 2 | 3 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 444 | E B 9 8 / 3 2 | 3, 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 445 | E 10 9 8 / 3 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 447 | D B 9 8 / 3 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 449 | K 10 9 8 / 3 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 450 | D 10 9 8 / 3 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 451 | E 7 6 5 4 3 / D 10 2 | 6, 5, 4 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 454 | E K 9 8 4 / B 3 2 | 5, 4 | Til 4 stik giver den bedste linje 96,1 %, linjen med flest stik kun 89,6 %. |
+| 455 | B 9 8 4 3 / E K 2 | 5, 4 | Til 4 stik giver den bedste linje 96,1 %, linjen med flest stik kun 87,6 %. |
+| 458 | E D 10 8 5 / 4 3 2 | 5, 4, 3, 2 | Til 4 stik giver den bedste linje 65,6 %, linjen med flest stik kun 62,7 %. |
+| 461 | E D B 9 5 4 3 / 2 | 7, 6, 5 | Til 6 stik giver den bedste linje 79,1 %, linjen med flest stik kun 76,3 %. |
+| 462 | K D B 9 5 4 3 / 2 | 6, 5 | Til 5 stik giver den bedste linje 98,0 %, linjen med flest stik kun 96,1 %. |
+| 468 | E K 9 8 3 / B 2 | 5, 4 | Til 4 stik giver den bedste linje 72,7 %, linjen med flest stik kun 70,2 %. |
+| 469 | E D 9 8 3 / B 2 | 5, 4 | Til 4 stik giver den bedste linje 71,5 %, linjen med flest stik kun 70,2 %. |
+| 484 | E 6 5 4 3 / D 10 9 2 | 5, 4 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 494 | E D 10 8 / 4 3 2 | 4, 3, 2 | Til 3 stik giver den bedste linje 53,0 %, linjen med flest stik kun 50,9 %. |
+| 495 | E D 9 8 / 4 3 2 | 3, 2 | Til 2 stik giver den bedste linje 90,8 %, linjen med flest stik kun 89,2 %. |
+| 497 | E B 9 8 / 4 3 2 | 3, 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 498 | K B 9 8 / 4 3 2 | 3, 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 499 | K 10 9 8 / 4 3 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 504 | E K 9 8 4 3 / B 2 | 6, 5 | Til 5 stik giver den bedste linje 87,6 %, linjen med flest stik kun 84,8 %. |
+| 513 | E 10 9 8 / 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 514 | D B 9 8 / 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 515 | D B 10 8 / 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 516 | D 10 9 8 / 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 524 | E D 7 6 5 4 3 / 10 2 | 7, 6, 5 | Til 6 stik giver den bedste linje 78,0 %, linjen med flest stik kun 71,8 %. |
+| 532 | E K 9 8 / B 3 2 | 4, 3 | Til 3 stik giver den bedste linje 83,9 %, linjen med flest stik kun 78,3 %. |
+| 533 | E K 3 2 / B 9 8 | 4, 3 | Til 3 stik giver den bedste linje 78,3 %, linjen med flest stik kun 77,0 %. |
+| 535 | E D 9 8 / B 3 2 | 4, 3 | Til 3 stik giver den bedste linje 79,0 %, linjen med flest stik kun 77,6 %. |
+| 544 | D B 8 7 / 2 | 2, 1 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 545 | D 10 8 7 / 2 | 2, 1 | Til 1 stik giver den bedste linje 15,1 %, linjen med flest stik kun 14,3 %. |
+| 548 | E D 7 5 4 / B 3 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 76,3 %, linjen med flest stik kun 70,7 %. |
+| 556 | E K B 9 8 / 3 2 | 5, 4 | Til 4 stik giver den bedste linje 77,0 %, linjen med flest stik kun 75,8 %. |
+| 559 | K D 9 3 2 / B 8 | 4, 3 | Til 3 stik giver den bedste linje 100,0 %, linjen med flest stik kun 95,2 %. |
+| 560 | E K 8 6 5 / B 4 3 2 | 5, 4 | Til 4 stik giver den bedste linje 100,0 %, linjen med flest stik kun 95,2 %. |
+| 562 | E K 8 6 5 / 10 4 3 2 | 5, 4 | Til 4 stik giver den bedste linje 95,2 %, linjen med flest stik kun 90,4 %. |
+| 568 | E D 5 4 3 2 / B 9 | 5, 4 | Til 4 stik giver den bedste linje 98,0 %, linjen med flest stik kun 96,1 %. |
+| 570 | K D 5 4 3 2 / B 9 | 5, 4 | Til 4 stik giver den bedste linje 98,0 %, linjen med flest stik kun 96,1 %. |
+| 573 | E B 10 8 5 4 3 / 2 | 6, 5, 4 | Til 5 stik giver den bedste linje 87,6 %, linjen med flest stik kun 84,8 %. |
+| 574 | E 10 9 8 5 4 3 / 2 | 5, 4 | Til 4 stik giver den bedste linje 98,0 %, linjen med flest stik kun 96,1 %. |
+| 575 | E D 9 6 5 4 3 / B 2 | 7, 6 | Til 6 stik giver den bedste linje 95,2 %, linjen med flest stik kun 90,4 %. |
+| 577 | D 10 9 6 5 4 3 / E 2 | 7, 6 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 585 | K 9 8 7 / 4 3 2 | 2, 1 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 586 | D 9 8 7 / 4 3 2 | 2, 1 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 588 | E D 9 8 / B 4 3 2 | 4, 3 | Til 3 stik giver den bedste linje 97,2 %, linjen med flest stik kun 89,6 %. |
+| 594 | E K 8 6 5 4 / B 3 2 | 6, 5 | Til 5 stik giver den bedste linje 100,0 %, linjen med flest stik kun 95,2 %. |
+| 597 | E K 8 6 5 4 / 10 3 2 | 6, 5 | Til 5 stik giver den bedste linje 95,2 %, linjen med flest stik kun 90,4 %. |
+| 600 | E K 4 3 2 / B 9 8 | 5, 4, 3 | Til 4 stik giver den bedste linje 87,6 %, linjen med flest stik kun 76,3 %. |
+| 610 | E 10 9 7 6 / D 5 4 3 2 | 5, 4 | Til 4 stik giver den bedste linje 100,0 %, linjen med flest stik kun 89,0 %. |
+| 611 | E D 10 8 / 5 4 3 2 | 4, 3, 2 | Til 3 stik giver den bedste linje 67,5 %, linjen med flest stik kun 64,7 %. |
+| 612 | K B 9 8 / 5 4 3 2 | 3, 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 613 | E 10 9 8 / 5 4 3 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 614 | K 10 9 8 / 5 4 3 2 | 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 616 | K 9 8 7 6 / 5 4 3 2 | 4, 3, 2 | Til 3 stik giver den bedste linje 71,8 %, linjen med flest stik kun 65,6 %. |
+| 623 | E D 6 4 3 / B 9 2 | 5, 4, 3 | Til 4 stik giver den bedste linje 82,0 %, linjen med flest stik kun 76,3 %. |
+| 624 | B 9 8 7 / E D 2 | 4, 3 | Til 3 stik giver den bedste linje 77,8 %, linjen med flest stik kun 77,0 %. |
+| 625 | 10 9 8 7 / E D 2 | 4, 3 | Til 3 stik giver den bedste linje 61,9 %, linjen med flest stik kun 60,7 %. |
+| 631 | K 9 8 7 / B 4 3 2 | 3, 2 | Små kort fra begge hænder giver et stik væk for at sikre resten. |
+| 634 | E K 7 3 2 / B 9 8 | 5, 4 | Til 4 stik giver den bedste linje 97,2 %, linjen med flest stik kun 89,6 %. |
+| 637 | D B 9 8 7 / E 2 | 5, 4 | Til 4 stik giver den bedste linje 63,0 %, linjen med flest stik kun 61,8 %. |
+| 638 | K 9 8 7 5 / B 4 3 2 | 4, 3 | Til 3 stik giver den bedste linje 93,8 %, linjen med flest stik kun 89,0 %. |
+| 641 | E 6 5 4 3 2 / D 10 9 | 6, 5, 4 | Til 5 stik giver den bedste linje 78,0 %, linjen med flest stik kun 75,4 %. |
+| 646 | D 7 6 5 4 3 2 / E 10 | 6, 5 | Til 5 stik giver den bedste linje 100,0 %, linjen med flest stik kun 95,2 %. |
+| 647 | E K 5 4 3 2 / B 9 8 | 6, 5 | Til 5 stik giver den bedste linje 100,0 %, linjen med flest stik kun 95,2 %. |
+| 650 | E B 4 3 2 / K 9 8 7 | 5, 4 | Til 4 stik giver den bedste linje 100,0 %, linjen med flest stik kun 95,2 %. |
+| 651 | 9 8 7 6 4 3 / E K 2 | 6, 5 | Til 5 stik giver den bedste linje 95,2 %, linjen med flest stik kun 90,4 %. |
+| 653 | B 7 4 3 2 / E D 6 | 5, 4, 3 | Til 4 stik giver den bedste linje 76,3 %, linjen med flest stik kun 70,7 %. |
 
 ## Begrænset valg (79)
 
@@ -638,64 +635,64 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 147 | D 5 4 3 / B 9 2 | 2, 1 | Falder esset i første runde, er kipning bedst (50,9 % mod 46,3 %). |
 | 148 | K 10 9 5 / 4 3 2 | 2, 1 | Falder damen i første runde, er kipning bedst (100,0 % mod 35,5 %). |
 | 149 | D 5 4 3 / 10 9 2 | 2, 1 | Falder esset i første runde, er kipning bedst (100,0 % mod 65,0 %). |
-| 171 | D B 8 4 / 3 2 | 2, 1 | Falder esset i første runde, er kipning bedst (71,7 % mod 37,3 %). |
-| 172 | D 10 8 4 / 3 2 | 2, 1 | Falder esset i første runde, er kipning bedst (73,6 % mod 27,8 %). |
-| 173 | B 10 8 4 / 3 2 | 1 | Falder esset i første runde, er kipning bedst (90,9 % mod 50,0 %). |
-| 199 | D 9 6 5 / B 4 3 2 | 2, 1 | Falder esset i første runde, er kipning bedst (55,8 % mod 28,8 %). |
-| 213 | E 10 9 5 4 / K 3 2 | 5, 4, 3 | Falder damen i første runde, er kipning bedst (62,5 % mod 37,5 %). |
-| 219 | B 10 9 5 4 / E 3 2 | 4, 3 | Falder kongen i første runde, er kipning bedst (87,6 % mod 79,3 %). |
-| 220 | E 10 6 5 4 / 9 3 2 | 3, 2 | Falder kongen i første runde, er kipning bedst (100,0 % mod 61,5 %). |
-| 221 | D B 9 6 5 / 4 3 2 | 3, 2 | Falder esset i første runde, er kipning bedst (73,1 % mod 28,8 %). |
-| 223 | D 10 9 5 4 / B 3 2 | 3 | Falder esset i første runde, er kipning bedst (100,0 % mod 34,7 %). |
-| 224 | K 10 9 6 5 / 4 3 2 | 3, 2 | Falder damen i første runde, er kipning bedst (78,8 % mod 28,8 %). |
-| 225 | K 10 6 5 4 / 9 3 2 | 3, 2 | Falder damen i første runde, er kipning bedst (100,0 % mod 90,4 %). |
-| 230 | E B 6 5 4 3 / 10 2 | 5, 4 | Falder kongen i første runde, er kipning bedst (91,7 % mod 79,3 %). |
-| 231 | E B 10 7 6 5 / 4 3 2 | 5, 4 | Falder kongen i første runde, er kipning bedst (67,3 % mod 57,7 %). |
-| 241 | E K 10 9 4 / 3 2 | 5, 4, 3 | Falder damen i første runde, er kipning bedst (64,7 % mod 59,0 %). |
-| 249 | E B 10 9 4 / 3 2 | 4, 3 | Falder kongen i første runde, er kipning bedst (47,0 % mod 20,0 %). |
-| 284 | E K 10 9 5 4 / 3 2 | 6, 5, 4 | Falder damen i første runde, er kipning bedst (100,0 % mod 37,5 %). |
-| 290 | E B 9 6 5 4 / 3 2 | 5, 4, 3 | Falder kongen i første runde, er kipning bedst (100,0 % mod 80,8 %). |
-| 292 | D B 9 6 5 4 / 3 2 | 4, 3, 2 | Falder esset i første runde, er kipning bedst (69,2 % mod 28,8 %). |
-| 310 | D 9 8 5 / 4 3 2 | 2, 1 | Falder knægten i første runde, er kipning bedst (68,4 % mod 53,3 %). |
-| 311 | B 10 8 5 / 4 3 2 | 1 | Falder esset i første runde, er kipning bedst (68,1 % mod 48,6 %). |
-| 329 | E 9 8 3 / 10 2 | 2 | Falder kongen i første runde, er kipning bedst (40,2 % mod 26,4 %). |
-| 330 | K 8 7 6 5 / 10 4 3 2 | 4, 3 | Falder damen i første runde, er kipning bedst (100,0 % mod 35,3 %). |
-| 337 | E D 9 8 4 / 3 2 | 4, 3, 2 | Falder knægten i første runde, er kipning bedst (81,7 % mod 69,9 %). |
-| 339 | E B 10 8 4 / 3 2 | 4, 3, 2 | Falder kongen i første runde, er kipning bedst (93,0 % mod 50,9 %). |
-| 340 | E B 9 8 4 / 3 2 | 4, 3, 2 | Falder kongen i første runde, er kipning bedst (93,0 % mod 65,0 %). |
-| 341 | E B 8 4 3 / 10 2 | 4, 3, 2 | Falder kongen i første runde, er kipning bedst (69,9 % mod 58,1 %). |
-| 342 | E B 8 4 3 / 9 2 | 4, 3, 2 | Falder kongen i første runde, er kipning bedst (93,0 % mod 65,0 %). |
-| 343 | E 10 9 8 4 / 3 2 | 3 | Falder kongen i første runde, er kipning bedst (78,7 % mod 66,6 %). |
-| 349 | E 10 9 5 4 3 / K 2 | 6, 5, 4 | Falder damen i første runde, er kipning bedst (100,0 % mod 37,5 %). |
-| 352 | E B 10 5 4 3 / 9 2 | 5, 4 | Falder kongen i første runde, er kipning bedst (100,0 % mod 79,3 %). |
-| 354 | E 10 5 4 / K 8 3 2 | 4, 3 | Falder damen i første runde, er kipning bedst (100,0 % mod 37,5 %). |
-| 366 | E 10 6 5 4 / K 9 3 2 | 5, 4 | Falder damen i første runde, er kipning bedst (64,7 % mod 35,3 %). |
-| 371 | E K 8 5 4 / 10 3 2 | 5, 4, 3 | Falder damen i første runde, er kipning bedst (100,0 % mod 37,5 %). |
-| 407 | E K 10 9 6 5 / 4 3 2 | 6, 5 | Falder damen i første runde, er kipning bedst (64,7 % mod 35,3 %). |
-| 415 | E 9 6 5 4 3 / B 2 | 5, 4, 3 | Falder kongen i første runde, er kipning bedst (100,0 % mod 70,6 %). |
-| 434 | E K 8 5 / 10 4 3 2 | 4, 3 | Falder damen i første runde, er kipning bedst (100,0 % mod 37,5 %). |
-| 436 | E B 8 5 / 10 4 3 2 | 3, 2 | Falder kongen i første runde, er kipning bedst (55,8 % mod 28,8 %). |
-| 439 | E 10 9 8 5 4 / 3 2 | 4, 3 | Falder kongen i første runde, er kipning bedst (91,7 % mod 79,3 %). |
-| 443 | K 9 7 6 5 / D 4 3 2 | 4, 3 | Falder knægten i første runde, er kipning bedst (64,7 % mod 35,3 %). |
-| 444 | E 9 7 6 5 / B 4 3 2 | 4 | Falder kongen i første runde, er kipning bedst (100,0 % mod 35,3 %). |
-| 454 | K 8 7 6 5 4 / 10 3 2 | 5, 4, 3 | Falder damen i første runde, er kipning bedst (100,0 % mod 35,3 %). |
-| 457 | E 10 5 4 3 / K 8 2 | 5, 4, 3 | Falder damen i første runde, er kipning bedst (100,0 % mod 37,5 %). |
-| 467 | D 8 7 6 5 4 3 / B 2 | 5 | Falder esset i første runde, er kipning bedst (100,0 % mod 35,3 %). |
-| 478 | E B 9 7 6 5 / 4 3 2 | 5, 4 | Falder kongen i første runde, er kipning bedst (64,7 % mod 35,3 %). |
-| 479 | K 10 9 7 6 5 / 4 3 2 | 5, 4, 3 | Falder damen i første runde, er kipning bedst (100,0 % mod 35,3 %). |
-| 481 | E B 10 9 6 5 4 / 3 2 | 6 | Falder kongen i første runde, er kipning bedst (67,3 % mod 57,7 %). |
-| 484 | E K 10 9 6 / 5 4 3 2 | 5, 4 | Falder damen i første runde, er kipning bedst (64,7 % mod 35,3 %). |
-| 487 | E B 9 7 6 / 5 4 3 2 | 4, 3 | Falder kongen i første runde, er kipning bedst (64,7 % mod 35,3 %). |
-| 489 | D 10 9 7 6 / 5 4 3 2 | 3 | Falder esset i første runde, er kipning bedst (100,0 % mod 68,6 %). |
-| 498 | K D 9 8 / 4 3 2 | 3, 2 | Falder knægten i første runde, er kipning bedst (85,0 % mod 70,1 %). |
-| 529 | E 10 6 5 4 3 / K 9 2 | 6, 5 | Falder damen i første runde, er kipning bedst (64,7 % mod 35,3 %). |
-| 531 | E 9 7 6 5 4 / B 3 2 | 5, 4 | Falder kongen i første runde, er kipning bedst (100,0 % mod 35,3 %). |
-| 546 | E 5 4 3 2 / B 10 9 | 4, 3 | Falder kongen i første runde, er kipning bedst (100,0 % mod 61,5 %). |
-| 553 | E B 8 7 4 / 10 3 2 | 4, 3 | Falder kongen i første runde, er kipning bedst (55,8 % mod 28,8 %). |
-| 554 | E 9 8 7 4 / B 3 2 | 4, 3 | Falder kongen i første runde, er kipning bedst (23,1 % mod 11,5 %). |
-| 555 | E 8 7 5 4 / 10 3 2 | 3, 2 | Falder kongen i første runde, er kipning bedst (100,0 % mod 87,8 %). |
-| 567 | D B 8 6 5 / 10 4 3 2 | 3 | Falder esset i første runde, er kipning bedst (100,0 % mod 52,2 %). |
-| 581 | E B 9 7 6 5 4 / 3 2 | 6, 5 | Falder kongen i første runde, er kipning bedst (100,0 % mod 35,3 %). |
-| 583 | D B 9 7 6 5 4 / 3 2 | 5, 4 | Falder esset i første runde, er kipning bedst (100,0 % mod 68,6 %). |
-| 633 | E 9 8 7 / B 4 3 2 | 3, 2 | Falder kongen i første runde, er kipning bedst (23,1 % mod 11,5 %). |
-| 635 | D 9 8 7 / B 4 3 2 | 2 | Falder esset i første runde, er kipning bedst (100,0 % mod 37,5 %). |
+| 170 | D B 8 4 / 3 2 | 2, 1 | Falder esset i første runde, er kipning bedst (71,7 % mod 37,3 %). |
+| 171 | D 10 8 4 / 3 2 | 2, 1 | Falder esset i første runde, er kipning bedst (73,6 % mod 27,8 %). |
+| 172 | B 10 8 4 / 3 2 | 1 | Falder esset i første runde, er kipning bedst (90,9 % mod 50,0 %). |
+| 198 | D 9 6 5 / B 4 3 2 | 2, 1 | Falder esset i første runde, er kipning bedst (55,8 % mod 28,8 %). |
+| 212 | E 10 9 5 4 / K 3 2 | 5, 4, 3 | Falder damen i første runde, er kipning bedst (62,5 % mod 37,5 %). |
+| 218 | B 10 9 5 4 / E 3 2 | 4, 3 | Falder kongen i første runde, er kipning bedst (87,6 % mod 79,3 %). |
+| 219 | E 10 6 5 4 / 9 3 2 | 3, 2 | Falder kongen i første runde, er kipning bedst (100,0 % mod 61,5 %). |
+| 220 | D B 9 6 5 / 4 3 2 | 3, 2 | Falder esset i første runde, er kipning bedst (73,1 % mod 28,8 %). |
+| 222 | D 10 9 5 4 / B 3 2 | 3 | Falder esset i første runde, er kipning bedst (100,0 % mod 34,7 %). |
+| 223 | K 10 9 6 5 / 4 3 2 | 3, 2 | Falder damen i første runde, er kipning bedst (78,8 % mod 28,8 %). |
+| 224 | K 10 6 5 4 / 9 3 2 | 3, 2 | Falder damen i første runde, er kipning bedst (100,0 % mod 90,4 %). |
+| 229 | E B 6 5 4 3 / 10 2 | 5, 4 | Falder kongen i første runde, er kipning bedst (91,7 % mod 79,3 %). |
+| 230 | E B 10 7 6 5 / 4 3 2 | 5, 4 | Falder kongen i første runde, er kipning bedst (67,3 % mod 57,7 %). |
+| 240 | E K 10 9 4 / 3 2 | 5, 4, 3 | Falder damen i første runde, er kipning bedst (64,7 % mod 59,0 %). |
+| 248 | E B 10 9 4 / 3 2 | 4, 3 | Falder kongen i første runde, er kipning bedst (47,0 % mod 20,0 %). |
+| 283 | E K 10 9 5 4 / 3 2 | 6, 5, 4 | Falder damen i første runde, er kipning bedst (100,0 % mod 37,5 %). |
+| 289 | E B 9 6 5 4 / 3 2 | 5, 4, 3 | Falder kongen i første runde, er kipning bedst (100,0 % mod 80,8 %). |
+| 291 | D B 9 6 5 4 / 3 2 | 4, 3, 2 | Falder esset i første runde, er kipning bedst (69,2 % mod 28,8 %). |
+| 309 | D 9 8 5 / 4 3 2 | 2, 1 | Falder knægten i første runde, er kipning bedst (68,4 % mod 53,3 %). |
+| 310 | B 10 8 5 / 4 3 2 | 1 | Falder esset i første runde, er kipning bedst (68,1 % mod 48,6 %). |
+| 328 | E 9 8 3 / 10 2 | 2 | Falder kongen i første runde, er kipning bedst (40,2 % mod 26,4 %). |
+| 329 | K 8 7 6 5 / 10 4 3 2 | 4, 3 | Falder damen i første runde, er kipning bedst (100,0 % mod 35,3 %). |
+| 336 | E D 9 8 4 / 3 2 | 4, 3, 2 | Falder knægten i første runde, er kipning bedst (81,7 % mod 69,9 %). |
+| 338 | E B 10 8 4 / 3 2 | 4, 3, 2 | Falder kongen i første runde, er kipning bedst (93,0 % mod 50,9 %). |
+| 339 | E B 9 8 4 / 3 2 | 4, 3, 2 | Falder kongen i første runde, er kipning bedst (93,0 % mod 65,0 %). |
+| 340 | E B 8 4 3 / 10 2 | 4, 3, 2 | Falder kongen i første runde, er kipning bedst (69,9 % mod 58,1 %). |
+| 341 | E B 8 4 3 / 9 2 | 4, 3, 2 | Falder kongen i første runde, er kipning bedst (93,0 % mod 65,0 %). |
+| 342 | E 10 9 8 4 / 3 2 | 3 | Falder kongen i første runde, er kipning bedst (78,7 % mod 66,6 %). |
+| 348 | E 10 9 5 4 3 / K 2 | 6, 5, 4 | Falder damen i første runde, er kipning bedst (100,0 % mod 37,5 %). |
+| 351 | E B 10 5 4 3 / 9 2 | 5, 4 | Falder kongen i første runde, er kipning bedst (100,0 % mod 79,3 %). |
+| 353 | E 10 5 4 / K 8 3 2 | 4, 3 | Falder damen i første runde, er kipning bedst (100,0 % mod 37,5 %). |
+| 365 | E 10 6 5 4 / K 9 3 2 | 5, 4 | Falder damen i første runde, er kipning bedst (64,7 % mod 35,3 %). |
+| 370 | E K 8 5 4 / 10 3 2 | 5, 4, 3 | Falder damen i første runde, er kipning bedst (100,0 % mod 37,5 %). |
+| 406 | E K 10 9 6 5 / 4 3 2 | 6, 5 | Falder damen i første runde, er kipning bedst (64,7 % mod 35,3 %). |
+| 414 | E 9 6 5 4 3 / B 2 | 5, 4, 3 | Falder kongen i første runde, er kipning bedst (100,0 % mod 70,6 %). |
+| 433 | E K 8 5 / 10 4 3 2 | 4, 3 | Falder damen i første runde, er kipning bedst (100,0 % mod 37,5 %). |
+| 435 | E B 8 5 / 10 4 3 2 | 3, 2 | Falder kongen i første runde, er kipning bedst (55,8 % mod 28,8 %). |
+| 438 | E 10 9 8 5 4 / 3 2 | 4, 3 | Falder kongen i første runde, er kipning bedst (91,7 % mod 79,3 %). |
+| 442 | K 9 7 6 5 / D 4 3 2 | 4, 3 | Falder knægten i første runde, er kipning bedst (64,7 % mod 35,3 %). |
+| 443 | E 9 7 6 5 / B 4 3 2 | 4 | Falder kongen i første runde, er kipning bedst (100,0 % mod 35,3 %). |
+| 453 | K 8 7 6 5 4 / 10 3 2 | 5, 4, 3 | Falder damen i første runde, er kipning bedst (100,0 % mod 35,3 %). |
+| 456 | E 10 5 4 3 / K 8 2 | 5, 4, 3 | Falder damen i første runde, er kipning bedst (100,0 % mod 37,5 %). |
+| 466 | D 8 7 6 5 4 3 / B 2 | 5 | Falder esset i første runde, er kipning bedst (100,0 % mod 35,3 %). |
+| 477 | E B 9 7 6 5 / 4 3 2 | 5, 4 | Falder kongen i første runde, er kipning bedst (64,7 % mod 35,3 %). |
+| 478 | K 10 9 7 6 5 / 4 3 2 | 5, 4, 3 | Falder damen i første runde, er kipning bedst (100,0 % mod 35,3 %). |
+| 480 | E B 10 9 6 5 4 / 3 2 | 6 | Falder kongen i første runde, er kipning bedst (67,3 % mod 57,7 %). |
+| 483 | E K 10 9 6 / 5 4 3 2 | 5, 4 | Falder damen i første runde, er kipning bedst (64,7 % mod 35,3 %). |
+| 486 | E B 9 7 6 / 5 4 3 2 | 4, 3 | Falder kongen i første runde, er kipning bedst (64,7 % mod 35,3 %). |
+| 488 | D 10 9 7 6 / 5 4 3 2 | 3 | Falder esset i første runde, er kipning bedst (100,0 % mod 68,6 %). |
+| 496 | K D 9 8 / 4 3 2 | 3, 2 | Falder knægten i første runde, er kipning bedst (85,0 % mod 70,1 %). |
+| 527 | E 10 6 5 4 3 / K 9 2 | 6, 5 | Falder damen i første runde, er kipning bedst (64,7 % mod 35,3 %). |
+| 529 | E 9 7 6 5 4 / B 3 2 | 5, 4 | Falder kongen i første runde, er kipning bedst (100,0 % mod 35,3 %). |
+| 543 | E 5 4 3 2 / B 10 9 | 4, 3 | Falder kongen i første runde, er kipning bedst (100,0 % mod 61,5 %). |
+| 550 | E B 8 7 4 / 10 3 2 | 4, 3 | Falder kongen i første runde, er kipning bedst (55,8 % mod 28,8 %). |
+| 551 | E 9 8 7 4 / B 3 2 | 4, 3 | Falder kongen i første runde, er kipning bedst (23,1 % mod 11,5 %). |
+| 552 | E 8 7 5 4 / 10 3 2 | 3, 2 | Falder kongen i første runde, er kipning bedst (100,0 % mod 87,8 %). |
+| 564 | D B 8 6 5 / 10 4 3 2 | 3 | Falder esset i første runde, er kipning bedst (100,0 % mod 52,2 %). |
+| 578 | E B 9 7 6 5 4 / 3 2 | 6, 5 | Falder kongen i første runde, er kipning bedst (100,0 % mod 35,3 %). |
+| 580 | D B 9 7 6 5 4 / 3 2 | 5, 4 | Falder esset i første runde, er kipning bedst (100,0 % mod 68,6 %). |
+| 630 | E 9 8 7 / B 4 3 2 | 3, 2 | Falder kongen i første runde, er kipning bedst (23,1 % mod 11,5 %). |
+| 632 | D 9 8 7 / B 4 3 2 | 2 | Falder esset i første runde, er kipning bedst (100,0 % mod 37,5 %). |

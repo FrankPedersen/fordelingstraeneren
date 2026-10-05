@@ -56,3 +56,9 @@ export function parseItemKey(key: string): { id: string; goal: number } {
   const i = key.lastIndexOf(':');
   return { id: key.slice(0, i), goal: Number(key.slice(i + 1)) };
 }
+
+/** Findes emnet i banken? Et mål kan være fjernet (fejl i kilden), selv om kombinationen findes. */
+export function inBank(bank: readonly BankItem[], key: string): boolean {
+  const { id, goal } = parseItemKey(key);
+  return bank.some((b) => b.combination.id === id && b.combination.goals.includes(goal));
+}
