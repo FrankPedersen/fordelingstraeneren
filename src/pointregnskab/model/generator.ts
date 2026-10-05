@@ -72,6 +72,9 @@ export const MIN_NS_HCP = 20;
 
 const MAX_ATTEMPTS = 50_000;
 
+/** Opgaver, der kan aflæses direkte, forkastes fra dette niveau; på niveau 1–2 bruges de. */
+export const DIRECT_READ_REJECTED_FROM: Level = 3;
+
 export function makeTask(exercise: Exercise, level: Level, seed: number): PointTask {
   const rng = mulberry32(seed);
   switch (exercise) {
@@ -118,8 +121,9 @@ export function canFinesse(hands: Hands, card: Card): boolean {
 
 /**
  * Opgaver om én uset honnør. Niveau 1–2 har én modspiller med en grænse (niveau 1 med én uset honnør, niveau 2 med
- * flere); fra niveau 3 har begge en grænse, så restintervallet skal bruges. Kvalitetskravene: svaret kan ikke
- * aflæses direkte, fra niveau 2 er mindst én honnør sikkert placeret uden at være set, og facit har en skabelon.
+ * flere); fra niveau 3 har begge en grænse, så restintervallet skal bruges. Kvalitetskravene: fra niveau 3 kan svaret
+ * ikke aflæses direkte (på niveau 1–2 må en modspiller have vist alt, han kan have; Franks afgørelse), fra niveau 2
+ * er mindst én honnør sikkert placeret uden at være set, og facit har en skabelon.
  */
 function placementTask(exercise: 'can' | 'who' | 'finesse', seed: number, level: Level, rng: Rng): PlacementTask {
   const wantOpen = rng.next() < OPEN_SHARE;
@@ -144,7 +148,7 @@ function placementTask(exercise: 'can' | 'who' | 'finesse', seed: number, level:
       E: { allowed: allowed.E, shown: clues.filter((c) => c.seat === 'E').map((c) => c.card) },
       unseen,
     };
-    if (directlyReadable(ledger)) continue;
+    if (level >= DIRECT_READ_REJECTED_FROM && directlyReadable(ledger)) continue;
     const solution = solve(ledger);
     if (level >= 2 && ![...solution.answer.values()].some((p) => p !== 'open')) continue;
 

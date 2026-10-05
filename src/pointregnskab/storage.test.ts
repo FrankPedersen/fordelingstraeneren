@@ -32,6 +32,11 @@ function example(): PrSaved {
     items: { 'blok:EK': newItem('2026-10-05'), 'interval:opening-1NT': newItem('2026-10-05') },
     xp: 230,
     sessions: [{ day: '2026-10-05', ms: 290_000, correct: 14.5, total: 17, xp: 145, level: 3, boss: false }],
+    answers: [
+      { day: '2026-10-05', exercise: 'sum', level: 3, score: 1, ms: 3_200 },
+      { day: '2026-10-05', exercise: 'who', level: 3, score: 0, ms: 9_800, overconfident: true },
+      { day: '2026-10-05', exercise: 'running', level: 3, score: 0.5, ms: 7_000 },
+    ],
     lastExport: '2026-10-05',
   };
 }
@@ -43,6 +48,14 @@ describe('Lagring under pointregnskab:v1', () => {
     expect([...storage.data.keys()]).toEqual([PR_STORAGE_KEY]);
     expect(loadPrSaved(storage)).toEqual(example());
     expect(readPrSaved(JSON.parse(JSON.stringify(defaultPrSaved())))).toEqual({ saved: defaultPrSaved(), problems: [] });
+  });
+
+  it('de valgfrie felter (svarloggen og lastExport) kan mangle, og sproget gemmes ikke', () => {
+    const { answers: _a, lastExport: _l, ...without } = example();
+    expect(readPrSaved(JSON.parse(JSON.stringify(without)))).toEqual({ saved: without, problems: [] });
+    expect(defaultPrSaved()).not.toHaveProperty('answers');
+    expect(defaultPrSaved()).not.toHaveProperty('language');
+    expect(defaultPrSaved().settings).not.toHaveProperty('language');
   });
 
   it('uden data starter brugeren fra standardværdierne', () => {
@@ -77,6 +90,8 @@ describe('Lagring under pointregnskab:v1', () => {
     expect(parsePrImport(JSON.stringify({ ...example(), version: 2 }))).toEqual({ ok: false, error: 'newer' });
     const invalid = parsePrImport(JSON.stringify({ ...example(), xp: -5 }));
     expect(invalid).toMatchObject({ ok: false, error: 'invalid' });
+    const badAnswer = parsePrImport(JSON.stringify({ ...example(), answers: [{ day: '2026-10-05', exercise: 'x', level: 1, score: 1, ms: 1 }] }));
+    expect(badAnswer).toMatchObject({ ok: false, error: 'invalid', problems: ['answers[0] er ugyldig'] });
   });
 
   it('Pointregnskabet bruger kun sin egen nøgle og læser ikke sproget fra fordelingssporet', () => {

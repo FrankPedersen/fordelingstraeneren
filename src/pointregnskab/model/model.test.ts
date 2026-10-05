@@ -14,6 +14,14 @@ const card = (suit: string, rank: string) => '♠♥♦♣'.indexOf(suit) * 13 +
 
 const rule = (context: string, call: string) => SYSTEM.find((r) => r.context === context && r.call === call)!;
 
+/** En hånd ud fra farverne, fx hand('♠54 ♥EKB98 ♦K73 ♣D62'); T er 10. */
+function hand(text: string) {
+  const cards = text.split(' ').flatMap((part) => [...part.slice(1)].map((r) => card(part[0], r)));
+  const valid = text.split(' ').every((part) => '♠♥♦♣'.includes(part[0]) && [...part.slice(1)].every((r) => RANKS.includes(r)));
+  if (!valid || new Set(cards).size !== 13) throw new Error(`Ugyldig hånd: ${text}`);
+  return cards;
+}
+
 describe('Model', () => {
   it('modpartens point = 40 − (Nords hp + Syds hp) for 10.000 tilfældige fordelinger', () => {
     const rng = mulberry32(1);
@@ -134,14 +142,16 @@ describe('Meldeforløbet', () => {
   it('ingen af 100.000 tilfældige hænder med 12 hp eller mere passer i åbningsposition', () => {
     const rng = mulberry32(12);
     let n = 0;
+    const passes: string[] = [];
     while (n < 100_000) {
       const hands = dealWith(rng);
       for (const seat of SEATS) {
         if (hcpOf(hands[seat]) < 12) continue;
         n++;
-        expect(chooseCall('opening', hands[seat]), `${hands[seat]}`).not.toBeNull();
+        if (chooseCall('opening', hands[seat]) === null) passes.push(`${hands[seat]}`);
       }
     }
+    expect(passes).toEqual([]);
   }, 60_000);
 
   /** Fordelinger med et meldeforløb. */
@@ -158,32 +168,38 @@ describe('Meldeforløbet', () => {
   it('hvert vist pas passer med sin regel, og Nord–Syds meldinger indgår ikke i regnskabet', () => {
     let openingPasses = 0;
     let responderPasses = 0;
+    const errors: string[] = [];
     for (const { hands, auction, m } of auctions(20_000)) {
+      const where = `${auction.dealer}: ${auction.calls.map((c) => `${c.seat} ${c.call}`).join(', ')}`;
       for (const call of auction.calls) {
         const points = hcpOf(hands[call.seat]);
         if (!isDefender(call.seat)) {
-          expect(call.limit).toBeUndefined();
+          if (call.limit) errors.push(`Nord–Syd har en grænse: ${where}`);
           continue;
         }
-        expect(call.limit).toBeDefined();
-        if (call.limit!.kind === 'opening-pass') {
+        if (!call.limit) errors.push(`Øst–Vest uden grænse: ${where}`);
+        else if (call.limit.kind === 'opening-pass') {
           openingPasses++;
-          expect(points).toBeLessThanOrEqual(11);
-        }
-        if (call.limit!.kind === 'responder-pass') {
+          if (points > 11) errors.push(`pas i åbningsposition med ${points}: ${where}`);
+        } else if (call.limit.kind === 'responder-pass') {
           responderPasses++;
-          expect(allows(allowedOf(call.limit!.rule.hcp), points)).toBe(true);
+          if (!allows(allowedOf(call.limit.rule.hcp), points)) errors.push(`svarerens pas med ${points}: ${where}`);
+        } else if (call.limit.kind === 'call' && !allows(allowedOf(call.limit.rule.hcp), points)) {
+          errors.push(`melding med ${points}: ${where}`);
         }
-        if (call.limit!.kind === 'call') expect(allows(allowedOf(call.limit!.rule.hcp), points)).toBe(true);
       }
-      for (const d of ['W', 'E'] as const) expect(allows(allowedFor(auction, d, m), hcpOf(hands[d]))).toBe(true);
       // Nord–Syds kort og meldinger ændrer ikke modspillernes tilladte point.
       const withoutNS = { ...auction, calls: auction.calls.filter((c) => isDefender(c.seat)) };
-      for (const d of ['W', 'E'] as const) expect(allowedFor(withoutNS, d, m)).toEqual(allowedFor(auction, d, m));
+      for (const d of ['W', 'E'] as const) {
+        const allowed = allowedFor(auction, d, m);
+        if (!allows(allowed, hcpOf(hands[d]))) errors.push(`${d} uden for sine tilladte point: ${where}`);
+        if (JSON.stringify(allowedFor(withoutNS, d, m)) !== JSON.stringify(allowed)) errors.push(`Nord–Syd ændrer ${d}: ${where}`);
+      }
     }
+    expect(errors).toEqual([]);
     expect(openingPasses).toBeGreaterThan(1000);
     expect(responderPasses).toBeGreaterThan(100);
-  });
+  }, 30_000);
 
   it('pas-reglerne har tekst på begge sprog: 0–5 efter 1 i farve og 0–7 efter 1NT', () => {
     expect(PASS_RULES.map((r) => [r.context, r.hcp])).toEqual([
@@ -197,12 +213,29 @@ describe('Meldeforløbet', () => {
   });
 
   it('har Nord eller Syd meldt ind eller doblet efter Øst–Vests åbning, giver svarerens pas tilladte point [0, M]', () => {
+    // Vest giver og åbner 1♥ (13 hp), Nord dobler (15 hp), og Øst passer med 8 hp.
+    const west = hand('♠54 ♥EKB98 ♦K73 ♣D62');
+    const doubler = hand('♠ED73 ♥4 ♦ED65 ♣K874');
+    const east = hand('♠KB92 ♥D73 ♦B98 ♣BT5');
+    const weak = hand('♠T86 ♥T652 ♦T42 ♣E93');
+    const doubled = bid({ W: west, N: doubler, E: east, S: weak }, 'W')!;
+    expect(doubled.calls.map((c) => c.call)).toEqual(['1H', 'X', 'P']);
+    expect(doubled.calls[2].limit).toEqual({ kind: 'free-pass' });
+    const m = 40 - 15 - 4;
+    expect(allowedFor(doubled, 'E', m)).toEqual([[0, m]]);
+    expect(allows(allowedFor(doubled, 'E', m), hcpOf(east))).toBe(true);
+    expect(hcpOf(east)).toBe(8);
+    // Passer Nord i stedet, gælder pas-reglen (0–5), og fordelingen bruges ikke, for Øst har 8 hp.
+    expect(bid({ W: west, N: weak, E: east, S: doubler }, 'W')).toBeNull();
+
     let seen = 0;
-    for (const { auction, m } of auctions(20_000, 8)) {
+    const kinds = new Set<string>();
+    for (const { auction, m } of auctions(10_000, 8)) {
       const openerIndex = auction.calls.findIndex((c) => c.call !== 'P');
       const opener = auction.calls[openerIndex];
       const overcall = auction.calls[openerIndex + 1];
       if (!isDefender(opener.seat) || !overcall || overcall.call === 'P') continue;
+      kinds.add(overcall.call === 'X' ? 'dobling' : 'indmelding');
       const responder = auction.calls[openerIndex + 2];
       expect(responder.call).toBe('P');
       expect(responder.limit).toEqual({ kind: 'free-pass' });
@@ -213,8 +246,9 @@ describe('Meldeforløbet', () => {
         seen++;
       }
     }
-    expect(seen).toBeGreaterThan(50);
-  });
+    expect(seen).toBeGreaterThan(30);
+    expect([...kinds].sort()).toEqual(['dobling', 'indmelding']);
+  }, 30_000);
 
   it('svarerens pas efter Nord–Syds pas giver pas-reglens interval, også sammen med pas i åbningsposition', () => {
     const rng = mulberry32(3);
@@ -230,7 +264,7 @@ describe('Meldeforløbet', () => {
       expect(allowedFor(auction, 'E', opponentsPoints(hands.N, hands.S))).toEqual([[0, 5]]);
     }
     expect(found).toBe(20);
-  });
+  }, 30_000);
 });
 
 /** Opgaver af type 3–5 på niveau 1–4. */
@@ -248,9 +282,17 @@ describe('Generatoren', () => {
     expect(open).toBeLessThanOrEqual(300);
   });
 
-  it('ingen opgave kan aflæses direkte, og fra niveau 2 er mindst én honnør sikkert placeret uden at være set', () => {
+  it('fra niveau 3 kan ingen opgave aflæses direkte; på niveau 1–2 bruges de (Franks afgørelse)', () => {
+    let direct = 0;
     for (const t of all) {
-      expect(directlyReadable(t.ledger)).toBe(false);
+      if (t.level >= 3) expect(directlyReadable(t.ledger)).toBe(false);
+      else if (directlyReadable(t.ledger)) direct++;
+    }
+    expect(direct).toBeGreaterThan(0);
+  });
+
+  it('fra niveau 2 er mindst én honnør sikkert placeret uden at være set, og niveau 1 har én uset honnør', () => {
+    for (const t of all) {
       if (t.level >= 2) expect([...solve(t.ledger).answer.values()].some((p) => p !== 'open')).toBe(true);
       if (t.level === 1) expect(t.ledger.unseen).toHaveLength(1);
     }

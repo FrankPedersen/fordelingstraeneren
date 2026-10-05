@@ -188,6 +188,10 @@ describe('Sessionen', () => {
     expect(Object.keys(saved.items)).toEqual(DECK_ORDER.slice(0, NEW_PER_SESSION));
     expect(saved.accuracy.sum?.length).toBeGreaterThan(0);
     expect(saved.levelLog.length).toBe(session.levelTasks);
+    // Svarloggen har regnestykket og niveaufasen, ikke opvarmningen.
+    expect(saved.answers?.length).toBe(session.total - NEW_PER_SESSION);
+    expect(saved.answers?.every((a) => a.day === '2026-10-05' && a.score === 1 && !a.overconfident)).toBe(true);
+    expect(saved.answers?.filter((a) => a.exercise === 'sum').length).toBe(saved.accuracy.sum?.length);
   });
 
   it('regnestykket varer 45 s, og opvarmningen slutter, når kortene er brugt', () => {

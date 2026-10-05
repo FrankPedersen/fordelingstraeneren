@@ -29,6 +29,21 @@ export interface PrSessionRecord {
   boss: boolean;
 }
 
+/** Et svar i sessionen (regnestykket og niveaufasen, ikke opvarmningen), til statistikken som i farvebehandling. */
+export interface PrAnswerEntry {
+  day: string;
+  exercise: Exercise;
+  level: Level;
+  /** 1 = rigtigt, 0,5 = halvt (løbende tælling), 0 = forkert. */
+  score: number;
+  ms: number;
+  /** Overmod: en sikker placering, da facit var "kan ikke afgøres". */
+  overconfident?: true;
+}
+
+/** Svarloggen gemmer de seneste så mange svar. */
+export const ANSWER_LOG_SIZE = 2000;
+
 export interface PrSaved {
   version: 1;
   settings: {
@@ -48,6 +63,8 @@ export interface PrSaved {
   xp: number;
   streak: Streak;
   sessions: PrSessionRecord[];
+  /** Svarloggen: de seneste 2000 svar, til statistikken. Valgfrit felt. */
+  answers?: PrAnswerEntry[];
   /** Dagen for den seneste eksport; til påmindelsen om at gemme en kopi. Valgfrit felt. */
   lastExport?: string;
 }
@@ -95,6 +112,15 @@ const isStreak = (v: unknown): v is Streak =>
   isCount(v.best) &&
   (v.lastDay === '' || isDay(v.lastDay)) &&
   (v.jokerWeek === undefined || (isString(v.jokerWeek) && /^\d{4}-W\d{2}$/.test(v.jokerWeek)));
+
+const isAnswer = (v: unknown): v is PrAnswerEntry =>
+  isObject(v) &&
+  isDay(v.day) &&
+  EXERCISES.includes(v.exercise as Exercise) &&
+  isLevel(v.level) &&
+  isScore(v.score) &&
+  isCount(v.ms) &&
+  (v.overconfident === undefined || v.overconfident === true);
 
 const isSession = (v: unknown): v is PrSessionRecord =>
   isObject(v) &&
@@ -150,11 +176,15 @@ export function readPrSaved(input: unknown): { saved: PrSaved; problems: string[
     if (EXERCISES.includes(key as Exercise)) accuracy[key as Exercise] = log;
     else problems.push(`accuracy["${key}"] er ugyldig`);
   }
-  // Valgfrit felt: det kontrolleres kun, når det findes.
-  const { lastExport: lastExportIn, ...rest } = raw;
+  function list<T>(name: string, value: unknown, valid: (v: unknown) => boolean): T[] {
+    const entries = check<unknown[]>(name, value, Array.isArray, []);
+    entries.forEach((entry, i) => valid(entry) || problems.push(`${name}[${i}] er ugyldig`));
+    return entries.filter(valid) as T[];
+  }
+  // Valgfrie felter: de kontrolleres kun, når de findes.
+  const { answers: answersIn, lastExport: lastExportIn, ...rest } = raw;
+  const answers = answersIn === undefined ? undefined : list<PrAnswerEntry>('answers', answersIn, isAnswer);
   const lastExport = lastExportIn === undefined ? undefined : check<string | undefined>('lastExport', lastExportIn, isDay, undefined);
-  const sessionsIn = check<unknown[]>('sessions', raw.sessions, Array.isArray, []);
-  sessionsIn.forEach((s, i) => isSession(s) || problems.push(`sessions[${i}] er ugyldig`));
   const saved: PrSaved = {
     ...rest,
     version: 1,
@@ -171,7 +201,8 @@ export function readPrSaved(input: unknown): { saved: PrSaved; problems: string[
     items: record('items', raw.items, isItem),
     xp: check('xp', raw.xp, (v) => isNumber(v) && v >= 0, 0),
     streak: check('streak', raw.streak, isStreak, fallback.streak),
-    sessions: sessionsIn.filter(isSession),
+    sessions: list('sessions', raw.sessions, isSession),
+    ...(answers ? { answers } : {}),
     ...(lastExport ? { lastExport } : {}),
   };
   return { saved, problems };

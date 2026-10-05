@@ -168,17 +168,18 @@ Et nyt, selvstændigt spor på grenen `pointregnskab` (appen før sporet er tagg
 - `model/`: point og tilladte point som mængder (`points.ts`), løseren (`solver.ts`), meldeforløbet med pas-reglerne (`bidding.ts`), facit-skabelonerne (`explain.ts`) og generatoren (`generator.ts`).
 - `content/pas-regler.json`: pas-reglerne med `text` og `textEn`.
 - `training/`: scoring og visningstid (`scoring.ts`), niveau (`progression.ts`), Leitner-bunken med blokke og intervalkort (`deck.ts`) og sessionen (`session.ts`).
-- `storage.ts`: skemaet for `pointregnskab:v1` (afventer Franks godkendelse) med indlæsning, kopi af ulæselige data, gem og import.
+- `storage.ts`: skemaet for `pointregnskab:v1` (afventer Franks godkendelse; valgfrie felter `answers` og `lastExport`) med indlæsning, kopi af ulæselige data, gem og import.
 
 **Beslutninger** (spørg, før du ændrer dem)
 - **Meldeforløbet:** åbner Øst eller Vest højere end 1 i farve eller 1NT, vises svarerens tur ikke, da systemfilen ikke har indmeldinger efter dem. Nord–Syd har mindst 20 hp i opgaverne om placeringer, så kontrakten er rimelig. Kontrakten er kosmetisk: major med 8+ kort, ellers NT, og en minor med 9+ kort fra 29 hp.
 - **Niveauerne:** niveau 1–2 har én modspiller med en grænse (niveau 1 én uset honnør, niveau 2 to til fem), fra niveau 3 begge. Løbende tælling viser 2 + niveau honnører.
-- **Aflæses direkte:** en modspiller har vist alt, han kan have (restens største værdi er 0). Opgaven forkastes også, når ingen skabelon forklarer løserens svar.
+- **Aflæses direkte:** en modspiller har vist alt, han kan have (restens største værdi er 0). Sådanne opgaver bruges på niveau 1–2 og forkastes fra niveau 3 (Franks afgørelse). En opgave forkastes altid, når ingen skabelon forklarer løserens svar.
 - **Skabelonerne** regner med regnskabspanelets rest (tilladte point minus det viste), som brugeren selv ser. "Den anden kan ikke have den" bruges, når honnøren er mere værd end hans største rest, eller når den ikke passer i nogen af hans intervaller sammen med de andre usete honnører (Michaels' hul).
 - **Kipningsretning** spørger kun om honnører, Nord–Syd kan kippe mod: de har kortet lige under og et højere kort i farven.
 - **Visningstiden** ændres ikke af et halvt rigtigt svar og kun af svar i Løbende tælling.
 - **Opvarmningen:** forfaldne kort først, derefter højst 3 nye kort pr. session; rigtigt inden for 5 s er hurtigt i Leitner og giver 10 XP. Ugens boss giver dobbelt XP for hele sessionen.
 - **Niveaufasen:** slutter efter 4 opgaver, eller efter 3, når 150 s er gået; den samme øvelse kommer ikke to gange i træk. Kun niveaufasens svar tilpasser niveauet.
+- **Svarloggen** (`answers`, de seneste 2000) har regnestykkets og niveaufasens svar med øvelse, niveau, score, tid og overmod; opvarmningens svar står i Leitner-emnernes log.
 
 **Status**
 - [x] Trin 1: model og løser med tilladte point som mængder, pas-regler og tests.

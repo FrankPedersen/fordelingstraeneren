@@ -132,7 +132,7 @@ Opgaverne genereres fra tilfældige fordelinger, og facit beregnes altid af løs
 4. **Krav til meldingerne:** mindst én modspiller skal have tilladte point, der begrænser, dvs. ikke \[0, M\].
 5. **Ledetrådsstrøm:** i første version vises en tilfældig delmængde af modspillernes honnører i tilfældig rækkefølge. Et rigtigt spilforløb, hvor honnører falder, når de vinder, dækker eller er tvunget, er en senere udvidelse.
 6. **Spørgsmålet:** en uset honnør vælges, og løseren giver facit. Ca. hver fjerde opgave skal have facit "kan ikke afgøres".
-7. **Kvalitet:** fra niveau 2 skal mindst én honnør være sikkert placeret uden at være set. Opgaver, hvor svaret kan aflæses direkte, forkastes.
+7. **Kvalitet:** fra niveau 2 skal mindst én honnør være sikkert placeret uden at være set. Opgaver, hvor svaret kan aflæses direkte (en modspiller har vist alt, han kan have), bruges på niveau 1–2 og forkastes fra niveau 3.
 8. **Fuldt regnskab:** længderne kommer fra 13-sudokuens generator, kaldt som bibliotek med et nyt seed, aldrig dagens sudoku. Kun Vests og Østs længder bruges.
 9. **Genskabelse:** hver opgave har et seed og kan genskabes præcist. Opgavens tekster bygges på det sprog, der gælder, når opgaven vises.
 
@@ -162,7 +162,7 @@ Fuldt regnskab er ugens boss: hver 7. session med dobbelt XP.
 
 Data ligger i ét JSON-objekt under nøglen `pointregnskab:v1`:
 
-- **Indhold:** version, indstillinger, niveau og glidende træfsikkerhed pr. øvelse, visningstiden for løbende tælling, Leitner-emner for blokke og intervalkort, XP, streak og sessioner. Sproget gemmes ikke her; det læses med `getLang()`.
+- **Indhold:** version, indstillinger, niveau og glidende træfsikkerhed pr. øvelse, visningstiden for løbende tælling, Leitner-emner for blokke og intervalkort, XP, streak med joker og sessioner, og de valgfrie felter `lastExport` og en svarlog som i farvebehandling. Sproget gemmes ikke her; det læses med `getLang()`.
 - **Skema:** Claude Code skriver det som en TypeScript-type i samme stil som de andre spor. Typen godkendes, før brugerfladen bygges.
 - **Eksport og import:** egen eksport og import under Pointregnskabets indstillinger.
 - **Versioner:** ved en ny skemaversion migreres data, og ukendte felter bevares.
@@ -275,7 +275,7 @@ Accepttest i Vitest:
 - [ ] Meldeforløbet: hvert vist pas passer med sin regel (pas i åbningsposition højst 11 hp, svarerens pas i pas-reglens interval), og Nord–Syds meldinger indgår ikke i regnskabet.
 - [ ] Har Nord eller Syd meldt ind eller doblet efter Øst–Vests åbning, giver svarerens pas tilladte point \[0, M\].
 - [ ] Fuldt regnskab: en modspiller med 1 kort i en farve kan ikke få to honnører i den.
-- [ ] Generatoren: 20–30 % af 1.000 opgaver har facit "kan ikke afgøres", ingen opgave kan aflæses direkte, og samme seed giver samme opgave.
+- [ ] Generatoren: 20–30 % af 1.000 opgaver har facit "kan ikke afgøres", ingen opgave fra niveau 3 kan aflæses direkte, og samme seed giver samme opgave.
 - [ ] Regnskabspanelets "Rest" er altid de tilladte point minus det viste, aldrig løserens slutning.
 - [ ] Løbende tælling: ét af to tal rigtigt giver halvt. Visningstiden bliver 10 % kortere efter rigtigt og 15 % længere efter forkert, inden for 800–4.000 ms pr. kort.
 - [ ] Facit: hvert svar har en sætning fra en af skabelonerne, og sætningen bruger kun løserens facit.
@@ -304,3 +304,5 @@ Afklaret (5. oktober 2026, Franks afgørelser):
 8. **Pas-regler:** 0–5 efter en åbning i 1 farve og 0–7 efter 1NT er bekræftet. De gælder kun, når Nord–Syd har passet imellem (Meldeinformation, Generator punkt 3).
 9. **Intervalkort:** kun meldingernes hp-intervaller trænes her; konventionerne bliver i konventionstræneren.
 10. **Fælles menu:** besluttes i en særskilt navigationsopgave (SPEC-navigation.md), før næste spor bygges. Pointregnskabet bygges med sit eget menupunkt, som navigationsopgaven derefter placerer i gruppen Optælling.
+11. **Aflæses direkte:** opgaver, hvor en modspiller har vist alt, han kan have, bruges på niveau 1–2 og forkastes først fra niveau 3 (Generator punkt 7).
+12. **Skemaet:** har de valgfrie felter `lastExport` og en svarlog som i farvebehandling; sproget gemmes ikke (Data).

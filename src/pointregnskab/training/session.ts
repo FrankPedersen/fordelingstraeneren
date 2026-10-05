@@ -3,7 +3,7 @@ import { mulberry32, type Rng } from '../../engine/rng';
 import { completeDay } from '../../engine/streak';
 import { addXp } from '../../engine/xp';
 import { makeTask, type Exercise, type PointTask } from '../model/generator';
-import type { PrSaved } from '../storage';
+import { ANSWER_LOG_SIZE, type PrAnswerEntry, type PrSaved } from '../storage';
 import { DECK_FAST_MS, deckCorrect, deckTask, reviewCard, warmupQueue, type DeckAnswer, type DeckTask } from './deck';
 import { nextLevel, pushAccuracy } from './progression';
 import { grade, nextRunningMs, XP, type Graded, type PointAnswer } from './scoring';
@@ -152,8 +152,8 @@ export function answerDeck(
 }
 
 /**
- * Svar på en opgave: XP, træfsikkerhed pr. øvelse og visningstiden i løbende tælling. Kun niveaufasens svar tilpasser
- * niveauet.
+ * Svar på en opgave: XP, træfsikkerhed pr. øvelse, svarloggen og visningstiden i løbende tælling. Kun niveaufasens
+ * svar tilpasser niveauet.
  */
 export function answerPrTask(
   s: PrSession,
@@ -163,11 +163,21 @@ export function answerPrTask(
 ): { session: PrSession; saved: PrSaved; graded: Graded } {
   if (s.step?.kind !== 'task') throw new Error('Ingen opgave at svare på');
   const { task, phase } = s.step;
-  const graded = grade(task, answer, Math.max(0, now - s.shownAt), s.boss);
+  const ms = Math.max(0, now - s.shownAt);
+  const graded = grade(task, answer, ms, s.boss);
+  const entry: PrAnswerEntry = {
+    day: todayOf(saved, now),
+    exercise: task.exercise,
+    level: task.level,
+    score: graded.score,
+    ms,
+    ...(graded.overconfident ? { overconfident: true as const } : {}),
+  };
   let next: PrSaved = {
     ...saved,
     xp: addXp(saved.xp, graded.xp),
     accuracy: { ...saved.accuracy, [task.exercise]: pushAccuracy(saved.accuracy[task.exercise], graded.score) },
+    answers: [...(saved.answers ?? []), entry].slice(-ANSWER_LOG_SIZE),
   };
   if (task.exercise === 'running') next = { ...next, runningMs: nextRunningMs(saved.runningMs, graded.result) };
   if (phase === 'level') {
