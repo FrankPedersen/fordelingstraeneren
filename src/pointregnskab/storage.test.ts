@@ -95,11 +95,13 @@ describe('Lagring under pointregnskab:v1', () => {
   });
 
   it('Pointregnskabet bruger kun sin egen nøgle og læser ikke sproget fra fordelingssporet', () => {
-    const files = Object.entries(sources).filter(([file]) => !file.endsWith('.test.ts'));
+    const files = Object.entries(sources).filter(([file]) => !/\.test\.tsx?$/.test(file));
     expect(files.length).toBeGreaterThan(5);
     for (const [file, source] of files) {
-      expect(source, file).not.toMatch(/fordelingstraener:v1|farvebehandling:v1/);
-      expect(source, file).not.toMatch(/localStorage/);
+      expect(source, file).not.toMatch(/fordelingstraener:v1|farvebehandling:v1|STORAGE_KEY(?<!PR_STORAGE_KEY)|FB_STORAGE_KEY/);
+      // Kun skærmen rører browserens lagring, og kun under Pointregnskabets egen nøgle.
+      if (file !== './ui/PointregnskabScreen.tsx') expect(source, file).not.toMatch(/localStorage/);
+      else expect(source).toMatch(/storage\.getItem\(PR_STORAGE_KEY\)/);
     }
   });
 });

@@ -128,6 +128,28 @@ function sections(): Section[] {
       ),
     },
     {
+      title: tx('Pointregnskab', 'Point count'),
+      body: (
+        <>
+          <p>
+            {tx(
+              'Pointregnskab er et selvstændigt spor om at tælle honnørpoint (E 4, K 3, D 2, B 1) som spilfører og slutte sig til, hvor de manglende honnører sidder. Det har sin egen daglige session, streak og XP.',
+              'Point count is a separate track about counting high-card points (A 4, K 3, Q 2, J 1) as declarer and working out where the missing honours are. It has its own daily session, streak and XP.',
+            )}
+          </p>
+          <List
+            items={[
+              tx('Sessionen: opvarmning med blokke og intervalkort, regnestykket som lynrunde, 3–4 opgaver på dit niveau og status. Hver 7. session er ugens boss med Fuldt regnskab og dobbelt XP.', 'The session: a warm-up with blocks and range cards, the sum as a lightning round, 3–4 tasks at your level and status. Every 7th session is the weekly boss with Full count and double XP.'),
+              tx('Øvelserne: Regnestykket, Løbende tælling, Kan han have den?, Hvem har den?, Kipningsretning og Fuldt regnskab med længder fra en 13-sudoku.', 'The exercises: The sum, Running count, Can he have it?, Who has it?, Finesse direction and Full count with lengths from a 13-sudoku.'),
+              tx('Regnskabspanelet viser interval, vist og rest for Vest og Øst. Rest er interval minus vist; panelet afslører aldrig løserens slutning og er skjult fra niveau 4.', 'The count panel shows range, shown and left for West and East. Left is range minus shown; the panel never reveals what the solver concludes and is hidden from level 4.'),
+              tx('"Kan ikke afgøres" og "det er et gæt" er altid gyldige svar. At svare sikkert, når det ikke kan afgøres, er forkert: "Det kunne du ikke vide endnu."', `"Can't tell" and "it's a guess" are always valid answers. Answering as if sure when it can't be told is wrong: "You couldn't know that yet."`),
+              tx('Niveauet stiger, når over 90 % af de seneste 20 svar er rigtige, og falder under 80 %. Data og eksport ligger under Pointregnskab → Indstillinger.', 'Your level rises when more than 90% of your last 20 answers are right, and falls below 80%. Data and export are under Point count → Settings.'),
+            ]}
+          />
+        </>
+      ),
+    },
+    {
       title: tx('Sprog og hjælp', 'Language and help'),
       body: (
         <List

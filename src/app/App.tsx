@@ -15,8 +15,10 @@ import { useSaved } from './useSaved';
 
 // Farvebehandling er et selvstændigt spor; det hentes først, når menupunktet bruges.
 const FarvebehandlingScreen = lazy(() => import('../farvebehandling/ui/FarvebehandlingScreen'));
+// Pointregnskab er også et selvstændigt spor (SPEC-pointregnskab.md).
+const PointregnskabScreen = lazy(() => import('../pointregnskab/ui/PointregnskabScreen'));
 
-type Screen = 'home' | 'session' | 'palace' | 'album' | 'club' | 'curves' | 'settings' | 'guide' | 'farvebehandling';
+type Screen = 'home' | 'session' | 'palace' | 'album' | 'club' | 'curves' | 'settings' | 'guide' | 'farvebehandling' | 'pointregnskab';
 
 interface AppProps {
   /** En ny version af appen er hentet og venter. */
@@ -70,6 +72,12 @@ export default function App({ updateReady = false, onUpdate }: AppProps) {
           <FarvebehandlingScreen onBack={home} />
         </Suspense>
       );
+    case 'pointregnskab':
+      return (
+        <Suspense fallback={<main className="screen" aria-busy="true" />}>
+          <PointregnskabScreen onBack={home} />
+        </Suspense>
+      );
     default:
       return (
         <HomeScreen
@@ -83,6 +91,7 @@ export default function App({ updateReady = false, onUpdate }: AppProps) {
           onCurves={() => setScreen('curves')}
           onSettings={() => setScreen('settings')}
           onFarvebehandling={() => setScreen('farvebehandling')}
+          onPointregnskab={() => setScreen('pointregnskab')}
           onLanguage={changeLanguage}
           onGuide={() => setScreen('guide')}
         />

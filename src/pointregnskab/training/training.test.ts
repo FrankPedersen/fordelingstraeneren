@@ -7,7 +7,7 @@ import { BLOCKS, DECK_ORDER, deckCorrect, deckTask, NEW_PER_SESSION, RANGE_CARDS
 import { mulberry32 } from '../../engine/rng';
 import { nextLevel } from './progression';
 import { correctAnswer, grade, nextRunningMs, RUNNING_MS, timeLimit } from './scoring';
-import { answerDeck, answerPrTask, isBossSession, nextPrStep, PR_PHASE_MS, startPrSession, type PrSession } from './session';
+import { answerDeck, answerPrTask, isBossSession, nextPrStep, PR_PHASE_MS, questionShown, startPrSession, type PrSession } from './session';
 
 const running = (seed: number) => makeTask('running', 2, seed) as RunningTask;
 const placement = (exercise: 'can' | 'who' | 'finesse', seed: number) => makeTask(exercise, 3, seed) as PlacementTask;
@@ -202,6 +202,18 @@ describe('Sessionen', () => {
     expect(phases.filter((p) => p === 'warmup').length).toBe(NEW_PER_SESSION);
   });
 
+  it('svartiden regnes fra spørgsmålet, så den løbende visning ikke tæller med', () => {
+    const saved = defaultPrSaved();
+    let session = startPrSession(saved, t0, 1);
+    session = { ...session, phase: 'level', phaseStarted: t0, queue: [] };
+    const step = nextPrStep(session, saved, t0).session;
+    const task = (step.step as { task: Parameters<typeof correctAnswer>[0] }).task;
+    const shown = questionShown(step, t0 + 30_000);
+    const r = answerPrTask(shown, saved, correctAnswer(task), t0 + 32_000);
+    expect(r.graded.inTime).toBe(true);
+    expect(r.saved.answers?.[0].ms).toBe(2_000);
+  });
+
   it('hver 7. session er ugens boss med dobbelt XP', () => {
     let saved = defaultPrSaved();
     const bosses: boolean[] = [];
@@ -215,5 +227,32 @@ describe('Sessionen', () => {
     const boss = play(sixDone, 3).session;
     expect(boss.boss).toBe(true);
     expect(boss.xp).toBe(2 * normal.xp);
+  });
+
+  it('ugens boss har Fuldt regnskab i niveaufasen; ellers kommer type 2–5 uden den samme to gange i træk', () => {
+    const sixDone = { ...defaultPrSaved(), sessions: Array.from({ length: 6 }, () => ({ day: '2026-10-05', ms: 0, correct: 0, total: 0, xp: 0, level: 1 as const, boss: false })) };
+    const levelExercises = (saved: PrSaved) => {
+      let session = startPrSession(saved, t0, 9);
+      let now = t0;
+      const seen: string[] = [];
+      for (let i = 0; i < 100; i++) {
+        ({ session, saved } = nextPrStep(session, saved, now));
+        const step = session.step!;
+        if (step.kind === 'status') break;
+        now += 20_000;
+        if (step.kind === 'deck') ({ session, saved } = answerDeck(session, saved, { kind: 'block', points: -1 }, now));
+        else {
+          if (step.phase === 'level') seen.push(step.task.exercise);
+          ({ session, saved } = answerPrTask(session, saved, correctAnswer(step.task), now));
+        }
+      }
+      return seen;
+    };
+    const boss = levelExercises(sixDone);
+    expect(boss.length).toBeGreaterThanOrEqual(3);
+    expect(new Set(boss)).toEqual(new Set(['full']));
+    const normal = levelExercises(defaultPrSaved());
+    expect(normal.every((e) => ['running', 'can', 'who', 'finesse'].includes(e))).toBe(true);
+    for (let i = 1; i < normal.length; i++) expect(normal[i]).not.toBe(normal[i - 1]);
   });
 });

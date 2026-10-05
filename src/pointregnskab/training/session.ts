@@ -20,7 +20,7 @@ export type PrPhase = keyof typeof PR_PHASE_MS;
 /** Niveaufasen har 3–4 opgaver: den slutter efter 4, eller efter 3, når tiden er gået. */
 export const LEVEL_TASKS = { min: 3, max: 4 } as const;
 
-/** Øvelserne i niveaufasen (type 2–5). Fuldt regnskab (type 6) kommer i leverancetrin 5 som ugens boss. */
+/** Øvelserne i niveaufasen (type 2–5). Ugens boss har Fuldt regnskab (type 6) i stedet. */
 export const LEVEL_EXERCISES: readonly Exercise[] = ['running', 'can', 'who', 'finesse'];
 
 export const BOSS_EVERY = 7;
@@ -122,11 +122,19 @@ export function nextPrStep(session: PrSession, saved: PrSaved, now: number): { s
   else if (s.phase === 'sum') step = { kind: 'task', phase: 'sum', task: makeTask('sum', saved.level, rng.uint32()) };
   else {
     const choices = LEVEL_EXERCISES.filter((e) => e !== s.lastExercise);
-    const exercise = choices[rng.int(choices.length)];
+    const exercise: Exercise = s.boss ? 'full' : choices[rng.int(choices.length)];
     step = { kind: 'task', phase: 'level', task: makeTask(exercise, saved.level, rng.uint32()) };
     s = { ...s, lastExercise: exercise };
   }
   return { session: { ...s, step, count: s.count + 1, shownAt: now }, saved };
+}
+
+/**
+ * Spørgsmålet vises nu. I løbende tælling og fra niveau 4 vises honnørerne først én ad gangen, og tiden til svaret
+ * regnes fra spørgsmålet.
+ */
+export function questionShown(s: PrSession, now: number): PrSession {
+  return { ...s, shownAt: now };
 }
 
 /** Svar på et kort i opvarmningen: Leitner-bunken flyttes, og XP gives efter regnestykkets tidsgrænse. */

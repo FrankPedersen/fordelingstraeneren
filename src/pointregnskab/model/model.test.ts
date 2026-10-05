@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { dealWith, SEATS, type Seat } from '../../domain/dealer';
 import { mulberry32 } from '../../engine/rng';
+import { suitLengths } from '../../domain/cards';
+import { makeSudoku } from '../../modes/sudoku/task';
 import { chooseCall, hcpOf, SYSTEM } from '../../system/interpreter';
 import { allowedFor, bid, isDefender, limitAllowed, OPENING_PASS, PASS_RULES, passRule } from './bidding';
 import { directlyReadable, explain } from './explain';
@@ -339,6 +341,22 @@ describe('Generatoren', () => {
       const ns = [...t.hands.N, ...t.hands.S];
       expect(ns).toContain(t.card - 1);
     }
+  });
+
+  it('Fuldt regnskab og niveau 5: længderne kommer fra 13-sudokuens generator med et nyt seed og indgår i løseren', () => {
+    for (let seed = 1; seed <= 12; seed++) {
+      const t = makeTask(seed % 2 ? 'full' : 'who', seed % 2 ? 3 : 5, seed) as PlacementTask;
+      expect(t.sudokuSeed).toBeDefined();
+      const sudoku = makeSudoku(t.sudokuSeed!);
+      for (const d of ['W', 'E'] as const) {
+        expect(t.ledger[d].lengths).toEqual(sudoku.lengths[d]);
+        expect(t.ledger[d].lengths).toEqual(suitLengths(t.hands[d]));
+      }
+      expect(limits(t.ledger.W.allowed, t.m) && limits(t.ledger.E.allowed, t.m)).toBe(true);
+      expect(t.placement).toBe(solve(t.ledger).answer.get(t.card));
+      expect(makeTask(t.exercise, t.level, seed)).toEqual(t);
+    }
+    expect((makeTask('who', 3, 1) as PlacementTask).sudokuSeed).toBeUndefined();
   });
 
   it('Regnestykket og Løbende tælling regner med alle fire hænder', () => {

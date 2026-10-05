@@ -20,6 +20,8 @@ interface HomeScreenProps {
   onSettings(): void;
   /** Farvebehandling: et selvstændigt spor (SPEC-farvebehandling.md). */
   onFarvebehandling?(): void;
+  /** Pointregnskab: et selvstændigt spor (SPEC-pointregnskab.md). */
+  onPointregnskab?(): void;
   /** Skifter appens sprog (dansk/engelsk). */
   onLanguage?(lang: Lang): void;
   /** Den samlede vejledning. */
@@ -29,7 +31,7 @@ interface HomeScreenProps {
 const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
 
 export function HomeScreen(props: HomeScreenProps) {
-  const { saved, updateReady, onUpdate, onStart, onPalace, onAlbum, onClub, onCurves, onSettings, onFarvebehandling, onLanguage, onGuide } = props;
+  const { saved, updateReady, onUpdate, onStart, onPalace, onAlbum, onClub, onCurves, onSettings, onFarvebehandling, onPointregnskab, onLanguage, onGuide } = props;
   const today = dayOf(Date.now(), saved.settings.dayStartsAtHour);
   const streak = streakOn(saved.streak, today);
   const progress = gradeProgress(saved);
@@ -237,6 +239,15 @@ export function HomeScreen(props: HomeScreenProps) {
               tx(
                 'Et selvstændigt spor om at spille én farve: hvilken linje giver størst chance for de stik, du skal bruge? Med egen daglig session, streak og XP, selvvalgt træning, analyse af 657 kombinationer og en løser.',
                 'A separate track about playing one suit: which line gives the best chance of the tricks you need? With its own daily session, streak and XP, free practice, analysis of 657 combinations and a solver.',
+              ),
+            )}
+          {onPointregnskab &&
+            menu(
+              tx('Pointregnskab', 'Point count'),
+              onPointregnskab,
+              tx(
+                'Et selvstændigt spor om at tælle honnørpoint under spillet: hvor mange point har modparten, hvem har vist hvad, og hvor sidder de manglende honnører? Med egen daglig session, streak og XP.',
+                'A separate track about counting high-card points during play: how many points do the opponents have, who has shown what, and where are the missing honours? With its own daily session, streak and XP.',
               ),
             )}
           {menu(

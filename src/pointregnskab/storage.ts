@@ -1,3 +1,4 @@
+import { daysBetween } from '../engine/dates';
 import type { Item } from '../engine/leitner';
 import { emptyStreak, type Streak } from '../engine/streak';
 import { EXERCISES, type Exercise, type Level } from './model/generator';
@@ -262,4 +263,14 @@ export function parsePrImport(text: string): PrImportResult {
 
 export function prExportFileName(today: string): string {
   return `pointregnskab-${today}.json`;
+}
+
+/** Påmindelsen om eksport kommer, når den seneste eksport (eller den første session) er så mange dage gammel. */
+export const EXPORT_REMINDER_DAYS = 30;
+
+/** Skal brugeren mindes om at gemme en kopi? Kun når der er en session at miste. */
+export function prExportDue(saved: PrSaved, today: string): boolean {
+  const first = saved.sessions.map((s) => s.day).sort()[0];
+  if (!first) return false;
+  return daysBetween(saved.lastExport ?? first, today) >= EXPORT_REMINDER_DAYS;
 }

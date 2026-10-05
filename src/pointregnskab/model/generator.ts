@@ -1,6 +1,7 @@
-import type { Card } from '../../domain/cards';
+import { suitLengths, type Card } from '../../domain/cards';
 import { SEATS, dealWith, type Hands, type Seat } from '../../domain/dealer';
 import { mulberry32, shuffle, type Rng } from '../../engine/rng';
+import { makeSudoku } from '../../modes/sudoku/task';
 import { hcpOf } from '../../system/interpreter';
 import { allowedFor, bid, type Auction } from './bidding';
 import { directlyReadable, explain, type Explanation } from './explain';
@@ -47,9 +48,12 @@ export interface RunningTask extends Base {
   shown: Record<Defender, number>;
 }
 
-/** Kan han have den?, Hvem har den? og Kipningsretning: et spørgsmål om én uset honnør. */
+/**
+ * Kan han have den?, Hvem har den?, Kipningsretning og Fuldt regnskab: et spørgsmål om én uset honnør. Fuldt regnskab
+ * (og niveau 5) har Vests og Østs farvelængder fra 13-sudokuens generator i regnskabet.
+ */
 export interface PlacementTask extends Base {
-  exercise: 'can' | 'who' | 'finesse';
+  exercise: 'can' | 'who' | 'finesse' | 'full';
   auction: Auction;
   /** Ledetrådsstrømmen i den rækkefølge, honnørerne falder. */
   clues: Clue[];
@@ -60,6 +64,8 @@ export interface PlacementTask extends Base {
   /** Løserens facit for honnøren. */
   placement: Placement;
   explanation: Explanation;
+  /** Seedet til 13-sudokuen, som længderne kommer fra (Fuldt regnskab og niveau 5). */
+  sudokuSeed?: number;
 }
 
 export type PointTask = SumTask | RunningTask | PlacementTask;
@@ -85,9 +91,8 @@ export function makeTask(exercise: Exercise, level: Level, seed: number): PointT
     case 'can':
     case 'who':
     case 'finesse':
-      return placementTask(exercise, seed, level, rng);
     case 'full':
-      throw new Error('Fuldt regnskab bygges i leverancetrin 5');
+      return placementTask(exercise, seed, level, rng);
   }
 }
 
@@ -119,38 +124,49 @@ export function canFinesse(hands: Hands, card: Card): boolean {
   return ns.includes(card - 1) && ns.some((c) => c > card && c < top);
 }
 
+/** Har opgaven farvelængder fra en 13-sudoku? Fuldt regnskab og niveau 5. */
+export const hasLengths = (exercise: Exercise, level: Level): boolean => exercise === 'full' || level === 5;
+
 /**
  * Opgaver om én uset honnør. Niveau 1–2 har én modspiller med en grænse (niveau 1 med én uset honnør, niveau 2 med
- * flere); fra niveau 3 har begge en grænse, så restintervallet skal bruges. Kvalitetskravene: fra niveau 3 kan svaret
- * ikke aflæses direkte (på niveau 1–2 må en modspiller have vist alt, han kan have; Franks afgørelse), fra niveau 2
- * er mindst én honnør sikkert placeret uden at være set, og facit har en skabelon.
+ * flere); fra niveau 3 har begge en grænse, så restintervallet skal bruges. Fuldt regnskab følger reglerne fra niveau 3
+ * og får længderne fra 13-sudokuens generator med et nyt seed: fordelingen er sudokuens egen, så længderne passer.
+ * Kvalitetskravene: fra niveau 3 kan svaret ikke aflæses direkte (på niveau 1–2 må en modspiller have vist alt, han
+ * kan have; Franks afgørelse), fra niveau 2 er mindst én honnør sikkert placeret uden at være set, og facit har en
+ * skabelon.
  */
-function placementTask(exercise: 'can' | 'who' | 'finesse', seed: number, level: Level, rng: Rng): PlacementTask {
+function placementTask(exercise: PlacementTask['exercise'], seed: number, level: Level, rng: Rng): PlacementTask {
   const wantOpen = rng.next() < OPEN_SHARE;
+  const lengths = hasLengths(exercise, level);
+  // Fuldt regnskab følger reglerne fra niveau 3.
+  const rules: Level = exercise === 'full' ? (Math.max(level, 3) as Level) : level;
   for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
-    const hands = dealWith(rng);
-    const dealer: Seat = SEATS[rng.int(4)];
+    // Med længder gives kortene som i 13-sudokuens generator (mulberry32(seed), dealWith og så giveren).
+    const sudokuSeed = lengths ? rng.uint32() : undefined;
+    const dealRng = sudokuSeed === undefined ? rng : mulberry32(sudokuSeed);
+    const hands = dealWith(dealRng);
+    const dealer: Seat = SEATS[dealRng.int(4)];
     if (hcpOf(hands.N) + hcpOf(hands.S) < MIN_NS_HCP) continue;
     const auction = bid(hands, dealer);
     if (!auction) continue;
     const m = opponentsPoints(hands.N, hands.S);
     const allowed = { W: allowedFor(auction, 'W', m), E: allowedFor(auction, 'E', m) };
     const limited = (['W', 'E'] as const).filter((d) => limits(allowed[d], m)).length;
-    if (level <= 2 ? limited !== 1 : limited !== 2) continue;
+    if (rules <= 2 ? limited !== 1 : limited !== 2) continue;
 
     const honors = shuffle(defenderHonors(hands), rng);
-    const unseenCount = level === 1 ? 1 : 2 + rng.int(4);
+    const unseenCount = rules === 1 ? 1 : 2 + rng.int(4);
     if (honors.length <= unseenCount) continue;
     const unseen = honors.slice(0, unseenCount).map((h) => h.card);
     const clues = honors.slice(unseenCount);
     const ledger: Ledger = {
-      W: { allowed: allowed.W, shown: clues.filter((c) => c.seat === 'W').map((c) => c.card) },
-      E: { allowed: allowed.E, shown: clues.filter((c) => c.seat === 'E').map((c) => c.card) },
+      W: { allowed: allowed.W, shown: clues.filter((c) => c.seat === 'W').map((c) => c.card), ...(lengths ? { lengths: suitLengths(hands.W) } : {}) },
+      E: { allowed: allowed.E, shown: clues.filter((c) => c.seat === 'E').map((c) => c.card), ...(lengths ? { lengths: suitLengths(hands.E) } : {}) },
       unseen,
     };
-    if (level >= DIRECT_READ_REJECTED_FROM && directlyReadable(ledger)) continue;
+    if (rules >= DIRECT_READ_REJECTED_FROM && directlyReadable(ledger)) continue;
     const solution = solve(ledger);
-    if (level >= 2 && ![...solution.answer.values()].some((p) => p !== 'open')) continue;
+    if (rules >= 2 && ![...solution.answer.values()].some((p) => p !== 'open')) continue;
 
     const candidates = unseen.filter(
       (card) =>
@@ -162,6 +178,13 @@ function placementTask(exercise: 'can' | 'who' | 'finesse', seed: number, level:
     const card = candidates[rng.int(candidates.length)];
     const placement = solution.answer.get(card)!;
     const asked: Defender | undefined = exercise === 'can' ? (rng.int(2) ? 'W' : 'E') : undefined;
+    if (sudokuSeed !== undefined) {
+      // Længderne kommer fra 13-sudokuens generator, kaldt som bibliotek; dagens sudoku påvirkes ikke.
+      const sudoku = makeSudoku(sudokuSeed);
+      for (const d of ['W', 'E'] as const) {
+        if (sudoku.lengths[d].join() !== ledger[d].lengths!.join()) throw new Error(`13-sudokuens længder passer ikke (seed ${sudokuSeed})`);
+      }
+    }
     return {
       exercise,
       seed,
@@ -175,6 +198,7 @@ function placementTask(exercise: 'can' | 'who' | 'finesse', seed: number, level:
       ...(asked ? { asked } : {}),
       placement,
       explanation: explain(ledger, card, solution)!,
+      ...(sudokuSeed !== undefined ? { sudokuSeed } : {}),
     };
   }
   throw new Error(`Ingen opgave fundet for seed ${seed}`);

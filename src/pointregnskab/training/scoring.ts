@@ -12,8 +12,8 @@ export type PointAnswer =
   | { exercise: 'running'; W: number; E: number }
   /** Kan han have den?: ja eller nej. */
   | { exercise: 'can'; yes: boolean }
-  /** Hvem har den? og Kipningsretning: Vest, Øst eller kan ikke afgøres / det er et gæt. */
-  | { exercise: 'who' | 'finesse'; placement: Placement };
+  /** Hvem har den?, Kipningsretning og Fuldt regnskab: Vest, Øst eller kan ikke afgøres / det er et gæt. */
+  | { exercise: 'who' | 'finesse' | 'full'; placement: Placement };
 
 export type Result = 'right' | 'half' | 'wrong';
 
@@ -45,6 +45,7 @@ export function correctAnswer(task: PointTask): PointAnswer {
       return { exercise: 'can', yes: task.placement !== otherDefender(task.asked!) };
     case 'who':
     case 'finesse':
+    case 'full':
       return { exercise: task.exercise, placement: task.placement };
   }
 }
@@ -64,6 +65,7 @@ function resultOf(task: PointTask, answer: PointAnswer): Result {
       return (answer as typeof facit).yes === facit.yes ? 'right' : 'wrong';
     case 'who':
     case 'finesse':
+    case 'full':
       return (answer as typeof facit).placement === facit.placement ? 'right' : 'wrong';
   }
 }

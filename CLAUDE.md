@@ -168,7 +168,8 @@ Et nyt, selvstændigt spor på grenen `pointregnskab` (appen før sporet er tagg
 - `model/`: point og tilladte point som mængder (`points.ts`), løseren (`solver.ts`), meldeforløbet med pas-reglerne (`bidding.ts`), facit-skabelonerne (`explain.ts`) og generatoren (`generator.ts`).
 - `content/pas-regler.json`: pas-reglerne med `text` og `textEn`.
 - `training/`: scoring og visningstid (`scoring.ts`), niveau (`progression.ts`), Leitner-bunken med blokke og intervalkort (`deck.ts`) og sessionen (`session.ts`).
-- `storage.ts`: skemaet for `pointregnskab:v1` (afventer Franks godkendelse; valgfrie felter `answers` og `lastExport`) med indlæsning, kopi af ulæselige data, gem og import.
+- `storage.ts`: skemaet for `pointregnskab:v1` (godkendt; valgfrie felter `answers` og `lastExport`) med indlæsning, kopi af ulæselige data, gem, import og påmindelsen om eksport.
+- `ui/`: skærmen (`PointregnskabScreen.tsx`, indlæses dovent fra `src/app/App.tsx`) med forsiden, `Session.tsx` (sessionen og status), `Opgave.tsx`, `Facit.tsx`, `Opvarmning.tsx` og `Indstillinger.tsx` (niveau, visningstid, eksport og import); komponenterne Regnskabspanel, Honnørchip, Meldelinje, Hånd og Ledetråde; al ordlyd i `texts.ts`, tal og intervaller i `format.ts` og resten i `pointregnskab.css` (bruger farvebehandlingens `tokens.css`, ingen nye tokens).
 
 **Beslutninger** (spørg, før du ændrer dem)
 - **Meldeforløbet:** åbner Øst eller Vest højere end 1 i farve eller 1NT, vises svarerens tur ikke, da systemfilen ikke har indmeldinger efter dem. Nord–Syd har mindst 20 hp i opgaverne om placeringer, så kontrakten er rimelig. Kontrakten er kosmetisk: major med 8+ kort, ellers NT, og en minor med 9+ kort fra 29 hp.
@@ -176,6 +177,8 @@ Et nyt, selvstændigt spor på grenen `pointregnskab` (appen før sporet er tagg
 - **Aflæses direkte:** en modspiller har vist alt, han kan have (restens største værdi er 0). Sådanne opgaver bruges på niveau 1–2 og forkastes fra niveau 3 (Franks afgørelse). En opgave forkastes altid, når ingen skabelon forklarer løserens svar.
 - **Skabelonerne** regner med regnskabspanelets rest (tilladte point minus det viste), som brugeren selv ser. "Den anden kan ikke have den" bruges, når honnøren er mere værd end hans største rest, eller når den ikke passer i nogen af hans intervaller sammen med de andre usete honnører (Michaels' hul).
 - **Kipningsretning** spørger kun om honnører, Nord–Syd kan kippe mod: de har kortet lige under og et højere kort i farven.
+- **Fuldt regnskab** er Hvem har den? med Vests og Østs længder i regnskabet og følger reglerne fra niveau 3. Fordelingen gives som i 13-sudokuens generator (`mulberry32(seed)`, `dealWith`, så giveren), og længderne hentes fra `makeSudoku(seed)` med et nyt seed og kontrolleres mod hænderne. Niveau 5 giver også type 3–5 med længder. Ugens boss har Fuldt regnskab i niveaufasen. Skabelonerne regner kun med point, så en opgave, hvor kun længderne afgør svaret, forkastes.
+- **Brugerfladen:** fra niveau 4 og i Løbende tælling vises honnørerne én ad gangen (visningstiden), og svartiden regnes fra spørgsmålet (`questionShown`). Fra niveau 4 er regnskabspanelet og ledetrådsstrømmen skjult, og chippene kan ikke noteres. Regnestykket viser hænderne uden hp-tal. Meldelinjen viser Øst–Vests meldinger med intervaller og forklaringen fra systemfilen eller pas-reglen under linjen. Facit viser de mulige placeringer, når der er højst fire, og løserens restinterval.
 - **Visningstiden** ændres ikke af et halvt rigtigt svar og kun af svar i Løbende tælling.
 - **Opvarmningen:** forfaldne kort først, derefter højst 3 nye kort pr. session; rigtigt inden for 5 s er hurtigt i Leitner og giver 10 XP. Ugens boss giver dobbelt XP for hele sessionen.
 - **Niveaufasen:** slutter efter 4 opgaver, eller efter 3, når 150 s er gået; den samme øvelse kommer ikke to gange i træk. Kun niveaufasens svar tilpasser niveauet.
@@ -185,4 +188,5 @@ Et nyt, selvstændigt spor på grenen `pointregnskab` (appen før sporet er tagg
 - [x] Trin 1: model og løser med tilladte point som mængder, pas-regler og tests.
 - [x] Trin 2: generator med meldeforløb, kvalitetskrav og seeds.
 - [x] Logik uden brugerflade for session, scoring og Leitner-bunken; skemaet for `pointregnskab:v1` som TypeScript-type.
-- [ ] Franks godkendelse af skemaet. Derefter trin 3–5 med brugerflade, tekstfil, ⓘ, menupunkt og vejledning.
+- [x] Franks godkendelse af skemaet (6. oktober 2026).
+- [x] Trin 3–5: brugerfladen på dansk og engelsk med ⓘ, menupunktet på forsiden, afsnittet i vejledningen, Kipningsretning, Løbende tælling med tilpasset visningstid og Fuldt regnskab med længder fra 13-sudokuens generator. Venter på Franks godkendelse, før grenen flettes ind.
