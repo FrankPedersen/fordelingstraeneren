@@ -1,4 +1,5 @@
 import { patternById } from '../domain/patterns';
+import { tx } from '../i18n';
 
 interface SkylineProps {
   /** Mønstret, fx "5-4-3-1". */
@@ -18,7 +19,7 @@ export function Skyline({ id, scale, size = 'md', label = true }: SkylineProps) 
     <span
       className={`skyline skyline-${size} family-${pattern.family}`}
       role="img"
-      aria-label={`Mønster ${id}`}
+      aria-label={tx(`Mønster ${id}`, `Pattern ${id}`)}
     >
       <span className="skyline-bars" aria-hidden="true">
         {pattern.lengths.map((length, i) => (

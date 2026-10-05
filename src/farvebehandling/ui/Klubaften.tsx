@@ -5,6 +5,7 @@ import { cardsText } from '../model/cards';
 import { eveningText, oncePerDeals } from '../model/frequency';
 import type { Technique } from '../training/palace';
 import { TEXT } from './texts';
+import { Info } from '../../ui/Info';
 
 interface KlubaftenProps {
   bank: readonly BankItem[];
@@ -40,6 +41,7 @@ export function Klubaften({ bank, techniques, onOpen, onBack }: KlubaftenProps) 
           ←
         </button>
         <h2>{TEXT.club}</h2>
+        <Info topic={TEXT.club}>{TEXT.help.club}</Info>
       </header>
       <p className="fb-note">{TEXT.clubIntro}</p>
       <div className="fb-club-grid" role="group" aria-label={TEXT.clubGrid}>

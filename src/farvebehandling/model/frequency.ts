@@ -2,6 +2,7 @@ import { binomial } from '../../domain/combinatorics';
 import { formatDecimal, formatInt } from '../../engine/format';
 import { rankFromSymbol, type Rank } from './cards';
 import type { Fraction } from './fraction';
+import { getLang } from '../../i18n';
 
 /** Antal spil på en klubaften. */
 export const DEALS_PER_EVENING = 25;
@@ -68,14 +69,22 @@ export function oncePerDeals(f: Fraction): number {
   return Number((2n * f.den + f.num) / (2n * f.num));
 }
 
+/** Engelsk ordenstal: 1st, 2nd, 3rd, 4th … 11th, 12th, 13th, 21st. */
+function ordinal(n: number): string {
+  const tens = n % 100;
+  const suffix = tens >= 11 && tens <= 13 ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' } as Record<number, string>)[n % 10] ?? 'th';
+  return `${formatInt(n)}${suffix}`;
+}
+
 /** Naturlig frekvens for en klubaften, fx "ca. 3,5 gange pr. klubaften" eller "ca. hver 5. klubaften". */
 export function eveningText(f: Fraction): string {
   const perEvening = (Number(f.num) * DEALS_PER_EVENING) / Number(f.den);
   if (perEvening >= 0.95) {
     const rounded = Math.round(perEvening * 10) / 10;
     const text = Number.isInteger(rounded) ? formatInt(rounded) : formatDecimal(rounded, 1);
+    if (getLang() === 'en') return rounded === 1 ? 'about once per club evening' : `about ${text} times per club evening`;
     return rounded === 1 ? 'ca. én gang pr. klubaften' : `ca. ${text} gange pr. klubaften`;
   }
   const every = Math.round(1 / perEvening);
-  return `ca. hver ${formatInt(every)}. klubaften`;
+  return getLang() === 'en' ? `about every ${ordinal(every)} club evening` : `ca. hver ${formatInt(every)}. klubaften`;
 }

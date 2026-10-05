@@ -33,6 +33,8 @@ export interface Saved {
     readShow?: 'tap' | 'timed';
     /** Tilføjet efter trin 5: kortene i Lynaflæsning sorteres efter farve som hjælp. */
     readSorted?: boolean;
+    /** Appens sprog (dansk, hvis feltet mangler); vælges med knappen på forsiden. */
+    language?: 'da' | 'en';
   };
   palace: {
     rooms: { name: string }[];
@@ -209,6 +211,10 @@ export function readSaved(input: unknown): { saved: Saved; problems: string[] } 
   if (settings.readSorted !== undefined && typeof settings.readSorted !== 'boolean') {
     problems.push('settings.readSorted er ugyldig');
     delete settings.readSorted;
+  }
+  if (settings.language !== undefined && settings.language !== 'da' && settings.language !== 'en') {
+    problems.push('settings.language er ugyldig');
+    delete settings.language;
   }
   if (raw.readMs !== undefined && !(isNumber(raw.readMs) && raw.readMs >= 800 && raw.readMs <= 5000)) {
     problems.push('readMs er ugyldig');

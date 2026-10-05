@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { tx } from '../i18n';
 
 interface NumberPadProps {
   /** Højst så mange cifre. */
@@ -18,7 +19,7 @@ export function NumberPad({ digits = 2, onSubmit }: NumberPadProps) {
       <div className="keypad-keys">
         {keys.map((key) =>
           key === 'back' ? (
-            <button key={key} type="button" className="key" aria-label="Slet" disabled={!value} onClick={() => setValue(value.slice(0, -1))}>
+            <button key={key} type="button" className="key" aria-label={tx('Slet', 'Delete')} disabled={!value} onClick={() => setValue(value.slice(0, -1))}>
               ⌫
             </button>
           ) : key === 'ok' ? (

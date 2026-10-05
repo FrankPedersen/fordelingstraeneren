@@ -4,6 +4,7 @@ import { cardsText } from '../model/cards';
 import type { FbSaved } from '../storage';
 import { palaceRooms, setScene, setTechniqueText, type Room, type Technique } from '../training/palace';
 import { TEXT } from './texts';
+import { Info } from '../../ui/Info';
 
 interface PaladsProps {
   bank: readonly BankItem[];
@@ -82,6 +83,7 @@ export function Palads({ bank, saved, update, techniques, onBack }: PaladsProps)
           ←
         </button>
         <h2>{TEXT.palace}</h2>
+        <Info topic={TEXT.palace}>{TEXT.help.palace}</Info>
       </header>
       <p className="fb-note">{TEXT.palaceHelp}</p>
       {open.map((room) => (

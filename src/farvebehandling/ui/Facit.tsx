@@ -14,6 +14,7 @@ import { Rumkort } from './Rumkort';
 import { Sandsynlighedsbånd } from './Sandsynlighedsbånd';
 import { PlayResult, SpilSelv } from './SpilSelv';
 import { TEXT } from './texts';
+import { Info } from '../../ui/Info';
 
 interface FacitProps {
   task: FbTask;
@@ -178,7 +179,10 @@ export function Facit({ task, answer, graded, reward, place, onNext }: FacitProp
       </section>
 
       <section className="card" aria-labelledby="fb-facit-difference">
-        <h2 id="fb-facit-difference">{TEXT.difference}</h2>
+<div className="with-info">
+          <h2 id="fb-facit-difference">{TEXT.difference}</h2>
+          <Info topic={TEXT.difference}>{TEXT.help.band}</Info>
+        </div>
         <Sandsynlighedsbånd lines={lines} fields={fields} selected={selected} onSelect={setSelected} />
         {lines.length > 1 && (
           <p>
@@ -192,7 +196,10 @@ export function Facit({ task, answer, graded, reward, place, onNext }: FacitProp
       </section>
 
       <section className="card" aria-labelledby="fb-facit-lines">
-        <h2 id="fb-facit-lines">{TEXT.lines}</h2>
+<div className="with-info">
+          <h2 id="fb-facit-lines">{TEXT.lines}</h2>
+          <Info topic={TEXT.lines}>{TEXT.help.lines}</Info>
+        </div>
         <div className="fb-lines">
           {lines.map((l, i) => (
             <Linjekort key={l.letter} line={l} chosen={answer.line === i && task.type !== 'chancen' && task.type !== 'find-hullet'} />

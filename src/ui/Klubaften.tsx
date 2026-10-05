@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { CLUB_PATTERNS, patternById, type Family } from '../domain/patterns';
+import { tx } from '../i18n';
 
 const FAMILIES: Family[] = [4, 5, 6, 7];
 const familyLabel = (f: Family) => (f === 7 ? '7+' : String(f));
@@ -43,10 +44,10 @@ export function Klubaften({ highlight }: KlubaftenProps) {
       <p className="club-caption" aria-live="polite">
         {active ? (
           <>
-            <strong>{active.id}</strong>: {active.per100} af 100 hænder
+            <strong>{active.id}</strong>: {tx(`${active.per100} af 100 hænder`, `${active.per100} of 100 hands`)}
           </>
         ) : (
-          'Vælg et mønster for at se dets hænder.'
+          tx('Vælg et mønster for at se dets hænder.', 'Choose a pattern to see its hands.')
         )}
       </p>
       <div className="club-legend">
@@ -64,12 +65,12 @@ export function Klubaften({ highlight }: KlubaftenProps) {
         ))}
       </div>
       <p className="muted small">
-        Længste farve:{' '}
+        {tx('Længste farve:', 'Longest suit:')}{' '}
         {FAMILIES.map((f) => {
           const count = CLUB_PATTERNS.filter((p) => p.family === f).reduce((sum, p) => sum + p.per100, 0);
-          return `${familyLabel(f)}-kort ${count}`;
+          return tx(`${familyLabel(f)}-kort ${count}`, `${familyLabel(f)}-card ${count}`);
         }).join(' · ')}{' '}
-        hænder.
+        {tx('hænder.', 'hands.')}
       </p>
     </div>
   );

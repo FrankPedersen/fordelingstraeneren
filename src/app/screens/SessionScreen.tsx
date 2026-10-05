@@ -35,15 +35,17 @@ import {
   type Step,
   type TaskStep,
 } from '../session';
+import { tx } from '../../i18n';
 
-const PHASE_LABEL: Record<Phase, string> = {
-  review: 'Repetition',
-  level: 'Niveauøvelse',
-  lightning: 'Lynrunde',
-  sudoku: '13-sudoku',
-  repeat: 'Gentagelse',
-  status: 'Status',
-};
+const phaseLabel = (phase: Phase): string =>
+  ({
+    review: tx('Repetition', 'Review'),
+    level: tx('Niveauøvelse', 'Level practice'),
+    lightning: tx('Lynrunde', 'Lightning round'),
+    sudoku: '13-sudoku',
+    repeat: tx('Gentagelse', 'Repeat'),
+    status: 'Status',
+  })[phase];
 
 /** Hele sessionens længde, til fremdriftsbjælken. */
 const SESSION_MS = 300_000;
@@ -180,7 +182,7 @@ export function SessionScreen({ saved, onSave, onExit }: SessionScreenProps) {
       <PresentationCard
         saved={saved}
         patternId={current.patternId}
-        title="Nyt mønster"
+        title={tx('Nyt mønster', 'New pattern')}
         onContinue={() => isCurrent(view) && introduce(current.patternId)}
       />
     );
@@ -189,7 +191,7 @@ export function SessionScreen({ saved, onSave, onExit }: SessionScreenProps) {
       <PresentationCard
         saved={saved}
         patternId={current.patternId}
-        title="Husk"
+        title={tx('Husk', 'Remember')}
         onContinue={() =>
           isCurrent(view) && setRun({ ...runRef.current, view: { kind: 'step', step: current.next, shownAt: Date.now() } })
         }
@@ -221,7 +223,8 @@ export function SessionScreen({ saved, onSave, onExit }: SessionScreenProps) {
             className="btn hint-btn"
             onClick={() => isCurrent(view) && setRun({ ...runRef.current, view: { ...view, hint: true } })}
           >
-            Vis ledetråd{plan.hint === 'paid' ? ` (−${HINT_COST} XP)` : ''}
+            {tx('Vis ledetråd', 'Show hint')}
+            {plan.hint === 'paid' ? ` (−${HINT_COST} XP)` : ''}
           </button>
         )}
         {view.kind === 'stake' && (
@@ -250,14 +253,14 @@ export function SessionScreen({ saved, onSave, onExit }: SessionScreenProps) {
   return (
     <main className="screen session">
       <header className="session-bar">
-        <span className="phase">{PHASE_LABEL[phase]}</span>
+        <span className="phase">{phaseLabel(phase)}</span>
         <span className="session-meta">
-          {inLightning ? `${clock(lightningLeft)} · ${session.lightning.correct} rigtige` : xpText(session.xp)}
+          {inLightning ? `${clock(lightningLeft)} · ${session.lightning.correct} ${tx('rigtige', 'correct')}` : xpText(session.xp)}
         </span>
         <button
           type="button"
           className="round"
-          aria-label={finished ? 'Luk' : 'Afbryd sessionen'}
+          aria-label={finished ? tx('Luk', 'Close') : tx('Afbryd sessionen', 'Stop the session')}
           onClick={() => (finished ? onExit() : setConfirmExit(true))}
         >
           ✕
@@ -272,14 +275,19 @@ export function SessionScreen({ saved, onSave, onExit }: SessionScreenProps) {
       {confirmExit && (
         <div className="overlay" role="dialog" aria-modal="true" aria-labelledby="exit-title">
           <div className="dialog">
-            <h2 id="exit-title">Afbryd sessionen?</h2>
-            <p>Dine svar er gemt, men dagen tæller først i din streak, når en session er gennemført.</p>
+            <h2 id="exit-title">{tx('Afbryd sessionen?', 'Stop the session?')}</h2>
+            <p>
+              {tx(
+                'Dine svar er gemt, men dagen tæller først i din streak, når en session er gennemført.',
+                'Your answers are saved, but the day only counts in your streak when a session is completed.',
+              )}
+            </p>
             <div className="actions">
               <button type="button" className="btn primary" onClick={() => setConfirmExit(false)}>
-                Fortsæt sessionen
+                {tx('Fortsæt sessionen', 'Continue the session')}
               </button>
               <button type="button" className="btn" onClick={onExit}>
-                Afbryd
+                {tx('Afbryd', 'Stop')}
               </button>
             </div>
           </div>
@@ -359,49 +367,56 @@ function TaskView({ step, saved, answer, reveal, skylines, onAnswer }: TaskViewP
 
 function StakePrompt({ onStake }: { onStake(stake: Stake): void }) {
   return (
-    <section className="stake" aria-label="Indsats">
-      <p className="prompt">Hvor sikker er du?</p>
+    <section className="stake" aria-label={tx('Indsats', 'Stake')}>
+      <p className="prompt">{tx('Hvor sikker er du?', 'How sure are you?')}</p>
       <div className="two">
         <button type="button" className="btn primary" onClick={() => onStake('sure')}>
-          Sikker
+          {tx('Sikker', 'Sure')}
         </button>
         <button type="button" className="btn" onClick={() => onStake('guess')}>
-          Gæt
+          {tx('Gæt', 'Guess')}
         </button>
       </div>
-      <p className="muted small">Sikker: +15 XP ved rigtigt, −10 ved forkert. Gæt: +5 ved rigtigt.</p>
+      <p className="muted small">
+        {tx('Sikker: +15 XP ved rigtigt, −10 ved forkert. Gæt: +5 ved rigtigt.', 'Sure: +15 XP if right, −10 if wrong. Guess: +5 if right.')}
+      </p>
     </section>
   );
 }
 
-const SCORE_TEXT = {
-  1: '✓ Rigtigt',
-  0.5: '½ Halv score – rigtige mønstre, forkert rækkefølge',
-  0: '✗ Forkert',
-} as const;
+const scoreText = (score: 0 | 0.5 | 1): string =>
+  score === 1
+    ? tx('✓ Rigtigt', '✓ Right')
+    : score === 0.5
+      ? tx('½ Halv score – rigtige mønstre, forkert rækkefølge', '½ Half score – right patterns, wrong order')
+      : tx('✗ Forkert', '✗ Wrong');
 
 function FeedbackBar({ feedback, auto, onNext }: { feedback: Feedback; auto: boolean; onNext(): void }) {
   const multiplier = comboMultiplier(feedback.combo);
   const meta = [
-    xpText(feedback.xp) + (feedback.hintCost ? ` (ledetråd −${feedback.hintCost})` : ''),
-    secondsText(feedback.ms) + (feedback.fast && feedback.score === 1 ? ' – hurtigt' : ''),
-    feedback.combo >= 5 && `${feedback.combo} i træk, combo ×${formatDecimal(multiplier, multiplier % 1 ? 1 : 0)}`,
+    xpText(feedback.xp) + (feedback.hintCost ? ` (${tx('ledetråd', 'hint')} −${feedback.hintCost})` : ''),
+    secondsText(feedback.ms) + (feedback.fast && feedback.score === 1 ? tx(' – hurtigt', ' – fast') : ''),
+    feedback.combo >= 5 && `${feedback.combo} ${tx('i træk', 'in a row')}, combo ×${formatDecimal(multiplier, multiplier % 1 ? 1 : 0)}`,
   ].filter(Boolean);
   const album = feedback.album;
   const find = album && patternById(album.patternId);
   return (
     <section className={`feedback ${feedback.score === 1 ? 'ok' : 'bad'}`} role="status">
-      <p className="feedback-title">{SCORE_TEXT[feedback.score]}</p>
+      <p className="feedback-title">{scoreText(feedback.score)}</p>
       <p className="feedback-meta">{meta.join(' · ')}</p>
       {find && album.rare && (
         <p className="find">
-          Sjældent fund! {find.id}: 1 ud af {formatInt(find.oneIn)}
+          {tx('Sjældent fund!', 'Rare find!')} {find.id}: {tx('1 ud af', '1 in')} {formatInt(find.oneIn)}
         </p>
       )}
-      {find && album.first && <p className="find">Nyt i albummet: {find.id}</p>}
+      {find && album.first && (
+        <p className="find">
+          {tx('Nyt i albummet:', 'New in the album:')} {find.id}
+        </p>
+      )}
       {!auto && (
         <button type="button" className="btn primary" onClick={onNext} autoFocus>
-          Næste
+          {tx('Næste', 'Next')}
         </button>
       )}
     </section>
@@ -421,38 +436,40 @@ function StatusView({ session, saved, jokerUsed, onDone }: StatusViewProps) {
   const days = saved.streak.current;
   return (
     <section className="status">
-      <h1>Session gennemført</h1>
+      <h1>{tx('Session gennemført', 'Session complete')}</h1>
       <dl className="facts">
         <div>
           <dt>Streak</dt>
-          <dd>{days === 1 ? '1 dag' : `${days} dage`} i træk</dd>
+          <dd>{tx(`${days === 1 ? '1 dag' : `${days} dage`} i træk`, `${days === 1 ? '1 day' : `${days} days`} in a row`)}</dd>
         </div>
         <div>
           <dt>XP</dt>
           <dd>
-            {xpText(session.xp)} · {formatInt(saved.xp)} i alt
+            {xpText(session.xp)} · {formatInt(saved.xp)} {tx('i alt', 'in total')}
           </dd>
         </div>
         <div>
-          <dt>Rigtige</dt>
+          <dt>{tx('Rigtige', 'Correct')}</dt>
+          <dd>{tx(`${session.correct} af ${session.total}`, `${session.correct} of ${session.total}`)}</dd>
+        </div>
+        <div>
+          <dt>{tx('Dagens kurvepunkt', "Today's chart point")}</dt>
           <dd>
-            {session.correct} af {session.total}
+            {formatDecimal(record?.cpm ?? 0, 1)} {tx('rigtige/min i lynrunden', 'correct/min in the lightning round')}
           </dd>
-        </div>
-        <div>
-          <dt>Dagens kurvepunkt</dt>
-          <dd>{formatDecimal(record?.cpm ?? 0, 1)} rigtige/min i lynrunden</dd>
         </div>
       </dl>
-      {jokerUsed && <p>Ugens joker dækkede en glemt dag, så din streak lever.</p>}
+      {jokerUsed && <p>{tx('Ugens joker dækkede en glemt dag, så din streak lever.', "This week's joker covered a missed day, so your streak lives on.")}</p>}
       {session.boss && <WeekStatus saved={saved} />}
       <p>
-        I morgen: {next.due === 1 ? '1 emne' : `${next.due} emner`} til repetition
-        {next.fresh > 0 && ` og ${next.fresh === 1 ? '1 nyt mønster' : `${next.fresh} nye mønstre`}`}.
+        {tx(
+          `I morgen: ${next.due === 1 ? '1 emne' : `${next.due} emner`} til repetition${next.fresh > 0 ? ` og ${next.fresh === 1 ? '1 nyt mønster' : `${next.fresh} nye mønstre`}` : ''}.`,
+          `Tomorrow: ${next.due === 1 ? '1 item' : `${next.due} items`} to review${next.fresh > 0 ? ` and ${next.fresh === 1 ? '1 new pattern' : `${next.fresh} new patterns`}` : ''}.`,
+        )}
       </p>
       <div className="spacer" />
       <button type="button" className="btn primary wide" onClick={onDone} autoFocus>
-        Færdig
+        {tx('Færdig', 'Done')}
       </button>
     </section>
   );
@@ -466,12 +483,14 @@ function WeekStatus({ saved }: { saved: Saved }) {
   const total = sessions.reduce((sum, s) => sum + s.total, 0);
   return (
     <section className="card">
-      <h2>Ugens status</h2>
+      <h2>{tx('Ugens status', "This week's status")}</h2>
       <p>
-        {sessions.length} {sessions.length === 1 ? 'session' : 'sessioner'} i uge {Number(week.slice(6))} ·{' '}
-        {correct} af {total} rigtige.
+        {tx(
+          `${sessions.length} ${sessions.length === 1 ? 'session' : 'sessioner'} i uge ${Number(week.slice(6))} · ${correct} af ${total} rigtige.`,
+          `${sessions.length} ${sessions.length === 1 ? 'session' : 'sessions'} in week ${Number(week.slice(6))} · ${correct} of ${total} correct.`,
+        )}
       </p>
-      <p className="muted small">Sådan ser 100 hænder ud på en klubaften:</p>
+      <p className="muted small">{tx('Sådan ser 100 hænder ud på en klubaften:', 'This is what 100 hands look like at a club evening:')}</p>
       <Klubaften />
     </section>
   );

@@ -13,6 +13,7 @@ import { grade, makeTask, type FbAnswer, type FbTask, type Graded } from '../tra
 import { Facit } from './Facit';
 import { Opgave } from './Opgave';
 import { TEXT } from './texts';
+import { Info } from '../../ui/Info';
 
 interface SelvvalgtProps {
   bank: readonly BankItem[];
@@ -104,7 +105,10 @@ export function Selvvalgt({ bank, saved, update, techniques, startTechnique }: S
   return (
     <div className="fb-narrow">
       <section className="card">
-        <h2>{TEXT.practiceTitle}</h2>
+        <div className="with-info">
+          <h2>{TEXT.practiceTitle}</h2>
+          <Info topic={TEXT.practiceTitle}>{TEXT.help.practice}</Info>
+        </div>
         <p className="fb-note">{TEXT.practiceHelp}</p>
       </section>
       {weak && filter.technique !== weak.key && (

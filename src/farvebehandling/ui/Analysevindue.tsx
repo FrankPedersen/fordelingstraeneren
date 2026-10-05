@@ -30,6 +30,8 @@ import { Resultatkort } from './Resultatkort';
 import { Sandsynlighedsbånd } from './Sandsynlighedsbånd';
 import { SpilSelv } from './SpilSelv';
 import { TEXT } from './texts';
+import { lineErrorText, stepText } from '../lineText';
+import { Info } from '../../ui/Info';
 
 interface AnalysevindueProps {
   bank: readonly BankItem[];
@@ -181,7 +183,7 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
     if (!saved || !update) return;
     const id = `egen-${Date.now().toString(36)}`;
     const errors = await computeOwn(id, line.steps);
-    setEditorErrors(errors);
+    setEditorErrors(errors.map(lineErrorText));
     if (errors.length) return;
     update({ ...saved, ownLines: [...saved.ownLines, { combination: item.combination.id, id, text: line.text, steps: line.steps }] });
     setEditing(false);
@@ -192,7 +194,7 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
     update({ ...saved, ownLines: saved.ownLines.filter((l) => l.id !== id) });
   }
 
-  const firstLeadText = best?.lead.steps[0]?.replace(/\.$/, '');
+  const firstLeadText = best?.lead.steps[0] ? stepText(best.lead.steps[0]).replace(/\.$/, '') : undefined;
   const arrow = best ? (best.lead.hand === 'N' ? 'ned' : 'op') : null;
   const elapsed = busy === null ? 0 : Math.max(0, Math.round((now - busy) / 1000));
   const busyNote = busy !== null && (
@@ -208,7 +210,10 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
     <div className="fb-analysis">
       <div className="fb-column">
         <section className="card" aria-labelledby="fb-choose">
+<div className="with-info">
           <h2 id="fb-choose">{TEXT.choose}</h2>
+          <Info topic={TEXT.choose}>{TEXT.help.choose}</Info>
+        </div>
           <div className="fb-segment" role="group" aria-label={TEXT.choose}>
             <button type="button" className={`btn small-btn${mode === 'bank' ? ' selected' : ''}`} aria-pressed={mode === 'bank'} onClick={() => setMode('bank')}>
               {TEXT.bank}
@@ -291,6 +296,7 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
           />
           <div className="fb-goals" role="group" aria-label={TEXT.goalLabel}>
             <span>{TEXT.goalLabel}</span>
+            <Info topic={TEXT.goalLabel}>{TEXT.help.goals}</Info>
             {item.combination.goals.map((g) => (
               <button
                 key={g}
@@ -315,7 +321,10 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
         )}
 
         <section className="card" aria-labelledby="fb-lines">
+<div className="with-info">
           <h2 id="fb-lines">{TEXT.lines}</h2>
+          <Info topic={TEXT.lines}>{TEXT.help.lines}</Info>
+        </div>
           {!solvedGoal && <p className="fb-note">{TEXT.goalNotSolved}</p>}
           {!solvedGoal && mode !== 'picker' && busyNote}
           <div className="fb-lines">
@@ -325,7 +334,10 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
           </div>
           {saved && update && solvedGoal && (
             <>
-              <h3>{TEXT.ownLines}</h3>
+              <div className="with-info">
+                <h3>{TEXT.ownLines}</h3>
+                <Info topic={TEXT.ownLines}>{TEXT.help.ownLines}</Info>
+              </div>
               <div className="fb-lines">
                 {ownViews.map((o, i) =>
                   o.view ? (
@@ -388,7 +400,10 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
 
       <div className="fb-column">
         <section className="card" aria-labelledby="fb-difference">
+<div className="with-info">
           <h2 id="fb-difference">{TEXT.difference}</h2>
+          <Info topic={TEXT.difference}>{TEXT.help.band}</Info>
+        </div>
           <Sandsynlighedsbånd lines={allLines} fields={fields} selected={selected} onSelect={setSelected} />
           {decisive.length ? (
             <p>
@@ -418,7 +433,10 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
         </section>
 
         <section className="card" aria-labelledby="fb-details">
+<div className="with-info">
           <h2 id="fb-details">{showAll ? TEXT.details : TEXT.decisive}</h2>
+          <Info topic={TEXT.details}>{TEXT.help.layouts}</Info>
+        </div>
           <LayoutList
             fields={showAll || !decisive.length ? fields : decisive}
             lines={allLines.map((l) => l.letter)}

@@ -2,6 +2,7 @@ import { formatInt } from '../engine/format';
 import { mulberry32 } from '../engine/rng';
 import type { Saved } from '../engine/storage';
 import { GRADES, GRADE_LABEL, PATTERNS, type Grade, type Pattern } from '../domain/patterns';
+import { tx } from '../i18n';
 
 type AlbumEntry = Saved['album'][string];
 
@@ -41,7 +42,7 @@ export interface QuizQuestion {
 }
 
 function magnitudeLabel(k: number): string {
-  return `1 ud af ${formatInt(10 ** k)}–${formatInt(10 ** (k + 1) - 1)}`;
+  return tx(`1 ud af ${formatInt(10 ** k)}–${formatInt(10 ** (k + 1) - 1)}`, `1 in ${formatInt(10 ** k)}–${formatInt(10 ** (k + 1) - 1)}`);
 }
 
 /** Tre spørgsmål om et legendarisk mønster: grad, størrelsesorden af "1 ud af N" og antal placeringer. */
@@ -53,17 +54,17 @@ export function legendaryQuiz(pattern: Pattern, seed: number): QuizQuestion[] {
   const magnitudes = [0, 1, 2, 3].map((i) => magnitudeLabel(lowest + i));
   return [
     {
-      prompt: `Hvilken grad har ${pattern.id}?`,
+      prompt: tx(`Hvilken grad har ${pattern.id}?`, `Which grade is ${pattern.id}?`),
       options: GRADES.map((g) => GRADE_LABEL[g]),
       answer: GRADE_LABEL[pattern.grade],
     },
     {
-      prompt: `Hvor sjælden er ${pattern.id}?`,
+      prompt: tx(`Hvor sjælden er ${pattern.id}?`, `How rare is ${pattern.id}?`),
       options: magnitudes,
       answer: magnitudeLabel(k),
     },
     {
-      prompt: `Hvor mange placeringer har ${pattern.id}?`,
+      prompt: tx(`Hvor mange placeringer har ${pattern.id}?`, `How many arrangements does ${pattern.id} have?`),
       options: ['4', '12', '24'],
       answer: String(pattern.placements),
     },

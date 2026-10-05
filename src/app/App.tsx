@@ -1,8 +1,11 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { dayOf } from '../engine/dates';
+import { setLang, type Lang } from '../i18n';
+import { useLang } from '../ui/useLang';
 import { ensureItems } from './progression';
 import { AlbumScreen } from './screens/AlbumScreen';
 import { CurvesScreen } from './screens/CurvesScreen';
+import { GuideScreen } from './screens/GuideScreen';
 import { HomeScreen } from './screens/HomeScreen';
 import { KlubaftenScreen } from './screens/KlubaftenScreen';
 import { PalaceScreen } from './screens/PalaceScreen';
@@ -13,7 +16,7 @@ import { useSaved } from './useSaved';
 // Farvebehandling er et selvstændigt spor; det hentes først, når menupunktet bruges.
 const FarvebehandlingScreen = lazy(() => import('../farvebehandling/ui/FarvebehandlingScreen'));
 
-type Screen = 'home' | 'session' | 'palace' | 'album' | 'club' | 'curves' | 'settings' | 'farvebehandling';
+type Screen = 'home' | 'session' | 'palace' | 'album' | 'club' | 'curves' | 'settings' | 'guide' | 'farvebehandling';
 
 interface AppProps {
   /** En ny version af appen er hentet og venter. */
@@ -23,6 +26,9 @@ interface AppProps {
 
 export default function App({ updateReady = false, onUpdate }: AppProps) {
   const [saved, setSaved] = useSaved();
+  // Sproget fra lagringen sættes, før noget tegnes; skifter det, tegnes hele appen igen.
+  useState(() => setLang(saved.settings.language ?? 'da'));
+  useLang();
   const [screen, setScreen] = useState<Screen>('home');
   const home = () => setScreen('home');
 
@@ -30,6 +36,11 @@ export default function App({ updateReady = false, onUpdate }: AppProps) {
     // Ingen returværdi: scrollTo giver et promise i nyere browsere, og React ville kalde det som oprydning.
     window.scrollTo(0, 0);
   }, [screen]);
+
+  function changeLanguage(language: Lang) {
+    setSaved({ ...saved, settings: { ...saved.settings, language } });
+    setLang(language);
+  }
 
   function startSession() {
     // Mønstre fra før en ny færdighed kom til, får deres manglende emner.
@@ -51,6 +62,8 @@ export default function App({ updateReady = false, onUpdate }: AppProps) {
       return <CurvesScreen saved={saved} onBack={home} />;
     case 'settings':
       return <SettingsScreen saved={saved} onSave={setSaved} onBack={home} />;
+    case 'guide':
+      return <GuideScreen onBack={home} />;
     case 'farvebehandling':
       return (
         <Suspense fallback={<main className="screen" aria-busy="true" />}>
@@ -70,6 +83,8 @@ export default function App({ updateReady = false, onUpdate }: AppProps) {
           onCurves={() => setScreen('curves')}
           onSettings={() => setScreen('settings')}
           onFarvebehandling={() => setScreen('farvebehandling')}
+          onLanguage={changeLanguage}
+          onGuide={() => setScreen('guide')}
         />
       );
   }

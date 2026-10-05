@@ -5,8 +5,16 @@ import { STANDARD_IMAGES, imageOf } from '../../memory/images';
 import { LOFT_ROOM, isRoomOpen, palaceOf, sceneTemplate, type Palace } from '../../memory/palace';
 import { Skyline } from '../../ui/Skyline';
 import { gradeProgress } from '../progression';
+import { tx } from '../../i18n';
+import { Info } from '../../ui/Info';
 
-const ROOM_SPAN = ['Station 1–5', 'Station 6–10', 'Station 11–13', 'De episke mønstre, uden rækkefølge'];
+const roomSpan = (r: number) =>
+  [
+    tx('Station 1–5', 'Stations 1–5'),
+    tx('Station 6–10', 'Stations 6–10'),
+    tx('Station 11–13', 'Stations 11–13'),
+    tx('De episke mønstre, uden rækkefølge', 'The epic patterns, in no particular order'),
+  ][r];
 
 interface PalaceScreenProps {
   saved: Saved;
@@ -39,14 +47,22 @@ export function PalaceScreen({ saved, onSave, onBack }: PalaceScreenProps) {
   return (
     <main className="screen">
       <header className="screen-head">
-        <button type="button" className="round" aria-label="Tilbage" onClick={onBack}>
+        <button type="button" className="round" aria-label={tx('Tilbage', 'Back')} onClick={onBack}>
           ←
         </button>
-        <h1>Huskepalads</h1>
+        <h1>{tx('Huskepalads', 'Memory palace')}</h1>
+        <Info topic={tx('Huskepalads', 'Memory palace')}>
+          {tx(
+            'Tryk på en station for at navngive den, skrive dit eget billede og en scene. Rum 2, rum 3 og Loftet åbner, når du når de næste niveauer. Paladsvandring i sessionen øver ruten begge veje.',
+            'Tap a station to name it and write your own image and a scene. Room 2, room 3 and the Attic open as you reach the next levels. Palace walk in the session practises the route both ways.',
+          )}
+        </Info>
       </header>
       <p className="muted small">
-        Vælg en rute, du kender udenad – fx dit hjem, klubben eller en fast gåtur – og læg 13 stationer på
-        den. Station n rummer mønstret med rang n. Skriv en scene til hver station.
+        {tx(
+          'Vælg en rute, du kender udenad – fx dit hjem, klubben eller en fast gåtur – og læg 13 stationer på den. Station n rummer mønstret med rang n. Skriv en scene til hver station.',
+          'Choose a route you know by heart – your home, the club or a regular walk – and place 13 stations along it. Station n holds the pattern with rank n. Write a scene for each station.',
+        )}
       </p>
 
       {palace.rooms.map((room, r) => {
@@ -54,17 +70,20 @@ export function PalaceScreen({ saved, onSave, onBack }: PalaceScreenProps) {
         return (
           <section key={r} className="card">
             <label className="field">
-              <span className="muted small">{ROOM_SPAN[r]}</span>
+              <span className="muted small">{roomSpan(r)}</span>
               <input
                 value={room.name}
-                aria-label={`Navn på rum ${r + 1}`}
+                aria-label={tx(`Navn på rum ${r + 1}`, `Name of room ${r + 1}`)}
                 disabled={!open}
                 onChange={(e) => setRoomName(r, e.target.value)}
               />
             </label>
             {!open ? (
               <p className="muted small">
-                Låses op på niveau {r + 1}, når mønstrene fra graden {GRADE_LABEL[GRADES[r - 1]]} er lært.
+                {tx(
+                  `Låses op på niveau ${r + 1}, når mønstrene fra graden ${GRADE_LABEL[GRADES[r - 1]]} er lært.`,
+                  `Unlocks at level ${r + 1}, when the patterns of the grade ${GRADE_LABEL[GRADES[r - 1]]} are learnt.`,
+                )}
               </p>
             ) : r + 1 === LOFT_ROOM ? (
               <ul className="stations">
@@ -77,7 +96,7 @@ export function PalaceScreen({ saved, onSave, onBack }: PalaceScreenProps) {
                       </span>
                       <input
                         value={saved.images[p.id] ?? ''}
-                        placeholder="Skriv dit eget billede"
+                        placeholder={tx('Skriv dit eget billede', 'Write your own image')}
                         onChange={(e) => setImage(p.id, e.target.value)}
                       />
                     </label>
@@ -98,7 +117,7 @@ export function PalaceScreen({ saved, onSave, onBack }: PalaceScreenProps) {
                         <span className="station-number">{i + 1}</span>
                         <Skyline id={station.patternId} size="sm" label={false} />
                         <span className="grow">
-                          <strong>{station.name.trim() || 'Navngiv stationen'}</strong>
+                          <strong>{station.name.trim() || tx('Navngiv stationen', 'Name the station')}</strong>
                           <span className="muted small"> · {imageOf(saved, station.patternId)?.name}</span>
                         </span>
                         <span aria-hidden="true">{editing === i ? '▴' : '▾'}</span>
@@ -135,22 +154,22 @@ interface StationEditorProps {
 function StationEditor({ saved, station, number, onStation, onImage }: StationEditorProps) {
   const standard = STANDARD_IMAGES[station.patternId];
   const image = imageOf(saved, station.patternId)?.name ?? '';
-  const template = sceneTemplate(station.name.trim() || 'stationen', image);
+  const template = sceneTemplate(station.name.trim() || tx('stationen', 'the station'), image);
   return (
     <div className="station-editor">
       <p>
-        <strong>{station.patternId}</strong> bor ved station {number}.
+        <strong>{station.patternId}</strong> {tx(`bor ved station ${number}.`, `lives at station ${number}.`)}
       </p>
       <label className="field">
-        <span>Stationens navn</span>
+        <span>{tx('Stationens navn', 'Name of the station')}</span>
         <input
           value={station.name}
-          placeholder="fx hoveddøren"
+          placeholder={tx('fx hoveddøren', 'e.g. the front door')}
           onChange={(e) => onStation({ name: e.target.value })}
         />
       </label>
       <label className="field">
-        <span>Billede</span>
+        <span>{tx('Billede', 'Image')}</span>
         <input
           value={saved.images[station.patternId] ?? ''}
           placeholder={standard?.name}
@@ -159,11 +178,14 @@ function StationEditor({ saved, station, number, onStation, onImage }: StationEd
       </label>
       {standard && (
         <p className="muted small">
-          Standardbilledet er {standard.name}: {standard.shape}. Et billede, du selv finder på, huskes bedre.
+          {tx(
+            `Standardbilledet er ${standard.name}: ${standard.shape}. Et billede, du selv finder på, huskes bedre.`,
+            `The standard image is ${standard.name}: ${standard.shape}. An image you make up yourself is remembered better.`,
+          )}
         </p>
       )}
       <label className="field">
-        <span>Scene</span>
+        <span>{tx('Scene', 'Scene')}</span>
         <textarea
           rows={3}
           value={station.scene ?? ''}
@@ -173,10 +195,12 @@ function StationEditor({ saved, station, number, onStation, onImage }: StationEd
       </label>
       {!station.scene && (
         <button type="button" className="btn small-btn" onClick={() => onStation({ scene: `${template} ` })}>
-          Brug skabelonen
+          {tx('Brug skabelonen', 'Use the template')}
         </button>
       )}
-      <p className="muted small">Gør billedet overdrevet, lad det bevæge sig, og lad det røre ved stationen.</p>
+      <p className="muted small">
+        {tx('Gør billedet overdrevet, lad det bevæge sig, og lad det røre ved stationen.', 'Make the image exaggerated, let it move, and let it touch the station.')}
+      </p>
     </div>
   );
 }

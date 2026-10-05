@@ -4,6 +4,8 @@ import { distributionText } from '../../domain/patterns';
 import { PatternKeypad } from '../../ui/PatternKeypad';
 import { Skyline } from '../../ui/Skyline';
 import { checkRead, rankLabel, type ReadTask } from './task';
+import { tx } from '../../i18n';
+import { Info } from '../../ui/Info';
 
 interface ReadViewProps {
   task: ReadTask;
@@ -37,19 +39,27 @@ export function ReadView({ task, answer, reveal, skylines, show, sorted, onAnswe
   const right = answer !== undefined && checkRead(task, answer);
   const prompt = showing
     ? show === 'tap'
-      ? 'Se hånden, og tryk Klar'
-      : 'Se hånden …'
+      ? tx('Se hånden, og tryk Klar', 'Look at the hand, and tap Ready')
+      : tx('Se hånden …', 'Look at the hand …')
     : reveal
-      ? 'Hånden'
-      : 'Hvilket mønster var det?';
+      ? tx('Hånden', 'The hand')
+      : tx('Hvilket mønster var det?', 'Which pattern was it?');
 
   return (
     <div className="task">
-      <p className="prompt">{prompt}</p>
+      <div className="with-info">
+        <p className="prompt">{prompt}</p>
+        <Info topic={tx('Lynaflæsning', 'Lightning reading')}>
+          {tx(
+            'Tæl farverne i hånden, og tast mønstret: de fire længder, længste først eller i vilkårlig rækkefølge. Svartiden måles fra, hånden er skjult. Under Indstillinger kan hånden vises sorteret efter farve eller kun et øjeblik.',
+            'Count the suits in the hand and type the pattern: the four lengths, longest first or in any order. The answer time is measured from when the hand is hidden. Under Settings the hand can be shown sorted by suit or only for a moment.',
+          )}
+        </Info>
+      </div>
       {reveal ? (
         <SortedHand cards={task.cards} />
       ) : showing && sorted ? (
-        <div className="hand-sorted" aria-label="Hånden">
+        <div className="hand-sorted" aria-label={tx('Hånden', 'The hand')}>
           {SUIT_SYMBOLS.map((symbol, suit) => {
             const cards = task.cards.filter((c) => suitOf(c) === suit).sort((a, b) => b - a);
             return cards.length === 0 ? null : (
@@ -62,7 +72,7 @@ export function ReadView({ task, answer, reveal, skylines, show, sorted, onAnswe
           })}
         </div>
       ) : (
-        <div className="hand" aria-label={showing ? 'Hånden' : 'Hånden er skjult'}>
+        <div className="hand" aria-label={showing ? tx('Hånden', 'The hand') : tx('Hånden er skjult', 'The hand is hidden')}>
           {task.cards.map((card) =>
             showing ? <CardFace key={card} card={card} /> : <span key={card} className="playing-card back" />,
           )}
@@ -70,22 +80,28 @@ export function ReadView({ task, answer, reveal, skylines, show, sorted, onAnswe
       )}
       {showing && show === 'tap' && (
         <button type="button" className="btn primary" onClick={() => setHiddenAt(Date.now())}>
-          Klar – skjul hånden
+          {tx('Klar – skjul hånden', 'Ready – hide the hand')}
         </button>
       )}
       {answer === undefined && (
         <PatternKeypad disabled={showing} onPattern={(lengths) => onAnswer(lengths, hiddenAt ?? Date.now())} />
       )}
-      {typed && !reveal && <p className="note">Dit svar: {typed}</p>}
+      {typed && !reveal && (
+        <p className="note">
+          {tx('Dit svar:', 'Your answer:')} {typed}
+        </p>
+      )}
       {reveal && (
         <div className="pair">
           <div className={`choice ${right ? 'right' : 'wrong'}`}>
-            <span className="muted small">Dit svar</span>
+            <span className="muted small">{tx('Dit svar', 'Your answer')}</span>
             {skylines ? <Skyline id={typed!} /> : <strong>{typed}</strong>}
           </div>
           {!right && (
             <div className="choice right">
-              <span className="muted small">Facit · {distributionText(suitLengths(task.cards))}</span>
+              <span className="muted small">
+                {tx('Facit', 'Answer')} · {distributionText(suitLengths(task.cards))}
+              </span>
               {skylines ? <Skyline id={task.patternId} /> : <strong>{task.patternId}</strong>}
             </div>
           )}

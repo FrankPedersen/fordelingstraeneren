@@ -5,6 +5,7 @@ import { Skyline } from '../ui/Skyline';
 import { patternPercent } from '../ui/text';
 import { imageOf, type PatternImage } from './images';
 import { palaceOf, placeOf, roomName, stationName } from './palace';
+import { tx } from '../i18n';
 
 /** "Station 3 · Køkkenbordet · Rum 1", "Loftet" eller null for legendariske mønstre. */
 export function placeText(saved: Saved, patternId: string): string | null {
@@ -45,12 +46,12 @@ export function PresentationCard({ saved, patternId, title, onContinue }: Presen
   const place = placeText(saved, patternId);
   const image = imageOf(saved, patternId);
   const facts: [string, string | number][] = [
-    ['Rang', p.rank],
-    ['Sandsynlighed', patternPercent(p)],
-    ['Pr. 100 hænder', p.per100],
-    ['1 ud af', formatInt(p.oneIn)],
-    ['Placeringer', p.placements],
-    ['Grad', GRADE_LABEL[p.grade]],
+    [tx('Rang', 'Rank'), p.rank],
+    [tx('Sandsynlighed', 'Probability'), patternPercent(p)],
+    [tx('Pr. 100 hænder', 'Per 100 hands'), p.per100],
+    [tx('1 ud af', '1 in'), formatInt(p.oneIn)],
+    [tx('Placeringer', 'Arrangements'), p.placements],
+    [tx('Grad', 'Grade'), GRADE_LABEL[p.grade]],
   ];
   return (
     <section className="intro">
@@ -73,7 +74,7 @@ export function PresentationCard({ saved, patternId, title, onContinue }: Presen
       </dl>
       <div className="spacer" />
       <button type="button" className="btn primary wide" onClick={onContinue}>
-        Videre
+        {tx('Videre', 'Continue')}
       </button>
     </section>
   );
@@ -83,7 +84,7 @@ export function PresentationCard({ saved, patternId, title, onContinue }: Presen
 export function HintBox({ image }: { image: PatternImage }) {
   return (
     <div className="memory hint" role="note">
-      <span className="eyebrow">Ledetråd</span>
+      <span className="eyebrow">{tx('Ledetråd', 'Hint')}</span>
       <ImageText image={image} />
     </div>
   );

@@ -1,6 +1,7 @@
 import { SUIT_SYMBOLS } from '../domain/cards';
+import { tx } from '../i18n';
 
-const SUIT_NAMES = ['spar', 'hjerter', 'ruder', 'klør'];
+const suitName = (c: number) => tx(['spar', 'hjerter', 'ruder', 'klør'][c], ['spades', 'hearts', 'diamonds', 'clubs'][c]);
 
 export interface GridCell {
   value: number | null;
@@ -57,7 +58,7 @@ export function Gitter4x4({ rows, selected, onSelect }: Gitter4x4Props) {
                       ]
                         .filter(Boolean)
                         .join(' ')}
-                      aria-label={`${row.label}, ${SUIT_NAMES[c]}: ${cell.value ?? (cell.notes.length ? `noter ${cell.notes.join(', ')}` : 'tom')}`}
+                      aria-label={`${row.label}, ${suitName(c)}: ${cell.value ?? (cell.notes.length ? `${tx('noter', 'notes')} ${cell.notes.join(', ')}` : tx('tom', 'empty'))}`}
                       onClick={() => onSelect(r, c)}
                     >
                       {cell.value ?? (cell.notes.length > 0 && <span className="notes">{cell.notes.join(' ')}</span>)}

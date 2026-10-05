@@ -2,6 +2,7 @@ import { addDays, daysBetween, isoWeek } from '../engine/dates';
 import type { Saved } from '../engine/storage';
 import { GRADES, type Grade } from '../domain/patterns';
 import { lightningKind } from './session';
+import { tx } from '../i18n';
 
 export interface WeekPoint {
   /** ISO-ugen, fx "2026-W40". */
@@ -42,7 +43,7 @@ export function weeklyCurves(saved: Saved, maxWeeks = 12): WeekPoint[] {
     }
     return {
       week,
-      label: `uge ${Number(week.slice(6))}`,
+      label: tx(`uge ${Number(week.slice(6))}`, `week ${Number(week.slice(6))}`),
       sessions: sessions.length,
       higherLower: mean(sessions.filter((s) => lightningKind(s.day) === 'higher-lower').map((s) => s.cpm)),
       read: mean(sessions.filter((s) => lightningKind(s.day) === 'read').map((s) => s.cpm)),

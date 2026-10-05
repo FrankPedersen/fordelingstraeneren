@@ -3,6 +3,8 @@ import { cardsData, rankText, type Rank } from '../model/cards';
 import { cardName } from '../solver/describe';
 import type { LineStep } from '../solver/lines';
 import { TEXT } from './texts';
+import { getLang } from '../../i18n';
+import { englishCardName } from '../lineText';
 
 interface LinjeeditorProps {
   north: readonly Rank[];
@@ -17,21 +19,16 @@ interface LinjeeditorProps {
 /** Højst så mange trin; efter sidste trin spiller løseren videre. */
 const MAX_STEPS = 4;
 
-const HAND: Record<'N' | 'S', string> = { N: 'bordet', S: 'hånden' };
-
-/** Linjen på dansk ud fra trinene, når brugeren ikke har givet den et navn. */
+/** Linjen ud fra trinene, når brugeren ikke har givet den et navn. */
 export function stepsText(steps: readonly LineStep[]): string {
-  const name = (card: string) => (card === 'low' ? 'lille' : card === 'high' ? 'højt' : cardName(symbolRank(card)));
+  const name = (card: string) => (card === 'low' || card === 'high' ? TEXT.editorCardName(card) : cardNameText(symbolRank(card)));
   return steps
-    .map((s) => {
-      const lead = `${capital(name(s.card))} fra ${HAND[s.leadFrom]}`;
-      if (!s.third) return `${lead}.`;
-      return `${lead}; 3. hånd lægger ${name(s.third.play)}, men ${name(s.third.else)}, hvis 2. hånd lægger en honnør.`;
-    })
+    .map((s) => TEXT.editorStepText(name(s.card), s.leadFrom, s.third && { play: name(s.third.play), else: name(s.third.else) }))
     .join(' ');
 }
 
-const capital = (t: string) => t.charAt(0).toUpperCase() + t.slice(1);
+/** Kortets navn: "esset" på dansk, "the ace" på engelsk. */
+const cardNameText = (rank: Rank) => (getLang() === 'en' ? englishCardName(rank) : cardName(rank));
 const DATA_RANK: Record<string, Rank> = { A: 14, K: 13, Q: 12, J: 11, T: 10 };
 const symbolRank = (symbol: string): Rank => DATA_RANK[symbol] ?? Number(symbol);
 

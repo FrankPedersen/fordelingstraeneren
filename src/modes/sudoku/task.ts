@@ -3,7 +3,8 @@ import { suitLengths, type SuitLengths } from '../../domain/cards';
 import { SEATS, SEAT_NAMES, dealWith, type Seat } from '../../domain/dealer';
 import { solveSudoku, type Defender, type Layout } from '../../domain/sudoku';
 import { simulateAuction, type Bid } from '../../system/auction';
-import { callText, satisfies, type Requirement } from '../../system/interpreter';
+import { callText, ruleText, satisfies, type Requirement } from '../../system/interpreter';
+import { tx } from '../../i18n';
 
 /** En ledetråd: en melding tolket efter systemfilen eller en spilhændelse. */
 export type Clue =
@@ -23,8 +24,12 @@ export interface SudokuTask {
 }
 
 const SUIT_NAMES = ['spar', 'hjerter', 'ruder', 'klør'];
+const SUIT_NAMES_EN = ['spades', 'hearts', 'diamonds', 'clubs'];
 const NUMBER_WORDS = ['', 'én', 'to', 'tre', 'fire', 'fem', 'seks', 'syv', 'otte', 'ni', 'ti', 'elleve', 'tolv', 'tretten'];
+const TIMES_EN = ['', 'once', 'twice', 'three times', 'four times', 'five times', 'six times', 'seven times', 'eight times', 'nine times', 'ten times', 'eleven times', 'twelve times', 'thirteen times'];
+const ORDINAL_EN = ['', '1st', '2nd', '3rd', '4th'];
 const POSSESSIVE: Record<Seat, string> = { N: 'Nords', E: 'Østs', S: 'Syds', W: 'Vests' };
+const POSSESSIVE_EN: Record<Seat, string> = { N: "North's", E: "East's", S: "South's", W: "West's" };
 
 /** Grundpoint pr. opgave. */
 export const SUDOKU_BASE = 10;
@@ -63,9 +68,13 @@ function callClue(bid: Bid): Clue {
   const seat = bid.seat as Defender;
   const name = SEAT_NAMES[seat];
   const call = callText(bid.rule.call);
+  const explanation = ruleText(bid.rule);
   const text = bid.over
-    ? `${name} ${bid.rule.call === 'X' ? 'dobler' : `melder ${call}`} efter ${POSSESSIVE[bid.over.seat]} ${callText(bid.over.call)}: ${bid.rule.text}.`
-    : `${name} åbner ${call}: ${bid.rule.text}.`;
+    ? tx(
+        `${name} ${bid.rule.call === 'X' ? 'dobler' : `melder ${call}`} efter ${POSSESSIVE[bid.over.seat]} ${callText(bid.over.call)}: ${explanation}.`,
+        `${name} ${bid.rule.call === 'X' ? 'doubles' : `bids ${call}`} after ${POSSESSIVE_EN[bid.over.seat]} ${callText(bid.over.call)}: ${explanation}.`,
+      )
+    : tx(`${name} åbner ${call}: ${explanation}.`, `${name} opens ${call}: ${explanation}.`);
   return { kind: 'call', seat, text, shows: bid.rule.shows };
 }
 
@@ -76,15 +85,17 @@ function playEvents(lengths: Record<Seat, SuitLengths>): Clue[] {
     const name = SEAT_NAMES[seat];
     lengths[seat].forEach((length, suit) => {
       const s = SUIT_NAMES[suit];
+      const en = SUIT_NAMES_EN[suit];
       if (length <= 3) {
         const n = length + 1;
-        events.push({ kind: 'cannot-follow', seat, suit, n, text: `${name} kan ikke bekende i ${n}. ${s}runde.` });
+        const text = tx(`${name} kan ikke bekende i ${n}. ${s}runde.`, `${name} shows out on the ${ORDINAL_EN[n]} round of ${en}.`);
+        events.push({ kind: 'cannot-follow', seat, suit, n, text });
       }
       for (let n = 2; n <= length; n++) {
-        events.push({ kind: 'follows', seat, suit, n, text: `${name} følger ${NUMBER_WORDS[n]} gange i ${s}.` });
+        events.push({ kind: 'follows', seat, suit, n, text: tx(`${name} følger ${NUMBER_WORDS[n]} gange i ${s}.`, `${name} follows ${TIMES_EN[n]} in ${en}.`) });
       }
       if (seat === 'W' && length >= 4) {
-        events.push({ kind: 'fourth-best', seat, suit, n: 4, text: `Vest spiller 4. højeste ud i ${s}.` });
+        events.push({ kind: 'fourth-best', seat, suit, n: 4, text: tx(`Vest spiller 4. højeste ud i ${s}.`, `West leads fourth highest in ${en}.`) });
       }
     });
   }

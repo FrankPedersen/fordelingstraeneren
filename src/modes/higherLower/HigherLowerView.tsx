@@ -3,6 +3,8 @@ import { patternById } from '../../domain/patterns';
 import { Skyline } from '../../ui/Skyline';
 import { patternPercent } from '../../ui/text';
 import type { HigherLowerAnswer, HigherLowerTask } from './task';
+import { tx } from '../../i18n';
+import { Info } from '../../ui/Info';
 
 interface HigherLowerViewProps {
   task: HigherLowerTask;
@@ -43,8 +45,10 @@ export function HigherLowerView({ task, chosen, reveal, onAnswer }: HigherLowerV
         {reveal && (
           <span className="choice-facit">
             <strong>{patternPercent(pattern)}</strong>
-            <span>{pattern.per100} pr. 100 hænder</span>
-            {answer === right && <span className="badge">Hyppigst</span>}
+            <span>
+              {pattern.per100} {tx('pr. 100 hænder', 'per 100 hands')}
+            </span>
+            {answer === right && <span className="badge">{tx('Hyppigst', 'Most frequent')}</span>}
           </span>
         )}
       </button>
@@ -53,7 +57,15 @@ export function HigherLowerView({ task, chosen, reveal, onAnswer }: HigherLowerV
 
   return (
     <div className="task">
-      <p className="prompt">Hvilket mønster er hyppigst?</p>
+      <div className="with-info">
+        <p className="prompt">{tx('Hvilket mønster er hyppigst?', 'Which pattern is more frequent?')}</p>
+        <Info topic={tx('Højere/lavere', 'Higher/lower')}>
+          {tx(
+            'Tryk på det mønster, der forekommer oftest. Er forskellen under 2 %, er "≈ Lige hyppige" rigtigt, fx 5-4-2-2 mod 4-3-3-3. Søjlerne er farvernes længder, længste først.',
+            'Tap the pattern that occurs more often. If the difference is under 2 %, "≈ Equally frequent" is right, e.g. 5-4-2-2 against 4-3-3-3. The bars are the suit lengths, longest first.',
+          )}
+        </Info>
+      </div>
       <div className="pair">
         {option('a')}
         {option('b')}
@@ -65,8 +77,8 @@ export function HigherLowerView({ task, chosen, reveal, onAnswer }: HigherLowerV
         aria-pressed={chosen === 'equal'}
         onClick={() => onAnswer('equal')}
       >
-        ≈ Lige hyppige
-        {reveal && right === 'equal' && <span className="badge">Under 2 % forskel</span>}
+        {tx('≈ Lige hyppige', '≈ Equally frequent')}
+        {reveal && right === 'equal' && <span className="badge">{tx('Under 2 % forskel', 'Less than 2 % apart')}</span>}
       </button>
     </div>
   );

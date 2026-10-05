@@ -8,6 +8,8 @@ import { Bridgebord } from './Bridgebord';
 import { Linjekort } from './Linjekort';
 import { SpilSelv } from './SpilSelv';
 import { TEXT } from './texts';
+import { cardLetter } from '../lineText';
+import { Info } from '../../ui/Info';
 
 interface OpgaveProps {
   task: FbTask;
@@ -36,11 +38,11 @@ export function handsOf(task: FbTask): { north: Rank[]; south: Rank[] } {
 /** Første runde i spillerækkefølge, fx "Nord E · Øst D · Syd 7 · Vest x"; honnører står med fed. */
 export function FørsteRunde({ trick }: { trick: readonly TrickCard[] }) {
   return (
-    <p className="fb-trick" aria-label={`${TEXT.firstRound}: ${trick.map((t) => `${TEXT.seats[t.seat]} ${t.card}`).join(', ')}`}>
+    <p className="fb-trick" aria-label={`${TEXT.firstRound}: ${trick.map((t) => `${TEXT.seats[t.seat]} ${cardLetter(t.card)}`).join(', ')}`}>
       <span className="fb-label">{TEXT.firstRound}:</span>
       {trick.map((t) => (
         <span key={t.seat} className="fb-trick-card">
-          <span className="fb-seat-name">{TEXT.seats[t.seat]}</span> <span className={HONORS.has(t.card) ? 'fb-honor' : undefined}>{t.card}</span>
+          <span className="fb-seat-name">{TEXT.seats[t.seat]}</span> <span className={HONORS.has(t.card) ? 'fb-honor' : undefined}>{cardLetter(t.card)}</span>
         </span>
       ))}
     </p>
@@ -201,7 +203,10 @@ export function Opgave({ task, optionalGuess = false, onAnswer }: OpgaveProps) {
   return (
     <section className="card fb-task" aria-label={TEXT.goalPrompt(goal)}>
       <Bridgebord north={hands.north} south={hands.south} />
-      <p className="prompt">{TEXT.goalPrompt(goal)}</p>
+      <div className="with-info">
+        <p className="prompt">{TEXT.goalPrompt(goal)}</p>
+        <Info topic={TEXT.taskNames[task.type]}>{TEXT.help.tasks[task.type]}</Info>
+      </div>
       {body}
     </section>
   );

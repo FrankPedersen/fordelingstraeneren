@@ -1,11 +1,12 @@
 import { Fragment, useState } from 'react';
 import { canPress, press, slots, type Key, type KeypadState } from './keypad';
+import { tx } from '../i18n';
 
-const KEYS: { key: Key; label: string; name?: string }[] = [
+const keysOf = (): { key: Key; label: string; name?: string }[] => [
   ...[1, 2, 3, 4, 5, 6, 7, 8, 9].map((d) => ({ key: d, label: String(d) })),
-  { key: 'long', label: '10+', name: '10 eller flere' },
+  { key: 'long', label: '10+', name: tx('10 eller flere', '10 or more') },
   { key: 0, label: '0' },
-  { key: 'back', label: '⌫', name: 'Slet' },
+  { key: 'back', label: '⌫', name: tx('Slet', 'Delete') },
 ];
 
 interface PatternKeypadProps {
@@ -35,7 +36,7 @@ export function PatternKeypad({ onPattern, disabled = false }: PatternKeypadProp
         ))}
       </div>
       <div className="keypad-keys">
-        {KEYS.map(({ key, label, name }) => (
+        {keysOf().map(({ key, label, name }) => (
           <button
             key={String(key)}
             type="button"

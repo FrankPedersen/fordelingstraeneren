@@ -22,10 +22,11 @@ Bridge-træningsapp til hånd-fordelinger. Appen er færdig og i brug på https:
 - Meldetolkning ligger kun i `src/system/dk-2over1.json` (standard dansk 2/1).
 - Al tilstand i localStorage under nøglen `fordelingstraener:v1`; skemaet står i SPEC.md under "Data og lagring". Datoer i lokal tid, dagen skifter kl. 04.
 - Mobil-først: én hånd, store trykflader, intet der kræver hover.
+- To sprog: dansk som standard og engelsk via knappen på forsiden (`settings.language`). Al ny tekst skrives på begge sprog: `tx('dansk', 'English')` fra `src/i18n.ts`, i farvebehandling i `ui/texts.ts` (DA og EN har samme type). Nye elementer får et ⓘ (`src/ui/Info.tsx`) med en kort forklaring på begge sprog.
 
 ## Sprog og notation
 
-- Al tekst i appen er på dansk.
+- Dansk er standardsproget; engelsk skal dække al tekst (tests i `src/app/i18n.test.tsx`, `src/modes/i18n.test.tsx` og `src/farvebehandling/ui/i18n.test.tsx` søger efter dansk på de engelske skærme).
 - Bridgeterminologi: "bordet" (ikke blindemand), "kipning" (ikke snit), "forbindelser" (ikke broer), "slutspil"/"endplay" (ikke indspil).
 - Mønster: faldende med bindestreg (5-4-2-2). Konkret fordeling: ♠♥♦♣ med lighedstegn (2=5=2=4). ♥ og ♦ står med rødt, også i tekst (`src/ui/SuitText.tsx`).
 - Familiefarver: blå (4), grøn (5), rav (6), violet (7+). Aldrig rød eller sort, og farve står aldrig alene uden tekst eller tal.
@@ -37,8 +38,9 @@ Bridge-træningsapp til hånd-fordelinger. Appen er færdig og i brug på https:
 - `src/system/`: systemfilen, fortolkeren (`interpreter.ts`) og den forenklede budgivning (`auction.ts`).
 - `src/memory/`: standardbilleder, paladsets rum og stationer, støtteniveauerne og deres visninger.
 - `src/modes/`: én mappe pr. øvelse med opgavegenerator, scoring og visning (`higherLower`, `complete`, `palace`, `read`, `estimate`, `sudoku`).
-- `src/ui/`: fælles komponenter (Skyline, Mønstertastatur, Klubaften, Gitter4x4, LineChart, SuitText) og `styles.css`.
-- `src/app/`: sessionsmotoren (`session.ts`), progression, album, kurver og skærmene. Den binder motor, domæne og øvelser sammen.
+- `src/ui/`: fælles komponenter (Skyline, Mønstertastatur, Klubaften, Gitter4x4, LineChart, SuitText, Info til ⓘ), `useLang.ts` og `styles.css`.
+- `src/i18n.ts`: sproget (`getLang`, `setLang`, `tx`); uden React, så løserens Web Worker kan bruge det. `engine/format.ts` skriver tal med decimalpunktum på engelsk.
+- `src/app/`: sessionsmotoren (`session.ts`), progression, album, kurver og skærmene, også den samlede vejledning (`GuideScreen.tsx`). Den binder motor, domæne og øvelser sammen.
 - Testene ligger ved siden af koden (`*.test.ts`). `src/app/App.test.tsx` kører hele flows i jsdom.
 
 ## Beslutninger
@@ -76,13 +78,15 @@ Valg, hvor SPEC.md er åben. Spørg, før du ændrer dem.
 - Ugens status (ugens tal og klubaftenen) vises på status-skærmen i bossens session.
 
 **Brugerflade**
+- Sproget skiftes kun med knappen på forsiden; hele appen tegnes igen, og opgaver, der allerede er lavet (fx en 13-sudoku), beholder sproget fra, da de blev lavet. Ordlyd i data (de faste tekster og navne) har en dansk og en engelsk udgave; brugerens egne tekster vises, som de er skrevet.
+- ⓘ åbner forklaringen lige under elementet (`.with-info`-rækker); trykfladen er ca. 44 px.
 - Tasten "10+" er den lange farve; dens længde er 13 minus de tre andre.
 - Kurverne er små multipler med én serie pr. diagram i magenta (`#d55181`, valideret mod begge flader), så familiefarverne ikke får en ny betydning. Træfsikkerhed pr. grad tæller ikke lynrunden med.
 - En ny version vises som en knap på forsiden; appen genindlæser aldrig midt i en session.
 
 ## Farvebehandling
 
-Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er tagget `v1-fordeling`). **[SPEC-farvebehandling.md](SPEC-farvebehandling.md) beskriver sporet.** Fordelingssporets adfærd, data og udseende må ikke ændres, SPEC.md røres ikke, og eksisterende kode må kun berøres de steder, specens tabel nævner. Kræver noget alligevel en ændring i eksisterende kode, så spørg først.
+Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er tagget `v1-fordeling`). **[SPEC-farvebehandling.md](SPEC-farvebehandling.md) beskriver sporet.** Fordelingssporets adfærd, data og udseende må ikke ændres, SPEC.md røres ikke, og eksisterende kode må kun berøres de steder, specens tabel nævner. Kræver noget alligevel en ændring i eksisterende kode, så spørg først. Undtagelse: sprog (engelsk) og ⓘ-hjælp i hele appen, som Frank valgte for begge spor (5. oktober 2026).
 
 **Kort over koden** (`src/farvebehandling/`)
 - `model/`: kort (E K D B 10 i visningen), sidningsberegning med ledige pladser, hyppighed, normalt modspil (kun til Spil den selv) og gætteintervaller.
@@ -92,6 +96,7 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
 - `analysis.ts`: data til analysevinduet (banken fra appens filer, linjerne, sandsynlighedsbåndet, situationen bag en kombination og kortvælgerens opslag), klubaftenens 100 hyppigste (`clubEvening`) og Hold eller pars to linjer (`pairsLines`). `testBank.ts` giver testene hele banken.
 - `play/`: Spil den selv (kortgiveren, stik med normalt modspil og sammenligningen med løserens linjer).
 - `training/`: opgavetyperne og pointtabellen (`tasks.ts`), progressionen (`progression.ts`), sessionsmotoren (`session.ts`), paladset (`palace.ts`), Selvvalgts filtre (`practice.ts`) og statistikken (`stats.ts`).
+- `lineText.ts`: løserens danske linjer, fejlbeskeder og honnørbogstaver på engelsk, skabelon for skabelon.
 - `techniques.ts`: forslaget til teknik pr. kombination og listen til godkendelse. `whatnowReport.ts`: listen over Hvad nu?-situationerne.
 - `ui/`: skærmen (`FarvebehandlingScreen.tsx`, indlæses dovent fra `src/app/App.tsx`) med fanerne `Træning.tsx` (forside, session og status), `Selvvalgt.tsx` og `Analysevindue.tsx`; `Opgave.tsx`, `Facit.tsx`, `SpilSelv.tsx`, `Linjeeditor.tsx`, `Introduktion.tsx`, `Rumkort.tsx`, `Palads.tsx`, `Klubaften.tsx`, `Statistik.tsx` og `Data.tsx` (eksport, import og fast lagring); komponenterne Bridgebord, Kortvælger, Linjekort, Resultatkort og Sandsynlighedsbånd, al ordlyd i `texts.ts`, tokens i `tokens.css` og resten i `farvebehandling.css`.
 - `storage.ts`: skemaet for `farvebehandling:v1` (godkendt; valgfrie felter `training` og `lastExport`) med indlæsning, kopi af ulæselige data, gem, eksport, import, fast lagring og påmindelsen om eksport.
@@ -153,3 +158,4 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
 - [x] Klubaften: de 100 hyppigste kombinationer som 10 × 10 felter med hyppighed, tekniknapper og liste (Franks ønske).
 - [x] Hold eller par (opgavetype 9), statistik pr. teknik og opgavetype med forslag i Selvvalgt, fast lagring og påmindelse om eksport (Franks ønske).
 - [x] Fejl i kilden: årsag til hver afvigelse i valideringsrapporterne; 14 mål uden beslutning fjernet, 657 kombinationer (Franks ønske).
+- [x] Engelsk og ⓘ i hele appen med en samlet vejledning på forsiden (Franks ønske).

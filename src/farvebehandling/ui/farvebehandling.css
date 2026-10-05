@@ -443,6 +443,12 @@
   flex: 1 1 auto;
 }
 
+/* Trænings menu: én knap pr. linje med ⓘ ved siden af. */
+.fb-menu {
+  display: grid;
+  gap: var(--space-10);
+}
+
 .fb-push {
   margin-left: auto;
 }

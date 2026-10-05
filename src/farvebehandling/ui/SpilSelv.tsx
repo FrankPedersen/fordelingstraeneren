@@ -17,6 +17,7 @@ import {
 import { Linjekort } from './Linjekort';
 import { Sandsynlighedsbånd } from './Sandsynlighedsbånd';
 import { TEXT } from './texts';
+import { Info } from '../../ui/Info';
 
 interface SpilSelvProps {
   item: BankItem;
@@ -116,6 +117,7 @@ export function SpilSelv({ item, goal, seed, onDone, onClose }: SpilSelvProps) {
     <section className="card fb-play" aria-label={TEXT.playTitle}>
       <header className="fb-room-row">
         <h2>{TEXT.playTitle}</h2>
+        <Info topic={TEXT.playTitle}>{TEXT.help.play}</Info>
         <span className="fb-note">{TEXT.playScore(state.won, goal)}</span>
         {onClose && (
           <button type="button" className="btn small-btn" onClick={onClose}>

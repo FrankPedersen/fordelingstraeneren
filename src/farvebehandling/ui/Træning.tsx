@@ -26,6 +26,7 @@ import { Opgave } from './Opgave';
 import { Palads } from './Palads';
 import { Statistik } from './Statistik';
 import { TEXT } from './texts';
+import { Info } from '../../ui/Info';
 
 interface TræningProps {
   bank: readonly BankItem[];
@@ -67,12 +68,18 @@ export function Træning({ bank, saved, update, techniques, onOpenAnalysis, onOp
         </div>
       </div>
       <section className="card">
-        <h2>{TEXT.today}</h2>
+        <div className="with-info">
+          <h2>{TEXT.today}</h2>
+          <Info topic={TEXT.today}>{TEXT.help.today}</Info>
+        </div>
         <p>{TEXT.todayPlan(due, fresh)}</p>
         {saved.sessions.some((s) => s.day === today) && <p className="fb-note">{TEXT.doneToday}</p>}
-        <button type="button" className="btn primary wide" onClick={() => setView('session')}>
-          {TEXT.start}
-        </button>
+        <div className="with-info">
+          <button type="button" className="btn primary wide" onClick={() => setView('session')}>
+            {TEXT.start}
+          </button>
+          <Info topic={TEXT.start}>{TEXT.help.start}</Info>
+        </div>
         <p className="fb-note">{TEXT.ownTrack}</p>
       </section>
       {exportDue(saved, today) && (
@@ -83,19 +90,22 @@ export function Træning({ bank, saved, update, techniques, onOpenAnalysis, onOp
           </button>
         </section>
       )}
-      <div className="fb-actions">
-        <button type="button" className="btn" onClick={() => setView('palace')}>
-          {TEXT.palace}
-        </button>
-        <button type="button" className="btn" onClick={() => setView('club')}>
-          {TEXT.club}
-        </button>
-        <button type="button" className="btn" onClick={() => setView('stats')}>
-          {TEXT.stats}
-        </button>
-        <button type="button" className="btn" onClick={() => setView('data')}>
-          {TEXT.data}
-        </button>
+      <div className="fb-menu">
+        {(
+          [
+            ['palace', TEXT.palace, TEXT.help.palace],
+            ['club', TEXT.club, TEXT.help.club],
+            ['stats', TEXT.stats, TEXT.help.stats],
+            ['data', TEXT.data, TEXT.help.data],
+          ] as const
+        ).map(([target, label, help]) => (
+          <div key={target} className="with-info">
+            <button type="button" className="btn" onClick={() => setView(target)}>
+              {label}
+            </button>
+            <Info topic={label}>{help}</Info>
+          </div>
+        ))}
       </div>
     </div>
   );

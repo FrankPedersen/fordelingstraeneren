@@ -3,6 +3,7 @@ import type { Difficulty } from '../../engine/session';
 import { SUIT_SYMBOLS, type SuitLengths } from '../../domain/cards';
 import { completions, type Completion } from '../../domain/complete';
 import type { Pattern } from '../../domain/patterns';
+import { tx } from '../../i18n';
 
 export interface CompleteTask {
   kind: 'complete';
@@ -91,11 +92,11 @@ export function completeFacit(task: CompleteTask): {
 
 /** De viste farver, fx "5♠ og 4♥". */
 export function shownText(task: CompleteTask): string {
-  return task.known.flatMap((l, i) => (l === null ? [] : [`${l}${SUIT_SYMBOLS[i]}`])).join(' og ');
+  return task.known.flatMap((l, i) => (l === null ? [] : [`${l}${SUIT_SYMBOLS[i]}`])).join(tx(' og ', ' and '));
 }
 
 export function instructionText(task: CompleteTask): string {
-  if (task.count === 1) return 'Tast mønstret.';
-  if (task.all) return 'Tast de mulige mønstre – hyppigste først.';
-  return 'Tast de tre hyppigste mønstre – hyppigste først.';
+  if (task.count === 1) return tx('Tast mønstret.', 'Type the pattern.');
+  if (task.all) return tx('Tast de mulige mønstre – hyppigste først.', 'Type the possible patterns – most frequent first.');
+  return tx('Tast de tre hyppigste mønstre – hyppigste først.', 'Type the three most frequent patterns – most frequent first.');
 }

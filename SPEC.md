@@ -11,7 +11,8 @@ Appen træner hånd-fordelinger i bridge i daglige sessioner på 5 minutter. Må
 Det andet trin er det egentlige mål. Når Vest har vist 5 spar og 4 hjerter, skal brugeren se "5-4-3-1 eller 5-4-2-2" uden at regne 13 − 5 − 4.
 
 - **Bruger:** én øvet spiller. Ingen login og ingen server.
-- **Sprog:** al tekst i appen er på dansk.
+- **Sprog:** appen er på dansk som standard. En knap øverst på forsiden skifter hele appen, også farvebehandling, til engelsk og tilbage, og valget gemmes (Franks ønske, 5. oktober 2026). På engelsk vises honnørerne som A K Q J, tal med decimalpunktum, og meldeforklaringerne fra systemfilen og løserens linjer oversættes. Engelsk bridgeterminologi: "dummy", "finesse", "entries", "endplay".
+- **Hjælp:** et lille ⓘ ved elementerne viser en kort forklaring af, hvad elementet gør, og hvordan det bruges, lige ved elementet; et nyt tryk skjuler den. Forsiden har en samlet vejledning med afsnit, der kan foldes ud.
 - **Bridgeterminologi:** "bordet" (ikke blindemand), "kipning" (ikke snit), "forbindelser" (ikke broer), "slutspil" eller "endplay" (ikke indspil).
 - **Notation:** et mønster skrives faldende med bindestreg (5-4-2-2). En konkret fordeling skrives i farveordenen ♠♥♦♣ med lighedstegn (2=5=2=4). ♥ og ♦ står med rødt, også i tekst.
 - **Meldesystem:** al meldetolkning følger standard dansk 2/1 og ligger i en konfigurationsfil (se Meldetolkning).
@@ -250,6 +251,7 @@ type Saved = {
     fastMs: Record<Skill, number>;
     readShow?: "tap" | "timed";   // Lynaflæsning: til "Klar" (standard) eller i t ms
     readSorted?: boolean;         // Lynaflæsning: kortene sorteret efter farve
+    language?: "da" | "en";       // appens sprog; dansk, når feltet mangler
   };
   palace: {
     rooms: { name: string }[];

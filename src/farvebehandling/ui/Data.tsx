@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { dayOf } from '../../engine/dates';
 import { fbExportFileName, fbSummary, parseFbImport, persistence, requestPersistence, type FbSaved, type Persistence } from '../storage';
 import { TEXT } from './texts';
+import { Info } from '../../ui/Info';
 
 interface DataProps {
   saved: FbSaved;
@@ -53,7 +54,7 @@ export function Data({ saved, update, onBack }: DataProps) {
       setMessage('');
     } else {
       setIncoming(null);
-      setMessage(result.error);
+      setMessage(TEXT.importError(result.error));
     }
   }
 
@@ -72,6 +73,7 @@ export function Data({ saved, update, onBack }: DataProps) {
           ←
         </button>
         <h2>{TEXT.data}</h2>
+        <Info topic={TEXT.data}>{TEXT.help.data}</Info>
       </header>
       <section className="card">
         <p className="fb-note">{TEXT.dataHelp}</p>

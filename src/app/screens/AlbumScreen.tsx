@@ -8,6 +8,8 @@ import { imageOf } from '../../memory/images';
 import { Skyline } from '../../ui/Skyline';
 import { patternPercent } from '../../ui/text';
 import { albumByGrade, legendaryQuiz, unlockLegendary, type QuizQuestion } from '../album';
+import { tx } from '../../i18n';
+import { Info } from '../../ui/Info';
 
 interface AlbumScreenProps {
   saved: Saved;
@@ -23,14 +25,22 @@ export function AlbumScreen({ saved, onSave, onBack }: AlbumScreenProps) {
   return (
     <main className="screen">
       <header className="screen-head">
-        <button type="button" className="round" aria-label="Tilbage" onClick={onBack}>
+        <button type="button" className="round" aria-label={tx('Tilbage', 'Back')} onClick={onBack}>
           ←
         </button>
         <h1>Album</h1>
+        <Info topic="Album">
+          {tx(
+            'Tryk på en plads for at se mønstrets grad, hyppighed og placeringer og skrive dit eget billede. Et "?" er et mønster, du ikke har mødt endnu; tallet viser, hvor sjældent det er. Legendariske pladser har knappen "Lås op med tre spørgsmål".',
+            'Tap a slot to see the pattern’s grade, frequency and arrangements and to write your own image. A "?" is a pattern you have not met yet; the number shows how rare it is. Legendary slots have the button "Unlock with three questions".',
+          )}
+        </Info>
       </header>
       <p className="muted small">
-        {collected} af 39 mønstre samlet. Et mønster samles første gang, det dukker op i en tilfældig hånd i
-        Lynaflæsning. De legendariske kan også låses op med tre rigtige svar.
+        {tx(
+          `${collected} af 39 mønstre samlet. Et mønster samles første gang, det dukker op i en tilfældig hånd i Lynaflæsning. De legendariske kan også låses op med tre rigtige svar.`,
+          `${collected} of 39 patterns collected. A pattern is collected the first time it turns up in a random hand in Lightning reading. The legendary ones can also be unlocked with three right answers.`,
+        )}
       </p>
 
       {grades.map(({ grade, slots }) => (
@@ -38,7 +48,7 @@ export function AlbumScreen({ saved, onSave, onBack }: AlbumScreenProps) {
           <h2>
             {GRADE_LABEL[grade]}{' '}
             <span className="muted small">
-              {slots.filter((s) => s.entry).length} af {slots.length}
+              {slots.filter((s) => s.entry).length} {tx('af', 'of')} {slots.length}
             </span>
           </h2>
           <div className="album-grid">
@@ -52,7 +62,7 @@ export function AlbumScreen({ saved, onSave, onBack }: AlbumScreenProps) {
                 {entry ? <Skyline id={pattern.id} size="sm" label={false} /> : <span className="slot-mark">?</span>}
                 <strong>{pattern.id}</strong>
                 <span className="muted small">
-                  {entry ? `× ${entry.count}` : `1 ud af ${formatInt(pattern.oneIn)}`}
+                  {entry ? `× ${entry.count}` : `${tx('1 ud af', '1 in')} ${formatInt(pattern.oneIn)}`}
                 </span>
               </button>
             ))}
@@ -104,35 +114,38 @@ function SlotDialog({ saved, pattern, onSave, onClose }: SlotDialogProps) {
               <Skyline id={pattern.id} />
             </div>
             <p>
-              {GRADE_LABEL[pattern.grade]} · {patternPercent(pattern)} · 1 ud af {formatInt(pattern.oneIn)} ·{' '}
-              {pattern.placements} placeringer
+              {GRADE_LABEL[pattern.grade]} · {patternPercent(pattern)} · {tx('1 ud af', '1 in')} {formatInt(pattern.oneIn)} ·{' '}
+              {pattern.placements} {tx('placeringer', 'arrangements')}
             </p>
             {entry ? (
               <p className="muted small">
                 {entry.count > 0
-                  ? `Set i ${entry.count} ${entry.count === 1 ? 'hånd' : 'hænder'}, første gang ${entry.first}.`
-                  : `Låst op ${entry.first}.`}
+                  ? tx(
+                      `Set i ${entry.count} ${entry.count === 1 ? 'hånd' : 'hænder'}, første gang ${entry.first}.`,
+                      `Seen in ${entry.count} ${entry.count === 1 ? 'hand' : 'hands'}, first on ${entry.first}.`,
+                    )
+                  : tx(`Låst op ${entry.first}.`, `Unlocked on ${entry.first}.`)}
               </p>
             ) : (
-              <p className="muted small">Ikke samlet endnu.</p>
+              <p className="muted small">{tx('Ikke samlet endnu.', 'Not collected yet.')}</p>
             )}
             <label className="field">
-              <span>Billede</span>
+              <span>{tx('Billede', 'Image')}</span>
               <input
                 value={saved.images[pattern.id] ?? ''}
-                placeholder={image?.own ? '' : (image?.name ?? 'Skriv dit eget billede')}
+                placeholder={image?.own ? '' : (image?.name ?? tx('Skriv dit eget billede', 'Write your own image'))}
                 onChange={(e) => setImage(e.target.value)}
               />
             </label>
             {!entry && pattern.grade === 'legendary' && (
               <button type="button" className="btn primary" onClick={() => setQuiz(legendaryQuiz(pattern, randomSeed()))}>
-                Lås op med tre spørgsmål
+                {tx('Lås op med tre spørgsmål', 'Unlock with three questions')}
               </button>
             )}
           </>
         )}
         <button type="button" className="btn" onClick={onClose}>
-          Luk
+          {tx('Luk', 'Close')}
         </button>
       </div>
     </div>
@@ -147,14 +160,14 @@ function Quiz({ questions, onDone }: { questions: QuizQuestion[]; onDone(passed:
   if (done) {
     return (
       <div className="quiz" role="status">
-        <p className="feedback-title">{passed ? '✓ Låst op!' : '✗ Ikke helt'}</p>
+        <p className="feedback-title">{passed ? tx('✓ Låst op!', '✓ Unlocked!') : tx('✗ Ikke helt', '✗ Not quite')}</p>
         {questions.map((q, i) => (
           <p key={q.prompt} className="small">
             {answers[i] === q.answer ? '✓' : '✗'} {q.prompt} {q.answer}
           </p>
         ))}
         <button type="button" className="btn primary" onClick={() => onDone(passed)}>
-          {passed ? 'Til albummet' : 'Prøv igen senere'}
+          {passed ? tx('Til albummet', 'To the album') : tx('Prøv igen senere', 'Try again later')}
         </button>
       </div>
     );
@@ -164,7 +177,7 @@ function Quiz({ questions, onDone }: { questions: QuizQuestion[]; onDone(passed:
   return (
     <div className="quiz">
       <p className="muted small">
-        Spørgsmål {answers.length + 1} af {questions.length}
+        {tx(`Spørgsmål ${answers.length + 1} af ${questions.length}`, `Question ${answers.length + 1} of ${questions.length}`)}
       </p>
       <p className="prompt">{q.prompt}</p>
       <div className="quiz-options">

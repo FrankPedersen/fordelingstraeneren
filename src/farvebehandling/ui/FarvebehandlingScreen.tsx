@@ -9,6 +9,8 @@ import { TEXT } from './texts';
 import { Træning } from './Træning';
 import './tokens.css';
 import './farvebehandling.css';
+import { getLang } from '../../i18n';
+import { Info } from '../../ui/Info';
 
 type Tab = 'training' | 'practice' | 'analysis';
 
@@ -58,7 +60,8 @@ export default function FarvebehandlingScreen({ onBack }: FarvebehandlingScreenP
   const [practiceStart, setPracticeStart] = useState<string | null>(null);
   const [bank, setBank] = useState<BankItem[] | null>(null);
   const [loadFailed, setLoadFailed] = useState(false);
-  const techniques = techniquesFile.techniques;
+  // Teknikkernes navn, huskeregel og billede på det aktuelle sprog.
+  const techniques = techniquesFile.techniques.map((t) => (getLang() === 'en' ? { ...t, ...t.en } : t));
   const storage = useMemo(browserStorage, []);
   // Intet skrives, før brugeren gør noget; et kig i Analyse rører ikke lagringen.
   const [saved, setSaved] = useState<FbSaved>(() => loadFbSaved(storage));
@@ -125,6 +128,7 @@ export default function FarvebehandlingScreen({ onBack }: FarvebehandlingScreenP
             </button>
           ))}
         </nav>
+        <Info topic={TEXT.title}>{TEXT.help.tabs}</Info>
       </header>
       {failed && (
         <p role="alert" className="fb-note">

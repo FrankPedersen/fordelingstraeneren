@@ -1,18 +1,32 @@
 import type { SuitLengths } from './cards';
 import { SUIT_WAYS, TOTAL_HANDS, ratioPercent } from './combinatorics';
+import { getLang } from '../i18n';
 
 export type Grade = 'common' | 'uncommon' | 'rare' | 'epic' | 'legendary';
 
 /** Graderne fra hyppigst til sjældnest; nummeret 1–5 er også niveauet. */
 export const GRADES: readonly Grade[] = ['common', 'uncommon', 'rare', 'epic', 'legendary'];
 
-export const GRADE_LABEL: Record<Grade, string> = {
+const GRADE_DA: Record<Grade, string> = {
   common: 'almindelig',
   uncommon: 'ualmindelig',
   rare: 'sjælden',
   epic: 'episk',
   legendary: 'legendarisk',
 };
+
+const GRADE_EN: Record<Grade, string> = {
+  common: 'common',
+  uncommon: 'uncommon',
+  rare: 'rare',
+  epic: 'epic',
+  legendary: 'legendary',
+};
+
+/** Gradens navn på det aktuelle sprog. */
+export const GRADE_LABEL: Record<Grade, string> = new Proxy(GRADE_DA, {
+  get: (_target, grade) => (getLang() === 'en' ? GRADE_EN : GRADE_DA)[grade as Grade],
+});
 
 /** Familien er den længste farve: 4, 5, 6 eller 7 (= 7+). */
 export type Family = 4 | 5 | 6 | 7;

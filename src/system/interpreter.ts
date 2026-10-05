@@ -1,6 +1,7 @@
 import { suitLengths, type Card, type SuitLengths } from '../domain/cards';
 import { patternOf } from '../domain/patterns';
 import file from './dk-2over1.json';
+import { tx } from '../i18n';
 
 export type Suit = 'S' | 'H' | 'D' | 'C';
 
@@ -29,6 +30,8 @@ export interface Rule {
   /** Det eneste, løseren i 13-sudoku bruger. */
   shows: Requirement;
   text: string;
+  /** Teksten på engelsk; ellers vises den danske. */
+  textEn?: string;
   /** Kræver hold i åbnerens farve. Bruges kun af meldegiveren, ikke af løseren. */
   stopper?: boolean;
   /** Bemærkning, fx et åbent punkt fra SPEC.md. */
@@ -90,7 +93,8 @@ function parseRules(rules: unknown[]): Rule[] {
       Number.isInteger(r.priority) &&
       intervals.every((h) => Array.isArray(h) && h.length === 2 && h[0] <= h[1]) &&
       isRequirement(r.shows) &&
-      typeof r.text === 'string';
+      typeof r.text === 'string' &&
+      (r.textEn === undefined || typeof r.textEn === 'string');
     if (!ok) throw new Error(`Ugyldig regel nr. ${i + 1} i systemfilen: ${JSON.stringify(raw)}`);
     return r;
   });
@@ -146,8 +150,13 @@ export function chooseCall(
   );
 }
 
+/** Meldingens forklaring på det aktuelle sprog. */
+export function ruleText(rule: Pick<Rule, 'text' | 'textEn'>): string {
+  return tx(rule.text, rule.textEn ?? rule.text);
+}
+
 /** Meldingen med farvesymbol, fx 1♥ og 2NT; X er en dobling. */
 export function callText(call: string): string {
-  if (call === 'X') return 'dobling';
+  if (call === 'X') return tx('dobling', 'double');
   return call.replace(/[SHDC]$/, (s) => SUIT_SYMBOL[s as Suit]);
 }

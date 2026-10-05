@@ -13,7 +13,8 @@ describe('13-sudoku – accepttest', () => {
         expect(found[0]).toEqual({ east: task.lengths.E, west: task.lengths.W });
       }
     }
-  });
+    // 120 opgaver med løser; under fuld belastning kan det tage over 5 s.
+  }, 20_000);
 });
 
 describe('13-sudoku – generator', () => {

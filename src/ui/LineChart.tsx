@@ -1,4 +1,5 @@
 import { useId, useState, type KeyboardEvent, type PointerEvent } from 'react';
+import { tx } from '../i18n';
 
 export interface ChartPoint {
   label: string;
@@ -117,15 +118,15 @@ export function LineChart({ title, points, format, yMax }: LineChartProps) {
         <p className="chart-readout" aria-live="polite">
           {shown ? (
             <>
-              <strong>{shown.value === null ? 'ingen data' : format(shown.value)}</strong> · {shown.label}
+              <strong>{shown.value === null ? tx('ingen data', 'no data') : format(shown.value)}</strong> · {shown.label}
             </>
           ) : (
-            'Tryk på kurven for at se en uge.'
+            tx('Tryk på kurven for at se en uge.', 'Tap the curve to see a week.')
           )}
         </p>
       </div>
       <details className="chart-table">
-        <summary>Vis som tabel</summary>
+        <summary>{tx('Vis som tabel', 'Show as a table')}</summary>
         <table aria-describedby={tableId}>
           <caption id={tableId}>{title}</caption>
           <tbody>

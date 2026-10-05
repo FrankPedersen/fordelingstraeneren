@@ -106,6 +106,8 @@ P = \frac{\binom{39}{13-a}\binom{26+a}{13-b}}{\binom{52}{13}\binom{39}{13}} \cdo
 
 **Visning.** Hyppigheden vises som naturlig frekvens i analysevinduet og på facitskærmen, fx "ca. hver 5. klubaften" eller "ca. 3 gange pr. klubaften". En klubaften er 25 spil.
 
+**Sprog og hjælp** (Franks ønske, 5. oktober 2026). Farvebehandling følger appens sprog (SPEC.md): al ordlyd står på dansk og engelsk i `ui/texts.ts`, teknikkerne har engelsk navn, huskeregel og billede i `techniques.json`, og løserens linjer, der står på dansk i data, oversættes skabelon for skabelon i appen (`lineText.ts`). Et ⓘ ved fanerne, Trænings knapper, hver opgavetype, facit, analysens afsnit, Selvvalgt, Spil den selv og undersiderne forklarer elementet.
+
 **Klubaften.** Trænings forside har en knap til klubaftenen som i fordelingstræneren (Franks ønske, 4. oktober 2026):
 
 - Bankens 100 hyppigste kombinationer står som 10 × 10 felter i rangorden med rangnummeret.

@@ -3,6 +3,8 @@ import { LOFT_ROOM, placeOf, type RouteRoom } from '../../memory/palace';
 import { PatternKeypad } from '../../ui/PatternKeypad';
 import { Skyline } from '../../ui/Skyline';
 import { checkPalace, type PalaceAnswer, type PalaceTask } from './task';
+import { tx } from '../../i18n';
+import { Info } from '../../ui/Info';
 
 interface PalaceViewProps {
   task: PalaceTask;
@@ -27,7 +29,12 @@ export function PalaceView({ task, route, answer, reveal, skylines, onAnswer }: 
     const right = answer !== undefined && checkPalace(task, answer);
     return (
       <div className="task">
-        <p className="prompt">Hvilket mønster bor ved station {place}?</p>
+        <div className="with-info">
+          <p className="prompt">{tx(`Hvilket mønster bor ved station ${place}?`, `Which pattern lives at station ${place}?`)}</p>
+          <Info topic={tx('Paladsvandring', 'Palace walk')}>
+            {tx('Paladsvandring øver ruten i dit huskepalads begge veje: tast mønstret, der bor ved en station, eller vælg stationen, hvor et mønster bor. Station n rummer mønstret med rang n; de episke mønstre bor på Loftet.', 'Palace walk practises the route in your memory palace both ways: type the pattern that lives at a station, or choose the station where a pattern lives. Station n holds the pattern with rank n; the epic patterns live in the Attic.')}
+          </Info>
+        </div>
         <p className="instruction">
           {station.name} · {room.name}
         </p>
@@ -36,12 +43,12 @@ export function PalaceView({ task, route, answer, reveal, skylines, onAnswer }: 
         ) : (
           <div className="pair">
             <div className={`choice${reveal ? (right ? ' right' : ' wrong') : ' chosen'}`}>
-              <span className="muted small">Dit svar</span>
+              <span className="muted small">{tx('Dit svar', 'Your answer')}</span>
               {skylines || !reveal ? <Skyline id={typed} /> : <strong>{typed}</strong>}
             </div>
             {reveal && !right && (
               <div className="choice right">
-                <span className="muted small">Facit</span>
+                <span className="muted small">{tx('Facit', 'Answer')}</span>
                 {skylines ? <Skyline id={pattern.id} /> : <strong>{pattern.id}</strong>}
               </div>
             )}
@@ -64,7 +71,12 @@ export function PalaceView({ task, route, answer, reveal, skylines, onAnswer }: 
 
   return (
     <div className="task">
-      <p className="prompt">Hvor på ruten bor {pattern.id}?</p>
+      <div className="with-info">
+        <p className="prompt">{tx(`Hvor på ruten bor ${pattern.id}?`, `Where on the route does ${pattern.id} live?`)}</p>
+        <Info topic={tx('Paladsvandring', 'Palace walk')}>
+          {tx('Paladsvandring øver ruten i dit huskepalads begge veje: tast mønstret, der bor ved en station, eller vælg stationen, hvor et mønster bor. Station n rummer mønstret med rang n; de episke mønstre bor på Loftet.', 'Palace walk practises the route in your memory palace both ways: type the pattern that lives at a station, or choose the station where a pattern lives. Station n holds the pattern with rank n; the epic patterns live in the Attic.')}
+        </Info>
+      </div>
       <div className="center">
         <Skyline id={pattern.id} />
       </div>

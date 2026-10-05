@@ -6,6 +6,8 @@ import { Skyline } from '../../ui/Skyline';
 import { SuitText } from '../../ui/SuitText';
 import { percentText } from '../../ui/text';
 import { completeFacit, instructionText, shownText, type CompleteTask } from './task';
+import { tx } from '../../i18n';
+import { Info } from '../../ui/Info';
 
 /** Højst så mange rækker i facit; resten samles i én linje. */
 const FACIT_ROWS = 6;
@@ -33,7 +35,7 @@ export function CompleteView({ task, submitted, reveal, skylines = true, onAnswe
 
   function add(lengths: number[]) {
     const id = lengths.join('-');
-    if (list.includes(id)) setNote(`${id} er allerede tastet.`);
+    if (list.includes(id)) setNote(tx(`${id} er allerede tastet.`, `${id} has already been typed.`));
     else {
       setList([...list, id]);
       setNote('');
@@ -48,9 +50,17 @@ export function CompleteView({ task, submitted, reveal, skylines = true, onAnswe
 
   return (
     <div className="task">
-      <p className="prompt">
-        {SEAT_NAMES[task.seat]} har vist <SuitText text={shownText(task)} />.
-      </p>
+      <div className="with-info">
+        <p className="prompt">
+          {SEAT_NAMES[task.seat]} {tx('har vist', 'has shown')} <SuitText text={shownText(task)} />.
+        </p>
+        <Info topic={tx('Fuldfør mønsteret', 'Complete the pattern')}>
+          {tx(
+            'Tast de mulige mønstre på mønstertastaturet, hyppigste først: de fire længder i vilkårlig rækkefølge, og den fjerde udfyldes selv. ↑ flytter et mønster op, ✕ fjerner det. Rigtige mønstre i rigtig rækkefølge giver fuld score, rigtige mønstre i forkert rækkefølge halv.',
+            'Type the possible patterns on the pattern keypad, most frequent first: the four lengths in any order, and the fourth fills itself in. ↑ moves a pattern up, ✕ removes it. Right patterns in the right order give a full score, right patterns in the wrong order half.',
+          )}
+        </Info>
+      </div>
       <p className="instruction">{instructionText(task)}</p>
 
       {reveal ? (
@@ -68,7 +78,7 @@ export function CompleteView({ task, submitted, reveal, skylines = true, onAnswe
                     <button
                       type="button"
                       className="tool"
-                      aria-label={`Flyt ${id} op`}
+                      aria-label={tx(`Flyt ${id} op`, `Move ${id} up`)}
                       disabled={i === 0}
                       onClick={() => moveUp(i)}
                     >
@@ -77,7 +87,7 @@ export function CompleteView({ task, submitted, reveal, skylines = true, onAnswe
                     <button
                       type="button"
                       className="tool"
-                      aria-label={`Fjern ${id}`}
+                      aria-label={tx(`Fjern ${id}`, `Remove ${id}`)}
                       onClick={() => setList(list.filter((x) => x !== id))}
                     >
                       ✕
@@ -86,7 +96,7 @@ export function CompleteView({ task, submitted, reveal, skylines = true, onAnswe
                 )}
               </li>
             ))}
-            {entries.length === 0 && <li className="entries-empty">Tast et mønster nedenfor.</li>}
+            {entries.length === 0 && <li className="entries-empty">{tx('Tast et mønster nedenfor.', 'Type a pattern below.')}</li>}
           </ol>
           {note && <p className="note">{note}</p>}
           {!locked && (
@@ -98,7 +108,7 @@ export function CompleteView({ task, submitted, reveal, skylines = true, onAnswe
                 disabled={list.length === 0}
                 onClick={() => onAnswer(list)}
               >
-                Svar
+                {tx('Svar', 'Answer')}
               </button>
             </>
           )}
@@ -129,20 +139,22 @@ function Facit({ task, answer, skylines }: { task: CompleteTask; answer: string[
               )}
               <th scope="row">{c.pattern.id}</th>
               <td className="num">{percentText(c.weight, total)}</td>
-              <td>{answer.includes(c.pattern.id) ? `din nr. ${answer.indexOf(c.pattern.id) + 1}` : ''}</td>
+              <td>{answer.includes(c.pattern.id) ? tx(`din nr. ${answer.indexOf(c.pattern.id) + 1}`, `your no. ${answer.indexOf(c.pattern.id) + 1}`) : ''}</td>
             </tr>
           ))}
         </tbody>
       </table>
       {rest.length > 0 && (
         <p className="muted">
-          + {rest.length} sjældnere mønstre, i alt {percentText(restWeight, total)}.
+          {tx(`+ ${rest.length} sjældnere mønstre, i alt ${percentText(restWeight, total)}.`, `+ ${rest.length} rarer patterns, ${percentText(restWeight, total)} in total.`)}
         </p>
       )}
-      {impossible.length > 0 && <p>Ikke muligt her: {impossible.join(', ')}.</p>}
-      <p className="muted">Dit svar: {answer.length > 0 ? answer.join(', ') : 'intet'}.</p>
+      {impossible.length > 0 && <p>{tx(`Ikke muligt her: ${impossible.join(', ')}.`, `Not possible here: ${impossible.join(', ')}.`)}</p>}
       <p className="muted">
-        {SEAT_NAMES[task.seat]} havde {distributionText(task.lengths)}.
+        {tx('Dit svar:', 'Your answer:')} {answer.length > 0 ? answer.join(', ') : tx('intet', 'none')}.
+      </p>
+      <p className="muted">
+        {SEAT_NAMES[task.seat]} {tx('havde', 'had')} {distributionText(task.lengths)}.
       </p>
     </div>
   );

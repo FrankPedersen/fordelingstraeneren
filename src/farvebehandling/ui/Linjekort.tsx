@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { formatDecimal } from '../../engine/format';
 import type { LineView } from '../analysis';
 import { TEXT } from './texts';
+import { stepText } from '../lineText';
 
 interface LinjekortProps {
   line: LineView;
@@ -35,7 +36,7 @@ export function Linjekort({ line, hideResult = false, chosen = false, selected =
         type="button"
         className={`fb-line fb-line-option${selected ? ' fb-line-selected' : ''}`}
         aria-pressed={selected}
-        aria-label={`${TEXT.line(line.letter)}: ${line.lead.steps.join(' ')}`}
+        aria-label={`${TEXT.line(line.letter)}: ${line.lead.steps.map(stepText).join(' ')}`}
         onClick={onSelect}
       >
         <span className="fb-line-head">
@@ -45,7 +46,7 @@ export function Linjekort({ line, hideResult = false, chosen = false, selected =
         <span className="fb-steps">
           {line.lead.steps.map((step, i) => (
             <span key={i} className="fb-step">
-              {i + 1}. {step}
+              {i + 1}. {stepText(step)}
             </span>
           ))}
         </span>
@@ -61,7 +62,7 @@ export function Linjekort({ line, hideResult = false, chosen = false, selected =
       </header>
       <ol className="fb-steps">
         {line.lead.steps.map((step, i) => (
-          <li key={i}>{step}</li>
+          <li key={i}>{stepText(step)}</li>
         ))}
       </ol>
       {!hideResult && line.mixed && <p className="fb-note">{TEXT.mixed}</p>}

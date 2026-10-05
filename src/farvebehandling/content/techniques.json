@@ -6,42 +6,72 @@
    "name": "Enkelt kipning",
    "order": 1,
    "rule": "Spil mod honnøren, ikke fra den.",
-   "image": "Indbrudstyven, der lister ind bag vagten"
+   "image": "Indbrudstyven, der lister ind bag vagten",
+   "en": {
+    "name": "Single finesse",
+    "rule": "Lead towards the honour, not away from it.",
+    "image": "The burglar sneaking in behind the guard"
+   }
   },
   {
    "id": "fald-eller-kip",
    "name": "Fald eller kip",
    "order": 2,
    "rule": "Med 8 kort kipper man, med 9 slår man.",
-   "image": "Vægten: 8 vipper mod kipning, 9 mod fald"
+   "image": "Vægten: 8 vipper mod kipning, 9 mod fald",
+   "en": {
+    "name": "Drop or finesse",
+    "rule": "With 8 cards finesse, with 9 play for the drop.",
+    "image": "The scales: 8 tips towards the finesse, 9 towards the drop"
+   }
   },
   {
    "id": "spil-mod-honnoer",
    "name": "Spil mod honnør",
    "order": 3,
    "rule": "Spil mod det kort, du vil gøre til stik.",
-   "image": "Stigen op mod honnøren"
+   "image": "Stigen op mod honnøren",
+   "en": {
+    "name": "Lead towards an honour",
+    "rule": "Lead towards the card you want to make a trick.",
+    "image": "The ladder up to the honour"
+   }
   },
   {
    "id": "dobbelt-kipning",
    "name": "Dobbelt kipning",
    "order": 4,
    "rule": "Kip først mod det laveste hul.",
-   "image": "To låger, hvor den nederste åbnes først"
+   "image": "To låger, hvor den nederste åbnes først",
+   "en": {
+    "name": "Double finesse",
+    "rule": "Finesse against the lower gap first.",
+    "image": "Two gates, the lower one opened first"
+   }
   },
   {
    "id": "sikkerhedsspil",
    "name": "Sikkerhedsspil",
    "order": 5,
    "rule": "Sikr målet, ikke maksimum.",
-   "image": "Sikkerhedsselen"
+   "image": "Sikkerhedsselen",
+   "en": {
+    "name": "Safety play",
+    "rule": "Secure the goal, not the maximum.",
+    "image": "The seat belt"
+   }
   },
   {
    "id": "begraenset-valg",
    "name": "Begrænset valg",
    "order": 6,
    "rule": "Lagde de en honnør, havde de nok ikke valget – kip.",
-   "image": "Gæsten, der kun havde én stol at vælge"
+   "image": "Gæsten, der kun havde én stol at vælge",
+   "en": {
+    "name": "Restricted choice",
+    "rule": "If they dropped an honour, they probably had no choice – finesse.",
+    "image": "The guest who had only one chair to choose"
+   }
   }
  ]
 }

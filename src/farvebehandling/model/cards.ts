@@ -1,3 +1,5 @@
+import { getLang } from '../../i18n';
+
 /**
  * Kortene i én farve. En rang er 2–14, hvor 14 er esset.
  * Data skrives A K Q J T 9 … 2; visningen er dansk: E K D B 10 9 … 2.
@@ -12,6 +14,7 @@ export const TEN: Rank = 10;
 
 const DATA_SYMBOL: Record<string, Rank> = { A: 14, K: 13, Q: 12, J: 11, T: 10 };
 const DISPLAY: Record<number, string> = { 14: 'E', 13: 'K', 12: 'D', 11: 'B', 10: '10' };
+const DISPLAY_EN: Record<number, string> = { 14: 'A', 13: 'K', 12: 'Q', 11: 'J', 10: '10' };
 const DATA: Record<number, string> = { 14: 'A', 13: 'K', 12: 'Q', 11: 'J', 10: 'T' };
 
 /** Alle 13 rang, højeste først. */
@@ -40,9 +43,9 @@ export function cardsData(ranks: readonly Rank[]): string {
   return [...ranks].sort((a, b) => b - a).map((r) => DATA[r] ?? String(r)).join('');
 }
 
-/** Dansk visning af én rang: E, K, D, B, 10, 9 … 2. */
+/** Visning af én rang: E, K, D, B, 10, 9 … 2 (på engelsk A, K, Q, J). */
 export function rankText(rank: Rank): string {
-  return DISPLAY[rank] ?? String(rank);
+  return (getLang() === 'en' ? DISPLAY_EN : DISPLAY)[rank] ?? String(rank);
 }
 
 /** Dansk visning af en hånd: [14, 10, 6, 5] → "E 10 6 5"; en renonce vises som "–". */

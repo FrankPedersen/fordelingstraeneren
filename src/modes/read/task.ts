@@ -2,6 +2,7 @@ import { mulberry32, shuffle } from '../../engine/rng';
 import { suitLengths, type Card } from '../../domain/cards';
 import { deal } from '../../domain/dealer';
 import { patternOf, type Pattern } from '../../domain/patterns';
+import { tx } from '../../i18n';
 
 export interface ReadTask {
   kind: 'read';
@@ -51,8 +52,9 @@ export function checkRead(task: ReadTask, lengths: readonly number[]): boolean {
 }
 
 const RANKS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'B', 'D', 'K', 'E'];
+const RANKS_EN = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
 
-/** Valøren på dansk: es, konge, dame, bonde (E, K, D, B). */
+/** Valøren: på dansk E, K, D, B (es, konge, dame, bonde), på engelsk A, K, Q, J. */
 export function rankLabel(rank: number): string {
-  return RANKS[rank];
+  return tx(RANKS[rank], RANKS_EN[rank]);
 }

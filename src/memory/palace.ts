@@ -1,5 +1,6 @@
 import type { Saved } from '../engine/storage';
 import { GRADES, PATTERNS, type Pattern } from '../domain/patterns';
+import { tx } from '../i18n';
 
 export type Palace = Saved['palace'];
 
@@ -9,7 +10,11 @@ export type Place = number | 'loft';
 export const STATIONS = 13;
 export const LOFT_ROOM = 4;
 
-const DEFAULT_ROOMS = ['Rum 1', 'Rum 2', 'Rum 3', 'Loftet'];
+const ROOMS_DA = ['Rum 1', 'Rum 2', 'Rum 3', 'Loftet'];
+const ROOMS_EN = ['Room 1', 'Room 2', 'Room 3', 'The Attic'];
+/** Rummets standardnavn på det aktuelle sprog; et gemt standardnavn på det andet sprog oversættes også. */
+const defaultRoom = (i: number) => tx(ROOMS_DA[i], ROOMS_EN[i]);
+const isDefaultRoom = (name: string, i: number) => name === ROOMS_DA[i] || name === ROOMS_EN[i];
 
 /**
  * Rummet for et mønster: rum 1–3 følger graderne almindelig, ualmindelig og sjælden
@@ -31,9 +36,10 @@ type Station = Palace['stations'][number];
 
 /** Paladset med brugerens navne og scener; manglende rum og stationer får standardværdier. */
 export function palaceOf(saved: Pick<Saved, 'palace'>): Palace {
-  const rooms = DEFAULT_ROOMS.map((name, i) => {
+  const rooms = ROOMS_DA.map((_, i) => {
     const stored = saved.palace.rooms[i] as Palace['rooms'][number] | undefined;
-    return { ...stored, name: stored?.name ?? name };
+    const name = stored?.name;
+    return { ...stored, name: name === undefined || isDefaultRoom(name, i) ? defaultRoom(i) : name };
   });
   const stations = PATTERNS.slice(0, STATIONS).map((pattern, i) => {
     const stored = saved.palace.stations[i] as Station | undefined;
@@ -69,7 +75,7 @@ export function stationName(saved: Pick<Saved, 'palace'>, station: number): stri
 }
 
 export function roomName(saved: Pick<Saved, 'palace'>, room: number): string {
-  return palaceOf(saved).rooms[room - 1].name.trim() || DEFAULT_ROOMS[room - 1];
+  return palaceOf(saved).rooms[room - 1].name.trim() || defaultRoom(room - 1);
 }
 
 /** Rum k åbner med niveau k: rum 2 og 3 og Loftet låses op, når den foregående grad er lært. */
@@ -78,5 +84,5 @@ export function isRoomOpen(room: number, level: number): boolean {
 }
 
 export function sceneTemplate(station: string, image: string): string {
-  return `Ved ${station}: ${image}`;
+  return tx(`Ved ${station}: ${image}`, `At ${station}: ${image}`);
 }

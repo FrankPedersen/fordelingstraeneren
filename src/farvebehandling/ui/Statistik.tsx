@@ -5,6 +5,7 @@ import type { FbSaved } from '../storage';
 import type { Technique } from '../training/palace';
 import { accuracy, answerLog, byWeakness, MIN_ANSWERS, taskStats, techniqueStats, weakest, type StatRow } from '../training/stats';
 import { TEXT } from './texts';
+import { Info } from '../../ui/Info';
 
 interface StatistikProps {
   bank: readonly BankItem[];
@@ -76,6 +77,7 @@ export function Statistik({ bank, saved, techniques, onPractice, onBack }: Stati
           ←
         </button>
         <h2>{TEXT.stats}</h2>
+        <Info topic={TEXT.stats}>{TEXT.help.stats}</Info>
       </header>
       <p className="fb-note">{TEXT.statsHelp}</p>
       {answerLog(saved).length === 0 ? (
