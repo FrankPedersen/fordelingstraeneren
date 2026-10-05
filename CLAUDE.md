@@ -40,7 +40,7 @@ Bridge-træningsapp til hånd-fordelinger. Appen er færdig og i brug på https:
 - `src/modes/`: én mappe pr. øvelse med opgavegenerator, scoring og visning (`higherLower`, `complete`, `palace`, `read`, `estimate`, `sudoku`).
 - `src/ui/`: fælles komponenter (Skyline, Mønstertastatur, Klubaften, Gitter4x4, LineChart, SuitText, Info til ⓘ), `useLang.ts` og `styles.css`.
 - `src/i18n.ts`: sproget (`getLang`, `setLang`, `tx`); uden React, så løserens Web Worker kan bruge det. `engine/format.ts` skriver tal med decimalpunktum på engelsk.
-- `src/app/`: sessionsmotoren (`session.ts`), progression, album, kurver og skærmene, også den samlede vejledning (`GuideScreen.tsx`). Den binder motor, domæne og øvelser sammen.
+- `src/app/`: sessionsmotoren (`session.ts`), progression, album, kurver og skærmene, også den samlede vejledning (`GuideScreen.tsx`). Den binder motor, domæne og øvelser sammen. `tracks.ts` er forsidens menupunkter og grupper (SPEC-navigation.md).
 - Testene ligger ved siden af koden (`*.test.ts`). `src/app/App.test.tsx` kører hele flows i jsdom.
 
 ## Beslutninger
@@ -83,6 +83,7 @@ Valg, hvor SPEC.md er åben. Spørg, før du ændrer dem.
 - Tasten "10+" er den lange farve; dens længde er 13 minus de tre andre.
 - Kurverne er små multipler med én serie pr. diagram i magenta (`#d55181`, valideret mod begge flader), så familiefarverne ikke får en ny betydning. Træfsikkerhed pr. grad tæller ikke lynrunden med.
 - En ny version vises som en knap på forsiden; appen genindlæser aldrig midt i en session.
+- **Forsidens grupper** (SPEC-navigation.md): Optælling (Fordeling med fordelingssporets elementer og menupunkter, og Pointregnskab), Spilføring (Farvebehandling) og Vurdering, når håndevaluering findes. Et nyt spor tilføjes med én linje i `src/app/tracks.ts`; en skærm uden egen funktion i `HomeScreen` åbnes med `onOpen`, som `App.tsx` giver, når det nye spor får sin skærm. Vurderings ⓘ-tekst er foreløbig og skrives færdig med håndevaluering. Grupperne har klasserne `home-group` og `home-track` i `styles.css` med eksisterende værdier; ingen nye tokens.
 
 ## Farvebehandling
 

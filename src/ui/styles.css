@@ -1398,6 +1398,19 @@ button.cell {
   gap: 12px;
 }
 
+/* Forsidens grupper (SPEC-navigation.md): afsnit med en overskrift, ikke undermenuer */
+.home-group {
+  display: grid;
+  gap: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.home-track {
+  display: grid;
+  gap: 12px;
+}
+
 /* Vejledningen */
 .guide details {
   border-top: 1px solid var(--line);

@@ -39,6 +39,27 @@ function sections(): Section[] {
       ),
     },
     {
+      title: tx('Forsidens grupper', 'The groups on the front page'),
+      body: (
+        <List
+          items={[
+            tx(
+              'Forsiden er delt i grupper efter, hvad sporene træner: Optælling (Fordeling og Pointregnskab), Spilføring (Farvebehandling) og senere Vurdering. Grupper uden spor vises ikke.',
+              'The front page is divided into groups by what the tracks train: Counting (Distribution and Point count), Declarer play (Suit combinations) and later Hand evaluation. Groups without a track are not shown.',
+            ),
+            tx(
+              'Under Fordeling står fordelingssporets streak, XP, niveau, dagens plan og startknap og menupunkterne Huskepalads, Album, Klubaften og Kurver. Streak og XP hører til fordelingssporet; de andre spor har deres egne inde i sporet.',
+              "Under Distribution are the distribution track's streak, XP, level, today's plan and start button and the menu items Memory palace, Album, Club evening and Charts. The streak and XP belong to the distribution track; the other tracks have their own inside the track.",
+            ),
+            tx(
+              'Hvert spor åbnes med ét tryk, og ⓘ ved en gruppe forklarer, hvad den træner. Vejledningen og Indstillinger står under grupperne.',
+              'Each track opens with one tap, and ⓘ next to a group explains what it trains. The guide and Settings are below the groups.',
+            ),
+          ]}
+        />
+      ),
+    },
+    {
       title: tx('Den daglige session', 'The daily session'),
       body: (
         <>
