@@ -159,3 +159,29 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
 - [x] Hold eller par (opgavetype 9), statistik pr. teknik og opgavetype med forslag i Selvvalgt, fast lagring og påmindelse om eksport (Franks ønske).
 - [x] Fejl i kilden: årsag til hver afvigelse i valideringsrapporterne; 14 mål uden beslutning fjernet, 657 kombinationer (Franks ønske).
 - [x] Engelsk og ⓘ i hele appen med en samlet vejledning på forsiden (Franks ønske).
+
+## Pointregnskab
+
+Et nyt, selvstændigt spor på grenen `pointregnskab` (appen før sporet er tagget `v3-tosproget`). **[SPEC-pointregnskab.md](SPEC-pointregnskab.md) beskriver sporet.** Eksisterende spor, systemfilen, meldegiveren og 13-sudokuens generator ændres ikke; kun stederne i specens tabel må berøres. Kræver noget alligevel en ændring i eksisterende kode, så spørg først.
+
+**Kort over koden** (`src/pointregnskab/`)
+- `model/`: point og tilladte point som mængder (`points.ts`), løseren (`solver.ts`), meldeforløbet med pas-reglerne (`bidding.ts`), facit-skabelonerne (`explain.ts`) og generatoren (`generator.ts`).
+- `content/pas-regler.json`: pas-reglerne med `text` og `textEn`.
+- `training/`: scoring og visningstid (`scoring.ts`), niveau (`progression.ts`), Leitner-bunken med blokke og intervalkort (`deck.ts`) og sessionen (`session.ts`).
+- `storage.ts`: skemaet for `pointregnskab:v1` (afventer Franks godkendelse) med indlæsning, kopi af ulæselige data, gem og import.
+
+**Beslutninger** (spørg, før du ændrer dem)
+- **Meldeforløbet:** åbner Øst eller Vest højere end 1 i farve eller 1NT, vises svarerens tur ikke, da systemfilen ikke har indmeldinger efter dem. Nord–Syd har mindst 20 hp i opgaverne om placeringer, så kontrakten er rimelig. Kontrakten er kosmetisk: major med 8+ kort, ellers NT, og en minor med 9+ kort fra 29 hp.
+- **Niveauerne:** niveau 1–2 har én modspiller med en grænse (niveau 1 én uset honnør, niveau 2 to til fem), fra niveau 3 begge. Løbende tælling viser 2 + niveau honnører.
+- **Aflæses direkte:** en modspiller har vist alt, han kan have (restens største værdi er 0). Opgaven forkastes også, når ingen skabelon forklarer løserens svar.
+- **Skabelonerne** regner med regnskabspanelets rest (tilladte point minus det viste), som brugeren selv ser. "Den anden kan ikke have den" bruges, når honnøren er mere værd end hans største rest, eller når den ikke passer i nogen af hans intervaller sammen med de andre usete honnører (Michaels' hul).
+- **Kipningsretning** spørger kun om honnører, Nord–Syd kan kippe mod: de har kortet lige under og et højere kort i farven.
+- **Visningstiden** ændres ikke af et halvt rigtigt svar og kun af svar i Løbende tælling.
+- **Opvarmningen:** forfaldne kort først, derefter højst 3 nye kort pr. session; rigtigt inden for 5 s er hurtigt i Leitner og giver 10 XP. Ugens boss giver dobbelt XP for hele sessionen.
+- **Niveaufasen:** slutter efter 4 opgaver, eller efter 3, når 150 s er gået; den samme øvelse kommer ikke to gange i træk. Kun niveaufasens svar tilpasser niveauet.
+
+**Status**
+- [x] Trin 1: model og løser med tilladte point som mængder, pas-regler og tests.
+- [x] Trin 2: generator med meldeforløb, kvalitetskrav og seeds.
+- [x] Logik uden brugerflade for session, scoring og Leitner-bunken; skemaet for `pointregnskab:v1` som TypeScript-type.
+- [ ] Franks godkendelse af skemaet. Derefter trin 3–5 med brugerflade, tekstfil, ⓘ, menupunkt og vejledning.

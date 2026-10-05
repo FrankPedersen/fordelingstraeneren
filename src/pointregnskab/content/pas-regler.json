@@ -1,0 +1,16 @@
+{
+  "rules": [
+    {
+      "context": "responder-pass-after-1-suit",
+      "hcp": [0, 5],
+      "text": "Svarer passede på makkers åbning i 1 farve",
+      "textEn": "Responder passed partner's one-level suit opening"
+    },
+    {
+      "context": "responder-pass-after-1NT",
+      "hcp": [0, 7],
+      "text": "Svarer passede på makkers 1NT-åbning",
+      "textEn": "Responder passed partner's 1NT opening"
+    }
+  ]
+}
