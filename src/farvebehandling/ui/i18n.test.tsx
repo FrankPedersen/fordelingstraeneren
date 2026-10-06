@@ -47,5 +47,5 @@ describe('Farvebehandlings opgaver på engelsk', () => {
       }
       cleanup();
     }
-  });
+  }, 30_000);
 });

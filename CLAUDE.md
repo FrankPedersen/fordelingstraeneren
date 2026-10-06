@@ -12,6 +12,7 @@ Bridge-træningsapp til hånd-fordelinger. Appen er færdig og i brug på https:
 - Åbne punkter i SPEC.md (fx oplysningsdoblingens "højst 2 i deres farve") er implementeret som beskrevet og markeret i `note`-felterne i `src/system/dk-2over1.json`; spørg, før du ændrer dem.
 - Brugerens data ligger i browseren og skal kunne læses efter hver opdatering: nye felter er valgfrie, og en ny skemaversion får en migrering i `src/engine/storage.ts`.
 - Lokalt: `npm run dev`. Ikonerne tegnes af `npm run icons`.
+- Tunge tests (jsdom-flows og løkker over mange opgaver) har en tidsgrænse på 30 s, fordi en fuld parallel kørsel lokalt kan tage over standardens 5 s.
 
 ## Ufravigelige regler
 
@@ -83,7 +84,7 @@ Valg, hvor SPEC.md er åben. Spørg, før du ændrer dem.
 - Tasten "10+" er den lange farve; dens længde er 13 minus de tre andre.
 - Kurverne er små multipler med én serie pr. diagram i magenta (`#d55181`, valideret mod begge flader), så familiefarverne ikke får en ny betydning. Træfsikkerhed pr. grad tæller ikke lynrunden med.
 - En ny version vises som en knap på forsiden; appen genindlæser aldrig midt i en session.
-- **Forsidens grupper** (SPEC-navigation.md): Optælling (Fordeling med fordelingssporets elementer og menupunkter, og Pointregnskab), Spilføring (Farvebehandling) og Vurdering, når håndevaluering findes. Et nyt spor tilføjes med én linje i `src/app/tracks.ts`; en skærm uden egen funktion i `HomeScreen` åbnes med `onOpen`, som `App.tsx` giver, når det nye spor får sin skærm. Vurderings ⓘ-tekst er foreløbig og skrives færdig med håndevaluering. Grupperne har klasserne `home-group` og `home-track` i `styles.css` med eksisterende værdier; ingen nye tokens.
+- **Forsidens grupper** (SPEC-navigation.md): Optælling (Fordeling med fordelingssporets elementer og menupunkter, og Pointregnskab), Spilføring (Farvebehandling) og Vurdering, når håndevaluering findes. Et nyt spor tilføjes med én linje i `src/app/tracks.ts`; en skærm uden egen funktion i `HomeScreen` åbnes med `onOpen`, som `App.tsx` giver, når det nye spor får sin skærm. Vurderings ⓘ-tekst er foreløbig og skrives færdig med håndevaluering. Grupperne har klasserne `home-group` og `home-track` i `styles.css` med eksisterende værdier; ingen nye tokens. Udgivet 6. oktober 2026 (appen før er tagget `v4-foer-navigation`).
 
 ## Farvebehandling
 
@@ -192,3 +193,5 @@ Et nyt, selvstændigt spor, bygget på grenen `pointregnskab` og flettet ind på
 - [x] Logik uden brugerflade for session, scoring og Leitner-bunken; skemaet for `pointregnskab:v1` som TypeScript-type.
 - [x] Franks godkendelse af skemaet (6. oktober 2026).
 - [x] Trin 3–5: brugerfladen på dansk og engelsk med ⓘ, menupunktet på forsiden, afsnittet i vejledningen, Kipningsretning, Løbende tælling med tilpasset visningstid og Fuldt regnskab med længder fra 13-sudokuens generator. Godkendt og udgivet på `main` (6. oktober 2026).
+- [x] Længdeskabelonerne "Farven er brugt op" og "Ikke plads"; på niveau 5 ændrer længderne svaret i mindst halvdelen af opgaverne (Franks afgørelse).
+- [ ] Regnskabspanel, Honnørchip og Meldelinje tegnes ind i designsystemet i Claude Design (kræver, at Frank starter `/design-sync`).

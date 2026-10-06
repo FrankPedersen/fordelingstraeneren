@@ -103,7 +103,7 @@ describe('Engelsk', () => {
     }
     click("Start today's session");
     expectEnglish('sessionen');
-  });
+  }, 30_000);
 
   it('viser farvebehandling på engelsk: Træning, Selvvalgt, Analyse og undersiderne', async () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...defaultSaved(), settings: { ...defaultSaved().settings, language: 'en' } }));

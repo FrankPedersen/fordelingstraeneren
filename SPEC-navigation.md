@@ -100,17 +100,17 @@ Forsiden ligger i appens 480 px-kolonne. Wireframen er designgrundlaget; designe
 
 ## Accepttest
 
-- [ ] Hver knap på forsiden åbner den samme skærm som før.
-- [ ] Ingen nøgle i localStorage ændres ved at åbne forsiden eller trykke på et menupunkt. Sprogknappen gemmer kun `settings.language`, og Start dagens session gemmer som i dag.
-- [ ] Grupperne står i rækkefølgen Optælling, Spilføring, Vurdering, og tomme grupper vises ikke.
-- [ ] Hvert menupunkt står i præcis én gruppe, og et nyt spor med ét menupunkt kræver kun én ny linje i `src/app/tracks.ts`.
-- [ ] Hver skærm åbnes med ét tryk fra forsiden.
-- [ ] Fordelingssporets elementer står først i Optælling under Fordeling, med samme indhold og i samme rækkefølge som før.
-- [ ] Vejledningskortet og Indstillinger står under grupperne, og sprogknappen står øverst som før.
-- [ ] Der er intet menupunkt for 13-sudoku.
-- [ ] På engelsk står der intet dansk på forsiden, heller ikke i gruppernes ⓘ (som `src/app/i18n.test.tsx`).
-- [ ] Hver gruppe har et ⓘ med en forklaring på begge sprog.
-- [ ] Alle eksisterende tests består; kun tests af forsidens opbygning er opdateret, og de er nævnt ved aflevering.
+- [x] Hver knap på forsiden åbner den samme skærm som før.
+- [x] Ingen nøgle i localStorage ændres ved at åbne forsiden eller trykke på et menupunkt. Sprogknappen gemmer kun `settings.language`, og Start dagens session gemmer som i dag.
+- [x] Grupperne står i rækkefølgen Optælling, Spilføring, Vurdering, og tomme grupper vises ikke.
+- [x] Hvert menupunkt står i præcis én gruppe, og et nyt spor med ét menupunkt kræver kun én ny linje i `src/app/tracks.ts`.
+- [x] Hver skærm åbnes med ét tryk fra forsiden.
+- [x] Fordelingssporets elementer står først i Optælling under Fordeling, med samme indhold og i samme rækkefølge som før.
+- [x] Vejledningskortet og Indstillinger står under grupperne, og sprogknappen står øverst som før.
+- [x] Der er intet menupunkt for 13-sudoku.
+- [x] På engelsk står der intet dansk på forsiden, heller ikke i gruppernes ⓘ (som `src/app/i18n.test.tsx`).
+- [x] Hver gruppe har et ⓘ med en forklaring på begge sprog.
+- [x] Alle eksisterende tests består; kun tests af forsidens opbygning er opdateret, og de er nævnt ved aflevering.
 
 ## Afklaret
 

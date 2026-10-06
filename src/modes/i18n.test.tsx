@@ -82,5 +82,5 @@ describe('Øvelserne på engelsk', () => {
       expectEnglish(`13-sudoku ${seed}`);
       cleanup();
     }
-  });
+  }, 30_000);
 });

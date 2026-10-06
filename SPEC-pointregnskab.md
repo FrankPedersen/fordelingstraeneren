@@ -269,29 +269,29 @@ Pointregnskabet bygges i fem trin. Hvert trin leveres på begge sprog og med ⓘ
 
 Accepttest i Vitest:
 
-- [ ] Alle eksisterende tests består uændret. Systemfilen, meldegiveren, 13-sudokuens generator og de andre spors nøgler i localStorage er uændrede.
-- [ ] Modpartens point = 40 − (Nords hp + Syds hp) for 10.000 tilfældige fordelinger.
-- [ ] Vest åbnede 1NT (15–17) og har vist 10, Øst passede (0–5) og har vist 0, og de usete honnører er ♣D og ♦E: begge sidder sikkert hos Vest.
-- [ ] Samme situation, men Vest åbnede 1♥ (12–21): både ♣D og ♦E giver "kan ikke afgøres".
-- [ ] To intervaller: Øst har meldt Michaels (8–15 eller 17+) og har vist 15. Med ♦B som eneste usete honnør kan Øst ikke have den (16 er ikke tilladt), så den sidder sikkert hos Vest, når Vests interval tillader det.
-- [ ] Ingen af 100.000 tilfældige hænder med 12 hp eller mere passer i åbningsposition efter `chooseCall('opening', …)`.
-- [ ] Meldeforløbet: hvert vist pas passer med sin regel (pas i åbningsposition højst 11 hp, svarerens pas i pas-reglens interval), og Nord–Syds meldinger indgår ikke i regnskabet.
-- [ ] Har Nord eller Syd meldt ind eller doblet efter Øst–Vests åbning, giver svarerens pas tilladte point \[0, M\].
-- [ ] Fuldt regnskab: en modspiller med 1 kort i en farve kan ikke få to honnører i den.
-- [ ] Farven er brugt op: Øst har vist ♠K og ♠D og har 2 spar, og ♠E er uset: ♠E sidder sikkert hos Vest, uden længder kan det ikke afgøres, og facit er "Øst har vist alle sine 2 spar, så ♠E sidder hos Vest." (også på engelsk).
-- [ ] Ikke plads: Øst har 1 spar, ♠E, ♠D og ♥K er usete, og Vest (2NT, 20–21) har vist 17: ♠E sidder sikkert hos Vest, uden længder kan det ikke afgøres, og facit nævner først Østs plads i spar og så Vests point (også på engelsk).
-- [ ] Niveau 5: i mindst halvdelen af 200 opgaver ændrer længderne svaret (uden længder ville facit være et andet), og facit bruger da længderne.
-- [ ] Generatoren: 20–30 % af 1.000 opgaver har facit "kan ikke afgøres", ingen opgave fra niveau 3 kan aflæses direkte, og samme seed giver samme opgave.
-- [ ] Regnskabspanelets "Rest" er altid de tilladte point minus det viste, aldrig løserens slutning.
-- [ ] Løbende tælling: ét af to tal rigtigt giver halvt. Visningstiden bliver 10 % kortere efter rigtigt og 15 % længere efter forkert, inden for 800–4.000 ms pr. kort.
-- [ ] Facit: hvert svar har en sætning fra en af skabelonerne, og sætningen bruger kun løserens facit.
-- [ ] Sprog: på engelsk står der intet dansk på Pointregnskabets skærme, heller ikke i ⓘ-forklaringerne, facit eller meldingerne (test som `src/app/i18n.test.tsx`), og den danske og den engelske tekstfil har samme type.
-- [ ] ⓘ: hvert element fra Sprog og hjælp har et ⓘ med en forklaring på begge sprog.
-- [ ] Komponentfilerne indeholder ingen farveværdier og ingen tal med enhed, undtagen 0, 1px-streger og procenter.
+- [x] Alle eksisterende tests består uændret. Systemfilen, meldegiveren, 13-sudokuens generator og de andre spors nøgler i localStorage er uændrede.
+- [x] Modpartens point = 40 − (Nords hp + Syds hp) for 10.000 tilfældige fordelinger.
+- [x] Vest åbnede 1NT (15–17) og har vist 10, Øst passede (0–5) og har vist 0, og de usete honnører er ♣D og ♦E: begge sidder sikkert hos Vest.
+- [x] Samme situation, men Vest åbnede 1♥ (12–21): både ♣D og ♦E giver "kan ikke afgøres".
+- [x] To intervaller: Øst har meldt Michaels (8–15 eller 17+) og har vist 15. Med ♦B som eneste usete honnør kan Øst ikke have den (16 er ikke tilladt), så den sidder sikkert hos Vest, når Vests interval tillader det.
+- [x] Ingen af 100.000 tilfældige hænder med 12 hp eller mere passer i åbningsposition efter `chooseCall('opening', …)`.
+- [x] Meldeforløbet: hvert vist pas passer med sin regel (pas i åbningsposition højst 11 hp, svarerens pas i pas-reglens interval), og Nord–Syds meldinger indgår ikke i regnskabet.
+- [x] Har Nord eller Syd meldt ind eller doblet efter Øst–Vests åbning, giver svarerens pas tilladte point \[0, M\].
+- [x] Fuldt regnskab: en modspiller med 1 kort i en farve kan ikke få to honnører i den.
+- [x] Farven er brugt op: Øst har vist ♠K og ♠D og har 2 spar, og ♠E er uset: ♠E sidder sikkert hos Vest, uden længder kan det ikke afgøres, og facit er "Øst har vist alle sine 2 spar, så ♠E sidder hos Vest." (også på engelsk).
+- [x] Ikke plads: Øst har 1 spar, ♠E, ♠D og ♥K er usete, og Vest (2NT, 20–21) har vist 17: ♠E sidder sikkert hos Vest, uden længder kan det ikke afgøres, og facit nævner først Østs plads i spar og så Vests point (også på engelsk).
+- [x] Niveau 5: i mindst halvdelen af 200 opgaver ændrer længderne svaret (uden længder ville facit være et andet), og facit bruger da længderne.
+- [x] Generatoren: 20–30 % af 1.000 opgaver har facit "kan ikke afgøres", ingen opgave fra niveau 3 kan aflæses direkte, og samme seed giver samme opgave.
+- [x] Regnskabspanelets "Rest" er altid de tilladte point minus det viste, aldrig løserens slutning.
+- [x] Løbende tælling: ét af to tal rigtigt giver halvt. Visningstiden bliver 10 % kortere efter rigtigt og 15 % længere efter forkert, inden for 800–4.000 ms pr. kort.
+- [x] Facit: hvert svar har en sætning fra en af skabelonerne, og sætningen bruger kun løserens facit.
+- [x] Sprog: på engelsk står der intet dansk på Pointregnskabets skærme, heller ikke i ⓘ-forklaringerne, facit eller meldingerne (test som `src/app/i18n.test.tsx`), og den danske og den engelske tekstfil har samme type.
+- [x] ⓘ: hvert element fra Sprog og hjælp har et ⓘ med en forklaring på begge sprog.
+- [x] Komponentfilerne indeholder ingen farveværdier og ingen tal med enhed, undtagen 0, 1px-streger og procenter.
 
 Åbne punkter (Frank afgør; bygges som beskrevet indtil da):
 
-- **Fælles menu:** forsiden grupperes i en særskilt navigationsopgave (SPEC-navigation.md), før næste spor bygges. Pointregnskabet får indtil da sit eget menupunkt som beskrevet.
+- **Fælles menu:** udført 6. oktober 2026. Forsiden er grupperet efter SPEC-navigation.md, og Pointregnskab står i gruppen Optælling.
 - **Flere pas-regler:** kan tilføjes senere i `pas-regler.json`, fx åbners pas på svarerens melding.
 - **Version 2:** rigtigt spilforløb og sandsynlighed i de uafgjorte tilfælde.
 
