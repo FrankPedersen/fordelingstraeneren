@@ -1,13 +1,17 @@
 // @vitest-environment jsdom
-import { cleanup, render } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
-import { bandFields, linesForGoal } from '../analysis';
+import { setLang } from '../../i18n';
+import { bandFields, disagreements, linesForGoal } from '../analysis';
 import { TEST_BANK } from '../testBank';
 import { LayoutList } from './Analysevindue';
 import { Bridgebord } from './Bridgebord';
 import { Sandsynlighedsbånd } from './Sandsynlighedsbånd';
 
-afterEach(cleanup);
+afterEach(() => {
+  cleanup();
+  setLang('da');
+});
 
 describe('Temaet i farvebehandling (SPEC-tema.md)', () => {
   it('fb-hit står altid med ✓ og fb-miss altid med ✕, i båndet og i listen over sidninger', () => {
@@ -37,6 +41,40 @@ describe('Temaet i farvebehandling (SPEC-tema.md)', () => {
     }
     expect(hits).toBeGreaterThan(100);
     expect(misses).toBeGreaterThan(20);
+  }, 30_000);
+
+  it('mærket "afgør" står ved præcis de afgørende sidninger, med ⓘ på dansk og engelsk', () => {
+    let marked = 0;
+    for (const item of TEST_BANK.slice(0, 40)) {
+      const lines = linesForGoal(item, item.combination.goals[0]);
+      const fields = bandFields(item, lines);
+      render(<LayoutList fields={fields} lines={lines.map((l) => l.letter)} selected={null} onSelect={() => {}} />);
+      const rows = [...document.querySelectorAll('.fb-layouts > li')];
+      const decisive = new Set(lines.length > 1 ? disagreements(fields).map((f) => f.id) : []);
+      rows.forEach((row, i) => {
+        const has = row.querySelector('.fb-decides') !== null;
+        expect(has, `${item.combination.id} ${fields[i].id}`).toBe(decisive.has(fields[i].id));
+        if (has) marked++;
+      });
+      expect(screen.queryByRole('button', { name: 'Hjælp: afgør' }) !== null).toBe(decisive.size > 0);
+      cleanup();
+    }
+    expect(marked).toBeGreaterThan(5);
+    const item = TEST_BANK.find((b) => {
+      const lines = linesForGoal(b, b.combination.goals[0]);
+      return lines.length > 1 && disagreements(bandFields(b, lines)).length > 0;
+    })!;
+    const lines = linesForGoal(item, item.combination.goals[0]);
+    const fields = bandFields(item, lines);
+    render(<LayoutList fields={fields} lines={lines.map((l) => l.letter)} selected={null} onSelect={() => {}} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Hjælp: afgør' }));
+    expect(screen.getByText('Linjerne giver forskelligt resultat i denne sidning.')).toBeTruthy();
+    cleanup();
+    setLang('en');
+    render(<LayoutList fields={fields} lines={lines.map((l) => l.letter)} selected={null} onSelect={() => {}} />);
+    expect(screen.getAllByText('decides').length).toBeGreaterThan(1);
+    fireEvent.click(screen.getByRole('button', { name: 'Help: decides' }));
+    expect(screen.getByText('The lines give different results in this layout.')).toBeTruthy();
   }, 30_000);
 
   it('bordet er et diagram: hænderne som i systemnotatet, Vest og Øst ved siderne og et kompas med de manglende kort', () => {

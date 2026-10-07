@@ -454,7 +454,10 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
   );
 }
 
-/** Sidningerne som liste med chancen og hver linjes resultat; et tryk vælger sidningen. */
+/**
+ * Sidningerne som liste med chancen og hver linjes resultat; et tryk vælger sidningen. En sidning, hvor linjerne giver
+ * forskelligt resultat, får mærket "afgør"; mærket står med ⓘ én gang over listen, fordi rækkerne selv er knapper.
+ */
 export function LayoutList({
   fields,
   lines,
@@ -466,28 +469,38 @@ export function LayoutList({
   selected: string | null;
   onSelect(id: string): void;
 }) {
+  const decides = (f: BandField) => lines.length > 1 && f.outcomes.some((o) => o !== f.outcomes[0]);
   return (
-    <ul className="fb-layouts">
-      {fields.map((f) => (
-        <li key={f.id}>
-          <button
-            type="button"
-            className={`fb-layout${selected === f.id ? ' fb-layout-selected' : ''}`}
-            aria-pressed={selected === f.id}
-            onClick={() => onSelect(f.id)}
-          >
-            <span className="fb-layout-cards">{TEXT.layout(f.west, f.east)}</span>
-            <span className="fb-layout-chance">{percent(f.probability)}</span>
-            <span className="fb-layout-results">
-              {f.outcomes.map((o, k) => (
-                <span key={k} className={`fb-chip ${o > 0 ? 'fb-chip-hit' : 'fb-chip-miss'}`}>
-                  {lines[k]} {o > 0 ? TEXT.hit : TEXT.miss}
-                </span>
-              ))}
-            </span>
-          </button>
-        </li>
-      ))}
-    </ul>
+    <>
+      {fields.some(decides) && (
+        <div className="with-info">
+          <span className="fb-decides">{TEXT.decides}</span>
+          <Info topic={TEXT.decides}>{TEXT.help.decides}</Info>
+        </div>
+      )}
+      <ul className="fb-layouts">
+        {fields.map((f) => (
+          <li key={f.id}>
+            <button
+              type="button"
+              className={`fb-layout${selected === f.id ? ' fb-layout-selected' : ''}`}
+              aria-pressed={selected === f.id}
+              onClick={() => onSelect(f.id)}
+            >
+              <span className="fb-layout-cards">{TEXT.layout(f.west, f.east)}</span>
+              <span className="fb-layout-chance">{percent(f.probability)}</span>
+              <span className="fb-layout-results">
+                {f.outcomes.map((o, k) => (
+                  <span key={k} className={`fb-chip ${o > 0 ? 'fb-chip-hit' : 'fb-chip-miss'}`}>
+                    {lines[k]} {o > 0 ? TEXT.hit : TEXT.miss}
+                  </span>
+                ))}
+                {decides(f) && <span className="fb-decides">{TEXT.decides}</span>}
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }

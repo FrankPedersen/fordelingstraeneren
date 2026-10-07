@@ -466,6 +466,17 @@
   color: var(--fb-miss-text);
 }
 
+/* Mærket "afgør": fb-miss med stiplet kant som de felter, hvor målet ikke nås (SPEC-tema.md). */
+.fb-decides {
+  padding: var(--space-2) var(--space-8);
+  border: 1px dashed var(--fb-miss-line);
+  border-radius: var(--radius-pill);
+  background: var(--fb-miss);
+  color: var(--fb-miss-text);
+  font-size: var(--type-small);
+  font-weight: 700;
+}
+
 .fb-result h3 {
   margin: 0;
   font-size: var(--type-h3);
