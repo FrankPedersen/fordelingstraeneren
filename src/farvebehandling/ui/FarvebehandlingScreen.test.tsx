@@ -104,7 +104,7 @@ describe('Farvebehandling', { timeout: 30_000 }, () => {
     const best = linesForGoal(first, first.combination.goals[0])[0];
     const article = screen.getByRole('article', { name: 'Linje A' });
     expect(within(article).getByText(percent(best.value))).toBeTruthy();
-    expect(within(article).getByText('✓ bedst')).toBeTruthy();
+    expect(within(article).getByText('✓ Bedste linje')).toBeTruthy();
     expect(screen.getByRole('group', { name: 'Forskellen' })).toBeTruthy();
     expect(screen.getByRole('figure', { name: /Første udspil/ })).toBeTruthy();
     expect(screen.getByText('a priori · ubegrænsede forbindelser · optimalt modspil')).toBeTruthy();
@@ -224,7 +224,7 @@ describe('Farvebehandling', { timeout: 30_000 }, () => {
     // Linjerne er skjult, indtil der er svaret (Spil den selv viser bordet med kortene).
     const prompt = screen.queryByText(`Mål: ${first.combination.goals[0]} stik`, { selector: '.prompt' });
     expect(prompt ?? screen.queryByRole('region', { name: 'Spil den selv' })).toBeTruthy();
-    expect(screen.queryByText('✓ bedst')).toBeNull();
+    expect(screen.queryByText('✓ Bedste linje')).toBeNull();
     answerAnything();
     expect(within(screen.getByRole('status')).getByText(/^(Rigtigt|Halvt rigtigt|Forkert)$/)).toBeTruthy();
     expect(screen.getByRole('group', { name: 'Forskellen' })).toBeTruthy();

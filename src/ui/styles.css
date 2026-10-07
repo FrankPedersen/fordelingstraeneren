@@ -11,6 +11,17 @@
   /* Primærknapper; bevidst neutral, så den ikke forveksles med familiefarverne. */
   --ink: #263241;
   --ink-text: #ffffff;
+  --accent: #5b6b82;
+  --accent-soft: #e3e9f1;
+  --accent-text: #ffffff;
+  --table: #1f5c4a;
+  --table-text: #ffffff;
+  --fb-hit: #d6e4f5;
+  --fb-hit-text: #163e73;
+  --fb-hit-line: #8daad3;
+  --fb-miss: #f8dfcc;
+  --fb-miss-text: #7a3410;
+  --fb-miss-line: #e0a27a;
   --ok: #0d6e63;
   --ok-bg: #e2f3ef;
   --bad-bg: #e9ecf1;
@@ -34,6 +45,17 @@
     --line: #2e3844;
     --ink: #dfe5ec;
     --ink-text: #12161c;
+    --accent: #9fb0c6;
+    --accent-soft: #2a3442;
+    --accent-text: #12161c;
+    --table: #1a4437;
+    --table-text: #e8ecf1;
+    --fb-hit: #1e3a5f;
+    --fb-hit-text: #d6e4f5;
+    --fb-hit-line: #5b84bd;
+    --fb-miss: #4a2a14;
+    --fb-miss-text: #f8dfcc;
+    --fb-miss-line: #b9774a;
     --ok: #5fd0c0;
     --ok-bg: #12302c;
     --bad-bg: #262d37;
@@ -176,9 +198,9 @@ p {
 }
 
 .btn.primary {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--ink-text);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
 }
 
 .btn:not(:disabled):active,
@@ -352,7 +374,9 @@ p {
 }
 
 .choice.chosen {
-  border-color: var(--ink);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--text);
 }
 
 .choice.right {
@@ -1161,7 +1185,9 @@ button.cell {
 }
 
 .cell.selected {
-  border-color: var(--ink);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--text);
 }
 
 .cell.right {
@@ -1322,7 +1348,9 @@ button.cell {
 }
 
 .choice-btn.selected {
-  border: 2px solid var(--ink);
+  border: 2px solid var(--accent);
+  background: var(--accent-soft);
+  color: var(--text);
 }
 
 /* ⓘ: hjælp ved et element (src/ui/Info.tsx). I en .with-info-række står ⓘ ved elementet og forklaringen under. */
@@ -1367,9 +1395,9 @@ button.cell {
 }
 
 .info-btn[aria-expanded='true'] {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--ink-text);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--text);
 }
 
 .info-text {

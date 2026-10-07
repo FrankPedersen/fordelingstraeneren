@@ -331,12 +331,12 @@ Alle skærme følger én læseretning: problem → linjer → forskel → detalj
 
 Regler for brugerfladen:
 
-- **Bridgebordet:** Nord (bordet) øverst, Syd (dig) nederst, Vest til venstre, Øst til højre. E K D B 10 med honnører i fed; ♥ og ♦ i appens eksisterende røde farvetoken, i både lys og mørk tilstand. En pil viser spilleretningen i det aktuelle trin.
-- **Linjer:** kort med nummererede trin og hvis/så-grene. Den bedste linje markeres først efter svaret.
+- **Bridgebordet:** klassisk diagram som på det godkendte artboard "Analysevindue v2" (SPEC-tema.md): Nord (bordet) øverst og Syd (dig) nederst, skrevet som i systemnotatet ("♠ B432" over "♠ E1065") med E K D B 10, Vest og Øst ved siderne og i midten et kompas i `table` med N, V, Ø, S og de manglende kort i `table-text`. ♥ og ♦ i appens eksisterende røde farvetoken, i både lys og mørk tilstand. En pil foran billedteksten viser spilleretningen i det aktuelle trin.
+- **Linjer:** kort med nummererede trin og hvis/så-grene. Den bedste linje markeres først efter svaret: kant i `ok`, flade `ok-bg`, mærket "✓ Bedste linje" og procenten i `ok`.
 - **Sandsynlighedsbånd:** én vandret søjle pr. linje på 100 %, delt i sidninger efter deres chance. Felterne står i samme rækkefølge for alle linjer, og et tryk åbner sidningen.
 - **Detaljer:** de afgørende sidninger vises først. "Vis alle sidninger" folder hele listen ud, grupperet efter fordeling eller honnørplacering.
-- **Nås / nås ikke:** skelnes på lyshed og symbol, ikke kulør: mørkt felt med ✓ og lyst felt med stiplet kant og ✕. Så kolliderer det ikke med mønsterfamiliernes blå, grøn, rav og violet.
-- **Øvrige farver:** sandsynlighedsbjælker er neutralt grå. Accentfarven er appens eksisterende; der indføres ingen ny brandfarve.
+- **Nås / nås ikke:** `fb-hit` (lys blå) med fuld kant i `fb-hit-line` og ✓, og `fb-miss` (lys orange) med stiplet kant i `fb-miss-line` og ✕, også til mærket "afgør" (SPEC-tema.md). Farven står aldrig alene uden symbol; i båndets felter under 5 % er der ikke plads til tegnet, så det står der kun for skærmlæsere, og kanten viser forskellen. Farverne bruges kun i farvebehandling.
+- **Øvrige farver:** sandsynlighedsbjælker er neutralt grå. Primærknapper og valgte elementer bruger appens `accent` og `accent-soft` (SPEC-tema.md); der indføres ingen ny brandfarve.
 - **Mørk tilstand:** alle farver har både lyse og mørke tokens og følger telefonens indstilling som resten af appen.
 - **Skrift:** systemskrift som resten af appen. Ingen eksterne skrifter, fordi appen er en offline-PWA.
 - **Bredde:** Træning og Selvvalgt ligger i appens 480 px-kolonne. Kun Analyse må gå bredere, op til 1280 px.
@@ -353,8 +353,8 @@ Wireframes og regler i afsnittet Layout er det godkendte designgrundlag, så bru
 
 - **Tokens:** `design/tokens.json` indeholder appens farver i lys og mørk tilstand, inklusive ♥♦-rød og mønsterfamilierne, samt skrift, afstande, radier og størrelser. `src/tokens.test.ts` holder filen i takt med `src/ui/styles.css`. Farvebehandlingens nye tokens (nås, nås ikke, båndets grå og Analyses bredde på 1280 px) tilføjes, når komponenterne bygges.
 - **Designsystem:** [Fordelingstræneren](https://claude.ai/artifact/NmcghGRGc1WRhmSMnjwTq3) i Claude Design, bygget på `design/tokens.json`. Det indeholder tokens, en brandbog på dansk og komponenterne Knap, Kort, Svarvalg, Skyline og Spillekort. Nye skærme bygges fra det.
-- **Tegnefladen** [Analysevindue – farvebehandling](https://claude.ai/artifact/S5p4ANVzT2BGLpH98nehwn) er et tidligt udkast og ikke godkendt. Er tegnefladen og specen uenige, gælder specen.
-- **Godkendte artboards:** ingen endnu. Når et artboard godkendes, skrives navnet her, og så gælder det frem for wireframes.
+- **Tegnefladen** [Analysevindue – farvebehandling](https://claude.ai/artifact/S5p4ANVzT2BGLpH98nehwn) har to artboards: "Udkast 1" er ikke godkendt, "Analysevindue v2" er godkendt.
+- **Godkendte artboards:** "Analysevindue v2" på tegnefladen "Analysevindue – farvebehandling" (5. oktober 2026, SPEC-tema.md). Det gælder for Analysevinduet. Når et artboard godkendes, skrives navnet her, og så gælder det frem for wireframes.
 
 Arbejdsgang ved senere ændringer:
 

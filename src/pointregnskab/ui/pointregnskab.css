@@ -197,14 +197,16 @@
 }
 
 .pr-chip-noted {
-  border-color: var(--ink);
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+  background: var(--accent-soft);
 }
 
 .pr-chip-note {
   padding: 0 var(--space-6);
   border-radius: var(--radius-pill);
-  background: var(--ink);
-  color: var(--ink-text);
+  background: var(--accent);
+  color: var(--accent-text);
   font-size: var(--type-small);
 }
 

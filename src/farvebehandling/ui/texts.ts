@@ -22,6 +22,9 @@ const DA = {
   west: 'Vest',
   east: 'Øst',
   unknown: '?',
+  /** Kompasset i bordets midte og de kort, modparten har. */
+  compass: { N: 'N', W: 'V', E: 'Ø', S: 'S' },
+  missing: (cards: string) => `${cards} mangler`,
   suit: '♠',
   goalLabel: 'Mål',
   goal: (n: number) => `${n} stik`,
@@ -29,7 +32,7 @@ const DA = {
   assumptions: 'a priori · ubegrænsede forbindelser · optimalt modspil',
 
   line: (letter: string) => `Linje ${letter}`,
-  best: '✓ bedst',
+  best: '✓ Bedste linje',
   equal: 'lige god',
   mixed: 'Chancen kræver, at du blander mellem to linjer.',
   chanceOf: (goal: number) => `Chance for ${goal} stik`,
@@ -378,6 +381,8 @@ const EN: Texts = {
   west: 'West',
   east: 'East',
   unknown: '?',
+  compass: { N: 'N', W: 'W', E: 'E', S: 'S' },
+  missing: (cards: string) => `${cards} missing`,
   suit: '♠',
   goalLabel: 'Goal',
   goal: (n: number) => `${n} ${n === 1 ? 'trick' : 'tricks'}`,
@@ -385,7 +390,7 @@ const EN: Texts = {
   assumptions: 'a priori · unlimited entries · best defence',
 
   line: (letter: string) => `Line ${letter}`,
-  best: '✓ best',
+  best: '✓ Best line',
   equal: 'equally good',
   mixed: 'The chance requires you to mix between two lines.',
   chanceOf: (goal: number) => `Chance of ${goal} ${goal === 1 ? 'trick' : 'tricks'}`,

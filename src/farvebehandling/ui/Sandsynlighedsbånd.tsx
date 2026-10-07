@@ -11,12 +11,13 @@ interface SandsynlighedsbåndProps {
 
 const percent = (p: number) => `${formatDecimal(100 * p, 2)} %`;
 
-/** Felter, der er smallere end 5 %, får intet tegn; resultatet står i listen over sidninger. */
+/** Felter smallere end 5 % har ikke plads til tegnet; det står der stadig, men kun for skærmlæsere (som på artboardet). */
 const MIN_SYMBOL = 0.05;
 
 /**
  * Én vandret søjle pr. linje på 100 %, delt i sidninger efter deres chance. Felterne står i samme rækkefølge for alle
- * linjer; mørkt felt med ✓ = målet nås, lyst felt med stiplet kant og ✕ = målet nås ikke. Et tryk vælger sidningen.
+ * linjer; blåt felt (fb-hit) med fuld kant og ✓ = målet nås, orange felt (fb-miss) med stiplet kant og ✕ = målet nås
+ * ikke. Farven står aldrig alene: kanten og tegnet skelner dem også. Et tryk vælger sidningen.
  */
 export function Sandsynlighedsbånd({ lines, fields, selected, onSelect }: SandsynlighedsbåndProps) {
   return (
@@ -39,7 +40,9 @@ export function Sandsynlighedsbånd({ lines, fields, selected, onSelect }: Sands
                   aria-pressed={selected === f.id}
                   onClick={() => onSelect(f.id)}
                 >
-                  {f.probability >= MIN_SYMBOL && <span aria-hidden="true">{hit ? TEXT.hit : TEXT.miss}</span>}
+                  <span aria-hidden="true" className={f.probability < MIN_SYMBOL ? 'fb-sr' : undefined}>
+                    {hit ? TEXT.hit : TEXT.miss}
+                  </span>
                 </button>
               );
             })}

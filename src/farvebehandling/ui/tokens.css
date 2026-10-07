@@ -1,13 +1,10 @@
 /*
  * Farvebehandlingens tokens som CSS-variabler. Værdierne står i design/tokens.json, og src/tokens.test.ts holder
- * filerne i takt. Farverne er aliaser for appens eksisterende tokens, så lys og mørk tilstand følger med.
+ * filerne i takt. Båndets grå er et alias for appens muted, så lys og mørk tilstand følger med.
  * Kun denne fil indeholder værdier; komponenterne bruger variablerne.
  */
 :root {
-  --fb-hit: var(--ink);
-  --fb-hit-text: var(--ink-text);
-  --fb-miss: var(--surface);
-  --fb-miss-line: var(--muted);
+  /* Nås og nås ikke (fb-hit, fb-miss og deres -text/-line) har egne lyse og mørke værdier i styles.css (SPEC-tema.md). */
   --fb-bar: var(--muted);
 
   --space-2: 2px;
