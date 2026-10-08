@@ -59,14 +59,14 @@ Besked til Claude Code:
 
 ## Accepttest
 
-- [ ] Alle eksisterende tests består, også App-testens flows.
-- [ ] Fanerne skifter som før, og den aktive fane er markeret med `accent-soft` og kant i `accent`.
-- [ ] Gennemsnittet for B432 / ET65: linje A = 2,32 stik og linje B = 2,07 stik (linje B giver 2 stik undtagen i KD–xxx og xxx–KD, hvor den giver 3). Efterprøvet med løseren 7. oktober 2026: 2,3165 og 2,0678.
-- [ ] Gennemsnittet vises med dansk decimalkomma på dansk og decimalpunktum på engelsk, og ⓘ findes på begge sprog.
-- [ ] Tabellen har én kolonne pr. viste linje, de afgørende sidninger står først, og hvert felt har ✓ eller ✕.
-- [ ] Et tryk på en række vælger sidningen som før.
-- [ ] På engelsk står der intet dansk i tabellen eller på linjekortene.
-- [ ] Ingen nøgle i localStorage ændres.
+- [x] Alle eksisterende tests består, også App-testens flows.
+- [x] Fanerne skifter som før, og den aktive fane er markeret med `accent-soft` og kant i `accent`.
+- [x] Gennemsnittet for B432 / ET65: linje A = 2,32 stik og linje B = 2,07 stik (linje B giver 2 stik undtagen i KD–xxx og xxx–KD, hvor den giver 3). Efterprøvet med løseren 7. oktober 2026: 2,3165 og 2,0678.
+- [x] Gennemsnittet vises med dansk decimalkomma på dansk og decimalpunktum på engelsk, og ⓘ findes på begge sprog.
+- [x] Tabellen har én kolonne pr. viste linje, de afgørende sidninger står først, og hvert felt har ✓ eller ✕.
+- [x] Et tryk på en række vælger sidningen som før.
+- [x] På engelsk står der intet dansk i tabellen eller på linjekortene.
+- [x] Ingen nøgle i localStorage ændres.
 
 ## Afklaret
 
@@ -77,3 +77,6 @@ Claude Codes gennemgang (7. oktober 2026):
 3. **Komponentreglen:** 2px-kanten laves som 1px kant plus 1px indre skygge, og 4px er `space-4`.
 4. **Valg af sidning** i tabellen bevares som i dag (punkt 3).
 5. **Data til gennemsnittet og antal stik i tabellen:** mulighed A, løserscriptet regner stik pr. sidning for de viste linjer, og de gemmes i appens data (Franks valg, 7. oktober 2026).
+6. **Kombinationer uden for banken og egne linjer:** løseren i browseren regner ikke stik pr. sidning, fordi det ville tredoble ventetiden (B432 / ET65: 14 s for målet, 43 s for stikkene). De har derfor intet gennemsnit og intet antal stik i tabellen, kun ✓ eller ✕ (Claude Codes valg ved bygningen, 8. oktober 2026).
+7. **Linjer, hvis trin ikke kan spilles helt igennem i spillet med flest stik:** spillet for et mål slutter, når målet er nået eller umuligt, men spillet med flest stik fortsætter, så et senere trin kan nås, efter at dets kort er spillet. Så bruges de første trin, der kan spilles, og derefter spiller løseren for flest stik (22 af 657 kombinationer).
+8. **Facit i appen:** linjen "Slå esset" er linje D for 3 stik, fordi løseren viser fire linjer, hvor artboardet viser to. Testen finder linjerne ud fra deres trin.

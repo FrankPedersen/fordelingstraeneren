@@ -18,6 +18,7 @@
 // Mellemlageret (én fil pr. case) ligger i FB_SOLVE_CACHE, ellers i <tmp>/fordelingstraeneren-solve. Ændres løseren,
 // tælles LINES_VERSION op; ændres kun reglerne for Hvad nu?, tælles WHAT_NOW_VERSION op (så løses kun den bedste linje).
 // Ændres kun Hold eller par (pairsFor), tælles PAIRS_VERSION op; så regnes kun målenes bedste linjer som parturnering.
+// Ændres kun stikkene pr. sidning for de viste linjer (withLeadTricks), tælles TRICKS_VERSION op; så regnes kun de.
 import { existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
@@ -27,6 +28,7 @@ import { runnerImport } from 'vite';
 const LINES_VERSION = 1;
 const WHAT_NOW_VERSION = 1;
 const PAIRS_VERSION = 1;
+const TRICKS_VERSION = 1;
 const PAGES = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const root = fileURLToPath(new URL('..', import.meta.url));
@@ -48,6 +50,8 @@ interface Cached {
   whatNowVersion: number;
   /** Hold eller par er regnet ind i lav.goals[mål].pairs. */
   pairsVersion?: number;
+  /** Stik pr. sidning for de viste linjer er regnet ind i lav.goals[mål].leads[i].tricks. */
+  tricksVersion?: number;
   key: string;
   lav: Solution;
   høj: Solution;
@@ -70,7 +74,8 @@ function readCached(c: (typeof cases)[number]): Cached | null {
   return entry.key === keyOf(c) && entry.lines === LINES_VERSION ? entry : null;
 }
 
-const current = (entry: Cached | null) => !!entry && entry.whatNowVersion === WHAT_NOW_VERSION && entry.pairsVersion === PAIRS_VERSION;
+const current = (entry: Cached | null) =>
+  !!entry && entry.whatNowVersion === WHAT_NOW_VERSION && entry.pairsVersion === PAIRS_VERSION && entry.tricksVersion === TRICKS_VERSION;
 
 /** Hold eller par skrives ind i målene i den løsning, appen bruger. */
 function withPairs(north: Parameters<typeof pre.pairsFor>[0], south: Parameters<typeof pre.pairsFor>[1], solution: Solution): Solution {
@@ -82,26 +87,35 @@ function withPairs(north: Parameters<typeof pre.pairsFor>[0], south: Parameters<
 }
 
 /** Løser en case (begge fortolkninger af x) og gemmer den i mellemlageret. */
-function solveCase(c: (typeof cases)[number]): 'løst' | 'hvad nu' | 'par' | 'gemt' {
+function solveCase(c: (typeof cases)[number]): 'løst' | 'hvad nu' | 'par' | 'stik' | 'gemt' {
   const cached = readCached(c);
   if (current(cached)) return 'gemt';
   const lav = src.concreteHands(c, 'lav');
   if (cached) {
     const whatNow = cached.whatNowVersion === WHAT_NOW_VERSION ? cached.whatNow : pre.whatNowFor(lav.north, lav.south, c.needs, cached.lav);
-    const lavSolution = cached.pairsVersion === PAIRS_VERSION ? cached.lav : withPairs(lav.north, lav.south, cached.lav);
-    const entry: Cached = { ...cached, whatNowVersion: WHAT_NOW_VERSION, pairsVersion: PAIRS_VERSION, whatNow, lav: lavSolution };
+    let lavSolution = cached.pairsVersion === PAIRS_VERSION ? cached.lav : withPairs(lav.north, lav.south, cached.lav);
+    if (cached.tricksVersion !== TRICKS_VERSION) lavSolution = pre.withLeadTricks(lav.north, lav.south, lavSolution);
+    const entry: Cached = {
+      ...cached,
+      whatNowVersion: WHAT_NOW_VERSION,
+      pairsVersion: PAIRS_VERSION,
+      tricksVersion: TRICKS_VERSION,
+      whatNow,
+      lav: lavSolution,
+    };
     writeFileSync(fileOf(c), JSON.stringify(entry));
-    return cached.whatNowVersion === WHAT_NOW_VERSION ? 'par' : 'hvad nu';
+    return cached.whatNowVersion !== WHAT_NOW_VERSION ? 'hvad nu' : cached.pairsVersion !== PAIRS_VERSION ? 'par' : 'stik';
   }
   const høj = pre.handsFor(c, 'høj');
   const { whatNow = {}, ...solved } = pre.solveCombination(lav.north, lav.south, c.needs, { tricks: true, whatNow: true });
-  const lavSolution = withPairs(lav.north, lav.south, solved);
+  const lavSolution = pre.withLeadTricks(lav.north, lav.south, withPairs(lav.north, lav.south, solved));
   const same = lav.north.join() === høj.north.join() && lav.south.join() === høj.south.join();
   const højSolution = same ? { ...lavSolution, tricks: undefined } : pre.solveCombination(høj.north, høj.south, c.needs);
   const entry: Cached = {
     lines: LINES_VERSION,
     whatNowVersion: WHAT_NOW_VERSION,
     pairsVersion: PAIRS_VERSION,
+    tricksVersion: TRICKS_VERSION,
     key: keyOf(c),
     lav: lavSolution,
     høj: højSolution,

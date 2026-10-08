@@ -332,14 +332,15 @@ Alle skærme følger én læseretning: problem → linjer → forskel → detalj
 Regler for brugerfladen:
 
 - **Bridgebordet:** klassisk diagram som på det godkendte artboard "Analysevindue v2" (SPEC-tema.md): Nord (bordet) øverst og Syd (dig) nederst, skrevet som i systemnotatet ("♠ B432" over "♠ E1065") med E K D B 10, Vest og Øst ved siderne og i midten et kompas i `table` med N, V, Ø, S og de manglende kort i `table-text`. ♥ og ♦ i appens eksisterende røde farvetoken, i både lys og mørk tilstand. En pil foran billedteksten viser spilleretningen i det aktuelle trin.
-- **Linjer:** kort med nummererede trin og hvis/så-grene. Den bedste linje markeres først efter svaret: kant i `ok`, flade `ok-bg`, mærket "✓ Bedste linje" og procenten i `ok`.
+- **Linjer:** kort med nummererede trin og hvis/så-grene. Den bedste linje markeres først efter svaret: kant i `ok`, flade `ok-bg`, mærket "✓ Bedste linje" og procenten i `ok`. Under trinene står gennemsnittet: "Flest stik i gennemsnit: 2,32 stik" med ⓘ, regnet ud fra linjens stik pr. sidning (SPEC-analysevindue-layout.md).
 - **Sandsynlighedsbånd:** én vandret søjle pr. linje på 100 %, delt i sidninger efter deres chance. Felterne står i samme rækkefølge for alle linjer, og et tryk åbner sidningen.
-- **Detaljer:** de afgørende sidninger vises først med mærket "afgør" (ⓘ: "Linjerne giver forskelligt resultat i denne sidning."). "Vis alle sidninger" folder hele listen ud, grupperet efter fordeling eller honnørplacering.
+- **Detaljer:** sidningerne står i en tabel med Vest, Øst, chancen, én kolonne pr. linje (✓ eller ✕ og antal stik) og mærket "afgør" (ⓘ: "Linjerne giver forskelligt resultat i denne sidning."). De afgørende sidninger står først og er markeret. "Vis alle sidninger" folder resten ud, grupperet efter fordeling eller honnørplacering som mellemoverskrifter. Knappen i rækkens første celle vælger sidningen. På en smal skærm ruller tabellen vandret i sin boks.
 - **Nås / nås ikke:** `fb-hit` (lys blå) med fuld kant i `fb-hit-line` og ✓, og `fb-miss` (lys orange) med stiplet kant i `fb-miss-line` og ✕, også til mærket "afgør" (SPEC-tema.md). Farven står aldrig alene uden symbol; i båndets felter under 5 % er der ikke plads til tegnet, så det står der kun for skærmlæsere, og kanten viser forskellen. Farverne bruges kun i farvebehandling.
 - **Øvrige farver:** sandsynlighedsbjælker er neutralt grå. Primærknapper og valgte elementer bruger appens `accent` og `accent-soft` (SPEC-tema.md); der indføres ingen ny brandfarve.
 - **Mørk tilstand:** alle farver har både lyse og mørke tokens og følger telefonens indstilling som resten af appen.
 - **Skrift:** systemskrift som resten af appen. Ingen eksterne skrifter, fordi appen er en offline-PWA.
 - **Bredde:** Træning og Selvvalgt ligger i appens 480 px-kolonne. Kun Analyse må gå bredere, op til 1280 px.
+- **Fanerne:** Træning, Selvvalgt og Analyse står i én samlet bjælke i `surface-2`; den aktive fane har `accent-soft` og kant i `accent` (SPEC-analysevindue-layout.md).
 - **Navn:** appen hedder Fordelingstræneren.
 - **Input:** kortvælger med tryk på kort i stedet for tekstfelt.
 - **Afspilning:** en selvstændig tilstand. Den aktuelle sidning lyser op i båndet.

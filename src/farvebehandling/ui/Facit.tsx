@@ -139,7 +139,7 @@ export function Facit({ task, answer, graded, reward, place, onNext }: FacitProp
         <section className="card" aria-labelledby="fb-all-layouts">
           <h2 id="fb-all-layouts">{TEXT.allLayouts}</h2>
           <GroupingButtons grouping={grouping} onChange={setGrouping} />
-          <LayoutList fields={fields} lines={lines.map((l) => l.letter)} selected={selected} onSelect={setSelected} />
+          <LayoutList fields={fields} lines={lines} selected={selected} onSelect={setSelected} grouping={grouping} />
         </section>
         <Resultatkort item={task.bank} goal={task.goal} best={best} />
         <div className="fb-actions">

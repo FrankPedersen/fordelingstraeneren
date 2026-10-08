@@ -6,6 +6,7 @@ import type { AppEntry, AppLead, Combination, CombinationSolution, GoalResult, L
 import type { WhatNowSituation } from './model/whatnow';
 import type { CombinationBase } from './solver/results';
 import { frequencyHolding } from './source/bridgehands';
+import { NEAR_BEST, shownLeads } from './model/shown';
 
 /** Data til analysevinduet: banken, linjerne, sandsynlighedsbåndet og opslag fra kortvælgeren. */
 
@@ -202,11 +203,11 @@ export interface LineView {
   nearBest: boolean;
   /** Spilføreren skal blande for at nå chancen. */
   mixed: boolean;
+  /** Stik i gennemsnit, når linjen har stik pr. sidning (bankens linjer); ellers mangler det. */
+  average?: number | null;
 }
 
-/** Linjer inden for så mange procentpoint af den bedste er lige gode. */
-export const NEAR_BEST = 0.005;
-export const MAX_ALTERNATIVES = 3;
+export { MAX_ALTERNATIVES, NEAR_BEST } from './model/shown';
 
 /**
  * Den bedste linje først; derefter alternativerne: løserens bedste linje for hvert andet første udspil, højst tre,
@@ -216,18 +217,29 @@ export function linesForGoal(item: BankItem, goal: number): LineView[] {
   const g = item.solution.goals[String(goal)];
   if (!g) return [];
   const best = g.leads[g.best];
-  const ordered = g.leads.map((lead, i) => ({ lead, i })).sort((a, b) => b.lead.value - a.lead.value || a.i - b.i);
-  const near = ordered.filter((o) => o.i !== g.best && best.value - o.lead.value <= NEAR_BEST);
-  const others = ordered.filter((o) => best.value - o.lead.value > NEAR_BEST).slice(0, MAX_ALTERNATIVES);
-  const chosen = [{ lead: best, i: g.best }, ...near, ...others];
-  return chosen.map((o, k) => ({
-    letter: String.fromCharCode(65 + k),
-    lead: o.lead,
-    value: o.lead.value,
-    best: o.i === g.best,
-    nearBest: o.i !== g.best && best.value - o.lead.value <= NEAR_BEST,
-    mixed: !o.lead.certified,
-  }));
+  return shownLeads(g).map((i, k) => {
+    const lead = g.leads[i];
+    return {
+      letter: String.fromCharCode(65 + k),
+      lead,
+      value: lead.value,
+      best: i === g.best,
+      nearBest: i !== g.best && best.value - lead.value <= NEAR_BEST,
+      mixed: !lead.certified,
+      average: averageTricks(item.solution, lead.tricks),
+    };
+  });
+}
+
+/**
+ * Stik i gennemsnit med en linje, der har stik pr. sidning: hver sidnings stik vægtet med dens chance (a priori), regnet
+ * med BigInt-tællere. Uden stik (fx en kombination fra før dataene fik dem) er der intet gennemsnit.
+ */
+export function averageTricks(solution: Pick<CombinationSolution, 'layouts' | 'denominator'>, tricks: ArrayLike<number> | undefined): number | null {
+  if (!tricks || tricks.length !== solution.layouts.length) return null;
+  let sum = 0n;
+  solution.layouts.forEach((l, L) => (sum += BigInt(l.weight) * BigInt(Math.round(tricks[L]))));
+  return Number((sum * 1_000_000_000n) / BigInt(solution.denominator)) / 1e9;
 }
 
 // ---------- Hold eller par ----------

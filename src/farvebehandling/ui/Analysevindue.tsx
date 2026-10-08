@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { formatDecimal } from '../../engine/format';
 import { randomSeed } from '../../engine/rng';
 import {
@@ -15,7 +15,7 @@ import {
   type Grouping,
   type LineView,
 } from '../analysis';
-import { cardsText, type Rank } from '../model/cards';
+import { cardsText, rankText, type Rank } from '../model/cards';
 import { eveningText } from '../model/frequency';
 import type { GoalResult, LeadResult } from '../precompute';
 import { createSolver, SolveCancelled } from '../solver/client';
@@ -437,12 +437,7 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
           <h2 id="fb-details">{showAll ? TEXT.details : TEXT.decisive}</h2>
           <Info topic={TEXT.details}>{TEXT.help.layouts}</Info>
         </div>
-          <LayoutList
-            fields={showAll || !decisive.length ? fields : decisive}
-            lines={allLines.map((l) => l.letter)}
-            selected={selected}
-            onSelect={setSelected}
-          />
+          <LayoutList fields={fields} lines={allLines} selected={selected} onSelect={setSelected} grouping={grouping} showAll={showAll} />
           <button type="button" className="btn small-btn" onClick={() => setShowAll(!showAll)}>
             {showAll ? TEXT.showFewer : TEXT.showAll}
           </button>
@@ -454,53 +449,112 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
   );
 }
 
+/** Østs antal kort i en sidning ("–" er en renonce). */
+const eastCount = (f: BandField) => (f.east === '–' ? 0 : f.east.split(' ').length);
+
 /**
- * Sidningerne som liste med chancen og hver linjes resultat; et tryk vælger sidningen. En sidning, hvor linjerne giver
- * forskelligt resultat, får mærket "afgør"; mærket står med ⓘ én gang over listen, fordi rækkerne selv er knapper.
+ * Sidningerne som tabel (SPEC-analysevindue-layout.md, punkt 3): Vest, Øst, chancen, én kolonne pr. linje med ✓ eller ✕
+ * og antal stik, og mærket "afgør". De afgørende sidninger står først og er markeret; med `showAll` følger resten med
+ * grupperingen som mellemoverskrifter. Knappen i rækkens første celle vælger sidningen som før. Mærkets ⓘ står én gang
+ * over tabellen (SPEC-tema.md).
  */
 export function LayoutList({
   fields,
   lines,
   selected,
   onSelect,
+  grouping = 'fordeling',
+  showAll = true,
 }: {
   fields: readonly BandField[];
-  lines: readonly string[];
+  lines: readonly LineView[];
   selected: string | null;
   onSelect(id: string): void;
+  grouping?: Grouping;
+  showAll?: boolean;
 }) {
   const decides = (f: BandField) => lines.length > 1 && f.outcomes.some((o) => o !== f.outcomes[0]);
+  const decisive = fields.filter(decides);
+  const groups: { label: string; rows: BandField[] }[] = [];
+  if (showAll || !decisive.length) {
+    for (const f of fields.filter((f) => !decides(f))) {
+      const label =
+        grouping === 'fordeling' ? TEXT.groupCount(f.westCount, eastCount(f)) : TEXT.groupHonors(f.westHonors.map(rankText).join(' '));
+      const last = groups[groups.length - 1];
+      if (last?.label === label) last.rows.push(f);
+      else groups.push({ label, rows: [f] });
+    }
+  }
+  const row = (f: BandField) => (
+    <tr key={f.id} className={[decides(f) && 'fb-row-decides', selected === f.id && 'fb-row-selected'].filter(Boolean).join(' ') || undefined}>
+      <td>
+        <button
+          type="button"
+          className="fb-row-select"
+          aria-pressed={selected === f.id}
+          aria-label={TEXT.layout(f.west, f.east)}
+          onClick={() => onSelect(f.id)}
+        >
+          {f.west}
+        </button>
+      </td>
+      <td>{f.east}</td>
+      <td>{percent(f.probability)}</td>
+      {lines.map((l, k) => {
+        const hit = f.outcomes[k] > 0;
+        const tricks = l.lead.tricks?.[f.layout];
+        return (
+          <td key={l.letter}>
+            <span className={`fb-chip ${hit ? 'fb-chip-hit' : 'fb-chip-miss'}`}>
+              {hit ? TEXT.hit : TEXT.miss}
+              {tricks !== undefined && ` ${tricks}`}
+            </span>
+          </td>
+        );
+      })}
+      <td>{decides(f) && <span className="fb-decides">{TEXT.decides}</span>}</td>
+    </tr>
+  );
   return (
     <>
-      {fields.some(decides) && (
+      {decisive.length > 0 && (
         <div className="with-info">
           <span className="fb-decides">{TEXT.decides}</span>
           <Info topic={TEXT.decides}>{TEXT.help.decides}</Info>
         </div>
       )}
-      <ul className="fb-layouts">
-        {fields.map((f) => (
-          <li key={f.id}>
-            <button
-              type="button"
-              className={`fb-layout${selected === f.id ? ' fb-layout-selected' : ''}`}
-              aria-pressed={selected === f.id}
-              onClick={() => onSelect(f.id)}
-            >
-              <span className="fb-layout-cards">{TEXT.layout(f.west, f.east)}</span>
-              <span className="fb-layout-chance">{percent(f.probability)}</span>
-              <span className="fb-layout-results">
-                {f.outcomes.map((o, k) => (
-                  <span key={k} className={`fb-chip ${o > 0 ? 'fb-chip-hit' : 'fb-chip-miss'}`}>
-                    {lines[k]} {o > 0 ? TEXT.hit : TEXT.miss}
-                  </span>
-                ))}
-                {decides(f) && <span className="fb-decides">{TEXT.decides}</span>}
-              </span>
-            </button>
-          </li>
-        ))}
-      </ul>
+      <div className="fb-table-scroll">
+        <table className="fb-layout-table">
+          <thead>
+            <tr>
+              <th scope="col">{TEXT.west}</th>
+              <th scope="col">{TEXT.east}</th>
+              <th scope="col">{TEXT.chanceHeader}</th>
+              {lines.map((l) => (
+                <th key={l.letter} scope="col">
+                  {TEXT.line(l.letter)}
+                </th>
+              ))}
+              <th scope="col">
+                <span className="fb-sr">{TEXT.decides}</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {decisive.map(row)}
+            {groups.map((g) => (
+              <Fragment key={g.label}>
+                <tr className="fb-group-row">
+                  <th scope="rowgroup" colSpan={4 + lines.length}>
+                    {g.label}
+                  </th>
+                </tr>
+                {g.rows.map(row)}
+              </Fragment>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </>
   );
 }

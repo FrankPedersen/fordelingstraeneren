@@ -24,19 +24,24 @@
   flex: 1;
 }
 
+/* Fanerne som én samlet bjælke (SPEC-analysevindue-layout.md, punkt 1): sporet i surface-2, fanerne deler bredden. */
 .fb-tabs {
   display: flex;
   gap: var(--space-4);
   width: 100%;
+  padding: var(--space-4);
+  border-radius: var(--radius-12);
+  background: var(--surface-2);
 }
 
 .fb-tab {
   flex: 1;
   min-height: var(--touch-min);
   padding: 0 var(--space-12);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-pill);
-  background: var(--surface);
+  border: 1px solid transparent;
+  border-radius: var(--radius-10);
+  background: transparent;
+  color: var(--text);
   font-weight: 600;
 }
 
@@ -464,6 +469,67 @@
   border: 1px dashed var(--fb-miss-line);
   background: var(--fb-miss);
   color: var(--fb-miss-text);
+}
+
+/* Sidningerne som tabel (punkt 3); på en smal skærm ruller tabellen vandret i sin boks, aldrig siden. */
+.fb-table-scroll {
+  overflow-x: auto;
+}
+
+.fb-layout-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.fb-layout-table th,
+.fb-layout-table td {
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.fb-layout-table thead th {
+  color: var(--muted);
+  font-size: var(--type-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--letter-eyebrow);
+  text-transform: uppercase;
+}
+
+.fb-layout-table .fb-chip {
+  display: inline-block;
+  min-width: var(--touch-min);
+  border-radius: var(--radius-8);
+  text-align: center;
+}
+
+.fb-row-decides td {
+  background: var(--surface-2);
+}
+
+.fb-row-selected td {
+  background: var(--accent-soft);
+}
+
+.fb-group-row th {
+  padding-top: var(--space-12);
+  color: var(--muted);
+  font-size: var(--type-small);
+  font-weight: 700;
+}
+
+.fb-row-select {
+  width: 100%;
+  min-height: var(--touch-min);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
 }
 
 /* Mærket "afgør": fb-miss med stiplet kant som de felter, hvor målet ikke nås (SPEC-tema.md). */

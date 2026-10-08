@@ -5,7 +5,7 @@ import { combinationFrequency, eveningText, oncePerDeals } from './model/frequen
 import { solveSubgame } from './solver/cfr';
 import { buildGame, type Objective } from './solver/game';
 import type { Line, LineStep } from './solver/lines';
-import { combinationBase, goalResult } from './solver/results';
+import { combinationBase, goalResult, shownLeadTricks } from './solver/results';
 import { solveGame, solveLine } from './solver/solve';
 import { whatNow, type WhatNowSituation } from './solver/whatnow';
 import { caseLabel, concreteHands, frequencyHolding, type ClassifiedCase, type XRule } from './source/bridgehands';
@@ -153,6 +153,11 @@ export interface LeadResult {
   steps: string[];
   /** De første trin i linjeformatet; derefter spiller løseren videre. */
   line: LineStep[];
+  /**
+   * Stik pr. abstrakt sidning (samme rækkefølge som `layouts`): linjens trin, og derefter spiller løseren for flest
+   * stik. Kun for de viste linjer (SPEC-analysevindue-layout.md, punkt 2); valgfrit, så ældre data stadig kan læses.
+   */
+  tricks?: number[];
 }
 
 export interface GoalResult {
@@ -230,6 +235,16 @@ export function pairsFor(north: readonly Rank[], south: readonly Rank[], solutio
 }
 
 /**
+ * Stik pr. sidning for de viste linjer i alle mål (bruges af scripts/solve.ts på en gemt løsning, så linjerne ikke skal
+ * løses igen).
+ */
+export function withLeadTricks(north: readonly Rank[], south: readonly Rank[], solution: CombinationSolution): CombinationSolution {
+  const game = { current: null as ReturnType<typeof buildGame> | null };
+  const goals = Object.fromEntries(Object.entries(solution.goals).map(([goal, g]) => [goal, shownLeadTricks(north, south, g, game)]));
+  return { ...solution, goals };
+}
+
+/**
  * Hvad nu? for en gemt løsning: kun den bedste linjes delspil løses igen for hvert mål (bruges, når reglerne for
  * Hvad nu? ændres, men linjerne ikke gør).
  */
@@ -266,7 +281,7 @@ export function pageTitle(page: number): string {
 // ---------- Appens data ----------
 
 /** En linje i appens data: uden den eksakte tæller og den øvre grænse, som appen ikke bruger. */
-export type AppLead = Pick<LeadResult, 'hand' | 'high' | 'low' | 'value' | 'certified' | 'layouts' | 'steps' | 'line'>;
+export type AppLead = Pick<LeadResult, 'hand' | 'high' | 'low' | 'value' | 'certified' | 'layouts' | 'steps' | 'line' | 'tricks'>;
 
 export interface AppEntry {
   /** Rang efter hyppighed på tværs af siderne (1 = hyppigst). */
@@ -293,6 +308,8 @@ const appLead = (l: LeadResult): AppLead => ({
   steps: l.steps,
   // Linjeformatet til Spil den selv: dine stik sammenlignes med løserens linjer.
   line: l.line,
+  // Stik pr. sidning til gennemsnittet på linjekortet og sidningstabellen.
+  ...(l.tricks ? { tricks: l.tricks } : {}),
 });
 
 /** Kombinationen i appens kompakte form (én fil pr. side, så hver fil kan gemmes offline). */
