@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import App from '../../app/App';
 import { setLang } from '../../i18n';
 import { HE_STORAGE_KEY, type HeSaved } from '../storage';
 import HaandevalueringScreen from './HaandevalueringScreen';
@@ -19,6 +20,18 @@ afterEach(() => {
 });
 
 describe('Håndevaluering', () => {
+  it('åbnes fra forsidens menupunkt i Vurdering med ⓘ og går tilbage igen; et kig skriver intet', async () => {
+    render(<App />);
+    expect(button('Hjælp: Håndevaluering')).toBeTruthy();
+    expect(button('Hjælp: Vurdering')).toBeTruthy();
+    click('Håndevaluering');
+    expect(await screen.findByRole('heading', { name: 'Håndevaluering', level: 1 }, { timeout: 10_000 })).toBeTruthy();
+    expect(button('Start dagens session')).toBeTruthy();
+    click('Tilbage til forsiden');
+    expect(button('Håndevaluering')).toBeTruthy();
+    expect(localStorage.getItem(HE_STORAGE_KEY)).toBeNull();
+  }, 30_000);
+
   it('forsiden viser dagens plan, husketeknikkerne og indstillinger; et kig skriver intet', () => {
     render(<HaandevalueringScreen onBack={() => {}} />);
     expect(screen.getByRole('heading', { name: 'Håndevaluering', level: 1 })).toBeTruthy();

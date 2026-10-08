@@ -44,8 +44,8 @@ function sections(): Section[] {
         <List
           items={[
             tx(
-              'Forsiden er delt i grupper efter, hvad sporene træner: Optælling (Fordeling og Pointregnskab), Spilføring (Farvebehandling) og senere Vurdering. Grupper uden spor vises ikke.',
-              'The front page is divided into groups by what the tracks train: Counting (Distribution and Point count), Declarer play (Suit combinations) and later Hand evaluation. Groups without a track are not shown.',
+              'Forsiden er delt i grupper efter, hvad sporene træner: Optælling (Fordeling og Pointregnskab), Spilføring (Farvebehandling) og Vurdering (Håndevaluering). Grupper uden spor vises ikke.',
+              'The front page is divided into groups by what the tracks train: Counting (Distribution and Point count), Declarer play (Suit combinations) and Hand evaluation (the track of the same name). Groups without a track are not shown.',
             ),
             tx(
               'Under Fordeling står fordelingssporets streak, XP, niveau, dagens plan og startknap og menupunkterne Huskepalads, Album, Klubaften og Kurver. Streak og XP hører til fordelingssporet; de andre spor har deres egne inde i sporet.',

@@ -85,14 +85,14 @@ Valg, hvor SPEC.md er åben. Spørg, før du ændrer dem.
 - Kurverne er små multipler med én serie pr. diagram i magenta (`#d55181`, valideret mod begge flader), så familiefarverne ikke får en ny betydning. Træfsikkerhed pr. grad tæller ikke lynrunden med.
 - En ny version vises som en knap på forsiden; appen genindlæser aldrig midt i en session.
 - **Temaet** (SPEC-tema.md, oktober 2026): primærknapper bruger `accent` med `accent-text`, og valgte elementer (faner, mål, svarvalg, felter, kort i kortvælgeren, åbne ⓘ og noterede chips) har `accent-soft`, kant i `accent` og tekst i `text`. `ink` har samme værdi og bruges kun til målere, fremdrift, boss-mærket og ⓘ-forklaringens streg. Farvebehandlingens nås/nås ikke er `fb-hit`/`fb-miss` med `-text` og `-line` (egne lyse og mørke værdier i `styles.css`, kun brugt i farvebehandling), bordet er et diagram med kompas i `table`, den bedste linje står i `ok`, og de afgørende sidninger har mærket "afgør" (`fb-miss`, ⓘ én gang over listen, fordi rækkerne er knapper). Rigtigt og forkert i de øvrige øvelser er uændret. `src/theme.test.ts` tjekker værdierne, kontrasten (mindst 4,5:1) og brugen.
-- **Forsidens grupper** (SPEC-navigation.md): Optælling (Fordeling med fordelingssporets elementer og menupunkter, og Pointregnskab), Spilføring (Farvebehandling) og Vurdering, når håndevaluering findes. Et nyt spor tilføjes med én linje i `src/app/tracks.ts`; en skærm uden egen funktion i `HomeScreen` åbnes med `onOpen`, som `App.tsx` giver, når det nye spor får sin skærm. Vurderings ⓘ-tekst er foreløbig og skrives færdig med håndevaluering. Grupperne har klasserne `home-group` og `home-track` i `styles.css` med eksisterende værdier; ingen nye tokens. Udgivet 6. oktober 2026 (appen før er tagget `v4-foer-navigation`).
+- **Forsidens grupper** (SPEC-navigation.md): Optælling (Fordeling med fordelingssporets elementer og menupunkter, og Pointregnskab), Spilføring (Farvebehandling) og Vurdering (Håndevaluering). Et nyt spor tilføjes med én linje i `src/app/tracks.ts`; en skærm uden egen funktion i `HomeScreen` åbnes med `onOpen`, som `App.tsx` giver (Håndevaluering står i `OPENED`). Vurderings ⓘ-tekst er skrevet færdig med håndevaluering. Grupperne har klasserne `home-group` og `home-track` i `styles.css` med eksisterende værdier; ingen nye tokens. Udgivet 6. oktober 2026 (appen før er tagget `v4-foer-navigation`).
 
 ## Næste opgaver
 
 Specerne ligger hos Frank (version 2 med Claude Codes gennemgang, 7. oktober 2026) og lægges i repoet, når opgaven starter. Rækkefølge:
 
 1. **SPEC-analysevindue-layout.md (godkendt og udgivet 8. oktober 2026; appen før er tagget `v5-tema`):** i farvebehandling fanerne som én bjælke, gennemsnitligt antal stik på linjekortene og sidningerne som tabel (efter det godkendte artboard "Analysevindue v2"). Appens data har kun nås/nås ikke pr. linje og sidning, så løserscriptet regner stik pr. sidning for de viste linjer og gemmer dem i appens data (mulighed A, Franks valg 7. oktober 2026). Facit for B432 / ET65 er efterprøvet: linje A 2,3165 og linje B 2,0678 stik.
-2. **SPEC-haandevaluering.md (i gang på grenen `haandevaluering`; appen før er tagget `v6-foer-haandevaluering`):** nyt spor i gruppen Vurdering på Franks P-model. Kræver `docs/MODEL.md` fra Frank; `src/haandevaluering/content/p-model.json` får en undtagelse fra reglen om, at intet tal tastes ind. Ud over linjen i `tracks.ts` skal `App.tsx` have ruten og `onOpen`, vejledningen et afsnit og Vurderings ⓘ-tekst skrives færdig.
+2. **SPEC-haandevaluering.md (leverancetrin 1–3 bygget på grenen `haandevaluering`, venter på Franks godkendelse før fletning; appen før er tagget `v6-foer-haandevaluering`):** nyt spor i gruppen Vurdering på Franks P-model. Kræver `docs/MODEL.md` fra Frank; `src/haandevaluering/content/p-model.json` får en undtagelse fra reglen om, at intet tal tastes ind. Ud over linjen i `tracks.ts` skal `App.tsx` have ruten og `onOpen`, vejledningen et afsnit og Vurderings ⓘ-tekst skrives færdig.
 
 ## Farvebehandling
 
@@ -226,5 +226,6 @@ Et nyt, selvstændigt spor i gruppen Vurdering, bygget på grenen `haandevalueri
 - [x] Specens version 2 (Franks svar 8. oktober 2026) er indarbejdet i modellen, facitfilen og testene.
 - [x] Franks godkendelse af skemaet; opgave 4 har P højst 37 (Franks afgørelse, 8. oktober 2026).
 - [x] Leverancetrin 3: brugerfladen til opgave 1–7 på dansk og engelsk med ⓘ, sporets talpanel med ½ og ¼, ruten i `App.tsx`, afsnittet i vejledningen og Vurderings ⓘ-tekst.
-- [ ] Linjen i `tracks.ts`: venter på Franks svar, da to eksisterende tests i `src/app/navigation.test.tsx` forventer, at Vurdering er tom og skjult.
+- [x] Linjen i `tracks.ts`: Vurdering står på forsiden; de to tests i `src/app/navigation.test.tsx`, der forventede en tom Vurdering, er rettet med Franks godkendelse (8. oktober 2026).
+- [ ] Franks godkendelse af leverancetrin 1–3 og fletning ind på `main`.
 - [ ] Leverancetrin 4: opgave 8 og 9.

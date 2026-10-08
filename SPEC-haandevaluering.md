@@ -257,6 +257,7 @@ Claude Codes gennemgang af version 1 (7. oktober 2026) og Franks svar i version 
 12. **Kortfarvepoint** tælles kun i sidefarverne (Frank, 8. oktober 2026).
 13. **HCP-grænsen i opgave 8** er 25 HCP, indtil Franks simulering viser den (Frank, 8. oktober 2026).
 14. **Storeslem i opgave 4:** opgaverne ligger omkring udgang og lilleslem, så P er højst 35 + 2 = 37. Storeslem er et svarvalg, men aldrig det rigtige i første version (Frank, 8. oktober 2026).
+15. **Forsidens tests:** med linjen i `tracks.ts` står Vurdering på forsiden. To tests i `src/app/navigation.test.tsx` forventer derfor Optælling, Spilføring, Vurdering, og testen for et nyt spor bruger et tænkt spor med et andet navn end Håndevaluering. Vejledningens afsnit om forsidens grupper nævner Håndevaluering (Frank, 8. oktober 2026).
 
 ## Claude Codes valg
 

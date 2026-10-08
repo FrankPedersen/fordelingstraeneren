@@ -62,9 +62,9 @@ describe('Forsidens grupper (SPEC-navigation.md)', () => {
     expect(now).toEqual({ ...old, settings: { ...old.settings, language: 'en' } });
   });
 
-  it('grupperne står i rækkefølgen Optælling, Spilføring; tom Vurdering vises ikke; intet menupunkt for 13-sudoku', () => {
+  it('grupperne står i rækkefølgen Optælling, Spilføring, Vurdering; intet menupunkt for 13-sudoku', () => {
     render(<App />);
-    expect(groupTitles()).toEqual(['Optælling', 'Spilføring']);
+    expect(groupTitles()).toEqual(['Optælling', 'Spilføring', 'Vurdering']);
     expect(screen.queryAllByRole('button', { name: /sudoku/i })).toEqual([]);
   });
 
@@ -127,7 +127,7 @@ describe('Forsidens grupper (SPEC-navigation.md)', () => {
     expect(screen.getByText(GROUPS[0].help.da)).toBeTruthy();
     expect(GROUPS[0].help.da).toMatch(/13-sudoku/);
     click('Skift sprog til engelsk');
-    expect(groupTitles()).toEqual(['Counting', 'Declarer play']);
+    expect(groupTitles()).toEqual(['Counting', 'Declarer play', 'Hand evaluation']);
     fireEvent.click(screen.getByRole('button', { name: 'Help: Declarer play' }));
     expect(screen.getByText(GROUPS[1].help.en)).toBeTruthy();
   });
@@ -135,11 +135,11 @@ describe('Forsidens grupper (SPEC-navigation.md)', () => {
   it('et nyt spor med ét menupunkt kræver kun én ny linje i tracks.ts', () => {
     const onOpen = vi.fn();
     const evaluation: TrackItem = {
-      id: 'evaluation',
-      track: 'haandevaluering',
+      id: 'new-track',
+      track: 'nyt-spor',
       group: 'evaluation',
-      screen: 'evaluation',
-      title: { da: 'Håndevaluering', en: 'Hand evaluation' },
+      screen: 'new-track',
+      title: { da: 'Nyt spor', en: 'New track' },
       help: { da: 'Et nyt spor om vurdering af egen og makkers hånd.', en: "A new track about evaluating your own and partner's hand." },
     };
     const noop = () => {};
@@ -160,8 +160,8 @@ describe('Forsidens grupper (SPEC-navigation.md)', () => {
     // Vurdering vises nu, sidst; skærme uden egen funktion åbnes med onOpen.
     expect(groupTitles()).toEqual(['Optælling', 'Spilføring', 'Vurdering']);
     expect(screen.getByRole('button', { name: 'Hjælp: Vurdering' })).toBeTruthy();
-    click('Håndevaluering');
-    expect(onOpen).toHaveBeenCalledWith('evaluation');
+    click('Nyt spor');
+    expect(onOpen).toHaveBeenCalledWith('new-track');
     cleanup();
     // Uden onOpen og uden Farvebehandlings funktion er Spilføring tom og vises ikke.
     render(
