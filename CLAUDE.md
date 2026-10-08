@@ -92,7 +92,7 @@ Valg, hvor SPEC.md er åben. Spørg, før du ændrer dem.
 Specerne ligger hos Frank (version 2 med Claude Codes gennemgang, 7. oktober 2026) og lægges i repoet, når opgaven starter. Rækkefølge:
 
 1. **SPEC-analysevindue-layout.md (godkendt og udgivet 8. oktober 2026; appen før er tagget `v5-tema`):** i farvebehandling fanerne som én bjælke, gennemsnitligt antal stik på linjekortene og sidningerne som tabel (efter det godkendte artboard "Analysevindue v2"). Appens data har kun nås/nås ikke pr. linje og sidning, så løserscriptet regner stik pr. sidning for de viste linjer og gemmer dem i appens data (mulighed A, Franks valg 7. oktober 2026). Facit for B432 / ET65 er efterprøvet: linje A 2,3165 og linje B 2,0678 stik.
-2. **SPEC-haandevaluering.md (leverancetrin 1–3 bygget på grenen `haandevaluering`, venter på Franks godkendelse før fletning; appen før er tagget `v6-foer-haandevaluering`):** nyt spor i gruppen Vurdering på Franks P-model. Kræver `docs/MODEL.md` fra Frank; `src/haandevaluering/content/p-model.json` får en undtagelse fra reglen om, at intet tal tastes ind. Ud over linjen i `tracks.ts` skal `App.tsx` have ruten og `onOpen`, vejledningen et afsnit og Vurderings ⓘ-tekst skrives færdig.
+2. **SPEC-haandevaluering.md (leverancetrin 1–3 godkendt og udgivet 8. oktober 2026; appen før er tagget `v6-foer-haandevaluering`; leverancetrin 4 med opgave 8 og 9 mangler):** nyt spor i gruppen Vurdering på Franks P-model. Kræver `docs/MODEL.md` fra Frank; `src/haandevaluering/content/p-model.json` får en undtagelse fra reglen om, at intet tal tastes ind. Ud over linjen i `tracks.ts` skal `App.tsx` have ruten og `onOpen`, vejledningen et afsnit og Vurderings ⓘ-tekst skrives færdig.
 
 ## Farvebehandling
 
@@ -208,7 +208,7 @@ Et nyt, selvstændigt spor, bygget på grenen `pointregnskab` og flettet ind på
 
 ## Håndevaluering
 
-Et nyt, selvstændigt spor i gruppen Vurdering, bygget på grenen `haandevaluering` (appen før sporet er tagget `v6-foer-haandevaluering`). **[SPEC-haandevaluering.md](SPEC-haandevaluering.md) beskriver sporet, og [docs/MODEL.md](docs/MODEL.md) er Franks P-model.** MODEL.md ændres ikke uden Franks godkendelse. Eksisterende spor, motoren, kortgiveren, systemfilen og meldegiveren ændres ikke; i appen kun stederne i specens tabel (`tracks.ts`, `App.tsx`, vejledningen). Kræver noget alligevel en ændring i eksisterende kode, så spørg først.
+Et nyt, selvstændigt spor i gruppen Vurdering, bygget på grenen `haandevaluering` og flettet ind på `main` (appen før sporet er tagget `v6-foer-haandevaluering`). **[SPEC-haandevaluering.md](SPEC-haandevaluering.md) beskriver sporet, og [docs/MODEL.md](docs/MODEL.md) er Franks P-model.** MODEL.md ændres ikke uden Franks godkendelse. Eksisterende spor, motoren, kortgiveren, systemfilen og meldegiveren ændres ikke; i appen kun stederne i specens tabel (`tracks.ts`, `App.tsx`, vejledningen). Kræver noget alligevel en ændring i eksisterende kode, så spørg først.
 
 **Kort over koden** (`src/haandevaluering/`)
 - `content/p-model.json`: modellens konstanter med afsnit i MODEL.md. `content/p-model.facit.json`: eksempelhænder med facit i PBN-notation, skrevet af `node scripts/p-model-facit.ts`; konventionstræneren kopierer begge filer og kører samme facittest.
@@ -227,5 +227,5 @@ Et nyt, selvstændigt spor i gruppen Vurdering, bygget på grenen `haandevalueri
 - [x] Franks godkendelse af skemaet; opgave 4 har P højst 37 (Franks afgørelse, 8. oktober 2026).
 - [x] Leverancetrin 3: brugerfladen til opgave 1–7 på dansk og engelsk med ⓘ, sporets talpanel med ½ og ¼, ruten i `App.tsx`, afsnittet i vejledningen og Vurderings ⓘ-tekst.
 - [x] Linjen i `tracks.ts`: Vurdering står på forsiden; de to tests i `src/app/navigation.test.tsx`, der forventede en tom Vurdering, er rettet med Franks godkendelse (8. oktober 2026).
-- [ ] Franks godkendelse af leverancetrin 1–3 og fletning ind på `main`.
+- [x] Franks godkendelse af leverancetrin 1–3; flettet ind og udgivet på `main` (8. oktober 2026).
 - [ ] Leverancetrin 4: opgave 8 og 9.
