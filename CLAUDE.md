@@ -18,7 +18,7 @@ Bridge-træningsapp til hånd-fordelinger. Appen er færdig og i brug på https:
 
 - Stack: React + Vite + TypeScript, statisk side på GitHub Pages, PWA (offline). Tests i Vitest. Ingen server, intet login, ingen eksterne API'er.
 - `src/engine/` må ikke importere fra `src/domain/` eller `src/system/` (håndhæves af `src/architecture.test.ts`).
-- Sandsynligheder beregnes i koden med BigInt-tællere; intet tal tastes ind. Hænder filtreres eller vægtes aldrig i øvelser, der viser hyppigheder.
+- Sandsynligheder beregnes i koden med BigInt-tællere; intet tal tastes ind. Hænder filtreres eller vægtes aldrig i øvelser, der viser hyppigheder. Undtagelse: `src/haandevaluering/content/p-model.json` har P-modellens empiriske konstanter fra `docs/MODEL.md` (Franks simuleringer) med henvisning til afsnittet; regnereglerne udføres i koden (SPEC-haandevaluering.md).
 - Kortgiver: Fisher–Yates over 52 kort med seedbar PRNG (mulberry32). Seed 1 er låst i en regressionstest, så gemte opgaver kan genskabes.
 - Meldetolkning ligger kun i `src/system/dk-2over1.json` (standard dansk 2/1).
 - Al tilstand i localStorage under nøglen `fordelingstraener:v1`; skemaet står i SPEC.md under "Data og lagring". Datoer i lokal tid, dagen skifter kl. 04.
@@ -92,7 +92,7 @@ Valg, hvor SPEC.md er åben. Spørg, før du ændrer dem.
 Specerne ligger hos Frank (version 2 med Claude Codes gennemgang, 7. oktober 2026) og lægges i repoet, når opgaven starter. Rækkefølge:
 
 1. **SPEC-analysevindue-layout.md (godkendt og udgivet 8. oktober 2026; appen før er tagget `v5-tema`):** i farvebehandling fanerne som én bjælke, gennemsnitligt antal stik på linjekortene og sidningerne som tabel (efter det godkendte artboard "Analysevindue v2"). Appens data har kun nås/nås ikke pr. linje og sidning, så løserscriptet regner stik pr. sidning for de viste linjer og gemmer dem i appens data (mulighed A, Franks valg 7. oktober 2026). Facit for B432 / ET65 er efterprøvet: linje A 2,3165 og linje B 2,0678 stik.
-2. **SPEC-haandevaluering.md:** nyt spor i gruppen Vurdering på Franks P-model. Kræver `docs/MODEL.md` fra Frank; `src/haandevaluering/content/p-model.json` får en undtagelse fra reglen om, at intet tal tastes ind. Ud over linjen i `tracks.ts` skal `App.tsx` have ruten og `onOpen`, vejledningen et afsnit og Vurderings ⓘ-tekst skrives færdig.
+2. **SPEC-haandevaluering.md (i gang på grenen `haandevaluering`; appen før er tagget `v6-foer-haandevaluering`):** nyt spor i gruppen Vurdering på Franks P-model. Kræver `docs/MODEL.md` fra Frank; `src/haandevaluering/content/p-model.json` får en undtagelse fra reglen om, at intet tal tastes ind. Ud over linjen i `tracks.ts` skal `App.tsx` have ruten og `onOpen`, vejledningen et afsnit og Vurderings ⓘ-tekst skrives færdig.
 
 ## Farvebehandling
 
@@ -205,3 +205,23 @@ Et nyt, selvstændigt spor, bygget på grenen `pointregnskab` og flettet ind på
 - [x] Trin 3–5: brugerfladen på dansk og engelsk med ⓘ, menupunktet på forsiden, afsnittet i vejledningen, Kipningsretning, Løbende tælling med tilpasset visningstid og Fuldt regnskab med længder fra 13-sudokuens generator. Godkendt og udgivet på `main` (6. oktober 2026).
 - [x] Længdeskabelonerne "Farven er brugt op" og "Ikke plads"; på niveau 5 ændrer længderne svaret i mindst halvdelen af opgaverne (Franks afgørelse).
 - [ ] Regnskabspanel, Honnørchip og Meldelinje tegnes ind i designsystemet i Claude Design (kræver, at Frank starter `/design-sync`).
+
+## Håndevaluering
+
+Et nyt, selvstændigt spor i gruppen Vurdering, bygget på grenen `haandevaluering` (appen før sporet er tagget `v6-foer-haandevaluering`). **[SPEC-haandevaluering.md](SPEC-haandevaluering.md) beskriver sporet, og [docs/MODEL.md](docs/MODEL.md) er Franks P-model.** MODEL.md ændres ikke uden Franks godkendelse. Eksisterende spor, motoren, kortgiveren, systemfilen og meldegiveren ændres ikke; i appen kun stederne i specens tabel (`tracks.ts`, `App.tsx`, vejledningen). Kræver noget alligevel en ændring i eksisterende kode, så spørg først.
+
+**Kort over koden** (`src/haandevaluering/`)
+- `content/p-model.json`: modellens konstanter med afsnit i MODEL.md. `content/p-model.facit.json`: eksempelhænder med facit i PBN-notation, skrevet af `node scripts/p-model-facit.ts`; konventionstræneren kopierer begge filer og kører samme facittest.
+- `model/`: P-modellen (`pmodel.ts`: honnørpoint og genvejen, p og P, kortfarvepoint pr. mønster, tabellen med interpolation, stikforventningen, grænser og kontroltjek, sansmodellen med stoppere, Zar, turneringsform og naturlig frekvens), PBN (`hand.ts`), facitfilen (`facit.ts`) og generatoren (`generator.ts`, opgave 1–7).
+- `training/`: Leitner-bunken med nøgletal og kortfarvepoint (`deck.ts`), facit og scoring (`scoring.ts`), niveau (`progression.ts`) og sessionen (`session.ts`).
+- `storage.ts`: skemaet for `haandevaluering:v1` (afventer Franks godkendelse; valgfrie felter `answers` og `lastExport`) med indlæsning, kopi af ulæselige data, gem, import og påmindelsen om eksport.
+
+**Beslutninger:** Claude Codes valg står i specen under "Claude Codes valg" (invit fra 26, stik efter tabellen over P = 32, farve eller sans, Leitner-bunken, nabovalg ved grænsen med grænserne medregnet og generatorens krav). Spørg, før du ændrer dem.
+
+**Status**
+- [x] Leverancetrin 1: model, `p-model.json`, facitfil med script og tests.
+- [x] Leverancetrin 2: generator til opgave 1–7 med seeds og kvalitetskravet for opgave 4 (P inden for ±2 af en grænse).
+- [x] Logik uden brugerflade for session, scoring, niveau og Leitner-bunken; skemaet for `haandevaluering:v1` som TypeScript-type.
+- [ ] Franks godkendelse af skemaet og svar på de åbne punkter (huskeversionen af stikformlen, HCP-grænsen i opgave 8, kortfarvepoint i trumffarven).
+- [ ] Leverancetrin 3: brugerfladen til opgave 1–5 på dansk og engelsk med ⓘ, sporets talpanel med ½ og ¼, linjen i `tracks.ts`, ruten i `App.tsx`, afsnittet i vejledningen og Vurderings ⓘ-tekst.
+- [ ] Leverancetrin 4: opgave 6–9.

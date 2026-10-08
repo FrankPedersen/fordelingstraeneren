@@ -1,0 +1,106 @@
+{
+  "kilde": "docs/MODEL.md",
+  "om": "P-modellen fra Franks dobbeltdummy-simuleringer. Tallene er empiriske modelværdier, ikke sandsynligheder regnet af appen, og har derfor en undtagelse fra reglen om, at intet tal tastes ind (CLAUDE.md). Regnereglerne udføres i koden (src/haandevaluering/model/pmodel.ts). Konventionstræneren kopierer filen og p-model.facit.json og kører samme facittest. Hvor MODEL.md ikke afgør sagen, står kilden i feltet 'afsnit'.",
+  "honnoerpoint": {
+    "afsnit": "MODEL.md 1 (Enkelthåndsversion)",
+    "A": 5,
+    "K": 3,
+    "Q": 1.5,
+    "J": 0.5,
+    "T": 0.25
+  },
+  "trumflaengde": {
+    "afsnit": "MODEL.md 1: 1½ pr. trumf du selv har ud over 4",
+    "over": 4,
+    "point": 1.5
+  },
+  "kortfarvepoint": {
+    "afsnit": "MODEL.md 1 og 3 (5/3/1, tælles i begge hænder)",
+    "renonce": 5,
+    "singleton": 3,
+    "dobbeltton": 1
+  },
+  "spildteVaerdier": {
+    "afsnit": "MODEL.md 1 og 3 (kun kongen koster)",
+    "konge": -1
+  },
+  "stik": {
+    "afsnit": "MODEL.md 1: stik ≈ 0,31 × P + 0,75. Formlen bruges til og med P = 32, tabellens kolonne derover og aldrig mere end 13 stik (SPEC-haandevaluering.md, Claude Codes valg).",
+    "faktor": 0.31,
+    "konstant": 0.75,
+    "formelTilOgMed": 32,
+    "hoejst": 13
+  },
+  "tabel": {
+    "afsnit": "MODEL.md 1 (P, gns. stik og chancen for 4M, 6M og 7M i procent; – er 0). Mellem rækkerne interpoleres lineært, uden for tabellen bruges nærmeste række.",
+    "raekker": [
+      { "P": 24, "stik": 8.1, "4M": 7, "6M": 0, "7M": 0 },
+      { "P": 26, "stik": 8.8, "4M": 22, "6M": 0, "7M": 0 },
+      { "P": 28.5, "stik": 9.4, "4M": 50, "6M": 1, "7M": 0 },
+      { "P": 30, "stik": 10.0, "4M": 74, "6M": 4, "7M": 0 },
+      { "P": 32, "stik": 10.6, "4M": 91, "6M": 13, "7M": 1 },
+      { "P": 34, "stik": 11.1, "4M": 98, "6M": 33, "7M": 5 },
+      { "P": 36, "stik": 11.7, "4M": 99, "6M": 64, "7M": 13 },
+      { "P": 38, "stik": 11.9, "4M": 99, "6M": 74, "7M": 24 },
+      { "P": 40, "stik": 12.3, "4M": 100, "6M": 90, "7M": 44 }
+    ]
+  },
+  "graenser": {
+    "afsnit": "MODEL.md 1 (udgang, slem og storeslem). Invit fra P = 26, hvor 4M holder 22 %, er Claude Codes valg (SPEC-haandevaluering.md).",
+    "invit": 26,
+    "udgang": 28.5,
+    "slem": 35,
+    "storeslem": 41
+  },
+  "kontroller": {
+    "afsnit": "SPEC-haandevaluering.md, afklaret fagligt valg 5 (forenklet kontroltjek)",
+    "slemHoejstManglendeEs": 1,
+    "storeslemKraeverTrumfkongen": true
+  },
+  "sans": {
+    "afsnit": "MODEL.md 2: point i sans = HCP (4-3-2-1) + ¼ pr. tier, ingen længdepoint og ingen fladhedsstraf",
+    "hcp": { "A": 4, "K": 3, "Q": 2, "J": 1 },
+    "T": 0.25,
+    "stoppere": {
+      "afsnit": "MODEL.md 2 (ved 24–26 HCP)",
+      "hcp": [24, 26],
+      "raekker": [
+        { "farver": 3, "stik": 7.97, "3NT": 31 },
+        { "farver": 4, "stik": 8.74, "3NT": 60 }
+      ]
+    }
+  },
+  "trumfensVaerdi": {
+    "afsnit": "MODEL.md 6 (samme kort, farve mod sans: stik mere i farvekontrakt)",
+    "raekker": [
+      { "trumf": 8, "stik": 2.22 },
+      { "trumf": 9, "stik": 2.98 },
+      { "trumf": 10, "stik": 3.81 }
+    ]
+  },
+  "zar": {
+    "afsnit": "MODEL.md 5 og SPEC-haandevaluering.md, Fagligt grundlag 6: ZP = HCP + kontroller + (a + b) + (a − d)",
+    "kontroller": { "A": 2, "K": 1 },
+    "aabning": 26,
+    "udgang": 52,
+    "stikformel": { "minus": 2, "divisor": 5, "bias": 1.01 },
+    "aabnerProcent": 46,
+    "hcp12Procent": 35
+  },
+  "praestation": {
+    "afsnit": "MODEL.md 1 og 5 (forklaret varians og korrekt udgangsbeslutning i procent)",
+    "P": { "r2": 0.794, "udgang": 87.5 },
+    "zar": { "r2": 0.73, "udgang": 85.2 },
+    "hcp": { "r2": 0.652, "udgang": 82.5 }
+  },
+  "dobbeltdummy": {
+    "afsnit": "MODEL.md 8: dobbeltdummy giver typisk 0,2–0,3 stik mere end virkeligt spil",
+    "stik": [0.2, 0.3]
+  },
+  "turnering": {
+    "afsnit": "SPEC-haandevaluering.md, afklaret fagligt valg 4: udgang er rigtig fra denne chance for 4M; P regnes af tabellen og rundes til nærmeste halve point",
+    "impIZonen": 37,
+    "impUdenForZonen": 45,
+    "par": 50
+  }
+}
