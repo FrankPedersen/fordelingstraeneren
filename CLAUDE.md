@@ -91,7 +91,7 @@ Valg, hvor SPEC.md er åben. Spørg, før du ændrer dem.
 
 Specerne ligger hos Frank (version 2 med Claude Codes gennemgang, 7. oktober 2026) og lægges i repoet, når opgaven starter. Rækkefølge:
 
-1. **SPEC-analysevindue-layout.md (bygget på grenen `analysevindue-layout`, venter på Franks godkendelse):** i farvebehandling fanerne som én bjælke, gennemsnitligt antal stik på linjekortene og sidningerne som tabel (efter det godkendte artboard "Analysevindue v2"). Appens data har kun nås/nås ikke pr. linje og sidning, så løserscriptet regner stik pr. sidning for de viste linjer og gemmer dem i appens data (mulighed A, Franks valg 7. oktober 2026). Facit for B432 / ET65 er efterprøvet: linje A 2,3165 og linje B 2,0678 stik.
+1. **SPEC-analysevindue-layout.md (godkendt og udgivet 8. oktober 2026; appen før er tagget `v5-tema`):** i farvebehandling fanerne som én bjælke, gennemsnitligt antal stik på linjekortene og sidningerne som tabel (efter det godkendte artboard "Analysevindue v2"). Appens data har kun nås/nås ikke pr. linje og sidning, så løserscriptet regner stik pr. sidning for de viste linjer og gemmer dem i appens data (mulighed A, Franks valg 7. oktober 2026). Facit for B432 / ET65 er efterprøvet: linje A 2,3165 og linje B 2,0678 stik.
 2. **SPEC-haandevaluering.md:** nyt spor i gruppen Vurdering på Franks P-model. Kræver `docs/MODEL.md` fra Frank; `src/haandevaluering/content/p-model.json` får en undtagelse fra reglen om, at intet tal tastes ind. Ud over linjen i `tracks.ts` skal `App.tsx` have ruten og `onOpen`, vejledningen et afsnit og Vurderings ⓘ-tekst skrives færdig.
 
 ## Farvebehandling
