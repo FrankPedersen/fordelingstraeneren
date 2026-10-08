@@ -21,6 +21,7 @@ import {
   rightDecisions,
   SHORTNESS_BY_PATTERN,
   shortcut,
+  shortnessOfLength,
   tableValue,
   trickFormula,
   zarOpens,
@@ -50,22 +51,43 @@ describe('P-modellen (SPEC-haandevaluering.md, accepttest)', () => {
     expect(pOf(SPEC_HAND)).toEqual({ honors: 12.5, trump: 0, shortness: 0, wasted: 0, p: 12.5 });
   });
 
-  it('P = 29 giver stik ≈ 9,74 (formlen) og 4M ≈ 58 % (lineær interpolation mellem 28½ og 30)', () => {
-    expect(expectedTricks(29)).toBeCloseTo(9.74, 10);
+  it('P = 29 giver stik ≈ 9,6 og 4M ≈ 58 % (lineær interpolation mellem 28½ og 30), og stikforventningen springer ikke ved tabellens rækker', () => {
+    expect(expectedTricks(29)).toBeCloseTo(9.6, 10);
     expect(chances(29).game).toBeCloseTo(58, 10);
+    // Fra P = 24 til 40 i kvarte point: aldrig faldende og aldrig mere end tabellens stejleste stykke (0,4 stik pr. point
+    // mellem 28½ og 30), heller ikke ved rækkerne.
+    for (let P = 24; P < 40; P += 0.25) {
+      const step = expectedTricks(P + 0.25) - expectedTricks(P);
+      expect(step, `P = ${P}`).toBeGreaterThanOrEqual(0);
+      expect(step, `P = ${P}`).toBeLessThanOrEqual(0.4 * 0.25 + 1e-9);
+    }
     // Makker med p = 12 over for specens hånd giver P = 29.
     const partner = parseHand('Q963.A98.A74.J76');
     expect(pOf(SPEC_HAND, { trump: SPADES }).p + pOf(partner, { trump: SPADES }).p).toBe(29);
   });
 
-  it('P = 28½ giver 4M = 50 %, og grænserne 28½, 35 og 41 vælger udgang, slem og storeslem', () => {
+  it('P = 28½ giver 4M = 50 %, og grænserne 28½, 35 og 41 vælger udgang, lilleslem og storeslem; fra P = 28 til 29 er både delkontrakt og udgang rigtige', () => {
     expect(chances(28.5).game).toBe(50);
-    expect(contractFor(28.25)).toBe('invite');
+    expect(contractFor(24)).toBe('partscore');
+    expect(contractFor(28.25)).toBe('partscore');
     expect(contractFor(28.5)).toBe('game');
     expect(contractFor(34.75)).toBe('game');
     expect(contractFor(35)).toBe('slam');
     expect(contractFor(40.75)).toBe('slam');
     expect(contractFor(41)).toBe('grand');
+    expect(rightDecisions(27.75)).toEqual(['partscore']);
+    for (const P of [28, 28.25, 28.5, 28.75, 29]) expect(rightDecisions(P), `P = ${P}`).toEqual(['partscore', 'game']);
+    expect(rightDecisions(29.25)).toEqual(['game']);
+  });
+
+  it('kortfarvepoint tælles ikke i trumffarven: en 6-2-fit giver ingen dobbelttonpoint for de 2 trumf, og en 7-1-fit ingen singletonpoint', () => {
+    // 2 trumf (♠) og en dobbeltton i ♦: kun ♦ tæller.
+    expect(pOf(parseHand('Q7.KJ84.A5.QT983'), { trump: SPADES })).toMatchObject({ trump: 0, shortness: 1 });
+    // 1 trumf (♥) og ingen anden korthed.
+    expect(pOf(parseHand('A853.7.KJ952.Q64'), { trump: 1 })).toMatchObject({ trump: 0, shortness: 0 });
+    // Samme hænder uden for trumffarven tæller som mønstret.
+    expect(pOf(parseHand('Q7.KJ84.A5.QT983'), { trump: 1 }).shortness).toBe(2);
+    expect(pOf(parseHand('A853.7.KJ952.Q64'), { trump: SPADES }).shortness).toBe(3);
   });
 
   it('samme hånd i Zar: 12 + 4 + 9 + 4 = 29 ZP, dvs. åbning', () => {
@@ -99,11 +121,12 @@ describe('P-modellen (SPEC-haandevaluering.md, accepttest)', () => {
     };
     for (const [id, points] of Object.entries(table)) expect(SHORTNESS_BY_PATTERN[id], id).toBe(points);
     expect(Object.keys(SHORTNESS_BY_PATTERN)).toHaveLength(PATTERNS.length);
-    // Hver hånds kortfarvepoint er mønstrets.
+    // Hver hånds kortfarvepoint er mønstrets minus trumffarvens.
     for (let seed = 1; seed <= 200; seed++) {
       const hand = deal(seed).N;
-      const id = [...suitLengths(hand)].sort((a, b) => b - a).join('-');
-      expect(pOf(hand, { trump: SPADES }).shortness).toBe(SHORTNESS_BY_PATTERN[id]);
+      const lengths = suitLengths(hand);
+      const id = [...lengths].sort((a, b) => b - a).join('-');
+      expect(pOf(hand, { trump: SPADES }).shortness).toBe(SHORTNESS_BY_PATTERN[id] - shortnessOfLength(lengths[SPADES]));
     }
   });
 
@@ -129,30 +152,23 @@ describe('P-modellen: tabellen, stikforventningen og beslutningen', () => {
     expect(chances(31).game).toBeCloseTo(82.5, 10);
   });
 
-  it('formlen og tabellens "Gns. stik" følges ad op til P = 32 (højst 0,2 stik fra hinanden); derover gælder tabellen, aldrig over 13', () => {
-    for (const row of P_MODEL.tabel.raekker.filter((r) => r.P <= 32)) {
-      expect(Math.abs(trickFormula(row.P) - row.stik), `P = ${row.P}`).toBeLessThanOrEqual(0.2);
-      expect(expectedTricks(row.P)).toBeCloseTo(trickFormula(row.P), 10);
-    }
-    expect(trickFormula(38)).toBeCloseTo(12.53, 10);
+  it('stikforventningen er tabellens "Gns. stik"; formlen bruges kun i forklaringer, og huskeversionen P/3 ligger inden for 0,2 stik fra P = 24 til 32', () => {
+    for (const row of P_MODEL.tabel.raekker) expect(expectedTricks(row.P)).toBe(row.stik);
     expect(expectedTricks(38)).toBeCloseTo(11.9, 10);
-    expect(trickFormula(40)).toBeGreaterThan(13);
-    for (let P = 0; P <= 60; P += 0.25) expect(expectedTricks(P)).toBeLessThanOrEqual(13);
+    expect(trickFormula(29)).toBeCloseTo(9.74, 10);
+    for (let P = 24; P <= 32; P += 0.25) expect(Math.abs(P / 3 - expectedTricks(P)), `P = ${P}`).toBeLessThanOrEqual(0.2);
   });
 
-  it('invit fra 26 (Claude Codes valg); inden for ½ point af en grænse er begge nabovalg rigtige', () => {
-    expect(contractFor(25.75)).toBe('pass');
-    expect(contractFor(26)).toBe('invite');
-    expect(rightDecisions(25.25)).toEqual(['pass']);
-    expect(rightDecisions(25.5)).toEqual(['pass', 'invite']);
-    expect(rightDecisions(27.75)).toEqual(['invite']);
-    expect(rightDecisions(28)).toEqual(['invite', 'game']);
-    expect(rightDecisions(29)).toEqual(['invite', 'game']);
-    expect(rightDecisions(29.25)).toEqual(['game']);
+  it('inden for ½ point af en grænse, grænserne medregnet, er begge nabovalg rigtige', () => {
+    expect(rightDecisions(24)).toEqual(['partscore']);
+    expect(rightDecisions(34.25)).toEqual(['game']);
     expect(rightDecisions(34.5)).toEqual(['game', 'slam']);
     expect(rightDecisions(35.5)).toEqual(['game', 'slam']);
     expect(rightDecisions(35.75)).toEqual(['slam']);
-    expect(rightDecisions(41)).toEqual(['slam']);
+    expect(rightDecisions(40.25)).toEqual(['slam']);
+    expect(rightDecisions(40.5)).toEqual(['slam', 'grand']);
+    expect(rightDecisions(41.5)).toEqual(['slam', 'grand']);
+    expect(rightDecisions(41.75)).toEqual(['grand']);
   });
 
   it('kontroltjekket: slem kræver højst ét manglende es, storeslem alle fire es og trumfkongen', () => {
@@ -161,6 +177,7 @@ describe('P-modellen: tabellen, stikforventningen og beslutningen', () => {
     expect(rightDecisions(35, { aces: 2, trumpKing: true })).toEqual(['game']);
     expect(contractFor(42, { aces: 4, trumpKing: false })).toBe('slam');
     expect(contractFor(42, { aces: 3, trumpKing: true })).toBe('slam');
+    expect(rightDecisions(41, { aces: 3, trumpKing: true })).toEqual(['slam']);
     const south = parseHand('AKJ752.A4.AK3.A2'), north = parseHand('Q643.K2.Q52.K843');
     expect(controlsOf(south, north, SPADES)).toEqual({ aces: 4, trumpKing: true });
   });

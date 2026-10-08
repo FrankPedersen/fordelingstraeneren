@@ -15,7 +15,7 @@
     "point": 1.5
   },
   "kortfarvepoint": {
-    "afsnit": "MODEL.md 1 og 3 (5/3/1, tælles i begge hænder)",
+    "afsnit": "MODEL.md 1 og 3 (5/3/1, tælles i begge hænder, kun i sidefarverne: en kort trumffarve giver ingen stjælestik; SPEC-haandevaluering.md version 2)",
     "renonce": 5,
     "singleton": 3,
     "dobbeltton": 1
@@ -25,14 +25,13 @@
     "konge": -1
   },
   "stik": {
-    "afsnit": "MODEL.md 1: stik ≈ 0,31 × P + 0,75. Formlen bruges til og med P = 32, tabellens kolonne derover og aldrig mere end 13 stik (SPEC-haandevaluering.md, Claude Codes valg).",
+    "afsnit": "MODEL.md 1: stik ≈ 0,31 × P + 0,75 bruges kun i forklaringer; stikforventningen er tabellens kolonne med lineær interpolation. Huskeversionen er stik ≈ P/3 (SPEC-haandevaluering.md version 2, Husketeknikker).",
     "faktor": 0.31,
     "konstant": 0.75,
-    "formelTilOgMed": 32,
-    "hoejst": 13
+    "huskeversionDivisor": 3
   },
   "tabel": {
-    "afsnit": "MODEL.md 1 (P, gns. stik og chancen for 4M, 6M og 7M i procent; – er 0). Mellem rækkerne interpoleres lineært, uden for tabellen bruges nærmeste række.",
+    "afsnit": "MODEL.md 1 (P, gns. stik og chancen for 4M, 6M og 7M i procent; – er 0). Mellem rækkerne interpoleres lineært. Opgaver laves kun for P i tabellens område (24–40); grænsen for storeslem (41) ligger over, så der bruges sidste række.",
     "raekker": [
       { "P": 24, "stik": 8.1, "4M": 7, "6M": 0, "7M": 0 },
       { "P": 26, "stik": 8.8, "4M": 22, "6M": 0, "7M": 0 },
@@ -46,8 +45,7 @@
     ]
   },
   "graenser": {
-    "afsnit": "MODEL.md 1 (udgang, slem og storeslem). Invit fra P = 26, hvor 4M holder 22 %, er Claude Codes valg (SPEC-haandevaluering.md).",
-    "invit": 26,
+    "afsnit": "MODEL.md 1 (udgang, lilleslem og storeslem; under udgang er det delkontrakt)",
     "udgang": 28.5,
     "slem": 35,
     "storeslem": 41
@@ -86,6 +84,10 @@
     "stikformel": { "minus": 2, "divisor": 5, "bias": 1.01 },
     "aabnerProcent": 46,
     "hcp12Procent": 35
+  },
+  "hcpMetode": {
+    "afsnit": "SPEC-haandevaluering.md, opgave 8: HCP-metodens udgangsgrænse er foreløbig 25 HCP, indtil Franks simulering viser grænsen bag de 82,5 %",
+    "udgang": 25
   },
   "praestation": {
     "afsnit": "MODEL.md 1 og 5 (forklaret varians og korrekt udgangsbeslutning i procent)",

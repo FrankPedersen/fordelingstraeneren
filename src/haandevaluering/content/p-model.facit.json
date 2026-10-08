@@ -91,6 +91,40 @@
    }
   },
   {
+   "id": "dobbeltton-i-trumf",
+   "kilde": "SPEC-haandevaluering.md, accepttest (6-2-fit)",
+   "haand": "Q7.KJ84.A5.QT983",
+   "trumf": "S",
+   "makkersKorthed": [],
+   "facit": {
+    "hcp": 12,
+    "honnoerpoint": 11.75,
+    "trumflaengde": 0,
+    "kortfarvepoint": 1,
+    "spildte": 0,
+    "p": 12.75,
+    "sanspoint": 12.25,
+    "zar": 27
+   }
+  },
+  {
+   "id": "singleton-i-trumf",
+   "kilde": "SPEC-haandevaluering.md, accepttest (7-1-fit)",
+   "haand": "A853.7.KJ952.Q64",
+   "trumf": "H",
+   "makkersKorthed": [],
+   "facit": {
+    "hcp": 10,
+    "honnoerpoint": 10,
+    "trumflaengde": 0,
+    "kortfarvepoint": 0,
+    "spildte": 0,
+    "p": 10,
+    "sanspoint": 10,
+    "zar": 26
+   }
+  },
+  {
    "id": "tiere-i-sans",
    "kilde": "MODEL.md 2",
    "haand": "KT4.QT3.AT52.J93",
@@ -253,13 +287,13 @@
    "facit": {
     "trumf": "S",
     "P": 29,
-    "stik": 9.74,
+    "stik": 9.6,
     "4M": 58,
     "6M": 2,
     "7M": 0,
     "kontrakt": "game",
     "svar": [
-     "invite",
+     "partscore",
      "game"
     ],
     "makkerSkalHave": 11.5,
@@ -286,7 +320,8 @@
     "7M": 44,
     "kontrakt": "grand",
     "svar": [
-     "slam"
+     "slam",
+     "grand"
     ],
     "makkerSkalHave": 0,
     "sanspoint": 33,
@@ -328,19 +363,19 @@
   },
   {
    "id": "seed-1",
-   "kilde": "kortgiveren, seed 1: invit",
+   "kilde": "kortgiveren, seed 1: delkontrakt",
    "syd": "K94.AT76.65.KJ94",
    "nord": "JT6532.KJ2.97.A6",
    "facit": {
     "trumf": "S",
     "P": 27,
-    "stik": 9.12,
+    "stik": 9.04,
     "4M": 33.2,
     "6M": 0.4,
     "7M": 0,
-    "kontrakt": "invite",
+    "kontrakt": "partscore",
     "svar": [
-     "invite"
+     "partscore"
     ],
     "makkerSkalHave": 15.75,
     "sanspoint": 20.5,
@@ -360,7 +395,7 @@
    "facit": {
     "trumf": "H",
     "P": 31.5,
-    "stik": 10.515,
+    "stik": 10.45,
     "4M": 86.75,
     "6M": 10.75,
     "7M": 0.75,
@@ -381,50 +416,25 @@
   },
   {
    "id": "seed-3",
-   "kilde": "kortgiveren, seed 3: slem",
+   "kilde": "kortgiveren, seed 3: lilleslem",
    "syd": "KQT9762.7.Q.AQ75",
    "nord": "J8.AQ2.AT7.98432",
    "facit": {
     "trumf": "S",
-    "P": 36.5,
-    "stik": 11.75,
-    "4M": 99,
-    "6M": 66.5,
-    "7M": 15.75,
+    "P": 35.5,
+    "stik": 11.55,
+    "4M": 98.75,
+    "6M": 56.25,
+    "7M": 11,
     "kontrakt": "slam",
     "svar": [
+     "game",
      "slam"
     ],
     "makkerSkalHave": 5.25,
     "sanspoint": 24.5,
     "stoppede": [
      "S",
-     "H",
-     "D",
-     "C"
-    ],
-    "retning": "major"
-   }
-  },
-  {
-   "id": "seed-4",
-   "kilde": "kortgiveren, seed 4: pas",
-   "syd": "863.K632.QT3.J63",
-   "nord": ".AJ98.A9852.KT87",
-   "facit": {
-    "trumf": "H",
-    "P": 24,
-    "stik": 8.19,
-    "4M": 7,
-    "6M": 0,
-    "7M": 0,
-    "kontrakt": "pass",
-    "svar": [
-     "pass"
-    ],
-    "makkerSkalHave": 23.25,
-    "sanspoint": 18.5,
-    "stoppede": [
      "H",
      "D",
      "C"
@@ -483,133 +493,99 @@
  ],
  "P": [
   {
-   "P": 20,
-   "stik": 6.95,
-   "4M": 7,
-   "6M": 0,
-   "7M": 0,
-   "kontrakt": "pass",
-   "svar": [
-    "pass"
-   ]
-  },
-  {
-   "P": 23.5,
-   "stik": 8.035,
-   "4M": 7,
-   "6M": 0,
-   "7M": 0,
-   "kontrakt": "pass",
-   "svar": [
-    "pass"
-   ]
-  },
-  {
    "P": 24,
-   "stik": 8.19,
+   "stik": 8.1,
    "4M": 7,
    "6M": 0,
    "7M": 0,
-   "kontrakt": "pass",
+   "kontrakt": "partscore",
    "svar": [
-    "pass"
+    "partscore"
    ]
   },
   {
    "P": 25,
-   "stik": 8.5,
+   "stik": 8.45,
    "4M": 14.5,
    "6M": 0,
    "7M": 0,
-   "kontrakt": "pass",
+   "kontrakt": "partscore",
    "svar": [
-    "pass"
+    "partscore"
    ]
   },
   {
    "P": 26,
-   "stik": 8.81,
+   "stik": 8.8,
    "4M": 22,
    "6M": 0,
    "7M": 0,
-   "kontrakt": "invite",
+   "kontrakt": "partscore",
    "svar": [
-    "pass",
-    "invite"
+    "partscore"
    ]
   },
   {
    "P": 27,
-   "stik": 9.12,
+   "stik": 9.04,
    "4M": 33.2,
    "6M": 0.4,
    "7M": 0,
-   "kontrakt": "invite",
+   "kontrakt": "partscore",
    "svar": [
-    "invite"
-   ]
-  },
-  {
-   "P": 27.5,
-   "stik": 9.275,
-   "4M": 38.8,
-   "6M": 0.6,
-   "7M": 0,
-   "kontrakt": "invite",
-   "svar": [
-    "invite"
+    "partscore"
    ]
   },
   {
    "P": 27.75,
-   "stik": 9.3525,
+   "stik": 9.22,
    "4M": 41.6,
    "6M": 0.7,
    "7M": 0,
-   "kontrakt": "invite",
+   "kontrakt": "partscore",
    "svar": [
-    "invite"
+    "partscore"
    ]
   },
   {
    "P": 28,
-   "stik": 9.43,
+   "stik": 9.28,
    "4M": 44.4,
    "6M": 0.8,
    "7M": 0,
-   "kontrakt": "invite",
+   "kontrakt": "partscore",
    "svar": [
-    "invite",
+    "partscore",
     "game"
    ]
   },
   {
    "P": 28.5,
-   "stik": 9.585,
+   "stik": 9.4,
    "4M": 50,
    "6M": 1,
    "7M": 0,
    "kontrakt": "game",
    "svar": [
-    "invite",
+    "partscore",
     "game"
    ]
   },
   {
    "P": 29,
-   "stik": 9.74,
+   "stik": 9.6,
    "4M": 58,
    "6M": 2,
    "7M": 0,
    "kontrakt": "game",
    "svar": [
-    "invite",
+    "partscore",
     "game"
    ]
   },
   {
    "P": 29.25,
-   "stik": 9.8175,
+   "stik": 9.7,
    "4M": 62,
    "6M": 2.5,
    "7M": 0,
@@ -620,7 +596,7 @@
   },
   {
    "P": 30,
-   "stik": 10.05,
+   "stik": 10,
    "4M": 74,
    "6M": 4,
    "7M": 0,
@@ -631,7 +607,7 @@
   },
   {
    "P": 31,
-   "stik": 10.36,
+   "stik": 10.3,
    "4M": 82.5,
    "6M": 8.5,
    "7M": 0.5,
@@ -642,21 +618,10 @@
   },
   {
    "P": 32,
-   "stik": 10.67,
+   "stik": 10.6,
    "4M": 91,
    "6M": 13,
    "7M": 1,
-   "kontrakt": "game",
-   "svar": [
-    "game"
-   ]
-  },
-  {
-   "P": 32.25,
-   "stik": 10.6625,
-   "4M": 91.875,
-   "6M": 15.5,
-   "7M": 1.5,
    "kontrakt": "game",
    "svar": [
     "game"
@@ -679,6 +644,17 @@
    "4M": 98,
    "6M": 33,
    "7M": 5,
+   "kontrakt": "game",
+   "svar": [
+    "game"
+   ]
+  },
+  {
+   "P": 34.25,
+   "stik": 11.175,
+   "4M": 98.125,
+   "6M": 36.875,
+   "7M": 6,
    "kontrakt": "game",
    "svar": [
     "game"
@@ -772,7 +748,8 @@
    "7M": 44,
    "kontrakt": "slam",
    "svar": [
-    "slam"
+    "slam",
+    "grand"
    ]
   },
   {
@@ -783,18 +760,31 @@
    "7M": 44,
    "kontrakt": "grand",
    "svar": [
-    "slam"
+    "slam",
+    "grand"
    ]
   },
   {
-   "P": 45,
+   "P": 41.5,
    "stik": 12.3,
    "4M": 100,
    "6M": 90,
    "7M": 44,
    "kontrakt": "grand",
    "svar": [
-    "slam"
+    "slam",
+    "grand"
+   ]
+  },
+  {
+   "P": 41.75,
+   "stik": 12.3,
+   "4M": 100,
+   "6M": 90,
+   "7M": 44,
+   "kontrakt": "grand",
+   "svar": [
+    "grand"
    ]
   }
  ],

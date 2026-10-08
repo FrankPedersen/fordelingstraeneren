@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { newItem } from '../../engine/leitner';
 import { mulberry32 } from '../../engine/rng';
 import { GENERATED, makeTask, pairP, type HandTask } from '../model/generator';
+import { expectedTricks } from '../model/pmodel';
 import { defaultHeSaved, type HeSaved } from '../storage';
 import { DECK_ORDER, DECK_PATTERNS, deckCorrect, deckTask, NEW_PER_SESSION, reviewCard, warmupQueue } from './deck';
 import { nextLevel } from './progression';
@@ -53,9 +54,14 @@ describe('Leitner-bunken (Claude Codes forslag i SPEC-haandevaluering.md, Husket
         expect(deckCorrect(task, task.answer)).toBe(true);
       }
     }
-    const stik = deckTask('stik', rng());
-    if (stik.kind !== 'choice') throw new Error('stik');
-    expect(stik.answer).toBeCloseTo(0.31 * stik.P! + 0.75, 1);
+    // Stikkortet: tabellens stikforventning, og huskeversionen P/3 peger på det rigtige svar.
+    for (let seed = 1; seed <= 50; seed++) {
+      const stik = deckTask('stik', mulberry32(seed));
+      if (stik.kind !== 'choice') throw new Error('stik');
+      expect(stik.answer).toBeCloseTo(expectedTricks(stik.P!), 1);
+      const nearest = [...stik.options].sort((a, b) => Math.abs(a - stik.P! / 3) - Math.abs(b - stik.P! / 3))[0];
+      expect(nearest).toBe(stik.answer);
+    }
   });
 
   it('opvarmningens kø: forfaldne kort først, derefter højst 3 nye', () => {
@@ -102,10 +108,10 @@ describe('Facit og scoring (SPEC-haandevaluering.md, Session, scoring og data)',
       const facit = facitOf(task);
       if (facit.exercise !== 'decision') throw new Error();
       expect(facit.P).toBe(pairP(task.hands, task.trump));
-      const near = [26, 28.5].some((g) => Math.abs(facit.P - g) <= 0.5) || (Math.abs(facit.P - 35) <= 0.5 && facit.controls.aces >= 3);
+      const near = Math.abs(facit.P - 28.5) <= 0.5 || (Math.abs(facit.P - 35) <= 0.5 && facit.controls.aces >= 3);
       expect(facit.right.length, `P = ${facit.P}`).toBe(near ? 2 : 1);
       if (facit.right.length === 2) both++;
-      for (const decision of ['pass', 'invite', 'game', 'slam'] as const) {
+      for (const decision of ['partscore', 'game', 'slam', 'grand'] as const) {
         expect(isRight(task, { exercise: 'decision', decision })).toBe(facit.right.includes(decision));
       }
     }

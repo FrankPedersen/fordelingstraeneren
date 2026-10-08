@@ -103,14 +103,14 @@ export interface PBreakdown {
 
 /**
  * Håndens p (MODEL.md 1): honnørpoint, og når fitten er bekræftet også trumflængde, kortfarvepoint og spildte
- * konger. Kortfarvepointene regnes af hele mønstret (alle fire farver), så de svarer til tabellen pr. mønster.
+ * konger. Kortfarvepoint tælles kun i sidefarverne: en kort trumffarve giver ingen stjælestik (SPEC version 2).
  */
 export function pOf(hand: readonly Card[], ctx: PContext = {}): PBreakdown {
   const honors = honorPoints(hand);
   if (ctx.trump === undefined) return { honors, trump: 0, shortness: 0, wasted: 0, p: honors };
   const lengths = suitLengths(hand);
   const trump = trumpPoints(lengths[ctx.trump]);
-  const shortness = shortnessPoints(lengths);
+  const shortness = shortnessPoints(lengths.filter((_, suit) => suit !== ctx.trump));
   const kings = hand.filter((c) => rankOf(c) === KING && (ctx.partnerShort ?? []).includes(suitOf(c))).length;
   const wasted = kings === 0 ? 0 : kings * model.spildteVaerdier.konge;
   return { honors, trump, shortness, wasted, p: honors + trump + shortness + wasted };
@@ -134,7 +134,10 @@ export function fitLength(a: readonly Card[], b: readonly Card[], trump: number)
 type Row = (typeof model.tabel.raekker)[number];
 export type Column = 'stik' | '4M' | '6M' | '7M';
 
-/** Lineær interpolation i tabellen; under 24 som 24 og over 40 som 40 (nærmeste række). */
+/** Opgaver laves kun for P i tabellens område (SPEC version 2). */
+export const P_RANGE = { min: model.tabel.raekker[0].P, max: model.tabel.raekker[model.tabel.raekker.length - 1].P } as const;
+
+/** Lineær interpolation i tabellen. Uden for den (fx storeslemsgrænsen 41) bruges nærmeste række. */
 export function tableValue(P: number, column: Column): number {
   const rows: readonly Row[] = model.tabel.raekker;
   const first = rows[0], last = rows[rows.length - 1];
@@ -145,18 +148,19 @@ export function tableValue(P: number, column: Column): number {
   return a[column] + ((b[column] - a[column]) * (P - a.P)) / (b.P - a.P);
 }
 
-/** Stikformlen 0,31 × P + 0,75 (MODEL.md 1). */
+/** Stikformlen 0,31 × P + 0,75 (MODEL.md 1); bruges kun i forklaringer. */
 export function trickFormula(P: number): number {
   return model.stik.faktor * P + model.stik.konstant;
 }
 
-/**
- * Stikforventningen: formlen til og med P = 32 og tabellens "Gns. stik" derover, aldrig mere end 13 (Claude Codes
- * valg; formlen og tabellen skilles over P = 32).
- */
+/** Huskeversionen: stik ≈ P/3 (inden for 0,2 stik af tabellen fra P = 24 til 32). */
+export function trickMnemonic(P: number): number {
+  return P / model.stik.huskeversionDivisor;
+}
+
+/** Stikforventningen: tabellens "Gns. stik" med lineær interpolation, så den aldrig springer (SPEC version 2). */
 export function expectedTricks(P: number): number {
-  const value = P <= model.stik.formelTilOgMed ? trickFormula(P) : tableValue(P, 'stik');
-  return Math.min(model.stik.hoejst, value);
+  return tableValue(P, 'stik');
 }
 
 export interface Chances {
@@ -172,11 +176,10 @@ export function chances(P: number): Chances {
 
 // --- Niveaubeslutningen ---
 
-/** Svarene i Niveaubeslutningen. Storeslem er ikke et eget svar; facit nævner den. */
-export type Decision = 'pass' | 'invite' | 'game' | 'slam';
-export type Contract = Decision | 'grand';
+/** Svarene i Niveaubeslutningen: delkontrakt, udgang, lilleslem og storeslem (SPEC version 2). */
+export type Decision = 'partscore' | 'game' | 'slam' | 'grand';
 
-export const DECISIONS: readonly Decision[] = ['pass', 'invite', 'game', 'slam'];
+export const DECISIONS: readonly Decision[] = ['partscore', 'game', 'slam', 'grand'];
 
 export interface Controls {
   /** Parrets antal es. */
@@ -203,46 +206,41 @@ export function grandAllowed(c: Controls): boolean {
 }
 
 export interface Limits {
-  invite: number;
   game: number;
   slam: number;
   grand: number;
 }
 
-/** Grænserne fra MODEL.md 1; invit fra P = 26 er Claude Codes valg. */
+/** Grænserne fra MODEL.md 1. */
 export const LIMITS: Limits = {
-  invite: model.graenser.invit,
   game: model.graenser.udgang,
   slam: model.graenser.slem,
   grand: model.graenser.storeslem,
 };
 
 /**
- * Kontrakten efter grænserne: pas under 26, invit fra 26, udgang fra 28½, slem fra 35 og storeslem fra 41, slem og
- * storeslem kun med kontrollerne.
+ * Kontrakten efter grænserne: delkontrakt under 28½, udgang fra 28½, lilleslem fra 35 og storeslem fra 41, slem kun
+ * med kontrollerne.
  */
-export function contractFor(P: number, controls: Controls = ALL_CONTROLS, limits: Limits = LIMITS): Contract {
+export function contractFor(P: number, controls: Controls = ALL_CONTROLS, limits: Limits = LIMITS): Decision {
   if (P >= limits.grand && grandAllowed(controls)) return 'grand';
   if (P >= limits.slam && slamAllowed(controls)) return 'slam';
   if (P >= limits.game) return 'game';
-  if (P >= limits.invite) return 'invite';
-  return 'pass';
+  return 'partscore';
 }
-
-export const decisionOf = (contract: Contract): Decision => (contract === 'grand' ? 'slam' : contract);
 
 /** Halvt point: ligger P inden for så meget af en grænse, er begge nabovalg rigtige (SPEC, scoring). */
 export const DECISION_MARGIN = 0.5;
 
 /**
- * De rigtige svar i Niveaubeslutningen: modellens valg og, når P ligger inden for ½ point af invit-, udgangs- eller
- * slemgrænsen (grænserne medregnet), også valgene lige under og på grænsen. Ved udgang er invit og udgang altså
- * rigtige fra P = 28 til 29. Slem som nabovalg kræver kontrollerne.
+ * De rigtige svar i Niveaubeslutningen: modellens valg og, når P ligger inden for ½ point af en grænse (grænserne
+ * medregnet), også valgene lige under og på grænsen. Ved udgang er delkontrakt og udgang altså rigtige fra P = 28 til
+ * 29. Slem som nabovalg kræver kontrollerne.
  */
 export function rightDecisions(P: number, controls: Controls = ALL_CONTROLS, limits: Limits = LIMITS): Decision[] {
-  const at = (x: number) => decisionOf(contractFor(x, controls, limits));
+  const at = (x: number) => contractFor(x, controls, limits);
   const set = new Set([at(P)]);
-  for (const limit of [limits.invite, limits.game, limits.slam]) {
+  for (const limit of [limits.game, limits.slam, limits.grand]) {
     if (Math.abs(P - limit) > DECISION_MARGIN) continue;
     set.add(at(limit - DECISION_MARGIN));
     set.add(at(limit));

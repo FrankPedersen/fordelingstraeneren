@@ -15,7 +15,6 @@ import {
   stoppedSuits,
   strainFor,
   zarPoints,
-  type Contract,
   type Decision,
   type Form,
   type Strain,
@@ -88,7 +87,7 @@ export interface PairFacit {
   '4M': number | null;
   '6M': number | null;
   '7M': number | null;
-  kontrakt: Contract | null;
+  kontrakt: Decision | null;
   /** De rigtige svar i Niveaubeslutningen. */
   svar: Decision[] | null;
   /** Syds krav til makker for udgang, regnet af Syds p med fitten (eller honnørpointene uden fit). */
@@ -148,7 +147,7 @@ export interface PFacit {
   '6M': number;
   '7M': number;
   /** Kontrakten med alle kontroller. */
-  kontrakt: Contract;
+  kontrakt: Decision;
   svar: Decision[];
 }
 

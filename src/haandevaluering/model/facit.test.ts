@@ -19,10 +19,11 @@ describe('Facitfilen p-model.facit.json', () => {
     expect(file.par.length).toBeGreaterThanOrEqual(8);
     expect(file.P.length).toBeGreaterThanOrEqual(20);
     expect(file.haender.find((h) => h.id === 'spec-spar-fit')!.facit.p).toBe(17);
-    expect(file.par.find((p) => p.id === 'spec-P-29')!.facit).toMatchObject({ P: 29, stik: 9.74, '4M': 58 });
-    // Hver kontrakt og begge udfald i Farve eller sans er med.
+    expect(file.par.find((p) => p.id === 'spec-P-29')!.facit).toMatchObject({ P: 29, stik: 9.6, '4M': 58, svar: ['partscore', 'game'] });
+    // Hver kontrakt, begge udfald i Farve eller sans og en kort trumffarve er med.
     const contracts = new Set(file.par.map((p) => p.facit.kontrakt));
-    for (const c of ['pass', 'invite', 'game', 'slam', 'grand']) expect(contracts, c).toContain(c);
+    for (const c of ['partscore', 'game', 'slam', 'grand']) expect(contracts, c).toContain(c);
+    expect(file.haender.find((h) => h.id === 'dobbeltton-i-trumf')!.facit.kortfarvepoint).toBe(1);
     expect(new Set(file.par.map((p) => p.facit.retning))).toEqual(new Set(['major', 'notrump', null]));
   });
 

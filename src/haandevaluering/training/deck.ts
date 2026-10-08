@@ -1,7 +1,7 @@
 import { PATTERNS } from '../../domain/patterns';
 import { isDue, newItem, review, type Item, type Outcome } from '../../engine/leitner';
 import { shuffle, type Rng } from '../../engine/rng';
-import { LIMITS, partnerNeeds, SHORTCUT, SHORTNESS_BY_PATTERN, shortnessOfLength, trickFormula } from '../model/pmodel';
+import { expectedTricks, LIMITS, P_RANGE, partnerNeeds, SHORTCUT, SHORTNESS_BY_PATTERN, shortnessOfLength } from '../model/pmodel';
 
 /**
  * Leitner-bunken med nøgletal og kortfarvepoint pr. mønster (SPEC-haandevaluering.md, Husketeknikker; Claude Codes
@@ -25,8 +25,11 @@ export const SHORTNESS_LENGTHS: readonly number[] = [0, 1, 2];
 /** Makkers krav for udgang: MODEL.md-tabellens rækker. */
 export const PARTNER_ROWS: readonly number[] = [12, 14, 16, 18, 21, 24];
 
-/** Stikformlen øves ved tabellens P-værdier op til 32, hvor formlen gælder. */
+/** Stikforventningen øves ved tabellens P-værdier op til 32, hvor huskeversionen P/3 gælder. */
 export const TRICK_PS: readonly number[] = [24, 26, 28.5, 30, 32];
+
+/** Stikkortets andre svarmuligheder er tabellens værdi ved P ± 2, ± 4 og så videre, de nærmeste først. */
+const TRICK_OFFSETS = [2, -2, 4, -4, 6, -6, 8];
 
 const groups: string[][] = [
   ANCHORS.map((a) => `anker:${a}`),
@@ -53,7 +56,7 @@ export const DECK_FAST_MS = 8_000;
 export type DeckTask =
   /** Et tal tastes på sporets talpanel (med ½ og ¼). */
   | { kind: 'number'; key: string; answer: number }
-  /** Fire svarmuligheder; ét er rigtigt. Stikformlen har P med. */
+  /** Fire svarmuligheder; ét er rigtigt. Stikkortet har P med. */
   | { kind: 'choice'; key: string; options: number[]; answer: number; P?: number };
 
 /** Genvejens led som svarmuligheder. */
@@ -86,11 +89,13 @@ export function deckTask(key: string, rng: Rng): DeckTask {
       return { kind: 'choice', key, answer, options: [answer, ...others].sort((a, b) => b - a) };
     }
     case 'stik': {
-      // Svarmulighederne er formlen ved P og ved P ± 2 og ± 4, så nabomulighederne ligger ca. 0,6 stik fra hinanden.
+      // Svarmulighederne er tabellens stikforventning ved P og ved de nærmeste P ± 2, ± 4 … inden for tabellen, så
+      // huskeversionen P/3 (inden for 0,2 stik) peger på det rigtige svar. Lige langt væk vælges tilfældigt.
       const P = TRICK_PS[rng.int(TRICK_PS.length)];
-      const offsets = shuffle([-4, -2, 2, 4], rng).slice(0, 3);
-      const options = [0, ...offsets].map((d) => roundTenth(trickFormula(P + d))).sort((a, b) => a - b);
-      return { kind: 'choice', key, P, answer: roundTenth(trickFormula(P)), options };
+      const inRange = TRICK_OFFSETS.filter((d) => P + d >= P_RANGE.min && P + d <= P_RANGE.max);
+      const nearest = shuffle(inRange, rng).sort((a, b) => Math.abs(a) - Math.abs(b)).slice(0, 3);
+      const options = [0, ...nearest].map((d) => roundTenth(expectedTricks(P + d))).sort((a, b) => a - b);
+      return { kind: 'choice', key, P, answer: roundTenth(expectedTricks(P)), options };
     }
   }
   throw new Error(`Ukendt kort: ${key}`);

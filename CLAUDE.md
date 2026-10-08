@@ -216,12 +216,13 @@ Et nyt, selvstændigt spor i gruppen Vurdering, bygget på grenen `haandevalueri
 - `training/`: Leitner-bunken med nøgletal og kortfarvepoint (`deck.ts`), facit og scoring (`scoring.ts`), niveau (`progression.ts`) og sessionen (`session.ts`).
 - `storage.ts`: skemaet for `haandevaluering:v1` (afventer Franks godkendelse; valgfrie felter `answers` og `lastExport`) med indlæsning, kopi af ulæselige data, gem, import og påmindelsen om eksport.
 
-**Beslutninger:** Claude Codes valg står i specen under "Claude Codes valg" (invit fra 26, stik efter tabellen over P = 32, farve eller sans, Leitner-bunken, nabovalg ved grænsen med grænserne medregnet og generatorens krav). Spørg, før du ændrer dem.
+**Beslutninger:** Franks svar står i specen under Afklaret (version 2, 8. oktober 2026): valgene er delkontrakt, udgang, lilleslem og storeslem; stikforventningen er tabellen med interpolation (formlen kun i forklaringer, huskeversionen P/3); kortfarvepoint tælles kun i sidefarverne; nabovalg ved grænsen med grænserne medregnet; opgaver kun for P 24–40. Claude Codes valg står under "Claude Codes valg" (farve eller sans, Leitner-bunken og generatorens krav). Spørg, før du ændrer dem.
 
 **Status**
 - [x] Leverancetrin 1: model, `p-model.json`, facitfil med script og tests.
 - [x] Leverancetrin 2: generator til opgave 1–7 med seeds og kvalitetskravet for opgave 4 (P inden for ±2 af en grænse).
 - [x] Logik uden brugerflade for session, scoring, niveau og Leitner-bunken; skemaet for `haandevaluering:v1` som TypeScript-type.
-- [ ] Franks godkendelse af skemaet og svar på de åbne punkter (huskeversionen af stikformlen, HCP-grænsen i opgave 8, kortfarvepoint i trumffarven).
+- [x] Specens version 2 (Franks svar 8. oktober 2026) er indarbejdet i modellen, facitfilen og testene.
+- [ ] Franks godkendelse af skemaet og svar på storeslem i opgave 4 (opgaverne har P højst 40, storeslem kræver 41).
 - [ ] Leverancetrin 3: brugerfladen til opgave 1–5 på dansk og engelsk med ⓘ, sporets talpanel med ½ og ¼, linjen i `tracks.ts`, ruten i `App.tsx`, afsnittet i vejledningen og Vurderings ⓘ-tekst.
 - [ ] Leverancetrin 4: opgave 6–9.

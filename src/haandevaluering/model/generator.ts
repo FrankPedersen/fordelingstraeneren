@@ -3,7 +3,9 @@ import { dealWith, type Hands } from '../../domain/dealer';
 import { patternOf } from '../../domain/patterns';
 import { mulberry32, type Rng } from '../../engine/rng';
 import { chooseCall, hcpOf } from '../../system/interpreter';
-import { LIMITS, majorFit, pOf, stoppedSuits, P_MODEL, type Limits } from './pmodel';
+import { LIMITS, majorFit, P_MODEL, P_RANGE, pOf, stoppedSuits, type Limits } from './pmodel';
+
+export { P_RANGE };
 
 /**
  * Generatoren (SPEC-haandevaluering.md, Generator): fordelinger fra motorens kortgiver med en seedbar PRNG. Du er Syd,
@@ -87,11 +89,11 @@ export interface AddTask extends Base {
   opening: string;
 }
 
-/** Opgave 4: pas, invit, udgang eller slem? P ligger inden for ±2 af `limit`. */
+/** Opgave 4: delkontrakt, udgang, lilleslem eller storeslem? P ligger inden for ±2 af `limit` og mellem 24 og 40. */
 export interface DecisionTask extends Base {
   exercise: 'decision';
   trump: number;
-  /** Grænsen, opgaven er valgt omkring: invit (26), udgang (28½) eller slem (35). */
+  /** Grænsen, opgaven er valgt omkring: udgang (28½), lilleslem (35) eller storeslem (41). */
   limit: number;
 }
 
@@ -173,12 +175,15 @@ export function makeTask(exercise: Exercise, seed: number, limits: Limits = LIMI
       return { exercise, seed, hands, scenario, opening: value };
     }
     case 'decision': {
-      // Grænserne invit, udgang og slem vælges lige ofte.
-      const allowed = [limits.invite, limits.game, limits.slam];
+      // Grænserne udgang, lilleslem og storeslem vælges lige ofte. P ligger i tabellens område (24–40), så ved
+      // storeslem er P 39–40 (åbent punkt: storeslem bliver derfor aldrig det rigtige svar).
+      const allowed = [limits.game, limits.slam, limits.grand];
       const limit = allowed[rng.int(allowed.length)];
       const { hands, value } = find(rng, (h) => {
         const fit = majorFit(h.S, h.N);
-        return fit !== null && Math.abs(pairP(h, fit) - limit) <= DECISION_WINDOW ? fit : null;
+        if (fit === null) return null;
+        const P = pairP(h, fit);
+        return Math.abs(P - limit) <= DECISION_WINDOW && P >= P_RANGE.min && P <= P_RANGE.max ? fit : null;
       });
       return { exercise, seed, hands, trump: value, limit };
     }

@@ -27,6 +27,8 @@ const hands: import('../src/haandevaluering/model/facit.ts').HandInput[] = [
   { id: 'spec-konge-over-korthed', kilde: SPEC, haand: 'AK752.4.KQ63.852', trumf: 'S', makkersKorthed: ['D'] },
   { id: 'dame-og-knaegt-over-korthed', kilde: SPEC, haand: 'AK752.4.QJ63.852', trumf: 'S', makkersKorthed: ['D'] },
   { id: 'renonce-og-syv-trumf', kilde: 'MODEL.md 1', haand: 'AKJ7652..KQ63.85', trumf: 'S', makkersKorthed: [] },
+  { id: 'dobbeltton-i-trumf', kilde: `${SPEC} (6-2-fit)`, haand: 'Q7.KJ84.A5.QT983', trumf: 'S', makkersKorthed: [] },
+  { id: 'singleton-i-trumf', kilde: `${SPEC} (7-1-fit)`, haand: 'A853.7.KJ952.Q64', trumf: 'H', makkersKorthed: [] },
   { id: 'tiere-i-sans', kilde: 'MODEL.md 2', haand: 'KT4.QT3.AT52.J93', trumf: null, makkersKorthed: [] },
 ];
 // Tilfældige hænder fra kortgiveren: Syds hånd med og uden den længste major som trumf og en konge over for korthed.
@@ -51,10 +53,9 @@ const pairs: import('../src/haandevaluering/model/facit.ts').PairInput[] = [
 ];
 // Den første fordeling fra kortgiveren for hver kontrakt og for sans med og uden alle stoppere.
 const wanted = new Map<string, string>([
-  ['pass', 'pas'],
-  ['invite', 'invit'],
+  ['partscore', 'delkontrakt'],
   ['game', 'udgang'],
-  ['slam', 'slem'],
+  ['slam', 'lilleslem'],
   ['sans', 'sans med alle fire farver stoppet'],
   ['ustoppet', 'ingen fit og en ustoppet farve'],
 ]);
@@ -71,7 +72,8 @@ for (let seed = 1; wanted.size > 0 && seed < 1_000_000; seed++) {
 }
 if (wanted.size) throw new Error(`Ingen fordeling fundet for ${[...wanted.keys()].join(', ')}`);
 
-const ps = [20, 23.5, 24, 25, 26, 27, 27.5, 27.75, 28, 28.5, 29, 29.25, 30, 31, 32, 32.25, 33, 34, 34.5, 35, 35.5, 35.75, 36, 38, 40, 40.5, 41, 45];
+// Tabellens område (24–40) og grænserne, også storeslemsgrænsen 41, hvor tabellens sidste række bruges.
+const ps = [24, 25, 26, 27, 27.75, 28, 28.5, 29, 29.25, 30, 31, 32, 33, 34, 34.25, 34.5, 35, 35.5, 35.75, 36, 38, 40, 40.5, 41, 41.5, 41.75];
 // MODEL.md 1, "Hvad makker skal have", og en hånd, der selv har udgang.
 const yours = [12, 14, 16, 18, 21, 24, 30];
 

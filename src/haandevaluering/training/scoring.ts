@@ -14,7 +14,6 @@ import {
   strainFor,
   trumpGain,
   type Chances,
-  type Contract,
   type Controls,
   type Decision,
   type PBreakdown,
@@ -50,7 +49,7 @@ export type Facit =
       tricks: number;
       chances: Chances;
       controls: Controls;
-      contract: Contract;
+      contract: Decision;
       /** De rigtige svar: modellens valg og nabovalget inden for ½ point af en grænse. */
       right: Decision[];
     }
