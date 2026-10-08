@@ -114,7 +114,7 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
 - Scripts: Node 24 kører TypeScript direkte, og kildekoden indlæses med Vites `runnerImport`, så `package.json` er uændret.
   - `node scripts/bridgehands.ts` henter siderne 0–9 (eller de sider, der står som argumenter).
   - `node scripts/solve.ts` løser det, der mangler i mellemlageret, og samler alle filer i `content/`. Med `--shard i/n` løser flere processer samtidig (10 processer tager ca. 1 time for alle sider); `--assemble` samler uden at løse. Mellemlageret har én fil pr. case i `FB_SOLVE_CACHE` (ellers `<tmp>/fordelingstraeneren-solve`). Ændres løseren, tælles `LINES_VERSION` op; ændres kun Hvad nu?, tælles `WHAT_NOW_VERSION` op; ændres kun Hold eller par (`pairsFor`), tælles `PAIRS_VERSION` op (10 processer tager ca. 11 min); ændres kun stikkene pr. sidning (`withLeadTricks`), tælles `TRICKS_VERSION` op (10 processer tager ca. 2 timer).
-- Tokens: `design/tokens.json` holdes i takt med `src/ui/styles.css` af `src/tokens.test.ts`. Designsystemet i Claude Design er bygget på filen.
+- Tokens: `design/tokens.json` holdes i takt med `src/ui/styles.css` af `src/tokens.test.ts`. Designsystemet "Fordelingstræneren" er bygget på filen. Det er et artifact af typen Design System (https://claude.ai/artifact/NmcghGRGc1WRhmSMnjwTq3) og ikke et projekt i claude.ai/design, så `/design-sync` kan ikke skrive til det. Det rettes fil for fil under `project/` med Artifact-værktøjet efter typens vejledning; komponenterne er statiske gengivelser skrevet i hånden ud fra koden (ingen bundle).
 
 **Beslutninger** (spørg, før du ændrer dem)
 - **Optimalt modspil:** modspillet kender alle kort, også hinandens, og blander sine valg; spilføreren ser kun de spillede kort. Spillet løses med CFR+. Resultatet er en ren linjes eksakte garanti (BigInt): modspillet vælger i hver sidning det værste. Linjen er certificeret, når garantien ligger inden for 0,002 procentpoint af CFR's øvre grænse.
@@ -204,7 +204,7 @@ Et nyt, selvstændigt spor, bygget på grenen `pointregnskab` og flettet ind på
 - [x] Franks godkendelse af skemaet (6. oktober 2026).
 - [x] Trin 3–5: brugerfladen på dansk og engelsk med ⓘ, menupunktet på forsiden, afsnittet i vejledningen, Kipningsretning, Løbende tælling med tilpasset visningstid og Fuldt regnskab med længder fra 13-sudokuens generator. Godkendt og udgivet på `main` (6. oktober 2026).
 - [x] Længdeskabelonerne "Farven er brugt op" og "Ikke plads"; på niveau 5 ændrer længderne svaret i mindst halvdelen af opgaverne (Franks afgørelse).
-- [ ] Regnskabspanel, Honnørchip og Meldelinje tegnes ind i designsystemet i Claude Design (kræver, at Frank starter `/design-sync`).
+- [x] Regnskabspanel, Honnørchip (mappen `Honnoerchip`) og Meldelinje er tegnet ind i designsystemet, og Knap og Svarvalg bruger `accent` (8. oktober 2026, designsystemets version 8).
 
 ## Håndevaluering
 

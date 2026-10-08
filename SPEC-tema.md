@@ -84,4 +84,4 @@ Franks afgørelser efter første aflevering (7. oktober 2026):
 
 1. **Mærket "afgør":** tilføjes ved de afgørende sidninger, hvor linjerne giver forskelligt resultat, på dansk og engelsk ("afgør" / "decides") og med ⓘ: "Linjerne giver forskelligt resultat i denne sidning." Mærket er `fb-miss` med stiplet kant. Det står i hver afgørende række og én gang med ⓘ over listen, fordi rækkerne selv er knapper. Det er en del af temaet.
 2. **Artboardets øvrige forskelle** (fanerne som én samlet bjælke, gennemsnitligt antal stik på linjekortene og sidningerne som tabel) bygges ikke i temaet, men i SPEC-analysevindue-layout.md.
-3. **Designsystemet:** når temaet er flettet ind, kører Frank `/design-sync`, så designsystemets Knap og Svarvalg følger koden (`accent` i stedet for `ink`).
+3. **Designsystemet:** når temaet er flettet ind, kører Frank `/design-sync`, så designsystemets Knap og Svarvalg følger koden (`accent` i stedet for `ink`). Udført 8. oktober 2026 (designsystemets version 8). Designsystemet er et artifact og ikke et projekt i claude.ai/design, så Knap og Svarvalg blev rettet direkte i dets filer.
