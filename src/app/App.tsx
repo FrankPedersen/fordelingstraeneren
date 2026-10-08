@@ -17,8 +17,13 @@ import { useSaved } from './useSaved';
 const FarvebehandlingScreen = lazy(() => import('../farvebehandling/ui/FarvebehandlingScreen'));
 // Pointregnskab er også et selvstændigt spor (SPEC-pointregnskab.md).
 const PointregnskabScreen = lazy(() => import('../pointregnskab/ui/PointregnskabScreen'));
+// Håndevaluering er et selvstændigt spor i gruppen Vurdering (SPEC-haandevaluering.md); forsiden åbner det med onOpen.
+const HaandevalueringScreen = lazy(() => import('../haandevaluering/ui/HaandevalueringScreen'));
 
-type Screen = 'home' | 'session' | 'palace' | 'album' | 'club' | 'curves' | 'settings' | 'guide' | 'farvebehandling' | 'pointregnskab';
+type Screen = 'home' | 'session' | 'palace' | 'album' | 'club' | 'curves' | 'settings' | 'guide' | 'farvebehandling' | 'pointregnskab' | 'haandevaluering';
+
+/** Skærmene, forsiden åbner med `onOpen` (spor uden egen funktion i HomeScreen). */
+const OPENED: readonly Screen[] = ['haandevaluering'];
 
 interface AppProps {
   /** En ny version af appen er hentet og venter. */
@@ -78,6 +83,12 @@ export default function App({ updateReady = false, onUpdate }: AppProps) {
           <PointregnskabScreen onBack={home} />
         </Suspense>
       );
+    case 'haandevaluering':
+      return (
+        <Suspense fallback={<main className="screen" aria-busy="true" />}>
+          <HaandevalueringScreen onBack={home} />
+        </Suspense>
+      );
     default:
       return (
         <HomeScreen
@@ -94,6 +105,9 @@ export default function App({ updateReady = false, onUpdate }: AppProps) {
           onPointregnskab={() => setScreen('pointregnskab')}
           onLanguage={changeLanguage}
           onGuide={() => setScreen('guide')}
+          onOpen={(target) => {
+            if (OPENED.includes(target as Screen)) setScreen(target as Screen);
+          }}
         />
       );
   }

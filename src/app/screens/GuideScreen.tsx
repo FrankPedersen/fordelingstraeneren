@@ -171,6 +171,28 @@ function sections(): Section[] {
       ),
     },
     {
+      title: tx('Håndevaluering', 'Hand evaluation'),
+      body: (
+        <>
+          <p>
+            {tx(
+              'Håndevaluering er et selvstændigt spor i gruppen Vurdering. Det træner at regne din hånd med Franks P-model og at vælge niveau ud fra parrets samlede styrke. Det har sin egen daglige session, streak og XP.',
+              "Hand evaluation is a separate track with its own group on the front page. It trains valuing your hand with Frank's P-model and choosing the level from the pair's total strength. It has its own daily session, streak and XP.",
+            )}
+          </p>
+          <List
+            items={[
+              tx('Honnørpoint: E 5, K 3, D 1½, B ½ og 10 ¼, eller genvejen HCP + 1 pr. es − ½ pr. dame − ½ pr. knægt + ¼ pr. tier. Sporets talpanel har ½ og ¼.', 'Honour points: A 5, K 3, Q 1½, J ½ and 10 ¼, or the shortcut HCP + 1 per ace − ½ per queen − ½ per jack + ¼ per ten. The track’s keypad has ½ and ¼.'),
+              tx('Når fitten er bekræftet: 1½ pr. trumf ud over 4 og korthed 5-3-1 i sidefarverne, minus 1 pr. konge over for makkers viste korthed. Det giver din p.', 'Once the fit is confirmed: 1½ per trump beyond 4 and shortness 5-3-1 in the side suits, minus 1 per king opposite partner’s shown shortness. That gives your p.'),
+              tx('P er din p plus makkers. Udgang ved P ≥ 28½, lilleslem ved 35 og storeslem ved 41; stik ≈ P/3. I sans tæller HCP + ¼ pr. tier og stoppere, ikke længde.', 'P is your p plus partner’s. Game at P ≥ 28½, small slam at 35 and grand slam at 41; tricks ≈ P/3. In notrump, HCP + ¼ per ten and stoppers count, not length.'),
+              tx('Sessionen: opvarmning med nøgletal og kortfarvepoint pr. mønster, en lynrunde med honnørpoint, opgaver på dit niveau og status.', 'The session: a warm-up with key numbers and shortness points per pattern, a lightning round with honour points, tasks at your level and status.'),
+              tx('Niveauet stiger, når over 90 % af de seneste 20 svar er rigtige, og falder under 80 %. Data og eksport ligger under Håndevaluering → Indstillinger.', 'Your level rises when more than 90% of your last 20 answers are right, and falls below 80%. Data and export are under Hand evaluation → Settings.'),
+            ]}
+          />
+        </>
+      ),
+    },
+    {
       title: tx('Sprog og hjælp', 'Language and help'),
       body: (
         <List

@@ -78,7 +78,7 @@ Fordelingsleddene (trumflængde og kortfarvepoint) må først lægges til, når 
 | 38 | 11,9 | 99 % | 74 % | 24 % |
 | 40 | 12,3 | 100 % | 90 % | 44 % |
 
-Udgang ved P ≥ 28½, lilleslem ved P ≥ 35 og storeslem ved P ≥ 41, slem med kontroltjek. Mellem tabellens rækker interpoleres lineært. Storeslemsgrænsen ligger over tabellen; der bruges sidste række (se Åbne punkter).
+Udgang ved P ≥ 28½, lilleslem ved P ≥ 35 og storeslem ved P ≥ 41, slem med kontroltjek. Mellem tabellens rækker interpoleres lineært. Storeslemsgrænsen ligger over tabellen; der bruges sidste række. Opgave 4 har P højst 37 (Afklaret 14), så storeslem er aldrig det rigtige svar i første version.
 
 **3. Hvad makker skal have til udgang:** 12 → 16½, 14 → 14½, 16 → 12½, 18 → 10½, 21 → 7½, 24 → 4½ (P = 28½).
 
@@ -228,8 +228,8 @@ Accepttest i Vitest:
 - [x] En konge over for makkers viste korthed trækker 1 fra; en dame eller knægt gør ikke.
 - [x] Facitfilen giver samme resultat i appen og i konventionstrænerens kopi (appens side; konventionstræneren kører testen på sin kopi).
 - [x] Generatoren: alle opgave 4-fordelinger har P inden for ±2 af en grænse, og samme seed giver samme opgave.
-- [ ] Sprog: på engelsk står der intet dansk på sporets skærme, og den danske og den engelske tekstfil har samme type.
-- [ ] ⓘ: hvert element fra Sprog og hjælp har et ⓘ med en forklaring på begge sprog.
+- [x] Sprog: på engelsk står der intet dansk på sporets skærme, og den danske og den engelske tekstfil har samme type.
+- [x] ⓘ: hvert element fra Sprog og hjælp har et ⓘ med en forklaring på begge sprog.
 
 Åbne punkter:
 
@@ -237,7 +237,6 @@ Accepttest i Vitest:
 - **HCP-grænsen i opgave 8:** hvilken udgangsgrænse gav 82,5 % i Franks simulering (findes formentlig i `scripts/analyse2.py` eller `scripts/systemer.py`)? Indtil da bruges 25 HCP.
 - **Kortfarvepoint i trumffarven:** reglen om kun at tælle sidefarverne bør efterprøves i `scripts/korthed.py`.
 - **IMP-grænserne** (P ≈ 27½ i zonen, 28 uden for) er aflæst af tabellen og bør efterprøves med Franks data.
-- **Storeslem i opgave 4:** opgaverne har P mellem 24 og 40, men storeslem kræver P ≥ 41. Storeslem er derfor aldrig det rigtige svar; omkring storeslemsgrænsen har opgaverne P 39–40, hvor lilleslem er rigtigt. Skal opgaverne gå op til 43 omkring storeslemsgrænsen (med tabellens sidste række som stikforventning og chance), eller er storeslem kun et fristende forkert svar indtil version 2?
 - **Version 2:** makkers forventede p ud fra meldingerne og dobbeltdummy-facit pr. fordeling kræver nye kørsler i Franks pipeline.
 
 ## Afklaret
@@ -257,10 +256,11 @@ Claude Codes gennemgang af version 1 (7. oktober 2026) og Franks svar i version 
 11. **Nabovalg ved grænsen:** inden for ½ point, grænserne medregnet (Frank, 8. oktober 2026).
 12. **Kortfarvepoint** tælles kun i sidefarverne (Frank, 8. oktober 2026).
 13. **HCP-grænsen i opgave 8** er 25 HCP, indtil Franks simulering viser den (Frank, 8. oktober 2026).
+14. **Storeslem i opgave 4:** opgaverne ligger omkring udgang og lilleslem, så P er højst 35 + 2 = 37. Storeslem er et svarvalg, men aldrig det rigtige i første version (Frank, 8. oktober 2026).
 
 ## Claude Codes valg
 
-Truffet under bygningen af leverancetrin 1–2 og logikken til trin 3 (8. oktober 2026). Ændres kun efter aftale.
+Truffet under bygningen af leverancetrin 1–3 (8. oktober 2026). Ændres kun efter aftale.
 
 1. **Farve eller sans:** facit som beskrevet under opgave 6.
 2. **Leitner-bunken (30 kort):** ankrene, korthed 5-3-1, genvejens fire led (vælg blandt fire værdier, fx −½ for en dame), de 13 mønstre, makkers krav for 12, 14, 16, 18, 21 og 24 og stikforventningen (vælg blandt fire stikantal fra tabellen ved P = 24, 26, 28½, 30 eller 32; huskeversionen P/3 peger på det rigtige). Grupperne introduceres på skift, højst 3 nye kort pr. session. Rigtigt inden for 8 s (lynrundens grænse) er hurtigt i Leitner.
@@ -268,12 +268,17 @@ Truffet under bygningen af leverancetrin 1–2 og logikken til trin 3 (8. oktobe
 4. **Spildte værdier** trækkes kun fra, når fitten er bekræftet, ligesom de andre fordelingsled.
 5. **Stoppere:** en farve er stoppet, når mindst én af hænderne har en stopper efter `hasStopper`.
 6. **Opgave 3** har tre situationer, alle efter makkers åbning fra systemfilen: åbning i farve uden kendt major-fit (åbner han 1♥ eller 1♠, har du højst 2 kort i farven) giver kun honnørpoint; 1♥ eller 1♠ med mindst 3 kort hos dig giver honnørpoint + fordeling; 1NT, når du er balanceret uden firekortsmajor, giver sansmodellen.
-7. **Opgave 4:** grænserne udgang, lilleslem og storeslem vælges lige ofte, og P ligger inden for ±2 af den valgte og mellem 24 og 40.
+7. **Opgave 4:** grænserne udgang og lilleslem vælges lige ofte, og P ligger inden for ±2 af den valgte (Afklaret 14).
 8. **Opgave 5:** dine point er din p med fitten, mellem 10 og 24, så makker altid skal have noget.
 9. **Opgave 6:** farveopgaverne har P i udgangszonen (28½ ≤ P < 35). Sansopgaverne har to balancerede hænder uden major-fit med 24–26 HCP i alt, hvor MODEL.md 2 har tallene for stoppere, og alle fire farver stoppet.
 10. **Opgave 7:** makker har mindst 4 trumf og en singleton eller renonce i en sidefarve (som efter en splinter). En tredjedel af opgaverne har en konge over for kortheden, en tredjedel kun dame eller knægt, resten er frie.
 11. **Turneringsform:** chancerne 37 %, 45 % og 50 % for 4M regnes om til P i tabellen og rundes til nærmeste halve point: 27½, 28 og 28½, som specen siger.
-12. **Naturlig frekvens:** chancen vises med den mindste af nævnerne 2, 3, 4, 5 og 10, der rammer inden for 2,5 procentpoint (58 % → 3 ud af 5), ellers som 1 ud af N.
+12. **Naturlig frekvens:** chancen vises med den mindste af nævnerne 2, 3, 4, 5 og 10, der rammer inden for 2,5 procentpoint (58 % → 3 ud af 5). Ellers står der "næsten altid" fra 95 %, 1 ud af N under 50 % (7 % → 1 ud af 14) og N − 1 ud af N derover.
 13. **Sessionen:** niveaufasen giver opgaver, til 150 s er gået (blød timer), og den samme øvelse kommer ikke to gange i træk. Lynrundens og niveaufasens svar logges; kun niveaufasens tilpasser niveauet. Sporet har ingen ugens boss, da specen ikke nævner en.
 14. **Svarloggen** har øvelse, niveau, score, tid, fase og opgavens seed, så opgaven kan genskabes.
-15. **Opgave 8 og 9** kommer i leverancetrin 4; indtil da giver niveau 4 kun opgave 6, og niveau 5 blander opgave 1–7.
+15. **Opgave 8 og 9** kommer i leverancetrin 4; indtil da giver niveau 4 kun opgave 6, og niveau 5 blander opgave 1–7. Opgave 6 og 7 har brugerflade allerede i leverancetrin 3, da niveau 3 og 4 bruger dem.
+16. **Regnskabet:** før svaret vises det kun i opgave 5 (din kolonne; spørgsmålet giver alligevel din p), fordi det ellers afslører facit. Efter svaret står det i facit i opgave 2, 4 og 7, i opgave 4 med begge kolonner, P og stikforventningen.
+17. **Meldingerne:** begge hænder er tilfældige, så de konkrete meldinger i wireframen (1♠ – 2♠) laves ikke. Fit-opgaverne viser "Fit fundet i ♠", opgave 7 også "Makker har vist korthed i ♦", og opgave 3 makkers åbning med hp-intervallet fra systemfilen. Opgave 1 og 6 har ingen meldinger.
+18. **Hænderne:** din hånd vises altid, makkers kun i opgave 4 og 6, hvor beslutningen gælder parret. Honnørerne og tieren står med fed.
+19. **Talpanelet:** ½ og ¼ lægges til brøken, der højst er ¾ (12¾ = 1, 2, ½, ¼); ⌫ sletter brøken før cifrene.
+20. **Facit** har overskriften (rigtigt, over tidsgrænsen eller forkert) med XP, dit svar, modellens begrundelse og i opgave 4 stikforventningen, chancen for kontrakten som naturlig frekvens, nabovalget ved grænsen, manglende es og forbeholdet om dobbeltdummy.

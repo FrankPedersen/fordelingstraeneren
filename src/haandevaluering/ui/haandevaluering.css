@@ -1,0 +1,181 @@
+/*
+ * Håndevalueringens komponenter. Kun tokens (farvebehandlingens tokens.css og appens styles.css), 0, 1px-streger og
+ * procenter. Skærmen ligger i appens kolonne (.screen) og bruger appens fælles klasser til kort, knapper og taster.
+ */
+
+.he-screen .screen-head h1 {
+  flex: 1;
+}
+
+.he-level {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.he-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--type-note);
+}
+
+.he-eyebrow {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--type-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--letter-eyebrow);
+  text-transform: uppercase;
+}
+
+.he-session {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+.he-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+
+.he-actions > .btn {
+  flex: 1;
+}
+
+/* Meldingerne */
+
+.he-auction {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.he-auction-line {
+  margin: 0;
+  font-weight: 700;
+}
+
+/* Hænderne: dig og makker side om side, én linje pr. farve */
+
+.he-hands {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-12) var(--space-20);
+}
+
+.he-hand {
+  display: grid;
+  flex: 1 1 40%;
+  gap: var(--space-4);
+}
+
+.he-suits {
+  display: grid;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--type-h3);
+  font-variant-numeric: tabular-nums;
+}
+
+.he-suits li {
+  white-space: nowrap;
+}
+
+/* Regnskabet */
+
+.he-panel {
+  display: grid;
+  gap: var(--space-6);
+  padding: var(--space-12) var(--space-16);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-12);
+  background: var(--surface);
+}
+
+.he-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.he-table th,
+.he-table td {
+  padding: var(--space-4) 0;
+  text-align: right;
+}
+
+.he-table th[scope='row'] {
+  text-align: left;
+  font-weight: 600;
+}
+
+.he-table thead th {
+  color: var(--muted);
+  font-size: var(--type-small);
+}
+
+.he-table tbody tr + tr {
+  border-top: 1px solid var(--line);
+}
+
+.he-table .he-sum {
+  font-weight: 700;
+}
+
+.he-total {
+  margin: 0;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Svarknapperne og talpanelet */
+
+.he-choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-10);
+}
+
+.he-choice {
+  flex: 1 1 40%;
+  min-width: 0;
+  min-height: var(--choice-height);
+  font-weight: 600;
+}
+
+.he-key-wide {
+  grid-column: span 2;
+}
+
+/* Opvarmningens kort og facit */
+
+.he-deck-card {
+  margin: 0;
+  font-size: var(--type-prompt);
+  font-weight: 700;
+  text-align: center;
+}
+
+.he-facit-line {
+  margin: 0;
+}
+
+/* Husketeknikkerne */
+
+.he-techniques {
+  display: grid;
+  gap: var(--space-8);
+  margin: 0;
+}
+
+.he-techniques dt {
+  font-weight: 700;
+}
+
+.he-techniques dd {
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--type-note);
+}

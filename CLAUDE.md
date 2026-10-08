@@ -214,7 +214,8 @@ Et nyt, selvstændigt spor i gruppen Vurdering, bygget på grenen `haandevalueri
 - `content/p-model.json`: modellens konstanter med afsnit i MODEL.md. `content/p-model.facit.json`: eksempelhænder med facit i PBN-notation, skrevet af `node scripts/p-model-facit.ts`; konventionstræneren kopierer begge filer og kører samme facittest.
 - `model/`: P-modellen (`pmodel.ts`: honnørpoint og genvejen, p og P, kortfarvepoint pr. mønster, tabellen med interpolation, stikforventningen, grænser og kontroltjek, sansmodellen med stoppere, Zar, turneringsform og naturlig frekvens), PBN (`hand.ts`), facitfilen (`facit.ts`) og generatoren (`generator.ts`, opgave 1–7).
 - `training/`: Leitner-bunken med nøgletal og kortfarvepoint (`deck.ts`), facit og scoring (`scoring.ts`), niveau (`progression.ts`) og sessionen (`session.ts`).
-- `storage.ts`: skemaet for `haandevaluering:v1` (afventer Franks godkendelse; valgfrie felter `answers` og `lastExport`) med indlæsning, kopi af ulæselige data, gem, import og påmindelsen om eksport.
+- `storage.ts`: skemaet for `haandevaluering:v1` (godkendt 8. oktober 2026; valgfrie felter `answers` og `lastExport`) med indlæsning, kopi af ulæselige data, gem, import og påmindelsen om eksport.
+- `ui/`: skærmen (`HaandevalueringScreen.tsx`, indlæses dovent fra `src/app/App.tsx` og åbnes med forsidens `onOpen`) med forsiden, `Session.tsx` (sessionen og status), `Opgave.tsx` (opgave 1–7), `Facit.tsx`, `Opvarmning.tsx` og `Indstillinger.tsx` (niveau, eksport og import); komponenterne Hånd, Meldinger, Regnskab og Talpanel (sporets eget med ½ og ¼); al ordlyd i `texts.ts`, point med brøk i `format.ts` og resten i `haandevaluering.css` (bruger farvebehandlingens `tokens.css`, ingen nye tokens).
 
 **Beslutninger:** Franks svar står i specen under Afklaret (version 2, 8. oktober 2026): valgene er delkontrakt, udgang, lilleslem og storeslem; stikforventningen er tabellen med interpolation (formlen kun i forklaringer, huskeversionen P/3); kortfarvepoint tælles kun i sidefarverne; nabovalg ved grænsen med grænserne medregnet; opgaver kun for P 24–40. Claude Codes valg står under "Claude Codes valg" (farve eller sans, Leitner-bunken og generatorens krav). Spørg, før du ændrer dem.
 
@@ -223,6 +224,7 @@ Et nyt, selvstændigt spor i gruppen Vurdering, bygget på grenen `haandevalueri
 - [x] Leverancetrin 2: generator til opgave 1–7 med seeds og kvalitetskravet for opgave 4 (P inden for ±2 af en grænse).
 - [x] Logik uden brugerflade for session, scoring, niveau og Leitner-bunken; skemaet for `haandevaluering:v1` som TypeScript-type.
 - [x] Specens version 2 (Franks svar 8. oktober 2026) er indarbejdet i modellen, facitfilen og testene.
-- [ ] Franks godkendelse af skemaet og svar på storeslem i opgave 4 (opgaverne har P højst 40, storeslem kræver 41).
-- [ ] Leverancetrin 3: brugerfladen til opgave 1–5 på dansk og engelsk med ⓘ, sporets talpanel med ½ og ¼, linjen i `tracks.ts`, ruten i `App.tsx`, afsnittet i vejledningen og Vurderings ⓘ-tekst.
-- [ ] Leverancetrin 4: opgave 6–9.
+- [x] Franks godkendelse af skemaet; opgave 4 har P højst 37 (Franks afgørelse, 8. oktober 2026).
+- [x] Leverancetrin 3: brugerfladen til opgave 1–7 på dansk og engelsk med ⓘ, sporets talpanel med ½ og ¼, ruten i `App.tsx`, afsnittet i vejledningen og Vurderings ⓘ-tekst.
+- [ ] Linjen i `tracks.ts`: venter på Franks svar, da to eksisterende tests i `src/app/navigation.test.tsx` forventer, at Vurdering er tom og skjult.
+- [ ] Leverancetrin 4: opgave 8 og 9.

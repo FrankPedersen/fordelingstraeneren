@@ -89,11 +89,14 @@ export interface AddTask extends Base {
   opening: string;
 }
 
-/** Opgave 4: delkontrakt, udgang, lilleslem eller storeslem? P ligger inden for ±2 af `limit` og mellem 24 og 40. */
+/**
+ * Opgave 4: delkontrakt, udgang, lilleslem eller storeslem? P ligger inden for ±2 af udgangs- eller lilleslemsgrænsen,
+ * altså højst 37; storeslem er et svarvalg, men aldrig det rigtige i første version (Franks afgørelse).
+ */
 export interface DecisionTask extends Base {
   exercise: 'decision';
   trump: number;
-  /** Grænsen, opgaven er valgt omkring: udgang (28½), lilleslem (35) eller storeslem (41). */
+  /** Grænsen, opgaven er valgt omkring: udgang (28½) eller lilleslem (35). */
   limit: number;
 }
 
@@ -175,9 +178,8 @@ export function makeTask(exercise: Exercise, seed: number, limits: Limits = LIMI
       return { exercise, seed, hands, scenario, opening: value };
     }
     case 'decision': {
-      // Grænserne udgang, lilleslem og storeslem vælges lige ofte. P ligger i tabellens område (24–40), så ved
-      // storeslem er P 39–40 (åbent punkt: storeslem bliver derfor aldrig det rigtige svar).
-      const allowed = [limits.game, limits.slam, limits.grand];
+      // Grænserne udgang og lilleslem vælges lige ofte; P bliver dermed højst 35 + 2 = 37.
+      const allowed = [limits.game, limits.slam];
       const limit = allowed[rng.int(allowed.length)];
       const { hands, value } = find(rng, (h) => {
         const fit = majorFit(h.S, h.N);

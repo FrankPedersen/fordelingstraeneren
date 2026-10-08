@@ -206,13 +206,15 @@ describe('P-modellen: tabellen, stikforventningen og beslutningen', () => {
     expect(naturalFrequency(74)).toEqual({ k: 3, n: 4 });
     expect(naturalFrequency(91)).toEqual({ k: 9, n: 10 });
     expect(naturalFrequency(7)).toEqual({ k: 1, n: 14 });
-    expect(naturalFrequency(98)).toEqual({ k: 49, n: 50 });
+    expect(naturalFrequency(97.125)).toEqual({ k: 1, n: 1 });
+    expect(naturalFrequency(98)).toEqual({ k: 1, n: 1 });
     expect(naturalFrequency(0)).toEqual({ k: 0, n: 1 });
     expect(naturalFrequency(100)).toEqual({ k: 1, n: 1 });
     for (let x = 0.5; x < 100; x += 0.5) {
       const { k, n } = naturalFrequency(x);
       expect(k / n).toBeGreaterThan(0);
-      expect(k / n).toBeLessThan(1);
+      // Under 95 % er det aldrig "næsten altid".
+      if (x < 95) expect(k / n, `${x} %`).toBeLessThan(1);
     }
   });
 

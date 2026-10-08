@@ -50,10 +50,9 @@ export const GROUPS: readonly Group[] = [
   {
     id: 'evaluation',
     title: { da: 'Vurdering', en: 'Hand evaluation' },
-    // Skrives sammen med håndevaluering; gruppen vises først, når sporet findes.
     help: {
-      da: 'Træner vurdering af egen og makkers hånd. Teksten skrives færdig sammen med sporet håndevaluering.',
-      en: "Trains evaluating your own and your partner's hand. The text is completed together with the hand evaluation track.",
+      da: 'Træner vurdering af egen og makkers hånd med Franks P-model: honnørpoint, hvornår fordelingen må lægges til, og niveaubeslutningen ud fra parrets samlede P i Håndevaluering.',
+      en: "Trains evaluating your own and your partner's hand with Frank's P-model: honour points, when distribution may be added, and the level decision from the pair's total P in Hand evaluation.",
     },
   },
 ];

@@ -23,18 +23,18 @@ const tasks = <E extends HandTask['exercise']>(exercise: E) =>
 const BALANCED = ['4-3-3-3', '4-4-3-2', '5-3-3-2'];
 
 describe('Generatoren (SPEC-haandevaluering.md, Generator)', () => {
-  it('alle opgave 4-fordelinger har P inden for ±2 af en grænse og mellem 24 og 40, og alle tre grænser forekommer', () => {
+  it('alle opgave 4-fordelinger har P inden for ±2 af udgang eller lilleslem, altså højst 37, og begge grænser forekommer', () => {
     const limits = new Set<number>();
     for (const t of tasks('decision')) {
       expect(majorFit(t.hands.S, t.hands.N)).toBe(t.trump);
-      expect([LIMITS.game, LIMITS.slam, LIMITS.grand]).toContain(t.limit);
+      expect([LIMITS.game, LIMITS.slam]).toContain(t.limit);
       const P = pairP(t.hands, t.trump);
       expect(Math.abs(P - t.limit), `seed ${t.seed}`).toBeLessThanOrEqual(DECISION_WINDOW);
       expect(P).toBeGreaterThanOrEqual(P_RANGE.min);
-      expect(P).toBeLessThanOrEqual(P_RANGE.max);
+      expect(P).toBeLessThanOrEqual(37);
       limits.add(t.limit);
     }
-    expect(limits).toEqual(new Set([LIMITS.game, LIMITS.slam, LIMITS.grand]));
+    expect(limits).toEqual(new Set([LIMITS.game, LIMITS.slam]));
   }, 30_000);
 
   it('samme seed giver samme opgave', () => {

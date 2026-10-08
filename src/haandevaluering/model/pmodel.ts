@@ -331,10 +331,13 @@ export const zarOpens = (hand: readonly Card[]) => zarPoints(hand).zp >= model.z
 /** Nævnerne, en chance helst vises med: "3 ud af 5 gange". */
 const DENOMINATORS = [2, 3, 4, 5, 10];
 const FREQUENCY_TOLERANCE = 2.5;
+/** Fra så høj en chance står der "næsten altid". */
+const ALMOST_ALWAYS = 95;
 
 /**
  * Chancen som naturlig frekvens, fx 58 % → 3 ud af 5. Først den mindste af nævnerne 2, 3, 4, 5 og 10, der rammer
- * inden for 2,5 procentpoint; ellers 1 ud af N (under 50 %) eller N − 1 ud af N. 0 og 100 % giver 0 ud af 1 og 1 ud af 1.
+ * inden for 2,5 procentpoint; ellers "næsten altid" fra 95 % (1 ud af 1), 1 ud af N under 50 % og N − 1 ud af N
+ * derover. 0 % giver 0 ud af 1 ("næsten aldrig").
  */
 export function naturalFrequency(percent: number): { k: number; n: number } {
   if (percent <= 0) return { k: 0, n: 1 };
@@ -343,6 +346,7 @@ export function naturalFrequency(percent: number): { k: number; n: number } {
     const k = Math.round((percent * n) / 100);
     if (k > 0 && k < n && Math.abs((100 * k) / n - percent) <= FREQUENCY_TOLERANCE) return { k, n };
   }
+  if (percent >= ALMOST_ALWAYS) return { k: 1, n: 1 };
   if (percent < 50) return { k: 1, n: Math.round(100 / percent) };
   const n = Math.round(100 / (100 - percent));
   return { k: n - 1, n };
