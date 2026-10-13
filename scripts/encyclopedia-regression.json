@@ -1,0 +1,606 @@
+{
+ "source": "The Official Encyclopedia of Bridge, Suit Combinations, s. 427, 429, 431 og 433 (Franks scanning 2026-10-12).",
+ "notation": "dummy = bordet (Nord, øverste linje i bogen), hand = spilføreren (Syd). T = 10'eren, x = små kort, tolket som de laveste (reglen 'lav'). goals: mål -> procent; max: stik i gennemsnit.",
+ "tolerance": {
+  "percent": 0.5,
+  "max": 0.015,
+  "known_percent": 0.1,
+  "known_max": 0.005
+ },
+ "cases": [
+  {
+   "nr": 16,
+   "page": 427,
+   "dummy": "AKQTxx",
+   "hand": "x",
+   "goals": {
+    "6": 52,
+    "5": 91,
+    "4": 99
+   },
+   "max": 5.37
+  },
+  {
+   "nr": 17,
+   "page": 427,
+   "dummy": "AKQT9",
+   "hand": "xx",
+   "goals": {
+    "5": 54
+   }
+  },
+  {
+   "nr": 18,
+   "page": 427,
+   "dummy": "AKQTx",
+   "hand": "xx",
+   "goals": {
+    "5": 52,
+    "4": 93
+   },
+   "max": 4.39
+  },
+  {
+   "nr": 19,
+   "page": 427,
+   "dummy": "AKQ9x",
+   "hand": "xx",
+   "goals": {
+    "5": 39,
+    "4": 90
+   },
+   "max": 4.23
+  },
+  {
+   "nr": 20,
+   "page": 427,
+   "dummy": "AKT9x",
+   "hand": "Qx",
+   "goals": {
+    "5": 54
+   }
+  },
+  {
+   "nr": 21,
+   "page": 427,
+   "dummy": "AKTxx",
+   "hand": "Qx",
+   "goals": {
+    "5": 52,
+    "4": 93
+   },
+   "max": 4.39
+  },
+  {
+   "nr": 22,
+   "page": 427,
+   "dummy": "AK9xx",
+   "hand": "QT",
+   "goals": {
+    "5": 54,
+    "4": 100
+   },
+   "max": 4.44,
+   "known": {
+    "max": {
+     "app": 4.48,
+     "reason": "Bogens Max-linje (damen, derefter 10'eren rundt) giver 4,44. Den bedste linje er reelt at spille på fald og giver 4,48."
+    }
+   }
+  },
+  {
+   "nr": 23,
+   "page": 427,
+   "dummy": "AKxxx",
+   "hand": "QT",
+   "goals": {
+    "5": 42,
+    "4": 92
+   },
+   "max": 4.34
+  },
+  {
+   "nr": 24,
+   "page": 427,
+   "dummy": "AK9xx",
+   "hand": "Qx",
+   "goals": {
+    "5": 39,
+    "4": 86
+   },
+   "max": 4.23
+  },
+  {
+   "nr": 25,
+   "page": 427,
+   "dummy": "AKQT",
+   "hand": "xxx",
+   "goals": {
+    "4": 61
+   }
+  },
+  {
+   "nr": 26,
+   "page": 427,
+   "dummy": "AKQ9",
+   "hand": "xxx",
+   "goals": {
+    "4": 48
+   }
+  },
+  {
+   "nr": 27,
+   "page": 427,
+   "dummy": "AKTx",
+   "hand": "Qxx",
+   "goals": {
+    "4": 61
+   }
+  },
+  {
+   "nr": 28,
+   "page": 427,
+   "dummy": "AK9x",
+   "hand": "Qxx",
+   "goals": {
+    "4": 48
+   }
+  },
+  {
+   "nr": 29,
+   "page": 427,
+   "dummy": "AKxx",
+   "hand": "QTx",
+   "goals": {
+    "4": 55
+   }
+  },
+  {
+   "nr": 30,
+   "page": 427,
+   "dummy": "ATxx",
+   "hand": "KQx",
+   "goals": {
+    "4": 61
+   }
+  },
+  {
+   "nr": 31,
+   "page": 427,
+   "dummy": "A9xx",
+   "hand": "KQx",
+   "goals": {
+    "4": 48
+   },
+   "known": {
+    "4": {
+     "app": 47.0,
+     "reason": "Bogen henviser blot til nr. 26 (48 %); appen regner 26 og 28 til 48 %, men 31 til 47 %."
+    }
+   }
+  },
+  {
+   "nr": 32,
+   "page": 427,
+   "dummy": "Axxx",
+   "hand": "KQT",
+   "goals": {
+    "4": 55
+   }
+  },
+  {
+   "nr": 33,
+   "page": 427,
+   "dummy": "AKQTxxx",
+   "hand": "x",
+   "goals": {
+    "7": 73,
+    "6": 98
+   },
+   "max": 6.7
+  },
+  {
+   "nr": 49,
+   "page": 429,
+   "dummy": "AKJT9",
+   "hand": "x",
+   "goals": {
+    "5": 18
+   }
+  },
+  {
+   "nr": 50,
+   "page": 429,
+   "dummy": "AKJ98",
+   "hand": "x",
+   "goals": {
+    "5": 5,
+    "4": 58
+   },
+   "max": 3.63
+  },
+  {
+   "nr": 51,
+   "page": 429,
+   "dummy": "AKJ9",
+   "hand": "xx",
+   "goals": {
+    "4": 24,
+    "3": 76
+   }
+  },
+  {
+   "nr": 52,
+   "page": 429,
+   "dummy": "AK98",
+   "hand": "Jx",
+   "goals": {
+    "4": 6,
+    "3": 76
+   }
+  },
+  {
+   "nr": 53,
+   "page": 429,
+   "dummy": "AK9x",
+   "hand": "Jx",
+   "goals": {
+    "3": 74
+   }
+  },
+  {
+   "nr": 54,
+   "page": 429,
+   "dummy": "AJ98",
+   "hand": "Kx",
+   "goals": {
+    "4": 6,
+    "3": 69
+   },
+   "max": 2.75
+  },
+  {
+   "nr": 55,
+   "page": 429,
+   "dummy": "AJxx",
+   "hand": "K9",
+   "goals": {
+    "3": 68
+   }
+  },
+  {
+   "nr": 56,
+   "page": 429,
+   "dummy": "AK9",
+   "hand": "Jxx",
+   "goals": {
+    "3": 24
+   }
+  },
+  {
+   "nr": 57,
+   "page": 429,
+   "dummy": "AKx",
+   "hand": "J98",
+   "goals": {
+    "3": 24
+   }
+  },
+  {
+   "nr": 58,
+   "page": 429,
+   "dummy": "AKJT9x",
+   "hand": "x",
+   "goals": {
+    "6": 27
+   }
+  },
+  {
+   "nr": 59,
+   "page": 429,
+   "dummy": "AKJ987",
+   "hand": "x",
+   "goals": {
+    "6": 19,
+    "5": 71
+   }
+  },
+  {
+   "nr": 60,
+   "page": 429,
+   "dummy": "AKJT9",
+   "hand": "xx",
+   "goals": {
+    "5": 43
+   }
+  },
+  {
+   "nr": 61,
+   "page": 429,
+   "dummy": "AKJ9x",
+   "hand": "xx",
+   "goals": {
+    "5": 19,
+    "4": 73,
+    "3": 94
+   },
+   "max": 3.85
+  },
+  {
+   "nr": 62,
+   "page": 429,
+   "dummy": "AK98x",
+   "hand": "Jx",
+   "goals": {
+    "5": 9,
+    "4": 73
+   },
+   "max": 3.79
+  },
+  {
+   "nr": 73,
+   "page": 431,
+   "dummy": "AKxx",
+   "hand": "J9x",
+   "goals": {
+    "4": 1,
+    "3": 78
+   },
+   "max": 2.79
+  },
+  {
+   "nr": 74,
+   "page": 431,
+   "dummy": "AKxx",
+   "hand": "Jxx",
+   "goals": {
+    "3": 69
+   },
+   "max": 2.69
+  },
+  {
+   "nr": 75,
+   "page": 431,
+   "dummy": "AJ98",
+   "hand": "Kxx",
+   "goals": {
+    "4": 29,
+    "3": 85
+   },
+   "max": 3.07
+  },
+  {
+   "nr": 76,
+   "page": 431,
+   "dummy": "AJ9x",
+   "hand": "Kxx",
+   "goals": {
+    "4": 29,
+    "3": 85
+   },
+   "max": 3.07
+  },
+  {
+   "nr": 77,
+   "page": 431,
+   "dummy": "AJxx",
+   "hand": "K9x",
+   "goals": {
+    "4": 19,
+    "3": 85
+   },
+   "max": 2.98
+  },
+  {
+   "nr": 78,
+   "page": 431,
+   "dummy": "AJxx",
+   "hand": "Kxx",
+   "goals": {
+    "4": 18,
+    "3": 77
+   },
+   "max": 2.87
+  },
+  {
+   "nr": 79,
+   "page": 431,
+   "dummy": "K9xx",
+   "hand": "AJx",
+   "goals": {
+    "4": 21,
+    "3": 84
+   },
+   "max": 3.03
+  },
+  {
+   "nr": 80,
+   "page": 431,
+   "dummy": "JTxx",
+   "hand": "AKx",
+   "goals": {
+    "4": 20
+   }
+  },
+  {
+   "nr": 81,
+   "page": 431,
+   "dummy": "J98x",
+   "hand": "AKx",
+   "goals": {
+    "4": 12,
+    "3": 85
+   },
+   "known": {
+    "4": {
+     "app": 10.9,
+     "reason": "Bogens 12 % forudsætter, at Vest ikke falskmarkerer fra D10; bogens stjernetal (11 %) svarer til optimalt modspil."
+    }
+   }
+  },
+  {
+   "nr": 82,
+   "page": 431,
+   "dummy": "Jxxx",
+   "hand": "AK9",
+   "goals": {
+    "4": 9,
+    "3": 85
+   },
+   "max": 2.9
+  },
+  {
+   "nr": 83,
+   "page": 431,
+   "dummy": "AKJT9xx",
+   "hand": "x",
+   "goals": {
+    "7": 37
+   }
+  },
+  {
+   "nr": 84,
+   "page": 431,
+   "dummy": "AKJ987x",
+   "hand": "x",
+   "goals": {
+    "7": 34,
+    "6": 85
+   }
+  },
+  {
+   "nr": 85,
+   "page": 431,
+   "dummy": "AKJTxx",
+   "hand": "xx",
+   "goals": {
+    "6": 48,
+    "5": 98
+   },
+   "max": 5.46
+  },
+  {
+   "nr": 95,
+   "page": 433,
+   "dummy": "AK76x",
+   "hand": "J98",
+   "goals": {
+    "5": 33,
+    "4": 98
+   },
+   "max": 4.11,
+   "known": {
+    "5": {
+     "app": 30.0,
+     "reason": "Bogens 33 % bygger på, at 9'eren skræmmer Vest fra at falskmarkere fra D10. Mod optimalt modspil er værdien 30 %."
+    },
+    "max": {
+     "app": 4.14,
+     "reason": "Appen rammer bogens stjernetal (4,14), ikke hovedtallet 4,11."
+    }
+   }
+  },
+  {
+   "nr": 96,
+   "page": 433,
+   "dummy": "AKxxx",
+   "hand": "JT9",
+   "goals": {
+    "5": 48,
+    "4": 100
+   }
+  },
+  {
+   "nr": 97,
+   "page": 433,
+   "dummy": "AKxxx",
+   "hand": "J98",
+   "goals": {
+    "5": 27,
+    "4": 88,
+    "3": 100
+   },
+   "max": 4.01
+  },
+  {
+   "nr": 98,
+   "page": 433,
+   "dummy": "AKxxx",
+   "hand": "J9x",
+   "goals": {
+    "5": 27,
+    "4": 88
+   },
+   "max": 3.99,
+   "known": {
+    "max": {
+     "app": 4.01,
+     "reason": "Falskmarkering fra D10; bogen giver 3,99."
+    }
+   }
+  },
+  {
+   "nr": 99,
+   "page": 433,
+   "dummy": "AJ9xx",
+   "hand": "Kxx",
+   "goals": {
+    "5": 40
+   },
+   "max": 4.27
+  },
+  {
+   "nr": 100,
+   "page": 433,
+   "dummy": "AJxxx",
+   "hand": "K9x",
+   "goals": {
+    "5": 34,
+    "4": 96,
+    "3": 100
+   },
+   "max": 4.22
+  },
+  {
+   "nr": 101,
+   "page": 433,
+   "dummy": "A9xxx",
+   "hand": "KJx",
+   "goals": {
+    "5": 37,
+    "4": 96,
+    "3": 100
+   },
+   "max": 4.3
+  },
+  {
+   "nr": 102,
+   "page": 433,
+   "dummy": "J98xx",
+   "hand": "AKx",
+   "goals": {
+    "4": 96
+   }
+  },
+  {
+   "nr": 103,
+   "page": 433,
+   "dummy": "AKJT",
+   "hand": "xxxx",
+   "goals": {
+    "4": 53
+   }
+  },
+  {
+   "nr": 104,
+   "page": 433,
+   "dummy": "AK9x",
+   "hand": "Jxxx",
+   "goals": {
+    "4": 30,
+    "3": 100
+   },
+   "max": 3.21
+  }
+ ]
+}
