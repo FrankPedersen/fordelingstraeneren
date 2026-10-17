@@ -60,6 +60,31 @@ function sections(): Section[] {
       ),
     },
     {
+      title: tx('Forsiden, sporenes kort og sidefoden', 'The front page, the track cards and the footer'),
+      body: (
+        <List
+          items={[
+            tx(
+              'I dag øverst viser, hvor mange af de fire spor du har trænet i dag, og hvilket spor der er det næste: det første spor på forsiden, der ikke er trænet. Knappen starter dets session. Første gang står Velkommen i stedet.',
+              'Today at the top shows how many of the four tracks you have trained today and which track is next: the first track on the front page that is not yet trained. The button starts its session. On your first visit, Welcome is shown instead.',
+            ),
+            tx(
+              'Hvert spor har sit eget kort med streak, niveau og ét mærke: trænet i dag, emner til repetition eller ikke startet endnu. Et tryk på kortet åbner sporet; Fordelingssporets streak, XP, plan og menupunkter står nu på Fordeling-skærmen.',
+              'Each track has its own card with streak, level and one badge: trained today, items to review or not started yet. Tapping the card opens the track; the distribution track’s streak, XP, plan and menu items are now on the Distribution screen.',
+            ),
+            tx(
+              'Hvert spor har sin egen adresse (#fordeling, #pointregnskab, #farvebehandling og #haandevaluering), så du kan gemme et spor som bogmærke, og browserens tilbage-knap fører til forsiden.',
+              'Each track has its own address (#fordeling, #pointregnskab, #farvebehandling and #haandevaluering), so you can bookmark a track, and the browser’s back button returns to the front page.',
+            ),
+            tx(
+              'Den sorte bjælke øverst og sidefoden nederst er fælles for alle sider på www.kontraktbridge.dk. Sidefoden har links til de andre trænere og min mailadresse; links ud af appen virker kun online. Under en session vises ingen af dem.',
+              'The black bar at the top and the footer at the bottom are shared by all pages on www.kontraktbridge.dk. The footer has links to the other trainers and my email address; links out of the app only work online. Neither is shown during a session.',
+            ),
+          ]}
+        />
+      ),
+    },
+    {
       title: tx('Den daglige session', 'The daily session'),
       body: (
         <>

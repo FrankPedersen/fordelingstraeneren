@@ -128,3 +128,32 @@ Pointregnskab, Farvebehandling (også Analyse) og Håndevaluering ændres ikke, 
 - [ ] Sidefodens Trænere har de samme 5 links som www.kontraktbridge.dk.
 - [ ] De nye tokens består 4,5:1, og `design/tokens.json` er i takt med `styles.css`.
 - [ ] På engelsk står der intet dansk på forsiden, Fordeling-skærmen eller i sidefoden.
+
+## Afklaret
+
+Claude Codes bygning på grenen `forside-spor` (17. oktober 2026). Bygget før leverancetrin 4 i håndevaluering, fordi Frank bad Claude Code fortsætte med de øvrige projekter; grenen flettes først ind efter Franks godkendelse.
+
+**Åbne spørgsmål til Frank**
+
+1. **"Start dagens session i <spor>"** starter Fordelings session direkte. For Pointregnskab, Farvebehandling og Håndevaluering åbner knappen sporets skærm, hvor sporets egen startknap står, for at starte deres session direkte kræver en lille ændring i de tre skærme (en valgfri prop, der starter sessionen), og tabellen tillader kun sidefoden dér. Skal den ændring laves (Forsiden, punkt 2)?
+2. **Vejledningen:** det nye afsnit "Forsiden, sporenes kort og sidefoden" er tilføjet. Afsnittene "Kom i gang" ('Tryk "Start dagens session" på forsiden') og "Forsidens grupper" (fordelingssporets elementer under Fordeling) beskriver nu den gamle forside, men tabellen tillader ikke at ændre de eksisterende afsnit. Skal de rettes?
+
+**Claude Codes valg**
+
+3. **Topbjælken på sporenes skærme:** tabellen nævner kun sidefoden for sporenes skærme, men afsnittet Topbjælken gælder dem også, så topbjælken er sat ind samme sted. Under en session vises ingen af dem; i Farvebehandling melder Træning sessionen med den nye prop `onSession`, fordi sessionen ligger inde i fanen (Sporenes skærme, Topbjælken).
+4. **Ingen skrivning:** `status.ts` læser med sporenes `readPrSaved`, `readFbSaved` og `readHeSaved` og aldrig med `load…`, fordi de skriver en kopi af ulæselige data. Data, der mangler eller ikke kan læses, giver "Ikke startet endnu" (Status fra sporene).
+5. **Emner til repetition:** Fordeling som på Fordeling-skærmen (`dueItemKeys`); Pointregnskab og Håndevaluering de forfaldne kort i opvarmningens kø uden de nye kort; Farvebehandling de forfaldne emner som sporets `dueItems`, men uden at tjekke dem mod opgavebanken, så banken ikke hentes på forsiden. Et gemt emne til et mål, der er fjernet fra banken, tælles derfor med (Status fra sporene).
+6. **Et fjerde mærke:** et startet spor, der ikke er trænet i dag og intet har til repetition, får "Ikke trænet i dag" / "Not trained today" (surface-2), så kortet altid har ét mærke (Forsiden, punkt 4).
+7. **ⓘ på kortene:** hvert kort har et ⓘ som alle nye elementer (CLAUDE.md), med sporets hjælpetekst fra de tidligere menupunkter; Fordeling har sin egen.
+8. **Næste-linjen:** "med … til repetition og … nye mønstre" kun med de tal, der ikke er 0, og "Ca. 5 minutter." for alle spor, som Velkomst siger "fem minutter om dagen".
+9. **Hovedet** er som i dag: "Fordelingstræneren" og sprogknappen. Specen nævner "appens skyline-ikon", men det stod ikke på forsiden før, og med ikonet er der ikke plads til navn og sprogknap på én linje ved 390 px. På en meget smal skærm (320 px) brydes sprogknappen ned på næste linje (Forsiden, punkt 1).
+10. **Sidefoden:** rækkefølgen Om mig, Trænere, Kontakt og 7NT-logoet foran "Kontraktbridge" som på www.kontraktbridge.dk og i Konventionstræneren (Fælles regler). På engelsk hedder linket til Konventionstræneren "Convention trainer", fordi appens i18n-test kun tillader appens eget navn på dansk.
+11. **Skrift:** topbjælken og sidefoden henter ikke Manrope udefra (appen virker offline uden eksterne kald); Manrope bruges, hvis den findes på enheden, ellers appens skrift.
+12. **Adresserne** ligger kun i `App.tsx`: at åbne et spor lægger en historikpost (#spor); Tilbage i appen går et skridt tilbage i browseren, når appen selv lagde posten, ellers fjernes hashen. Huskepalads, Album, Klubaften, Kurver og sessionen vender tilbage til den skærm, de blev åbnet fra (Fordeling-skærmen eller forsiden).
+13. **Tests, der er opdateret** (alle fordi forsiden er bygget om, eller fordi adressen nu huskes mellem tests i samme fil):
+    - `src/app/navigation.test.tsx`: skrevet om til kortene og Fordeling-skærmen med samme hensigt.
+    - `src/app/App.test.tsx`: første test tjekker Velkomst; 11 steder er der et tryk på "Fordeling" før fordelingssporets knapper; adressen nulstilles før hver test.
+    - `src/app/i18n.test.tsx`: Velkomst-knapperne og Fordeling-skærmen; adressen nulstilles.
+    - `FarvebehandlingScreen.test.tsx`, `HaandevalueringScreen.test.tsx` og `PointregnskabScreen.test.tsx`: adressen nulstilles før hver test; Pointregnskab ser forsiden på "Start med Fordeling".
+    - `src/pointregnskab/ui/i18n.test.tsx` og `src/haandevaluering/ui/i18n.test.tsx`: appens navn "Fordelingstræneren" i topbjælken er undtaget som i `src/app/i18n.test.tsx`.
+    - Nye: `src/app/status.test.ts` og `src/app/forside.test.tsx` (accepttesten ovenfor).

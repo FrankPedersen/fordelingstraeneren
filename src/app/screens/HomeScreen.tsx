@@ -131,12 +131,6 @@ export function HomeScreen(props: HomeScreenProps) {
       <TopBar />
       <main className="screen">
         <header className="home-head">
-          <span className="home-icon" aria-hidden="true">
-            <i />
-            <i />
-            <i />
-            <i />
-          </span>
           <h1>Fordelingstræneren</h1>
           {onLanguage && (
             <button
