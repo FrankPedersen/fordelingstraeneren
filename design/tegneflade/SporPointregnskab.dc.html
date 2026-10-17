@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<title>Fordelingstræneren – Pointregnskab</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="fordeling.css">
+<link rel="stylesheet" href="ds/subtlegradient/tokens.css">
+<link rel="stylesheet" href="ds/subtlegradient/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:inherit}
+</style>
+</helmet>
+<div class="ft" data-theme="{{theme}}" style="width: 390px; min-height: 1600px; box-sizing: border-box; background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 17px; line-height: 1.45;">
+<main style="display: flex; flex-direction: column; gap: 16px; padding: 28px 16px 24px;">
+
+  <header style="display: flex; align-items: center; gap: 12px;">
+    <a href="FordelingForside.dc.html" aria-label="Tilbage til forsiden" style="flex: none; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); color: var(--text); font-size: 1.15rem; text-decoration: none;">←</a>
+    <span style="color: var(--muted); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;">Optælling</span>
+  </header>
+
+  <div style="display: grid; gap: 4px;">
+    <div style="display: flex; align-items: center; gap: 4px;">
+      <h1 style="margin: 0; font-size: 1.6rem; line-height: 1.2; font-weight: 700;">Pointregnskab</h1>
+      <button type="button" aria-label="Hjælp: Pointregnskab" aria-expanded="false" style="flex: none; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; background: transparent;">
+        <span aria-hidden="true" style="display: grid; place-items: center; width: 26px; height: 26px; border: 1px solid var(--muted); border-radius: 50%; background: var(--surface); color: var(--muted); font: italic 700 0.95rem Georgia, 'Times New Roman', serif; line-height: 1;">i</span>
+      </button>
+    </div>
+    <p style="margin: 0; color: var(--muted); font-size: 0.92rem;">Tæl honnørpoint under spillet: hvem har vist hvad, og hvor sidder de manglende honnører?</p>
+  </div>
+
+  <section aria-label="Streak og XP" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;">
+    <div style="display: grid; padding: 14px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px;">
+      <span style="font-size: 2rem; line-height: 1.15; font-weight: 700; font-variant-numeric: tabular-nums;">5</span>
+      <span style="color: var(--muted);">dage i træk</span>
+    </div>
+    <div style="display: grid; padding: 14px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px;">
+      <span style="font-size: 2rem; line-height: 1.15; font-weight: 700; font-variant-numeric: tabular-nums;">860</span>
+      <span style="color: var(--muted);">XP</span>
+    </div>
+  </section>
+
+  <section aria-labelledby="pr-niveau" style="display: grid; gap: 10px; padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px;">
+    <h2 id="pr-niveau" style="margin: 0; font-size: 1.1rem; line-height: 1.45; font-weight: 700;">Niveau 3</h2>
+    <p style="margin: 0; color: var(--muted); font-size: 0.88rem;">To intervaller, så restintervallet skal bruges.</p>
+    <div role="meter" aria-label="Fremgang mod niveau 4" aria-valuemin="0" aria-valuemax="100" aria-valuenow="40" style="height: 10px; overflow: hidden; background: var(--surface-2); border-radius: 5px;">
+      <span style="display: block; width: 40%; height: 100%; background: var(--ink); border-radius: 5px;"></span>
+    </div>
+  </section>
+
+  <section aria-labelledby="pr-idag" style="display: grid; gap: 10px; padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px;">
+    <h2 id="pr-idag" style="margin: 0; font-size: 1.1rem; line-height: 1.45; font-weight: 700;">I dag</h2>
+    <p style="margin: 0;">3 kort til opvarmning · regnestykket · niveau 3</p>
+    <p style="margin: 0; color: var(--ok); font-weight: 600;">✓ Dagens session er gennemført. Du kan tage en til.</p>
+  </section>
+
+  <button type="button" style="min-height: 56px; padding: 0 20px; border: 1px solid var(--accent); border-radius: 14px; background: var(--accent); color: var(--accent-text); font-family: var(--sans); font-size: 1.05rem; font-weight: 600;">Tag en ekstra session</button>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;">
+    <button type="button" style="min-height: 56px; padding: 0 10px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); color: var(--text); font-family: var(--sans); font-size: 1rem; font-weight: 600;">Husketeknikker</button>
+    <button type="button" style="min-height: 56px; padding: 0 10px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); color: var(--text); font-family: var(--sans); font-size: 1rem; font-weight: 600;">Indstillinger</button>
+  </div>
+
+  <div style="--ink: #1a1a1a; --canvas-soft: #f2f3f4; --body: #4a4a4a; --primary: #ff9f4a; --primary-active: #ffc48f; margin-top: 16px;">
+    <footer class="sg-footer" style="font-family: var(--font-sans);">
+      <div class="sg-footer-top">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <span class="sg-footer-name">Kontraktbridge</span>
+          <h2 style="margin: 8px 0 0; font-size: 18px; line-height: 24px; font-weight: 600; color: var(--canvas-soft);">Om mig</h2>
+          <p style="margin: 0; font-size: 16px; line-height: 24px; color: var(--canvas-soft);">Jeg er bridgeentusiast med forkærlighed for spillets kognitive udfordringer og det gode fællesskab omkring bordet. Jeg elsker at skabe og forbedre ting – og med AI som ny medspiller har jeg bygget et digitalt bridge-univers, der kombinerer logik, læring og spilleglæde.</p>
+        </div>
+        <div class="sg-footer-col">
+          <span class="sg-footer-col-title">Kontakt</span>
+          <span>Har du fundet en fejl, eller har du en idé til en ny træner? Skriv til mig.</span>
+          <a class="sg-footer-link" href="mailto:frank.steen.pedersen@gmail.com" style="color: var(--primary); font-weight: 600;">frank.steen.pedersen@gmail.com</a>
+        </div>
+        <div class="sg-footer-col">
+          <span class="sg-footer-col-title">Trænere</span>
+          <a class="sg-footer-link" href="#">Konventionstræner</a>
+          <a class="sg-footer-link" href="#">Fordelingstræneren</a>
+        </div>
+      </div>
+      <div class="sg-footer-legal">© 2026 Frank Pedersen</div>
+    </footer>
+  </div>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tema":{"editor":"enum","options":["lys","mørk"],"default":"lys","section":"Visning"},"$preview":{"width":390,"height":1600}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { theme: (this.props.tema ?? 'lys') === 'mørk' ? 'dark' : 'light' };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<title>Fordelingstræneren – forside</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="fordeling.css">
+<link rel="stylesheet" href="ds/subtlegradient/tokens.css">
+<link rel="stylesheet" href="ds/subtlegradient/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:inherit}
+</style>
+</helmet>
+<div class="ft" data-theme="{{theme}}" style="width: 390px; min-height: 1500px; box-sizing: border-box; background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 17px; line-height: 1.45;">
+<main style="display: flex; flex-direction: column; gap: 16px; padding: 28px 16px 24px;">
+
+  <header style="display: flex; align-items: center; gap: 12px;">
+    <span aria-hidden="true" style="flex: none; display: flex; align-items: flex-end; gap: 3px; height: 28px;">
+      <span style="width: 6px; height: 28px; border-radius: 3px 3px 0 0; background: var(--fam-4);"></span>
+      <span style="width: 6px; height: 28px; border-radius: 3px 3px 0 0; background: var(--fam-4);"></span>
+      <span style="width: 6px; height: 21px; border-radius: 3px 3px 0 0; background: var(--fam-4);"></span>
+      <span style="width: 6px; height: 14px; border-radius: 3px 3px 0 0; background: var(--fam-4);"></span>
+    </span>
+    <h1 style="margin: 0; flex: 1 1 auto; font-size: 1.6rem; line-height: 1.2; font-weight: 700;">Fordelingstræneren</h1>
+    <button type="button" lang="en" aria-label="Skift sprog til engelsk" style="flex: none; min-height: 44px; padding: 0 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); color: var(--text); font-family: var(--sans); font-size: 1rem; font-weight: 600;">English</button>
+  </header>
+
+  <sc-if value="{{returning}}" hint-placeholder-val="{{true}}">
+    <section aria-labelledby="idag" style="display: grid; gap: 10px; padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px;">
+      <span style="color: var(--muted); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;">I dag · tirsdag 13. oktober</span>
+      <h2 id="idag" style="margin: 0; font-size: 1.25rem; line-height: 1.3; font-weight: 700;">2 af 4 spor er trænet</h2>
+      <div role="meter" aria-label="Spor trænet i dag" aria-valuemin="0" aria-valuemax="4" aria-valuenow="2" style="height: 10px; overflow: hidden; background: var(--surface-2); border-radius: 5px;">
+        <span style="display: block; width: 50%; height: 100%; background: var(--ink); border-radius: 5px;"></span>
+      </div>
+      <p style="margin: 0; color: var(--muted); font-size: 0.88rem;">Næste: Fordeling, med 4 emner til repetition og 1 nyt mønster. Ca. 5 minutter.</p>
+      <button type="button" style="min-height: 56px; padding: 0 20px; border: 1px solid var(--accent); border-radius: 14px; background: var(--accent); color: var(--accent-text); font-family: var(--sans); font-size: 1.05rem; font-weight: 600;">Start dagens session i Fordeling</button>
+    </section>
+  </sc-if>
+
+  <sc-if value="{{firstVisit}}" hint-placeholder-val="{{false}}">
+    <section aria-labelledby="velkommen" style="display: grid; gap: 10px; padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px;">
+      <h2 id="velkommen" style="margin: 0; font-size: 1.25rem; line-height: 1.3; font-weight: 700;">Velkommen</h2>
+      <p style="margin: 0;">Bridgetræning fem minutter om dagen. Appen har fire spor, og hvert spor har sin egen daglige session, streak og XP.</p>
+      <p style="margin: 0; color: var(--muted); font-size: 0.88rem;">Start med Fordeling, hvis du er i tvivl. Du kan altid skifte spor her på forsiden.</p>
+      <button type="button" style="min-height: 56px; padding: 0 20px; border: 1px solid var(--accent); border-radius: 14px; background: var(--accent); color: var(--accent-text); font-family: var(--sans); font-size: 1.05rem; font-weight: 600;">Start med Fordeling</button>
+      <button type="button" style="justify-self: start; min-height: 44px; padding: 0 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); color: var(--text); font-family: var(--sans); font-size: 1rem; font-weight: 600;">Se en klubaften: 100 hænder</button>
+    </section>
+  </sc-if>
+
+  <sc-for list="{{groups}}" as="g" hint-placeholder-count="3">
+    <section aria-labelledby="{{g.hid}}" style="display: grid; gap: 12px; padding-top: 12px; border-top: 1px solid var(--line);">
+      <div style="display: flex; align-items: center; gap: 4px;">
+        <h2 id="{{g.hid}}" style="margin: 0; color: var(--muted); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;">{{g.title}}</h2>
+        <button type="button" aria-label="{{g.helpLabel}}" aria-expanded="false" style="flex: none; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; background: transparent;">
+          <span aria-hidden="true" style="display: grid; place-items: center; width: 26px; height: 26px; border: 1px solid var(--muted); border-radius: 50%; background: var(--surface); color: var(--muted); font: italic 700 0.95rem Georgia, 'Times New Roman', serif; line-height: 1;">i</span>
+        </button>
+      </div>
+      <sc-for list="{{g.tracks}}" as="t" hint-placeholder-count="1">
+        <a href="{{t.href}}" style="display: grid; gap: 8px; padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; color: var(--text); text-decoration: none;">
+          <span style="display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+            <span style="font-size: 1.1rem; line-height: 1.3; font-weight: 700;">{{t.name}}</span>
+            <span aria-hidden="true" style="color: var(--muted); font-size: 1.15rem; line-height: 1;">→</span>
+          </span>
+          <span style="color: var(--muted); font-size: 0.88rem;">{{t.desc}}</span>
+          <sc-if value="{{t.hasStats}}" hint-placeholder-val="{{true}}">
+            <span style="display: flex; flex-wrap: wrap; gap: 2px 14px; font-size: 0.92rem;">
+              <span><b style="font-variant-numeric: tabular-nums;">{{t.streak}}</b> {{t.streakLabel}}</span>
+              <span>{{t.level}}</span>
+            </span>
+          </sc-if>
+          <sc-if value="{{t.done}}" hint-placeholder-val="{{false}}">
+            <span style="justify-self: start; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; background: var(--ok-bg); color: var(--ok); font-size: 0.8rem; font-weight: 700;">✓ Trænet i dag</span>
+          </sc-if>
+          <sc-if value="{{t.due}}" hint-placeholder-val="{{true}}">
+            <span style="justify-self: start; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--text); font-size: 0.8rem; font-weight: 700;">{{t.dueText}}</span>
+          </sc-if>
+          <sc-if value="{{t.fresh}}" hint-placeholder-val="{{false}}">
+            <span style="justify-self: start; display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; background: var(--surface-2); color: var(--muted); font-size: 0.8rem; font-weight: 700;">Ikke startet endnu</span>
+          </sc-if>
+        </a>
+      </sc-for>
+    </section>
+  </sc-for>
+
+  <section aria-labelledby="vejledning" style="display: grid; gap: 10px; padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px;">
+    <h2 id="vejledning" style="margin: 0; font-size: 1.1rem; line-height: 1.45; font-weight: 700;">Vejledning</h2>
+    <p style="margin: 0; color: var(--muted); font-size: 0.88rem;">Sådan bruger du appen: sporene, sessionerne, husketeknikkerne, sprog og dine data. Tryk på ⓘ ved et element for at få en kort forklaring.</p>
+    <button type="button" style="justify-self: start; min-height: 44px; padding: 0 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); color: var(--text); font-family: var(--sans); font-size: 1rem; font-weight: 600;">Læs vejledningen</button>
+  </section>
+
+  <div style="display: flex; align-items: center; gap: 8px;">
+    <button type="button" style="flex: 1 1 0; min-width: 0; min-height: 56px; padding: 0 20px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); color: var(--text); font-family: var(--sans); font-size: 1.05rem; font-weight: 600;">Indstillinger</button>
+    <button type="button" aria-label="Hjælp: Indstillinger" aria-expanded="false" style="flex: none; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; background: transparent;">
+      <span aria-hidden="true" style="display: grid; place-items: center; width: 26px; height: 26px; border: 1px solid var(--muted); border-radius: 50%; background: var(--surface); color: var(--muted); font: italic 700 0.95rem Georgia, 'Times New Roman', serif; line-height: 1;">i</span>
+    </button>
+  </div>
+
+  <div style="--ink: #1a1a1a; --canvas-soft: #f2f3f4; --body: #4a4a4a; --primary: #ff9f4a; --primary-active: #ffc48f; margin-top: 16px;">
+    <footer class="sg-footer" style="font-family: var(--font-sans);">
+      <div class="sg-footer-top">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <span class="sg-footer-name">Kontraktbridge</span>
+          <h2 style="margin: 8px 0 0; font-size: 18px; line-height: 24px; font-weight: 600; color: var(--canvas-soft);">Om mig</h2>
+          <p style="margin: 0; font-size: 16px; line-height: 24px; color: var(--canvas-soft);">Jeg er bridgeentusiast med forkærlighed for spillets kognitive udfordringer og det gode fællesskab omkring bordet. Jeg elsker at skabe og forbedre ting – og med AI som ny medspiller har jeg bygget et digitalt bridge-univers, der kombinerer logik, læring og spilleglæde.</p>
+        </div>
+        <div class="sg-footer-col">
+          <span class="sg-footer-col-title">Kontakt</span>
+          <span>Har du fundet en fejl, eller har du en idé til en ny træner? Skriv til mig.</span>
+          <a class="sg-footer-link" href="mailto:frank.steen.pedersen@gmail.com" style="color: var(--primary); font-weight: 600;">frank.steen.pedersen@gmail.com</a>
+        </div>
+        <div class="sg-footer-col">
+          <span class="sg-footer-col-title">Trænere</span>
+          <a class="sg-footer-link" href="#">Konventionstræner</a>
+          <a class="sg-footer-link" href="#">Fordelingstræneren</a>
+        </div>
+      </div>
+      <div class="sg-footer-legal">© 2026 Frank Pedersen</div>
+    </footer>
+  </div>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tema":{"editor":"enum","options":["lys","mørk"],"default":"lys","section":"Visning"},"forsteBesoeg":{"editor":"boolean","default":false,"section":"Visning"},"$preview":{"width":390,"height":1500}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const first = !!(this.props.forsteBesoeg ?? false);
+    const theme = (this.props.tema ?? 'lys') === 'mørk' ? 'dark' : 'light';
+    const days = (n) => (n === 1 ? 'dag i træk' : 'dage i træk');
+    const track = (name, desc, href, streak, level, status, dueText) => ({
+      name,
+      desc,
+      href,
+      hasStats: !first,
+      streak,
+      streakLabel: days(streak),
+      level: level || '',
+      done: !first && status === 'done',
+      due: !first && status === 'due',
+      fresh: first,
+      dueText: dueText || ''
+    });
+    return {
+      theme,
+      firstVisit: first,
+      returning: !first,
+      groups: [
+        {
+          hid: 'gruppe-optaelling',
+          title: 'Optælling',
+          helpLabel: 'Hjælp: Optælling',
+          tracks: [
+            track('Fordeling', 'De 39 mønstre og deres hyppighed', 'FordelingSpor.dc.html', 3, 'Niveau 2 · ualmindelig', 'due', '4 emner til repetition'),
+            track('Pointregnskab', 'Tæl honnørpoint under spillet', 'SporPointregnskab.dc.html', 5, 'Niveau 3', 'done')
+          ]
+        },
+        {
+          hid: 'gruppe-spilfoering',
+          title: 'Spilføring',
+          helpLabel: 'Hjælp: Spilføring',
+          tracks: [
+            track('Farvebehandling', 'Den bedste linje i én farve · 657 kombinationer', 'SporFarvebehandling.dc.html', 2, '', 'due', '5 emner til repetition · 2 nye')
+          ]
+        },
+        {
+          hid: 'gruppe-vurdering',
+          title: 'Vurdering',
+          helpLabel: 'Hjælp: Vurdering',
+          tracks: [
+            track('Håndevaluering', 'Vurdér hånden med P-modellen', 'SporHaandevaluering.dc.html', 1, 'Niveau 1', 'done')
+          ]
+        }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+/* Subtle Gradient — tokens.json as CSS variables, for the canvas copy */
+:root, [data-theme="light"] {
+  --primary: #ff9f4a;
+  --on-primary: #1a1a1a;
+  --primary-active: #ffc48f;
+  --primary-neutral: #f7b87a;
+  --primary-pale: #fff1e3;
+  --ink: #1a1a1a;
+  --ink-deep: #0f0f0f;
+  --body: #4a4a4a;
+  --mute: #8a8a8a;
+  --canvas: #ffffff;
+  --canvas-soft: #f2f3f4;
+  --positive: #2ead4b;
+  --positive-deep: #054d28;
+  --warning: #ffd11a;
+  --warning-deep: #b86700;
+  --warning-content: #4a3b1c;
+  --negative: #d03238;
+  --negative-deep: #a72027;
+  --negative-darkest: #a7000d;
+  --negative-bg: #320707;
+  --suit-black: var(--ink);
+  --suit-red: #c62828;
+  --table: #1f5c4a;
+  --table-text: #ffffff;
+  --accent-orange: #ffb27a;
+  --accent-cyan: #38c8ff;
+}
+:root {
+  --space-xxs: 2px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 12px;
+  --space-lg: 16px;
+  --space-xl: 24px;
+  --space-2xl: 32px;
+  --space-3xl: 48px;
+  --radius-none: 0px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 9999px;
+  --radius-full: 9999px;
+  --font-display: Manrope, Inter, system-ui, sans-serif;
+  --font-sans: Inter, system-ui, sans-serif;
+}

@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<title>Fordelingstræneren – Farvebehandling, Analyse</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="ds/subtlegradient/tokens.css">
+<link rel="stylesheet" href="ds/subtlegradient/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:#263241}a:hover{color:#18202b}
+</style>
+</helmet>
+<div style="{{ themeVars }}">
+<div style="min-height: 100vh; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; font-size: 17px; line-height: 1.45; font-variant-numeric: tabular-nums">
+
+<header style="background: var(--surface); border-bottom: 1px solid var(--line); padding: 10px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<div style="display: flex; align-items: center; gap: 12px">
+<a href="FordelingForside.dc.html" aria-label="Tilbage til forsiden" style="flex: none; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); color: var(--text); font-size: 1.15rem; text-decoration: none">←</a>
+<div style="display: flex; flex-direction: column">
+<span style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted)">Spilføring</span>
+<span style="font-size: 20px; font-weight: 700">Farvebehandling</span>
+</div>
+</div>
+<nav aria-label="Faner" style="display: flex; gap: 4px; background: var(--surface-2); border-radius: 12px; padding: 4px">
+<a href="SporFarvebehandling.dc.html" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 10px; background: transparent; color: var(--text); font-weight: 600; text-decoration: none">Træning</a>
+<button type="button" style="min-height: 44px; padding: 0 18px; border: 0; border-radius: 10px; background: transparent; color: var(--text); font: inherit; font-weight: 600; cursor: pointer">Selvvalgt</button>
+<button type="button" aria-current="page" style="min-height: 44px; padding: 0 18px; border: 0; border-radius: 10px; background: var(--accent-soft); color: var(--text); box-shadow: inset 0 0 0 2px var(--accent); font: inherit; font-weight: 600; cursor: pointer">Analyse</button>
+</nav>
+</header>
+
+<main style="max-width: 1280px; margin: 0 auto; padding: 16px; display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-start">
+
+<div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+
+<section style="background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">Kombinationen</h2>
+<span style="font-size: 14px; color: var(--muted)">Es uden kongen · ca. hver 15. klubaften</span>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; align-items: center; justify-items: center; padding: 6px 0">
+<div></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 2px">
+<span style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; color: var(--muted)">NORD · BORDET</span>
+<span style="font-size: 22px; font-weight: 700; letter-spacing: 0.04em">♠ B432</span>
+</div>
+<div></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 2px">
+<span style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; color: var(--muted)">VEST</span>
+<span style="font-size: 22px; font-weight: 700; color: var(--muted)">♠ ? ? ?</span>
+</div>
+<div style="width: 124px; height: 124px; border-radius: 10px; background: var(--table); color: var(--table-text); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); align-items: center; justify-items: center; font-weight: 700">
+<span></span><span style="font-size: 16px">N</span><span></span>
+<span style="font-size: 16px">V</span><span style="font-size: 11px; font-weight: 600; text-align: center; line-height: 1.2">K D 9 8 7<br>mangler</span><span style="font-size: 16px">Ø</span>
+<span></span><span style="font-size: 16px">S</span><span></span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 2px">
+<span style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; color: var(--muted)">ØST</span>
+<span style="font-size: 22px; font-weight: 700; color: var(--muted)">♠ ? ?</span>
+</div>
+<div></div>
+<div style="display: flex; flex-direction: column; align-items: center; gap: 2px">
+<span style="font-size: 22px; font-weight: 700; letter-spacing: 0.04em">♠ E1065</span>
+<span style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; color: var(--muted)">SYD · DIG</span>
+</div>
+<div></div>
+</div>
+<p style="margin: 0; text-align: center; font-size: 14px; color: var(--muted)">↓ Linje A: lille fra bordet mod 10'eren</p>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted)">Kortvælger · tryk for at flytte et kort</span>
+<div style="display: flex; flex-wrap: wrap; gap: 4px">
+<sc-for list="{{ picker }}" as="k" hint-placeholder-count="13">
+<span style="{{ k.style }}"><span style="font-weight: 700">{{ k.rank }}</span><span style="font-size: 11px">{{ k.where }}</span></span>
+</sc-for>
+</div>
+<span style="font-size: 13px; color: var(--muted)">N = bordet · S = dig · – = modparten</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted)">Mål</span>
+<div style="display: flex; gap: 8px; flex-wrap: wrap">
+<button type="button" onClick="{{ setGoal3 }}" aria-pressed="{{ goal3Pressed }}" style="{{ goal3Style }}">3 stik</button>
+<button type="button" onClick="{{ setGoal2 }}" aria-pressed="{{ goal2Pressed }}" style="{{ goal2Style }}">2 stik</button>
+</div>
+</div>
+</section>
+
+<section style="background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">Huskeregel</h2>
+<p style="margin: 0"><strong>Enkelt kipning:</strong> Spil mod honnøren, ikke fra den.</p>
+<p style="margin: 0; font-size: 14px; color: var(--muted)">Rum 1 · Indbrudstyven, der lister ind bag vagten</p>
+<button type="button" style="min-height: 56px; border: 0; border-radius: 14px; background: var(--accent); color: var(--accent-text); font: inherit; font-weight: 600; cursor: pointer">Spil den selv</button>
+</section>
+</div>
+
+<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+
+<section style="background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">Linjerne · {{ goalLabel }}</h2>
+<span style="font-size: 13px; color: var(--muted)">a priori · ubegrænsede forbindelser · optimalt modspil</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<sc-for list="{{ lines }}" as="line" hint-placeholder-count="2">
+<div style="{{ line.cardStyle }}">
+<div style="display: flex; justify-content: space-between; align-items: center; gap: 8px">
+<span style="font-weight: 700">Linje {{ line.id }}</span>
+<sc-if value="{{ line.best }}" hint-placeholder-val="{{ true }}"><span style="font-size: 12px; font-weight: 700; color: var(--surface); background: var(--ok); border-radius: 999px; padding: 3px 10px">✓ Bedste linje</span></sc-if>
+</div>
+<span style="{{ line.pctStyle }}">{{ line.pct }}</span>
+<ol style="margin: 0; padding-left: 20px; font-size: 15px">
+<sc-for list="{{ line.steps }}" as="s" hint-placeholder-count="2"><li>{{ s }}</li></sc-for>
+</ol>
+<span style="font-size: 13px; color: var(--muted)">Flest stik i gennemsnit: {{ line.avg }}</span>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section style="background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">Forskellen</h2>
+<div style="display: flex; gap: 14px; flex-wrap: wrap; font-size: 13px; color: var(--muted)">
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 16px; height: 16px; border-radius: 3px; background: var(--hit-bg); color: var(--hit-text); border: 1px solid var(--hit-line); font-size: 11px; display: flex; align-items: center; justify-content: center">✓</span>målet nås</span>
+<span style="display: flex; align-items: center; gap: 6px"><span style="width: 16px; height: 16px; border-radius: 3px; background: var(--miss-bg); color: var(--miss-text); border: 1px dashed var(--miss-line); font-size: 11px; display: flex; align-items: center; justify-content: center">✕</span>målet nås ikke</span>
+<span style="display: flex; align-items: center; gap: 6px"><span style="font-size: 11px; font-weight: 700; color: var(--miss-text); background: var(--miss-bg); border: 1px solid var(--miss-line); border-radius: 999px; padding: 1px 8px">afgør</span>linjerne er uenige</span>
+</div>
+</div>
+<sc-for list="{{ bands }}" as="band" hint-placeholder-count="2">
+<div style="display: flex; align-items: center; gap: 10px">
+<span style="width: 70px; flex: none; font-weight: 700; font-size: 15px">Linje {{ band.id }}</span>
+<div style="flex: 1; display: flex; height: 30px; gap: 1px; min-width: 0">
+<sc-for list="{{ band.segs }}" as="seg" hint-placeholder-count="16"><span title="{{ seg.title }}" style="{{ seg.style }}">{{ seg.mark }}</span></sc-for>
+</div>
+</div>
+</sc-for>
+<p style="margin: 0; font-size: 15px">{{ insight }}</p>
+</section>
+
+<section style="background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 700">{{ listTitle }}</h2>
+<button type="button" onClick="{{ toggleAll }}" style="min-height: 44px; padding: 0 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); color: var(--text); font: inherit; font-weight: 600; cursor: pointer">{{ toggleLabel }}</button>
+</div>
+<div style="overflow-x: auto">
+<div style="min-width: 560px; display: flex; flex-direction: column">
+<div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; padding: 6px 4px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; color: var(--muted); border-bottom: 1px solid var(--line)">
+<span>VEST</span><span>ØST</span><span>CHANCE</span><span style="text-align: center">LINJE A</span><span style="text-align: center">LINJE B</span><span></span>
+</div>
+<sc-for list="{{ rows }}" as="row" hint-placeholder-count="3">
+<div style="{{ row.rowStyle }}">
+<span style="font-weight: 600">{{ row.w }}</span>
+<span style="font-weight: 600">{{ row.e }}</span>
+<span style="font-size: 15px">{{ row.pct }}</span>
+<span style="{{ row.aStyle }}">{{ row.aText }}</span>
+<span style="{{ row.bStyle }}">{{ row.bText }}</span>
+<span><sc-if value="{{ row.decides }}" hint-placeholder-val="{{ true }}"><span style="font-size: 12px; font-weight: 700; color: var(--miss-text); background: var(--miss-bg); border: 1px solid var(--miss-line); border-radius: 999px; padding: 2px 10px">afgør</span></sc-if></span>
+</div>
+</sc-for>
+</div>
+</div>
+<p style="margin: 0; font-size: 13px; color: var(--muted)">x = et af de små kort 9, 8 eller 7. Tallene er stik med hver linje.</p>
+</section>
+</div>
+</main>
+
+<div style="max-width: 1280px; margin: 0 auto; padding: 0 16px 24px; box-sizing: border-box; --ink: #1a1a1a; --canvas-soft: #f2f3f4; --body: #4a4a4a; --primary: #ff9f4a; --primary-active: #ffc48f">
+<footer class="sg-footer" style="font-family: var(--font-sans)">
+<div class="sg-footer-top">
+<div style="display: flex; flex-direction: column; gap: 10px; max-width: 460px">
+<span class="sg-footer-name">Kontraktbridge</span>
+<h2 style="margin: 8px 0 0; font-size: 18px; line-height: 24px; font-weight: 600; color: var(--canvas-soft)">Om mig</h2>
+<p style="margin: 0; font-size: 16px; line-height: 24px; color: var(--canvas-soft)">Jeg er bridgeentusiast med forkærlighed for spillets kognitive udfordringer og det gode fællesskab omkring bordet. Jeg elsker at skabe og forbedre ting – og med AI som ny medspiller har jeg bygget et digitalt bridge-univers, der kombinerer logik, læring og spilleglæde.</p>
+</div>
+<div class="sg-footer-cols">
+<div class="sg-footer-col">
+<span class="sg-footer-col-title">Trænere</span>
+<a class="sg-footer-link" href="https://frankpedersen.github.io/konventionstraener/">Konventionstræner</a>
+<a class="sg-footer-link" href="https://frankpedersen.github.io/fordelingstraeneren/">Fordelingstræneren</a>
+</div>
+<div class="sg-footer-col" style="max-width: 260px">
+<span class="sg-footer-col-title">Kontakt</span>
+<span>Har du fundet en fejl, eller har du en idé til en ny træner? Skriv til mig.</span>
+<a class="sg-footer-link" href="mailto:frank.steen.pedersen@gmail.com" style="color: var(--primary); font-weight: 600">frank.steen.pedersen@gmail.com</a>
+</div>
+</div>
+</div>
+<div class="sg-footer-legal">© 2026 Frank Pedersen</div>
+</footer>
+</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["lys","mørk"],"default":"lys"},"$preview":{"width":1280,"height":1900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var self = this;
+    var st = this.state || {};
+    var goal = st.goal || 3;
+    var showAll = !!st.showAll;
+    var dark = (this.props.theme || 'lys') === 'mørk';
+    var L = { bg:'#f5f6f8', surface:'#ffffff', s2:'#eceff3', text:'#18202b', muted:'#5d6675', line:'#d8dde5', ink:'#263241', inkText:'#ffffff', ok:'#0d6e63', okBg:'#e2f3ef', table:'#1f5c4a', tableText:'#ffffff', hitBg:'#d6e4f5', hitText:'#163e73', hitLine:'#8daad3', missBg:'#f8dfcc', missText:'#7a3410', missLine:'#e0a27a', accent:'#5b6b82', accentSoft:'#e3e9f1', accentText:'#ffffff' };
+    var D = { bg:'#12161c', surface:'#1b2129', s2:'#252d37', text:'#e8ecf1', muted:'#9aa4b2', line:'#2e3844', ink:'#dfe5ec', inkText:'#12161c', ok:'#5fd0c0', okBg:'#12302c', table:'#1a4437', tableText:'#e8ecf1', hitBg:'#1e3a5f', hitText:'#d6e4f5', hitLine:'#5b84bd', missBg:'#4a2a14', missText:'#f8dfcc', missLine:'#b9774a', accent:'#9fb0c6', accentSoft:'#2a3442', accentText:'#12161c' };
+    var t = dark ? D : L;
+    var themeVars = '--bg:' + t.bg + ';--surface:' + t.surface + ';--surface-2:' + t.s2 + ';--text:' + t.text + ';--muted:' + t.muted + ';--line:' + t.line + ';--ink:' + t.ink + ';--ink-text:' + t.inkText + ';--ok:' + t.ok + ';--ok-bg:' + t.okBg + ';--table:' + t.table + ';--table-text:' + t.tableText + ';--accent:' + t.accent + ';--accent-soft:' + t.accentSoft + ';--accent-text:' + t.accentText + ';--hit-bg:' + t.hitBg + ';--hit-text:' + t.hitText + ';--hit-line:' + t.hitLine + ';--miss-bg:' + t.missBg + ';--miss-text:' + t.missText + ';--miss-line:' + t.missLine + ';--card-face:#ffffff;--card-edge:#c9ced6;--card-ink:#1c2330';
+    function C(n, r) { if (r < 0 || r > n) return 0; var v = 1; for (var i = 1; i <= r; i++) v = v * (n - r + i) / i; return v; }
+    var tot = C(26, 13);
+    function each(k) { return C(21, 13 - k) / tot; }
+    function fmt(x, d) { return x.toFixed(d).replace('.', ',') + ' %'; }
+    var raw = [
+      ['KD','xxx',1,3,3],['KDx','xx',3,2,2],['Kxx','Dx',3,3,2],['Kx','Dxx',3,2,2],['Dxx','Kx',3,3,2],['Dx','Kxx',3,2,2],['xxx','KD',1,3,3],['xx','KDx',3,3,2],
+      ['KDxx','x',3,2,2],['Kxxx','D',1,2,2],['K','Dxxx',1,1,2],['Dxxx','K',1,2,2],['D','Kxxx',1,1,2],['x','KDxx',3,2,2],
+      ['KDxxx','–',1,2,2],['–','KDxxx',1,2,2]
+    ];
+    var rows = raw.map(function (r) {
+      var k = r[0] === '–' ? 0 : r[0].length;
+      return { w: r[0].split('').join(' '), e: r[1].split('').join(' '), p: r[2] * each(k) * 100, a: r[3], b: r[4] };
+    });
+    var hit = 'display: flex; align-items: center; justify-content: center; min-height: 32px; border-radius: 8px; background: var(--hit-bg); color: var(--hit-text); border: 1px solid var(--hit-line); font-weight: 700';
+    var miss = 'display: flex; align-items: center; justify-content: center; min-height: 32px; border-radius: 8px; background: var(--miss-bg); color: var(--miss-text); border: 1px dashed var(--miss-line); font-weight: 700';
+    var sumA = 0, sumB = 0, avgA = 0, avgB = 0, diff = [], diffP = 0;
+    rows.forEach(function (r) {
+      if (r.a >= goal) sumA += r.p; if (r.b >= goal) sumB += r.p;
+      avgA += r.a * r.p / 100; avgB += r.b * r.p / 100;
+      if ((r.a >= goal) !== (r.b >= goal)) { diff.push(r.w.replace(/ /g, '') + '–' + r.e.replace(/ /g, '')); diffP += r.p; }
+    });
+    var shown = rows.filter(function (r) { return showAll || (r.a >= goal) !== (r.b >= goal); }).map(function (r) {
+      var dec = (r.a >= goal) !== (r.b >= goal);
+      return { decides: dec, rowStyle: 'display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; align-items: center; padding: 6px 4px; border-bottom: 1px solid var(--line); ' + (dec ? 'background: var(--surface-2); border-radius: 8px' : ''), w: r.w, e: r.e, pct: fmt(r.p, 2), aStyle: r.a >= goal ? hit : miss, aText: (r.a >= goal ? '✓ ' : '✕ ') + r.a, bStyle: r.b >= goal ? hit : miss, bText: (r.b >= goal ? '✓ ' : '✕ ') + r.b };
+    });
+    function seg(r, v) {
+      var ok = v >= goal;
+      return { title: r.w + ' – ' + r.e + ': ' + fmt(r.p, 2) + ', ' + v + ' stik', mark: r.p > 5 ? (ok ? '✓' : '✕') : '',
+        style: 'flex: 0 0 calc(' + r.p.toFixed(3) + '% - 1px); min-width: 0; display: flex; align-items: center; justify-content: center; font-size: 12px; border-radius: 3px; ' + (ok ? 'background: var(--hit-bg); color: var(--hit-text); border: 1px solid var(--hit-line)' : 'background: var(--miss-bg); color: var(--miss-text); border: 1px dashed var(--miss-line)') };
+    }
+    var bands = [
+      { id: 'A', segs: rows.map(function (r) { return seg(r, r.a); }) },
+      { id: 'B', segs: rows.map(function (r) { return seg(r, r.b); }) }
+    ];
+    var bestA = sumA >= sumB;
+    function card(best) {
+      return best
+        ? 'flex: 1 1 240px; min-width: 0; border: 2px solid var(--ok); background: var(--ok-bg); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px'
+        : 'flex: 1 1 240px; min-width: 0; border: 1px solid var(--line); background: var(--surface); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; gap: 8px';
+    }
+    function pctStyle(best) { return 'font-size: 2rem; line-height: 1.1; font-weight: 700; color: ' + (best ? 'var(--ok)' : 'var(--text)'); }
+    var lines = [
+      { id: 'A', best: bestA, pct: fmt(sumA, 1), cardStyle: card(bestA), pctStyle: pctStyle(bestA), steps: ['Lille fra bordet mod 10\'eren; lægger Øst lille, så 10\'eren.', 'Slå esset.'], avg: avgA.toFixed(2).replace('.', ',') + ' stik' },
+      { id: 'B', best: !bestA, pct: fmt(sumB, 1), cardStyle: card(!bestA), pctStyle: pctStyle(!bestA), steps: ['Slå esset.', 'Lille fra bordet mod 10\'eren.'], avg: avgB.toFixed(2).replace('.', ',') + ' stik' }
+    ];
+    var insight = 'Linjerne er uenige i ' + diff.length + ' sidninger (' + fmt(diffP, 1) + '): ' + diff.join(', ') + '. Dem vinder linje ' + (bestA ? 'A' : 'B') + '.';
+    var pick = { 'E': 'S', 'K': '', 'D': '', 'B': 'N', '10': 'S', '9': '', '8': '', '7': '', '6': 'S', '5': 'S', '4': 'N', '3': 'N', '2': 'N' };
+    var picker = ['E','K','D','B','10','9','8','7','6','5','4','3','2'].map(function (r) {
+      var w = pick[r];
+      var base = 'min-width: 44px; min-height: 52px; padding: 2px 4px; border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 16px; ';
+      var style = w === 'N' ? base + 'background: var(--accent-soft); color: var(--text); border: 2px solid var(--accent)' : w === 'S' ? base + 'background: var(--surface); color: var(--text); border: 2px dashed var(--accent)' : base + 'background: var(--surface-2); color: var(--muted)';
+      return { rank: r, where: w || '–', style: style };
+    });
+    var on = 'min-height: 44px; padding: 0 20px; border-radius: 999px; border: 2px solid var(--accent); background: var(--accent-soft); color: var(--text); font: inherit; font-weight: 600; cursor: pointer';
+    var off = 'min-height: 44px; padding: 0 20px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--text); font: inherit; font-weight: 600; cursor: pointer';
+    return {
+      themeVars: themeVars,
+      north: ['B','4','3','2'], south: ['E','10','6','5'],
+      picker: picker,
+      lines: lines, bands: bands, insight: insight,
+      rows: shown,
+      listTitle: showAll ? 'Alle sidninger' : 'Afgørende sidninger',
+      toggleLabel: showAll ? 'Vis kun de afgørende' : 'Vis alle 16 sidninger',
+      toggleAll: function () { self.setState({ showAll: !showAll }); },
+      goalLabel: goal + ' stik',
+      goal3Style: goal === 3 ? on : off, goal2Style: goal === 2 ? on : off,
+      goal3Pressed: goal === 3 ? 'true' : 'false', goal2Pressed: goal === 2 ? 'true' : 'false',
+      setGoal3: function () { self.setState({ goal: 3 }); },
+      setGoal2: function () { self.setState({ goal: 2 }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

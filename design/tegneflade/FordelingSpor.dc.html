@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<title>Fordelingstræneren – Fordeling</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="fordeling.css">
+<link rel="stylesheet" href="ds/subtlegradient/tokens.css">
+<link rel="stylesheet" href="ds/subtlegradient/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0}
+a{color:inherit}
+</style>
+</helmet>
+<div class="ft" data-theme="{{theme}}" style="width: 390px; min-height: 1000px; box-sizing: border-box; background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 17px; line-height: 1.45;">
+<main style="display: flex; flex-direction: column; gap: 16px; padding: 28px 16px 24px;">
+
+  <header style="display: flex; align-items: center; gap: 12px;">
+    <a href="FordelingForside.dc.html" aria-label="Tilbage til forsiden" style="flex: none; display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: 50%; background: var(--surface); color: var(--text); font-size: 1.15rem; text-decoration: none;">←</a>
+    <span style="color: var(--muted); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;">Optælling</span>
+  </header>
+
+  <div style="display: grid; gap: 4px;">
+    <div style="display: flex; align-items: center; gap: 4px;">
+      <h1 style="margin: 0; font-size: 1.6rem; line-height: 1.2; font-weight: 700;">Fordeling</h1>
+      <button type="button" aria-label="Hjælp: Fordeling" aria-expanded="false" style="flex: none; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; background: transparent;">
+        <span aria-hidden="true" style="display: grid; place-items: center; width: 26px; height: 26px; border: 1px solid var(--muted); border-radius: 50%; background: var(--surface); color: var(--muted); font: italic 700 0.95rem Georgia, 'Times New Roman', serif; line-height: 1;">i</span>
+      </button>
+    </div>
+    <p style="margin: 0; color: var(--muted); font-size: 0.92rem;">De 39 mønstre og deres hyppighed – fem minutter om dagen.</p>
+  </div>
+
+  <section aria-label="Streak og XP" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;">
+    <div style="display: grid; padding: 14px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px;">
+      <span style="font-size: 2rem; line-height: 1.15; font-weight: 700; font-variant-numeric: tabular-nums;">3</span>
+      <span style="color: var(--muted);">dage i træk</span>
+    </div>
+    <div style="display: grid; padding: 14px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px;">
+      <span style="font-size: 2rem; line-height: 1.15; font-weight: 700; font-variant-numeric: tabular-nums;">1.240</span>
+      <span style="color: var(--muted);">XP</span>
+    </div>
+  </section>
+
+  <div style="display: flex; align-items: center; gap: 8px;">
+    <p style="margin: 0; flex: 1 1 auto; color: var(--muted); font-size: 0.88rem;">Ugens joker er klar til en glemt dag. Bedste streak: 9.</p>
+    <button type="button" aria-label="Hjælp: Streak og XP" aria-expanded="false" style="flex: none; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; background: transparent;">
+      <span aria-hidden="true" style="display: grid; place-items: center; width: 26px; height: 26px; border: 1px solid var(--muted); border-radius: 50%; background: var(--surface); color: var(--muted); font: italic 700 0.95rem Georgia, 'Times New Roman', serif; line-height: 1;">i</span>
+    </button>
+  </div>
+
+  <section aria-labelledby="niveau" style="display: grid; gap: 10px; padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px;">
+    <div style="display: flex; align-items: center; gap: 4px;">
+      <h2 id="niveau" style="margin: 0; flex: 1 1 auto; font-size: 1.1rem; line-height: 1.45; font-weight: 700;">Niveau 2 · ualmindelig</h2>
+      <button type="button" aria-label="Hjælp: Niveau" aria-expanded="false" style="flex: none; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; background: transparent;">
+        <span aria-hidden="true" style="display: grid; place-items: center; width: 26px; height: 26px; border: 1px solid var(--muted); border-radius: 50%; background: var(--surface); color: var(--muted); font: italic 700 0.95rem Georgia, 'Times New Roman', serif; line-height: 1;">i</span>
+      </button>
+    </div>
+    <div role="meter" aria-label="Emner i kasse 3 eller højere" aria-valuemin="0" aria-valuemax="26" aria-valuenow="18" style="height: 10px; overflow: hidden; background: var(--surface-2); border-radius: 5px;">
+      <span style="display: block; width: 69%; height: 100%; background: var(--ink); border-radius: 5px;"></span>
+    </div>
+    <p style="margin: 0; color: var(--muted); font-size: 0.88rem;">18 af 26 emner i kasse 3 eller højere · 13 af 39 mønstre introduceret</p>
+    <p style="margin: 0; color: var(--muted); font-size: 0.88rem;">Huskepalads: 9 af 13 stationer navngivet.</p>
+  </section>
+
+  <section aria-labelledby="idag-fordeling" style="display: grid; gap: 10px; padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px;">
+    <div style="display: flex; align-items: center; gap: 4px;">
+      <h2 id="idag-fordeling" style="margin: 0; flex: 1 1 auto; font-size: 1.1rem; line-height: 1.45; font-weight: 700;">I dag</h2>
+      <button type="button" aria-label="Hjælp: I dag" aria-expanded="false" style="flex: none; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; background: transparent;">
+        <span aria-hidden="true" style="display: grid; place-items: center; width: 26px; height: 26px; border: 1px solid var(--muted); border-radius: 50%; background: var(--surface); color: var(--muted); font: italic 700 0.95rem Georgia, 'Times New Roman', serif; line-height: 1;">i</span>
+      </button>
+    </div>
+    <p style="margin: 0;">4 emner til repetition. 1 nyt mønster venter.</p>
+  </section>
+
+  <div style="display: flex; align-items: center; gap: 8px;">
+    <button type="button" style="flex: 1 1 0; min-width: 0; min-height: 56px; padding: 0 20px; border: 1px solid var(--accent); border-radius: 14px; background: var(--accent); color: var(--accent-text); font-family: var(--sans); font-size: 1.05rem; font-weight: 600;">Start dagens session</button>
+    <button type="button" aria-label="Hjælp: Sessionen" aria-expanded="false" style="flex: none; display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; background: transparent;">
+      <span aria-hidden="true" style="display: grid; place-items: center; width: 26px; height: 26px; border: 1px solid var(--muted); border-radius: 50%; background: var(--surface); color: var(--muted); font: italic 700 0.95rem Georgia, 'Times New Roman', serif; line-height: 1;">i</span>
+    </button>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px;">
+    <sc-for list="{{menu}}" as="m" hint-placeholder-count="4">
+      <div style="display: flex; align-items: center; gap: 4px; min-width: 0;">
+        <button type="button" style="flex: 1 1 0; min-width: 0; min-height: 56px; padding: 0 10px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); color: var(--text); font-family: var(--sans); font-size: 1rem; font-weight: 600;">{{m.label}}</button>
+        <button type="button" aria-label="{{m.help}}" aria-expanded="false" style="flex: none; display: grid; place-items: center; width: 36px; height: 44px; padding: 0; border: 0; background: transparent;">
+          <span aria-hidden="true" style="display: grid; place-items: center; width: 26px; height: 26px; border: 1px solid var(--muted); border-radius: 50%; background: var(--surface); color: var(--muted); font: italic 700 0.95rem Georgia, 'Times New Roman', serif; line-height: 1;">i</span>
+        </button>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="--ink: #1a1a1a; --canvas-soft: #f2f3f4; --body: #4a4a4a; --primary: #ff9f4a; --primary-active: #ffc48f; margin-top: 16px;">
+    <footer class="sg-footer" style="font-family: var(--font-sans);">
+      <div class="sg-footer-top">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
+          <span class="sg-footer-name">Kontraktbridge</span>
+          <h2 style="margin: 8px 0 0; font-size: 18px; line-height: 24px; font-weight: 600; color: var(--canvas-soft);">Om mig</h2>
+          <p style="margin: 0; font-size: 16px; line-height: 24px; color: var(--canvas-soft);">Jeg er bridgeentusiast med forkærlighed for spillets kognitive udfordringer og det gode fællesskab omkring bordet. Jeg elsker at skabe og forbedre ting – og med AI som ny medspiller har jeg bygget et digitalt bridge-univers, der kombinerer logik, læring og spilleglæde.</p>
+        </div>
+        <div class="sg-footer-col">
+          <span class="sg-footer-col-title">Kontakt</span>
+          <span>Har du fundet en fejl, eller har du en idé til en ny træner? Skriv til mig.</span>
+          <a class="sg-footer-link" href="mailto:frank.steen.pedersen@gmail.com" style="color: var(--primary); font-weight: 600;">frank.steen.pedersen@gmail.com</a>
+        </div>
+        <div class="sg-footer-col">
+          <span class="sg-footer-col-title">Trænere</span>
+          <a class="sg-footer-link" href="#">Konventionstræner</a>
+          <a class="sg-footer-link" href="#">Fordelingstræneren</a>
+        </div>
+      </div>
+      <div class="sg-footer-legal">© 2026 Frank Pedersen</div>
+    </footer>
+  </div>
+
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"tema":{"editor":"enum","options":["lys","mørk"],"default":"lys","section":"Visning"},"$preview":{"width":390,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      theme: (this.props.tema ?? 'lys') === 'mørk' ? 'dark' : 'light',
+      menu: [
+        { label: 'Huskepalads', help: 'Hjælp: Huskepalads' },
+        { label: 'Album', help: 'Hjælp: Album' },
+        { label: 'Klubaften', help: 'Hjælp: Klubaften' },
+        { label: 'Kurver', help: 'Hjælp: Kurver' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

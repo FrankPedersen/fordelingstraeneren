@@ -1,0 +1,70 @@
+/* Fordelingstræneren: farver og former fra designsystemet "Fordelingstræneren"
+   (design/tokens.json og src/ui/styles.css i repoet). Lys tilstand er standard;
+   data-theme="dark" på roden giver mørk tilstand, som appen viser efter systemets indstilling. */
+.ft {
+  --bg: #f5f6f8;
+  --surface: #ffffff;
+  --surface-2: #eceff3;
+  --text: #18202b;
+  --muted: #5d6675;
+  --line: #d8dde5;
+  --ink: #263241;
+  --ink-text: #ffffff;
+  --accent: #5b6b82;
+  --accent-soft: #e3e9f1;
+  --accent-text: #ffffff;
+  --table: #1f5c4a;
+  --table-text: #ffffff;
+  --ok: #0d6e63;
+  --ok-bg: #e2f3ef;
+  --bad-bg: #e9ecf1;
+  --fam-4: #2563eb;
+  --fam-5: #15803d;
+  --fam-6: #d97706;
+  --fam-7: #7c3aed;
+  --suit-red: #c62828;
+  --radius: 14px;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme: light;
+}
+
+.ft[data-theme="dark"] {
+  --bg: #12161c;
+  --surface: #1b2129;
+  --surface-2: #252d37;
+  --text: #e8ecf1;
+  --muted: #9aa4b2;
+  --line: #2e3844;
+  --ink: #dfe5ec;
+  --ink-text: #12161c;
+  --accent: #9fb0c6;
+  --accent-soft: #2a3442;
+  --accent-text: #12161c;
+  --table: #1a4437;
+  --table-text: #e8ecf1;
+  --ok: #5fd0c0;
+  --ok-bg: #12302c;
+  --bad-bg: #262d37;
+  --fam-4: #60a5fa;
+  --fam-5: #4ade80;
+  --fam-6: #fbbf24;
+  --fam-7: #a78bfa;
+  --suit-red: #ff6b6b;
+  color-scheme: dark;
+}
+
+/* Som i appen: intet kræver hover, et tryk giver en lille skalering, fokusringen er 3px i fam-4. */
+.ft button,
+.ft a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.ft :focus-visible {
+  outline: 3px solid var(--fam-4);
+  outline-offset: 2px;
+}
+
+.ft button:not(:disabled):active,
+.ft a:active {
+  transform: scale(0.97);
+}
