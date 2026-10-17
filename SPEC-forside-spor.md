@@ -87,7 +87,7 @@ En smal sort bjælke helt øverst på forsiden og alle sporenes skærme, ikke i 
 ### Fælles regler for alle sider på www.kontraktbridge.dk
 
 - **Topbjælke:** I appsene er den fuld bredde øverst. På hubsiden står menuen inde i det sorte hero-felt. Det er bevidst.
-- **Sprogknap:** Kun i de to apps, som findes på engelsk. Hubsiden har ingen English-knap.
+- **Sprogknap:** På alle sider, der findes på engelsk, også hubsiden (Franks beslutning 17. oktober 2026). Fordelingstræneren gemmer sproget i sine egne indstillinger og følger derfor ikke valget fra hubsiden.
 - **Sidefod:** Om mig, Trænere (5 links) og Kontakt overalt. Kun Konventionstræneren har også "Aftaler og notater".
 
 ## Sidefoden
