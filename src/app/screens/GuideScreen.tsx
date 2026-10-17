@@ -29,7 +29,7 @@ function sections(): Section[] {
           </p>
           <List
             items={[
-              tx('Tryk "Start dagens session" på forsiden. Appen vælger selv opgaverne.', 'Tap "Start today\'s session" on the front page. The app chooses the tasks.'),
+              tx('Tryk på knappen under I dag på forsiden: den starter dagens session i det næste spor. Appen vælger selv opgaverne.', 'Tap the button under Today on the front page: it starts today\'s session in the next track. The app chooses the tasks.'),
               tx('Tryk på ⓘ ved et element for at få en kort forklaring lige der.', 'Tap ⓘ next to an element for a short explanation right there.'),
               tx('Knappen øverst på forsiden skifter mellem dansk og engelsk.', 'The button at the top of the front page switches between Danish and English.'),
               tx('Alt gemmes i din browser. Ingen login og ingen server.', 'Everything is saved in your browser. No login and no server.'),
@@ -44,12 +44,12 @@ function sections(): Section[] {
         <List
           items={[
             tx(
-              'Forsiden er delt i grupper efter, hvad sporene træner: Optælling (Fordeling og Pointregnskab), Spilføring (Farvebehandling) og Vurdering (Håndevaluering). Grupper uden spor vises ikke.',
-              'The front page is divided into groups by what the tracks train: Counting (Distribution and Point count), Declarer play (Suit combinations) and Hand evaluation (the track of the same name). Groups without a track are not shown.',
+              'Forsiden er delt i grupper efter, hvad sporene træner: Optælling (Fordeling og Pointregnskab), Spilføring (Farvebehandling) og Vurdering (Håndevaluering). Hvert spor har sit eget kort. Grupper uden spor vises ikke.',
+              'The front page is divided into groups by what the tracks train: Counting (Distribution and Point count), Declarer play (Suit combinations) and Hand evaluation (the track of the same name). Each track has its own card. Groups without a track are not shown.',
             ),
             tx(
-              'Under Fordeling står fordelingssporets streak, XP, niveau, dagens plan og startknap og menupunkterne Huskepalads, Album, Klubaften og Kurver. Streak og XP hører til fordelingssporet; de andre spor har deres egne inde i sporet.',
-              "Under Distribution are the distribution track's streak, XP, level, today's plan and start button and the menu items Memory palace, Album, Club evening and Charts. The streak and XP belong to the distribution track; the other tracks have their own inside the track.",
+              'Fordeling-skærmen har fordelingssporets streak, XP, niveau, dagens plan og startknap og menupunkterne Huskepalads, Album, Klubaften og Kurver. Streak og XP hører til fordelingssporet; de andre spor har deres egne inde i sporet.',
+              "The Distribution screen has the distribution track's streak, XP, level, today's plan and start button and the menu items Memory palace, Album, Club evening and Charts. The streak and XP belong to the distribution track; the other tracks have their own inside the track.",
             ),
             tx(
               'Hvert spor åbnes med ét tryk, og ⓘ ved en gruppe forklarer, hvad den træner. Vejledningen og Indstillinger står under grupperne.',
@@ -69,8 +69,8 @@ function sections(): Section[] {
               'Today at the top shows how many of the four tracks you have trained today and which track is next: the first track on the front page that is not yet trained. The button starts its session. On your first visit, Welcome is shown instead.',
             ),
             tx(
-              'Hvert spor har sit eget kort med streak, niveau og ét mærke: trænet i dag, emner til repetition eller ikke startet endnu. Et tryk på kortet åbner sporet; Fordelingssporets streak, XP, plan og menupunkter står nu på Fordeling-skærmen.',
-              'Each track has its own card with streak, level and one badge: trained today, items to review or not started yet. Tapping the card opens the track; the distribution track’s streak, XP, plan and menu items are now on the Distribution screen.',
+              'Hvert spor har sit eget kort med streak, niveau og ét mærke: trænet i dag, emner til repetition eller ikke startet endnu. Et tryk på kortet åbner sporet.',
+              'Each track has its own card with streak, level and one badge: trained today, items to review or not started yet. Tapping the card opens the track.',
             ),
             tx(
               'Hvert spor har sin egen adresse (#fordeling, #pointregnskab, #farvebehandling og #haandevaluering), så du kan gemme et spor som bogmærke, og browserens tilbage-knap fører til forsiden.',

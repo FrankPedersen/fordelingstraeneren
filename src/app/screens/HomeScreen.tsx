@@ -20,8 +20,10 @@ interface HomeScreenProps {
   onLanguage?(lang: Lang): void;
   /** Den samlede vejledning. */
   onGuide?(): void;
-  /** Åbner et spors skærm: kortene og I dag for de andre spor. Uden onOpen vises sporene ikke. */
+  /** Åbner et spors skærm (kortene). Uden onOpen vises sporene ikke. */
   onOpen?(screen: string): void;
+  /** Åbner et spors skærm og starter dets session (I dag for de andre spor end Fordeling); uden den åbnes skærmen. */
+  onStartTrack?(screen: string): void;
   /** Sporenes kort; standard er listen i `tracks.ts`. */
   cards?: readonly TrackCard[];
   /** Sporenes status; standard læses fra lagringen uden at skrive (`status.ts`). */
@@ -57,7 +59,7 @@ function dayText(day: string): string {
  * på Fordeling-skærmen (`DistributionScreen.tsx`). Forsiden læser sporenes data, men skriver intet.
  */
 export function HomeScreen(props: HomeScreenProps) {
-  const { saved, updateReady, onUpdate, onStart, onClub, onSettings, onLanguage, onGuide, onOpen } = props;
+  const { saved, updateReady, onUpdate, onStart, onClub, onSettings, onLanguage, onGuide, onOpen, onStartTrack } = props;
   const cards = props.cards ?? TRACK_CARDS;
   const statuses = props.statuses ?? trackStatuses(saved, readableStorage(), Date.now());
   const today = dayOf(Date.now(), saved.settings.dayStartsAtHour);
@@ -73,8 +75,8 @@ export function HomeScreen(props: HomeScreenProps) {
   );
   const nextCard = cards.find((c) => c.track === overview.next);
   const firstCard = cards[0];
-  /** Starter det næste spors session: Fordelings session direkte, de andre spor på deres egen skærm. */
-  const startTrack = (card: TrackCard) => (card.track === 'fordeling' ? onStart() : onOpen?.(card.screen));
+  /** Starter det næste spors session direkte: Fordelings her, de andre sporers på deres skærm. */
+  const startTrack = (card: TrackCard) => (card.track === 'fordeling' ? onStart() : (onStartTrack ?? onOpen)?.(card.screen));
 
   /** "Næste: Fordeling, med 4 emner til repetition og 1 nyt mønster. Ca. 5 minutter." */
   function nextText(card: TrackCard): string {

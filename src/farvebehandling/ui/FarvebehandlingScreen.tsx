@@ -18,6 +18,8 @@ type Tab = 'training' | 'practice' | 'analysis';
 
 interface FarvebehandlingScreenProps {
   onBack(): void;
+  /** Træningen begynder i dagens session (forsidens "Start dagens session i Farvebehandling", SPEC-forside-spor.md). */
+  start?: boolean;
 }
 
 type Storage = { getItem(key: string): string | null; setItem(key: string, value: string): void };
@@ -54,7 +56,7 @@ function loadAppBank(): Promise<BankItem[]> {
 }
 
 /** Farvebehandlingens skal: tilbage til forsiden og fanerne Træning, Selvvalgt og Analyse. */
-export default function FarvebehandlingScreen({ onBack }: FarvebehandlingScreenProps) {
+export default function FarvebehandlingScreen({ onBack, start = false }: FarvebehandlingScreenProps) {
   const [tab, setTab] = useState<Tab>('training');
   // Kombinationen, som Analyse åbner med, når den vælges i klubaftenen.
   const [analysisStart, setAnalysisStart] = useState<string | null>(null);
@@ -63,7 +65,8 @@ export default function FarvebehandlingScreen({ onBack }: FarvebehandlingScreenP
   const [bank, setBank] = useState<BankItem[] | null>(null);
   const [loadFailed, setLoadFailed] = useState(false);
   // Træningens session er i gang; så vises topbjælken og sidefoden ikke (SPEC-forside-spor.md).
-  const [inSession, setInSession] = useState(false);
+  // Åbnes skærmen med start, er sessionen i gang fra begyndelsen, så topbjælken ikke blinker frem.
+  const [inSession, setInSession] = useState(start);
   // Teknikkernes navn, huskeregel og billede på det aktuelle sprog.
   const techniques = techniquesFile.techniques.map((t) => (getLang() === 'en' ? { ...t, ...t.en } : t));
   const storage = useMemo(browserStorage, []);
@@ -149,7 +152,7 @@ export default function FarvebehandlingScreen({ onBack }: FarvebehandlingScreenP
         ) : (
           <>
             {tab === 'training' && (
-              <Træning bank={bank} saved={saved} update={update} techniques={techniques} onOpenAnalysis={openAnalysis} onOpenPractice={openPractice} onSession={setInSession} />
+              <Træning bank={bank} saved={saved} update={update} techniques={techniques} onOpenAnalysis={openAnalysis} onOpenPractice={openPractice} onSession={setInSession} startSession={start} />
             )}
             {tab === 'practice' && (
               <Selvvalgt bank={bank} saved={saved} update={update} techniques={techniques} startTechnique={practiceStart ?? undefined} />

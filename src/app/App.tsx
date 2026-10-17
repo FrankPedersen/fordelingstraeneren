@@ -49,6 +49,8 @@ export default function App({ updateReady = false, onUpdate }: AppProps) {
   const [screen, setScreen] = useState<Screen>(() => screenOf(window.location.hash));
   // Skærmen, en underskærm (session, huskepalads, …) vender tilbage til.
   const [from, setFrom] = useState<Screen>('home');
+  // Sporet, hvis session skal starte, når det åbnes (forsidens "Start dagens session i …").
+  const [autoStart, setAutoStart] = useState<Screen | null>(null);
 
   useEffect(() => {
     // Ingen returværdi: scrollTo giver et promise i nyere browsere, og React ville kalde det som oprydning.
@@ -57,7 +59,10 @@ export default function App({ updateReady = false, onUpdate }: AppProps) {
 
   // Sporenes adresser (SPEC-forside-spor.md): browserens tilbage-knap og links med #spor skifter skærm.
   useEffect(() => {
-    const follow = () => setScreen(screenOf(window.location.hash));
+    const follow = () => {
+      setAutoStart(null);
+      setScreen(screenOf(window.location.hash));
+    };
     window.addEventListener('popstate', follow);
     window.addEventListener('hashchange', follow);
     return () => {
@@ -67,13 +72,15 @@ export default function App({ updateReady = false, onUpdate }: AppProps) {
   }, []);
 
   /** Åbner et spor: adressen skifter til #spor, så browserens tilbage-knap fører tilbage til forsiden. */
-  function openTrack(track: Screen) {
+  function openTrack(track: Screen, start = false) {
+    setAutoStart(start ? track : null);
     if (window.location.hash !== `#${track}`) window.history.pushState(OWN, '', `#${track}`);
     setScreen(track);
   }
 
   /** Tilbage til forsiden fra et spor: et skridt tilbage i browseren, hvis appen selv lagde posten, ellers uden hash. */
   function home() {
+    setAutoStart(null);
     setScreen('home');
     if (!window.location.hash) return;
     const state = window.history.state as typeof OWN | null;
@@ -130,19 +137,19 @@ export default function App({ updateReady = false, onUpdate }: AppProps) {
     case 'farvebehandling':
       return (
         <Suspense fallback={<main className="screen" aria-busy="true" />}>
-          <FarvebehandlingScreen onBack={home} />
+          <FarvebehandlingScreen onBack={home} start={autoStart === 'farvebehandling'} />
         </Suspense>
       );
     case 'pointregnskab':
       return (
         <Suspense fallback={<main className="screen" aria-busy="true" />}>
-          <PointregnskabScreen onBack={home} />
+          <PointregnskabScreen onBack={home} start={autoStart === 'pointregnskab'} />
         </Suspense>
       );
     case 'haandevaluering':
       return (
         <Suspense fallback={<main className="screen" aria-busy="true" />}>
-          <HaandevalueringScreen onBack={home} />
+          <HaandevalueringScreen onBack={home} start={autoStart === 'haandevaluering'} />
         </Suspense>
       );
     default:
@@ -158,6 +165,9 @@ export default function App({ updateReady = false, onUpdate }: AppProps) {
           onGuide={() => open('guide')}
           onOpen={(target) => {
             if (TRACKS.includes(target as Screen)) openTrack(target as Screen);
+          }}
+          onStartTrack={(target) => {
+            if (TRACKS.includes(target as Screen)) openTrack(target as Screen, true);
           }}
         />
       );

@@ -58,9 +58,31 @@ describe('Forsiden (SPEC-forside-spor.md)', () => {
     expect(describedBy('Pointregnskab')).toBe('Tæl honnørpoint under spillet1 dag i trækNiveau 22 emner til repetition');
     expect(describedBy('Farvebehandling')).toMatch(/Ikke startet endnu$/);
     expect(snapshot()).toBe(stored);
+    // Knappen starter sporets session direkte (Afklaret punkt 1), uden topbjælke og sidefod.
     click('Start dagens session i Pointregnskab');
-    expect(await screen.findByRole('heading', { name: 'Pointregnskab', level: 1 }, { timeout: 10_000 })).toBeTruthy();
-    expect(snapshot()).toBe(stored);
+    expect(await screen.findByRole('button', { name: 'Afbryd sessionen' }, { timeout: 10_000 })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: 'Pointregnskab', level: 1 })).toBeTruthy();
+    expect(topbar()).toBeNull();
+  }, 30_000);
+
+  it('I dag starter også Farvebehandlings session direkte, når den er det næste spor', async () => {
+    const done = { streak: { current: 1, best: 1, lastDay: TODAY } };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...defaultSaved(), ...done, items: { '4-4-3-2:rank': newItem('2026-10-20') } }));
+    localStorage.setItem(PR_STORAGE_KEY, JSON.stringify({ ...defaultPrSaved(), ...done, items: { [PR_DECK[0]]: newItem('2026-10-20') } }));
+    render(<App />);
+    expect(screen.getByText(/^Næste: Farvebehandling/)).toBeTruthy();
+    click('Start dagens session i Farvebehandling');
+    expect(await screen.findByRole('button', { name: 'Afbryd sessionen' }, { timeout: 20_000 })).toBeTruthy();
+    expect(topbar()).toBeNull();
+    expect(footer()).toBeNull();
+  }, 30_000);
+
+  it('et tryk på kortet åbner sporets forside, ikke sessionen', async () => {
+    oneTrackDone();
+    render(<App />);
+    click('Pointregnskab');
+    expect(await screen.findByRole('button', { name: 'Start dagens session' }, { timeout: 10_000 })).toBeTruthy();
+    expect(screen.queryByRole('button', { name: 'Afbryd sessionen' })).toBeNull();
   }, 30_000);
 
   it('når alle fire spor er trænet, tilbydes en ekstra session i Fordeling', () => {

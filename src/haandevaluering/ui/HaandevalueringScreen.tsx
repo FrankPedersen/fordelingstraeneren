@@ -28,12 +28,13 @@ function browserStorage(): Storage {
 }
 
 /** Håndevaluering: forsiden med dagens plan, sessionen og indstillingerne med data. */
-export default function HaandevalueringScreen({ onBack }: { onBack(): void }) {
+/** `start`: skærmen begynder i dagens session (forsidens "Start dagens session i …", SPEC-forside-spor.md). */
+export default function HaandevalueringScreen({ onBack, start = false }: { onBack(): void; start?: boolean }) {
   const storage = useMemo(browserStorage, []);
   // Intet skrives, før brugeren gør noget.
   const [saved, setSaved] = useState<HeSaved>(() => loadHeSaved(storage));
   const [failed, setFailed] = useState(false);
-  const [view, setView] = useState<'home' | 'session' | 'settings'>('home');
+  const [view, setView] = useState<'home' | 'session' | 'settings'>(start ? 'session' : 'home');
   const update = useCallback(
     (next: HeSaved) => {
       setSaved(next);

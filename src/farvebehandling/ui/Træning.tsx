@@ -39,11 +39,13 @@ interface TræningProps {
   onOpenPractice?(technique: string): void;
   /** Sessionen starter eller slutter; skærmen skjuler topbjælken og sidefoden under en session (SPEC-forside-spor.md). */
   onSession?(active: boolean): void;
+  /** Begynder i dagens session i stedet for Trænings forside. */
+  startSession?: boolean;
 }
 
 /** Træning: forsiden med dagens plan, den daglige session, paladset, klubaftenen, statistikken og dine data. */
-export function Træning({ bank, saved, update, techniques, onOpenAnalysis, onOpenPractice, onSession }: TræningProps) {
-  const [view, setView] = useState<'home' | 'session' | 'palace' | 'club' | 'stats' | 'data'>('home');
+export function Træning({ bank, saved, update, techniques, onOpenAnalysis, onOpenPractice, onSession, startSession = false }: TræningProps) {
+  const [view, setView] = useState<'home' | 'session' | 'palace' | 'club' | 'stats' | 'data'>(startSession ? 'session' : 'home');
   const home = () => setView('home');
   useEffect(() => {
     onSession?.(view === 'session');

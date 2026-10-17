@@ -21,9 +21,9 @@ Før arbejdet starter:
 | `src/app/tracks.ts` | ét kort pr. spor med titel, kort beskrivelse og skærm på begge sprog | indeholde logik fra sporene |
 | `src/app/App.tsx` | ruten til Fordeling-skærmen; adresser pr. spor (se nedenfor) | ændre de andre skærmes adfærd |
 | Ny fil `src/app/status.ts` | læser hvert spors streak, niveau og dagens status | skrive nogen nøgle |
-| Sporenes egne skærme | sidefoden nederst | ændre indhold, layout eller adfærd |
+| Sporenes egne skærme | sidefoden nederst og topbjælken øverst; en valgfri `start`, der begynder i dagens session (Afklaret, punkt 1) | ændre indhold, layout eller adfærd i øvrigt |
 | `src/ui/styles.css` og `design/tokens.json` | tre nye tokens til sidefoden (se nedenfor) | ændre værdien af eksisterende tokens |
-| Vejledningen | et kort afsnit om forsiden og sidefoden på begge sprog | ændre de eksisterende afsnit |
+| Vejledningen | et kort afsnit om forsiden og sidefoden på begge sprog; afsnittene "Kom i gang" og "Forsidens grupper" rettet til den nye forside (Afklaret, punkt 2) | ændre de øvrige afsnit |
 | Lagring | ingen ændringer | skrive nogen nøgle |
 
 Kræver noget alligevel en ændring ud over tabellen, skal Claude Code stoppe og spørge.
@@ -133,10 +133,10 @@ Pointregnskab, Farvebehandling (også Analyse) og Håndevaluering ændres ikke, 
 
 Claude Codes bygning på grenen `forside-spor` (17. oktober 2026). Bygget før leverancetrin 4 i håndevaluering, fordi Frank bad Claude Code fortsætte med de øvrige projekter; grenen flettes først ind efter Franks godkendelse.
 
-**Åbne spørgsmål til Frank**
+**Franks svar (17. oktober 2026)**
 
-1. **"Start dagens session i <spor>"** starter Fordelings session direkte. For Pointregnskab, Farvebehandling og Håndevaluering åbner knappen sporets skærm, hvor sporets egen startknap står, for at starte deres session direkte kræver en lille ændring i de tre skærme (en valgfri prop, der starter sessionen), og tabellen tillader kun sidefoden dér. Skal den ændring laves (Forsiden, punkt 2)?
-2. **Vejledningen:** det nye afsnit "Forsiden, sporenes kort og sidefoden" er tilføjet. Afsnittene "Kom i gang" ('Tryk "Start dagens session" på forsiden') og "Forsidens grupper" (fordelingssporets elementer under Fordeling) beskriver nu den gamle forside, men tabellen tillader ikke at ændre de eksisterende afsnit. Skal de rettes?
+1. **"Start dagens session i <spor>"** starter det næste spors session direkte i alle fire spor (Franks svar). Pointregnskab, Farvebehandling og Håndevaluering har fået en valgfri `start`, der lader skærmen begynde i dagens session (i Farvebehandling via Træningens `startSession`); `App.tsx` sætter den kun fra I dag-knappen og nulstiller den ved Tilbage og browserens tilbage-knap. Et tryk på et kort åbner som før sporets forside (Forsiden, punkt 2).
+2. **Vejledningen:** "Kom i gang" og "Forsidens grupper" er rettet til den nye forside, og det nye afsnit "Forsiden, sporenes kort og sidefoden" er tilføjet, på begge sprog (Franks svar).
 
 **Claude Codes valg**
 

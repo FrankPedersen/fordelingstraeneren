@@ -29,12 +29,13 @@ function browserStorage(): Storage {
 }
 
 /** Pointregnskabet: forsiden med dagens plan, sessionen og indstillingerne med data. */
-export default function PointregnskabScreen({ onBack }: { onBack(): void }) {
+/** `start`: skærmen begynder i dagens session (forsidens "Start dagens session i …", SPEC-forside-spor.md). */
+export default function PointregnskabScreen({ onBack, start = false }: { onBack(): void; start?: boolean }) {
   const storage = useMemo(browserStorage, []);
   // Intet skrives, før brugeren gør noget.
   const [saved, setSaved] = useState<PrSaved>(() => loadPrSaved(storage));
   const [failed, setFailed] = useState(false);
-  const [view, setView] = useState<'home' | 'session' | 'settings'>('home');
+  const [view, setView] = useState<'home' | 'session' | 'settings'>(start ? 'session' : 'home');
   const update = useCallback(
     (next: PrSaved) => {
       setSaved(next);
