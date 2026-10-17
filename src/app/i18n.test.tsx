@@ -55,6 +55,7 @@ function answerAnything() {
 }
 
 beforeEach(() => {
+  window.history.replaceState(null, '', '/');
   localStorage.clear();
   window.scrollTo = vi.fn();
 });
@@ -76,21 +77,31 @@ describe('Engelsk', () => {
   it('skifter hele forsiden til engelsk, gemmer valget og skifter tilbage', () => {
     render(<App />);
     click('Skift sprog til engelsk');
-    expect(screen.getByRole('button', { name: "Start today's session" })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Start with Distribution' })).toBeTruthy();
     expect(JSON.parse(localStorage.getItem(STORAGE_KEY)!).settings.language).toBe('en');
     expectEnglish('forsiden');
     click('Switch language to Danish');
-    expect(screen.getByRole('button', { name: 'Start dagens session' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Start med Fordeling' })).toBeTruthy();
     expect(JSON.parse(localStorage.getItem(STORAGE_KEY)!).settings.language).toBe('da');
   });
 
   it('husker sproget og viser fordelingssporets skærme og den første opgave på engelsk', () => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...defaultSaved(), settings: { ...defaultSaved().settings, language: 'en' } }));
     render(<App />);
-    expect(screen.getByRole('button', { name: "Start today's session" })).toBeTruthy();
     for (const [button, title] of [
       ['Read the guide', 'Guide'],
       ['Settings', 'Settings'],
+    ] as const) {
+      click(button);
+      expect(screen.getByRole('heading', { name: title, level: 1 })).toBeTruthy();
+      expectEnglish(title);
+      click('Back');
+    }
+    // Fordelingssporets skærme åbnes fra Fordeling-skærmen (SPEC-forside-spor.md).
+    click('Distribution');
+    expect(screen.getByRole('button', { name: "Start today's session" })).toBeTruthy();
+    expectEnglish('Fordeling-skærmen');
+    for (const [button, title] of [
       ['Memory palace', 'Memory palace'],
       ['Album', 'Album'],
       ['Charts', 'Charts'],

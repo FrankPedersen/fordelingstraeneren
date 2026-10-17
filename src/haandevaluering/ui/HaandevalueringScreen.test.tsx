@@ -10,6 +10,8 @@ const click = (name: string | RegExp) => fireEvent.click(screen.getByRole('butto
 const button = (name: string | RegExp) => screen.queryByRole('button', { name });
 
 beforeEach(() => {
+  // Hver test starter på forsiden; sporenes adresser (#farvebehandling osv.) huskes ellers mellem tests.
+  window.history.replaceState(null, '', '/');
   window.scrollTo = vi.fn();
   localStorage.clear();
 });

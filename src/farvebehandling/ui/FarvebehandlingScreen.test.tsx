@@ -47,6 +47,8 @@ const stored = (): FbSaved => JSON.parse(localStorage.getItem(FB_STORAGE_KEY)!);
 const T0 = new Date(2026, 9, 5, 12, 0).getTime();
 
 beforeEach(() => {
+  // Hver test starter på forsiden; sporenes adresser (#farvebehandling osv.) huskes ellers mellem tests.
+  window.history.replaceState(null, '', '/');
   localStorage.clear();
   window.scrollTo = vi.fn();
   seeds.next = 1;

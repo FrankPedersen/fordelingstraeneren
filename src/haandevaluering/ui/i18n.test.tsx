@@ -20,7 +20,8 @@ function expectEnglish(where: string) {
   for (const button of screen.queryAllByRole('button', { name: /^Help: / })) {
     if (button.getAttribute('aria-expanded') !== 'true') fireEvent.click(button);
   }
-  const text = document.body.textContent ?? '';
+  // Appens navn står på dansk på begge sprog, også i topbjælken (som i src/app/i18n.test.tsx).
+  const text = (document.body.textContent ?? '').replace(/Fordelingstræneren/g, '');
   const found = text.match(DANISH);
   expect(found?.[0], `${where}: ${found ? text.slice(Math.max(0, (found.index ?? 0) - 60), (found.index ?? 0) + 60) : ''}`).toBeUndefined();
 }

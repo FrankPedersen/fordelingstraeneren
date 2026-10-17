@@ -8,6 +8,7 @@ const click = (name: string | RegExp) => fireEvent.click(screen.getByRole('butto
 const stored = () => JSON.parse(localStorage.getItem(STORAGE_KEY)!);
 
 beforeEach(() => {
+  window.history.replaceState(null, '', '/');
   localStorage.clear();
   window.scrollTo = vi.fn();
 });
@@ -22,12 +23,16 @@ describe('App', () => {
     render(<App />);
     expect(screen.getByRole('heading', { name: 'Fordelingstræneren' })).toBeTruthy();
     expect(screen.getByText('Velkommen')).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Start med Fordeling' })).toBeTruthy();
+    // Fordelingssporets plan står på Fordeling-skærmen (SPEC-forside-spor.md).
+    click('Fordeling');
     expect(screen.getByText(/2 nye mønstre venter/)).toBeTruthy();
     expect(screen.getByRole('button', { name: 'Start dagens session' })).toBeTruthy();
   });
 
   it('introducerer det første mønster og opretter dets emner', () => {
     render(<App />);
+    click('Fordeling');
     click('Start dagens session');
     expect(screen.getByText('Nyt mønster')).toBeTruthy();
     expect(screen.getByRole('img', { name: 'Mønster 4-4-3-2' })).toBeTruthy();
@@ -43,6 +48,7 @@ describe('App', () => {
 
   it('viser klubaftenens 100 hænder og fremhæver et mønster', () => {
     render(<App />);
+    click('Fordeling');
     click('Klubaften');
     expect(screen.getByRole('img', { name: /^100 hænder: 22 × 4-4-3-2, 16 × 5-3-3-2/ })).toBeTruthy();
     click(/^6-3-2-2 × 6$/);
@@ -51,6 +57,7 @@ describe('App', () => {
 
   it('låser en legendarisk albumplads op med tre rigtige svar', () => {
     render(<App />);
+    click('Fordeling');
     click('Album');
     expect(screen.getByText(/0 af 39 mønstre samlet/)).toBeTruthy();
     click(/^\?6-6-1-01 ud af 1\.382$/);
@@ -68,6 +75,7 @@ describe('App', () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date(2026, 9, 3, 12, 0));
     render(<App />);
+    click('Fordeling');
     click('Start dagens session');
     click('Videre');
     for (const key of ['4', '4', '3']) click(key);
@@ -107,6 +115,7 @@ describe('App', () => {
 
   it('tager mønstre fra tastaturet, giver feedback og går videre til Paladsvandring', () => {
     render(<App />);
+    click('Fordeling');
     click('Start dagens session');
     click('Videre');
     for (const key of ['4', '4', '3']) click(key);
@@ -126,6 +135,7 @@ describe('App', () => {
 
   it('viser billedet som gratis ledetråd på støtteniveau 3', () => {
     render(<App />);
+    click('Fordeling');
     click('Start dagens session');
     click('Videre');
     click('Vis ledetråd');
@@ -134,6 +144,7 @@ describe('App', () => {
 
   it('lader brugeren navngive stationer og skrive scener i huskepaladset', () => {
     render(<App />);
+    click('Fordeling');
     click('Huskepalads');
     expect(screen.getByText(/Låses op på niveau 2/)).toBeTruthy();
     click(/Navngiv stationen.*Trappen/);
@@ -147,6 +158,7 @@ describe('App', () => {
 
   it('kan afbryde en session', () => {
     render(<App />);
+    click('Fordeling');
     click('Start dagens session');
     click('Afbryd sessionen');
     expect(screen.getByRole('dialog')).toBeTruthy();
@@ -158,6 +170,7 @@ describe('App', () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date(2026, 9, 2, 12, 0));
     render(<App />);
+    click('Fordeling');
     click('Start dagens session');
     click('Videre');
     for (const key of ['4', '4', '3']) click(key);
@@ -180,6 +193,7 @@ describe('App', () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date(2026, 9, 2, 12, 0));
     render(<App />);
+    click('Fordeling');
     click('Start dagens session');
     click('Videre');
     for (const key of ['4', '4', '3']) click(key);
@@ -219,6 +233,7 @@ describe('App', () => {
       }),
     );
     render(<App />);
+    click('Fordeling');
     click('Kurver');
     expect(screen.getByRole('img', { name: /^Højere\/lavere: korrekte svar pr\. minut\. uge 39: 9, uge 40: 12$/ })).toBeTruthy();
     expect(screen.getByRole('img', { name: /^Træfsikkerhed, almindelig\. uge 39: 80 %, uge 40: 90 %$/ })).toBeTruthy();

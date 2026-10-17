@@ -37,12 +37,18 @@ interface TræningProps {
   onOpenAnalysis?(id: string): void;
   /** Åbner Selvvalgt med en teknik valgt (fra statistikken). */
   onOpenPractice?(technique: string): void;
+  /** Sessionen starter eller slutter; skærmen skjuler topbjælken og sidefoden under en session (SPEC-forside-spor.md). */
+  onSession?(active: boolean): void;
 }
 
 /** Træning: forsiden med dagens plan, den daglige session, paladset, klubaftenen, statistikken og dine data. */
-export function Træning({ bank, saved, update, techniques, onOpenAnalysis, onOpenPractice }: TræningProps) {
+export function Træning({ bank, saved, update, techniques, onOpenAnalysis, onOpenPractice, onSession }: TræningProps) {
   const [view, setView] = useState<'home' | 'session' | 'palace' | 'club' | 'stats' | 'data'>('home');
   const home = () => setView('home');
+  useEffect(() => {
+    onSession?.(view === 'session');
+    return () => onSession?.(false);
+  }, [view, onSession]);
   if (view === 'session') return <SessionView bank={bank} saved={saved} update={update} techniques={techniques} onExit={home} />;
   if (view === 'palace') return <Palads bank={bank} saved={saved} update={update} techniques={techniques} onBack={home} />;
   if (view === 'club') return <Klubaften bank={bank} techniques={techniques} onOpen={(id) => onOpenAnalysis?.(id)} onBack={home} />;

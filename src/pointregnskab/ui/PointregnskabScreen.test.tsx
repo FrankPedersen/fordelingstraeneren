@@ -10,6 +10,8 @@ const click = (name: string | RegExp) => fireEvent.click(screen.getByRole('butto
 const button = (name: string | RegExp) => screen.queryByRole('button', { name });
 
 beforeEach(() => {
+  // Hver test starter på forsiden; sporenes adresser (#farvebehandling osv.) huskes ellers mellem tests.
+  window.history.replaceState(null, '', '/');
   window.scrollTo = vi.fn();
   localStorage.clear();
 });
@@ -27,7 +29,7 @@ describe('Pointregnskab i appen', () => {
     expect(await screen.findByRole('heading', { name: 'Pointregnskab', level: 1 }, { timeout: 10_000 })).toBeTruthy();
     expect(button('Start dagens session')).toBeTruthy();
     click('Tilbage til forsiden');
-    expect(button('Start dagens session')).toBeTruthy();
+    expect(button('Start med Fordeling')).toBeTruthy();
     expect(button('Pointregnskab')).toBeTruthy();
     // Et kig skriver intet.
     expect(localStorage.getItem(PR_STORAGE_KEY)).toBeNull();

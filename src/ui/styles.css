@@ -32,6 +32,10 @@
   --fam-7: #7c3aed;
   /* Kulørernes røde farve til ♥ og ♦ i tekst. */
   --suit-red: #c62828;
+  /* Topbjælken og sidefoden (SPEC-forside-spor.md): som på www.kontraktbridge.dk, ens i lys og mørk tilstand. */
+  --footer-bg: #1a1a1a;
+  --footer-text: #f2f3f4;
+  --footer-accent: #ff9f4a;
   --radius: 14px;
 }
 
@@ -64,6 +68,9 @@
     --fam-6: #fbbf24;
     --fam-7: #a78bfa;
     --suit-red: #ff6b6b;
+    --footer-bg: #1a1a1a;
+    --footer-text: #f2f3f4;
+    --footer-accent: #ff9f4a;
   }
 }
 
@@ -1457,4 +1464,245 @@ button.cell {
 .guide ul {
   margin: 8px 0 0;
   padding-left: 20px;
+}
+
+/* Topbjælken (SPEC-forside-spor.md): smal, sort og i fuld bredde helt øverst, som på www.kontraktbridge.dk.
+   Skrifterne er appens egne (ingen skrift hentes udefra), så Manrope bruges kun, hvis den findes på enheden. */
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: calc(8px + env(safe-area-inset-top)) 12px 8px;
+  background: var(--footer-bg);
+  color: var(--footer-text);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.43;
+}
+
+/* Under topbjælken ligger sikkerhedsmargenen allerede i bjælken. */
+.topbar + .screen {
+  padding-top: 12px;
+}
+
+.topbar-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  color: var(--footer-text);
+  text-decoration: none;
+}
+
+.kb-logo {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--footer-accent);
+  color: var(--footer-bg);
+  font-family: Manrope, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.topbar-name {
+  font-family: Manrope, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+/* "· Fordelingstræneren" i lysegrå (#c9cdd2 på footer-bg giver 11,6:1). */
+.topbar-app {
+  color: #c9cdd2;
+}
+
+.topbar-app::before {
+  content: '·';
+  margin-right: 8px;
+}
+
+.topbar a:focus-visible,
+.site-footer a:focus-visible {
+  outline: 2px solid var(--footer-accent);
+  outline-offset: 2px;
+}
+
+/* Sidefoden (SPEC-forside-spor.md): nederst på forsiden og sporenes skærme. */
+.site-footer {
+  display: grid;
+  gap: 16px;
+  margin-top: auto;
+  padding: 16px;
+  background: var(--footer-bg);
+  color: var(--footer-text);
+  border-radius: var(--radius);
+}
+
+.site-footer h2 {
+  margin: 0;
+  color: var(--footer-text);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.site-footer p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.site-footer a {
+  color: var(--footer-text);
+  text-decoration: none;
+}
+
+.site-footer-about {
+  display: grid;
+  gap: 8px;
+}
+
+.site-footer .site-footer-name {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  color: var(--footer-accent);
+  font-family: Manrope, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.site-footer-col {
+  display: grid;
+}
+
+.site-footer-col h2 {
+  margin-bottom: 4px;
+}
+
+.site-footer-col a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.site-footer .site-footer-mail {
+  color: var(--footer-accent);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.site-footer .site-footer-legal {
+  padding-top: 12px;
+  border-top: 1px solid var(--footer-text);
+  font-size: 0.8rem;
+}
+
+/* Forsiden (SPEC-forside-spor.md): I dag, sporenes kort og deres mærker. */
+.track-card {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+}
+
+.with-info > .track-card {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.track-card:not(:disabled):active {
+  transform: scale(0.97);
+}
+
+.track-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.track-card-arrow,
+.track-card-desc {
+  color: var(--muted);
+}
+
+.track-card-desc {
+  font-size: 0.88rem;
+}
+
+.track-card-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 14px;
+  font-size: 0.92rem;
+}
+
+.track-badge {
+  justify-self: start;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.track-badge.trained {
+  background: var(--ok-bg);
+  color: var(--ok);
+}
+
+.track-badge.due {
+  background: var(--accent-soft);
+  color: var(--text);
+}
+
+.track-badge.waiting {
+  background: var(--surface-2);
+  color: var(--muted);
+}
+
+/* Forsidens hoved: appens skyline-ikon (4-4-3-2 i familiefarven for 4), navnet og sprogknappen. */
+.home-head h1 {
+  flex: 1;
+}
+
+.home-icon {
+  flex: none;
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 28px;
+}
+
+.home-icon i {
+  width: 6px;
+  height: 100%;
+  border-radius: 3px 3px 0 0;
+  background: var(--fam-4);
+}
+
+.home-icon i:nth-child(3) {
+  height: 75%;
+}
+
+.home-icon i:nth-child(4) {
+  height: 50%;
 }

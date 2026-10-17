@@ -70,3 +70,25 @@ export const TRACK_ITEMS: readonly TrackItem[] = [
   { id: 'farvebehandling', track: 'farvebehandling', group: 'play', screen: 'farvebehandling', title: { da: 'Farvebehandling', en: 'Suit combinations' }, help: { da: 'Et selvstændigt spor om at spille én farve: hvilken linje giver størst chance for de stik, du skal bruge? Med egen daglig session, streak og XP, selvvalgt træning, analyse af 657 kombinationer og en løser.', en: 'A separate track about playing one suit: which line gives the best chance of the tricks you need? With its own daily session, streak and XP, free practice, analysis of 657 combinations and a solver.' } },
   { id: 'haandevaluering', track: 'haandevaluering', group: 'evaluation', screen: 'haandevaluering', title: { da: 'Håndevaluering', en: 'Hand evaluation' }, help: { da: 'Et selvstændigt spor om at vurdere hånden med Franks P-model: honnørpoint, hvornår fordelingen må lægges til, og niveaubeslutningen ud fra parrets samlede P. Med egen daglig session, streak og XP.', en: "A separate track about valuing your hand with Frank's P-model: honour points, when distribution may be added, and the level decision from the pair's total P. With its own daily session, streak and XP." } },
 ];
+
+const helpOf = (id: string): Both => TRACK_ITEMS.find((item) => item.id === id)!.help;
+
+/** Et spor på forsiden (SPEC-forside-spor.md): ét kort pr. spor med navn, kort beskrivelse og skærmen, kortet åbner. */
+export interface TrackCard {
+  track: string;
+  group: GroupId;
+  /** Skærmen i `App.tsx`; den er også sporets adresse (`#fordeling` osv.). */
+  screen: string;
+  title: Both;
+  description: Both;
+  /** Kortets ⓘ. */
+  help: Both;
+}
+
+/** Sporene i forsidens rækkefølge. Rækkefølgen afgør også, hvilket spor der er "næste" i I dag. */
+export const TRACK_CARDS: readonly TrackCard[] = [
+  { track: 'fordeling', group: 'counting', screen: 'fordeling', title: { da: 'Fordeling', en: 'Distribution' }, description: { da: 'De 39 mønstre og deres hyppighed', en: 'The 39 patterns and how often they occur' }, help: { da: 'Fordelingssporet: de 39 mønstre og deres hyppighed. Den daglige session tager ca. 5 minutter, og på sporets skærm finder du også huskepaladset, albummet, klubaftenen og kurverne.', en: 'The distribution track: the 39 patterns and how often they occur. The daily session takes about 5 minutes, and on the track’s screen you also find the memory palace, the album, the club evening and the charts.' } },
+  { track: 'pointregnskab', group: 'counting', screen: 'pointregnskab', title: { da: 'Pointregnskab', en: 'Point count' }, description: { da: 'Tæl honnørpoint under spillet', en: 'Count high-card points during play' }, help: helpOf('pointregnskab') },
+  { track: 'farvebehandling', group: 'play', screen: 'farvebehandling', title: { da: 'Farvebehandling', en: 'Suit combinations' }, description: { da: 'Den bedste linje i én farve · 657 kombinationer', en: 'The best line in one suit · 657 combinations' }, help: helpOf('farvebehandling') },
+  { track: 'haandevaluering', group: 'evaluation', screen: 'haandevaluering', title: { da: 'Håndevaluering', en: 'Hand evaluation' }, description: { da: 'Vurdér hånden med P-modellen', en: 'Value your hand with the P-model' }, help: helpOf('haandevaluering') },
+];

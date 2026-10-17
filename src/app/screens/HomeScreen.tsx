@@ -1,258 +1,278 @@
-import { Fragment } from 'react';
 import { dayOf } from '../../engine/dates';
-import { formatInt } from '../../engine/format';
 import type { Saved } from '../../engine/storage';
-import { streakOn } from '../../engine/streak';
 import { GRADE_LABEL } from '../../domain/patterns';
 import { getLang, tx, type Lang } from '../../i18n';
-import { isRoomOpen, palaceOf } from '../../memory/palace';
+import { Footer } from '../../ui/Footer';
 import { Info } from '../../ui/Info';
-import { dueItemKeys, gradeProgress, newPatternsToday } from '../progression';
-import { DISTRIBUTION_TRACK, GROUPS, TRACK_ITEMS, type Both, type TrackItem } from '../tracks';
+import { TopBar } from '../../ui/TopBar';
+import { todayOverview, trackStatuses, type TrackStatus } from '../status';
+import { GROUPS, TRACK_CARDS, type Both, type TrackCard } from '../tracks';
 
 interface HomeScreenProps {
   saved: Saved;
   updateReady: boolean;
   onUpdate?: () => void;
+  /** Starter fordelingssporets session (Velkomst, og I dag, når Fordeling er det næste spor). */
   onStart(): void;
-  onPalace(): void;
-  onAlbum(): void;
   onClub(): void;
-  onCurves(): void;
   onSettings(): void;
-  /** Farvebehandling: et selvstændigt spor (SPEC-farvebehandling.md). */
-  onFarvebehandling?(): void;
-  /** Pointregnskab: et selvstændigt spor (SPEC-pointregnskab.md). */
-  onPointregnskab?(): void;
   /** Skifter appens sprog (dansk/engelsk). */
   onLanguage?(lang: Lang): void;
   /** Den samlede vejledning. */
   onGuide?(): void;
-  /** Åbner en skærm fra `tracks.ts`, som ikke har sin egen funktion ovenfor (et nyt spor). */
+  /** Åbner et spors skærm: kortene og I dag for de andre spor. Uden onOpen vises sporene ikke. */
   onOpen?(screen: string): void;
-  /** Menupunkterne; standard er listen i `tracks.ts`. */
-  items?: readonly TrackItem[];
+  /** Sporenes kort; standard er listen i `tracks.ts`. */
+  cards?: readonly TrackCard[];
+  /** Sporenes status; standard læses fra lagringen uden at skrive (`status.ts`). */
+  statuses?: Record<string, TrackStatus>;
 }
 
 const plural = (n: number, one: string, many: string) => `${n} ${n === 1 ? one : many}`;
 
+/** Lagringen til at læse sporenes status; er den spærret (fx privat vindue), er der ingen data. */
+function readableStorage(): { getItem(key: string): string | null } {
+  try {
+    const storage = window.localStorage;
+    storage.getItem('fordelingstraener:v1');
+    return storage;
+  } catch {
+    return { getItem: () => null };
+  }
+}
+
+/** "tirsdag 13. oktober" / "Tuesday 13 October" for en dag i formen 2026-10-13. */
+function dayText(day: string): string {
+  const [y, m, d] = day.split('-').map(Number);
+  const date = new Date(y, m - 1, d, 12);
+  const locale = getLang() === 'en' ? 'en-GB' : 'da-DK';
+  const weekday = new Intl.DateTimeFormat(locale, { weekday: 'long' }).format(date);
+  const month = new Intl.DateTimeFormat(locale, { month: 'long' }).format(date);
+  return tx(`${weekday} ${d}. ${month}`, `${weekday} ${d} ${month}`);
+}
+
+/**
+ * Forsiden (SPEC-forside-spor.md): topbjælken, hovedet, I dag (eller Velkomst ved første besøg), de fire spor som kort i
+ * grupperne Optælling, Spilføring og Vurdering, Vejledning, Indstillinger og sidefoden. Fordelingssporets elementer står
+ * på Fordeling-skærmen (`DistributionScreen.tsx`). Forsiden læser sporenes data, men skriver intet.
+ */
 export function HomeScreen(props: HomeScreenProps) {
-  const { saved, updateReady, onUpdate, onStart, onPalace, onAlbum, onClub, onCurves, onSettings, onFarvebehandling, onPointregnskab, onLanguage, onGuide, onOpen } = props;
+  const { saved, updateReady, onUpdate, onStart, onClub, onSettings, onLanguage, onGuide, onOpen } = props;
+  const cards = props.cards ?? TRACK_CARDS;
+  const statuses = props.statuses ?? trackStatuses(saved, readableStorage(), Date.now());
   const today = dayOf(Date.now(), saved.settings.dayStartsAtHour);
-  const streak = streakOn(saved.streak, today);
-  const progress = gradeProgress(saved);
-  const stations = palaceOf(saved).stations.filter((s) => isRoomOpen(s.room, progress.level));
-  const named = stations.filter((s) => s.name.trim()).length;
-  const due = dueItemKeys(saved, today).length;
-  const fresh = newPatternsToday(saved, today);
-  const doneToday = saved.streak.lastDay === today;
-  const firstVisit = saved.sessions.length === 0 && Object.keys(saved.items).length === 0;
   const other: Lang = getLang() === 'da' ? 'en' : 'da';
-
-  /** Skærmene, forsiden kan åbne; et nyt spor åbnes med `onOpen`. Et menupunkt uden skærm vises ikke. */
-  const screens: Record<string, (() => void) | undefined> = {
-    palace: onPalace,
-    album: onAlbum,
-    club: onClub,
-    curves: onCurves,
-    farvebehandling: onFarvebehandling,
-    pointregnskab: onPointregnskab,
-  };
-  const opener = (screen: string) => screens[screen] ?? (onOpen && (() => onOpen(screen)));
-  const items = (props.items ?? TRACK_ITEMS).filter((item) => opener(item.screen));
   const both = (b: Both) => tx(b.da, b.en);
+  const statusOf = (track: string): TrackStatus =>
+    statuses[track] ?? { track, started: false, streak: 0, level: null, grade: null, doneToday: false, due: 0, fresh: 0 };
 
-  /** En menuknap med ⓘ ved siden af. */
-  const menu = (label: string, onClick: () => void, help: string) => (
-    <div className="with-info">
-      <button type="button" className="btn" onClick={onClick}>
-        {label}
-      </button>
-      <Info topic={label}>{help}</Info>
-    </div>
+  const firstVisit = cards.every((card) => !statusOf(card.track).started);
+  const overview = todayOverview(
+    cards.map((c) => c.track),
+    statuses,
   );
-  /** Et menupunkt fra `tracks.ts`: titel og ⓘ på det aktuelle sprog. */
-  const menuItem = (item: TrackItem) => <Fragment key={item.id}>{menu(both(item.title), opener(item.screen)!, both(item.help))}</Fragment>;
+  const nextCard = cards.find((c) => c.track === overview.next);
+  const firstCard = cards[0];
+  /** Starter det næste spors session: Fordelings session direkte, de andre spor på deres egen skærm. */
+  const startTrack = (card: TrackCard) => (card.track === 'fordeling' ? onStart() : onOpen?.(card.screen));
+
+  /** "Næste: Fordeling, med 4 emner til repetition og 1 nyt mønster. Ca. 5 minutter." */
+  function nextText(card: TrackCard): string {
+    const s = statusOf(card.track);
+    const da = [s.due > 0 && `${plural(s.due, 'emne', 'emner')} til repetition`, s.fresh > 0 && plural(s.fresh, 'nyt mønster', 'nye mønstre')].filter(Boolean);
+    const en = [s.due > 0 && `${plural(s.due, 'item', 'items')} to review`, s.fresh > 0 && plural(s.fresh, 'new pattern', 'new patterns')].filter(Boolean);
+    return tx(
+      `Næste: ${card.title.da}${da.length ? `, med ${da.join(' og ')}` : ''}. Ca. 5 minutter.`,
+      `Next: ${card.title.en}${en.length ? `, with ${en.join(' and ')}` : ''}. About 5 minutes.`,
+    );
+  }
+
+  /** Kortets mærke: trænet i dag, emner til repetition, ikke startet endnu eller ikke trænet i dag. */
+  function badge(s: TrackStatus) {
+    if (!s.started) return <span className="track-badge waiting">{tx('Ikke startet endnu', 'Not started yet')}</span>;
+    if (s.doneToday) return <span className="track-badge trained">{tx('✓ Trænet i dag', '✓ Trained today')}</span>;
+    if (s.due > 0) return <span className="track-badge due">{tx(`${plural(s.due, 'emne', 'emner')} til repetition`, `${plural(s.due, 'item', 'items')} to review`)}</span>;
+    return <span className="track-badge waiting">{tx('Ikke trænet i dag', 'Not trained today')}</span>;
+  }
+
+  function trackCard(card: TrackCard) {
+    const s = statusOf(card.track);
+    const info = `track-${card.track}-info`;
+    const level = s.level === null ? null : tx(`Niveau ${s.level}`, `Level ${s.level}`) + (s.grade ? ` · ${GRADE_LABEL[s.grade]}` : '');
+    return (
+      <div key={card.track} className="with-info">
+        <button type="button" className="track-card" aria-label={both(card.title)} aria-describedby={info} onClick={() => onOpen?.(card.screen)}>
+          <span className="track-card-head">
+            <span>{both(card.title)}</span>
+            <span className="track-card-arrow" aria-hidden="true">
+              →
+            </span>
+          </span>
+          <span id={info} className="track-card-body">
+            <span className="track-card-desc">{both(card.description)}</span>
+            {s.started && (
+              <span className="track-card-stats">
+                <span>
+                  <b>{s.streak}</b> {s.streak === 1 ? tx('dag i træk', 'day in a row') : tx('dage i træk', 'days in a row')}
+                </span>
+                {level && <span>{level}</span>}
+              </span>
+            )}
+            {badge(s)}
+          </span>
+        </button>
+        <Info topic={both(card.title)}>{both(card.help)}</Info>
+      </div>
+    );
+  }
 
   return (
-    <main className="screen">
-      <header className="home-head">
-        <h1>Fordelingstræneren</h1>
-        {onLanguage && (
-          <button
-            type="button"
-            className="btn small-btn"
-            lang={other}
-            aria-label={tx('Skift sprog til engelsk', 'Switch language to Danish')}
-            onClick={() => onLanguage(other)}
-          >
-            {tx('English', 'Dansk')}
-          </button>
+    <>
+      <TopBar />
+      <main className="screen">
+        <header className="home-head">
+          <span className="home-icon" aria-hidden="true">
+            <i />
+            <i />
+            <i />
+            <i />
+          </span>
+          <h1>Fordelingstræneren</h1>
+          {onLanguage && (
+            <button
+              type="button"
+              className="btn small-btn"
+              lang={other}
+              aria-label={tx('Skift sprog til engelsk', 'Switch language to Danish')}
+              onClick={() => onLanguage(other)}
+            >
+              {tx('English', 'Dansk')}
+            </button>
+          )}
+        </header>
+
+        {updateReady && (
+          <div className="banner" role="status">
+            <span>{tx('En ny version er klar.', 'A new version is ready.')}</span>
+            <button type="button" className="btn small-btn" onClick={onUpdate}>
+              {tx('Opdatér', 'Update')}
+            </button>
+          </div>
         )}
-      </header>
 
-      {updateReady && (
-        <div className="banner" role="status">
-          <span>{tx('En ny version er klar.', 'A new version is ready.')}</span>
-          <button type="button" className="btn small-btn" onClick={onUpdate}>
-            {tx('Opdatér', 'Update')}
-          </button>
-        </div>
-      )}
-
-      {firstVisit && (
-        <section className="card">
-          <h2>{tx('Velkommen', 'Welcome')}</h2>
-          <p>
-            {tx(
-              'Fem minutter om dagen. Du lærer de 39 mønstre og deres hyppighed og øver dig i at tænke i mønstre, når du tæller en hånd ud.',
-              'Five minutes a day. You learn the 39 patterns and how often they occur, and practise thinking in patterns when you count out a hand.',
-            )}
-          </p>
-          <button type="button" className="btn small-btn" onClick={onClub}>
-            {tx('Se en klubaften: 100 hænder', 'See a club evening: 100 hands')}
-          </button>
-        </section>
-      )}
-
-      {GROUPS.map((group) => {
-        const own = items.filter((item) => item.group === group.id);
-        const distribution = own.filter((item) => item.track === DISTRIBUTION_TRACK);
-        const others = own.filter((item) => item.track !== DISTRIBUTION_TRACK);
-        // Fordelingssporets elementer står altid først i Optælling; tomme grupper vises ikke.
-        const withDistribution = group.id === 'counting';
-        if (!own.length && !withDistribution) return null;
-        return (
-          <section key={group.id} className="home-group" aria-labelledby={`group-${group.id}`}>
-            <div className="with-info">
-              <h2 id={`group-${group.id}`} className="eyebrow">
-                {both(group.title)}
-              </h2>
-              <Info topic={both(group.title)}>{both(group.help)}</Info>
-            </div>
-            {withDistribution && (
-              <div className="home-track" role="group" aria-labelledby="track-distribution">
-                <h3 id="track-distribution">{tx('Fordeling', 'Distribution')}</h3>
-                <section className="stats">
-                  <div className="stat">
-                    <span className="stat-value">{streak.current}</span>
-                    <span className="stat-label">{streak.current === 1 ? tx('dag i træk', 'day in a row') : tx('dage i træk', 'days in a row')}</span>
-                  </div>
-                  <div className="stat">
-                    <span className="stat-value">{formatInt(saved.xp)}</span>
-                    <span className="stat-label">XP</span>
-                  </div>
-                </section>
-                <div className="with-info">
-                  <p className="muted small">
-                    {streak.jokerUsedThisWeek
-                      ? tx('Ugens joker er brugt.', "This week's joker is used.")
-                      : tx('Ugens joker er klar til en glemt dag.', "This week's joker is ready for a missed day.")}{' '}
-                    {tx('Bedste streak:', 'Best streak:')} {saved.streak.best}.
-                  </p>
-                  <Info topic={tx('Streak og XP', 'Streak and XP')}>
-                    {tx(
-                      'Streak er antal dage i træk med en gennemført session; dagen skifter kl. 04. Én glemt dag pr. uge dækkes automatisk af ugens joker. XP: 10 for et rigtigt svar, mere for hurtige svar og for mange rigtige i træk (combo).',
-                      'Your streak is the number of days in a row with a completed session; the day changes at 04:00. One missed day per week is covered automatically by the weekly joker. XP: 10 for a right answer, more for fast answers and for long runs of right answers (combo).',
-                    )}
-                  </Info>
-                </div>
-
-                <section className="card">
-                  <div className="with-info">
-                    <h2>
-                      {tx('Niveau', 'Level')} {progress.level} · {GRADE_LABEL[progress.grade]}
-                    </h2>
-                    <Info topic={tx('Niveau', 'Level')}>
-                      {tx(
-                        'Niveauet følger mønstrenes grader: almindelig, ualmindelig, sjælden, episk og legendarisk. Næste grad låses op, når alle emner i den nuværende grad står i kasse 3 eller højere i Leitner-systemet. Bjælken viser, hvor langt du er, og et nyt rum i huskepaladset åbner med niveauet.',
-                        'Your level follows the pattern grades: common, uncommon, rare, epic and legendary. The next grade unlocks when all items in the current grade are in box 3 or higher in the Leitner system. The bar shows how far you are, and a new room in the memory palace opens with each level.',
-                      )}
-                    </Info>
-                  </div>
-                  <div
-                    className="meter"
-                    role="meter"
-                    aria-label={tx('Emner i kasse 3 eller højere', 'Items in box 3 or higher')}
-                    aria-valuemin={0}
-                    aria-valuemax={progress.items}
-                    aria-valuenow={progress.itemsDone}
-                  >
-                    <span style={{ width: `${(progress.itemsDone / progress.items) * 100}%` }} />
-                  </div>
-                  <p className="muted small">
-                    {tx(
-                      `${progress.itemsDone} af ${progress.items} emner i kasse 3 eller højere · ${progress.introduced} af ${progress.patterns} mønstre introduceret`,
-                      `${progress.itemsDone} of ${progress.items} items in box 3 or higher · ${progress.introduced} of ${progress.patterns} patterns introduced`,
-                    )}
-                  </p>
-                  <p className="muted small">
-                    {tx(`Huskepalads: ${named} af ${stations.length} stationer navngivet.`, `Memory palace: ${named} of ${stations.length} stations named.`)}
-                  </p>
-                </section>
-
-                <section className="card">
-                  <div className="with-info">
-                    <h2>{tx('I dag', 'Today')}</h2>
-                    <Info topic={tx('I dag', 'Today')}>
-                      {tx(
-                        'Repetition er de emner, Leitner-systemet har sat til i dag. Et rigtigt og hurtigt svar flytter emnet en kasse op, så det kommer igen om 1, 2, 4, 8 eller 16 dage; et forkert svar sender det tilbage til kasse 1. Der kommer højst 2 nye mønstre pr. dag.',
-                        'Review is the items the Leitner system has scheduled for today. A right and fast answer moves the item up one box, so it returns in 1, 2, 4, 8 or 16 days; a wrong answer sends it back to box 1. At most 2 new patterns arrive per day.',
-                      )}
-                    </Info>
-                  </div>
-                  <p>
-                    {due === 0
-                      ? tx('Ingen emner til repetition.', 'No items to review.')
-                      : tx(`${plural(due, 'emne', 'emner')} til repetition.`, `${plural(due, 'item', 'items')} to review.`)}
-                    {fresh > 0 && tx(` ${plural(fresh, 'nyt mønster venter', 'nye mønstre venter')}.`, ` ${plural(fresh, 'new pattern is waiting', 'new patterns are waiting')}.`)}
-                  </p>
-                  {doneToday && <p className="done">{tx('✓ Dagens session er gennemført.', "✓ Today's session is complete.")}</p>}
-                </section>
-                <div className="with-info">
-                  <button type="button" className="btn primary" onClick={onStart}>
-                    {doneToday ? tx('Tag en ekstra session', 'Take an extra session') : tx('Start dagens session', "Start today's session")}
-                  </button>
-                  <Info topic={tx('Sessionen', 'The session')}>
-                    {tx(
-                      'En session tager ca. 5 minutter: repetition, niveauøvelse, lynrunde, 13-sudoku og status. Timeren er blød, så opgaven, du er i gang med, gøres altid færdig. Dagen tæller i din streak, når sessionen er gennemført.',
-                      'A session takes about 5 minutes: review, level practice, lightning round, 13-sudoku and status. The timer is soft, so the task you are working on is always finished. The day counts in your streak when the session is complete.',
-                    )}
-                  </Info>
-                </div>
-                {distribution.length > 0 && <div className="two">{distribution.map(menuItem)}</div>}
-              </div>
-            )}
-            {others.length > 0 && <div className="two">{others.map(menuItem)}</div>}
+        {firstVisit ? (
+          <section className="card" aria-labelledby="welcome">
+            <h2 id="welcome">{tx('Velkommen', 'Welcome')}</h2>
+            <p>
+              {tx(
+                'Bridgetræning fem minutter om dagen. Appen har fire spor, og hvert spor har sin egen daglige session, streak og XP.',
+                'Bridge practice five minutes a day. The app has four tracks, and each track has its own daily session, streak and XP.',
+              )}
+            </p>
+            <p className="muted small">
+              {tx(
+                'Start med Fordeling, hvis du er i tvivl. Du kan altid skifte spor her på forsiden.',
+                'Start with Distribution if you are unsure. You can always switch tracks here on the home screen.',
+              )}
+            </p>
+            <button type="button" className="btn primary" onClick={onStart}>
+              {tx('Start med Fordeling', 'Start with Distribution')}
+            </button>
+            <button type="button" className="btn small-btn" onClick={onClub}>
+              {tx('Se en klubaften: 100 hænder', 'See a club evening: 100 hands')}
+            </button>
           </section>
-        );
-      })}
-
-      {onGuide && (
-        <section className="card">
-          <h2>{tx('Vejledning', 'Guide')}</h2>
-          <p className="muted small">
-            {tx(
-              'Sådan bruger du appen: sessionen, øvelserne, husketeknikkerne, farvebehandling, sprog og dine data. Tryk på ⓘ ved et element for at få en kort forklaring.',
-              'How to use the app: the session, the exercises, the memory techniques, suit combinations, language and your data. Tap ⓘ next to an element for a short explanation.',
+        ) : (
+          <section className="card" aria-labelledby="today">
+            <div className="with-info">
+              <span className="eyebrow">
+                {tx('I dag', 'Today')} · {dayText(today)}
+              </span>
+              <Info topic={tx('I dag', 'Today')}>
+                {tx(
+                  'Et spor er trænet, når dagens session i sporet er gennemført; dagen skifter kl. 04. Næste spor er det første spor her på forsiden, der ikke er trænet i dag, og knappen starter dets session.',
+                  "A track is trained when today's session in the track is complete; the day changes at 04:00. The next track is the first track on this screen that is not yet trained today, and the button starts its session.",
+                )}
+              </Info>
+            </div>
+            <h2 id="today">{tx(`${overview.done} af ${overview.total} spor er trænet`, `${overview.done} of ${overview.total} tracks trained`)}</h2>
+            <div
+              className="meter"
+              role="meter"
+              aria-label={tx('Spor trænet i dag', 'Tracks trained today')}
+              aria-valuemin={0}
+              aria-valuemax={overview.total}
+              aria-valuenow={overview.done}
+            >
+              <span style={{ width: `${(overview.done / overview.total) * 100}%` }} />
+            </div>
+            {nextCard ? (
+              <>
+                <p className="muted small">{nextText(nextCard)}</p>
+                <button type="button" className="btn primary" onClick={() => startTrack(nextCard)}>
+                  {tx(`Start dagens session i ${nextCard.title.da}`, `Start today's session in ${nextCard.title.en}`)}
+                </button>
+              </>
+            ) : (
+              <>
+                <p className="muted small">
+                  {tx(`Alle ${overview.total === 4 ? 'fire' : overview.total} spor er trænet i dag.`, `All ${overview.total === 4 ? 'four' : overview.total} tracks are trained today.`)}
+                </p>
+                <button type="button" className="btn primary" onClick={() => startTrack(firstCard)}>
+                  {tx(`Tag en ekstra session i ${firstCard.title.da}`, `Take an extra session in ${firstCard.title.en}`)}
+                </button>
+              </>
             )}
-          </p>
-          <button type="button" className="btn small-btn" onClick={onGuide}>
-            {tx('Læs vejledningen', 'Read the guide')}
-          </button>
-        </section>
-      )}
-
-      <div className="two">
-        {menu(
-          tx('Indstillinger', 'Settings'),
-          onSettings,
-          tx(
-            'Sikkerhedskopi (eksport og import af dine data), tærsklerne for hurtige svar og visningen i Lynaflæsning.',
-            'Backup (export and import of your data), the thresholds for fast answers and the display in Lightning reading.',
-          ),
+          </section>
         )}
-      </div>
-    </main>
+
+        {onOpen &&
+          GROUPS.map((group) => {
+            const own = cards.filter((card) => card.group === group.id);
+            if (!own.length) return null;
+            return (
+              <section key={group.id} className="home-group" aria-labelledby={`group-${group.id}`}>
+                <div className="with-info">
+                  <h2 id={`group-${group.id}`} className="eyebrow">
+                    {both(group.title)}
+                  </h2>
+                  <Info topic={both(group.title)}>{both(group.help)}</Info>
+                </div>
+                {own.map(trackCard)}
+              </section>
+            );
+          })}
+
+        {onGuide && (
+          <section className="card">
+            <h2>{tx('Vejledning', 'Guide')}</h2>
+            <p className="muted small">
+              {tx(
+                'Sådan bruger du appen: sessionen, øvelserne, husketeknikkerne, farvebehandling, sprog og dine data. Tryk på ⓘ ved et element for at få en kort forklaring.',
+                'How to use the app: the session, the exercises, the memory techniques, suit combinations, language and your data. Tap ⓘ next to an element for a short explanation.',
+              )}
+            </p>
+            <button type="button" className="btn small-btn" onClick={onGuide}>
+              {tx('Læs vejledningen', 'Read the guide')}
+            </button>
+          </section>
+        )}
+
+        <div className="two">
+          <div className="with-info">
+            <button type="button" className="btn" onClick={onSettings}>
+              {tx('Indstillinger', 'Settings')}
+            </button>
+            <Info topic={tx('Indstillinger', 'Settings')}>
+              {tx(
+                'Sikkerhedskopi (eksport og import af dine data), tærsklerne for hurtige svar og visningen i Lynaflæsning.',
+                'Backup (export and import of your data), the thresholds for fast answers and the display in Lightning reading.',
+              )}
+            </Info>
+          </div>
+        </div>
+        <Footer />
+      </main>
+    </>
   );
 }

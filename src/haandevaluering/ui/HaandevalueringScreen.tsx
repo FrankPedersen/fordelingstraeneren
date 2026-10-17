@@ -2,7 +2,9 @@ import { useCallback, useMemo, useState } from 'react';
 import { dayOf } from '../../engine/dates';
 import { formatInt } from '../../engine/format';
 import { streakOn } from '../../engine/streak';
+import { Footer } from '../../ui/Footer';
 import { Info } from '../../ui/Info';
+import { TopBar } from '../../ui/TopBar';
 import { heExportDue, HE_STORAGE_KEY, loadHeSaved, saveHeSaved, type HeSaved } from '../storage';
 import { warmupQueue } from '../training/deck';
 import { downloadHeExport, Indstillinger } from './Indstillinger';
@@ -49,23 +51,29 @@ export default function HaandevalueringScreen({ onBack }: { onBack(): void }) {
   else if (view === 'settings') content = <Indstillinger saved={saved} update={update} onBack={home} />;
   else content = <Forside saved={saved} update={update} onStart={() => setView('session')} onSettings={() => setView('settings')} />;
 
+  // Topbjælken og sidefoden står på sporets skærm, men ikke i en session (SPEC-forside-spor.md).
+  const frame = view !== 'session';
   return (
-    <main className="screen he-screen">
-      <header className="screen-head">
-        <button type="button" className="round" aria-label={TEXT.back} onClick={onBack}>
-          ←
-        </button>
-        <h1>{TEXT.title}</h1>
-        <Info topic={TEXT.title}>{TEXT.help.screen}</Info>
-        <span className="he-level">{TEXT.level(saved.level)}</span>
-      </header>
-      {failed && (
-        <p role="alert" className="he-note">
-          {TEXT.saveFailed}
-        </p>
-      )}
-      {content}
-    </main>
+    <>
+      {frame && <TopBar />}
+      <main className="screen he-screen">
+        <header className="screen-head">
+          <button type="button" className="round" aria-label={TEXT.back} onClick={onBack}>
+            ←
+          </button>
+          <h1>{TEXT.title}</h1>
+          <Info topic={TEXT.title}>{TEXT.help.screen}</Info>
+          <span className="he-level">{TEXT.level(saved.level)}</span>
+        </header>
+        {failed && (
+          <p role="alert" className="he-note">
+            {TEXT.saveFailed}
+          </p>
+        )}
+        {content}
+        {frame && <Footer />}
+      </main>
+    </>
   );
 }
 

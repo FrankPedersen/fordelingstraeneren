@@ -10,7 +10,9 @@ import { Træning } from './Træning';
 import './tokens.css';
 import './farvebehandling.css';
 import { getLang } from '../../i18n';
+import { Footer } from '../../ui/Footer';
 import { Info } from '../../ui/Info';
+import { TopBar } from '../../ui/TopBar';
 
 type Tab = 'training' | 'practice' | 'analysis';
 
@@ -60,6 +62,8 @@ export default function FarvebehandlingScreen({ onBack }: FarvebehandlingScreenP
   const [practiceStart, setPracticeStart] = useState<string | null>(null);
   const [bank, setBank] = useState<BankItem[] | null>(null);
   const [loadFailed, setLoadFailed] = useState(false);
+  // Træningens session er i gang; så vises topbjælken og sidefoden ikke (SPEC-forside-spor.md).
+  const [inSession, setInSession] = useState(false);
   // Teknikkernes navn, huskeregel og billede på det aktuelle sprog.
   const techniques = techniquesFile.techniques.map((t) => (getLang() === 'en' ? { ...t, ...t.en } : t));
   const storage = useMemo(browserStorage, []);
@@ -104,52 +108,57 @@ export default function FarvebehandlingScreen({ onBack }: FarvebehandlingScreenP
     };
   }, []);
 
+  const frame = !(tab === 'training' && inSession);
   return (
-    <main className="fb-screen">
-      <header className="fb-header">
-        <button type="button" className="round" aria-label={TEXT.back} onClick={onBack}>
-          ←
-        </button>
-        <h1>{TEXT.title}</h1>
-        <nav className="fb-tabs" aria-label={TEXT.title}>
-          {(['training', 'practice', 'analysis'] as const).map((t) => (
-            <button
-              key={t}
-              type="button"
-              className={`fb-tab${tab === t ? ' fb-tab-current' : ''}`}
-              aria-current={tab === t ? 'page' : undefined}
-              onClick={() => {
-                setTab(t);
-                setAnalysisStart(null);
-                setPracticeStart(null);
-              }}
-            >
-              {TEXT.tabs[t]}
-            </button>
-          ))}
-        </nav>
-        <Info topic={TEXT.title}>{TEXT.help.tabs}</Info>
-      </header>
-      {failed && (
-        <p role="alert" className="fb-note">
-          {TEXT.saveFailed}
-        </p>
-      )}
-      {!bank ? (
-        <p role="status" className="fb-note">
-          {loadFailed ? TEXT.loadFailed : TEXT.loading}
-        </p>
-      ) : (
-        <>
-          {tab === 'training' && (
-            <Træning bank={bank} saved={saved} update={update} techniques={techniques} onOpenAnalysis={openAnalysis} onOpenPractice={openPractice} />
-          )}
-          {tab === 'practice' && (
-            <Selvvalgt bank={bank} saved={saved} update={update} techniques={techniques} startTechnique={practiceStart ?? undefined} />
-          )}
-          {tab === 'analysis' && <Analysevindue bank={bank} start={analysisStart ?? undefined} saved={saved} update={update} />}
-        </>
-      )}
-    </main>
+    <>
+      {frame && <TopBar />}
+      <main className="fb-screen">
+        <header className="fb-header">
+          <button type="button" className="round" aria-label={TEXT.back} onClick={onBack}>
+            ←
+          </button>
+          <h1>{TEXT.title}</h1>
+          <nav className="fb-tabs" aria-label={TEXT.title}>
+            {(['training', 'practice', 'analysis'] as const).map((t) => (
+              <button
+                key={t}
+                type="button"
+                className={`fb-tab${tab === t ? ' fb-tab-current' : ''}`}
+                aria-current={tab === t ? 'page' : undefined}
+                onClick={() => {
+                  setTab(t);
+                  setAnalysisStart(null);
+                  setPracticeStart(null);
+                }}
+              >
+                {TEXT.tabs[t]}
+              </button>
+            ))}
+          </nav>
+          <Info topic={TEXT.title}>{TEXT.help.tabs}</Info>
+        </header>
+        {failed && (
+          <p role="alert" className="fb-note">
+            {TEXT.saveFailed}
+          </p>
+        )}
+        {!bank ? (
+          <p role="status" className="fb-note">
+            {loadFailed ? TEXT.loadFailed : TEXT.loading}
+          </p>
+        ) : (
+          <>
+            {tab === 'training' && (
+              <Træning bank={bank} saved={saved} update={update} techniques={techniques} onOpenAnalysis={openAnalysis} onOpenPractice={openPractice} onSession={setInSession} />
+            )}
+            {tab === 'practice' && (
+              <Selvvalgt bank={bank} saved={saved} update={update} techniques={techniques} startTechnique={practiceStart ?? undefined} />
+            )}
+            {tab === 'analysis' && <Analysevindue bank={bank} start={analysisStart ?? undefined} saved={saved} update={update} />}
+          </>
+        )}
+        {frame && <Footer />}
+      </main>
+    </>
   );
 }

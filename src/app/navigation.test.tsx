@@ -5,7 +5,10 @@ import { defaultSaved, STORAGE_KEY } from '../engine/storage';
 import { setLang } from '../i18n';
 import App from './App';
 import { HomeScreen } from './screens/HomeScreen';
-import { GROUPS, TRACK_ITEMS, type TrackItem } from './tracks';
+import { GROUPS, TRACK_CARDS, TRACK_ITEMS, type TrackCard } from './tracks';
+
+// Opdateret til SPEC-forside-spor.md: sporene står som kort på forsiden, og fordelingssporets elementer og menupunkter
+// står på Fordeling-skærmen. Testenes hensigt fra SPEC-navigation.md er den samme.
 
 const click = (name: string | RegExp) => fireEvent.click(screen.getByRole('button', { name }));
 const before = (a: Node, b: Node) => Boolean(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
@@ -16,6 +19,7 @@ const snapshot = () => JSON.stringify(Object.fromEntries(Object.keys(localStorag
 
 beforeEach(() => {
   window.scrollTo = vi.fn();
+  window.history.replaceState(null, '', '/');
   localStorage.clear();
   localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultSaved()));
 });
@@ -24,15 +28,26 @@ afterEach(() => {
   setLang('da');
 });
 
-describe('Forsidens grupper (SPEC-navigation.md)', () => {
-  it('hver knap åbner den samme skærm som før med ét tryk, og intet i lagringen ændres', async () => {
+describe('Forsidens grupper (SPEC-navigation.md og SPEC-forside-spor.md)', () => {
+  it('hver knap åbner den samme skærm som før, og intet i lagringen ændres', async () => {
     const stored = snapshot();
     render(<App />);
+    click('Fordeling');
+    expect(screen.getByRole('heading', { name: 'Fordeling', level: 1 })).toBeTruthy();
     for (const [button, heading] of [
       ['Huskepalads', 'Huskepalads'],
       ['Album', 'Album'],
       ['Klubaften', 'Klubaften'],
       ['Kurver', 'Kurver'],
+    ] as const) {
+      click(button);
+      expect(screen.getByRole('heading', { name: heading, level: 1 }), button).toBeTruthy();
+      click('Tilbage');
+      // Tilbage fører til Fordeling-skærmen, hvor menupunktet står.
+      expect(screen.getByRole('heading', { name: 'Fordeling', level: 1 }), button).toBeTruthy();
+    }
+    click('Tilbage til forsiden');
+    for (const [button, heading] of [
       ['Indstillinger', 'Indstillinger'],
       ['Læs vejledningen', 'Vejledning'],
     ] as const) {
@@ -40,12 +55,13 @@ describe('Forsidens grupper (SPEC-navigation.md)', () => {
       expect(screen.getByRole('heading', { name: heading, level: 1 }), button).toBeTruthy();
       click('Tilbage');
     }
-    for (const track of ['Pointregnskab', 'Farvebehandling']) {
+    for (const track of ['Pointregnskab', 'Farvebehandling', 'Håndevaluering']) {
       click(track);
       expect(await screen.findByRole('heading', { name: track, level: 1 }, { timeout: 10_000 })).toBeTruthy();
       click('Tilbage til forsiden');
     }
     expect(snapshot()).toBe(stored);
+    click('Fordeling');
     click('Start dagens session');
     expect(screen.getByRole('button', { name: 'Afbryd sessionen' })).toBeTruthy();
   }, 30_000);
@@ -68,40 +84,37 @@ describe('Forsidens grupper (SPEC-navigation.md)', () => {
     expect(screen.queryAllByRole('button', { name: /sudoku/i })).toEqual([]);
   });
 
-  it('hvert menupunkt står i præcis én gruppe, med samme navn og ⓘ som før', () => {
+  it('hvert spor står som ét kort i præcis én gruppe', () => {
     render(<App />);
     const sections = [...document.querySelectorAll('section.home-group')];
-    for (const item of TRACK_ITEMS) {
-      const buttons = screen.getAllByRole('button', { name: item.title.da });
-      expect(buttons, item.id).toHaveLength(1);
-      const section = buttons[0].closest('section.home-group');
-      expect(sections.filter((s) => s.contains(buttons[0])), item.id).toHaveLength(1);
-      expect(section?.getAttribute('aria-labelledby'), item.id).toBe(`group-${item.group}`);
-      expect(screen.getByRole('button', { name: `Hjælp: ${item.title.da}` })).toBeTruthy();
+    for (const card of TRACK_CARDS) {
+      const buttons = screen.getAllByRole('button', { name: card.title.da });
+      expect(buttons, card.track).toHaveLength(1);
+      expect(sections.filter((s) => s.contains(buttons[0])), card.track).toHaveLength(1);
+      expect(buttons[0].closest('section.home-group')?.getAttribute('aria-labelledby'), card.track).toBe(`group-${card.group}`);
     }
   });
 
-  it('fordelingssporets elementer står først i Optælling under Fordeling i samme rækkefølge som før', () => {
+  it('fordelingssporets elementer og menupunkter står på Fordeling-skærmen i samme rækkefølge som før, med samme navn og ⓘ', () => {
     render(<App />);
-    const counting = document.querySelector('section.home-group')!;
-    const distribution = screen.getByRole('group', { name: 'Fordeling' });
-    expect(counting.contains(distribution)).toBe(true);
+    click('Fordeling');
+    const main = document.querySelector('main')!;
     const inOrder = [
-      within(distribution).getByRole('heading', { name: 'Fordeling' }),
-      within(distribution).getByText('dage i træk'),
-      within(distribution).getByText(/Ugens joker/),
-      within(distribution).getByRole('heading', { name: /^Niveau 1/ }),
-      within(distribution).getByRole('heading', { name: 'I dag' }),
-      within(distribution).getByRole('button', { name: 'Start dagens session' }),
-      within(distribution).getByRole('button', { name: 'Huskepalads' }),
-      within(distribution).getByRole('button', { name: 'Album' }),
-      within(distribution).getByRole('button', { name: 'Klubaften' }),
-      within(distribution).getByRole('button', { name: 'Kurver' }),
-      screen.getByRole('button', { name: 'Pointregnskab' }),
+      within(main).getByRole('heading', { name: 'Fordeling', level: 1 }),
+      within(main).getByText('dage i træk'),
+      within(main).getByText(/Ugens joker/),
+      within(main).getByRole('heading', { name: /^Niveau 1/ }),
+      within(main).getByRole('heading', { name: 'I dag' }),
+      within(main).getByRole('button', { name: 'Start dagens session' }),
+      within(main).getByRole('button', { name: 'Huskepalads' }),
+      within(main).getByRole('button', { name: 'Album' }),
+      within(main).getByRole('button', { name: 'Klubaften' }),
+      within(main).getByRole('button', { name: 'Kurver' }),
     ];
     for (let i = 1; i < inOrder.length; i++) expect(before(inOrder[i - 1], inOrder[i]), `${i}`).toBe(true);
-    // Pointregnskab er sit eget spor og står ikke under Fordeling.
-    expect(distribution.contains(inOrder[inOrder.length - 1])).toBe(false);
+    for (const item of TRACK_ITEMS.filter((i) => i.track === 'fordeling')) {
+      expect(screen.getByRole('button', { name: `Hjælp: ${item.title.da}` }), item.id).toBeTruthy();
+    }
   });
 
   it('vejledningskortet og Indstillinger står under grupperne', () => {
@@ -132,41 +145,27 @@ describe('Forsidens grupper (SPEC-navigation.md)', () => {
     expect(screen.getByText(GROUPS[1].help.en)).toBeTruthy();
   });
 
-  it('et nyt spor med ét menupunkt kræver kun én ny linje i tracks.ts', () => {
+  it('et nyt spor kræver kun én ny linje i tracks.ts', () => {
     const onOpen = vi.fn();
-    const evaluation: TrackItem = {
-      id: 'new-track',
+    const card: TrackCard = {
       track: 'nyt-spor',
       group: 'evaluation',
       screen: 'new-track',
       title: { da: 'Nyt spor', en: 'New track' },
+      description: { da: 'Et nyt spor om vurdering', en: 'A new track about evaluation' },
       help: { da: 'Et nyt spor om vurdering af egen og makkers hånd.', en: "A new track about evaluating your own and partner's hand." },
     };
     const noop = () => {};
-    render(
-      <HomeScreen
-        saved={defaultSaved()}
-        updateReady={false}
-        onStart={noop}
-        onPalace={noop}
-        onAlbum={noop}
-        onClub={noop}
-        onCurves={noop}
-        onSettings={noop}
-        onOpen={onOpen}
-        items={[...TRACK_ITEMS, evaluation]}
-      />,
-    );
-    // Vurdering vises nu, sidst; skærme uden egen funktion åbnes med onOpen.
+    render(<HomeScreen saved={defaultSaved()} updateReady={false} onStart={noop} onClub={noop} onSettings={noop} onOpen={onOpen} cards={[...TRACK_CARDS, card]} />);
     expect(groupTitles()).toEqual(['Optælling', 'Spilføring', 'Vurdering']);
-    expect(screen.getByRole('button', { name: 'Hjælp: Vurdering' })).toBeTruthy();
+    const evaluation = document.querySelector('section[aria-labelledby="group-evaluation"]')!;
+    expect(within(evaluation as HTMLElement).getByRole('button', { name: 'Nyt spor' })).toBeTruthy();
+    expect(screen.getByRole('button', { name: 'Hjælp: Nyt spor' })).toBeTruthy();
     click('Nyt spor');
     expect(onOpen).toHaveBeenCalledWith('new-track');
     cleanup();
-    // Uden onOpen og uden Farvebehandlings funktion er Spilføring tom og vises ikke.
-    render(
-      <HomeScreen saved={defaultSaved()} updateReady={false} onStart={noop} onPalace={noop} onAlbum={noop} onClub={noop} onCurves={noop} onSettings={noop} />,
-    );
-    expect(groupTitles()).toEqual(['Optælling']);
+    // Uden onOpen kan sporene ikke åbnes, og grupperne vises ikke.
+    render(<HomeScreen saved={defaultSaved()} updateReady={false} onStart={noop} onClub={noop} onSettings={noop} />);
+    expect(groupTitles()).toEqual([]);
   });
 });

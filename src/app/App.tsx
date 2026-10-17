@@ -5,6 +5,7 @@ import { useLang } from '../ui/useLang';
 import { ensureItems } from './progression';
 import { AlbumScreen } from './screens/AlbumScreen';
 import { CurvesScreen } from './screens/CurvesScreen';
+import { DistributionScreen } from './screens/DistributionScreen';
 import { GuideScreen } from './screens/GuideScreen';
 import { HomeScreen } from './screens/HomeScreen';
 import { KlubaftenScreen } from './screens/KlubaftenScreen';
@@ -20,10 +21,19 @@ const PointregnskabScreen = lazy(() => import('../pointregnskab/ui/Pointregnskab
 // Håndevaluering er et selvstændigt spor i gruppen Vurdering (SPEC-haandevaluering.md); forsiden åbner det med onOpen.
 const HaandevalueringScreen = lazy(() => import('../haandevaluering/ui/HaandevalueringScreen'));
 
-type Screen = 'home' | 'session' | 'palace' | 'album' | 'club' | 'curves' | 'settings' | 'guide' | 'farvebehandling' | 'pointregnskab' | 'haandevaluering';
+type Screen = 'home' | 'fordeling' | 'session' | 'palace' | 'album' | 'club' | 'curves' | 'settings' | 'guide' | 'farvebehandling' | 'pointregnskab' | 'haandevaluering';
 
-/** Skærmene, forsiden åbner med `onOpen` (spor uden egen funktion i HomeScreen). */
-const OPENED: readonly Screen[] = ['haandevaluering'];
+/** Sporenes skærme; de åbnes fra forsiden med `onOpen`, og navnet er også skærmens adresse (#fordeling osv.). */
+const TRACKS: readonly Screen[] = ['fordeling', 'pointregnskab', 'farvebehandling', 'haandevaluering'];
+
+/** Skærmen for en adresse: et spor, eller forsiden uden (eller med en ukendt) hash. */
+function screenOf(hash: string): Screen {
+  const name = decodeURIComponent(hash.replace(/^#/, '')) as Screen;
+  return TRACKS.includes(name) ? name : 'home';
+}
+
+/** Markerer historikposter, appen selv har lagt, så Tilbage i appen kan gå et skridt tilbage i browseren. */
+const OWN = { fordelingstraeneren: true };
 
 interface AppProps {
   /** En ny version af appen er hentet og venter. */
@@ -36,13 +46,47 @@ export default function App({ updateReady = false, onUpdate }: AppProps) {
   // Sproget fra lagringen sættes, før noget tegnes; skifter det, tegnes hele appen igen.
   useState(() => setLang(saved.settings.language ?? 'da'));
   useLang();
-  const [screen, setScreen] = useState<Screen>('home');
-  const home = () => setScreen('home');
+  const [screen, setScreen] = useState<Screen>(() => screenOf(window.location.hash));
+  // Skærmen, en underskærm (session, huskepalads, …) vender tilbage til.
+  const [from, setFrom] = useState<Screen>('home');
 
   useEffect(() => {
     // Ingen returværdi: scrollTo giver et promise i nyere browsere, og React ville kalde det som oprydning.
     window.scrollTo(0, 0);
   }, [screen]);
+
+  // Sporenes adresser (SPEC-forside-spor.md): browserens tilbage-knap og links med #spor skifter skærm.
+  useEffect(() => {
+    const follow = () => setScreen(screenOf(window.location.hash));
+    window.addEventListener('popstate', follow);
+    window.addEventListener('hashchange', follow);
+    return () => {
+      window.removeEventListener('popstate', follow);
+      window.removeEventListener('hashchange', follow);
+    };
+  }, []);
+
+  /** Åbner et spor: adressen skifter til #spor, så browserens tilbage-knap fører tilbage til forsiden. */
+  function openTrack(track: Screen) {
+    if (window.location.hash !== `#${track}`) window.history.pushState(OWN, '', `#${track}`);
+    setScreen(track);
+  }
+
+  /** Tilbage til forsiden fra et spor: et skridt tilbage i browseren, hvis appen selv lagde posten, ellers uden hash. */
+  function home() {
+    setScreen('home');
+    if (!window.location.hash) return;
+    const state = window.history.state as typeof OWN | null;
+    if (state?.fordelingstraeneren) window.history.back();
+    else window.history.replaceState(null, '', window.location.pathname + window.location.search);
+  }
+
+  /** Åbner en underskærm og husker, hvilken skærm den kom fra. */
+  function open(next: Screen) {
+    setFrom(screen);
+    setScreen(next);
+  }
+  const back = () => (from === 'home' ? home() : setScreen(from));
 
   function changeLanguage(language: Lang) {
     setSaved({ ...saved, settings: { ...saved.settings, language } });
@@ -53,24 +97,36 @@ export default function App({ updateReady = false, onUpdate }: AppProps) {
     // Mønstre fra før en ny færdighed kom til, får deres manglende emner.
     const ensured = ensureItems(saved, dayOf(Date.now(), saved.settings.dayStartsAtHour));
     if (ensured !== saved) setSaved(ensured);
-    setScreen('session');
+    open('session');
   }
 
   switch (screen) {
     case 'session':
-      return <SessionScreen saved={saved} onSave={setSaved} onExit={home} />;
+      return <SessionScreen saved={saved} onSave={setSaved} onExit={back} />;
     case 'palace':
-      return <PalaceScreen saved={saved} onSave={setSaved} onBack={home} />;
+      return <PalaceScreen saved={saved} onSave={setSaved} onBack={back} />;
     case 'album':
-      return <AlbumScreen saved={saved} onSave={setSaved} onBack={home} />;
+      return <AlbumScreen saved={saved} onSave={setSaved} onBack={back} />;
     case 'club':
-      return <KlubaftenScreen onBack={home} />;
+      return <KlubaftenScreen onBack={back} />;
     case 'curves':
-      return <CurvesScreen saved={saved} onBack={home} />;
+      return <CurvesScreen saved={saved} onBack={back} />;
     case 'settings':
-      return <SettingsScreen saved={saved} onSave={setSaved} onBack={home} />;
+      return <SettingsScreen saved={saved} onSave={setSaved} onBack={back} />;
     case 'guide':
-      return <GuideScreen onBack={home} />;
+      return <GuideScreen onBack={back} />;
+    case 'fordeling':
+      return (
+        <DistributionScreen
+          saved={saved}
+          onStart={startSession}
+          onPalace={() => open('palace')}
+          onAlbum={() => open('album')}
+          onClub={() => open('club')}
+          onCurves={() => open('curves')}
+          onBack={home}
+        />
+      );
     case 'farvebehandling':
       return (
         <Suspense fallback={<main className="screen" aria-busy="true" />}>
@@ -96,17 +152,12 @@ export default function App({ updateReady = false, onUpdate }: AppProps) {
           updateReady={updateReady}
           onUpdate={onUpdate}
           onStart={startSession}
-          onPalace={() => setScreen('palace')}
-          onAlbum={() => setScreen('album')}
-          onClub={() => setScreen('club')}
-          onCurves={() => setScreen('curves')}
-          onSettings={() => setScreen('settings')}
-          onFarvebehandling={() => setScreen('farvebehandling')}
-          onPointregnskab={() => setScreen('pointregnskab')}
+          onClub={() => open('club')}
+          onSettings={() => open('settings')}
           onLanguage={changeLanguage}
-          onGuide={() => setScreen('guide')}
+          onGuide={() => open('guide')}
           onOpen={(target) => {
-            if (OPENED.includes(target as Screen)) setScreen(target as Screen);
+            if (TRACKS.includes(target as Screen)) openTrack(target as Screen);
           }}
         />
       );
