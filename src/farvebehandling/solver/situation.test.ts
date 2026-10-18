@@ -95,7 +95,8 @@ describe('Situationen i løseren', { timeout: 300_000 }, () => {
   });
 
   it('delingen af huller: uden grænse giver det delte spil samme værdi som det udelte', () => {
-    for (const [north, south, goals] of [[EB43, X652, [3, 2]], [parseCards('AJ2'), parseCards('T43'), [2]], [parseCards('A932'), parseCards('JT54'), [3]]] as const) {
+    // Flere kombinationer med en grænse står i deling.test.ts.
+    for (const [north, south, goals] of [[EB43, X652, [3, 2]], [parseCards('AJ2'), parseCards('T43'), [2]]] as const) {
       for (const g of goals) {
         const whole = solveGame(buildGame(north, south, { objective: { kind: 'goal', goal: g } }));
         const split = buildGame(north, south, { objective: { kind: 'goal', goal: g }, splitHonors: true });

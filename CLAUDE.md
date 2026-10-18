@@ -128,6 +128,7 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
   - `SolveRequest` har et valgfrit felt `situation`. Uden det, eller på standard, er svaret præcis som før, låst af `solver/uden-situation.test.ts`.
   - Binder en hp-grænse, deler `buildGame` hullerne efter honnørpoint (`splitHonors`). Delene holdes adskilt hele spillet, og kun de små kort slås sammen.
   - Svaret har situationens vægte (0 = udelukket) og nævneren = summen. Claude Codes valg står i specen under Afklaret.
+  - Delingen beholdes, så analysen er eksakt (Franks afgørelse). `solver/deling.test.ts` holder øje med, at delt og udelt beregning giver samme tal; den udelte findes kun i testen.
 - **Linjer:**
   - "low" i `ifSecondPlays` betyder et kort under B.
   - En `goto` til antal trin + 1 betyder, at linjen slutter.

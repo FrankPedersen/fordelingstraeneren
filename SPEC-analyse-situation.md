@@ -126,16 +126,29 @@ Facitværdierne er regnet med løseren (18. oktober 2026).
 2. **Forbindelser** er stadig ubegrænsede. Begrænsede forbindelser kræver indgange i spillets tilstand og får sin egen spec.
 3. **Beregningstiden** kan blive lang på en telefon (op til ca. 2 minutter i Node for de tungeste kombinationer med 5–6 manglende kort). Ventevisningen og Stop er de samme som i dag.
 
-4. **Deling af huller** (leverancetrin 1, 18. oktober 2026). Binder en hp-grænse, dvs. ligger den under modpartens honnørpoint i farven, bygges spillet med `splitHonors`. Hvert hul deles så efter honnørpoint: hver honnør (E, K, D, B) står for sig, og 10'eren og lavere står samlet.
-   - **Hele spillet igennem:** delene holdes adskilt. Når to huller slås sammen, fordi spilføreren har spillet et kort imellem dem, slås kun dele med samme honnørpoint sammen, altså de små kort. Det gælder også en kombination uden blandede huller fra start, fx E D B 10 / 6 5 4 3 2, hvor K og 9 8 7 kommer i samme hul, når D, B og 10 er spillet.
+4. **Huller deles hele spillet, når en hp-grænse binder** (leverancetrin 1). Franks afgørelse 18. oktober 2026: delingen beholdes, og analysen skal være eksakt, også når en grænse binder. Den udelte beregning bruges hverken som genvej eller kun til visningen.
+   - **Hvordan:** binder en hp-grænse, dvs. ligger den under modpartens honnørpoint i farven, bygges spillet med `splitHonors`. Hvert hul deles efter honnørpoint: hver honnør (E, K, D, B) står for sig, og 10'eren og lavere står samlet.
+   - **Hele spillet:** delene holdes adskilt, også når to huller slås sammen, fordi spilføreren har spillet kortet imellem dem. Kun dele med samme honnørpoint slås sammen, altså de små kort. Det gælder også en kombination uden blandede huller fra start, fx E D B 10 / 6 5 4 3 2, hvor K og 9 8 7 kommer i samme hul, når D, B og 10 er spillet.
+   - **Hvorfor:** løseren regner modpartens kort i samme hul som ligeværdige og tæller kun, hvor mange hver modspiller har. Det er kun eksakt, når kortene i hullet kan byttes om, uden at sidningens vægt ændres.
+     - A priori og med ledige pladser kan de byttes om.
+     - Med en hp-grænse kan de ikke: Vest med K kan være udelukket, mens Vest med D er mulig.
+     - Står to kort med forskellige honnørpoint i samme del, ser spilføreren i løseren ikke, hvilket af dem der faldt. Ved bordet ser han det. Desuden kan sidningens vægt ikke regnes eksakt ud fra antallet. Det gælder på ethvert tidspunkt i spillet.
+     - Derfor deles hullerne fra start og holdes delt hele spillet.
    - **Eksakte vægte:** alle kort i en del har samme honnørpoint, så antallet pr. del giver Vests og Østs honnørpoint. En sidnings vægt er a priori-vægten med de ledige pladser, når begge ligger inden for grænserne, ellers 0.
-   - **Visning:** et modspilskort fra en delt del har delens eget kortinterval, der ligger inde i hullet. Linjebeskrivelsen, linjeformatet og de naturlige valg virker derfor uændret.
+   - **Visning:** et modspilskort fra en delt del har delens eget kortinterval inde i hullet. Linjebeskrivelsen, linjeformatet og de naturlige valg virker derfor uændret.
    - **Uden en grænse, der binder,** deles intet, og spillet er præcis som før. `solver/uden-situation.test.ts` låser 95 spil fra banken og løserens svar, skrevet af koden før ændringen.
-   - **Beregningstiden** målt i Node for 8 kombinationer med 5–8 manglende kort og en bindende grænse: delingen giver 1,1–3 gange så mange knuder og 1,2–3 gange så lang tid. Eksempler: E 10 3 2 / K 9 5 4 for 3 stik går fra 10,5 s til 22,4 s, og E 9 3 2 / B 10 5 4 fra 11,2 s til 21,5 s. Målingen kørte samtidig med bogregressionen, så de absolutte tider er for høje; forholdet gælder.
-   - **Sammenligning:** vægtene lagt direkte på det udelte spil gav samme chance i alle 8 kombinationer (til 4 decimaler). Delingen er alligevel med, fordi:
-     - specen kræver den,
-     - spilføreren i princippet kan bruge, hvilken honnør der falder,
-     - båndet og tabellen i trin 2 kan vise hver honnørplacering med sin egen vægt. En udelt sidning med "K eller D hos Vest" deles ellers ligeligt mellem de to.
+   - **Fast kontrol:** `solver/deling.test.ts` regner 8 kombinationer med en bindende grænse både delt og udelt. Det udelte spil får vægte talt over de konkrete sidninger. Testen kræver samme tal for hvert første udspil, og certificerede linjer sammenlignes eksakt som brøk. De to gav samme tal i alle 8 (18. oktober 2026). Den udelte beregning findes kun i testen, aldrig i appen.
+   - **Beregningstid:** målt med `handleSolve` for ét mål, 3 kørsler hver, i Node 24 på en bærbar med Intel i7-1355U. Ingen andre tests eller scripts kørte samtidig, men andre programmer på maskinen gjorde, så tiderne svinger mellem kørslerne.
+
+     | Kombination, 3 stik | Grænse | Knuder | Hurtigste | Median | Chance |
+     | --- | --- | --- | --- | --- | --- |
+     | D B 6 / E 7 4 2 | ingen | 759 405 | 215 s | 246 s | 70,83 % |
+     | D B 6 / E 7 4 2 | Vest maks. 2 hp | 800 765 | 145 s | 188 s | 45,22 % |
+     | E 10 3 2 / K 9 5 4 | ingen | 269 343 | 12,8 s | 21,3 s | 94,35 % |
+     | E 10 3 2 / K 9 5 4 | Vest maks. 2 hp | 593 365 | 44,9 s | 45,5 s | 100,00 % |
+
+     - **Træet og tiden:** delingen gør træet 5 % større for D B 6 / E 7 4 2, hvor kongen står alene, og 2,2 gange større for E 10 3 2 / K 9 5 4, hvor D og B står i samme hul. Tiden følger træet, fra omtrent den samme til ca. 2–3 gange så lang.
+     - **Ny tid for punkt 3:** D B 6 / E 7 4 2 tager allerede uden grænse 3,5–4 minutter i Node, mere end de ca. 2 minutter i punkt 3. På en telefon tager den længere.
 5. **Svaret med en situation.** `handleSolve` regner med situationens vægte gennem `SubgameOptions.weights`.
    - Sidninger, situationen udelukker, har vægt 0 i svaret (`base.layouts[L].weight`).
    - Nævneren er summen af vægtene. Procenterne er dermed betingede, og båndet og tabellen kan bruge dem uden ændringer.
@@ -144,4 +157,5 @@ Facitværdierne er regnet med løseren (18. oktober 2026).
    - En situation, der ikke kan lade sig gøre, afvises.
    - `model/situation.ts` har også `isPossible` og `canStep` til trinvælgerne i trin 2. De er testet i modellen, mens de grå knapper kommer i trin 2.
 
+6. **Ventevisningen** (Franks krav, 18. oktober 2026): mens løseren regner med situationen, viser ventevisningen den tid, der er gået ("Regner … 12 s"), og knappen Stop. En stoppet beregning står som "Beregningen blev stoppet …" med knappen "Regn med situationen".
 Åbne punkter: ingen.
