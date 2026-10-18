@@ -168,4 +168,6 @@ Facitværdierne er regnet med løseren (18. oktober 2026).
    - **Egne linjer** regnes med situationen, når en situation er sat.
    - **Uden for banken** regnes en kombination først a priori (målene og forslaget som i dag) og derefter med situationen.
 
+8. **Tabellens bredde på mobil** (Franks ja, 18. oktober 2026). Ved 390 px var Analyse 396–402 px bred, også uden situation, fordi den skjulte skærmlæsertekst "afgør" i tabellens hoved stak ud af rullekassen. Rullekassen (`.fb-table-scroll`) har nu `position: relative`, så Analyse er 390 px bred med og uden situation.
+
 Åbne punkter: ingen.

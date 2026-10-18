@@ -473,6 +473,8 @@
 
 /* Sidningerne som tabel (punkt 3); på en smal skærm ruller tabellen vandret i sin boks, aldrig siden. */
 .fb-table-scroll {
+  /* Holder den skjulte skærmlæsertekst (.fb-sr) inde i rullekassen, så siden ikke bliver bredere end skærmen. */
+  position: relative;
   overflow-x: auto;
 }
 
