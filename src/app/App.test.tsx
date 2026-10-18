@@ -219,7 +219,8 @@ describe('App', () => {
     expect(screen.getByText('−10 XP')).toBeTruthy();
     click('Videre');
     expect(screen.getByText('Session gennemført')).toBeTruthy();
-  });
+    // 30 s som de andre tunge jsdom-flows (CLAUDE.md): de tunge løsertests kan tage maskinen under en fuld kørsel.
+  }, 30_000);
 
   it('tegner kurverne pr. uge med en tabelvisning', () => {
     localStorage.setItem(

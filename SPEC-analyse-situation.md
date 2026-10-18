@@ -170,4 +170,6 @@ Facitværdierne er regnet med løseren (18. oktober 2026).
 
 8. **Tabellens bredde på mobil** (Franks ja, 18. oktober 2026). Ved 390 px var Analyse 396–402 px bred, også uden situation, fordi den skjulte skærmlæsertekst "afgør" i tabellens hoved stak ud af rullekassen. Rullekassen (`.fb-table-scroll`) har nu `position: relative`, så Analyse er 390 px bred med og uden situation.
 
+9. **App-testen med 13-sudokuen** (`src/app/App.test.tsx`) får en tidsgrænse på 30 s som de andre tunge jsdom-flows (Franks valg, 18. oktober 2026). De tunge løsertests fra trin 1–2 kunne få den over standardens 5 s i en fuld kørsel, og GitHub kører `npm test`, før appen udgives. Testens kontroller er uændrede.
+
 Åbne punkter: ingen.
