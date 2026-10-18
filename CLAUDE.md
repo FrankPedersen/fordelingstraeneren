@@ -130,6 +130,7 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
   - Svaret har situationens vægte (0 = udelukket) og nævneren = summen. Claude Codes valg står i specen under Afklaret.
   - Delingen beholdes, så analysen er eksakt (Franks afgørelse). `solver/deling.test.ts` holder øje med, at delt og udelt beregning giver samme tal; den udelte findes kun i testen.
   - Trin 2 er bygget på samme gren: panelet Situationen (`ui/Situationspanel.tsx`) og beregningen i browseren. Valgene står i specen under Afklaret 6–7.
+  - Trin 3 (import): tolkeren `ui/importer.ts` og feltet `ui/Importfelt.tsx` over kortvælgeren. Valgene står i specen under Afklaret 10.
 - **Linjer:**
   - "low" i `ifSecondPlays` betyder et kort under B.
   - En `goto` til antal trin + 1 betyder, at linjen slutter.

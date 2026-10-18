@@ -1057,3 +1057,33 @@
   background: var(--accent-soft);
   color: var(--text);
 }
+
+/* Import over kortvælgeren (SPEC-analyse-situation.md, leverancetrin 3). */
+.fb-import {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.fb-import-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+
+.fb-import-input {
+  flex: 1 1 60%;
+  min-width: 0;
+  min-height: var(--touch-min);
+  padding: var(--space-8) var(--space-10);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-8);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+}
+
+.fb-import-choices,
+.fb-import-pair {
+  display: grid;
+  gap: var(--space-8);
+}

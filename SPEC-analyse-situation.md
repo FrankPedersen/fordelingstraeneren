@@ -114,8 +114,8 @@ Facitværdierne er regnet med løseren (18. oktober 2026).
 - [x] B 5 / E D 7 6 4 2, 5 stik, Vest maks. 0 hp: knægten fra bordet 84,78 %.
 - [x] Vægte ved delt hul: for E B 4 3 / 6 5 2 (K og D i samme hul) og alle hp-grænser 0–10 er summen af de abstrakte sidningers vægt lig med summen over de konkrete sidninger, der overholder grænserne, talt direkte.
 - [x] En situation, der ikke kan lade sig gøre (fx kendte kort 13/13), kan ikke vælges.
-- [ ] Import: `AK65-J43` og `EK65-B43` giver samme kombination; `AK6-AJ4` afvises, fordi esset står to gange.
-- [ ] Import: spillet `md|3SQ6HKQ84D632CQ832,ST94HJ752DK84CT65,SJ52HTDAQJ975CKJ7,|`, giver 8 kombinationer, blandt dem ♦ E D B 9 7 5 – 6 3 2 og ♣ K B 7 – D 8 3 2 (Nord–Syd) og ♠ E K 8 7 3 – 10 9 4 (Øst–Vest; Øst er afledt som de resterende kort).
+- [x] Import: `AK65-J43` og `EK65-B43` giver samme kombination; `AK6-AJ4` afvises, fordi esset står to gange.
+- [x] Import: spillet `md|3SQ6HKQ84D632CQ832,ST94HJ752DK84CT65,SJ52HTDAQJ975CKJ7,|`, giver 8 kombinationer, blandt dem ♦ E D B 9 7 5 – 6 3 2 og ♣ K B 7 – D 8 3 2 (Nord–Syd) og ♠ E K 8 7 3 – 10 9 4 (Øst–Vest; Øst er afledt som de resterende kort).
 - [ ] Sammenlign: med to linjer valgt er linje A's unikke vindere minus linje B's lig med forskellen mellem linjernes chance.
 - [ ] Alle nye tekster findes på dansk og engelsk, og de engelske skærme indeholder ingen dansk tekst.
 - [ ] Komponentfilerne indeholder ingen farveværdier og ingen tal med enhed, undtagen 0, 1px-streger og procenter.
@@ -171,5 +171,22 @@ Facitværdierne er regnet med løseren (18. oktober 2026).
 8. **Tabellens bredde på mobil** (Franks ja, 18. oktober 2026). Ved 390 px var Analyse 396–402 px bred, også uden situation, fordi den skjulte skærmlæsertekst "afgør" i tabellens hoved stak ud af rullekassen. Rullekassen (`.fb-table-scroll`) har nu `position: relative`, så Analyse er 390 px bred med og uden situation.
 
 9. **App-testen med 13-sudokuen** (`src/app/App.test.tsx`) får en tidsgrænse på 30 s som de andre tunge jsdom-flows (Franks valg, 18. oktober 2026). De tunge løsertests fra trin 1–2 kunne få den over standardens 5 s i en fuld kørsel, og GitHub kører `npm test`, før appen udgives. Testens kontroller er uændrede.
+
+10. **Claude Codes valg i leverancetrin 3 (import):**
+    - **Hvor:** tolkeren står i `ui/importer.ts` og feltet i `ui/Importfelt.tsx`. Begge hører til Analysevinduets import (tabellens række for `ui/Analysevindue.tsx` og dets komponenter), så `model/` får ingen ny fil.
+    - **Tolkningen:**
+      - Teksten er en adresse, når den begynder med http(s):// eller www.
+      - Den er LIN, når den indeholder `|`.
+      - Ellers er den bordet-hånden.
+      - Stregen mellem bordet og hånden kan være -, –, — eller /, og kulørtegn ignoreres.
+    - **Notationen:** dansk eller engelsk afgøres kun for bordet-hånden. LIN og BBO bruger altid S H D C og A K Q J T.
+    - **Et spil:**
+      - Alle angivne hænder skal have 13 kort, og intet kort må stå to gange.
+      - Mangler én hånd, er den de resterende kort.
+      - Er kun to eller tre hænder angivet i en adresse, kan kombinationerne for de ukendte hænder ikke vælges.
+    - **De 8 knapper** står i to rækker, Nord–Syd og Øst–Vest. En kombination, hvor en af hænderne er renonce eller modparten ikke har kort, er grået ud med en forklaring.
+    - **Et kort link** er en adresse uden `lin=` og uden `n=`, `s=`, `e=` og `w=`.
+    - **Valget af kombination** stiller den op i kortvælgeren som et tryk på kortene. Står den i banken, vises bankens tal straks; ellers står knappen "Regn den ud" som i dag. Situationen røres ikke.
+    - **Gruppens navn:** knapperne hedder samlet "Vælg en kombination fra spillet", så de ikke får samme navn som Analyses "Vælg kombination".
 
 Åbne punkter: ingen.

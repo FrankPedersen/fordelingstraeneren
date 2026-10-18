@@ -24,6 +24,7 @@ import type { LineStep } from '../solver/lines';
 import type { CombinationBase } from '../solver/results';
 import type { FbSaved } from '../storage';
 import { Bridgebord } from './Bridgebord';
+import { Importfelt } from './Importfelt';
 import { Kortvælger } from './Kortvælger';
 import { Linjeeditor } from './Linjeeditor';
 import { Linjekort } from './Linjekort';
@@ -324,6 +325,7 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
             </>
           ) : (
             <>
+              <Importfelt onImport={pick} />
               <Kortvælger north={picked.north} south={picked.south} onChange={pick} />
               <p className="fb-note" role="status">
                 {!complete ? TEXT.pickMore : pickedFound ? '' : TEXT.notInBank}

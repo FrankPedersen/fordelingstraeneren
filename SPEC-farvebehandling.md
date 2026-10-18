@@ -353,6 +353,7 @@ Regler for brugerfladen:
   - Med en situation regner løseren i appen med ventevisning, forløbet tid og Stop.
   - Chancerne er betingede, og udelukkede sidninger står ikke i båndet og tabellen.
   - Spil den selv giver kortene efter situationen.
+- **Import** (SPEC-analyse-situation.md): over kortvælgeren kan en kombination indsættes som tekst (EK65-B43 eller AK65-J43), som LIN eller som BBO-handviewerens adresse. Et spil giver et valg mellem 8 kombinationer. Appen læser kun teksten og henter intet fra nettet.
 - **Træning:** linjer og forskel er skjult, indtil brugeren har valgt linje og gættet en chance.
 - **Tone:** kollegial og adskiller beslutning fra resultat, fx "God beslutning – sidningen var imod dig".
 - **Tilgængelighed:** trykflader mindst 44 px og kontrast mindst 4,5:1. Undtagelse: klubaftenens 10 × 10 felter er mindre på smalle skærme; listen under dem har trykflader i fuld størrelse.

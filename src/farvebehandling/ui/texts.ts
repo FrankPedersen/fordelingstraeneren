@@ -123,6 +123,29 @@ const DA = {
     compute: 'Regn med situationen',
   },
 
+  /** Import over kortvælgeren i Analyse (SPEC-analyse-situation.md, leverancetrin 3). */
+  importer: {
+    label: 'Indsæt kombination eller spil',
+    placeholder: 'EK65-B43, LIN eller BBO-adresse',
+    button: 'Importér',
+    choose: 'Vælg en kombination fra spillet',
+    pairs: { NS: 'Nord–Syd', EW: 'Øst–Vest' } as Record<'NS' | 'EW', string>,
+    choice: (label: string, pair: string) => `${label} (${pair})`,
+    unusable: 'En af hænderne har ingen kort i farven, eller modparten har ingen.',
+    seats: { N: 'Nord', S: 'Syd', E: 'Øst', W: 'Vest' } as Record<'N' | 'S' | 'E' | 'W', string>,
+    errors: {
+      empty: 'Indsæt en kombination, fx EK65-B43, eller et spil fra BBO.',
+      shortLink: 'Adressen er et kort link. Åbn spillet i handvieweren og kopiér den lange adresse.',
+      unknownSymbol: (symbol: string) => `Tegnet "${symbol}" kan ikke læses. Skriv kortene som E K D B 10 9 … 2 eller A K Q J T 9 … 2.`,
+      duplicate: (card: string) => `Kortet ${card} står to gange. Ret det, og prøv igen.`,
+      separator: 'Skriv bordet og hånden med en streg imellem, fx EK65-B43.',
+      emptyHand: 'Både bordet og hånden skal have mindst ét kort.',
+      noOpponents: 'Bordet og hånden har alle 13 kort, så modparten har ingen. Fjern et kort.',
+      handSize: (seat: string, n: number) => `${seat} har ${n} kort, men en hånd har 13. Kopiér hele spillet igen.`,
+      noDeal: 'Teksten indeholder intet spil. Kopiér hele LIN-teksten med md|…, eller handviewerens lange adresse.',
+    },
+  },
+
   ownLines: 'Dine linjer',
   addOwnLine: '+ Egen linje',
   ownLineTitle: (letter: string) => `Din linje ${letter}`,
@@ -382,6 +405,7 @@ const DA = {
     play: 'Spil ud fra bordet eller hånden, og læg 3. håndens kort. Modspillet lægger efter normalt modspil. Bagefter lyser fordelingen op i båndet, og du ser, om du fulgte en af de bedste linjer.',
     situation: 'Det, du ved fra meldingerne og spillet ved bordet. Med en situation er chancerne betingede: procenten er chancen givet situationen, og sidninger, situationen udelukker, står ikke i båndet og tabellen. Bankens tal er a priori, så løseren regner her i appen; det kan tage et stykke tid, og du kan stoppe den.',
     known: 'Hvor mange kort Vest og Øst har vist i de andre farver. De ledige pladser er 13 minus de kendte kort og skal tilsammen kunne rumme farvens manglende kort. En knap er grået ud, når den ville gøre situationen umulig.',
+    importer: 'Indsæt en kombination som bordet-hånden (EK65-B43 eller AK65-J43), en LIN-tekst eller adressen fra BBO\'s handviewer. Fra et spil vælger du en af de 8 kombinationer: hver farve for Nord–Syd og Øst–Vest, og den første hånd bliver bordet. Kun teksten læses; appen henter intet fra nettet, og situationen sætter du selv.',
     maxHp: 'De fleste honnørpoint i farven (E 4, K 3, D 2, B 1), Vest eller Øst kan have, fx fordi han har passet. Grænserne skal tilsammen give plads til modpartens honnører. En knap er grået ud, når den ville gøre situationen umulig.',
     tasks: {
       'vælg-linjen': 'Vælg den linje, der giver størst chance for målet, og gæt chancen. Rigtig linje og rigtigt interval giver fuld score, rigtig linje og forkert interval halv.',
@@ -510,6 +534,28 @@ const EN: Texts = {
     pending: 'The chances are being worked out for the situation.',
     stopped: 'The calculation was stopped, so the chances for the situation have not been worked out.',
     compute: 'Work it out for the situation',
+  },
+
+  importer: {
+    label: 'Paste a combination or a deal',
+    placeholder: 'AK65-J43, LIN or BBO address',
+    button: 'Import',
+    choose: 'Choose a combination from the deal',
+    pairs: { NS: 'North–South', EW: 'East–West' },
+    choice: (label: string, pair: string) => `${label} (${pair})`,
+    unusable: 'One of the hands has no cards in the suit, or the opponents have none.',
+    seats: { N: 'North', S: 'South', E: 'East', W: 'West' },
+    errors: {
+      empty: 'Paste a combination, e.g. AK65-J43, or a deal from BBO.',
+      shortLink: 'The address is a short link. Open the deal in the hand viewer and copy the long address.',
+      unknownSymbol: (symbol: string) => `The character "${symbol}" can't be read. Write the cards as A K Q J T 9 … 2.`,
+      duplicate: (card: string) => `The card ${card} appears twice. Correct it and try again.`,
+      separator: 'Write dummy and your hand with a dash between them, e.g. AK65-J43.',
+      emptyHand: 'Both dummy and your hand need at least one card.',
+      noOpponents: 'Dummy and your hand hold all 13 cards, so the opponents have none. Remove a card.',
+      handSize: (seat: string, n: number) => `${seat} has ${n} cards, but a hand has 13. Copy the whole deal again.`,
+      noDeal: 'The text contains no deal. Copy the whole LIN text with md|…, or the long address from the hand viewer.',
+    },
   },
 
   ownLines: 'Your lines',
@@ -761,6 +807,7 @@ const EN: Texts = {
     play: 'Lead from dummy or your hand, and play the 3rd-hand card. The defenders play normal defence. Afterwards the layout lights up in the band, and you see whether you followed one of the best lines.',
     situation: 'What you know from the bidding and the play at the table. With a situation the chances are conditional: the percentage is the chance given the situation, and layouts the situation rules out are left out of the band and the table. The bank figures are a priori, so the solver works it out here in the app; this can take a while, and you can stop it.',
     known: 'How many cards West and East have shown in the other suits. The vacant places are 13 minus the known cards and must together be able to hold the missing cards of the suit. A button is greyed out when it would make the situation impossible.',
+    importer: "Paste a combination as dummy-hand (AK65-J43), a LIN text or the address from BBO's hand viewer. From a deal you choose one of the 8 combinations: each suit for North–South and East–West, and the first hand becomes dummy. Only the text is read; the app fetches nothing from the internet, and you set the situation yourself.",
     maxHp: "The most high-card points in the suit (A 4, K 3, Q 2, J 1) West or East can hold, for instance because he passed. Together the limits must leave room for the opponents' honours. A button is greyed out when it would make the situation impossible.",
     tasks: {
       'vælg-linjen': 'Choose the line that gives the best chance of the goal, and guess the chance. Right line and right interval give a full score, right line and wrong interval half.',
