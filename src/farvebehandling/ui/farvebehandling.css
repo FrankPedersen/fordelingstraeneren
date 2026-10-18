@@ -1087,3 +1087,22 @@
   display: grid;
   gap: var(--space-8);
 }
+
+/* Valg af linjer (SPEC-analyse-situation.md, leverancetrin 4): afkrydsningsfeltet Sammenlign i linjekortets hoved. */
+.fb-compare {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-left: auto;
+  min-height: var(--touch-min);
+  color: var(--muted);
+  font-size: var(--type-small);
+  cursor: pointer;
+}
+
+.fb-compare input {
+  width: var(--space-20);
+  height: var(--space-20);
+  margin: 0;
+  accent-color: var(--accent);
+}

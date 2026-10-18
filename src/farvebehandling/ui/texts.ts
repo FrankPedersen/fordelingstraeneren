@@ -123,6 +123,16 @@ const DA = {
     compute: 'Regn med situationen',
   },
 
+  /** Valg af linjer i Analyse (SPEC-analyse-situation.md, leverancetrin 4). */
+  lineChoice: {
+    showAll: 'Vis alle udspil',
+    showMain: 'Vis kun de vigtigste udspil',
+    compare: 'Sammenlign',
+    compareLine: (letter: string) => `Sammenlign linje ${letter}`,
+    unique: (a: string, na: number, pa: string, b: string, nb: number, pb: string) =>
+      `Linje ${a} vinder alene i ${na} ${na === 1 ? 'sidning' : 'sidninger'} (${pa}), linje ${b} i ${nb} (${pb})`,
+  },
+
   /** Import over kortvælgeren i Analyse (SPEC-analyse-situation.md, leverancetrin 3). */
   importer: {
     label: 'Indsæt kombination eller spil',
@@ -405,6 +415,8 @@ const DA = {
     play: 'Spil ud fra bordet eller hånden, og læg 3. håndens kort. Modspillet lægger efter normalt modspil. Bagefter lyser fordelingen op i båndet, og du ser, om du fulgte en af de bedste linjer.',
     situation: 'Det, du ved fra meldingerne og spillet ved bordet. Med en situation er chancerne betingede: procenten er chancen givet situationen, og sidninger, situationen udelukker, står ikke i båndet og tabellen. Bankens tal er a priori, så løseren regner her i appen; det kan tage et stykke tid, og du kan stoppe den.',
     known: 'Hvor mange kort Vest og Øst har vist i de andre farver. De ledige pladser er 13 minus de kendte kort og skal tilsammen kunne rumme farvens manglende kort. En knap er grået ud, når den ville gøre situationen umulig.',
+    allLeads: 'Alle første udspil i løserens resultat, også dem langt under den bedste og dem med 0 %. Hvert udspil vises med sin bedste fortsættelse.',
+    compare: 'Kryds præcis to linjer af med Sammenlign: båndet og tabellen viser så kun de to, "afgør" gælder dem, og over tabellen står, i hvor mange sidninger hver linje vinder alene. Ellers sammenlignes de viste linjer.',
     importer: 'Indsæt en kombination som bordet-hånden (EK65-B43 eller AK65-J43), en LIN-tekst eller adressen fra BBO\'s handviewer. Fra et spil vælger du en af de 8 kombinationer: hver farve for Nord–Syd og Øst–Vest, og den første hånd bliver bordet. Kun teksten læses; appen henter intet fra nettet, og situationen sætter du selv.',
     maxHp: 'De fleste honnørpoint i farven (E 4, K 3, D 2, B 1), Vest eller Øst kan have, fx fordi han har passet. Grænserne skal tilsammen give plads til modpartens honnører. En knap er grået ud, når den ville gøre situationen umulig.',
     tasks: {
@@ -534,6 +546,15 @@ const EN: Texts = {
     pending: 'The chances are being worked out for the situation.',
     stopped: 'The calculation was stopped, so the chances for the situation have not been worked out.',
     compute: 'Work it out for the situation',
+  },
+
+  lineChoice: {
+    showAll: 'Show all first leads',
+    showMain: 'Show only the main first leads',
+    compare: 'Compare',
+    compareLine: (letter: string) => `Compare line ${letter}`,
+    unique: (a: string, na: number, pa: string, b: string, nb: number, pb: string) =>
+      `Line ${a} wins alone in ${na} ${na === 1 ? 'layout' : 'layouts'} (${pa}), line ${b} in ${nb} (${pb})`,
   },
 
   importer: {
@@ -807,6 +828,8 @@ const EN: Texts = {
     play: 'Lead from dummy or your hand, and play the 3rd-hand card. The defenders play normal defence. Afterwards the layout lights up in the band, and you see whether you followed one of the best lines.',
     situation: 'What you know from the bidding and the play at the table. With a situation the chances are conditional: the percentage is the chance given the situation, and layouts the situation rules out are left out of the band and the table. The bank figures are a priori, so the solver works it out here in the app; this can take a while, and you can stop it.',
     known: 'How many cards West and East have shown in the other suits. The vacant places are 13 minus the known cards and must together be able to hold the missing cards of the suit. A button is greyed out when it would make the situation impossible.',
+    allLeads: "All first leads in the solver's result, also those far below the best and those with 0 %. Each lead is shown with its best continuation.",
+    compare: 'Tick exactly two lines with Compare: the band and the table then show only those two, "decides" applies to them, and above the table you see in how many layouts each line wins alone. Otherwise the lines shown are compared.',
     importer: "Paste a combination as dummy-hand (AK65-J43), a LIN text or the address from BBO's hand viewer. From a deal you choose one of the 8 combinations: each suit for North–South and East–West, and the first hand becomes dummy. Only the text is read; the app fetches nothing from the internet, and you set the situation yourself.",
     maxHp: "The most high-card points in the suit (A 4, K 3, Q 2, J 1) West or East can hold, for instance because he passed. Together the limits must leave room for the opponents' honours. A button is greyed out when it would make the situation impossible.",
     tasks: {

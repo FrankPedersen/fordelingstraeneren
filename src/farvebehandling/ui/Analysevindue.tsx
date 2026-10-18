@@ -32,6 +32,7 @@ import { Resultatkort } from './Resultatkort';
 import { Sandsynlighedsbånd } from './Sandsynlighedsbånd';
 import { SpilSelv } from './SpilSelv';
 import { assumptionsText, situationChips, situationItem, Situationspanel } from './Situationspanel';
+import { allLinesForGoal, leadKey, uniqueWinners } from './linjevalg';
 import { TEXT } from './texts';
 import { lineErrorText, stepText } from '../lineText';
 import { Info } from '../../ui/Info';
@@ -46,6 +47,7 @@ interface AnalysevindueProps {
 }
 
 const percent = (p: number) => `${formatDecimal(100 * p, 2)} %`;
+const percent1 = (p: number) => `${formatDecimal(100 * p, 1)} %`;
 
 /** En kombination uden for banken, som løseren har regnet (Analyse fase 2). */
 interface Custom {
@@ -99,6 +101,9 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
   const [situated, setSituated] = useState<Record<string, { base: CombinationBase; result: GoalResult }>>({});
   const [stopped, setStopped] = useState<string | null>(null);
   const situationRun = useRef<string | null>(null);
+  // Valg af linjer (leverancetrin 4): alle udspil og de linjer, der sammenlignes (nøgle pr. første udspil).
+  const [allLeads, setAllLeads] = useState(false);
+  const [compare, setCompare] = useState<string[]>([]);
   const solver = useMemo(createSolver, []);
   useEffect(() => () => solver.cancel(), [solver]);
   const now = useSeconds(busy !== null);
@@ -119,7 +124,8 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
 
   // Egne linjer for kombinationen; de regnede får bogstaverne X, Y, Z …
   const ownLines = (saved?.ownLines ?? []).filter((l) => l.combination === item.combination.id);
-  const lines = useMemo(() => (pending ? [] : linesForGoal(view, goal)), [view, goal, pending]);
+  const lines = useMemo(() => (pending ? [] : allLeads ? allLinesForGoal(view, goal) : linesForGoal(view, goal)), [view, goal, pending, allLeads]);
+  const moreLeads = !pending && allLinesForGoal(view, goal).length > linesForGoal(view, goal).length;
   const ownViews: { id: string; text: string; view: LineView | null }[] = ownLines.map((l, i) => {
     const lead = pending ? undefined : ownResults[ownKey(l.id)];
     return {
@@ -128,12 +134,22 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
       view: lead ? { letter: OWN_LETTERS[i % OWN_LETTERS.length], lead, value: lead.value, best: false, nearBest: false, mixed: !lead.certified } : null,
     };
   });
-  // Båndet viser løserens linjer og de egne linjer, der er regnet for målet.
-  const allLines = [...lines, ...ownViews.flatMap((o) => (o.view ? [o.view] : []))];
-  const allFields = pending ? [] : sortFields(bandFields(view, allLines), grouping);
+  // Båndet viser løserens linjer og de egne linjer, der er regnet for målet. Er præcis to krydset af med Sammenlign,
+  // viser båndet og tabellen kun dem, og "afgør" gælder dem; ellers sammenlignes de viste linjer som før.
+  const keyed = [
+    ...lines.map((l) => ({ key: leadKey(l.lead), view: l })),
+    ...ownViews.flatMap((o) => (o.view ? [{ key: `egen:${o.id}`, view: o.view }] : [])),
+  ];
+  const allLines = keyed.map((k) => k.view);
+  const chosenLines = keyed.filter((k) => compare.includes(k.key)).map((k) => k.view);
+  const comparing = compare.length === 2 && chosenLines.length === 2;
+  const shownLines = comparing ? chosenLines : allLines;
+  const toggleCompare = (key: string) => setCompare((c) => (c.includes(key) ? c.filter((x) => x !== key) : [...c, key]));
+  const allFields = pending ? [] : sortFields(bandFields(view, shownLines), grouping);
   // Sidninger, situationen udelukker (chance 0), står ikke i båndet og tabellen; linjen under tabellen tæller dem.
   const fields = standard ? allFields : allFields.filter((f) => f.probability > 0);
   const excluded = standard || pending ? 0 : aprioriFieldCount(view.solution.gaps) - fields.length;
+  const unique = comparing ? uniqueWinners(fields, 0, 1) : null;
   const decisive = disagreements(fields);
   const field = fields.find((f) => f.id === selected) ?? null;
   const best = lines[0];
@@ -168,6 +184,7 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
   }
 
   function choose(next: BankItem, nextGoal = next.combination.goals[0]) {
+    setCompare([]);
     // Situationen følger med til en ny kombination, når den kan lade sig gøre dér; ellers står den på standard.
     if (!isPossible(next.north, next.south, situation)) setSituation(STANDARD);
     setItem(next);
@@ -219,6 +236,7 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
 
   async function chooseGoal(g: number) {
     setGoal(g);
+    setCompare([]);
     setSelected(null);
     setPlaySeed(null);
     // Med en situation regnes målet med situationen (ovenfor), ikke a priori.
@@ -411,9 +429,25 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
           {!solvedGoal && mode !== 'picker' && busyNote}
           <div className="fb-lines">
             {lines.map((l) => (
-              <Linjekort key={l.letter} line={l} />
+              <Linjekort
+                key={l.letter}
+                line={l}
+                compare={{ checked: compare.includes(leadKey(l.lead)), onToggle: () => toggleCompare(leadKey(l.lead)) }}
+              />
             ))}
           </div>
+          {solvedGoal && (
+            <div className="with-info">
+              {(moreLeads || allLeads) && (
+                <button type="button" className="btn small-btn" aria-pressed={allLeads} onClick={() => setAllLeads(!allLeads)}>
+                  {allLeads ? TEXT.lineChoice.showMain : TEXT.lineChoice.showAll}
+                </button>
+              )}
+              {(moreLeads || allLeads) && <Info topic={TEXT.lineChoice.showAll}>{TEXT.help.allLeads}</Info>}
+              <span className="fb-note">{TEXT.lineChoice.compare}</span>
+              <Info topic={TEXT.lineChoice.compare}>{TEXT.help.compare}</Info>
+            </div>
+          )}
           {saved && update && solvedGoal && (
             <>
               <div className="with-info">
@@ -426,6 +460,7 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
                     <Linjekort
                       key={o.id}
                       line={o.view}
+                      compare={{ checked: compare.includes(`egen:${o.id}`), onToggle: () => toggleCompare(`egen:${o.id}`) }}
                       title={`${TEXT.ownLineTitle(o.view.letter)}: ${o.text}`}
                       action={
                         <button type="button" className="btn small-btn" onClick={() => deleteOwn(o.id)}>
@@ -490,7 +525,7 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
             <p className="fb-note">{TEXT.situationPanel.pending}</p>
           ) : (
             <>
-              <Sandsynlighedsbånd lines={allLines} fields={fields} selected={selected} onSelect={setSelected} />
+              <Sandsynlighedsbånd lines={shownLines} fields={fields} selected={selected} onSelect={setSelected} />
               {decisive.length ? (
                 <p>
                   {TEXT.disagree(
@@ -525,10 +560,22 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
           <h2 id="fb-details">{showAll ? TEXT.details : TEXT.decisive}</h2>
           <Info topic={TEXT.details}>{TEXT.help.layouts}</Info>
         </div>
+          {unique && (
+            <p>
+              {TEXT.lineChoice.unique(
+                shownLines[0].letter,
+                unique.a.count,
+                percent1(unique.a.probability),
+                shownLines[1].letter,
+                unique.b.count,
+                percent1(unique.b.probability),
+              )}
+            </p>
+          )}
           {pending ? (
             <p className="fb-note">{TEXT.situationPanel.pending}</p>
           ) : (
-            <LayoutList fields={fields} lines={allLines} selected={selected} onSelect={setSelected} grouping={grouping} showAll={showAll} />
+            <LayoutList fields={fields} lines={shownLines} selected={selected} onSelect={setSelected} grouping={grouping} showAll={showAll} />
           )}
           {excluded > 0 && <p className="fb-note">{TEXT.situationPanel.excluded(excluded)}</p>}
           <button type="button" className="btn small-btn" onClick={() => setShowAll(!showAll)}>

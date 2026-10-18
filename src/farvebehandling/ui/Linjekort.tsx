@@ -18,10 +18,12 @@ interface LinjekortProps {
   title?: string;
   /** En knap i kortets hoved, fx "Slet". */
   action?: ReactNode;
+  /** I Analyse: afkrydsningsfeltet "Sammenlign" (SPEC-analyse-situation.md, leverancetrin 4). */
+  compare?: { checked: boolean; onToggle(): void };
 }
 
 /** En linje med chancen og de nummererede trin. Den bedste linje markeres, men først efter svaret. */
-export function Linjekort({ line, hideResult = false, chosen = false, selected = false, onSelect, title, action }: LinjekortProps) {
+export function Linjekort({ line, hideResult = false, chosen = false, selected = false, onSelect, title, action, compare }: LinjekortProps) {
   const heading = title ?? TEXT.line(line.letter);
   const badges = (
     <>
@@ -60,6 +62,12 @@ export function Linjekort({ line, hideResult = false, chosen = false, selected =
         <h3>{heading}</h3>
         {badges}
         {action}
+        {compare && (
+          <label className="fb-compare">
+            <input type="checkbox" checked={compare.checked} onChange={compare.onToggle} aria-label={TEXT.lineChoice.compareLine(line.letter)} />
+            <span aria-hidden="true">{TEXT.lineChoice.compare}</span>
+          </label>
+        )}
       </header>
       <ol className="fb-steps">
         {line.lead.steps.map((step, i) => (

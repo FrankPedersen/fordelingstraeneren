@@ -353,6 +353,7 @@ Regler for brugerfladen:
   - Med en situation regner løseren i appen med ventevisning, forløbet tid og Stop.
   - Chancerne er betingede, og udelukkede sidninger står ikke i båndet og tabellen.
   - Spil den selv giver kortene efter situationen.
+- **Valg af linjer** (SPEC-analyse-situation.md): under linjerne viser "Vis alle udspil" alle første udspil i løserens resultat. Med "Sammenlign" på præcis to linjer viser båndet og tabellen kun dem, og over tabellen står, hvor tit hver vinder alene.
 - **Import** (SPEC-analyse-situation.md): over kortvælgeren kan en kombination indsættes som tekst (EK65-B43 eller AK65-J43), som LIN eller som BBO-handviewerens adresse. Et spil giver et valg mellem 8 kombinationer. Appen læser kun teksten og henter intet fra nettet.
 - **Træning:** linjer og forskel er skjult, indtil brugeren har valgt linje og gættet en chance.
 - **Tone:** kollegial og adskiller beslutning fra resultat, fx "God beslutning – sidningen var imod dig".

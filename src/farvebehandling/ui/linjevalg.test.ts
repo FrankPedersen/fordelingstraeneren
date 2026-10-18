@@ -32,7 +32,8 @@ describe('Valg af linjer', () => {
           for (let j = i + 1; j < lines.length; j++) {
             const a = lines[i], b = lines[j];
             const u = uniqueWinners(bandFields(item, [a, b]), 0, 1);
-            expect(u.a.probability - u.b.probability).toBeCloseTo(a.value - b.value, 9);
+            // Appens data har chancen med 6 betydende cifre; forskellen mellem to afrundede tal er højst 0,00001 forkert.
+            expect(Math.abs(u.a.probability - u.b.probability - (a.value - b.value))).toBeLessThanOrEqual(1e-5 + 1e-12);
             pairs++;
           }
         }

@@ -116,9 +116,9 @@ Facitværdierne er regnet med løseren (18. oktober 2026).
 - [x] En situation, der ikke kan lade sig gøre (fx kendte kort 13/13), kan ikke vælges.
 - [x] Import: `AK65-J43` og `EK65-B43` giver samme kombination; `AK6-AJ4` afvises, fordi esset står to gange.
 - [x] Import: spillet `md|3SQ6HKQ84D632CQ832,ST94HJ752DK84CT65,SJ52HTDAQJ975CKJ7,|`, giver 8 kombinationer, blandt dem ♦ E D B 9 7 5 – 6 3 2 og ♣ K B 7 – D 8 3 2 (Nord–Syd) og ♠ E K 8 7 3 – 10 9 4 (Øst–Vest; Øst er afledt som de resterende kort).
-- [ ] Sammenlign: med to linjer valgt er linje A's unikke vindere minus linje B's lig med forskellen mellem linjernes chance.
-- [ ] Alle nye tekster findes på dansk og engelsk, og de engelske skærme indeholder ingen dansk tekst.
-- [ ] Komponentfilerne indeholder ingen farveværdier og ingen tal med enhed, undtagen 0, 1px-streger og procenter.
+- [x] Sammenlign: med to linjer valgt er linje A's unikke vindere minus linje B's lig med forskellen mellem linjernes chance.
+- [x] Alle nye tekster findes på dansk og engelsk, og de engelske skærme indeholder ingen dansk tekst.
+- [x] Komponentfilerne indeholder ingen farveværdier og ingen tal med enhed, undtagen 0, 1px-streger og procenter.
 
 ## Afklaret
 
@@ -188,5 +188,21 @@ Facitværdierne er regnet med løseren (18. oktober 2026).
     - **Et kort link** er en adresse uden `lin=` og uden `n=`, `s=`, `e=` og `w=`.
     - **Valget af kombination** stiller den op i kortvælgeren som et tryk på kortene. Står den i banken, vises bankens tal straks; ellers står knappen "Regn den ud" som i dag. Situationen røres ikke.
     - **Gruppens navn:** knapperne hedder samlet "Vælg en kombination fra spillet", så de ikke får samme navn som Analyses "Vælg kombination".
+
+11. **Claude Codes valg i leverancetrin 4 (valg af linjer):**
+    - **Hvor:** logikken står i `ui/linjevalg.ts`. Linjekortet har fået et valgfrit afkrydsningsfelt, som kun Analyse bruger, så Træning og facit er uændrede.
+    - **Vis alle udspil:**
+      - Den bedste står først og derefter de andre efter chance, så de viste linjer beholder deres bogstaver.
+      - Knappen skifter til "Vis kun de vigtigste udspil".
+      - Knappen vises kun, når der er flere udspil end de viste.
+      - Valget gælder, til man slår det fra igen.
+      - Udspil uden for de viste har intet gennemsnit, fordi appens data kun har stik pr. sidning for de viste linjer.
+    - **Sammenlign:**
+      - Valget følger det første udspil, ikke bogstavet, så det holder, når Vis alle udspil skifter bogstaverne.
+      - Egne linjer kan også krydses af.
+      - Valget nulstilles, når kombinationen eller målet skifter.
+      - Er én eller tre eller flere linjer krydset af, sammenlignes de viste linjer som før.
+    - **Unikke vindere** tælles i båndets felter (tabellens rækker) med situationens chancer, når en situation er sat. Procenterne står med én decimal som linjernes chance.
+    - **Accepttesten** regner med appens data, hvor chancen står med 6 betydende cifre. Forskellen mellem de unikke vindere og forskellen mellem chancerne stemmer derfor inden for 0,00001.
 
 Åbne punkter: ingen.
