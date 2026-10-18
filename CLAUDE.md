@@ -100,7 +100,7 @@ Specerne ligger hos Frank (version 2 med Claude Codes gennemgang, 7. oktober 202
 Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er tagget `v1-fordeling`). **[SPEC-farvebehandling.md](SPEC-farvebehandling.md) beskriver sporet.** Fordelingssporets adfærd, data og udseende må ikke ændres, SPEC.md røres ikke, og eksisterende kode må kun berøres de steder, specens tabel nævner. Kræver noget alligevel en ændring i eksisterende kode, så spørg først. Undtagelse: sprog (engelsk) og ⓘ-hjælp i hele appen, som Frank valgte for begge spor (5. oktober 2026).
 
 **Kort over koden** (`src/farvebehandling/`)
-- `model/`: kort (E K D B 10 i visningen), sidningsberegning med ledige pladser, hyppighed, normalt modspil (kun til Spil den selv) og gætteintervaller.
+- `model/`: kort (E K D B 10 i visningen), sidningsberegning med ledige pladser, hyppighed, normalt modspil (kun til Spil den selv), gætteintervaller og situationen i Analyse (`situation.ts`: kendte kort, hp-grænser, vægte, `isPossible` og `canStep`; henter kun typer fra løseren).
 - `solver/`: spiltræet (`game.ts`), løseren med optimalt modspil (`cfr.ts`), naturlige valg mellem lige gode træk (`natural.ts`), linjerne på dansk (`describe.ts`), linjeformatet (`lines.ts`), det samlede API (`solve.ts`), resultaterne i datafilernes form og forespørgslerne fra appen (`results.ts`), løseren i en Web Worker (`solver.worker.ts`, `client.ts`) og Hvad nu? (`whatnow.ts`; datatyperne ligger i `model/whatnow.ts`, så appen ikke henter løseren).
 - `source/bridgehands.ts`: læser bridgehands.com's tabeller (siderne 0–9), tolker kildens notation, sorterer fejl fra og omsætter x til konkrete kort.
 - `precompute.ts`: hyppighed, opgavebank, løsninger (med Hvad nu?), appens kompakte data, valideringsrapport og linjeteksterne til godkendelse som rene funktioner.
@@ -124,6 +124,10 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
 - **Abstraktion:** modpartens kort mellem to af spilførerens kort er ligeværdige, så kun antallet pr. hul tæller. Det ændrer ikke værdien, og begrænset valg følger af tællingen.
 - **Forbindelser og udspil:** forbindelserne er ubegrænsede. Spilføreren spiller altid ud fra den hånd, han vil, og modspillet spiller aldrig farven.
 - **Alternative linjer:** hvert første udspil er et delspil; dets bedste linje er alternativet.
+- **Situationen** (SPEC-analyse-situation.md, leverancetrin 1 bygget på grenen `analyse-situation`; appen før er tagget `v8-foer-analyse-situation`):
+  - `SolveRequest` har et valgfrit felt `situation`. Uden det, eller på standard, er svaret præcis som før, låst af `solver/uden-situation.test.ts`.
+  - Binder en hp-grænse, deler `buildGame` hullerne efter honnørpoint (`splitHonors`). Delene holdes adskilt hele spillet, og kun de små kort slås sammen.
+  - Svaret har situationens vægte (0 = udelukket) og nævneren = summen. Claude Codes valg står i specen under Afklaret.
 - **Linjer:**
   - "low" i `ifSecondPlays` betyder et kort under B.
   - En `goto` til antal trin + 1 betyder, at linjen slutter.

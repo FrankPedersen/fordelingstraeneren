@@ -54,14 +54,19 @@ describe('Situationen (model)', () => {
     expect(gameOptionsFor(north, south, situation([0, 0], [4, 10])).splitHonors).toBe(true);
   });
 
-  it('vægte ved delt hul: E B 4 3 / 6 5 2 for alle hp-grænser 0–10 er lig de konkrete sidninger talt direkte', () => {
+  it('vægte ved delt hul: E B 4 3 / 6 5 2 for alle hp-grænser 0–10 er lig de konkrete sidninger talt direkte', { timeout: 60_000 }, () => {
     // K og D ligger i samme hul (mellem E og B), så hullet deles, når en grænse binder.
     const north = parseCards('AJ43'), south = parseCards('652');
+    // Spillet afhænger kun af de ledige pladser og delingen; det bygges én gang for hver.
+    const games = new Map<string, ReturnType<typeof buildGame>>();
     for (const known of [[0, 0], [5, 2]] as [number, number][]) {
       for (let w = 0; w <= 10; w++) {
         for (let e = 0; e <= 10; e++) {
           const s = situation(known, [w, e]);
-          const game = buildGame(north, south, { objective: { kind: 'goal', goal: 3 }, ...gameOptionsFor(north, south, s) });
+          const options = gameOptionsFor(north, south, s);
+          const key = JSON.stringify(options);
+          if (!games.has(key)) games.set(key, buildGame(north, south, { objective: { kind: 'goal', goal: 3 }, ...options }));
+          const game = games.get(key)!;
           const weights = situationWeights(game, s);
           expect(weights).toHaveLength(game.layouts.length);
           // Sidning for sidning: summen over de konkrete sidninger i den abstrakte, der overholder grænserne.

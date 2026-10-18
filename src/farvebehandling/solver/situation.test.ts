@@ -75,7 +75,8 @@ describe('Situationen i løseren', { timeout: 300_000 }, () => {
   it('en egen linje og flest stik regnes også med situationen', () => {
     const line = handleSolve({
       kind: 'line', north: B5, south: EDX, goal: 5, situation: situation([0, 0], [0, 10]),
-      line: { id: 'egen', text: 'Knægten fra bordet', steps: [{ leadFrom: 'N', card: 'J' }] },
+      // Knægten fra bordet; dækker Øst med kongen, tager hånden med esset.
+      line: { id: 'egen', text: 'Knægten fra bordet', steps: [{ leadFrom: 'N', card: 'J', third: { ifSecondPlays: 'low', play: 'low', else: 'A' } }] },
     });
     if (line.kind !== 'line' || !line.lead) throw new Error('forkert svar');
     expect(percent2(line.lead.value)).toBe(84.78);
@@ -98,16 +99,22 @@ describe('Situationen i løseren', { timeout: 300_000 }, () => {
       for (const g of goals) {
         const whole = solveGame(buildGame(north, south, { objective: { kind: 'goal', goal: g } }));
         const split = buildGame(north, south, { objective: { kind: 'goal', goal: g }, splitHonors: true });
-        expect(split.parts.length).toBeGreaterThan(split.gaps.length);
+        // Mindst ét hul er delt i flere dele.
+        expect(new Set(split.parts.map((p) => p.hole)).size).toBeLessThan(split.parts.length);
         expect(solveGame(split).value).toBeCloseTo(whole.value, 4);
       }
     }
   });
 
-  it('delingen af huller: uden blandede huller er det delte spil identisk med det udelte', () => {
+  it('delingen af huller: uden blandede huller har det delte spil de samme sidninger og samme værdi', () => {
+    // Hullerne deles ikke ved start, men delene holdes adskilt, når hullerne slås sammen undervejs (fx K og 9 8 7,
+    // når D, B og 10 er spillet). Sidningerne og værdien uden grænse er de samme.
     for (const [north, south] of [[EDB10, X65432], [B5, EDX]]) {
       const objective = { kind: 'goal', goal: 5 } as const;
-      expect(buildGame(north, south, { objective, splitHonors: true })).toEqual(buildGame(north, south, { objective }));
+      const whole = buildGame(north, south, { objective }), split = buildGame(north, south, { objective, splitHonors: true });
+      const layouts = (g: typeof whole) => g.layouts.map(({ west, count, weight }) => ({ west, count, weight }));
+      expect(layouts(split)).toEqual(layouts(whole));
+      expect(solveGame(split).value).toBeCloseTo(solveGame(whole).value, 4);
     }
   });
 });

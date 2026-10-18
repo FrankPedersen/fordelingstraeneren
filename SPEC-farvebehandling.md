@@ -161,6 +161,11 @@ Opgaven er et spil under usikkerhed: spilføreren må kun beslutte ud fra de kor
 6. **Mål:** for hvert mål maksimeres P(stik ≥ mål). Desuden findes linjen med flest stik i gennemsnit (parturnering). Linjer inden for 0,5 procentpoint af den bedste vises alle. Til Hold eller par: når parturneringens linje når målet mere end 0,5 procentpoint sjældnere end målets bedste linje, regnes målets bedste linje også som parturnering (dens trin, derefter flest stik). Målet kommer med, når linjen stadig når målet lige så tit (inden for 0,5 procentpoint) og giver mindst 0,005 stik færre i gennemsnit.
 7. **Kapacitet:** løseren skal klare op til 8 manglende kort.
 8. **Forbindelser:** ubegrænsede i første version. Begrænsede forbindelser er en senere udvidelse.
+9. **Situation** (SPEC-analyse-situation.md): Analyse kan regne en kombination med en situation.
+   - Kendte kort i andre farver giver ledige pladser.
+   - En grænse for honnørpoint i farven giver vægt 0 til sidninger, hvor en modspiller har for mange.
+   - Binder en grænse, deles hullerne efter honnørpoint, så vægtene er eksakte.
+   - Chancerne er betingede af situationen. Bankens tal er og bliver a priori.
 
 **Resultat.** Løseren giver et strategitræ. Det gemmes i linjeformatet fra afsnittet Opgavebank og oversættes til dansk med faste sætningsskabeloner: en kort hovedlinje, fx "Slå esset, kip derefter mod damen", og grene, hvor de er nødvendige, fx "Lægger Øst en honnør, …". Frank godkender teksterne for startbanken.
 

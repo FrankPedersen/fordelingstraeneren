@@ -1,5 +1,6 @@
 import { cardsData, type Rank } from '../model/cards';
 import { shownLeads } from '../model/shown';
+import { gameOptionsFor, isStandard, situationWeights, type Situation } from '../model/situation';
 import type { CombinationSolution, GoalResult, LeadResult } from '../precompute';
 import { describeLine } from './describe';
 import { buildGame, type Game } from './game';
@@ -71,28 +72,28 @@ export function leadTricks(north: readonly Rank[], south: readonly Rank[], lead:
 
 export type CombinationBase = Omit<CombinationSolution, 'goals' | 'tricks'>;
 
-/** Kombinationens huller og sidninger; de afhænger ikke af målet. */
-export function combinationBase(game: Game): CombinationBase {
-  const declarer = game.declarer;
+/**
+ * Kombinationens huller og sidninger; de afhænger ikke af målet. Hullerne er spillets dele (uden deling ét pr. hul).
+ * Med en situations vægte (`weights`) har hver sidning sin vægt i situationen (0 = udelukket), og nævneren er summen,
+ * så chancerne er betingede.
+ */
+export function combinationBase(game: Game, weights?: readonly bigint[]): CombinationBase {
   return {
     north: cardsData(game.north),
     south: cardsData(game.south),
-    denominator: game.denominator.toString(),
-    gaps: game.gaps.map((size, q) => ({
-      high: q === 0 ? 14 : declarer[q - 1].rank - 1,
-      low: q === declarer.length ? 2 : declarer[q].rank + 1,
-      size,
-    })),
-    layouts: game.layouts.map((l) => ({ west: [...l.west], weight: l.weight.toString() })),
+    denominator: (weights ? weights.reduce((a, b) => a + b, 0n) : game.denominator).toString(),
+    gaps: game.parts.map(({ high, low, size }) => ({ high, low, size })),
+    layouts: game.layouts.map((l, L) => ({ west: [...l.parts], weight: (weights ? weights[L] : l.weight).toString() })),
   };
 }
 
 // ---------- Beregning på forespørgsel ----------
 
+/** `situation` er valgfri (SPEC-analyse-situation.md); uden den, eller på standard, er svaret som før. */
 export type SolveRequest =
-  | { kind: 'goal'; north: Rank[]; south: Rank[]; goal: number }
-  | { kind: 'tricks'; north: Rank[]; south: Rank[] }
-  | { kind: 'line'; north: Rank[]; south: Rank[]; goal: number; line: Line };
+  | { kind: 'goal'; north: Rank[]; south: Rank[]; goal: number; situation?: Situation }
+  | { kind: 'tricks'; north: Rank[]; south: Rank[]; situation?: Situation }
+  | { kind: 'line'; north: Rank[]; south: Rank[]; goal: number; line: Line; situation?: Situation };
 
 export type SolveResponse =
   | { kind: 'goal' | 'tricks'; base: CombinationBase; result: GoalResult }
@@ -100,6 +101,7 @@ export type SolveResponse =
 
 /** Løser en forespørgsel: et mål, flest stik i gennemsnit eller en egen linje (efter dens trin spiller løseren videre). */
 export function handleSolve(request: SolveRequest): SolveResponse {
+  if (request.situation && !isStandard(request.situation)) return handleSituation(request, request.situation);
   if (request.kind === 'tricks') {
     const game = buildGame(request.north, request.south, { objective: { kind: 'tricks' } });
     return { kind: 'tricks', base: combinationBase(game), result: goalResult(solveGame(game)) };
@@ -110,4 +112,20 @@ export function handleSolve(request: SolveRequest): SolveResponse {
   const errors = validateLine(game, request.line);
   if (errors.length) return { kind: 'line', lead: null, errors };
   return { kind: 'line', lead: leadResult(game, solveLine(game, request.line)), errors: [] };
+}
+
+/**
+ * En forespørgsel med en situation: spillet bygges med de ledige pladser (og delte huller, når en hp-grænse binder), og
+ * løseren regner med situationens vægte, så chancen er betinget af situationen.
+ */
+function handleSituation(request: SolveRequest, situation: Situation): SolveResponse {
+  const objective = request.kind === 'tricks' ? ({ kind: 'tricks' } as const) : ({ kind: 'goal', goal: request.goal } as const);
+  const game = buildGame(request.north, request.south, { objective, ...gameOptionsFor(request.north, request.south, situation) });
+  const weights = situationWeights(game, situation);
+  if (!weights.some((w) => w > 0n)) throw new Error('Situationen kan ikke lade sig gøre');
+  const base = combinationBase(game, weights);
+  if (request.kind !== 'line') return { kind: request.kind, base, result: goalResult(solveGame(game, { weights })) };
+  const errors = validateLine(game, request.line);
+  if (errors.length) return { kind: 'line', lead: null, errors };
+  return { kind: 'line', lead: leadResult(game, solveLine(game, request.line, { weights })), errors: [] };
 }

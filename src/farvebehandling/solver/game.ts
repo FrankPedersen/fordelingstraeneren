@@ -1,6 +1,7 @@
 import { binomial } from '../../domain/combinatorics';
 import { missingCards, type Rank } from '../model/cards';
 import { A_PRIORI, type Vacant } from '../model/layouts';
+import { honorPoints } from '../model/situation';
 
 /**
  * Spiltræet for én farve.
@@ -10,6 +11,12 @@ import { A_PRIORI, type Vacant } from '../model/layouts';
  *
  * Abstraktion: modpartens kort, der ligger mellem to af spilførerens kort (et "hul"), er ligeværdige. Derfor tæller
  * kun, hvor mange kort Vest og Øst har i hvert hul. Det ændrer ikke spillets værdi, og begrænset valg følger af tællingen.
+ *
+ * Deling af huller (SPEC-analyse-situation.md): med en hp-grænse er kort med forskellige honnørpoint ikke længere
+ * ligeværdige, fordi sidningernes vægt afhænger af, hvem der har hvilken honnør. Med `splitHonors` deles hvert hul
+ * derfor i dele efter honnørpoint: hver honnør står for sig, og 10'eren og lavere står samlet. Delene beholdes, når
+ * hullerne slås sammen undervejs; kun dele med samme honnørpoint slås sammen. Uden `splitHonors` er der én del pr. hul,
+ * og spillet er præcis som før.
  *
  * Træet har to slags knuder. En knude er en offentlig spilsituation (det, spilføreren ved); et "item" er en knude
  * sammen med én sidning (det, modspillet ved). Knuder og items er nummereret i dybde-først rækkefølge, så et deltræ
@@ -38,6 +45,19 @@ export interface Layout {
   count: number;
   /** Tæller over `Game.denominator`: antal konkrete sidninger gange chancen for hver. */
   weight: bigint;
+  /** Antal kort hos Vest i hver del (`Game.parts`); uden deling det samme som `west`. */
+  parts: readonly number[];
+}
+
+/** En del af et hul i startpositionen: kort med samme honnørpoint, eller hele hullet uden deling. */
+export interface GamePart {
+  hole: number;
+  /** Højeste og laveste kort i delen (uden deling hullets interval). */
+  high: Rank;
+  low: Rank;
+  size: number;
+  /** Honnørpoint pr. kort, når alle delens kort har de samme; null, hvis delen blander. */
+  hp: number | null;
 }
 
 export interface Game {
@@ -50,6 +70,8 @@ export interface Game {
   declarer: readonly DeclarerCard[];
   /** Antal modpartskort over hvert af spilførerens kort og under det laveste. */
   gaps: readonly number[];
+  /** Hullernes dele; uden deling én pr. hul. */
+  parts: readonly GamePart[];
   layouts: readonly Layout[];
   denominator: bigint;
   layoutWeight: Float64Array;
@@ -89,16 +111,29 @@ export interface Game {
 export interface GameOptions {
   vacant?: Vacant;
   objective: Objective;
+  /** Del hullerne efter honnørpoint (når en hp-grænse binder). */
+  splitHonors?: boolean;
+}
+
+/** En del undervejs: hul, klasse (honnørpoint, uden deling 0), interval og antal modpartskort. */
+interface PartState {
+  hole: number;
+  cls: number;
+  high: Rank;
+  low: Rank;
+  size: number;
 }
 
 interface State {
   decl: DeclarerCard[];
   gaps: number[];
+  parts: PartState[];
   tricks: number;
 }
 
 interface ItemState {
   layout: number;
+  /** Vests antal kort i hver del. */
   west: number[];
 }
 
@@ -114,32 +149,67 @@ export function buildGame(north: readonly Rank[], south: readonly Rank[], option
   const owner = new Map<Rank, Hand>();
   for (const r of north) owner.set(r, 'N');
   for (const r of south) owner.set(r, 'S');
+  const split = options.splitHonors === true;
   const decl0: DeclarerCard[] = [];
   const gaps0 = [0];
+  const holeCards: Rank[][] = [[]];
   for (let r = 14; r >= 2; r--) {
     const hand = owner.get(r);
     if (hand) {
       decl0.push({ rank: r, hand });
       gaps0.push(0);
-    } else gaps0[gaps0.length - 1]++;
+      holeCards.push([]);
+    } else {
+      gaps0[gaps0.length - 1]++;
+      holeCards[holeCards.length - 1].push(r);
+    }
   }
 
-  // Sidninger: Vests antal i hvert hul. Vægt = C(U − n, v_V − k) · ∏ C(hul, w).
+  // Delene: uden deling ét pr. hul med hullets interval; med deling hvert huls kort grupperet efter honnørpoint.
+  const holeRange = (q: number) => ({
+    high: q === 0 ? 14 : decl0[q - 1].rank - 1,
+    low: q === decl0.length ? 2 : decl0[q].rank + 1,
+  });
+  const parts0: PartState[] = [];
+  const partHp: (number | null)[] = [];
+  holeCards.forEach((cards, q) => {
+    if (!split) {
+      parts0.push({ hole: q, cls: 0, ...holeRange(q), size: cards.length });
+      const hps = new Set(cards.map(honorPoints));
+      partHp.push(hps.size === 0 ? 0 : hps.size === 1 ? [...hps][0] : null);
+      return;
+    }
+    for (const r of cards) {
+      const cls = honorPoints(r);
+      const part = parts0.find((p) => p.hole === q && p.cls === cls);
+      if (part) {
+        part.low = r;
+        part.size++;
+      } else {
+        parts0.push({ hole: q, cls, high: r, low: r, size: 1 });
+        partHp.push(cls);
+      }
+    }
+  });
+
+  // Sidninger: Vests antal i hver del. Vægt = C(U − n, v_V − k) · ∏ C(del, w).
   const n = missing.length;
   const u = vacant.west + vacant.east;
   if (n > u) throw new Error('Flere manglende kort end ledige pladser');
   let counts: number[][] = [[]];
-  for (const size of gaps0) {
+  for (const { size } of parts0) {
     const next: number[][] = [];
     for (const c of counts) for (let w = 0; w <= size; w++) next.push([...c, w]);
     counts = next;
   }
   const layouts: Layout[] = [];
-  for (const west of counts) {
-    const k = west.reduce((a, b) => a + b, 0);
+  for (const parts of counts) {
+    const k = parts.reduce((a, b) => a + b, 0);
     let weight = binomial(u - n, vacant.west - k);
-    for (let g = 0; g < gaps0.length; g++) weight *= binomial(gaps0[g], west[g]);
-    if (weight > 0n) layouts.push({ west, count: k, weight });
+    for (let p = 0; p < parts0.length; p++) weight *= binomial(parts0[p].size, parts[p]);
+    const west = gaps0.map(() => 0);
+    parts.forEach((w, p) => (west[parts0[p].hole] += w));
+    if (weight > 0n) layouts.push({ west, count: k, weight, parts });
   }
   const denominator = binomial(u, vacant.west);
 
@@ -265,11 +335,20 @@ export function buildGame(north: readonly Rank[], south: readonly Rank[], option
     return { hand: -1, high, low };
   }
 
+  /** Et modpartskort fra delen p: hullets interval, når hullet kun har én del (altid uden deling), ellers delens. */
+  function partRange(st: State, p: number): Slot {
+    if (p < 0) return gapRange(st, -1);
+    const part = st.parts[p];
+    if (st.parts.filter((x) => x.hole === part.hole).length === 1) return gapRange(st, part.hole);
+    return { hand: -1, high: part.high, low: part.low };
+  }
+
   /** 2. hånd (second < 0) eller 4. hånd efter 3. håndens kort. */
   function buildDefender(st: State, leader: Hand, lead: number, items: ItemState[], second: number, third: number): Built {
     const isSecond = third === -1 && second === -1;
     const seat = isSecond ? (leader === 'N' ? 'E' : 'W') : leader === 'N' ? 'W' : 'E';
-    const gapsNow = st.gaps.slice();
+    // Handlingerne er pr. del: uden deling er en del et hul.
+    const gapsNow = st.parts.map((p) => p.size);
     if (!isSecond && second >= 0) gapsNow[second]--;
     const byGap = new Map<number, ItemState[]>();
     for (const it of items) {
@@ -295,7 +374,7 @@ export function buildGame(north: readonly Rank[], south: readonly Rank[], option
     const node = newNode(isSecond ? SECOND : FOURTH, st, items);
     attach(
       node,
-      actions.map((q) => gapRange(st, q)),
+      actions.map((q) => partRange(st, q)),
       (i) =>
         isSecond
           ? buildThird(st, leader, lead, actions[i], byGap.get(actions[i])!)
@@ -320,26 +399,43 @@ export function buildGame(north: readonly Rank[], south: readonly Rank[], option
   }
 
   function finishTrick(st: State, lead: number, second: number, third: number, fourth: number, items: ItemState[]): Built {
-    // Spilførerens kort med indeks j slår et modpartskort i hul q, når j < q.
+    // Spilførerens kort med indeks j slår et modpartskort i hul q, når j < q. 2. og 4. hånd spiller fra en del.
+    const holeOf = (p: number) => (p >= 0 ? st.parts[p].hole : 99);
     const ours = Math.min(lead, third >= 0 ? third : 99);
-    const theirs = Math.min(second >= 0 ? second : 99, fourth >= 0 ? fourth : 99);
+    const theirs = Math.min(holeOf(second), holeOf(fourth));
     const won = ours < theirs;
     const gaps = st.gaps.slice();
-    if (second >= 0) gaps[second]--;
-    if (fourth >= 0) gaps[fourth]--;
+    const parts = st.parts.map((p) => ({ ...p }));
+    for (const p of [second, fourth]) {
+      if (p < 0) continue;
+      gaps[parts[p].hole]--;
+      parts[p].size--;
+    }
     const decl = st.decl.slice();
     const next = items.map((it) => ({ layout: it.layout, west: it.west.slice() }));
     for (const j of [lead, third].filter((x) => x >= 0).sort((a, b) => b - a)) {
       decl.splice(j, 1);
       gaps.splice(j, 2, gaps[j] + gaps[j + 1]);
-      for (const it of next) it.west.splice(j, 2, it.west[j] + it.west[j + 1]);
+      // Hul j og j + 1 bliver ét. Dele med samme klasse slås sammen; uden deling er det de to huller.
+      for (const p of parts) if (p.hole > j) p.hole--;
+      for (let a = 0; a < parts.length; a++) {
+        if (parts[a].hole !== j) continue;
+        for (let b = a + 1; b < parts.length; b++) {
+          if (parts[b].hole !== j || parts[b].cls !== parts[a].cls) continue;
+          const size = parts[a].size + parts[b].size;
+          parts[a] = { ...parts[a], high: Math.max(parts[a].high, parts[b].high), low: Math.min(parts[a].low, parts[b].low), size };
+          parts.splice(b, 1);
+          for (const it of next) it.west.splice(a, 1, it.west[a] + it.west.splice(b, 1)[0]);
+          b--;
+        }
+      }
     }
-    return buildLead({ decl, gaps, tricks: st.tricks + (won ? 1 : 0) }, next);
+    return buildLead({ decl, gaps, parts, tricks: st.tricks + (won ? 1 : 0) }, next);
   }
 
   const root = buildLead(
-    { decl: decl0, gaps: gaps0, tricks: 0 },
-    layouts.map((l, i) => ({ layout: i, west: [...l.west] })),
+    { decl: decl0, gaps: gaps0, parts: parts0.map((p) => ({ ...p })), tricks: 0 },
+    layouts.map((l, i) => ({ layout: i, west: [...l.parts] })),
   ).id;
 
   const nodes = kind.length;
@@ -360,6 +456,7 @@ export function buildGame(north: readonly Rank[], south: readonly Rank[], option
     objective,
     declarer: decl0,
     gaps: gaps0,
+    parts: parts0.map((p, i) => ({ hole: p.hole, high: p.high, low: p.low, size: p.size, hp: partHp[i] })),
     layouts,
     denominator,
     layoutWeight: Float64Array.from(layouts.map((l) => Number(l.weight) / Number(denominator))),
@@ -388,14 +485,14 @@ export function buildGame(north: readonly Rank[], south: readonly Rank[], option
 
 /** Sidningen (indeks i game.layouts), hvor Vest har netop disse af de manglende kort. */
 export function layoutOf(game: Game, westCards: readonly Rank[]): number {
-  const west = game.gaps.map(() => 0);
+  const west = game.parts.map(() => 0);
   for (const r of westCards) {
     if (!game.missing.includes(r)) throw new Error(`Vest kan ikke have ${r}`);
-    // hullet: antal af spilførerens kort over r
+    // hullet: antal af spilførerens kort over r; delen: den i hullet, hvis interval rummer r
     const q = game.declarer.filter((d) => d.rank > r).length;
-    west[q]++;
+    west[game.parts.findIndex((p) => p.hole === q && p.high >= r && r >= p.low)]++;
   }
-  const index = game.layouts.findIndex((l) => l.west.every((w, q) => w === west[q]));
+  const index = game.layouts.findIndex((l) => l.parts.every((w, p) => w === west[p]));
   if (index < 0) throw new Error('Sidningen er umulig med de ledige pladser');
   return index;
 }

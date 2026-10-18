@@ -104,15 +104,15 @@ Hvert trin er færdigt, når `npm test` er grøn, `SPEC-farvebehandling.md` er o
 
 Facitværdierne er regnet med løseren (18. oktober 2026).
 
-- [ ] Alle eksisterende tests består uændret.
-- [ ] Uden situation giver `handleSolve` præcis samme svar som i dag for B432 / ET65 og E K B 3 2 / 7 6 5 4.
-- [ ] Kendte kort 0/0 og maks. hp 10/10 giver præcis samme tal som a priori.
-- [ ] E D B 10 / 6 5 4 3 2, 5 stik, kendte kort Vest 5 og Øst 2: lille fra begge hænder 42,11 %, esset 12,49 %.
-- [ ] E D B 10 / 6 5 4 3 2, 5 stik, Øst maks. 0 hp: lille fra begge hænder 100,00 %.
-- [ ] E D B 10 / 6 5 4 3 2, 5 stik, Vest maks. 0 hp: 12,43 % (esset eller lille fra hånden).
-- [ ] E D B 10 / 6 5 4 3 2, 5 stik, Vest maks. 0 hp og kendte kort Vest 5, Øst 2: 6,86 %.
-- [ ] B 5 / E D 7 6 4 2, 5 stik, Vest maks. 0 hp: knægten fra bordet 84,78 %.
-- [ ] Vægte ved delt hul: for E B 4 3 / 6 5 2 (K og D i samme hul) og alle hp-grænser 0–10 er summen af de abstrakte sidningers vægt lig med summen over de konkrete sidninger, der overholder grænserne, talt direkte.
+- [x] Alle eksisterende tests består uændret.
+- [x] Uden situation giver `handleSolve` præcis samme svar som i dag for B432 / ET65 og E K B 3 2 / 7 6 5 4.
+- [x] Kendte kort 0/0 og maks. hp 10/10 giver præcis samme tal som a priori.
+- [x] E D B 10 / 6 5 4 3 2, 5 stik, kendte kort Vest 5 og Øst 2: lille fra begge hænder 42,11 %, esset 12,49 %.
+- [x] E D B 10 / 6 5 4 3 2, 5 stik, Øst maks. 0 hp: lille fra begge hænder 100,00 %.
+- [x] E D B 10 / 6 5 4 3 2, 5 stik, Vest maks. 0 hp: 12,43 % (esset eller lille fra hånden).
+- [x] E D B 10 / 6 5 4 3 2, 5 stik, Vest maks. 0 hp og kendte kort Vest 5, Øst 2: 6,86 %.
+- [x] B 5 / E D 7 6 4 2, 5 stik, Vest maks. 0 hp: knægten fra bordet 84,78 %.
+- [x] Vægte ved delt hul: for E B 4 3 / 6 5 2 (K og D i samme hul) og alle hp-grænser 0–10 er summen af de abstrakte sidningers vægt lig med summen over de konkrete sidninger, der overholder grænserne, talt direkte.
 - [ ] En situation, der ikke kan lade sig gøre (fx kendte kort 13/13), kan ikke vælges.
 - [ ] Import: `AK65-J43` og `EK65-B43` giver samme kombination; `AK6-AJ4` afvises, fordi esset står to gange.
 - [ ] Import: spillet `md|3SQ6HKQ84D632CQ832,ST94HJ752DK84CT65,SJ52HTDAQJ975CKJ7,|`, giver 8 kombinationer, blandt dem ♦ E D B 9 7 5 – 6 3 2 og ♣ K B 7 – D 8 3 2 (Nord–Syd) og ♠ E K 8 7 3 – 10 9 4 (Øst–Vest; Øst er afledt som de resterende kort).
@@ -126,4 +126,22 @@ Facitværdierne er regnet med løseren (18. oktober 2026).
 2. **Forbindelser** er stadig ubegrænsede. Begrænsede forbindelser kræver indgange i spillets tilstand og får sin egen spec.
 3. **Beregningstiden** kan blive lang på en telefon (op til ca. 2 minutter i Node for de tungeste kombinationer med 5–6 manglende kort). Ventevisningen og Stop er de samme som i dag.
 
-Åbne punkter: Claude Code skriver her, hvordan hullet deles ved en hp-grænse, og om det påvirker beregningstiden.
+4. **Deling af huller** (leverancetrin 1, 18. oktober 2026). Binder en hp-grænse, dvs. ligger den under modpartens honnørpoint i farven, bygges spillet med `splitHonors`. Hvert hul deles så efter honnørpoint: hver honnør (E, K, D, B) står for sig, og 10'eren og lavere står samlet.
+   - **Hele spillet igennem:** delene holdes adskilt. Når to huller slås sammen, fordi spilføreren har spillet et kort imellem dem, slås kun dele med samme honnørpoint sammen, altså de små kort. Det gælder også en kombination uden blandede huller fra start, fx E D B 10 / 6 5 4 3 2, hvor K og 9 8 7 kommer i samme hul, når D, B og 10 er spillet.
+   - **Eksakte vægte:** alle kort i en del har samme honnørpoint, så antallet pr. del giver Vests og Østs honnørpoint. En sidnings vægt er a priori-vægten med de ledige pladser, når begge ligger inden for grænserne, ellers 0.
+   - **Visning:** et modspilskort fra en delt del har delens eget kortinterval, der ligger inde i hullet. Linjebeskrivelsen, linjeformatet og de naturlige valg virker derfor uændret.
+   - **Uden en grænse, der binder,** deles intet, og spillet er præcis som før. `solver/uden-situation.test.ts` låser 95 spil fra banken og løserens svar, skrevet af koden før ændringen.
+   - **Beregningstiden** målt i Node for 8 kombinationer med 5–8 manglende kort og en bindende grænse: delingen giver 1,1–3 gange så mange knuder og 1,2–3 gange så lang tid. Eksempler: E 10 3 2 / K 9 5 4 for 3 stik går fra 10,5 s til 22,4 s, og E 9 3 2 / B 10 5 4 fra 11,2 s til 21,5 s. Målingen kørte samtidig med bogregressionen, så de absolutte tider er for høje; forholdet gælder.
+   - **Sammenligning:** vægtene lagt direkte på det udelte spil gav samme chance i alle 8 kombinationer (til 4 decimaler). Delingen er alligevel med, fordi:
+     - specen kræver den,
+     - spilføreren i princippet kan bruge, hvilken honnør der falder,
+     - båndet og tabellen i trin 2 kan vise hver honnørplacering med sin egen vægt. En udelt sidning med "K eller D hos Vest" deles ellers ligeligt mellem de to.
+5. **Svaret med en situation.** `handleSolve` regner med situationens vægte gennem `SubgameOptions.weights`.
+   - Sidninger, situationen udelukker, har vægt 0 i svaret (`base.layouts[L].weight`).
+   - Nævneren er summen af vægtene. Procenterne er dermed betingede, og båndet og tabellen kan bruge dem uden ændringer.
+   - Hullerne i svaret er spillets dele, og uden deling er det ét pr. hul som før.
+   - Standardsituationen (0/0 og 10/10) går den gamle vej.
+   - En situation, der ikke kan lade sig gøre, afvises.
+   - `model/situation.ts` har også `isPossible` og `canStep` til trinvælgerne i trin 2. De er testet i modellen, mens de grå knapper kommer i trin 2.
+
+Åbne punkter: ingen.
