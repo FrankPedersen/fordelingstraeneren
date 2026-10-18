@@ -1005,3 +1005,53 @@
   padding-left: var(--space-20);
   color: var(--text);
 }
+
+/* Situationen (SPEC-analyse-situation.md): trinvælgere med trykflader på mindst 44 px og chips under bordet. */
+.fb-situation-field {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.fb-situation-seats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-16);
+}
+
+.fb-stepper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.fb-stepper-seat {
+  min-width: var(--touch-min);
+  font-weight: 700;
+}
+
+.fb-step {
+  min-width: var(--touch-min);
+  min-height: var(--touch-min);
+}
+
+.fb-stepper-value {
+  min-width: var(--touch-min);
+  text-align: center;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.fb-situation-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fb-chip-situation {
+  border: 1px solid var(--accent);
+  background: var(--accent-soft);
+  color: var(--text);
+}

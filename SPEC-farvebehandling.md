@@ -349,6 +349,10 @@ Regler for brugerfladen:
 - **Navn:** appen hedder Fordelingstræneren.
 - **Input:** kortvælger med tryk på kort i stedet for tekstfelt.
 - **Afspilning:** en selvstændig tilstand. Den aktuelle sidning lyser op i båndet.
+- **Situationen** (SPEC-analyse-situation.md): Analyse har panelet Situationen under Problemet med kendte kort i andre farver og maks. hp i farven hos Vest og Øst.
+  - Med en situation regner løseren i appen med ventevisning, forløbet tid og Stop.
+  - Chancerne er betingede, og udelukkede sidninger står ikke i båndet og tabellen.
+  - Spil den selv giver kortene efter situationen.
 - **Træning:** linjer og forskel er skjult, indtil brugeren har valgt linje og gættet en chance.
 - **Tone:** kollegial og adskiller beslutning fra resultat, fx "God beslutning – sidningen var imod dig".
 - **Tilgængelighed:** trykflader mindst 44 px og kontrast mindst 4,5:1. Undtagelse: klubaftenens 10 × 10 felter er mindre på smalle skærme; listen under dem har trykflader i fuld størrelse.

@@ -1,6 +1,6 @@
 import { binomial } from '../../domain/combinatorics';
 import type { Game } from '../solver/game';
-import { missingCards, type Rank } from './cards';
+import { missingCards, TEN, type Rank } from './cards';
 import type { Vacant } from './layouts';
 
 /**
@@ -87,6 +87,14 @@ export function isPossible(north: readonly Rank[], south: readonly Rank[], s: Si
   }
   return false;
 }
+
+/**
+ * Antal felter i båndet a priori for hullerne, som `bandFields` folder dem ud: et hul, hvor alle kort er 10 eller højere,
+ * giver 2^antal felter (hvert kort hos Vest eller Øst), ellers antal + 1 (Vests antal små kort). Forskellen til de viste
+ * felter er de sidninger, situationen udelukker.
+ */
+export const aprioriFieldCount = (gaps: readonly { low: Rank; size: number }[]) =>
+  gaps.reduce((a, g) => a * (g.low >= TEN ? 2 ** g.size : g.size + 1), 1);
 
 /** Situationen efter et tryk på − eller + i et felt. */
 export function step(s: Situation, field: SituationField, seat: Seat, delta: 1 | -1): Situation {

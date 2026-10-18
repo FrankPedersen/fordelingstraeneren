@@ -113,7 +113,7 @@ Facitværdierne er regnet med løseren (18. oktober 2026).
 - [x] E D B 10 / 6 5 4 3 2, 5 stik, Vest maks. 0 hp og kendte kort Vest 5, Øst 2: 6,86 %.
 - [x] B 5 / E D 7 6 4 2, 5 stik, Vest maks. 0 hp: knægten fra bordet 84,78 %.
 - [x] Vægte ved delt hul: for E B 4 3 / 6 5 2 (K og D i samme hul) og alle hp-grænser 0–10 er summen af de abstrakte sidningers vægt lig med summen over de konkrete sidninger, der overholder grænserne, talt direkte.
-- [ ] En situation, der ikke kan lade sig gøre (fx kendte kort 13/13), kan ikke vælges.
+- [x] En situation, der ikke kan lade sig gøre (fx kendte kort 13/13), kan ikke vælges.
 - [ ] Import: `AK65-J43` og `EK65-B43` giver samme kombination; `AK6-AJ4` afvises, fordi esset står to gange.
 - [ ] Import: spillet `md|3SQ6HKQ84D632CQ832,ST94HJ752DK84CT65,SJ52HTDAQJ975CKJ7,|`, giver 8 kombinationer, blandt dem ♦ E D B 9 7 5 – 6 3 2 og ♣ K B 7 – D 8 3 2 (Nord–Syd) og ♠ E K 8 7 3 – 10 9 4 (Øst–Vest; Øst er afledt som de resterende kort).
 - [ ] Sammenlign: med to linjer valgt er linje A's unikke vindere minus linje B's lig med forskellen mellem linjernes chance.
@@ -158,4 +158,14 @@ Facitværdierne er regnet med løseren (18. oktober 2026).
    - `model/situation.ts` har også `isPossible` og `canStep` til trinvælgerne i trin 2. De er testet i modellen, mens de grå knapper kommer i trin 2.
 
 6. **Ventevisningen** (Franks krav, 18. oktober 2026): mens løseren regner med situationen, viser ventevisningen den tid, der er gået ("Regner … 12 s"), og knappen Stop. En stoppet beregning står som "Beregningen blev stoppet …" med knappen "Regn med situationen".
+7. **Claude Codes valg i leverancetrin 2:**
+   - **Start:** beregningen starter af sig selv 0,6 s efter sidste tryk på en trinvælger, så flere tryk i træk giver én beregning. Et nyt tryk eller et skift af kombination eller mål stopper en beregning, der er i gang.
+   - **Hukommelse:** resultaterne huskes pr. kombination, mål og situation, mens fanen er åben.
+   - **Ny kombination:** situationen følger med, når den kan lade sig gøre dér; ellers står den på standard.
+   - **Panelet** har knappen "Angiv situationen", når det er foldet sammen, og "Fold sammen", når det er åbent på standard.
+   - **Chips:** der er ét pr. ændret felt, fx "Vest 5 kendte kort" og "Øst maks. 0 hp".
+   - **Tallet N** i "N sidninger er udelukket af situationen" tæller båndets felter: felterne a priori minus de viste.
+   - **Egne linjer** regnes med situationen, når en situation er sat.
+   - **Uden for banken** regnes en kombination først a priori (målene og forslaget som i dag) og derefter med situationen.
+
 Åbne punkter: ingen.

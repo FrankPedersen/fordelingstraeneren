@@ -17,6 +17,7 @@ import {
 } from '../analysis';
 import { cardsText, rankText, type Rank } from '../model/cards';
 import { eveningText } from '../model/frequency';
+import { aprioriFieldCount, isPossible, isStandard, STANDARD, type Situation } from '../model/situation';
 import type { GoalResult, LeadResult } from '../precompute';
 import { createSolver, SolveCancelled } from '../solver/client';
 import type { LineStep } from '../solver/lines';
@@ -29,6 +30,7 @@ import { Linjekort } from './Linjekort';
 import { Resultatkort } from './Resultatkort';
 import { Sandsynlighedsbånd } from './Sandsynlighedsbånd';
 import { SpilSelv } from './SpilSelv';
+import { assumptionsText, situationChips, situationItem, Situationspanel } from './Situationspanel';
 import { TEXT } from './texts';
 import { lineErrorText, stepText } from '../lineText';
 import { Info } from '../../ui/Info';
@@ -54,6 +56,9 @@ interface Custom {
 
 /** Bogstaver til egne linjer, så de skiller sig ud fra løserens A, B, C … */
 const OWN_LETTERS = ['X', 'Y', 'Z', 'W', 'V', 'U'];
+
+/** Ventetid fra sidste tryk på en trinvælger, til situationen regnes, så flere tryk i træk giver én beregning. */
+const SITUATION_DELAY = 600;
 
 /** Opdaterer visningen hvert sekund, mens løseren regner. */
 function useSeconds(running: boolean): number {
@@ -87,17 +92,35 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
   const [editing, setEditing] = useState(false);
   const [editorErrors, setEditorErrors] = useState<string[]>([]);
   const [ownResults, setOwnResults] = useState<Record<string, LeadResult>>({});
+  // Situationen ved bordet (SPEC-analyse-situation.md) lever kun her, mens fanen er åben. Resultaterne gemmes pr.
+  // kombination, mål og situation, så et skift tilbage ikke regnes igen.
+  const [situation, setSituation] = useState<Situation>(STANDARD);
+  const [situated, setSituated] = useState<Record<string, { base: CombinationBase; result: GoalResult }>>({});
+  const [stopped, setStopped] = useState<string | null>(null);
+  const situationRun = useRef<string | null>(null);
   const solver = useMemo(createSolver, []);
   useEffect(() => () => solver.cancel(), [solver]);
   const now = useSeconds(busy !== null);
   const pointValues = useMemo(() => [...new Set(bank.map((b) => b.points))].sort((a, b) => a - b), [bank]);
   const shown = points === null ? bank : bank.filter((b) => b.points === points);
 
+  // Bankens tal bruges kun på standard; ellers regnes kombinationen med situationen, og chancerne er betingede.
+  const standard = isStandard(situation);
+  const situationTag = JSON.stringify(situation);
+  const situationKey = `${item.combination.id}|${goal}|${situationTag}`;
+  const situationSolved = standard ? null : (situated[situationKey] ?? null);
+  const pending = !standard && !situationSolved;
+  const view = useMemo(
+    () => (situationSolved ? situationItem(item, goal, situationSolved.base, situationSolved.result) : item),
+    [item, goal, situationSolved],
+  );
+  const ownKey = (id: string) => (standard ? `${id}:${goal}` : `${id}:${goal}:${situationTag}`);
+
   // Egne linjer for kombinationen; de regnede får bogstaverne X, Y, Z …
   const ownLines = (saved?.ownLines ?? []).filter((l) => l.combination === item.combination.id);
-  const lines = useMemo(() => linesForGoal(item, goal), [item, goal]);
+  const lines = useMemo(() => (pending ? [] : linesForGoal(view, goal)), [view, goal, pending]);
   const ownViews: { id: string; text: string; view: LineView | null }[] = ownLines.map((l, i) => {
-    const lead = ownResults[`${l.id}:${goal}`];
+    const lead = pending ? undefined : ownResults[ownKey(l.id)];
     return {
       id: l.id,
       text: l.text,
@@ -106,13 +129,46 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
   });
   // Båndet viser løserens linjer og de egne linjer, der er regnet for målet.
   const allLines = [...lines, ...ownViews.flatMap((o) => (o.view ? [o.view] : []))];
-  const fields = sortFields(bandFields(item, allLines), grouping);
+  const allFields = pending ? [] : sortFields(bandFields(view, allLines), grouping);
+  // Sidninger, situationen udelukker (chance 0), står ikke i båndet og tabellen; linjen under tabellen tæller dem.
+  const fields = standard ? allFields : allFields.filter((f) => f.probability > 0);
+  const excluded = standard || pending ? 0 : aprioriFieldCount(view.solution.gaps) - fields.length;
   const decisive = disagreements(fields);
   const field = fields.find((f) => f.id === selected) ?? null;
   const best = lines[0];
-  const solvedGoal = !!item.solution.goals[String(goal)];
+  const solvedGoal = !pending && !!view.solution.goals[String(goal)];
+
+  // Med en situation regnes målet i browseren, kort efter sidste ændring. Et skift af situation, kombination eller mål
+  // stopper en beregning, der er i gang; en stoppet beregning startes igen med knappen "Regn med situationen".
+  useEffect(() => {
+    if (standard || situationSolved || stopped === situationKey) return;
+    const request = { kind: 'goal' as const, north: item.north, south: item.south, goal, situation };
+    const key = situationKey;
+    const timer = setTimeout(() => {
+      situationRun.current = key;
+      void run(() => solver.solve(request)).then((response) => {
+        if (situationRun.current === key) situationRun.current = null;
+        if (response?.kind === 'goal') setSituated((c) => ({ ...c, [key]: { base: response.base, result: response.result } }));
+      });
+    }, SITUATION_DELAY);
+    return () => {
+      clearTimeout(timer);
+      if (situationRun.current === key) {
+        situationRun.current = null;
+        solver.cancel();
+      }
+    };
+    // Nøglen dækker kombination, mål og situation.
+  }, [situationKey, standard, situationSolved, stopped]);
+
+  function stop() {
+    if (situationRun.current) setStopped(situationRun.current);
+    solver.cancel();
+  }
 
   function choose(next: BankItem, nextGoal = next.combination.goals[0]) {
+    // Situationen følger med til en ny kombination, når den kan lade sig gøre dér; ellers står den på standard.
+    if (!isPossible(next.north, next.south, situation)) setSituation(STANDARD);
     setItem(next);
     setGoal(nextGoal);
     setSelected(null);
@@ -164,7 +220,8 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
     setGoal(g);
     setSelected(null);
     setPlaySeed(null);
-    if (!isCustom || !custom || custom.solved[String(g)]) return;
+    // Med en situation regnes målet med situationen (ovenfor), ikke a priori.
+    if (!standard || !isCustom || !custom || custom.solved[String(g)]) return;
     const response = await run(() => solver.solve({ kind: 'goal', north: item.north, south: item.south, goal: g }));
     if (!response || response.kind !== 'goal') return;
     const next = { ...custom, solved: { ...custom.solved, [g]: response.result } };
@@ -173,9 +230,11 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
   }
 
   async function computeOwn(id: string, steps: LineStep[]): Promise<string[]> {
-    const response = await run(() => solver.solve({ kind: 'line', north: item.north, south: item.south, goal, line: { id, text: '', steps } }));
+    const key = ownKey(id);
+    const request = { kind: 'line' as const, north: item.north, south: item.south, goal, line: { id, text: '', steps } };
+    const response = await run(() => solver.solve(standard ? request : { ...request, situation }));
     if (!response || response.kind !== 'line') return [];
-    if (response.lead) setOwnResults((r) => ({ ...r, [`${id}:${goal}`]: response.lead! }));
+    if (response.lead) setOwnResults((r) => ({ ...r, [key]: response.lead! }));
     return response.errors;
   }
 
@@ -200,7 +259,7 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
   const busyNote = busy !== null && (
     <div className="fb-room-row" role="status">
       <span>{TEXT.solving(elapsed)}</span>
-      <button type="button" className="btn small-btn" onClick={() => solver.cancel()}>
+      <button type="button" className="btn small-btn" onClick={stop}>
         {TEXT.stopSolving}
       </button>
     </div>
@@ -294,6 +353,15 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
             arrow={arrow}
             caption={firstLeadText ? TEXT.firstLead(firstLeadText.toLowerCase()) : undefined}
           />
+          {!standard && (
+            <ul className="fb-situation-chips" aria-label={TEXT.situationPanel.title}>
+              {situationChips(situation).map((chip) => (
+                <li key={chip} className="fb-chip fb-chip-situation">
+                  {chip}
+                </li>
+              ))}
+            </ul>
+          )}
           <div className="fb-goals" role="group" aria-label={TEXT.goalLabel}>
             <span>{TEXT.goalLabel}</span>
             <Info topic={TEXT.goalLabel}>{TEXT.help.goals}</Info>
@@ -316,8 +384,10 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
           )}
         </section>
 
+        <Situationspanel north={item.north} south={item.south} situation={situation} onChange={setSituation} />
+
         {playSeed !== null && solvedGoal && (
-          <SpilSelv key={`${item.combination.id}:${goal}:${playSeed}`} item={item} goal={goal} seed={playSeed} onClose={() => setPlaySeed(null)} />
+          <SpilSelv key={`${situationKey}:${playSeed}`} item={view} goal={goal} seed={playSeed} onClose={() => setPlaySeed(null)} />
         )}
 
         <section className="card" aria-labelledby="fb-lines">
@@ -325,7 +395,17 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
           <h2 id="fb-lines">{TEXT.lines}</h2>
           <Info topic={TEXT.lines}>{TEXT.help.lines}</Info>
         </div>
-          {!solvedGoal && <p className="fb-note">{TEXT.goalNotSolved}</p>}
+          {pending && (
+            <div className="fb-room-row">
+              <p className="fb-note">{stopped === situationKey ? TEXT.situationPanel.stopped : TEXT.situationPanel.pending}</p>
+              {stopped === situationKey && (
+                <button type="button" className="btn small-btn" onClick={() => setStopped(null)}>
+                  {TEXT.situationPanel.compute}
+                </button>
+              )}
+            </div>
+          )}
+          {!pending && !solvedGoal && <p className="fb-note">{TEXT.goalNotSolved}</p>}
           {!solvedGoal && mode !== 'picker' && busyNote}
           <div className="fb-lines">
             {lines.map((l) => (
@@ -394,7 +474,7 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
               {mode !== 'picker' && busyNote}
             </>
           )}
-          <p className="fb-note">{TEXT.assumptions}</p>
+          <p className="fb-note">{assumptionsText(situation)}</p>
         </section>
       </div>
 
@@ -404,17 +484,23 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
           <h2 id="fb-difference">{TEXT.difference}</h2>
           <Info topic={TEXT.difference}>{TEXT.help.band}</Info>
         </div>
-          <Sandsynlighedsbånd lines={allLines} fields={fields} selected={selected} onSelect={setSelected} />
-          {decisive.length ? (
-            <p>
-              {TEXT.disagree(
-                decisive.length,
-                decisive.slice(0, 3).map(compactLayout).join(', '),
-                Math.max(0, decisive.length - 3),
-              )}
-            </p>
+          {pending ? (
+            <p className="fb-note">{TEXT.situationPanel.pending}</p>
           ) : (
-            <p>{TEXT.agree}</p>
+            <>
+              <Sandsynlighedsbånd lines={allLines} fields={fields} selected={selected} onSelect={setSelected} />
+              {decisive.length ? (
+                <p>
+                  {TEXT.disagree(
+                    decisive.length,
+                    decisive.slice(0, 3).map(compactLayout).join(', '),
+                    Math.max(0, decisive.length - 3),
+                  )}
+                </p>
+              ) : (
+                <p>{TEXT.agree}</p>
+              )}
+            </>
           )}
           <div className="fb-segment" role="group" aria-label={TEXT.groupBy}>
             <span>{TEXT.groupBy}:</span>
@@ -437,13 +523,18 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
           <h2 id="fb-details">{showAll ? TEXT.details : TEXT.decisive}</h2>
           <Info topic={TEXT.details}>{TEXT.help.layouts}</Info>
         </div>
-          <LayoutList fields={fields} lines={allLines} selected={selected} onSelect={setSelected} grouping={grouping} showAll={showAll} />
+          {pending ? (
+            <p className="fb-note">{TEXT.situationPanel.pending}</p>
+          ) : (
+            <LayoutList fields={fields} lines={allLines} selected={selected} onSelect={setSelected} grouping={grouping} showAll={showAll} />
+          )}
+          {excluded > 0 && <p className="fb-note">{TEXT.situationPanel.excluded(excluded)}</p>}
           <button type="button" className="btn small-btn" onClick={() => setShowAll(!showAll)}>
             {showAll ? TEXT.showFewer : TEXT.showAll}
           </button>
         </section>
 
-        {best && <Resultatkort item={item} goal={goal} best={best} />}
+        {best && <Resultatkort item={view} goal={goal} best={best} />}
       </div>
     </div>
   );

@@ -109,7 +109,7 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
 - `training/`: opgavetyperne og pointtabellen (`tasks.ts`), progressionen (`progression.ts`), sessionsmotoren (`session.ts`), paladset (`palace.ts`), Selvvalgts filtre (`practice.ts`) og statistikken (`stats.ts`).
 - `lineText.ts`: løserens danske linjer, fejlbeskeder og honnørbogstaver på engelsk, skabelon for skabelon.
 - `techniques.ts`: forslaget til teknik pr. kombination og listen til godkendelse. `whatnowReport.ts`: listen over Hvad nu?-situationerne.
-- `ui/`: skærmen (`FarvebehandlingScreen.tsx`, indlæses dovent fra `src/app/App.tsx`) med fanerne `Træning.tsx` (forside, session og status), `Selvvalgt.tsx` og `Analysevindue.tsx`; `Opgave.tsx`, `Facit.tsx`, `SpilSelv.tsx`, `Linjeeditor.tsx`, `Introduktion.tsx`, `Rumkort.tsx`, `Palads.tsx`, `Klubaften.tsx`, `Statistik.tsx` og `Data.tsx` (eksport, import og fast lagring); komponenterne Bridgebord, Kortvælger, Linjekort, Resultatkort og Sandsynlighedsbånd, al ordlyd i `texts.ts`, tokens i `tokens.css` og resten i `farvebehandling.css`.
+- `ui/`: skærmen (`FarvebehandlingScreen.tsx`, indlæses dovent fra `src/app/App.tsx`) med fanerne `Træning.tsx` (forside, session og status), `Selvvalgt.tsx` og `Analysevindue.tsx`; `Opgave.tsx`, `Facit.tsx`, `SpilSelv.tsx`, `Linjeeditor.tsx`, `Introduktion.tsx`, `Rumkort.tsx`, `Palads.tsx`, `Klubaften.tsx`, `Statistik.tsx` og `Data.tsx` (eksport, import og fast lagring); komponenterne Bridgebord, Kortvælger, Linjekort, Resultatkort, Sandsynlighedsbånd og Situationspanel (Analyses panel Situationen), al ordlyd i `texts.ts`, tokens i `tokens.css` og resten i `farvebehandling.css`.
 - `storage.ts`: skemaet for `farvebehandling:v1` (godkendt; valgfrie felter `training` og `lastExport`) med indlæsning, kopi af ulæselige data, gem, eksport, import, fast lagring og påmindelsen om eksport.
 - `content/`: kildens sider `bridgehands-side-N.json` (N = 0–9), `damen-mangler-hyppighed.csv` (side 2, specens accepttest), `hyppighed.csv` (alle sider), `suit-combinations.json`, `solutions.json`, `hvad-nu.json`, appens data `app/side-N.json`, `validering-side-N.md`, `linjer-side-N.md`, `teknikker.md`, `hvad-nu.md`, `kildefejl.json` (målene, der fjernes som fejl i kilden) og `techniques.json`. Alt undtagen `techniques.json` genereres.
 - Scripts: Node 24 kører TypeScript direkte, og kildekoden indlæses med Vites `runnerImport`, så `package.json` er uændret.
@@ -129,6 +129,7 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
   - Binder en hp-grænse, deler `buildGame` hullerne efter honnørpoint (`splitHonors`). Delene holdes adskilt hele spillet, og kun de små kort slås sammen.
   - Svaret har situationens vægte (0 = udelukket) og nævneren = summen. Claude Codes valg står i specen under Afklaret.
   - Delingen beholdes, så analysen er eksakt (Franks afgørelse). `solver/deling.test.ts` holder øje med, at delt og udelt beregning giver samme tal; den udelte findes kun i testen.
+  - Trin 2 er bygget på samme gren: panelet Situationen (`ui/Situationspanel.tsx`) og beregningen i browseren. Valgene står i specen under Afklaret 6–7.
 - **Linjer:**
   - "low" i `ifSecondPlays` betyder et kort under B.
   - En `goto` til antal trin + 1 betyder, at linjen slutter.
