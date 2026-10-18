@@ -124,7 +124,7 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
 - **Abstraktion:** modpartens kort mellem to af spilførerens kort er ligeværdige, så kun antallet pr. hul tæller. Det ændrer ikke værdien, og begrænset valg følger af tællingen.
 - **Forbindelser og udspil:** forbindelserne er ubegrænsede. Spilføreren spiller altid ud fra den hånd, han vil, og modspillet spiller aldrig farven.
 - **Alternative linjer:** hvert første udspil er et delspil; dets bedste linje er alternativet.
-- **Situationen** (SPEC-analyse-situation.md, leverancetrin 1 bygget på grenen `analyse-situation`; appen før er tagget `v8-foer-analyse-situation`):
+- **Situationen** (SPEC-analyse-situation.md, leverancetrin 1–4 bygget på grenen `analyse-situation`, godkendt af Frank og udgivet 18. oktober 2026; appen før er tagget `v8-foer-analyse-situation`):
   - `SolveRequest` har et valgfrit felt `situation`. Uden det, eller på standard, er svaret præcis som før, låst af `solver/uden-situation.test.ts`.
   - Binder en hp-grænse, deler `buildGame` hullerne efter honnørpoint (`splitHonors`). Delene holdes adskilt hele spillet, og kun de små kort slås sammen.
   - Svaret har situationens vægte (0 = udelukket) og nævneren = summen. Claude Codes valg står i specen under Afklaret.
