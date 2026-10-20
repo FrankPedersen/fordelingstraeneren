@@ -136,7 +136,5 @@ Claude Codes bygning af leverancetrin 2 (20. oktober 2026):
 12. **Kortet på kontraktbridge.dk** står i `index.html` efter Håndevaluering med samme opbygning som Håndevaluerings (`art` med stort tal og mørk pille, `kicker`, `h3`, `p` og `meta` med to dele: "I Fordelingstræneren" og "Åbn analysen →"). Teksten slutter efter "forbindelser", til trin 3 er udgivet. Sidefodens liste har linket "Analyse" til `/fordelingstraeneren/#analyse` efter Håndevaluering. Ændringen ligger på grenen `analyse-kort` i repoet `frankpedersen.github.io` og pushes først, når trin 1 er udgivet.
 13. **Bredden** er målt i Chrome (headless) på `index.html`: ved 390 px er `scrollWidth` 390 på dansk og engelsk, og kortets tal og pille holder sig inden for feltet. Ved 1280 px er der heller ingen vandret rulning.
 14. **"Linket åbner Analyse direkte på www.kontraktbridge.dk"** kan først prøves, når trin 1 og kortet er udgivet.
-
-Åbne punkter til trin 2:
-
-1. **Siden Om mig og kontakt** (`om-mig/index.html` i samme repo) har samme liste over trænere i sin sidefod. Den står ikke i tabellen; skal den også have linket Analyse?
+15. **Om mig (Franks svar 20. oktober 2026):** siden Om mig og kontakt (`om-mig/index.html`) har samme liste over trænere i sidefoden og får også linket "Analyse" efter Håndevaluering, så sidefoden er ens på hele kontraktbridge.dk. Siden findes kun på dansk, så linket har ingen `data-en`.
+16. **Udgivelsen venter på forbindelser (Franks valg 20. oktober 2026):** kortets tekst og ⓘ nævner forbindelser, så `analyse-modul` flettes først ind, når SPEC-forbindelser.md (grenen `forbindelser`, trin 3 mangler) er godkendt og flettet ind. Derefter flettes `analyse-modul` ind, og når `#analyse` virker på www.kontraktbridge.dk/fordelingstraeneren/, pushes `analyse-kort` til `main` i `frankpedersen.github.io`.
