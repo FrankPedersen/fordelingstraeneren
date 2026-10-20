@@ -355,6 +355,7 @@ Regler for brugerfladen:
   - Chancerne er betingede, og udelukkede sidninger står ikke i båndet og tabellen.
   - Spil den selv giver kortene efter situationen.
 - **Valg af linjer** (SPEC-analyse-situation.md): under linjerne viser "Vis alle udspil" alle første udspil i løserens resultat. Med "Sammenlign" på præcis to linjer viser båndet og tabellen kun dem, og over tabellen står, hvor tit hver vinder alene (antallet er de konkrete sidninger, SPEC-notation-sidninger.md).
+- **Analyse som modul** (SPEC-analyse-modul.md): adressen `#analyse` og kortet "Analyse" i forsidens gruppe Spilføring (efter Farvebehandling, uden streak og uden plads i I dag) åbner Analyse alene med overskriften "Farvebehandling – Analyse" og uden fanerne Træning og Selvvalgt. Det er samme skærm, bank og lagring som fanen Analyse, som er uændret.
 - **Import** (SPEC-analyse-situation.md): over kortvælgeren kan en kombination indsættes som tekst (EK65-B43 eller AK65-J43), som LIN eller som BBO-handviewerens adresse. Et spil giver et valg mellem 8 kombinationer. Appen læser kun teksten og henter intet fra nettet.
 - **Træning:** linjer og forskel er skjult, indtil brugeren har valgt linje og gættet en chance.
 - **Tone:** kollegial og adskiller beslutning fra resultat, fx "God beslutning – sidningen var imod dig".

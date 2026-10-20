@@ -6,7 +6,7 @@ import { Footer } from '../../ui/Footer';
 import { Info } from '../../ui/Info';
 import { TopBar } from '../../ui/TopBar';
 import { todayOverview, trackStatuses, type TrackStatus } from '../status';
-import { GROUPS, TRACK_CARDS, type Both, type TrackCard } from '../tracks';
+import { GROUPS, MODULE_CARDS, TRACK_CARDS, type Both, type TrackCard } from '../tracks';
 
 interface HomeScreenProps {
   saved: Saved;
@@ -26,6 +26,8 @@ interface HomeScreenProps {
   onStartTrack?(screen: string): void;
   /** Sporenes kort; standard er listen i `tracks.ts`. */
   cards?: readonly TrackCard[];
+  /** Modulernes kort (uden status); standard er `MODULE_CARDS` i `tracks.ts`. */
+  modules?: readonly TrackCard[];
   /** Sporenes status; standard læses fra lagringen uden at skrive (`status.ts`). */
   statuses?: Record<string, TrackStatus>;
 }
@@ -55,12 +57,14 @@ function dayText(day: string): string {
 
 /**
  * Forsiden (SPEC-forside-spor.md): topbjælken, hovedet, I dag (eller Velkomst ved første besøg), de fire spor som kort i
- * grupperne Optælling, Spilføring og Vurdering, Vejledning, Indstillinger og sidefoden. Fordelingssporets elementer står
+ * grupperne Optælling, Spilføring og Vurdering (med modulet Analyse efter Farvebehandling, SPEC-analyse-modul.md),
+ * Vejledning, Indstillinger og sidefoden. Fordelingssporets elementer står
  * på Fordeling-skærmen (`DistributionScreen.tsx`). Forsiden læser sporenes data, men skriver intet.
  */
 export function HomeScreen(props: HomeScreenProps) {
   const { saved, updateReady, onUpdate, onStart, onClub, onSettings, onLanguage, onGuide, onOpen, onStartTrack } = props;
   const cards = props.cards ?? TRACK_CARDS;
+  const modules = props.modules ?? MODULE_CARDS;
   const statuses = props.statuses ?? trackStatuses(saved, readableStorage(), Date.now());
   const today = dayOf(Date.now(), saved.settings.dayStartsAtHour);
   const other: Lang = getLang() === 'da' ? 'en' : 'da';
@@ -97,7 +101,8 @@ export function HomeScreen(props: HomeScreenProps) {
     return <span className="track-badge waiting">{tx('Ikke trænet i dag', 'Not trained today')}</span>;
   }
 
-  function trackCard(card: TrackCard) {
+  /** Et spors kort; et modul (SPEC-analyse-modul.md) har kun navn, pil, beskrivelse og ⓘ, ingen streak, niveau eller mærke. */
+  function trackCard(card: TrackCard, module = false) {
     const s = statusOf(card.track);
     const info = `track-${card.track}-info`;
     const level = s.level === null ? null : tx(`Niveau ${s.level}`, `Level ${s.level}`) + (s.grade ? ` · ${GRADE_LABEL[s.grade]}` : '');
@@ -112,7 +117,7 @@ export function HomeScreen(props: HomeScreenProps) {
           </span>
           <span id={info} className="track-card-body">
             <span className="track-card-desc">{both(card.description)}</span>
-            {s.started && (
+            {!module && s.started && (
               <span className="track-card-stats">
                 <span>
                   <b>{s.streak}</b> {s.streak === 1 ? tx('dag i træk', 'day in a row') : tx('dage i træk', 'days in a row')}
@@ -120,7 +125,7 @@ export function HomeScreen(props: HomeScreenProps) {
                 {level && <span>{level}</span>}
               </span>
             )}
-            {badge(s)}
+            {!module && badge(s)}
           </span>
         </button>
         <Info topic={both(card.title)}>{both(card.help)}</Info>
@@ -225,7 +230,8 @@ export function HomeScreen(props: HomeScreenProps) {
         {onOpen &&
           GROUPS.map((group) => {
             const own = cards.filter((card) => card.group === group.id);
-            if (!own.length) return null;
+            const ownModules = modules.filter((card) => card.group === group.id);
+            if (!own.length && !ownModules.length) return null;
             return (
               <section key={group.id} className="home-group" aria-labelledby={`group-${group.id}`}>
                 <div className="with-info">
@@ -234,7 +240,8 @@ export function HomeScreen(props: HomeScreenProps) {
                   </h2>
                   <Info topic={both(group.title)}>{both(group.help)}</Info>
                 </div>
-                {own.map(trackCard)}
+                {own.map((card) => trackCard(card))}
+                {ownModules.map((card) => trackCard(card, true))}
               </section>
             );
           })}

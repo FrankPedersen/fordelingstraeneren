@@ -20,6 +20,8 @@ interface FarvebehandlingScreenProps {
   onBack(): void;
   /** Træningen begynder i dagens session (forsidens "Start dagens session i Farvebehandling", SPEC-forside-spor.md). */
   start?: boolean;
+  /** Analyse alene som selvstændigt modul (#analyse, SPEC-analyse-modul.md): eget navn og ingen faner. */
+  analysisOnly?: boolean;
 }
 
 type Storage = { getItem(key: string): string | null; setItem(key: string, value: string): void };
@@ -55,9 +57,12 @@ function loadAppBank(): Promise<BankItem[]> {
   return loading;
 }
 
-/** Farvebehandlingens skal: tilbage til forsiden og fanerne Træning, Selvvalgt og Analyse. */
-export default function FarvebehandlingScreen({ onBack, start = false }: FarvebehandlingScreenProps) {
-  const [tab, setTab] = useState<Tab>('training');
+/**
+ * Farvebehandlingens skal: tilbage til forsiden og fanerne Træning, Selvvalgt og Analyse. Som modulet Analyse vises kun
+ * Analyse, med samme bank og lagring som fanen.
+ */
+export default function FarvebehandlingScreen({ onBack, start = false, analysisOnly = false }: FarvebehandlingScreenProps) {
+  const [tab, setTab] = useState<Tab>(analysisOnly ? 'analysis' : 'training');
   // Kombinationen, som Analyse åbner med, når den vælges i klubaftenen.
   const [analysisStart, setAnalysisStart] = useState<string | null>(null);
   // Tekniken, som Selvvalgt åbner med, når den vælges i statistikken.
@@ -120,25 +125,34 @@ export default function FarvebehandlingScreen({ onBack, start = false }: Farvebe
           <button type="button" className="round" aria-label={TEXT.back} onClick={onBack}>
             ←
           </button>
-          <h1>{TEXT.title}</h1>
-          <nav className="fb-tabs" aria-label={TEXT.title}>
-            {(['training', 'practice', 'analysis'] as const).map((t) => (
-              <button
-                key={t}
-                type="button"
-                className={`fb-tab${tab === t ? ' fb-tab-current' : ''}`}
-                aria-current={tab === t ? 'page' : undefined}
-                onClick={() => {
-                  setTab(t);
-                  setAnalysisStart(null);
-                  setPracticeStart(null);
-                }}
-              >
-                {TEXT.tabs[t]}
-              </button>
-            ))}
-          </nav>
-          <Info topic={TEXT.title}>{TEXT.help.tabs}</Info>
+          {analysisOnly ? (
+            <>
+              <h1>{TEXT.analysisModule}</h1>
+              <Info topic={TEXT.analysisModule}>{TEXT.help.analysisModule}</Info>
+            </>
+          ) : (
+            <>
+              <h1>{TEXT.title}</h1>
+              <nav className="fb-tabs" aria-label={TEXT.title}>
+                {(['training', 'practice', 'analysis'] as const).map((t) => (
+                  <button
+                    key={t}
+                    type="button"
+                    className={`fb-tab${tab === t ? ' fb-tab-current' : ''}`}
+                    aria-current={tab === t ? 'page' : undefined}
+                    onClick={() => {
+                      setTab(t);
+                      setAnalysisStart(null);
+                      setPracticeStart(null);
+                    }}
+                  >
+                    {TEXT.tabs[t]}
+                  </button>
+                ))}
+              </nav>
+              <Info topic={TEXT.title}>{TEXT.help.tabs}</Info>
+            </>
+          )}
         </header>
         {failed && (
           <p role="alert" className="fb-note">

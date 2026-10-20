@@ -7,6 +7,8 @@ const MONTHS_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July
 /** Al ordlyd i farvebehandlingens brugerflade på dansk. Ret her uden at røre layoutet; EN nedenfor har samme form. */
 const DA = {
   title: 'Farvebehandling',
+  /** Analyse som selvstændigt modul (SPEC-analyse-modul.md). */
+  analysisModule: 'Farvebehandling – Analyse',
   back: 'Tilbage til forsiden',
   backToTraining: 'Tilbage til Træning',
   loading: 'Indlæser farvebehandling …',
@@ -407,6 +409,8 @@ const DA = {
   // ⓘ: hjælp ved elementerne
   help: {
     tabs: 'Træning: din daglige session på ca. 5 minutter med nye kombinationer og repetition. Selvvalgt: vælg selv, hvad du vil øve, uden at dagsplanen ændres. Analyse: slå enhver kombination op og se linjerne, chancerne og sidningerne.',
+    analysisModule:
+      'Analysen fra Farvebehandling som selvstændigt modul: slå enhver kombination op, og se linjerne, chancerne og sidningerne, også med kendte kort, hp-grænser og forbindelser. Den findes også som fanen Analyse i Farvebehandling.',
     today: 'Repetition er emner (kombination × mål), som Leitner-systemet har sat til i dag. Nye kombinationer kommer i hyppighedsorden, højst 2 om dagen, og øves straks i hvert mål.',
     start: 'Sessionen: repetition (ca. 60 s), niveau med nye kombinationer og de senest introducerede, lynrunde med linje mod linje (60 s) og status. Dagen tæller i farvebehandlings egen streak.',
     palace: 'Hvert rum er en teknik med en huskeregel og et billede; stationerne er kombinationerne i den rækkefølge, du har mødt dem. Du kan skrive din egen huskeregel, dit eget billede og en scene til hver station.',
@@ -451,6 +455,7 @@ type Texts = typeof DA;
 /** Al ordlyd på engelsk, i samme form som DA. */
 const EN: Texts = {
   title: 'Suit combinations',
+  analysisModule: 'Suit combinations – Analysis',
   back: 'Back to the front page',
   backToTraining: 'Back to Training',
   loading: 'Loading suit combinations …',
@@ -827,6 +832,8 @@ const EN: Texts = {
 
   help: {
     tabs: 'Training: your daily session of about 5 minutes with new combinations and review. Free practice: choose for yourself what to practise without changing the daily plan. Analysis: look up any combination and see the lines, the chances and the layouts.',
+    analysisModule:
+      'The analysis from Suit combinations as a separate module: look up any combination and see the lines, the chances and the layouts, also with known cards, HCP limits and entries. It is also the Analysis tab in Suit combinations.',
     today: 'Review is the items (combination × goal) the Leitner system has scheduled for today. New combinations arrive in order of frequency, at most 2 a day, and are practised at once in each goal.',
     start: 'The session: review (about 60 s), level with new combinations and the most recently introduced ones, a lightning round with line against line (60 s) and status. The day counts in the suit combinations streak.',
     palace: 'Each room is a technique with a memory rule and an image; the stations are the combinations in the order you met them. You can write your own memory rule, your own image and a scene for each station.',

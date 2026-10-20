@@ -92,3 +92,21 @@ export const TRACK_CARDS: readonly TrackCard[] = [
   { track: 'farvebehandling', group: 'play', screen: 'farvebehandling', title: { da: 'Farvebehandling', en: 'Suit combinations' }, description: { da: 'Den bedste linje i én farve · 657 kombinationer', en: 'The best line in one suit · 657 combinations' }, help: helpOf('farvebehandling') },
   { track: 'haandevaluering', group: 'evaluation', screen: 'haandevaluering', title: { da: 'Håndevaluering', en: 'Hand evaluation' }, description: { da: 'Vurdér hånden med P-modellen', en: 'Value your hand with the P-model' }, help: helpOf('haandevaluering') },
 ];
+
+/**
+ * Moduler uden daglig session (SPEC-analyse-modul.md): kortet står i sin gruppe efter sporene, men har ingen streak,
+ * intet niveau og intet mærke og indgår ikke i I dag.
+ */
+export const MODULE_CARDS: readonly TrackCard[] = [
+  {
+    track: 'analyse',
+    group: 'play',
+    screen: 'analyse',
+    title: { da: 'Analyse', en: 'Analysis' },
+    description: { da: 'Slå en kombination op · linjer, chancer og sidninger', en: 'Look up a combination · lines, chances and layouts' },
+    help: {
+      da: 'Analysen fra Farvebehandling som selvstændigt modul: slå enhver kombination op, og se linjerne, chancerne og sidningerne, også med kendte kort, hp-grænser og forbindelser. Den findes også som fanen Analyse i Farvebehandling.',
+      en: 'The analysis from Suit combinations as a separate module: look up any combination and see the lines, the chances and the layouts, also with known cards, HCP limits and entries. It is also the Analysis tab in Suit combinations.',
+    },
+  },
+];

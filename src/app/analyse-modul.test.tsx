@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { newItem } from '../engine/leitner';
 import { defaultSaved, STORAGE_KEY } from '../engine/storage';
@@ -93,7 +93,8 @@ describe('Analyse som selvstændigt modul (SPEC-analyse-modul.md, trin 1)', { ti
     await moduleReady();
     click('Tilbage til forsiden');
     expect(await screen.findByRole('heading', { name: 'Fordelingstræneren' }, WAIT)).toBeTruthy();
-    expect(window.location.hash).toBe('');
+    // Browserens skridt tilbage sker bagefter; testen venter på det, så det ikke rammer den næste test.
+    await waitFor(() => expect(window.location.hash).toBe(''));
   });
 
   it('forsidekortet "Analyse" står i Spilføring efter Farvebehandling, har ⓘ og ingen streak, og I dag tæller stadig fire spor', () => {
@@ -132,6 +133,7 @@ describe('Analyse som selvstændigt modul (SPEC-analyse-modul.md, trin 1)', { ti
     click('Vis alle sidninger');
     click('Tilbage til forsiden');
     await screen.findByRole('heading', { name: 'Fordelingstræneren' }, WAIT);
+    await waitFor(() => expect(window.location.hash).toBe(''));
     expect(describedBy('Farvebehandling')).toBe(before);
     expect(snapshot()).toBe(stored);
   });
@@ -174,8 +176,8 @@ describe('Analyse som selvstændigt modul (SPEC-analyse-modul.md, trin 1)', { ti
   });
 
   it('på engelsk: kortet og modulets hoved uden dansk', async () => {
-    setLang('en');
     render(<App />);
+    click('Skift sprog til engelsk');
     const play = screen.getByRole('region', { name: 'Declarer play' });
     expect(describedBy('Analysis')).toBe('Look up a combination · lines, chances and layouts');
     fireEvent.click(within(play).getByRole('button', { name: 'Help: Analysis' }));
