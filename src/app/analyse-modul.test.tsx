@@ -182,6 +182,15 @@ describe('Analyse som selvstændigt modul (SPEC-analyse-modul.md, trin 1)', { ti
     expect(current()).toMatch(/^3\. /);
   });
 
+  it('trin 2: sidefodens link "Analyse" åbner modulet', async () => {
+    render(<App />);
+    const footer = document.querySelector('footer.site-footer') as HTMLElement;
+    const link = within(footer).getByRole('link', { name: 'Analyse' });
+    expect(link.getAttribute('href')).toBe('#analyse');
+    fireEvent.click(link);
+    await moduleReady();
+  });
+
   it('på engelsk: kortet og modulets hoved uden dansk', async () => {
     render(<App />);
     click('Skift sprog til engelsk');
