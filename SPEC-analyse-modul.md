@@ -96,9 +96,9 @@ Trin 1:
 
 Trin 2:
 
-- [ ] Kortet står efter Håndevaluering, linker til `/fordelingstraeneren/#analyse`, og al tekst har `data-en`.
+- [x] Kortet står efter Håndevaluering, linker til `/fordelingstraeneren/#analyse`, og al tekst har `data-en`.
 - [ ] Linket åbner Analyse direkte på www.kontraktbridge.dk, på computer og mobil.
-- [ ] Ved 390 px har forsiden ingen vandret rulning.
+- [x] Ved 390 px har forsiden ingen vandret rulning.
 
 Trin 3:
 
@@ -128,6 +128,15 @@ Claude Codes bygning af leverancetrin 1 på grenen `analyse-modul` (20. oktober 
 8. **Bredden ved 390 px** er målt i Chrome (headless, 390 × 844) på den byggede app: forsiden, også med kortets ⓘ åbent, og modulet som første adresse, med ⓘ i hovedet, alle sidninger, Situationen og kortvælgeren åbne. `scrollWidth` er 390 i alle 7 målinger. jsdom kan ikke måle bredder, så målingen er ikke en Vitest-test.
 9. **Forbindelserne:** kortets ⓘ nævner forbindelser, som kommer med SPEC-forbindelser.md (grenen `forbindelser`). Flettes modulet ind før forbindelserne, nævner teksten noget, appen endnu ikke har.
 
+10. **Trin 1 er godkendt af Frank** (20. oktober 2026).
+
+Claude Codes bygning af leverancetrin 2 (20. oktober 2026):
+
+11. **Appens egen sidefod (Franks svar 20. oktober 2026: "ja tak egen sidefod"):** `src/ui/Footer.tsx` får linket "Analyse" / "Analysis" til `#analyse` efter Håndevaluering, så Trænere har de samme links som www.kontraktbridge.dk. Testen af sidefodens links i `src/app/forside.test.tsx` er rettet til de seks links, og `src/app/analyse-modul.test.tsx` tjekker, at linket åbner modulet.
+12. **Kortet på kontraktbridge.dk** står i `index.html` efter Håndevaluering med samme opbygning som Håndevaluerings (`art` med stort tal og mørk pille, `kicker`, `h3`, `p` og `meta` med to dele: "I Fordelingstræneren" og "Åbn analysen →"). Teksten slutter efter "forbindelser", til trin 3 er udgivet. Sidefodens liste har linket "Analyse" til `/fordelingstraeneren/#analyse` efter Håndevaluering. Ændringen ligger på grenen `analyse-kort` i repoet `frankpedersen.github.io` og pushes først, når trin 1 er udgivet.
+13. **Bredden** er målt i Chrome (headless) på `index.html`: ved 390 px er `scrollWidth` 390 på dansk og engelsk, og kortets tal og pille holder sig inden for feltet. Ved 1280 px er der heller ingen vandret rulning.
+14. **"Linket åbner Analyse direkte på www.kontraktbridge.dk"** kan først prøves, når trin 1 og kortet er udgivet.
+
 Åbne punkter til trin 2:
 
-1. **Appens egen sidefod:** Trænere har i dag de samme 5 links som www.kontraktbridge.dk (SPEC-forside-spor.md). Får sidefoden på kontraktbridge.dk linket Analyse, skal appens sidefod (`src/ui/Footer.tsx`) så også have det? Filen står ikke i tabellen.
+1. **Siden Om mig og kontakt** (`om-mig/index.html` i samme repo) har samme liste over trænere i sin sidefod. Den står ikke i tabellen; skal den også have linket Analyse?
