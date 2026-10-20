@@ -6,8 +6,14 @@ import { honorPoints } from '../model/situation';
 /**
  * Spiltræet for én farve.
  *
- * Spilføreren styrer Nord (bordet) og Syd (hånden) og ser kun de spillede kort. Modspillet kender alle kort.
- * Forbindelserne er ubegrænsede: spilføreren spiller altid ud fra den hånd, han vil, og modspillet spiller aldrig farven.
+ * Spilføreren styrer Nord (bordet) og Syd (hånden) og ser kun de spillede kort. Modspillet kender alle kort og spiller
+ * aldrig farven. Uden `entries` er forbindelserne ubegrænsede: spilføreren spiller altid ud fra den hånd, han vil.
+ *
+ * Forbindelser (SPEC-forbindelser.md): med `entries` har Nord og Syd et antal indgange i de andre farver, og en hånd er
+ * inde. Et udspil fra hånden, der er inde, er gratis; et udspil fra den anden hånd bruger en indgang til den. Vinder
+ * spilføreren stikket, er hånden med det vindende kort inde; vinder modspillet, er ingen hånd inde, og næste udspil
+ * bruger en indgang. Hvem der er inde, og indgangene er offentlige, så de er en del af knuden. En hånd med mindst lige så
+ * mange indgange, som den har kort, er ubegrænset, og er begge hænder ubegrænsede, er spillet præcis som uden `entries`.
  *
  * Abstraktion: modpartens kort, der ligger mellem to af spilførerens kort (et "hul"), er ligeværdige. Derfor tæller
  * kun, hvor mange kort Vest og Øst har i hvert hul. Det ændrer ikke spillets værdi, og begrænset valg følger af tællingen.
@@ -113,6 +119,10 @@ export interface GameOptions {
   objective: Objective;
   /** Del hullerne efter honnørpoint (når en hp-grænse binder). */
   splitHonors?: boolean;
+  /** Indgange til Nord og Syd i de andre farver; null = ubegrænset. Udeladt = ubegrænset for begge. */
+  entries?: { north: number | null; south: number | null };
+  /** Hånden, der er inde ved første udspil (standard Syd). */
+  lead?: Hand;
 }
 
 /** En del undervejs: hul, klasse (honnørpoint, uden deling 0), interval og antal modpartskort. */
@@ -129,6 +139,10 @@ interface State {
   gaps: number[];
   parts: PartState[];
   tricks: number;
+  /** Hånden, der er inde; null, når modspillet vandt sidste stik, eller når begge hænder er ubegrænsede. */
+  inde: Hand | null;
+  /** Indgange til hver hånd; Infinity = ubegrænset. */
+  entries: Record<Hand, number>;
 }
 
 interface ItemState {
@@ -294,14 +308,28 @@ export function buildGame(north: readonly Rank[], south: readonly Rank[], option
     return out;
   }
   const countIn = (st: State, hand: Hand) => st.decl.reduce((a, d) => a + (d.hand === hand ? 1 : 0), 0);
+  const unlimited = (st: State) => st.entries.N === Infinity && st.entries.S === Infinity;
+  /** Kan spilføreren spille ud fra hånden? Den er inde, eller den har en indgang. */
+  const reachable = (st: State, hand: Hand) => st.inde === hand || st.entries[hand] >= 1;
+
+  /** Indgangene, som de virker: en hånd med mindst lige så mange indgange, som den har kort, er ubegrænset. */
+  function connected(st: State): State {
+    const entries = { N: st.entries.N, S: st.entries.S };
+    for (const hand of ['N', 'S'] as const) if (entries[hand] >= countIn(st, hand)) entries[hand] = Infinity;
+    const free = entries.N === Infinity && entries.S === Infinity;
+    return { ...st, entries, inde: free ? null : st.inde };
+  }
 
   function terminal(st: State): number | null {
     const rounds = Math.max(countIn(st, 'N'), countIn(st, 'S'));
     const opponents = st.gaps.reduce((a, b) => a + b, 0);
     let final: number | null = null;
     if (st.decl.length === 0) final = st.tricks;
-    // Modparten har ingen kort, eller kun kort under alle spilførerens: spilføreren vinder resten af runderne.
-    else if (opponents === st.gaps[st.gaps.length - 1]) final = st.tricks + rounds;
+    // Modparten har ingen kort, eller kun kort under alle spilførerens: spilføreren vinder resten af runderne. Kun uden
+    // begrænsning; ellers spilles videre, så kort, der ikke kan hjemtages, ikke tælles med.
+    else if (unlimited(st) && opponents === st.gaps[st.gaps.length - 1]) final = st.tricks + rounds;
+    // Kan ingen hånd med kort nås, slutter spillet.
+    else if (!(['N', 'S'] as const).some((h) => countIn(st, h) > 0 && reachable(st, h))) final = st.tricks;
     if (objective.kind === 'tricks') return final;
     const goal = objective.goal;
     if (final !== null) return final >= goal ? 1 : 0;
@@ -310,20 +338,23 @@ export function buildGame(north: readonly Rank[], south: readonly Rank[], option
     return null;
   }
 
-  function buildLead(st: State, items: ItemState[]): Built {
+  function buildLead(state: State, items: ItemState[]): Built {
+    const st = connected(state);
     const end = terminal(st);
     if (end !== null) {
       const node = newNode(END, st, items);
       payoff[node.id] = end;
       return node;
     }
+    // Udspil kun fra en hånd, der kan nås; fra den anden hånd end den, der er inde, bruger det en indgang.
     const options: { hand: Hand; top: number; bottom: number }[] = [];
-    for (const hand of ['N', 'S'] as const) for (const grp of groups(st, hand)) options.push({ hand, ...grp });
+    for (const hand of ['N', 'S'] as const) if (reachable(st, hand)) for (const grp of groups(st, hand)) options.push({ hand, ...grp });
+    const via = (hand: Hand): State => (hand === st.inde ? st : { ...st, entries: { ...st.entries, [hand]: st.entries[hand] - 1 } });
     const node = newNode(LEAD, st, items);
     attach(
       node,
       options.map((o) => ({ hand: o.hand === 'N' ? 0 : 1, high: st.decl[o.top].rank, low: st.decl[o.bottom].rank })),
-      (i) => buildDefender(st, options[i].hand, options[i].bottom, items, -1, -1),
+      (i) => buildDefender(via(options[i].hand), options[i].hand, options[i].bottom, items, -1, -1),
     );
     return node;
   }
@@ -430,11 +461,13 @@ export function buildGame(north: readonly Rank[], south: readonly Rank[], option
         }
       }
     }
-    return buildLead({ decl, gaps, parts, tricks: st.tricks + (won ? 1 : 0) }, next);
+    const inde = won ? st.decl[ours].hand : null;
+    return buildLead({ decl, gaps, parts, tricks: st.tricks + (won ? 1 : 0), inde, entries: st.entries }, next);
   }
 
+  const entries0 = { N: options.entries?.north ?? Infinity, S: options.entries?.south ?? Infinity };
   const root = buildLead(
-    { decl: decl0, gaps: gaps0, parts: parts0.map((p) => ({ ...p })), tricks: 0 },
+    { decl: decl0, gaps: gaps0, parts: parts0.map((p) => ({ ...p })), tricks: 0, inde: options.lead ?? 'S', entries: entries0 },
     layouts.map((l, i) => ({ layout: i, west: [...l.parts] })),
   ).id;
 

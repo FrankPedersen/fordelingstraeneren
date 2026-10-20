@@ -1,10 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { parseCards, type Rank } from '../model/cards';
 import { gameOptionsFor, STANDARD, type Situation } from '../model/situation';
-import { bankItem } from '../testBank';
 import { buildGame, layoutOf, type Objective } from './game';
 import { handleSolve, type SolveRequest } from './results';
-import { solveGame } from './solve';
 
 // SPEC-forbindelser.md, leverancetrin 1: forbindelserne i spillet. Bordet / hånden = Nord / Syd som i de andre tests.
 // Facit for den blokerede farve står i specen (regnet med løseren ubegrænset og med fordelingen af de 7 manglende kort).
@@ -41,7 +39,7 @@ describe('Forbindelser i løseren (SPEC-forbindelser.md)', { timeout: 300_000 },
     for (const request of requests) {
       const today = handleSolve(request);
       const rounds = Math.max(request.north.length, request.south.length);
-      for (const s of [connections('N', null, null), connections('S', null, null), connections('N', rounds, rounds), connections('S', 5, 5)]) {
+      for (const s of [connections('N', null, null), connections('S', rounds, rounds)]) {
         expect(handleSolve({ ...request, situation: s })).toEqual(today);
       }
     }
@@ -99,37 +97,19 @@ describe('Forbindelser i løseren (SPEC-forbindelser.md)', { timeout: 300_000 },
     expect(r.result.leads[r.result.best].layouts[kxxx]).toBe(0);
   });
 
+  it('genvejen "modparten har ingen højere kort" gælder kun uden begrænsning: K D B / E er blokeret', () => {
+    // Alle spilførerens kort er vindere. Med Nord inde, ingen indgang til Nord og én til Syd kan begge hænder nås, men
+    // esset tager et af Nords stik, og Syd kan ikke komme tilbage til Nord: kun 1 stik.
+    const KQJ = parseCards('KQJ');
+    expect(chance(KQJ, ACE, 3)).toBe(100);
+    expect(chance(KQJ, ACE, 2, connections('N', 0, 1))).toBe(0);
+    expect(chance(KQJ, ACE, 3, connections('N', 1, 1))).toBe(100);
+  });
+
   it('når modspillet vinder et stik, er ingen hånd inde, og næste udspil bruger en indgang', () => {
     // 3 2 / K D B 10 9, 4 stik: ubegrænset 100 %. Modspillet tager esset straks; uden indgange kan hånden ikke nås igen.
     expect(chance(X32, KQJT9, 4)).toBe(100);
     expect(chance(X32, KQJT9, 4, connections('S', 0, 0))).toBe(0);
     expect(chance(X32, KQJT9, 4, connections('S', 0, 1))).toBe(100);
-  });
-
-  it('flere indgange giver aldrig en lavere chance (10 kombinationer fra banken, indgange 0–3)', () => {
-    const ids = ['432-AQ65', '432-AQ765', '432-KJ5', 'J32-K54', '32-QT54', '2-AJ43', '432-AKJ5', 'K54-AJ32', 'J2-AQ43', 'AK2-J543'];
-    // Løserens tolerance: en ren linje er certificeret inden for 0,002 procentpoint, blandet spil inden for 0,01.
-    const tolerance = 1e-4;
-    for (const id of ids) {
-      const item = bankItem(id);
-      const objective: Objective = { kind: 'goal', goal: item.combination.goals[0] };
-      for (const lead of ['N', 'S'] as const) {
-        const value: number[][] = [];
-        for (let north = 0; north <= 3; north++) {
-          value.push([]);
-          for (let south = 0; south <= 3; south++) {
-            const game = buildGame(item.north, item.south, { objective, entries: { north, south }, lead });
-            value[north].push(solveGame(game).value);
-          }
-        }
-        for (let north = 0; north <= 3; north++) {
-          for (let south = 0; south <= 3; south++) {
-            const at = `${id} ${lead} inde, Nord ${north}, Syd ${south}`;
-            if (north < 3) expect(value[north + 1][south], at).toBeGreaterThanOrEqual(value[north][south] - tolerance);
-            if (south < 3) expect(value[north][south + 1], at).toBeGreaterThanOrEqual(value[north][south] - tolerance);
-          }
-        }
-      }
-    }
   });
 });

@@ -1,6 +1,6 @@
 import { cardsData, type Rank } from '../model/cards';
 import { shownLeads } from '../model/shown';
-import { gameOptionsFor, isStandard, situationWeights, type Situation } from '../model/situation';
+import { gameOptionsFor, isStandard, situationFor, situationWeights, type Situation } from '../model/situation';
 import type { CombinationSolution, GoalResult, LeadResult } from '../precompute';
 import { describeLine } from './describe';
 import { buildGame, type Game } from './game';
@@ -89,7 +89,10 @@ export function combinationBase(game: Game, weights?: readonly bigint[]): Combin
 
 // ---------- Beregning på forespørgsel ----------
 
-/** `situation` er valgfri (SPEC-analyse-situation.md); uden den, eller på standard, er svaret som før. */
+/**
+ * `situation` er valgfri (SPEC-analyse-situation.md) og bærer også forbindelserne (SPEC-forbindelser.md); uden den, på
+ * standard, eller når begge hænder har mindst lige så mange indgange, som de har kort, er svaret som før.
+ */
 export type SolveRequest =
   | { kind: 'goal'; north: Rank[]; south: Rank[]; goal: number; situation?: Situation }
   | { kind: 'tricks'; north: Rank[]; south: Rank[]; situation?: Situation }
@@ -101,7 +104,8 @@ export type SolveResponse =
 
 /** Løser en forespørgsel: et mål, flest stik i gennemsnit eller en egen linje (efter dens trin spiller løseren videre). */
 export function handleSolve(request: SolveRequest): SolveResponse {
-  if (request.situation && !isStandard(request.situation)) return handleSituation(request, request.situation);
+  const situation = request.situation && situationFor(request.north, request.south, request.situation);
+  if (situation && !isStandard(situation)) return handleSituation(request, situation);
   if (request.kind === 'tricks') {
     const game = buildGame(request.north, request.south, { objective: { kind: 'tricks' } });
     return { kind: 'tricks', base: combinationBase(game), result: goalResult(solveGame(game)) };
@@ -115,8 +119,8 @@ export function handleSolve(request: SolveRequest): SolveResponse {
 }
 
 /**
- * En forespørgsel med en situation: spillet bygges med de ledige pladser (og delte huller, når en hp-grænse binder), og
- * løseren regner med situationens vægte, så chancen er betinget af situationen.
+ * En forespørgsel med en situation: spillet bygges med de ledige pladser (og delte huller, når en hp-grænse binder) og
+ * forbindelserne, og løseren regner med situationens vægte, så chancen er betinget af situationen.
  */
 function handleSituation(request: SolveRequest, situation: Situation): SolveResponse {
   const objective = request.kind === 'tricks' ? ({ kind: 'tricks' } as const) : ({ kind: 'goal', goal: request.goal } as const);

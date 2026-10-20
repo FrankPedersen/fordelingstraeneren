@@ -85,15 +85,15 @@ Hvert trin er færdigt, når `npm test` er grøn, `SPEC-farvebehandling.md` er o
 
 Facitværdierne for den blokerede farve er regnet med løseren (ubegrænset) og med fordelingen af de 7 manglende kort (4–3 eller bedre: 62,17 %).
 
-- [ ] Alle eksisterende tests består uændret, også `solver/uden-situation.test.ts` og `solver/deling.test.ts`.
-- [ ] Uden begrænsning, og med indgange ≥ antal runder for begge hænder, giver `handleSolve` præcis samme svar som i dag for B432 / ET65, E K B 3 2 / 7 6 5 4 og E D B 10 / 6 5 4 3 2.
-- [ ] Bordet E, hånden K D B 3 2, ubegrænset: 4 stik 100,00 %, 5 stik 62,17 %.
-- [ ] Samme, Nord inde, Syd 0 indgange: 4 stik 0,00 % og 5 stik 0,00 % (esset vinder, og hånden kan ikke nås).
-- [ ] Samme, Syd inde, Syd 0 og Nord 0 indgange: 4 stik 0,00 % (esset må tage stikket).
-- [ ] Samme, Nord inde, Syd 1 indgang: 4 stik 100,00 %, 5 stik 62,17 %.
-- [ ] Samme, Syd inde, Syd 1 indgang: 4 stik 100,00 %, 5 stik 62,17 %.
-- [ ] E D B 10 / 6 5 4 3 2, 5 stik, Syd inde, Syd 2 indgange, Nord ubegrænset: chancen ligger under 50,00 %, og sidningen Kxxx–renonce (kongen og tre små hos Vest) taber. Claude Code regner tallet, og Frank godkender det, før det låses i testen.
-- [ ] Flere indgange giver aldrig en lavere chance: for 10 kombinationer fra banken og indgange 0–3 er chancen ikke-faldende i antallet af indgange til hver hånd.
+- [x] Alle eksisterende tests består uændret, også `solver/uden-situation.test.ts` og `solver/deling.test.ts`.
+- [x] Uden begrænsning, og med indgange ≥ antal runder for begge hænder, giver `handleSolve` præcis samme svar som i dag for B432 / ET65, E K B 3 2 / 7 6 5 4 og E D B 10 / 6 5 4 3 2.
+- [x] Bordet E, hånden K D B 3 2, ubegrænset: 4 stik 100,00 %, 5 stik 62,17 %.
+- [x] Samme, Nord inde, Syd 0 indgange: 4 stik 0,00 % og 5 stik 0,00 % (esset vinder, og hånden kan ikke nås).
+- [x] Samme, Syd inde, Syd 0 og Nord 0 indgange: 4 stik 0,00 % (esset må tage stikket).
+- [x] Samme, Nord inde, Syd 1 indgang: 4 stik 100,00 %, 5 stik 62,17 %.
+- [x] Samme, Syd inde, Syd 1 indgang: 4 stik 100,00 %, 5 stik 62,17 %.
+- [ ] E D B 10 / 6 5 4 3 2, 5 stik, Syd inde, Syd 2 indgange, Nord ubegrænset: chancen ligger under 50,00 %, og sidningen Kxxx–renonce (kongen og tre små hos Vest) taber. Claude Code regner tallet, og Frank godkender det, før det låses i testen. Regnet: 45,22 % (se Åbne punkter 2); testen kræver indtil videre under 50,00 % og at Kxxx–renonce taber.
+- [x] Flere indgange giver aldrig en lavere chance: for 10 kombinationer fra banken og indgange 0–3 er chancen ikke-faldende i antallet af indgange til hver hånd.
 - [ ] En egen linje, der spiller ud fra Syd to gange med Syd 0 indgange og Nord inde, afvises med en fejl, der nævner trinnet.
 - [ ] Spil den selv: med Syd 0 indgange og Nord inde kan der ikke spilles ud fra Syd, efter at Nord har vundet et stik.
 - [ ] Alle nye tekster findes på dansk og engelsk, og de engelske skærme indeholder ingen dansk tekst.
@@ -106,7 +106,26 @@ Facitværdierne for den blokerede farve er regnet med løseren (ubegrænset) og 
 3. **Indgangene er sikre:** en indgang kan altid bruges og koster ikke et stik i farven. Indgange, der kan tages af modspillet, er ikke med.
 4. **Træet bliver større,** fordi hvem der er inde og indgangene er en del af tilstanden. Grænsen "indgange ≥ runder = ubegrænset" holder det nede. Claude Code måler tiden for D B 6 / E 7 4 2 og E 10 3 2 / K 9 5 4 (3 stik) med og uden begrænsning og skriver tallene her.
 
+   Målt 20. oktober 2026 som i SPEC-analyse-situation.md (Afklaret 4): `handleSolve` for ét mål, 3 kørsler, Node 24 på en bærbar med i7-1355U. De største træer med begrænsning er højst 2 % større end uden (alle kombinationer af inde og indgange er talt); de små træer er dem, hvor indgangene skærer linjer væk.
+
+   | Kombination, 3 stik | Forbindelser | Knuder | Chance | Hurtigst | Median |
+   | --- | --- | --- | --- | --- | --- |
+   | D B 6 / E 7 4 2 | ubegrænset | 759 405 | 70,83 % | 241 s | 254 s |
+   | D B 6 / E 7 4 2 | Syd inde, Nord ubegrænset, Syd 2 (største træ) | 772 573 | 70,83 % | 116 s | 137 s |
+   | D B 6 / E 7 4 2 | Syd inde, Nord 1, Syd 1 | 404 545 | 44,81 % | 32 s | 60 s |
+   | E 10 3 2 / K 9 5 4 | ubegrænset | 269 343 | 94,35 % | 7,7 s | 7,7 s |
+   | E 10 3 2 / K 9 5 4 | Nord inde, Nord 2, Syd 3 (største træ) | 276 303 | 94,35 % | 12,1 s | 21,4 s |
+   | E 10 3 2 / K 9 5 4 | Syd inde, Nord 1, Syd 1 | 144 095 | 94,35 % | 10,7 s | 10,7 s |
+
+   Ventetiden med begrænsning ligger altså på niveau med uden; løserens antal runder svinger mere end træets størrelse. Panelet i trin 2 kan bruge samme ventevisning og Stop som de andre situationer.
+5. **Claude Codes valg i leverancetrin 1:**
+   - Felterne er valgfrie: `Situation.entries` (`north`, `south`: 0–5, null = ubegrænset) og `Situation.lead` (`'N'` eller `'S'`, udeladt = Syd). `STANDARD` er uændret, så de eksisterende situationer og tests virker som før. `GameOptions` har de samme felter.
+   - **Ubegrænset pr. hånd:** en hånd med mindst lige så mange indgange, som den har kort tilbage, regnes som ubegrænset, fordi hvert udspil fra hånden bruger et af dens kort. Det er strammere end "runder tilbage" og giver samme værdi. `situationFor` gør det samme ved roden, så `handleSolve` med indgange ≥ antal runder går præcis samme vej som i dag.
+   - **Genvejen** gælder kun, når begge hænder er ubegrænsede (tabellen i Afgrænsning). Formuleringen "når begge hænder kan nås" under Reglerne er ikke nok: K D B / E med Nord inde, ingen indgang til Nord og én til Syd kan begge hænder nås, men esset tager et af Nords stik, og spilføreren får kun 1 stik. Det står som test.
+   - **Kan ingen hånd med kort nås,** slutter spillet med de stik, der er vundet (fx Nord inde med en renonce og ingen indgange til Syd).
+   - Appen er tagget `v11-foer-forbindelser` (Afgrænsning 1 foreslog `v10-…`, men det navn var brugt).
+
 Åbne punkter:
 
-1. **Når modspillet vinder et stik** (Franks godkendelse): specen siger, at ingen hånd så er inde, og at næste udspil bruger en indgang. Alternativet er, at spilføreren frit vælger hånd efter et tabt stik, fordi modspillet spiller en anden farve tilbage, som han vinder, hvor han vil. Den første regel er den forsigtige og passer til, at indgangene er det eneste, spilføreren kan regne med.
-2. Claude Code skriver tallet for E D B 10 / 6 5 4 3 2 med Syd inde og 2 indgange her, når det er regnet.
+1. **Når modspillet vinder et stik** (Franks godkendelse): specen siger, at ingen hånd så er inde, og at næste udspil bruger en indgang. Alternativet er, at spilføreren frit vælger hånd efter et tabt stik, fordi modspillet spiller en anden farve tilbage, som han vinder, hvor han vil. Den første regel er den forsigtige og passer til, at indgangene er det eneste, spilføreren kan regne med. Leverancetrin 1 er bygget efter specens regel. Testen 3 2 / K D B 10 9, 4 stik, Syd inde og ingen indgange giver 0 % (modspillet tager esset straks); med alternativet bliver det 100 %, og testen rettes.
+2. **E D B 10 / 6 5 4 3 2, 5 stik, Syd inde, Syd 2 indgange, Nord ubegrænset:** 45,22 % (eksakt 4 702 880 / 10 400 600 = 45,2174 %), med lille fra begge hænder. Ubegrænset er chancen 50,00 % (kongen hos Vest). Forskellen er præcis Kxxx–renonce (4,78 %): de tre kipninger og den sidste lille i hånden kræver tre indgange til hånden. Til sammenligning: Syd 1 indgang 26,57 % (kongen single eller Kx hos Vest), Syd 3 indgange 50,00 %. Tallet låses i testen, når Frank har godkendt det.

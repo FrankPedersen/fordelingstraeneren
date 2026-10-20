@@ -160,7 +160,11 @@ Opgaven er et spil under usikkerhed: spilføreren må kun beslutte ud fra de kor
 5. **Beskæring:** ligeværdige kort behandles som ét, og mellemresultater gemmes pr. tilstand.
 6. **Mål:** for hvert mål maksimeres P(stik ≥ mål). Desuden findes linjen med flest stik i gennemsnit (parturnering). Linjer inden for 0,5 procentpoint af den bedste vises alle. Til Hold eller par: når parturneringens linje når målet mere end 0,5 procentpoint sjældnere end målets bedste linje, regnes målets bedste linje også som parturnering (dens trin, derefter flest stik). Målet kommer med, når linjen stadig når målet lige så tit (inden for 0,5 procentpoint) og giver mindst 0,005 stik færre i gennemsnit.
 7. **Kapacitet:** løseren skal klare op til 8 manglende kort.
-8. **Forbindelser:** ubegrænsede i første version. Begrænsede forbindelser er en senere udvidelse.
+8. **Forbindelser:** banken er og bliver regnet med ubegrænsede forbindelser. Med en situation kan løseren regne med begrænsede forbindelser (SPEC-forbindelser.md; leverancetrin 1 er model og spil, panelet i Analyse kommer i trin 2).
+   - Situationen har indgange til Nord og Syd i de andre farver (0–5 eller ubegrænset) og hånden, der er inde (standard Syd).
+   - Et udspil fra hånden, der er inde, er gratis; fra den anden hånd bruger det en indgang til den. Udspil kan kun komme fra en hånd, der kan nås.
+   - Vinder spilføreren stikket, er hånden med det vindende kort inde. Vinder modspillet, er ingen hånd inde, og næste udspil bruger en indgang.
+   - En hånd med mindst lige så mange indgange, som den har kort, er ubegrænset. Er begge hænder ubegrænsede, er spillet og svaret præcis som uden forbindelser. Genvejen "modparten har ingen højere kort" gælder kun uden begrænsning.
 9. **Situation** (SPEC-analyse-situation.md): Analyse kan regne en kombination med en situation.
    - Kendte kort i andre farver giver ledige pladser.
    - En grænse for honnørpoint i farven giver vægt 0 til sidninger, hvor en modspiller har for mange.
