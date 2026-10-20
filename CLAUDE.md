@@ -1,6 +1,6 @@
 # Fordelingstræneren
 
-Bridge-træningsapp til hånd-fordelinger. Appen er færdig og i brug på https://frankpedersen.github.io/fordelingstraeneren/ (repo: `FrankPedersen/fordelingstraeneren`).
+Bridge-træningsapp til hånd-fordelinger. Appen er færdig og i brug på https://www.kontraktbridge.dk/fordelingstraeneren/ (GitHub Pages med eget domæne; den gamle adresse https://frankpedersen.github.io/fordelingstraeneren/ sender videre dertil; repo: `FrankPedersen/fordelingstraeneren`).
 
 **[SPEC.md](SPEC.md) beskriver, hvad appen gør. Læs de relevante afsnit før en ændring**, og følg dem frem for egne antagelser. Ved uenighed mellem denne fil og SPEC.md vinder SPEC.md.
 
