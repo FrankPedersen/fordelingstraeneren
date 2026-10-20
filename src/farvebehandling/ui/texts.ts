@@ -80,12 +80,12 @@ const DA = {
     if (!theirs.length) return capital(list);
     return list ? `${capital(list)} uden ${the[theirs[0]]}` : `Uden ${the[theirs[0]]}`;
   },
-  verified: 'Tallene stemmer med bridgehands.com.',
-  unverified: 'Tallene afviger fra bridgehands.com; se valideringsrapporten.',
+  verified: 'Tallene stemmer med de klassiske farvebehandlinger.',
+  unverified: 'Tallene afviger fra de klassiske farvebehandlinger; appen bruger sin egen beregning.',
 
   choose: 'Vælg kombination',
   bank: 'Banken',
-  bankHelp: 'Alle sider fra bridgehands.com, hyppigste først.',
+  bankHelp: 'De klassiske farvebehandlinger, hyppigste først.',
   pageFilter: 'Modpartens honnørpoint',
   hp: (points: number) => (points === 0 ? 'ingen' : `${points} hp`),
   picker: 'Kortvælger',
@@ -408,7 +408,7 @@ const DA = {
     decides: 'Linjerne giver forskelligt resultat i denne sidning.',
     average: 'Gennemsnittet over alle sidninger, vægtet efter chance. Det er det tal, der tæller i parturnering.',
     result: 'Bedste chance for målet, bedste linje i parturnering (flest stik i gennemsnit) og hvor tit kombinationen og situationen bag den forekommer.',
-    choose: 'Vælg en kombination fra banken (hyppigste først; kan filtreres efter modpartens honnørpoint), eller byg den selv i kortvælgeren.',
+    choose: 'Vælg en kombination fra banken (hyppigste først; kan filtreres efter modpartens honnørpoint), eller byg den selv i kortvælgeren. Banken er de klassiske farvebehandlinger med inspiration fra Suit Combinations in Bridge (Jethalal M. Shah). Alle chancer er regnet i appen.',
     picker: 'Tryk på et kort én gang for bordet, to gange for din hånd og tre gange for at fjerne det. Findes kombinationen ikke i banken, kan løseren regne den på telefonen.',
     goals: 'Målet er det antal stik, du skal have. Den bedste linje kan skifte med målet; det er kernen i sikkerhedsspil.',
     ownLines: 'Byg din egen linje trin for trin og se dens chance ved siden af løserens. Efter sidste trin spiller løseren videre optimalt.',
@@ -506,12 +506,12 @@ const EN: Texts = {
     if (!theirs.length) return capital(list);
     return list ? `${capital(list)} without ${the[theirs[0]]}` : `Without ${the[theirs[0]]}`;
   },
-  verified: 'The figures agree with bridgehands.com.',
-  unverified: 'The figures differ from bridgehands.com; see the validation report.',
+  verified: 'The figures agree with the classic suit combinations.',
+  unverified: 'The figures differ from the classic suit combinations; the app uses its own calculation.',
 
   choose: 'Choose a combination',
   bank: 'The bank',
-  bankHelp: 'All pages from bridgehands.com, most frequent first.',
+  bankHelp: 'The classic suit combinations, most frequent first.',
   pageFilter: "Opponents' high-card points",
   hp: (points: number) => (points === 0 ? 'none' : `${points} HCP`),
   picker: 'Card picker',
@@ -821,7 +821,7 @@ const EN: Texts = {
     decides: 'The lines give different results in this layout.',
     average: 'The average over all layouts, weighted by chance. This is what counts at pairs.',
     result: 'The best chance of the goal, the best line at pairs (most tricks on average) and how often the combination and the situation behind it occur.',
-    choose: "Choose a combination from the bank (most frequent first; can be filtered by the opponents' high-card points), or build it yourself in the card picker.",
+    choose: "Choose a combination from the bank (most frequent first; can be filtered by the opponents' high-card points), or build it yourself in the card picker. The bank is the classic suit combinations, inspired by Suit Combinations in Bridge (Jethalal M. Shah). All chances are worked out in the app.",
     picker: 'Tap a card once for dummy, twice for your hand and three times to remove it. If the combination is not in the bank, the solver can work it out on your phone.',
     goals: 'The goal is the number of tricks you need. The best line can change with the goal; that is the heart of safety play.',
     ownLines: "Build your own line step by step and see its chance next to the solver's. After the last step the solver plays on optimally.",

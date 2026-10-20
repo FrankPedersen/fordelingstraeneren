@@ -108,7 +108,11 @@ export interface Combination {
   goals: number[];
   entries: 'unlimited';
   lines: Line[];
-  source?: { name: string; values: Record<string, number> };
+  /**
+   * Kildens procent pr. mål. Navnet står kun i udviklerfilerne (suit-combinations.json); appens data udelader det, så
+   * appen omtaler kilden neutralt (SPEC-neutral-kilde.md).
+   */
+  source?: { name?: string; values: Record<string, number> };
   verified: boolean;
 }
 
@@ -321,6 +325,8 @@ export function appEntry(
   situations?: Readonly<Record<string, readonly WhatNowSituation[]>>,
 ): AppEntry {
   const { lines: _lines, ...meta } = combination;
+  // Kildens navn kommer ikke med i appens data (SPEC-neutral-kilde.md); nøglernes rækkefølge er den samme.
+  const neutral = meta.source ? { ...meta, source: { values: meta.source.values } } : meta;
   const goals: AppEntry['solution']['goals'] = {};
   for (const [goal, g] of Object.entries(solution.goals)) {
     goals[goal] = { value: round6(g.value), best: g.best, leads: g.leads.map(appLead), ...(g.pairs !== undefined ? { pairs: g.pairs } : {}) };
@@ -334,7 +340,7 @@ export function appEntry(
   return {
     rank,
     frequency: [frequency.num.toString(), frequency.den.toString()],
-    combination: meta,
+    combination: neutral,
     solution: { ...rest, goals, ...(tricks ? { tricks } : {}) },
     ...(situations && Object.keys(situations).length ? { whatNow: situations as Record<string, WhatNowSituation[]> } : {}),
   };

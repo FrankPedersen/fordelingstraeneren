@@ -49,19 +49,23 @@ Hvert trin er færdigt, når `npm test` er grøn, og Frank har godkendt.
 
 ## Accepttest
 
-- [ ] Alle eksisterende tests består; tests, der låste de gamle tekster, er rettet og nævnt under Afklaret.
-- [ ] `texts.ts` indeholder ikke "bridgehands" på dansk eller engelsk.
-- [ ] Efter `npm run build` indeholder ingen fil i `dist/` teksten "bridgehands" (der skelnes ikke mellem store og små bogstaver).
-- [ ] Resultatkortet for E K D B 3 / 2 viser "Tallene stemmer med de klassiske farvebehandlinger." og på engelsk "The figures agree with the classic suit combinations."
-- [ ] En kombination fra kortvælgeren, der ikke er i banken, viser fortsat "Regnet i appen; der er ingen kilde at sammenligne med."
-- [ ] Banken viser "De klassiske farvebehandlinger, hyppigste først.", og ⓘ ved Vælg kombination nævner Suit Combinations in Bridge (Jethalal M. Shah).
-- [ ] `app/side-N.json` er uændret bortset fra, at `source.name` mangler: samme kombinationer, rækkefølge, `source.values`, `verified` og løsninger.
-- [ ] De engelske skærme indeholder ingen dansk tekst.
+- [x] Alle eksisterende tests består; tests, der låste de gamle tekster, er rettet og nævnt under Afklaret.
+- [x] `texts.ts` indeholder ikke "bridgehands" på dansk eller engelsk.
+- [x] Efter `npm run build` indeholder ingen fil i `dist/` teksten "bridgehands" (der skelnes ikke mellem store og små bogstaver).
+- [x] Resultatkortet for E K D B 3 / 2 viser "Tallene stemmer med de klassiske farvebehandlinger." og på engelsk "The figures agree with the classic suit combinations."
+- [x] En kombination fra kortvælgeren, der ikke er i banken, viser fortsat "Regnet i appen; der er ingen kilde at sammenligne med."
+- [x] Banken viser "De klassiske farvebehandlinger, hyppigste først.", og ⓘ ved Vælg kombination nævner Suit Combinations in Bridge (Jethalal M. Shah).
+- [x] `app/side-N.json` er uændret bortset fra, at `source.name` mangler: samme kombinationer, rækkefølge, `source.values`, `verified` og løsninger.
+- [x] De engelske skærme indeholder ingen dansk tekst.
 
 ## Afklaret
 
 1. **Udviklerfilerne beholder navnet** bridgehands, fordi de beskriver, hvor kildens tal er læst til facitkontrollen. De vises ikke i appen.
 2. **Banken er den samme:** 657 kombinationer, samme hyppighed og rækkefølge.
 3. **Bogen er inspiration, ikke kilde til tallene.** Teksterne siger "med inspiration fra", og chancerne er regnet i appen.
+4. **Appens data er genereret fra udviklerfilerne** (Franks valg, 20. oktober 2026): løserscriptets mellemlager var tomt (også sikkerhedskopien), så `scripts/solve.ts --assemble` ville have løst alle kombinationer igen. I stedet er `app/side-N.json` skrevet med `appEntry` ud fra de committede `suit-combinations.json`, `solutions.json` og `hvad-nu.json` i en engangskørsel uden nyt script i repoet. Hver fil er byte for byte den gamle med de 657 `"name"`-felter fjernet. `neutral-kilde.test.ts` låser, at hver post er `appEntry` af udviklerfilerne, så en senere `--assemble` giver det samme.
+5. **Typen:** `source.name` er valgfrit i `Combination` (`precompute.ts`). `bankEntry` sætter det stadig i udviklerfilerne, og `scripts/solve.ts` bruger det som før.
+6. **Den byggede app** tjekkes i `npm test`: `neutral-kilde.dist.test.ts` bygger appen med `vite.config.ts` i en midlertidig mappe (ca. 6 s) og søger "bridgehands" i alle filer. Før ændringen stod det i Farvebehandlings chunk (teksterne) og i de ti datafiler (`source.name`); `source/bridgehands.ts` kom ikke med i bundlen.
+7. **`help.choose`:** den hidtidige tekst er bevaret, og de to nye sætninger står til sidst.
 
-Åbne punkter: Claude Code skriver her, hvilke tests der låste teksterne og er rettet.
+Åbne punkter: ingen. Ingen eksisterende tests låste de gamle tekster, så ingen er rettet.
