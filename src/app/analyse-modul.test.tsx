@@ -111,6 +111,13 @@ describe('Analyse som selvstændigt modul (SPEC-analyse-modul.md, trin 1)', { ti
     expect(screen.getByText(/^Næste: Pointregnskab/)).toBeTruthy();
   });
 
+  it('første besøg: Velkomst som i dag, og kortet "Analyse" har intet mærke', () => {
+    render(<App />);
+    expect(screen.getByRole('heading', { name: 'Velkommen' })).toBeTruthy();
+    expect(describedBy('Farvebehandling')).toMatch(/Ikke startet endnu$/);
+    expect(describedBy('Analyse')).toBe('Slå en kombination op · linjer, chancer og sidninger');
+  });
+
   it('når alle fire spor er trænet, foreslår I dag ikke Analyse', () => {
     // Som i forside.test.tsx: alle fire spor har en session i dag.
     const done = { streak: { current: 1, best: 1, lastDay: TODAY }, items: { [PR_DECK[0]]: newItem('2026-10-20') } };

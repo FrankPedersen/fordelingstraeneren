@@ -83,21 +83,21 @@ export interface TrackCard {
   description: Both;
   /** Kortets ⓘ. */
   help: Both;
+  /**
+   * `false`: kortet har ingen status (SPEC-analyse-modul.md): ingen streak, intet niveau og intet mærke, og det tælles
+   * ikke med i I dag eller Velkomst og kommer aldrig med i forslaget til dagens session.
+   */
+  status?: false;
 }
 
-/** Sporene i forsidens rækkefølge. Rækkefølgen afgør også, hvilket spor der er "næste" i I dag. */
+/**
+ * Sporene i forsidens rækkefølge. Rækkefølgen afgør også, hvilket spor der er "næste" i I dag; kort uden status
+ * (modulet Analyse) springes over.
+ */
 export const TRACK_CARDS: readonly TrackCard[] = [
   { track: 'fordeling', group: 'counting', screen: 'fordeling', title: { da: 'Fordeling', en: 'Distribution' }, description: { da: 'De 39 mønstre og deres hyppighed', en: 'The 39 patterns and how often they occur' }, help: { da: 'Fordelingssporet: de 39 mønstre og deres hyppighed. Den daglige session tager ca. 5 minutter, og på sporets skærm finder du også huskepaladset, albummet, klubaftenen og kurverne.', en: 'The distribution track: the 39 patterns and how often they occur. The daily session takes about 5 minutes, and on the track’s screen you also find the memory palace, the album, the club evening and the charts.' } },
   { track: 'pointregnskab', group: 'counting', screen: 'pointregnskab', title: { da: 'Pointregnskab', en: 'Point count' }, description: { da: 'Tæl honnørpoint under spillet', en: 'Count high-card points during play' }, help: helpOf('pointregnskab') },
   { track: 'farvebehandling', group: 'play', screen: 'farvebehandling', title: { da: 'Farvebehandling', en: 'Suit combinations' }, description: { da: 'Den bedste linje i én farve · 657 kombinationer', en: 'The best line in one suit · 657 combinations' }, help: helpOf('farvebehandling') },
-  { track: 'haandevaluering', group: 'evaluation', screen: 'haandevaluering', title: { da: 'Håndevaluering', en: 'Hand evaluation' }, description: { da: 'Vurdér hånden med P-modellen', en: 'Value your hand with the P-model' }, help: helpOf('haandevaluering') },
-];
-
-/**
- * Moduler uden daglig session (SPEC-analyse-modul.md): kortet står i sin gruppe efter sporene, men har ingen streak,
- * intet niveau og intet mærke og indgår ikke i I dag.
- */
-export const MODULE_CARDS: readonly TrackCard[] = [
   {
     track: 'analyse',
     group: 'play',
@@ -108,5 +108,7 @@ export const MODULE_CARDS: readonly TrackCard[] = [
       da: 'Analysen fra Farvebehandling som selvstændigt modul: slå enhver kombination op, og se linjerne, chancerne og sidningerne, også med kendte kort, hp-grænser og forbindelser. Den findes også som fanen Analyse i Farvebehandling.',
       en: 'The analysis from Suit combinations as a separate module: look up any combination and see the lines, the chances and the layouts, also with known cards, HCP limits and entries. It is also the Analysis tab in Suit combinations.',
     },
+    status: false,
   },
+  { track: 'haandevaluering', group: 'evaluation', screen: 'haandevaluering', title: { da: 'Håndevaluering', en: 'Hand evaluation' }, description: { da: 'Vurdér hånden med P-modellen', en: 'Value your hand with the P-model' }, help: helpOf('haandevaluering') },
 ];
