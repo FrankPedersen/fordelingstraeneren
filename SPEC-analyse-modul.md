@@ -65,18 +65,18 @@ Sidefodens liste over trænerne får linket "Analyse" / "Analysis" til `/fordeli
 
 | Del | Indhold |
 | --- | --- |
-| Kilden | `src/farvebehandling/content/guide-analyse.md`, eksporteret fra Franks dokument "Guide til Farvebehandling – Analyse" i den opdaterede udgave. Claude Code skriver ikke i guidens tekst |
+| Kilden | to filer: `src/farvebehandling/content/guide-analyse.md` (dansk) og `guide-analyse.en.md` (engelsk), eksporteret fra Franks dokument "Guide til Farvebehandling – Analyse" og den engelske udgave "Guide to Suit Combinations – Analysis" i den opdaterede udgave. De to har samme afsnit og nummerering. Claude Code skriver ikke i guidens tekst |
 | Knappen | "Guide" øverst i Analyse, til højre for overskriften, både i modulet og i fanen, med ⓘ: "Sådan bruger du analysen, og sådan regner den." |
 | Visningen | `ui/Guide.tsx` viser guiden i samme skærm med Tilbage til analysen; den valgte kombination og situationen er uændrede bagefter. Visningen klarer det, guiden bruger: overskrifter, afsnit, punkt- og nummerlister, tabeller, fed og kode. Tabeller rulles vandret i deres egen boks |
 | Indholdsfortegnelse | afsnittenes overskrifter (niveau 2) øverst som links |
 | Indlæsning | guiden hentes dovent, første gang knappen bruges, og er med offline |
-| Engelsk | guiden findes kun på dansk; på engelsk vises knappen ikke, før `guide-analyse.en.md` findes |
+| Sprog | guiden vises på appens sprog: dansk fra `guide-analyse.md`, engelsk fra `guide-analyse.en.md`. Knappen hedder "Guide" på begge sprog, og ⓘ-teksten på engelsk er "How to use the analysis, and how it calculates." |
 
 ## Leverancetrin
 
 1. **Modulet i appen:** adressen, skærmen uden faner, forsidekortet med ⓘ og tests.
 2. **Kortet på kontraktbridge.dk** og linket i sidefoden. Udgives efter trin 1, så linket virker.
-3. **Guiden:** når SPEC-forbindelser.md er udgivet, opdateres dokumentet (afsnit 2 om Situationen og forbindelserne, sidningstabellen med notationen, afsnit 5 om begrænsningerne og afsnit 6). Frank lægger den eksporterede `guide-analyse.md` i repoet, og Claude Code bygger knappen og visningen.
+3. **Guiden:** når SPEC-forbindelser.md er udgivet, opdateres dokumentet (afsnit 2 om Situationen og forbindelserne, sidningstabellen med notationen, afsnit 5 om begrænsningerne og afsnit 6), og den engelske udgave skrives ud fra den. Frank lægger de to eksporterede filer i repoet, og Claude Code bygger knappen og visningen.
 
 Hvert trin er færdigt, når `npm test` er grøn, `SPEC-farvebehandling.md` er opdateret, og Frank har godkendt.
 
@@ -103,18 +103,19 @@ Trin 2:
 Trin 3:
 
 - [ ] Knappen Guide står øverst i Analyse i modulet og i fanen og åbner guiden; Tilbage viser samme kombination og situation som før.
-- [ ] Hver overskrift i `guide-analyse.md` vises, og indholdsfortegnelsen linker til afsnittene på niveau 2.
+- [ ] Hver overskrift i `guide-analyse.md` vises på dansk og hver overskrift i `guide-analyse.en.md` på engelsk, og indholdsfortegnelsen linker til afsnittene på niveau 2.
+- [ ] De to filer har samme antal overskrifter med samme nummerering (fx "2.1"), så de ikke kommer ud af takt.
 - [ ] Guidens tabeller vises som tabeller, og ved 390 px rulles de i deres egen boks uden vandret rulning på siden.
 - [ ] Guiden er ikke med i appens første indlæsning, men kan åbnes offline efter første besøg.
-- [ ] På engelsk vises knappen Guide ikke.
+- [ ] På engelsk viser knappen Guide den engelske guide, og skærmen indeholder ingen dansk tekst (testen i `ui/i18n.test.tsx`).
+- [ ] Ingen af guiderne indeholder "bridgehands".
 - [ ] Komponentfilerne indeholder ingen farveværdier og ingen tal med enhed, undtagen 0, 1px-streger og procenter.
 
 ## Afklaret
 
 1. **Ét modul, to indgange.** Det selvstændige modul og fanen er samme komponent med samme data. Ingen kopi af analysen.
 2. **Ingen streak:** analysen er et opslagsværk, ikke en daglig træning, så kortet har ingen status og indgår ikke i "I dag".
-3. **Guiden skrives i dokumentet**, ikke i koden. En ny udgave af guiden er en ny eksport af `guide-analyse.md`.
+3. **Guiden skrives i dokumentet**, ikke i koden. En ny udgave af guiden er en ny eksport af begge filer.
+4. **Guiden findes på dansk og engelsk** (Franks valg 20. oktober 2026). Trin 3 udgives først, når begge filer er der.
 
-Åbne punkter:
-
-1. **Engelsk guide** (Franks valg): indtil den findes, er knappen skjult på engelsk.
+Åbne punkter: ingen.
