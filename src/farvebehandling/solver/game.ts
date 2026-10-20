@@ -103,6 +103,11 @@ export interface Game {
   slotHand: Int8Array;
   slotHigh: Int8Array;
   slotLow: Int8Array;
+  /**
+   * LEAD: 1, når udspillet bruger en indgang, fordi hånden ikke er inde, og forbindelserne er begrænsede ved knuden
+   * (SPEC-forbindelser.md); ellers 0. Uden begrænsning er alle 0.
+   */
+  slotEntry: Int8Array;
 
   itemLayout: Int32Array;
   itemNode: Int32Array;
@@ -231,7 +236,7 @@ export function buildGame(north: readonly Rank[], south: readonly Rank[], option
   const kind: number[] = [], payoff: number[] = [], tricks: number[] = [], parent: number[] = [], parentSlot: number[] = [];
   const opponentHigh: number[] = [];
   const childStart: number[] = [], childCount: number[] = [], children: number[] = [];
-  const slotHand: number[] = [], slotHigh: number[] = [], slotLow: number[] = [];
+  const slotHand: number[] = [], slotHigh: number[] = [], slotLow: number[] = [], slotEntry: number[] = [];
   const itemLayout: number[] = [], itemNode: number[] = [], itemChildStart: number[] = [], itemChildren: number[] = [];
   const nodeItemStart: number[] = [], nodeItemCount: number[] = [];
 
@@ -262,6 +267,8 @@ export function buildGame(north: readonly Rank[], south: readonly Rank[], option
     hand: number;
     high: number;
     low: number;
+    /** Udspillet bruger en indgang (kun LEAD). */
+    entry?: number;
   }
 
   /** Reserverer barn-slots, bygger børnene og kobler items. */
@@ -274,6 +281,7 @@ export function buildGame(north: readonly Rank[], south: readonly Rank[], option
       slotHand.push(s.hand);
       slotHigh.push(s.high);
       slotLow.push(s.low);
+      slotEntry.push(s.entry ?? 0);
     }
     const kids: Built[] = [];
     for (let i = 0; i < slots.length; i++) {
@@ -353,7 +361,12 @@ export function buildGame(north: readonly Rank[], south: readonly Rank[], option
     const node = newNode(LEAD, st, items);
     attach(
       node,
-      options.map((o) => ({ hand: o.hand === 'N' ? 0 : 1, high: st.decl[o.top].rank, low: st.decl[o.bottom].rank })),
+      options.map((o) => ({
+        hand: o.hand === 'N' ? 0 : 1,
+        high: st.decl[o.top].rank,
+        low: st.decl[o.bottom].rank,
+        entry: !unlimited(st) && o.hand !== st.inde ? 1 : 0,
+      })),
       (i) => buildDefender(via(options[i].hand), options[i].hand, options[i].bottom, items, -1, -1),
     );
     return node;
@@ -506,6 +519,7 @@ export function buildGame(north: readonly Rank[], south: readonly Rank[], option
     slotHand: Int8Array.from(slotHand),
     slotHigh: Int8Array.from(slotHigh),
     slotLow: Int8Array.from(slotLow),
+    slotEntry: Int8Array.from(slotEntry),
     itemLayout: Int32Array.from(itemLayout),
     itemNode: Int32Array.from(itemNode),
     itemChildStart: Int32Array.from(itemChildStart),

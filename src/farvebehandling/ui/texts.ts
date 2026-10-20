@@ -281,6 +281,10 @@ const DA = {
   playTitle: 'Spil den selv',
   playTrick: 'Stikket',
   playButton: 'Spil den selv ▶',
+  // Forbindelserne i Spil den selv (SPEC-forbindelser.md).
+  playConnectionsTitle: 'Forbindelser i spillet',
+  playNoLead: 'Ingen hånd er inde',
+  playStranded: 'Ingen hånd med kort kan nås, så resten af kortene kan ikke hjemtages.',
   playLeadPrompt: 'Spil ud fra bordet eller hånden.',
   playThirdPrompt: (hand: string) => `Læg et kort fra ${hand === 'bordet' ? 'bordet' : 'hånden'}.`,
   playHidden: (n: number) => (n === 1 ? '? (1 kort)' : `? (${n} kort)`),
@@ -448,6 +452,7 @@ const DA = {
     maxHp: 'De fleste honnørpoint i farven (E 4, K 3, D 2, B 1), Vest eller Øst kan have, fx fordi han har passet. Grænserne skal tilsammen give plads til modpartens honnører. En knap er grået ud, når den ville gøre situationen umulig.',
     connections: 'Sikre indgange til bordet (Nord) og hånden (Syd) i de andre farver. Et udspil fra hånden, der er inde, er gratis; et udspil fra den anden hånd bruger en indgang. Vinder modspillet et stik, er ingen hånd inde, og næste udspil bruger en indgang. "Ubegrænset" står over 5 og er som i banken.',
     lead: 'Hånden, der spiller ud til første stik i farven. Vinder du et stik, er hånden med det vindende kort inde. Feltet vises kun, når en hånd har begrænsede indgange.',
+    playConnections: 'Et udspil fra hånden, der er inde, er gratis; et udspil fra den anden hånd bruger en indgang, som tælles ned. Vinder modspillet et stik, er ingen hånd inde. Knapperne er grået ud, når hånden ikke kan nås.',
     tasks: {
       'vælg-linjen': 'Vælg den linje, der giver størst chance for målet, og gæt chancen. Rigtig linje og rigtigt interval giver fuld score, rigtig linje og forkert interval halv.',
       chancen: 'Linjen er givet; gæt chancen for målet. Grænsen hører til intervallet over: 50,0 % er 50–75 %.',
@@ -721,6 +726,9 @@ const EN: Texts = {
   playTitle: 'Play it yourself',
   playTrick: 'The trick',
   playButton: 'Play it yourself ▶',
+  playConnectionsTitle: 'Entries in play',
+  playNoLead: 'Neither hand is on lead',
+  playStranded: 'No hand with cards can be reached, so the remaining cards cannot be cashed.',
   playLeadPrompt: 'Lead from dummy or from your hand.',
   // Hånden kommer som TEXT.owners: "dummy" eller "your hand".
   playThirdPrompt: (hand: string) => `Play a card from ${hand}.`,
@@ -883,6 +891,7 @@ const EN: Texts = {
     maxHp: "The most high-card points in the suit (A 4, K 3, Q 2, J 1) West or East can hold, for instance because he passed. Together the limits must leave room for the opponents' honours. A button is greyed out when it would make the situation impossible.",
     connections: 'Sure entries to dummy (North) and your hand (South) in the other suits. A lead from the hand that is on lead is free; a lead from the other hand uses an entry. If the defenders win a trick, neither hand is on lead, and the next lead uses an entry. "Unlimited" comes after 5 and is as in the bank.',
     lead: 'The hand that leads to the first trick in the suit. When you win a trick, the hand with the winning card is on lead. The field is shown only when a hand has limited entries.',
+    playConnections: 'A lead from the hand that is on lead is free; a lead from the other hand uses an entry, which is counted down. If the defenders win a trick, neither hand is on lead. The buttons are greyed out when the hand cannot be reached.',
     tasks: {
       'vælg-linjen': 'Choose the line that gives the best chance of the goal, and guess the chance. Right line and right interval give a full score, right line and wrong interval half.',
       chancen: 'The line is given; guess the chance of the goal. A boundary belongs to the interval above: 50.0 % is 50–75 %.',

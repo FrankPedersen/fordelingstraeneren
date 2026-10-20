@@ -10,6 +10,9 @@ import { itemValues } from './natural';
  * billigt som muligt, når den kan. Lægger 2. hånd en honnør, og ændrer det 3. håndens kort, nævnes det som en gren.
  * Beskrivelsen stopper, når resultatet er afgjort i alle sidninger. Linjeformatet får trinene frem til det første
  * sted, hvor næste udspil afhænger af, hvad modspillet lagde; derefter spiller løseren videre ("Efter sidste trin").
+ *
+ * Med begrænsede forbindelser (SPEC-forbindelser.md) begynder et udspil, der bruger en indgang, med "Gå ind på hånden
+ * (bordet) med en sideindgang, og spil …"; hånden står så ikke igen efter kortet. Uden begrænsning er teksterne som før.
  */
 export interface LineDescription {
   steps: string[];
@@ -151,22 +154,30 @@ export function describeFrom(game: Game, strategy: Int8Array, leadSlot: number, 
     let text: string;
     let cash: Rank | null = null;
     const ledLow = led.lowest && led.rank < TEN;
+    // Et udspil, der bruger en indgang, nævner hånden i "Gå ind på …", ikke efter kortet.
+    const entry = game.slotEntry[slot] === 1;
+    const from = entry ? '' : ` fra ${HAND_NAME[hand]}`;
     if (led.winner && (!low || low.lowest) && (!high || high.lowest)) {
-      text = ledLow ? `lille fra ${HAND_NAME[hand]}` : `slå ${cardName(led.rank)}`;
+      text = ledLow ? `lille${from}` : `slå ${cardName(led.rank)}`;
       if (!ledLow) cash = led.rank;
     } else if (ledLow) {
       const toward = low ?? high;
-      if (!toward) text = `lille fra ${HAND_NAME[hand]}`;
-      else if (toward.winner) text = `lille fra ${HAND_NAME[hand]} til ${cardName(toward.rank)}`;
+      if (!toward) text = `lille${from}`;
+      else if (toward.winner) text = `lille${from} til ${cardName(toward.rank)}`;
       else if (toward.lowest) text = 'lille fra begge hænder';
-      else text = `lille fra ${HAND_NAME[hand]} mod ${cardName(toward.rank)} (kip)`;
+      else text = `lille${from} mod ${cardName(toward.rank)} (kip)`;
       if (low && high && high.rank !== low.rank) {
         text += `; lægger ${seat2} en honnør, ${high.lowest ? 'lægges der lille' : `tages den med ${cardName(high.rank)}`}`;
       }
     } else {
-      text = `${cardName(led.rank)} fra ${HAND_NAME[hand]}`;
+      text = `${cardName(led.rank)}${from}`;
       if (covers && high) text += `; dækker ${seat2}, ${high.lowest ? 'lægges der lille' : `tages stikket med ${cardName(high.rank)}`}`;
       if (low) text += `${covers && high ? ', ellers' : ';'} ${low.lowest ? 'lad den løbe' : `læg ${cardName(low.rank)}`}`;
+    }
+    if (entry) {
+      // "Slå" med en indgang slås ikke sammen med de andre "slå"-trin.
+      text = `gå ind på ${HAND_NAME[hand]} med en sideindgang, og ${cash !== null ? text : `spil ${text}`}`;
+      cash = null;
     }
     parts.push({ text, cash });
 

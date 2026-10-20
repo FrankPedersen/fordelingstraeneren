@@ -409,7 +409,14 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
         <Situationspanel north={item.north} south={item.south} situation={situation} onChange={setSituation} />
 
         {playSeed !== null && solvedGoal && (
-          <SpilSelv key={`${situationKey}:${playSeed}`} item={view} goal={goal} seed={playSeed} onClose={() => setPlaySeed(null)} />
+          <SpilSelv
+            key={`${situationKey}:${playSeed}`}
+            item={view}
+            goal={goal}
+            seed={playSeed}
+            onClose={() => setPlaySeed(null)}
+            connections={situation.entries && (situation.entries.north !== null || situation.entries.south !== null) ? { entries: situation.entries, lead: situation.lead ?? 'S' } : undefined}
+          />
         )}
 
         <section className="card" aria-labelledby="fb-lines">

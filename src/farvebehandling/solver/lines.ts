@@ -139,6 +139,15 @@ export function lineMask(game: Game, line: Line): LineMask {
     const step = line.steps[state.step];
     const number = state.step + 1;
     const card = choose(state.physical[step.leadFrom], step.card);
+    // Med begrænsede forbindelser (SPEC-forbindelser.md) kan en hånd uden indgang ikke spille ud.
+    const code = step.leadFrom === 'N' ? 0 : 1;
+    let reachable = false;
+    for (let x = 0; x < game.childCount[node]; x++) if (game.slotHand[game.childStart[node] + x] === code) reachable = true;
+    if (card !== null && !reachable) {
+      errors.add(`Trin ${number}: der er ingen indgang til ${handName(step.leadFrom)}, så der kan ikke spilles ud derfra.`);
+      allowSubtree(node);
+      return;
+    }
     const slot = card === null ? -1 : slotFor(game, node, step.leadFrom, state, card, true);
     if (card === null || slot < 0) {
       errors.add(`Trin ${number}: ${cardName(step.card)} kan ikke spilles fra ${handName(step.leadFrom)}.`);

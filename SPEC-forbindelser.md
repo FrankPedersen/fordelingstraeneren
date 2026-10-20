@@ -94,10 +94,10 @@ Facitværdierne for den blokerede farve er regnet med løseren (ubegrænset) og 
 - [x] Samme, Syd inde, Syd 1 indgang: 4 stik 100,00 %, 5 stik 62,17 %.
 - [x] E D B 10 / 6 5 4 3 2, 5 stik, Syd inde, Syd 2 indgange, Nord ubegrænset: chancen ligger under 50,00 %, og sidningen Kxxx–renonce (kongen og tre små hos Vest) taber. Claude Code regner tallet, og Frank godkender det, før det låses i testen. Regnet: 45,22 %, godkendt af Frank 20. oktober 2026 og låst i testen.
 - [x] Flere indgange giver aldrig en lavere chance: for 10 kombinationer fra banken og indgange 0–3 er chancen ikke-faldende i antallet af indgange til hver hånd.
-- [ ] En egen linje, der spiller ud fra Syd to gange med Syd 0 indgange og Nord inde, afvises med en fejl, der nævner trinnet.
-- [ ] Spil den selv: med Syd 0 indgange og Nord inde kan der ikke spilles ud fra Syd, efter at Nord har vundet et stik.
-- [ ] Alle nye tekster findes på dansk og engelsk, og de engelske skærme indeholder ingen dansk tekst.
-- [ ] Komponentfilerne indeholder ingen farveværdier og ingen tal med enhed, undtagen 0, 1px-streger og procenter.
+- [x] En egen linje, der spiller ud fra Syd to gange med Syd 0 indgange og Nord inde, afvises med en fejl, der nævner trinnet.
+- [x] Spil den selv: med Syd 0 indgange og Nord inde kan der ikke spilles ud fra Syd, efter at Nord har vundet et stik.
+- [x] Alle nye tekster findes på dansk og engelsk, og de engelske skærme indeholder ingen dansk tekst.
+- [x] Komponentfilerne indeholder ingen farveværdier og ingen tal med enhed, undtagen 0, 1px-streger og procenter.
 
 ## Afklaret
 
@@ -128,6 +128,12 @@ Facitværdierne for den blokerede farve er regnet med løseren (ubegrænset) og 
    - **Chips:** hånden, der er inde, først og med sine indgange, når de er begrænsede ("Syd inde · Syd 2 indgange" eller "Syd inde"); den anden hånd kun, når dens indgange er begrænsede ("Nord 0 indgange"). 1 hedder "1 indgang".
    - **Forudsætningslinjen:** situationens del (eller "a priori") · forbindelserne · optimalt modspil, fx "a priori · Syd inde, Nord ubegrænset og Syd 2 indgange · optimalt modspil" eller "Vest 1 kendt kort · Syd inde, Nord ubegrænset og Syd 1 indgang · optimalt modspil". På engelsk "South on lead, North unlimited and South 2 entries".
    - **Bankens tal** bruges, når begge hænder har mindst lige så mange indgange, som de har kort (samme regel som i trin 1), så intet regnes forgæves; chips og forudsætningslinjen viser stadig det valgte.
+7. **Claude Codes valg i leverancetrin 3** (trin 1 og 2 er godkendt af Frank 20. oktober 2026):
+   - **Hvilke udspil bruger en indgang:** spillet har et felt pr. udspil (`slotEntry` i `game.ts`). Det er 1, når forbindelserne er begrænsede ved knuden, og hånden ikke er inde; også når hånden selv har ubegrænsede indgange, for så går man stadig ind på den med en sideindgang. Uden begrænsning er feltet 0 overalt, og teksterne er som før.
+   - **Sætningen:** hånden nævnes i "Gå ind på …" og ikke igen efter kortet: "Gå ind på hånden med en sideindgang, og spil lille til esset.", "Gå ind på bordet med en sideindgang, og spil lille mod damen (kip)." og "Gå ind på bordet med en sideindgang, og slå esset." Et "slå" med en indgang slås ikke sammen med de andre "slå"-trin. På engelsk "Cross to hand with a side entry and lead low to the ace." og "… and cash the ace." Den engelske skabelon sætter hånden ind igen og bruger de faste skabeloner, så de er uændrede.
+   - **Egne linjer:** et trin, der spiller ud fra en hånd, som ikke kan nås, afvises med "Trin 2: der er ingen indgang til hånden, så der kan ikke spilles ud derfra." (engelsk "Step 2: there is no entry to hand, so you cannot lead from there."). Slutter spillet, fordi ingen hånd med kort kan nås, tjekkes de senere trin ikke; linjen taber så de sidninger. Specens eksempel (Syd to gange med Syd 0 indgange og Nord inde) afvises allerede i trin 1; testen har også et eksempel, der afvises i trin 2 (E K 2 / B 5 4 3: esset fra bordet, så lille fra hånden).
+   - **Spil den selv** følger forbindelserne kun, når det åbnes fra Analyse med begrænsede indgange; Træning og facit er uændrede. Indgangene tælles ned fra det valgte (en hånd med flere indgange end kort vises også). Under bordet står fx "Nord inde · Syd 0 indgange" eller "Ingen hånd er inde · Syd 1 indgang" med ⓘ ("Forbindelser i spillet"), og knapperne for udspil fra en hånd, der ikke kan nås, er grået ud. Kan ingen hånd med kort nås, er spillet slut, og der står "Ingen hånd med kort kan nås, så resten af kortene kan ikke hjemtages."
+   - Ingen nye tokens eller ny CSS.
 
 Åbne punkter:
 
