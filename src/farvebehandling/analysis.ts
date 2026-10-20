@@ -300,8 +300,15 @@ export interface BandField {
   westCount: number;
   /** Vests honnører, til gruppering efter honnørplacering. */
   westHonors: Rank[];
-  /** Sidningens chance. */
+  /** Rækkens chance: summen over de konkrete sidninger, den samler. */
   probability: number;
+  /**
+   * Antal konkrete sidninger i rækken (SPEC-notation-sidninger.md): produktet over hullerne med små kort af C(hullets
+   * størrelse, Vests antal i hullet). Honnører over 10'eren står konkret og tæller ikke med.
+   */
+  count: number;
+  /** Chancen for hver af rækkens sidninger, `probability / count`; de har samme chance, fordi Vest har lige mange kort. */
+  each: number;
   /** Linjernes resultat i sidningen (1 = målet nås), i samme rækkefølge som linjerne. */
   outcomes: number[];
   /** Den abstrakte sidning (indeks i løsningens sidninger). */
@@ -333,6 +340,8 @@ export function bandFields(item: BankItem, lines: readonly LineView[], weights?:
     // Kartesisk produkt over hullerne med honnører.
     let variants: { west: Rank[]; east: Rank[]; ways: number }[] = [{ west: [], east: [], ways: 1 }];
     let westSmall = 0, eastSmall = 0;
+    // Antal måder at vælge de små kort på: rækken samler dem (SPEC-notation-sidninger.md).
+    let count = 1;
     gaps.forEach((gap, g) => {
       const w = layout.west[g];
       if (gap.size === 0) return;
@@ -349,6 +358,7 @@ export function bandFields(item: BankItem, lines: readonly LineView[], weights?:
       } else {
         westSmall += w;
         eastSmall += gap.size - w;
+        count *= Number(binomial(gap.size, w));
       }
     });
     const probability = weights ? weights[L] : Number(layout.weight) / den;
@@ -360,6 +370,8 @@ export function bandFields(item: BankItem, lines: readonly LineView[], weights?:
         westCount: v.west.length + westSmall,
         westHonors: [...v.west].sort((a, b) => b - a),
         probability: probability / v.ways,
+        count,
+        each: probability / v.ways / count,
         outcomes: lines.map((l) => l.lead.layouts[L]),
         layout: L,
       });
@@ -387,10 +399,13 @@ export function sortFields(fields: readonly BandField[], by: Grouping): BandFiel
   );
 }
 
-/** Kort notation som i specen, fx "Kxx–Dx"; en renonce skrives "renonce". */
+/**
+ * Kort notation som i specen, fx "Kxx–Dx"; en renonce skrives "renonce". Samler rækken flere sidninger, står antallet i
+ * parentes: "Kx–xx(3)" (SPEC-notation-sidninger.md).
+ */
 export function compactLayout(f: BandField): string {
   const compact = (text: string) => (text === '–' ? 'renonce' : text.replace(/ /g, ''));
-  return `${compact(f.west)}–${compact(f.east)}`;
+  return `${compact(f.west)}–${compact(f.east)}${f.count > 1 ? `(${f.count})` : ''}`;
 }
 
 /** Sidningerne, hvor linjerne ikke giver samme resultat. */

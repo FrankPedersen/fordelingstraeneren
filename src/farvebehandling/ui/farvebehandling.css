@@ -507,6 +507,35 @@
   text-align: center;
 }
 
+/* Notationen (SPEC-notation-sidninger.md): chancen pr. sidning under rækkens samlede chance, i mindre og dæmpet tekst. */
+.fb-layout-table .fb-each {
+  display: block;
+  color: var(--muted);
+  font-size: var(--type-small);
+}
+
+/* ⓘ ved Chance-overskriften: knappen står ved teksten, og forklaringen har almindelig tekst og ombrydes, så den ikke
+   gør tabellen bredere end i dag, når den er åben. */
+.fb-th-info {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.fb-layout-table thead .info-btn,
+.fb-layout-table thead .info-text {
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.fb-layout-table thead .info-text {
+  color: var(--text);
+  font-size: var(--type-note);
+  font-weight: 400;
+  white-space: normal;
+}
+
 .fb-row-decides td {
   background: var(--surface-2);
 }
