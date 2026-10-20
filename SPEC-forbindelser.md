@@ -6,13 +6,13 @@ Analyse i farvebehandling får begrænsede forbindelser. I dag spiller spilføre
 
 Forbindelserne bliver en del af spillets tilstand i `solver/game.ts`. Løseren (`cfr.ts`), certificeringen og tolerancerne ændres ikke. Uden begrænsning er spillet præcis som i dag.
 
-Forudsætning: SPEC-notation-sidninger.md er bygget og flettet ind, eller grenen laves fra `main` uden den.
+Forudsætning: SPEC-notation-sidninger.md og SPEC-neutral-kilde.md er udgivet (20. oktober 2026), så grenen laves fra den nuværende `main`.
 
 ## Afgrænsning
 
 Før arbejdet starter:
 
-1. Commit og tag den nuværende app, fx `v10-foer-forbindelser`.
+1. Commit og tag den nuværende app, fx `v11-foer-forbindelser`.
 2. Arbejd på grenen `forbindelser`, og flet først ind efter godkendelse.
 3. Kør alle eksisterende tests før og efter. De skal bestå uændret.
 4. Kør regressionstesten mod bogen (`node scripts/bog-regression.ts`, ca. 25 min), før grenen flettes ind, fordi løserens spil ændres.
@@ -92,7 +92,7 @@ Facitværdierne for den blokerede farve er regnet med løseren (ubegrænset) og 
 - [x] Samme, Syd inde, Syd 0 og Nord 0 indgange: 4 stik 0,00 % (esset må tage stikket).
 - [x] Samme, Nord inde, Syd 1 indgang: 4 stik 100,00 %, 5 stik 62,17 %.
 - [x] Samme, Syd inde, Syd 1 indgang: 4 stik 100,00 %, 5 stik 62,17 %.
-- [ ] E D B 10 / 6 5 4 3 2, 5 stik, Syd inde, Syd 2 indgange, Nord ubegrænset: chancen ligger under 50,00 %, og sidningen Kxxx–renonce (kongen og tre små hos Vest) taber. Claude Code regner tallet, og Frank godkender det, før det låses i testen. Regnet: 45,22 % (se Åbne punkter 2); testen kræver indtil videre under 50,00 % og at Kxxx–renonce taber.
+- [x] E D B 10 / 6 5 4 3 2, 5 stik, Syd inde, Syd 2 indgange, Nord ubegrænset: chancen ligger under 50,00 %, og sidningen Kxxx–renonce (kongen og tre små hos Vest) taber. Claude Code regner tallet, og Frank godkender det, før det låses i testen. Regnet: 45,22 %, godkendt af Frank 20. oktober 2026 og låst i testen.
 - [x] Flere indgange giver aldrig en lavere chance: for 10 kombinationer fra banken og indgange 0–3 er chancen ikke-faldende i antallet af indgange til hver hånd.
 - [ ] En egen linje, der spiller ud fra Syd to gange med Syd 0 indgange og Nord inde, afvises med en fejl, der nævner trinnet.
 - [ ] Spil den selv: med Syd 0 indgange og Nord inde kan der ikke spilles ud fra Syd, efter at Nord har vundet et stik.
@@ -123,9 +123,8 @@ Facitværdierne for den blokerede farve er regnet med løseren (ubegrænset) og 
    - **Ubegrænset pr. hånd:** en hånd med mindst lige så mange indgange, som den har kort tilbage, regnes som ubegrænset, fordi hvert udspil fra hånden bruger et af dens kort. Det er strammere end "runder tilbage" og giver samme værdi. `situationFor` gør det samme ved roden, så `handleSolve` med indgange ≥ antal runder går præcis samme vej som i dag.
    - **Genvejen** gælder kun, når begge hænder er ubegrænsede (tabellen i Afgrænsning). Formuleringen "når begge hænder kan nås" under Reglerne er ikke nok: K D B / E med Nord inde, ingen indgang til Nord og én til Syd kan begge hænder nås, men esset tager et af Nords stik, og spilføreren får kun 1 stik. Det står som test.
    - **Kan ingen hånd med kort nås,** slutter spillet med de stik, der er vundet (fx Nord inde med en renonce og ingen indgange til Syd).
-   - Appen er tagget `v11-foer-forbindelser` (Afgrænsning 1 foreslog `v10-…`, men det navn var brugt).
 
 Åbne punkter:
 
-1. **Når modspillet vinder et stik** (Franks godkendelse): specen siger, at ingen hånd så er inde, og at næste udspil bruger en indgang. Alternativet er, at spilføreren frit vælger hånd efter et tabt stik, fordi modspillet spiller en anden farve tilbage, som han vinder, hvor han vil. Den første regel er den forsigtige og passer til, at indgangene er det eneste, spilføreren kan regne med. Leverancetrin 1 er bygget efter specens regel. Testen 3 2 / K D B 10 9, 4 stik, Syd inde og ingen indgange giver 0 % (modspillet tager esset straks); med alternativet bliver det 100 %, og testen rettes.
-2. **E D B 10 / 6 5 4 3 2, 5 stik, Syd inde, Syd 2 indgange, Nord ubegrænset:** 45,22 % (eksakt 4 702 880 / 10 400 600 = 45,2174 %), med lille fra begge hænder. Ubegrænset er chancen 50,00 % (kongen hos Vest). Forskellen er præcis Kxxx–renonce (4,78 %): de tre kipninger og den sidste lille i hånden kræver tre indgange til hånden. Til sammenligning: Syd 1 indgang 26,57 % (kongen single eller Kx hos Vest), Syd 3 indgange 50,00 %. Tallet låses i testen, når Frank har godkendt det.
+1. **Når modspillet vinder et stik** (Franks godkendelse): specen siger, at ingen hånd så er inde, og at næste udspil bruger en indgang. Alternativet er, at spilføreren frit vælger hånd efter et tabt stik, fordi modspillet spiller en anden farve tilbage, som han vinder, hvor han vil. Den første regel er den forsigtige og passer til, at indgangene er det eneste, spilføreren kan regne med. **Afgjort (Frank, 20. oktober 2026): specens regel.** Testen 3 2 / K D B 10 9, 4 stik, Syd inde og ingen indgange giver 0 % (modspillet tager esset straks); med alternativet ville det være 100 %.
+2. **E D B 10 / 6 5 4 3 2, 5 stik, Syd inde, Syd 2 indgange, Nord ubegrænset:** 45,22 % (eksakt 4 702 880 / 10 400 600 = 45,2174 %), med lille fra begge hænder. Ubegrænset er chancen 50,00 % (kongen hos Vest). Forskellen er præcis Kxxx–renonce (4,78 %): de tre kipninger og den sidste lille i hånden kræver tre indgange til hånden. Til sammenligning: Syd 1 indgang 26,57 % (kongen single eller Kx hos Vest), Syd 3 indgange 50,00 %. Godkendt af Frank 20. oktober 2026 og låst i testen.

@@ -87,10 +87,11 @@ describe('Forbindelser i løseren (SPEC-forbindelser.md)', { timeout: 300_000 },
     expect(chance(ACE, KQJ32, 5, connections('S', null, 1))).toBe(62.17);
   });
 
-  it('E D B 10 / 6 5 4 3 2, 5 stik, Syd inde, Syd 2 indgange, Nord ubegrænset: under 50,00 %, og Kxxx–renonce taber', () => {
+  it('E D B 10 / 6 5 4 3 2, 5 stik, Syd inde, Syd 2 indgange, Nord ubegrænset: 45,22 %, og Kxxx–renonce taber', () => {
+    // Tallet er godkendt af Frank (20. oktober 2026). Ubegrænset er det 50,00 %; Kxxx–renonce kræver tre indgange til hånden.
     const s = connections('S', null, 2);
     const r = goal(EDB10, X65432, 5, s);
-    expect(r.result.value).toBeLessThan(0.5);
+    expect(percent2(r.result.value)).toBe(45.22);
     // Sidningen med kongen og tre små hos Vest (9 8 7) og renonce hos Øst.
     const game = buildGame(EDB10, X65432, { objective: { kind: 'goal', goal: 5 }, ...gameOptionsFor(EDB10, X65432, s) });
     const kxxx = layoutOf(game, [13, 9, 8, 7]);
