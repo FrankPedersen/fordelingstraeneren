@@ -1,11 +1,11 @@
 import { useMemo, useState } from 'react';
 import { formatDecimal } from '../../engine/format';
-import { bandFields, compactLayout, disagreements, linesForGoal, sortFields, type Grouping, type LineView } from '../analysis';
+import { bandFields, disagreements, linesForGoal, sortFields, type Grouping, type LineView } from '../analysis';
 import { randomSeed } from '../../engine/rng';
 import { guessInterval } from '../model/guess';
 import type { Room, Station } from '../training/palace';
 import { bestOption, vacantWeights, type FbAnswer, type FbTask, type Graded, type PairsOption } from '../training/tasks';
-import { LayoutList } from './Analysevindue';
+import { disagreeText, LayoutList } from './Analysevindue';
 import { Bridgebord } from './Bridgebord';
 import { Linjekort } from './Linjekort';
 import { FørsteRunde, handsOf, letteredLines } from './Opgave';
@@ -187,7 +187,7 @@ export function Facit({ task, answer, graded, reward, place, onNext }: FacitProp
         {lines.length > 1 && (
           <p>
             {decisive.length
-              ? TEXT.disagree(decisive.length, decisive.slice(0, 3).map(compactLayout).join(', '), Math.max(0, decisive.length - 3))
+              ? disagreeText(decisive)
               : TEXT.agree}
           </p>
         )}

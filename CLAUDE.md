@@ -132,6 +132,7 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
   - Trin 2 er bygget på samme gren: panelet Situationen (`ui/Situationspanel.tsx`) og beregningen i browseren. Valgene står i specen under Afklaret 6–7.
   - Trin 3 (import): tolkeren `ui/importer.ts` og feltet `ui/Importfelt.tsx` over kortvælgeren. Valgene står i specen under Afklaret 10.
   - Trin 4 (valg af linjer): `ui/linjevalg.ts` (alle udspil og unikke vindere) og afkrydsningsfeltet Sammenlign på linjekortet i Analyse. Valgene står i specen under Afklaret 11.
+- **Notationen for sidninger** (SPEC-notation-sidninger.md, bygget på grenen `notation-sidninger`; appen før er tagget `v9-foer-notation`): `BandField` har `count` (konkrete sidninger i rækken: produktet over hullerne med små kort af C(størrelse, Vests antal)) og `each` (chancen pr. sidning). Tabellen viser antallet i Øst-cellen og chancen pr. sidning under den samlede chance; mellemoverskrifterne har navn ("2–2", "K", "ingen honnører"), chance og antal, og ved mærket "afgør" står de afgørende sidningers antal og chance. "Linjerne er uenige i …" (`disagreeText`) og Sammenligns unikke vindere (`uniqueWinners`) tæller sidninger, ikke rækker (Franks valg). Bredden ved 390 px er målt i Chrome; detaljer i specen under Afklaret.
 - **Linjer:**
   - "low" i `ifSecondPlays` betyder et kort under B.
   - En `goto` til antal trin + 1 betyder, at linjen slutter.

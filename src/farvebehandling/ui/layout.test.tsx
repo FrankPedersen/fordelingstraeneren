@@ -58,7 +58,13 @@ describe('Analysevinduets layout (SPEC-analysevindue-layout.md)', () => {
     const onSelect = vi.fn();
     render(<LayoutList fields={fields} lines={lines} selected={null} onSelect={onSelect} grouping="fordeling" showAll />);
     const table = document.querySelector('.fb-layout-table')!;
-    const headers = [...table.querySelectorAll('thead th')].map((th) => th.textContent);
+    // Overskrifternes tekst uden ⓘ-knappen ved Chance (SPEC-notation-sidninger.md).
+    const label = (th: Element) => {
+      const copy = th.cloneNode(true) as Element;
+      copy.querySelectorAll('.info').forEach((info) => info.remove());
+      return copy.textContent;
+    };
+    const headers = [...table.querySelectorAll('thead th')].map(label);
     expect(headers).toEqual(['Vest', 'Øst', 'Chance', ...lines.map((l) => `Linje ${l.letter}`), 'afgør']);
     const rows = [...table.querySelectorAll('tbody tr:not(.fb-group-row)')];
     expect(rows).toHaveLength(fields.length);
@@ -85,7 +91,10 @@ describe('Analysevinduets layout (SPEC-analysevindue-layout.md)', () => {
     expect(document.querySelectorAll('.fb-layout-table tbody tr')).toHaveLength(disagreements(fields).length);
     cleanup();
     render(<LayoutList fields={fields} lines={lines} selected={null} onSelect={() => {}} grouping="honnører" />);
-    expect([...document.querySelectorAll('.fb-group-row')].every((r) => /^Vest har /.test(r.textContent ?? ''))).toBe(true);
+    // Mellemoverskrifterne er Vests honnører med gruppens chance og antal sidninger (SPEC-notation-sidninger.md).
+    const groups = [...document.querySelectorAll('.fb-group-row')].map((r) => r.textContent ?? '');
+    expect(groups.length).toBeGreaterThan(0);
+    expect(groups.every((g) => /^(ingen honnører|[EKDB10 ]+) · \d+,\d\d % · \d+ sidning(er)?$/.test(g)), groups.join(' | ')).toBe(true);
   });
 
   it('på engelsk står der intet dansk i tabellen eller på linjekortene', () => {

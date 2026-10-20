@@ -10,7 +10,7 @@ import { TEST_BANK } from '../testBank';
 import { grade, makeTask } from '../training/tasks';
 import { disagreeText, LayoutList } from './Analysevindue';
 import { Facit } from './Facit';
-import { TEXTS } from './texts';
+import { TEXT } from './texts';
 
 // SPEC-notation-sidninger.md, accepttest for visningen. E D B 10 / 6 5 4 3 2, mål 5, regnet med løseren som i kortvælgeren.
 function edb(): BankItem {
@@ -107,13 +107,15 @@ describe('Sidningstabellen med antal og chance pr. sidning (SPEC-notation-sidnin
   });
 
   it('alle nye tekster findes på dansk og engelsk, og den engelske tabel har ingen dansk tekst', () => {
-    for (const key of ['layoutRow', 'groupSummary', 'decisiveSummary', 'eachChance', 'countSuffix'] as const) {
-      expect(typeof TEXTS.da[key], key).toBe('function');
-      expect(typeof TEXTS.en[key], key).toBe('function');
+    // Den engelske tekstfil har samme type som den danske (Texts = typeof DA), så nøglerne findes på begge sprog.
+    for (const lang of ['da', 'en'] as const) {
+      setLang(lang);
+      for (const key of ['layoutRow', 'groupSummary', 'decisiveSummary', 'eachChance', 'countSuffix'] as const) {
+        expect(typeof TEXT[key], `${lang} ${key}`).toBe('function');
+      }
+      expect(TEXT.help.chanceColumn.length, lang).toBeGreaterThan(40);
     }
-    expect(TEXTS.da.help.chanceColumn.length).toBeGreaterThan(40);
-    expect(TEXTS.en.help.chanceColumn.length).toBeGreaterThan(40);
-    setLang('en');
+    expect(TEXT.help.chanceColumn).toMatch(/^The row collects layouts/);
     const fields = sortFields(bandFields(item, lines), 'honnører');
     render(<LayoutList fields={fields} lines={lines} selected={null} onSelect={() => {}} grouping="honnører" showAll />);
     for (const button of screen.queryAllByRole('button', { name: /^Help: / })) fireEvent.click(button);

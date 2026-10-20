@@ -42,13 +42,21 @@ describe('Valg af linjer', () => {
     expect(pairs).toBeGreaterThan(100);
   });
 
-  it('unikke vindere tæller sidningerne (båndets felter), hvor kun den ene linje når målet', () => {
+  it('unikke vindere tæller de konkrete sidninger (summen af rækkernes antal), hvor kun den ene linje når målet', () => {
+    // SPEC-notation-sidninger.md: en række i tabellen kan samle flere sidninger, så antallet er summen af count (Franks valg).
     const item = TEST_BANK.find((b) => b.combination.id === 'J432-AT65') ?? TEST_BANK.find((b) => allLinesForGoal(b, b.combination.goals[0]).length >= 2)!;
     const goal = item.combination.goals[0];
     const [a, b] = allLinesForGoal(item, goal);
     const fields = bandFields(item, [a, b]);
     const u = uniqueWinners(fields, 0, 1);
-    expect(u.a.count).toBe(fields.filter((f) => f.outcomes[0] > 0 && f.outcomes[1] === 0).length);
-    expect(u.b.count).toBe(fields.filter((f) => f.outcomes[1] > 0 && f.outcomes[0] === 0).length);
+    const sidings = (keep: (f: (typeof fields)[number]) => boolean) => fields.filter(keep).reduce((s, f) => s + f.count, 0);
+    expect(u.a.count).toBe(sidings((f) => f.outcomes[0] > 0 && f.outcomes[1] === 0));
+    expect(u.b.count).toBe(sidings((f) => f.outcomes[1] > 0 && f.outcomes[0] === 0));
+    // Et eksempel, hvor rækkerne samler flere sidninger, så antallet er større end antallet af rækker.
+    const many = TEST_BANK.flatMap((x) => {
+      const [p, q] = allLinesForGoal(x, x.combination.goals[0]);
+      return q ? [uniqueWinners(bandFields(x, [p, q]), 0, 1).a.count - bandFields(x, [p, q]).filter((f) => f.outcomes[0] > 0 && f.outcomes[1] === 0).length] : [];
+    });
+    expect(many.some((d) => d > 0)).toBe(true);
   });
 });

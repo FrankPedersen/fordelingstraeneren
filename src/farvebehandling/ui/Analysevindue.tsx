@@ -527,13 +527,7 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
             <>
               <Sandsynlighedsbånd lines={shownLines} fields={fields} selected={selected} onSelect={setSelected} />
               {decisive.length ? (
-                <p>
-                  {TEXT.disagree(
-                    decisive.length,
-                    decisive.slice(0, 3).map(compactLayout).join(', '),
-                    Math.max(0, decisive.length - 3),
-                  )}
-                </p>
+                <p>{disagreeText(decisive)}</p>
               ) : (
                 <p>{TEXT.agree}</p>
               )}
@@ -592,6 +586,17 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
 /** Østs antal kort i en sidning ("–" er en renonce). */
 const eastCount = (f: BandField) => (f.east === '–' ? 0 : f.east.split(' ').length);
 
+const sidings = (fields: readonly BandField[]) => fields.reduce((s, f) => s + f.count, 0);
+const chanceOf = (fields: readonly BandField[]) => fields.reduce((s, f) => s + f.probability, 0);
+
+/**
+ * "Linjerne er uenige i …" under båndet i Analyse og facit: antallet er de konkrete sidninger (summen af rækkernes
+ * antal), og de tre første rækker står i den korte form med antallet i parentes (SPEC-notation-sidninger.md).
+ */
+export function disagreeText(decisive: readonly BandField[]): string {
+  return TEXT.disagree(sidings(decisive), decisive.slice(0, 3).map(compactLayout).join(', '), sidings(decisive.slice(3)));
+}
+
 /**
  * Sidningerne som tabel (SPEC-analysevindue-layout.md, punkt 3): Vest, Øst, chancen, én kolonne pr. linje med ✓ eller ✕
  * og antal stik, og mærket "afgør". De afgørende sidninger står først og er markeret; med `showAll` følger resten med
@@ -615,16 +620,18 @@ export function LayoutList({
 }) {
   const decides = (f: BandField) => lines.length > 1 && f.outcomes.some((o) => o !== f.outcomes[0]);
   const decisive = fields.filter(decides);
-  const groups: { label: string; rows: BandField[] }[] = [];
+  const groups: { name: string; rows: BandField[] }[] = [];
   if (showAll || !decisive.length) {
     for (const f of fields.filter((f) => !decides(f))) {
-      const label =
+      const name =
         grouping === 'fordeling' ? TEXT.groupCount(f.westCount, eastCount(f)) : TEXT.groupHonors(f.westHonors.map(rankText).join(' '));
       const last = groups[groups.length - 1];
-      if (last?.label === label) last.rows.push(f);
-      else groups.push({ label, rows: [f] });
+      if (last?.name === name) last.rows.push(f);
+      else groups.push({ name, rows: [f] });
     }
   }
+  // En række samler sidninger, der kun adskiller sig i små kort: antallet står i Øst-cellen og chancen pr. sidning under
+  // den samlede chance (SPEC-notation-sidninger.md), så der kommer ingen ny kolonne.
   const row = (f: BandField) => (
     <tr key={f.id} className={[decides(f) && 'fb-row-decides', selected === f.id && 'fb-row-selected'].filter(Boolean).join(' ') || undefined}>
       <td>
@@ -632,14 +639,17 @@ export function LayoutList({
           type="button"
           className="fb-row-select"
           aria-pressed={selected === f.id}
-          aria-label={TEXT.layout(f.west, f.east)}
+          aria-label={TEXT.layoutRow(f.west, f.east, f.count, percent(f.each), percent(f.probability))}
           onClick={() => onSelect(f.id)}
         >
           {f.west}
         </button>
       </td>
-      <td>{f.east}</td>
-      <td>{percent(f.probability)}</td>
+      <td>{TEXT.countSuffix(f.east, f.count)}</td>
+      <td>
+        {percent(f.probability)}
+        {f.count > 1 && <span className="fb-each">{TEXT.eachChance(f.count, percent(f.each))}</span>}
+      </td>
       {lines.map((l, k) => {
         const hit = f.outcomes[k] > 0;
         const tricks = l.lead.tricks?.[f.layout];
@@ -660,6 +670,7 @@ export function LayoutList({
       {decisive.length > 0 && (
         <div className="with-info">
           <span className="fb-decides">{TEXT.decides}</span>
+          <span className="fb-decisive-summary">{TEXT.decisiveSummary(sidings(decisive), percent(chanceOf(decisive)))}</span>
           <Info topic={TEXT.decides}>{TEXT.help.decides}</Info>
         </div>
       )}
@@ -669,7 +680,12 @@ export function LayoutList({
             <tr>
               <th scope="col">{TEXT.west}</th>
               <th scope="col">{TEXT.east}</th>
-              <th scope="col">{TEXT.chanceHeader}</th>
+              <th scope="col">
+                <span className="fb-th-info">
+                  {TEXT.chanceHeader}
+                  <Info topic={TEXT.chanceHeader}>{TEXT.help.chanceColumn}</Info>
+                </span>
+              </th>
               {lines.map((l) => (
                 <th key={l.letter} scope="col">
                   {TEXT.line(l.letter)}
@@ -683,10 +699,10 @@ export function LayoutList({
           <tbody>
             {decisive.map(row)}
             {groups.map((g) => (
-              <Fragment key={g.label}>
+              <Fragment key={g.name}>
                 <tr className="fb-group-row">
                   <th scope="rowgroup" colSpan={4 + lines.length}>
-                    {g.label}
+                    {TEXT.groupSummary(g.name, percent(chanceOf(g.rows)), sidings(g.rows))}
                   </th>
                 </tr>
                 {g.rows.map(row)}

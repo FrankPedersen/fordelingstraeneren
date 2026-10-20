@@ -32,18 +32,19 @@ export function allLinesForGoal(item: BankItem, goal: number): LineView[] {
 export const leadKey = (lead: LeadResult) => `${lead.hand}${lead.high}-${lead.low}`;
 
 /**
- * Unikke vindere for to linjer (indeks i båndets linjer): sidningerne, hvor kun den ene når målet, og deres samlede
- * chance. Forskellen mellem de to er forskellen mellem linjernes chance.
+ * Unikke vindere for to linjer (indeks i båndets linjer): de konkrete sidninger, hvor kun den ene når målet (summen af
+ * rækkernes antal, SPEC-notation-sidninger.md), og deres samlede chance. Forskellen mellem de to er forskellen mellem
+ * linjernes chance.
  */
 export function uniqueWinners(fields: readonly BandField[], a: number, b: number) {
   const result = { a: { count: 0, probability: 0 }, b: { count: 0, probability: 0 } };
   for (const f of fields) {
     const x = f.outcomes[a] > 0, y = f.outcomes[b] > 0;
     if (x && !y) {
-      result.a.count++;
+      result.a.count += f.count;
       result.a.probability += f.probability;
     } else if (y && !x) {
-      result.b.count++;
+      result.b.count += f.count;
       result.b.probability += f.probability;
     }
   }

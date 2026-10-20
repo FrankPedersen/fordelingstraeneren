@@ -51,8 +51,20 @@ const DA = {
   averageTopic: 'Stik i gennemsnit',
   /** Sidningstabellen (punkt 3). */
   chanceHeader: 'Chance',
-  groupCount: (west: number, east: number) => `Vest ${west} kort – Øst ${east} kort`,
-  groupHonors: (honors: string) => (honors ? `Vest har ${honors}` : 'Vest har ingen honnører'),
+  /** Mellemoverskrifternes navne (SPEC-notation-sidninger.md): fordelingen som 2–2 og Vests honnører som K. */
+  groupCount: (west: number, east: number) => `${west}–${east}`,
+  groupHonors: (honors: string) => honors || 'ingen honnører',
+  /** Mellemoverskriften med gruppens samlede chance og antal sidninger, fx "2–2 · 40,70 % · 6 sidninger". */
+  groupSummary: (name: string, chance: string, count: number) => `${name} · ${chance} · ${count === 1 ? '1 sidning' : `${count} sidninger`}`,
+  /** Over de afgørende sidninger, ved mærket "afgør": "4 sidninger · 25,00 %". */
+  decisiveSummary: (count: number, chance: string) => `${count === 1 ? '1 sidning' : `${count} sidninger`} · ${chance}`,
+  /** Under rækkens samlede chance, når den samler flere sidninger: "3 × 6,78 %". */
+  eachChance: (count: number, each: string) => `${count} × ${each}`,
+  /** Antallet i Øst-cellen, når rækken samler flere sidninger: "x x (3)". */
+  countSuffix: (text: string, count: number) => (count > 1 ? `${text} (${count})` : text),
+  /** Rækkens knap for skærmlæsere. */
+  layoutRow: (west: string, east: string, count: number, each: string, total: string) =>
+    count > 1 ? `Vest ${west}, Øst ${east}, ${count} sidninger på hver ${each}, i alt ${total}` : `Vest ${west}, Øst ${east}, ${total}`,
   /** Mærket ved en sidning, hvor linjerne giver forskelligt resultat. */
   decides: 'afgør',
   groupBy: 'Gruppér',
@@ -406,6 +418,7 @@ const DA = {
     lines: 'Linjerne med nummererede trin. "✓ bedst" markerer den bedste; linjer inden for 0,5 procentpoint er lige gode. Tallene forudsætter optimalt modspil og ubegrænsede forbindelser.',
     layouts: 'Alle sidninger af modpartens kort med chance og resultat for hver linje. Gruppér efter fordeling (Vests antal kort) eller efter honnørernes placering.',
     decides: 'Linjerne giver forskelligt resultat i denne sidning.',
+    chanceColumn: 'Rækken samler sidninger, der kun adskiller sig i små kort (x). Tallet i parentes er antallet af sidninger; under chancen står chancen for hver af dem.',
     average: 'Gennemsnittet over alle sidninger, vægtet efter chance. Det er det tal, der tæller i parturnering.',
     result: 'Bedste chance for målet, bedste linje i parturnering (flest stik i gennemsnit) og hvor tit kombinationen og situationen bag den forekommer.',
     choose: 'Vælg en kombination fra banken (hyppigste først; kan filtreres efter modpartens honnørpoint), eller byg den selv i kortvælgeren.',
@@ -479,8 +492,14 @@ const EN: Texts = {
   average: (tricks: string) => `Average tricks: ${tricks}`,
   averageTopic: 'Average tricks',
   chanceHeader: 'Chance',
-  groupCount: (west: number, east: number) => `West ${west} cards – East ${east} cards`,
-  groupHonors: (honors: string) => (honors ? `West has ${honors}` : 'West has no honours'),
+  groupCount: (west: number, east: number) => `${west}–${east}`,
+  groupHonors: (honors: string) => honors || 'no honours',
+  groupSummary: (name: string, chance: string, count: number) => `${name} · ${chance} · ${count === 1 ? '1 layout' : `${count} layouts`}`,
+  decisiveSummary: (count: number, chance: string) => `${count === 1 ? '1 layout' : `${count} layouts`} · ${chance}`,
+  eachChance: (count: number, each: string) => `${count} × ${each}`,
+  countSuffix: (text: string, count: number) => (count > 1 ? `${text} (${count})` : text),
+  layoutRow: (west: string, east: string, count: number, each: string, total: string) =>
+    count > 1 ? `West ${west}, East ${east}, ${count} layouts at ${each} each, ${total} in all` : `West ${west}, East ${east}, ${total}`,
   decides: 'decides',
   groupBy: 'Group',
   byDistribution: 'distribution',
@@ -819,6 +838,7 @@ const EN: Texts = {
     lines: 'The lines with numbered steps. "✓ best" marks the best one; lines within 0.5 percentage points are equally good. The figures assume best defence and unlimited entries.',
     layouts: "All layouts of the opponents' cards with the chance and result for each line. Group by distribution (West's number of cards) or by where the honours are.",
     decides: 'The lines give different results in this layout.',
+    chanceColumn: 'The row collects layouts that differ only in small cards (x). The number in brackets is the number of layouts; under the chance is the chance of each of them.',
     average: 'The average over all layouts, weighted by chance. This is what counts at pairs.',
     result: 'The best chance of the goal, the best line at pairs (most tricks on average) and how often the combination and the situation behind it occur.',
     choose: "Choose a combination from the bank (most frequent first; can be filtered by the opponents' high-card points), or build it yourself in the card picker.",
