@@ -123,6 +123,11 @@ Facitværdierne for den blokerede farve er regnet med løseren (ubegrænset) og 
    - **Ubegrænset pr. hånd:** en hånd med mindst lige så mange indgange, som den har kort tilbage, regnes som ubegrænset, fordi hvert udspil fra hånden bruger et af dens kort. Det er strammere end "runder tilbage" og giver samme værdi. `situationFor` gør det samme ved roden, så `handleSolve` med indgange ≥ antal runder går præcis samme vej som i dag.
    - **Genvejen** gælder kun, når begge hænder er ubegrænsede (tabellen i Afgrænsning). Formuleringen "når begge hænder kan nås" under Reglerne er ikke nok: K D B / E med Nord inde, ingen indgang til Nord og én til Syd kan begge hænder nås, men esset tager et af Nords stik, og spilføreren får kun 1 stik. Det står som test.
    - **Kan ingen hånd med kort nås,** slutter spillet med de stik, der er vundet (fx Nord inde med en renonce og ingen indgange til Syd).
+6. **Claude Codes valg i leverancetrin 2:**
+   - Blokken Forbindelser står under maks. hp med ⓘ og to trinvælgere som de andre ("Indgange til Nord", "Indgange til Syd"; værdien "ubegrænset" står over 5). Feltet Inde er to knapper, Nord og Syd, med ⓘ, som de andre valg i Analyse (`aria-pressed`, `accent-soft`); ingen nye tokens eller CSS.
+   - **Chips:** hånden, der er inde, først og med sine indgange, når de er begrænsede ("Syd inde · Syd 2 indgange" eller "Syd inde"); den anden hånd kun, når dens indgange er begrænsede ("Nord 0 indgange"). 1 hedder "1 indgang".
+   - **Forudsætningslinjen:** situationens del (eller "a priori") · forbindelserne · optimalt modspil, fx "a priori · Syd inde, Nord ubegrænset og Syd 2 indgange · optimalt modspil" eller "Vest 1 kendt kort · Syd inde, Nord ubegrænset og Syd 1 indgang · optimalt modspil". På engelsk "South on lead, North unlimited and South 2 entries".
+   - **Bankens tal** bruges, når begge hænder har mindst lige så mange indgange, som de har kort (samme regel som i trin 1), så intet regnes forgæves; chips og forudsætningslinjen viser stadig det valgte.
 
 Åbne punkter:
 

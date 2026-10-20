@@ -128,6 +128,8 @@ Et nyt, selvstændigt spor på grenen `farvebehandling` (den nuværende app er t
   - Hvem der er inde, og indgangene er en del af tilstanden i `game.ts`. Uden feltet, eller når begge hænder er ubegrænsede, er spillet præcis det samme (låst af `solver/forbindelser.test.ts`).
   - En hånd med mindst lige så mange indgange, som den har kort, regnes som ubegrænset (hvert udspil fra hånden bruger et af dens kort). Specen siger "runder tilbage"; reglen her er strammere og giver samme værdi. Træerne bliver derfor højst 2 % større end uden begrænsning.
   - Genvejen i `terminal` gælder kun, når begge hænder er ubegrænsede, og kan ingen hånd med kort nås, slutter spillet.
+  - Frank har godkendt trin 1, tallet 45,22 % for E D B 10 / 6 5 4 3 2 og specens regel for et tabt stik (20. oktober 2026).
+  - Trin 2 er bygget på samme gren: blokken Forbindelser i panelet Situationen (`Forbindelser` i `ui/Situationspanel.tsx`), chips og forudsætningslinjen. Analyse bruger bankens tal, når `situationFor` giver standard. Valgene står i specen under Afklaret 6.
 - **Alternative linjer:** hvert første udspil er et delspil; dets bedste linje er alternativet.
 - **Situationen** (SPEC-analyse-situation.md, leverancetrin 1–4 bygget på grenen `analyse-situation`, godkendt af Frank og udgivet 18. oktober 2026; appen før er tagget `v8-foer-analyse-situation`):
   - `SolveRequest` har et valgfrit felt `situation`. Uden det, eller på standard, er svaret præcis som før, låst af `solver/uden-situation.test.ts`.
