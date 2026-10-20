@@ -21,6 +21,7 @@ Før arbejdet starter:
 | `src/app/App.tsx` | skærmen og adressen `analyse` | ændre de andre spors adresser og Tilbage-adfærd |
 | `src/app/tracks.ts` | ét kort "Analyse" i gruppen Spilføring efter Farvebehandling, med ⓘ | ændre de andre kort og grupper |
 | `src/app/status.ts` | intet; modulet har ingen streak eller niveau | alt |
+| `src/app/screens/HomeScreen.tsx` | et kort uden status (fx `status: false` på kortet i `tracks.ts`): ingen streak, niveau eller mærke, og kortet tælles ikke i I dag ("x af 4 spor") eller i forslaget til dagens session | ændre sporenes kort, I dag, Velkomst eller rækkefølgen af forslag |
 | `ui/FarvebehandlingScreen.tsx` | en valgfri prop, der viser Analyse alene uden fanerne Træning og Selvvalgt | ændre fanerne, sessionen eller indlæsningen af banken |
 | `ui/Analysevindue.tsx` | knappen Guide øverst | ændre resten af analysen |
 | `ui/Guide.tsx` (ny), `content/guide-analyse.md` (ny) | guiden og en lille visning af den (trin 3) | et markdown-bibliotek eller andre nye afhængigheder |
@@ -90,7 +91,8 @@ Trin 1:
 - [ ] Fanen Analyse i Farvebehandling virker som i dag, også når den åbnes fra klubaftenen.
 - [ ] En egen linje gemt i modulet findes i fanen Analyse, og `farvebehandling:v1` har ingen nye felter.
 - [ ] At åbne modulet og kigge skriver intet i lagringen, og forsidens status for Farvebehandling (streak, niveau, I dag) er uændret.
-- [ ] Forsidekortet "Analyse" står i Spilføring efter Farvebehandling, har ⓘ og ingen streak.
+- [ ] Forsidekortet "Analyse" står i Spilføring efter Farvebehandling, har ⓘ og ingen streak, niveau eller mærke.
+- [ ] I dag tæller fortsat 4 spor ("x af 4 spor"), og når alle fire spor er trænet, foreslår knappen aldrig Analyse.
 - [ ] Ved 390 px er `document.documentElement.scrollWidth` lig med skærmbredden i modulet.
 - [ ] Alle nye tekster findes på dansk og engelsk, og de engelske skærme indeholder ingen dansk tekst.
 
@@ -114,7 +116,7 @@ Trin 3:
 ## Afklaret
 
 1. **Ét modul, to indgange.** Det selvstændige modul og fanen er samme komponent med samme data. Ingen kopi af analysen.
-2. **Ingen streak:** analysen er et opslagsværk, ikke en daglig træning, så kortet har ingen status og indgår ikke i "I dag".
+2. **Ingen streak:** analysen er et opslagsværk, ikke en daglig træning, så kortet har ingen status og indgår ikke i "I dag". `HomeScreen.tsx` må ændres til det (Claude Codes spørgsmål, Franks svar 20. oktober 2026).
 3. **Guiden skrives i dokumentet**, ikke i koden. En ny udgave af guiden er en ny eksport af begge filer.
 4. **Guiden findes på dansk og engelsk** (Franks valg 20. oktober 2026). Trin 3 udgives først, når begge filer er der.
 
