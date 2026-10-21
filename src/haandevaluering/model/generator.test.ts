@@ -121,7 +121,7 @@ describe('Generatoren (SPEC-haandevaluering.md, Generator)', () => {
     expect(exercisesFor(1)).toEqual(['honors', 'partner']);
     expect(exercisesFor(2)).toEqual(['distribution', 'add']);
     expect(exercisesFor(3)).toEqual(['decision', 'wasted']);
-    expect(exercisesFor(4)).toEqual(['strain']);
+    expect(exercisesFor(4)).toEqual(['strain', 'compare']);
     expect(exercisesFor(5)).toEqual(GENERATED);
     for (const level of [1, 2, 3, 4, 5] as Level[]) expect(exercisesFor(level).length).toBeGreaterThan(0);
     expect(() => makeTask('compare', 1)).toThrow();
