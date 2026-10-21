@@ -97,7 +97,7 @@ Trin 1:
 Trin 2:
 
 - [x] Kortet står efter Håndevaluering, linker til `/fordelingstraeneren/#analyse`, og al tekst har `data-en`.
-- [ ] Linket åbner Analyse direkte på www.kontraktbridge.dk, på computer og mobil.
+- [x] Linket åbner Analyse direkte på www.kontraktbridge.dk, på computer og mobil.
 - [x] Ved 390 px har forsiden ingen vandret rulning.
 
 Trin 3:
@@ -135,6 +135,6 @@ Claude Codes bygning af leverancetrin 2 (20. oktober 2026):
 11. **Appens egen sidefod (Franks svar 20. oktober 2026: "ja tak egen sidefod"):** `src/ui/Footer.tsx` får linket "Analyse" / "Analysis" til `#analyse` efter Håndevaluering, så Trænere har de samme links som www.kontraktbridge.dk. Testen af sidefodens links i `src/app/forside.test.tsx` er rettet til de seks links, og `src/app/analyse-modul.test.tsx` tjekker, at linket åbner modulet.
 12. **Kortet på kontraktbridge.dk** står i `index.html` efter Håndevaluering med samme opbygning som Håndevaluerings (`art` med stort tal og mørk pille, `kicker`, `h3`, `p` og `meta` med to dele: "I Fordelingstræneren" og "Åbn analysen →"). Teksten slutter efter "forbindelser", til trin 3 er udgivet. Sidefodens liste har linket "Analyse" til `/fordelingstraeneren/#analyse` efter Håndevaluering. Ændringen ligger på grenen `analyse-kort` i repoet `frankpedersen.github.io` og pushes først, når trin 1 er udgivet.
 13. **Bredden** er målt i Chrome (headless) på `index.html`: ved 390 px er `scrollWidth` 390 på dansk og engelsk, og kortets tal og pille holder sig inden for feltet. Ved 1280 px er der heller ingen vandret rulning.
-14. **"Linket åbner Analyse direkte på www.kontraktbridge.dk"** kan først prøves, når trin 1 og kortet er udgivet.
+14. **"Linket åbner Analyse direkte på www.kontraktbridge.dk"** er prøvet efter udgivelsen (21. oktober 2026) i Chrome (headless) ved 390 px (mobil) og 1280 px: kortet står på www.kontraktbridge.dk, et tryk åbner `/fordelingstraeneren/#analyse` med overskriften "Farvebehandling – Analyse" og uden faner, og ved 390 px er der ingen vandret rulning på forsiden eller i modulet. Om mig har linket.
 15. **Om mig (Franks svar 20. oktober 2026):** siden Om mig og kontakt (`om-mig/index.html`) har samme liste over trænere i sidefoden og får også linket "Analyse" efter Håndevaluering, så sidefoden er ens på hele kontraktbridge.dk. Siden findes kun på dansk, så linket har ingen `data-en`.
-16. **Udgivelsen venter på forbindelser (Franks valg 20. oktober 2026):** kortets tekst og ⓘ nævner forbindelser, så `analyse-modul` flettes først ind, når SPEC-forbindelser.md (grenen `forbindelser`, trin 3 mangler) er godkendt og flettet ind. Derefter flettes `analyse-modul` ind, og når `#analyse` virker på www.kontraktbridge.dk/fordelingstraeneren/, pushes `analyse-kort` til `main` i `frankpedersen.github.io`.
+16. **Udgivelsen ventede på forbindelser (Franks valg 20. oktober 2026; udgivet 21. oktober 2026):** kortets tekst og ⓘ nævner forbindelser, så `analyse-modul` flettes først ind, når SPEC-forbindelser.md (grenen `forbindelser`, trin 3 mangler) er godkendt og flettet ind. Derefter flettes `analyse-modul` ind, og når `#analyse` virker på www.kontraktbridge.dk/fordelingstraeneren/, pushes `analyse-kort` til `main` i `frankpedersen.github.io`.
