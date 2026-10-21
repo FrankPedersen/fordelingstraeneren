@@ -1,18 +1,25 @@
 # SPEC-haandevaluering-kalibrering
 
-21. oktober 2026 · Frank
+21. oktober 2026 · Frank · version 2: trumflængden er med
 
-SPEC-haandevaluering.md har fire åbne punkter, som ventede på tal fra Franks simuleringer (datasættet `fit_deals.csv` bag MODEL.md). Tallene er nu regnet. To punkter bekræfter det, appen gør i dag. To ændrer appen: HCP-grænsen i opgave 8 og kontroltjekket ved lilleslem. IMP-grænserne i opgave 9 forbliver åbne, fordi tallene afslørede en forskel mellem MODEL.md og simuleringernes P (se Åbne punkter).
+SPEC-haandevaluering.md har fire åbne punkter, som ventede på tal fra Franks simuleringer (`fit_deals.csv` bag MODEL.md). Tallene er regnet med `bridge-model/scripts/aabne_punkter.py`, og de afslørede en fejl i MODEL.md's tekst om trumflængden. Denne spec retter tre ting i håndevalueringen:
+
+1. **Trumflængden i P** følger scripterne, som tabellen, grænserne og R² er regnet med.
+2. **HCP-grænsen i opgave 8** bliver 23 HCP.
+3. **Lilleslem** kræver højst ét manglende nøglekort.
+
+Kortfarvepoint, storeslem og IMP-grænserne bekræftes uændret.
 
 ## Resultaterne
 
 | Punkt | Franks tal | Beslutning |
 | --- | --- | --- |
-| HCP-grænse i opgave 8 | 82,5 % rigtige udgangsbeslutninger ved 23 HCP; 25 HCP giver 79,3 % | **Rettes til 23 HCP** |
-| Kortfarvepoint i trumffarven | "Kun sidefarver" er bedst på alle fordelinger og især ved højst 2 trumf: R² 0,754 mod 0,727 og 86,4 % mod 85,1 % rigtige beslutninger | Bekræftet, ingen ændring |
-| Lilleslem | 12 stik i 87,8 % uden manglende es, 67,7 % med ét manglende es og 29,1 % med to. Med ét manglende es og uden trumfkongen kun 30,6 % (36 fordelinger) | **Nøglekort** (Franks valg 21. oktober 2026): højst ét manglende af de fem nøglekort, de fire es og trumfkongen |
-| Storeslem | Alle fire es: 13 stik i 73,8 % med trumfkongen og 38,9 % uden (P ≥ 38); 53,5 % og 22,7 % ved P ≥ 35 | Bekræftet: alle fem nøglekort. Ved P ≥ 41 har kun én fordeling alle es uden trumfkongen, så testen er lavet ved lavere P |
-| IMP-grænser i opgave 9 | Med simuleringernes P nås 37 %, 45 % og 50 % ved 27½, 28 og 28½. Med appens P giver de samme grænser 35,2 %, 33,3 % og 41,4 % | **Åbent** (se Åbne punkter) |
+| Trumflængden | Scripterne regner 1½ × (trumf − 4) pr. hånd, også negativt. MODEL.md's tekst ("1½ per trumf du selv har ud over 4") giver 1½ point mere pr. trumf under 4: +1½ ved 5-3, +3 ved 6-2, +4½ ved 7-1. Med scripternes formel: R² 0,794, middelfejl 0,736 stik, 87,5 % rigtige udgangsbeslutninger. Med tekstens: 0,765, 0,844 stik (lover 0,40 stik for meget) og 85,6 % | **Scripternes formel** (Franks valg 21. oktober 2026), skrevet pr. hånd: "1½ pr. trumf ud over 4, minus 1½ pr. trumf under 4" |
+| HCP-grænse i opgave 8 | 82,5 % rigtige udgangsbeslutninger ved 23 HCP; 25 HCP giver 79,3 % | **23 HCP** |
+| Kortfarvepoint i trumffarven | "Kun sidefarver" er bedst, især ved højst 2 trumf: R² 0,754 mod 0,727 og 86,4 % mod 85,1 % | Bekræftet, ingen ændring |
+| Lilleslem | 12 stik i 87,8 % uden manglende es, 67,7 % med ét og 29,1 % med to. Ét manglende es uden trumfkongen: 30,6 % (36 fordelinger) | **Nøglekort** (Franks valg 21. oktober 2026): højst ét manglende af de fem nøglekort, de fire es og trumfkongen |
+| Storeslem | Alle fire es: 13 stik i 73,8 % med trumfkongen og 38,9 % uden (P ≥ 38) | Bekræftet: alle fem nøglekort |
+| IMP-grænser i opgave 9 | Med scripternes P nås 37 %, 45 % og 50 % første gang ved 27½ (44,6 %), 28 (47,1 %) og 28½ (61,7 %); lige under ligger 27 på 35,4 % | Bekræftet, ingen ændring. Grænserne gælder P med scripternes formel, som appen får med denne spec |
 
 ## Afgrænsning
 
@@ -20,55 +27,69 @@ Før arbejdet starter:
 
 1. Commit og tag den nuværende app, fx `v15-foer-kalibrering`.
 2. Arbejd på grenen `haandevaluering-kalibrering`, og flet først ind efter godkendelse.
-3. Kør alle eksisterende tests før og efter. Tests, der låser 25 HCP eller es-reglen, rettes og nævnes under Afklaret.
+3. Kør alle eksisterende tests før og efter. Tests, der låser den gamle trumflængde, 25 HCP eller es-reglen, rettes og nævnes under Afklaret.
 
 | Sted | Må ske | Må ikke ske |
 | --- | --- | --- |
-| `src/haandevaluering/content/p-model.json` | `hcpMetode.udgang` = 23 med ny `afsnit`-tekst; `kontroller` får nøglekortreglen (fx `slemHoejstManglendeNoeglekort: 1`, `storeslemKraeverTrumfkongen: true`) | ændre de øvrige konstanter, også `turnering` og `trumflaengde` |
-| `model/pmodel.ts` | `slamAllowed` tæller nøglekort (fire es og trumfkongen); `grandAllowed` er uændret i virkning | ændre P, grænserne eller tabellen |
-| `model/generator.ts` | opgave 8 bruger 23 HCP via `hcpMetode.udgang`; opgaver med slem vælges efter den nye regel | ændre de andre opgavers krav |
-| `ui/Facit.tsx`, `ui/texts.ts` | forklaringen ved slem taler om nøglekort, fx "Parret mangler 2 nøglekort (♠K og et es), så lilleslem er for meget." på dansk og engelsk | ændre facit i øvrigt |
-| `scripts/p-model-facit.ts`, `content/p-model.facit.json` | køres igen; nye eksempler for nøglekort | rettes i hånden |
-| `docs/MODEL.md` | afsnit 1: tallene for HCP-grænsen og kontroltjekket fra tabellen ovenfor (Frank har godkendt dem) | ændre modellen eller de øvrige tal |
-| `SPEC-haandevaluering.md` | de fire åbne punkter: tre lukkes med henvisning hertil, IMP-grænserne står fortsat åbne med forskellen beskrevet | — |
-| Den samlede vejledning (`GuideScreen.tsx`) | sætningen om kontroltjek ved slem, hvis den nævner es-reglen | — |
-| `CLAUDE.md` | Håndevaluerings status og beslutninger; linjen under "Næste opgaver", der stadig siger, at leverancetrin 4 mangler, rettes | — |
-| Lagring, tokens, andre spor | intet | alt |
+| `src/haandevaluering/content/p-model.json` | `trumflaengde` med ny `afsnit`-tekst og et felt, der tillader negative point (fx `negativ: true`); `hcpMetode.udgang` = 23; `kontroller` med nøglekortreglen (fx `slemHoejstManglendeNoeglekort: 1`, `storeslemKraeverTrumfkongen: true`) | ændre tabellen, grænserne 28½, 35 og 41, kortfarvepoint, honnørskalaen, Zar eller `turnering` |
+| `model/pmodel.ts` | `trumpPoints(t)` = 1½ × (t − 4), også negativt; `slamAllowed` tæller nøglekort; `grandAllowed` er uændret i virkning | ændre honnørpoint, kortfarvepoint, spildte konger eller tabellen |
+| `model/generator.ts` | opgaverne regnes med den nye P; opgave 8 bruger 23 HCP; slem vælges efter nøglekortreglen. Kravene til P (fx opgave 4 højst 37, P 24–40) er uændrede | ændre opgavernes krav i øvrigt |
+| `training/deck.ts` | Leitner-kortene med nøgletal om trumflængden får den nye regel | nye korttyper |
+| `ui/texts.ts`, `ui/Facit.tsx`, `ui/Regnskab*` | reglen på dansk og engelsk (se Ordlyd); et negativt trumfled vises med minus, fx "−1½ trumf"; slem-forklaringen taler om nøglekort | ændre facit i øvrigt |
+| `src/app/screens/GuideScreen.tsx` | sætningen om trumflængden og kontroltjekket ved slem | ændre andre afsnit |
+| `scripts/p-model-facit.ts`, `content/p-model.facit.json` | køres igen; facitfilen får eksempler med 5-3-, 6-2- og 7-1-fit og med ét manglende es uden trumfkongen | rettes i hånden |
+| `docs/MODEL.md` | afsnit 1: trumfleddet får ordlyden nedenfor (Frank har godkendt den); tallene for HCP-grænsen og kontroltjekket tilføjes. Ingen andre tal ændres, fordi de er regnet med scripternes formel | ændre modellen i øvrigt |
+| `SPEC-haandevaluering.md` | formlen i afsnit 1 og de fire åbne punkter lukkes med henvisning hertil | — |
+| Lagring | ingen nye felter; gemte svar beholder deres point | ændre skemaet |
+| Tokens, andre spor | intet | alt |
 
 Kræver noget alligevel en ændring ud over tabellen, skal Claude Code stoppe og spørge.
 
-Konventionstræneren kopierer `p-model.json` og `p-model.facit.json` og kører samme facittest (CLAUDE.md, Håndevaluering). Claude Code skriver i Afklaret, hvilke filer Frank skal kopiere derover bagefter.
+Konventionstræneren kopierer `p-model.json` og `p-model.facit.json` og kører samme facittest. Claude Code skriver i Afklaret, hvilke filer Frank skal kopiere derover, og om konventionstræneren selv bruger trumflængden i tekster.
 
 Besked til Claude Code:
 
-> Læs CLAUDE.md, SPEC-haandevaluering.md, docs/MODEL.md og SPEC-haandevaluering-kalibrering.md. Byg specen på grenen `haandevaluering-kalibrering`, skriv accepttestene først, og stop, når testene er grønne, så jeg kan godkende. Ret kun HCP-grænsen og kontroltjekket ved slem; IMP-grænserne og P-modellen ændres ikke.
+> Læs CLAUDE.md, SPEC-haandevaluering.md, docs/MODEL.md og SPEC-haandevaluering-kalibrering.md. Byg specen på grenen `haandevaluering-kalibrering`, skriv accepttestene først, og stop, når testene er grønne, så jeg kan godkende. Ret trumflængden, HCP-grænsen og kontroltjekket ved slem; tabellen, grænserne og de andre konstanter ændres ikke.
+
+## Ordlyd
+
+| Sted | Dansk | Engelsk |
+| --- | --- | --- |
+| MODEL.md afsnit 1 og SPEC-haandevaluering.md | + 1½ pr. trumf du selv har ud over 4, minus 1½ pr. trumf under 4 (for parret det samme som 1½ pr. trumf ud over 8) | — |
+| Appens regel | 1½ pr. trumf ud over 4, minus 1½ pr. trumf under 4 | 1½ per trump beyond 4, minus 1½ per trump short of 4 |
+| Eksempel i vejledningen | 5-3-fit: den med 5 trumf får +1½, den med 3 trumf −1½, så parret får 0 | 5-3 fit: the hand with 5 trumps gets +1½, the hand with 3 trumps −1½, so the pair gets 0 |
 
 ## Nøglekortreglen
 
 - **Nøglekort** er de fire es og kongen i trumffarven.
 - **Lilleslem** kræver, at parret højst mangler ét nøglekort.
-- **Storeslem** kræver alle fem nøglekort (som i dag: alle es og trumfkongen).
-- Kontroltjekket gælder kun farvekontrakter med fit. P-grænserne 35 og 41 er uændrede.
+- **Storeslem** kræver alle fem nøglekort.
+- P-grænserne 35 og 41 er uændrede.
 
 ## Accepttest
 
-- [ ] Alle eksisterende tests består; tests, der låste 25 HCP eller es-reglen, er rettet og nævnt under Afklaret.
-- [ ] `P_MODEL.hcpMetode.udgang` er 23, og opgave 8 regner HCP-metodens beslutning med den: 23 HCP er udgang, 22 HCP er delkontrakt.
-- [ ] Opgave 8 har stadig kun fordelinger, hvor HCP og Zar er uenige, og HCP og Zar har ret lige ofte i generatoren.
-- [ ] Opgave 8's eksempel "HCP har ret" i specen (E 8 6 · K D 8 · 8 2 · D 10 4 3 2 / D B 5 · E 7 6 4 2 · K 7 6 4 · B, 22 HCP, 52 ZP, P 27¼) er stadig en opgave med HCP som rigtigt svar. Eksemplet "Zar har ret" (23 HCP) er ikke længere en opgave, fordi HCP nu siger udgang; testen skriver det.
-- [ ] `slamAllowed`: alle es og trumfkongen → ja; ét es mangler, trumfkongen er der → ja; alle es, trumfkongen mangler → ja; ét es og trumfkongen mangler → nej; to es mangler → nej.
-- [ ] `grandAllowed`: alle es og trumfkongen → ja; ét nøglekort mangler → nej.
+Tallene er regnet med appens model og den nye trumflængde.
+
+- [ ] Alle eksisterende tests består; tests, der låste den gamle trumflængde, 25 HCP eller es-reglen, er rettet og nævnt under Afklaret.
+- [ ] `trumpPoints`: 3 trumf → −1½, 4 → 0, 5 → +1½, 2 → −3, 1 → −4½, 7 → +4½.
+- [ ] For parret er trumfleddet 1½ × (fittens længde − 8): 5-3 → 0, 4-4 → 0, 6-2 → 0, 5-4 → +1½, 6-3 → +1½.
+- [ ] ♠ E K 7 5 2 ♥ 4 ♦ K D 6 3 ♣ 8 5 2 over for ♠ D 9 6 3 ♥ K 8 7 2 ♦ 9 4 ♣ E 7 3 med fit i ♠: p = 17 og 10½, P = 27½ (uændret, fordi begge har mindst 4 trumf).
+- [ ] ♠ E 8 6 ♥ K D 8 ♦ 8 2 ♣ D 10 4 3 2 over for ♠ D B 5 ♥ E 7 6 4 2 ♦ K 7 6 4 ♣ B med fit i ♥: Syds trumfled er −1½ og Nords +1½, P = 25¾ (før 27¼). Opgave 8: HCP 22 → delkontrakt, Zar 52 → udgang, P → delkontrakt, så HCP har ret.
+- [ ] `P_MODEL.hcpMetode.udgang` er 23: 23 HCP er udgang, 22 HCP er delkontrakt. Opgave 8 har stadig kun fordelinger, hvor HCP og Zar er uenige, og de har ret lige ofte i generatoren.
+- [ ] `slamAllowed`: alle nøglekort → ja; ét es mangler → ja; trumfkongen mangler → ja; ét es og trumfkongen mangler → nej; to es mangler → nej. `grandAllowed`: alle fem → ja; ét nøglekort mangler → nej.
 - [ ] Med P = 36, ét manglende es og uden trumfkongen er den rigtige beslutning udgang, og facit nævner de to manglende nøglekort.
-- [ ] `p-model.facit.json` er regnet igen af scriptet og har et eksempel med ét manglende es uden trumfkongen.
+- [ ] Opgave 9's grænser er stadig 27½, 28 og 28½.
+- [ ] `p-model.facit.json` er regnet igen af scriptet og har eksempler med 5-3-, 6-2- og 7-1-fit og med ét manglende es uden trumfkongen.
+- [ ] Facit viser et negativt trumfled med minus, fx for Syd i eksemplet ovenfor: "honnørpoint 11¼, trumf −1½, korthed 1, p = 10¾".
 - [ ] Alle nye tekster findes på dansk og engelsk, og de engelske skærme indeholder ingen dansk tekst.
 
 ## Afklaret
 
-1. **HCP-grænsen** er 23 HCP, fordi den giver de 82,5 %, MODEL.md angiver for ren HCP (Franks kørsel 21. oktober 2026).
-2. **Kortfarvepoint tælles kun i sidefarverne**, som i dag (bekræftet af Franks data).
-3. **Nøglekort ved slem** er Franks valg 21. oktober 2026: ét manglende es uden trumfkongen gav kun 30,6 %, lige så lidt som to manglende es.
+1. **Trumflængden følger scripterne** (Franks valg 21. oktober 2026). Tabellen, grænserne 28½, 35 og 41, R² 0,794 og de 87,5 % er regnet med den formel, så de passer igen, når appen bruger den. MODEL.md's tidligere tekst gav i gennemsnit 1,1 point for meget.
+2. **Reglen skrives pr. hånd** (Franks valg 21. oktober 2026), så hver spiller regner sin egen p. En hånd med færre end 4 trumf får minus.
+3. **HCP-grænsen** er 23 HCP, fordi den giver de 82,5 %, MODEL.md angiver for ren HCP.
+4. **Kortfarvepoint tælles kun i sidefarverne**, som i dag.
+5. **Nøglekort ved slem** (Franks valg 21. oktober 2026): ét manglende es uden trumfkongen gav kun 30,6 %, lige så lidt som to manglende es.
+6. **IMP-grænserne** 27½, 28 og 28½ er bekræftet med scripternes P. En udglattet kurve giver 27,7 og 28,1 for 45 % og 50 %; de afrundes til de samme halve point.
 
-Åbne punkter:
-
-1. **Trumflængden i P (Franks undersøgelse):** appen regner som MODEL.md afsnit 1: "1½ per trumf du selv har ud over 4". Simuleringernes P regner trumflængden anderledes, og med appens P ligger andelen med mindst 10 stik under det, tabellen lover (41,4 % ved 28½ mod 50 %). Det gælder ikke kun IMP-grænserne, men alle grænser og tabellen i appen. Frank finder i simuleringsprojektet, hvilken formel scripts bruger, og om MODEL.md eller scripts er rigtig. Først derefter kan IMP-grænserne og eventuelt trumflængden rettes i en ny spec.
-2. **45 % og 50 % ligger på kanten:** en udglattet kurve giver 27,7 og 28,1. Afgøres sammen med punkt 1.
+Åbne punkter: ingen.
