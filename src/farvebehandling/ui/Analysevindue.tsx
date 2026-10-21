@@ -24,6 +24,7 @@ import type { LineStep } from '../solver/lines';
 import type { CombinationBase } from '../solver/results';
 import type { FbSaved } from '../storage';
 import { Bridgebord } from './Bridgebord';
+import { Guide } from './Guide';
 import { Importfelt } from './Importfelt';
 import { Kortvælger } from './Kortvælger';
 import { Linjeeditor } from './Linjeeditor';
@@ -93,6 +94,8 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
   const [busy, setBusy] = useState<number | null>(null);
   const [solveError, setSolveError] = useState<string | null>(null);
   const [editing, setEditing] = useState(false);
+  // Guiden (SPEC-analyse-modul.md, trin 3) vises i stedet for analysen; kombination og situation står uændrede bagefter.
+  const [guide, setGuide] = useState(false);
   const [editorErrors, setEditorErrors] = useState<string[]>([]);
   const [ownResults, setOwnResults] = useState<Record<string, LeadResult>>({});
   // Situationen ved bordet (SPEC-analyse-situation.md) lever kun her, mens fanen er åben. Resultaterne gemmes pr.
@@ -286,309 +289,330 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
     </div>
   );
 
+  if (guide) {
+    return (
+      <Guide
+        onBack={() => {
+          setGuide(false);
+          window.scrollTo(0, 0);
+        }}
+      />
+    );
+  }
+
   return (
-    <div className="fb-analysis">
-      <div className="fb-column">
-        <section className="card" aria-labelledby="fb-choose">
-<div className="with-info">
-          <h2 id="fb-choose">{TEXT.choose}</h2>
-          <Info topic={TEXT.choose}>{TEXT.help.choose}</Info>
+    <>
+      <div className="fb-guide-bar">
+        <div className="with-info">
+          <button type="button" className="btn small-btn" onClick={() => setGuide(true)}>
+            {TEXT.guide.button}
+          </button>
+          <Info topic={TEXT.guide.button}>{TEXT.help.guide}</Info>
         </div>
-          <div className="fb-segment" role="group" aria-label={TEXT.choose}>
-            <button type="button" className={`btn small-btn${mode === 'bank' ? ' selected' : ''}`} aria-pressed={mode === 'bank'} onClick={() => setMode('bank')}>
-              {TEXT.bank}
-            </button>
-            <button type="button" className={`btn small-btn${mode === 'picker' ? ' selected' : ''}`} aria-pressed={mode === 'picker'} onClick={() => setMode('picker')}>
-              {TEXT.picker}
-            </button>
+      </div>
+      <div className="fb-analysis">
+        <div className="fb-column">
+          <section className="card" aria-labelledby="fb-choose">
+  <div className="with-info">
+            <h2 id="fb-choose">{TEXT.choose}</h2>
+            <Info topic={TEXT.choose}>{TEXT.help.choose}</Info>
           </div>
-          {mode === 'bank' ? (
-            <>
-              <p className="fb-note">{TEXT.bankHelp}</p>
-              <div className="fb-filter" role="group" aria-label={TEXT.pageFilter}>
-                <span>{TEXT.pageFilter}:</span>
-                <button
-                  type="button"
-                  className={`btn small-btn${points === null ? ' selected' : ''}`}
-                  aria-pressed={points === null}
-                  onClick={() => setPoints(null)}
-                >
-                  {TEXT.option(TEXT.all, bank.length)}
-                </button>
-                {pointValues.map((p) => (
+            <div className="fb-segment" role="group" aria-label={TEXT.choose}>
+              <button type="button" className={`btn small-btn${mode === 'bank' ? ' selected' : ''}`} aria-pressed={mode === 'bank'} onClick={() => setMode('bank')}>
+                {TEXT.bank}
+              </button>
+              <button type="button" className={`btn small-btn${mode === 'picker' ? ' selected' : ''}`} aria-pressed={mode === 'picker'} onClick={() => setMode('picker')}>
+                {TEXT.picker}
+              </button>
+            </div>
+            {mode === 'bank' ? (
+              <>
+                <p className="fb-note">{TEXT.bankHelp}</p>
+                <div className="fb-filter" role="group" aria-label={TEXT.pageFilter}>
+                  <span>{TEXT.pageFilter}:</span>
                   <button
-                    key={p}
                     type="button"
-                    className={`btn small-btn${points === p ? ' selected' : ''}`}
-                    aria-pressed={points === p}
-                    onClick={() => setPoints(p)}
+                    className={`btn small-btn${points === null ? ' selected' : ''}`}
+                    aria-pressed={points === null}
+                    onClick={() => setPoints(null)}
                   >
-                    {TEXT.option(TEXT.hp(p), bank.filter((b) => b.points === p).length)}
+                    {TEXT.option(TEXT.all, bank.length)}
                   </button>
-                ))}
-              </div>
-              <ul className="fb-bank" aria-label={TEXT.bank}>
-                {shown.map((b) => (
-                  <li key={b.combination.id}>
+                  {pointValues.map((p) => (
                     <button
-                      ref={b === item ? currentRef : undefined}
+                      key={p}
                       type="button"
-                      className={`fb-bank-item${b === item ? ' fb-bank-current' : ''}`}
-                      aria-current={b === item}
-                      onClick={() => choose(b)}
+                      className={`btn small-btn${points === p ? ' selected' : ''}`}
+                      aria-pressed={points === p}
+                      onClick={() => setPoints(p)}
                     >
-                      {TEXT.bankEntry(b.rank, `${cardsText(b.south)} / ${cardsText(b.north)}`, eveningText(b.frequency))}
+                      {TEXT.option(TEXT.hp(p), bank.filter((b) => b.points === p).length)}
                     </button>
+                  ))}
+                </div>
+                <ul className="fb-bank" aria-label={TEXT.bank}>
+                  {shown.map((b) => (
+                    <li key={b.combination.id}>
+                      <button
+                        ref={b === item ? currentRef : undefined}
+                        type="button"
+                        className={`fb-bank-item${b === item ? ' fb-bank-current' : ''}`}
+                        aria-current={b === item}
+                        onClick={() => choose(b)}
+                      >
+                        {TEXT.bankEntry(b.rank, `${cardsText(b.south)} / ${cardsText(b.north)}`, eveningText(b.frequency))}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <>
+                <Importfelt onImport={pick} />
+                <Kortvælger north={picked.north} south={picked.south} onChange={pick} />
+                <p className="fb-note" role="status">
+                  {!complete ? TEXT.pickMore : pickedFound ? '' : TEXT.notInBank}
+                </p>
+                {complete && !pickedFound && !isCustom && busy === null && (
+                  <button type="button" className="btn primary wide" onClick={() => void solveCustom()}>
+                    {TEXT.solveCustom}
+                  </button>
+                )}
+                {busyNote}
+                {solveError && (
+                  <p role="alert" className="fb-note">
+                    {solveError}
+                  </p>
+                )}
+              </>
+            )}
+          </section>
+
+          <section className="card" aria-labelledby="fb-problem">
+            <h2 id="fb-problem">{TEXT.problem}</h2>
+            <Bridgebord
+              north={item.north}
+              south={item.south}
+              west={field?.west}
+              east={field?.east}
+              arrow={arrow}
+              caption={firstLeadText ? TEXT.firstLead(firstLeadText.toLowerCase()) : undefined}
+            />
+            {chips.length > 0 && (
+              <ul className="fb-situation-chips" aria-label={TEXT.situationPanel.title}>
+                {chips.map((chip) => (
+                  <li key={chip} className="fb-chip fb-chip-situation">
+                    {chip}
                   </li>
                 ))}
               </ul>
-            </>
-          ) : (
-            <>
-              <Importfelt onImport={pick} />
-              <Kortvælger north={picked.north} south={picked.south} onChange={pick} />
-              <p className="fb-note" role="status">
-                {!complete ? TEXT.pickMore : pickedFound ? '' : TEXT.notInBank}
-              </p>
-              {complete && !pickedFound && !isCustom && busy === null && (
-                <button type="button" className="btn primary wide" onClick={() => void solveCustom()}>
-                  {TEXT.solveCustom}
+            )}
+            <div className="fb-goals" role="group" aria-label={TEXT.goalLabel}>
+              <span>{TEXT.goalLabel}</span>
+              <Info topic={TEXT.goalLabel}>{TEXT.help.goals}</Info>
+              {item.combination.goals.map((g) => (
+                <button
+                  key={g}
+                  type="button"
+                  className={`btn small-btn${g === goal ? ' selected' : ''}`}
+                  aria-pressed={g === goal}
+                  onClick={() => void chooseGoal(g)}
+                >
+                  {TEXT.goal(g)}
                 </button>
-              )}
-              {busyNote}
-              {solveError && (
-                <p role="alert" className="fb-note">
-                  {solveError}
-                </p>
-              )}
-            </>
-          )}
-        </section>
-
-        <section className="card" aria-labelledby="fb-problem">
-          <h2 id="fb-problem">{TEXT.problem}</h2>
-          <Bridgebord
-            north={item.north}
-            south={item.south}
-            west={field?.west}
-            east={field?.east}
-            arrow={arrow}
-            caption={firstLeadText ? TEXT.firstLead(firstLeadText.toLowerCase()) : undefined}
-          />
-          {chips.length > 0 && (
-            <ul className="fb-situation-chips" aria-label={TEXT.situationPanel.title}>
-              {chips.map((chip) => (
-                <li key={chip} className="fb-chip fb-chip-situation">
-                  {chip}
-                </li>
               ))}
-            </ul>
-          )}
-          <div className="fb-goals" role="group" aria-label={TEXT.goalLabel}>
-            <span>{TEXT.goalLabel}</span>
-            <Info topic={TEXT.goalLabel}>{TEXT.help.goals}</Info>
-            {item.combination.goals.map((g) => (
-              <button
-                key={g}
-                type="button"
-                className={`btn small-btn${g === goal ? ' selected' : ''}`}
-                aria-pressed={g === goal}
-                onClick={() => void chooseGoal(g)}
-              >
-                {TEXT.goal(g)}
+            </div>
+            {solvedGoal && playSeed === null && (
+              <button type="button" className="btn small-btn" onClick={() => setPlaySeed(randomSeed())}>
+                {TEXT.playButton}
               </button>
-            ))}
+            )}
+          </section>
+
+          <Situationspanel north={item.north} south={item.south} situation={situation} onChange={setSituation} />
+
+          {playSeed !== null && solvedGoal && (
+            <SpilSelv
+              key={`${situationKey}:${playSeed}`}
+              item={view}
+              goal={goal}
+              seed={playSeed}
+              onClose={() => setPlaySeed(null)}
+              connections={situation.entries && (situation.entries.north !== null || situation.entries.south !== null) ? { entries: situation.entries, lead: situation.lead ?? 'S' } : undefined}
+            />
+          )}
+
+          <section className="card" aria-labelledby="fb-lines">
+  <div className="with-info">
+            <h2 id="fb-lines">{TEXT.lines}</h2>
+            <Info topic={TEXT.lines}>{TEXT.help.lines}</Info>
           </div>
-          {solvedGoal && playSeed === null && (
-            <button type="button" className="btn small-btn" onClick={() => setPlaySeed(randomSeed())}>
-              {TEXT.playButton}
-            </button>
-          )}
-        </section>
-
-        <Situationspanel north={item.north} south={item.south} situation={situation} onChange={setSituation} />
-
-        {playSeed !== null && solvedGoal && (
-          <SpilSelv
-            key={`${situationKey}:${playSeed}`}
-            item={view}
-            goal={goal}
-            seed={playSeed}
-            onClose={() => setPlaySeed(null)}
-            connections={situation.entries && (situation.entries.north !== null || situation.entries.south !== null) ? { entries: situation.entries, lead: situation.lead ?? 'S' } : undefined}
-          />
-        )}
-
-        <section className="card" aria-labelledby="fb-lines">
-<div className="with-info">
-          <h2 id="fb-lines">{TEXT.lines}</h2>
-          <Info topic={TEXT.lines}>{TEXT.help.lines}</Info>
-        </div>
-          {pending && (
-            <div className="fb-room-row">
-              <p className="fb-note">{stopped === situationKey ? TEXT.situationPanel.stopped : TEXT.situationPanel.pending}</p>
-              {stopped === situationKey && (
-                <button type="button" className="btn small-btn" onClick={() => setStopped(null)}>
-                  {TEXT.situationPanel.compute}
-                </button>
-              )}
-            </div>
-          )}
-          {!pending && !solvedGoal && <p className="fb-note">{TEXT.goalNotSolved}</p>}
-          {!solvedGoal && mode !== 'picker' && busyNote}
-          <div className="fb-lines">
-            {lines.map((l) => (
-              <Linjekort
-                key={l.letter}
-                line={l}
-                compare={{ checked: compare.includes(leadKey(l.lead)), onToggle: () => toggleCompare(leadKey(l.lead)) }}
-              />
-            ))}
-          </div>
-          {solvedGoal && (
-            <div className="with-info">
-              {(moreLeads || allLeads) && (
-                <button type="button" className="btn small-btn" aria-pressed={allLeads} onClick={() => setAllLeads(!allLeads)}>
-                  {allLeads ? TEXT.lineChoice.showMain : TEXT.lineChoice.showAll}
-                </button>
-              )}
-              {(moreLeads || allLeads) && <Info topic={TEXT.lineChoice.showAll}>{TEXT.help.allLeads}</Info>}
-              <span className="fb-note">{TEXT.lineChoice.compare}</span>
-              <Info topic={TEXT.lineChoice.compare}>{TEXT.help.compare}</Info>
-            </div>
-          )}
-          {saved && update && solvedGoal && (
-            <>
-              <div className="with-info">
-                <h3>{TEXT.ownLines}</h3>
-                <Info topic={TEXT.ownLines}>{TEXT.help.ownLines}</Info>
-              </div>
-              <div className="fb-lines">
-                {ownViews.map((o, i) =>
-                  o.view ? (
-                    <Linjekort
-                      key={o.id}
-                      line={o.view}
-                      compare={{ checked: compare.includes(`egen:${o.id}`), onToggle: () => toggleCompare(`egen:${o.id}`) }}
-                      title={`${TEXT.ownLineTitle(o.view.letter)}: ${o.text}`}
-                      action={
-                        <button type="button" className="btn small-btn" onClick={() => deleteOwn(o.id)}>
-                          {TEXT.deleteOwnLine}
-                        </button>
-                      }
-                    />
-                  ) : (
-                    <article key={o.id} className="fb-line" aria-label={`${TEXT.ownLineTitle(OWN_LETTERS[i % OWN_LETTERS.length])}: ${o.text}`}>
-                      <header className="fb-line-head">
-                        <h3>{`${TEXT.ownLineTitle(OWN_LETTERS[i % OWN_LETTERS.length])}: ${o.text}`}</h3>
-                      </header>
-                      <p className="fb-note">{TEXT.ownLineNotComputed}</p>
-                      <div className="fb-actions">
-                        <button
-                          type="button"
-                          className="btn small-btn"
-                          disabled={busy !== null}
-                          onClick={() => void computeOwn(o.id, ownLines[i].steps)}
-                        >
-                          {TEXT.computeOwnLine}
-                        </button>
-                        <button type="button" className="btn small-btn" onClick={() => deleteOwn(o.id)}>
-                          {TEXT.deleteOwnLine}
-                        </button>
-                      </div>
-                    </article>
-                  ),
+            {pending && (
+              <div className="fb-room-row">
+                <p className="fb-note">{stopped === situationKey ? TEXT.situationPanel.stopped : TEXT.situationPanel.pending}</p>
+                {stopped === situationKey && (
+                  <button type="button" className="btn small-btn" onClick={() => setStopped(null)}>
+                    {TEXT.situationPanel.compute}
+                  </button>
                 )}
               </div>
-              {editing ? (
-                <Linjeeditor
-                  north={item.north}
-                  south={item.south}
-                  errors={editorErrors}
-                  busy={busy !== null}
-                  onSave={(line) => void saveOwn(line)}
-                  onCancel={() => {
-                    setEditing(false);
-                    setEditorErrors([]);
-                  }}
+            )}
+            {!pending && !solvedGoal && <p className="fb-note">{TEXT.goalNotSolved}</p>}
+            {!solvedGoal && mode !== 'picker' && busyNote}
+            <div className="fb-lines">
+              {lines.map((l) => (
+                <Linjekort
+                  key={l.letter}
+                  line={l}
+                  compare={{ checked: compare.includes(leadKey(l.lead)), onToggle: () => toggleCompare(leadKey(l.lead)) }}
                 />
-              ) : (
-                <button type="button" className="btn small-btn" onClick={() => setEditing(true)}>
-                  {TEXT.addOwnLine}
-                </button>
-              )}
-              {mode !== 'picker' && busyNote}
-            </>
-          )}
-          <p className="fb-note">{assumptionsText(situation)}</p>
-        </section>
-      </div>
-
-      <div className="fb-column">
-        <section className="card" aria-labelledby="fb-difference">
-<div className="with-info">
-          <h2 id="fb-difference">{TEXT.difference}</h2>
-          <Info topic={TEXT.difference}>{TEXT.help.band}</Info>
+              ))}
+            </div>
+            {solvedGoal && (
+              <div className="with-info">
+                {(moreLeads || allLeads) && (
+                  <button type="button" className="btn small-btn" aria-pressed={allLeads} onClick={() => setAllLeads(!allLeads)}>
+                    {allLeads ? TEXT.lineChoice.showMain : TEXT.lineChoice.showAll}
+                  </button>
+                )}
+                {(moreLeads || allLeads) && <Info topic={TEXT.lineChoice.showAll}>{TEXT.help.allLeads}</Info>}
+                <span className="fb-note">{TEXT.lineChoice.compare}</span>
+                <Info topic={TEXT.lineChoice.compare}>{TEXT.help.compare}</Info>
+              </div>
+            )}
+            {saved && update && solvedGoal && (
+              <>
+                <div className="with-info">
+                  <h3>{TEXT.ownLines}</h3>
+                  <Info topic={TEXT.ownLines}>{TEXT.help.ownLines}</Info>
+                </div>
+                <div className="fb-lines">
+                  {ownViews.map((o, i) =>
+                    o.view ? (
+                      <Linjekort
+                        key={o.id}
+                        line={o.view}
+                        compare={{ checked: compare.includes(`egen:${o.id}`), onToggle: () => toggleCompare(`egen:${o.id}`) }}
+                        title={`${TEXT.ownLineTitle(o.view.letter)}: ${o.text}`}
+                        action={
+                          <button type="button" className="btn small-btn" onClick={() => deleteOwn(o.id)}>
+                            {TEXT.deleteOwnLine}
+                          </button>
+                        }
+                      />
+                    ) : (
+                      <article key={o.id} className="fb-line" aria-label={`${TEXT.ownLineTitle(OWN_LETTERS[i % OWN_LETTERS.length])}: ${o.text}`}>
+                        <header className="fb-line-head">
+                          <h3>{`${TEXT.ownLineTitle(OWN_LETTERS[i % OWN_LETTERS.length])}: ${o.text}`}</h3>
+                        </header>
+                        <p className="fb-note">{TEXT.ownLineNotComputed}</p>
+                        <div className="fb-actions">
+                          <button
+                            type="button"
+                            className="btn small-btn"
+                            disabled={busy !== null}
+                            onClick={() => void computeOwn(o.id, ownLines[i].steps)}
+                          >
+                            {TEXT.computeOwnLine}
+                          </button>
+                          <button type="button" className="btn small-btn" onClick={() => deleteOwn(o.id)}>
+                            {TEXT.deleteOwnLine}
+                          </button>
+                        </div>
+                      </article>
+                    ),
+                  )}
+                </div>
+                {editing ? (
+                  <Linjeeditor
+                    north={item.north}
+                    south={item.south}
+                    errors={editorErrors}
+                    busy={busy !== null}
+                    onSave={(line) => void saveOwn(line)}
+                    onCancel={() => {
+                      setEditing(false);
+                      setEditorErrors([]);
+                    }}
+                  />
+                ) : (
+                  <button type="button" className="btn small-btn" onClick={() => setEditing(true)}>
+                    {TEXT.addOwnLine}
+                  </button>
+                )}
+                {mode !== 'picker' && busyNote}
+              </>
+            )}
+            <p className="fb-note">{assumptionsText(situation)}</p>
+          </section>
         </div>
-          {pending ? (
-            <p className="fb-note">{TEXT.situationPanel.pending}</p>
-          ) : (
-            <>
-              <Sandsynlighedsbånd lines={shownLines} fields={fields} selected={selected} onSelect={setSelected} />
-              {decisive.length ? (
-                <p>{disagreeText(decisive)}</p>
-              ) : (
-                <p>{TEXT.agree}</p>
-              )}
-            </>
-          )}
-          <div className="fb-segment" role="group" aria-label={TEXT.groupBy}>
-            <span>{TEXT.groupBy}:</span>
-            {(['fordeling', 'honnører'] as const).map((g) => (
-              <button
-                key={g}
-                type="button"
-                className={`btn small-btn${grouping === g ? ' selected' : ''}`}
-                aria-pressed={grouping === g}
-                onClick={() => setGrouping(g)}
-              >
-                {g === 'fordeling' ? TEXT.byDistribution : TEXT.byHonors}
-              </button>
-            ))}
+
+        <div className="fb-column">
+          <section className="card" aria-labelledby="fb-difference">
+  <div className="with-info">
+            <h2 id="fb-difference">{TEXT.difference}</h2>
+            <Info topic={TEXT.difference}>{TEXT.help.band}</Info>
           </div>
-        </section>
+            {pending ? (
+              <p className="fb-note">{TEXT.situationPanel.pending}</p>
+            ) : (
+              <>
+                <Sandsynlighedsbånd lines={shownLines} fields={fields} selected={selected} onSelect={setSelected} />
+                {decisive.length ? (
+                  <p>{disagreeText(decisive)}</p>
+                ) : (
+                  <p>{TEXT.agree}</p>
+                )}
+              </>
+            )}
+            <div className="fb-segment" role="group" aria-label={TEXT.groupBy}>
+              <span>{TEXT.groupBy}:</span>
+              {(['fordeling', 'honnører'] as const).map((g) => (
+                <button
+                  key={g}
+                  type="button"
+                  className={`btn small-btn${grouping === g ? ' selected' : ''}`}
+                  aria-pressed={grouping === g}
+                  onClick={() => setGrouping(g)}
+                >
+                  {g === 'fordeling' ? TEXT.byDistribution : TEXT.byHonors}
+                </button>
+              ))}
+            </div>
+          </section>
 
-        <section className="card" aria-labelledby="fb-details">
-<div className="with-info">
-          <h2 id="fb-details">{showAll ? TEXT.details : TEXT.decisive}</h2>
-          <Info topic={TEXT.details}>{TEXT.help.layouts}</Info>
+          <section className="card" aria-labelledby="fb-details">
+  <div className="with-info">
+            <h2 id="fb-details">{showAll ? TEXT.details : TEXT.decisive}</h2>
+            <Info topic={TEXT.details}>{TEXT.help.layouts}</Info>
+          </div>
+            {unique && (
+              <p>
+                {TEXT.lineChoice.unique(
+                  shownLines[0].letter,
+                  unique.a.count,
+                  percent1(unique.a.probability),
+                  shownLines[1].letter,
+                  unique.b.count,
+                  percent1(unique.b.probability),
+                )}
+              </p>
+            )}
+            {pending ? (
+              <p className="fb-note">{TEXT.situationPanel.pending}</p>
+            ) : (
+              <LayoutList fields={fields} lines={shownLines} selected={selected} onSelect={setSelected} grouping={grouping} showAll={showAll} />
+            )}
+            {excluded > 0 && <p className="fb-note">{TEXT.situationPanel.excluded(excluded)}</p>}
+            <button type="button" className="btn small-btn" onClick={() => setShowAll(!showAll)}>
+              {showAll ? TEXT.showFewer : TEXT.showAll}
+            </button>
+          </section>
+
+          {best && <Resultatkort item={view} goal={goal} best={best} />}
         </div>
-          {unique && (
-            <p>
-              {TEXT.lineChoice.unique(
-                shownLines[0].letter,
-                unique.a.count,
-                percent1(unique.a.probability),
-                shownLines[1].letter,
-                unique.b.count,
-                percent1(unique.b.probability),
-              )}
-            </p>
-          )}
-          {pending ? (
-            <p className="fb-note">{TEXT.situationPanel.pending}</p>
-          ) : (
-            <LayoutList fields={fields} lines={shownLines} selected={selected} onSelect={setSelected} grouping={grouping} showAll={showAll} />
-          )}
-          {excluded > 0 && <p className="fb-note">{TEXT.situationPanel.excluded(excluded)}</p>}
-          <button type="button" className="btn small-btn" onClick={() => setShowAll(!showAll)}>
-            {showAll ? TEXT.showFewer : TEXT.showAll}
-          </button>
-        </section>
-
-        {best && <Resultatkort item={view} goal={goal} best={best} />}
       </div>
-    </div>
+    </>
   );
 }
 

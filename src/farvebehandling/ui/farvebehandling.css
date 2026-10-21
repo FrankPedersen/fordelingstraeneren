@@ -1135,3 +1135,78 @@
   margin: 0;
   accent-color: var(--accent);
 }
+
+/* Guiden til Analyse (SPEC-analyse-modul.md, trin 3): knappen øverst til højre og guiden med tabeller i rullekasser. */
+.fb-guide-bar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.fb-guide {
+  display: grid;
+  gap: var(--space-12);
+  max-width: var(--column);
+}
+
+/* Et grid-element er som standard mindst så bredt som sit indhold; tabellerne skal rulle i deres egen boks. */
+.fb-guide > * {
+  min-width: 0;
+}
+
+.fb-guide h2,
+.fb-guide h3,
+.fb-guide h4,
+.fb-guide p,
+.fb-guide ul,
+.fb-guide ol {
+  margin: 0;
+}
+
+.fb-guide ul,
+.fb-guide ol {
+  display: grid;
+  gap: var(--space-6);
+  padding-left: var(--space-20);
+}
+
+.fb-guide table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.fb-guide th,
+.fb-guide td {
+  padding: var(--space-4) var(--space-6);
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.fb-guide thead th {
+  color: var(--muted);
+  font-size: var(--type-note);
+  font-weight: 700;
+}
+
+/* Lange links og kodelinjer, fx adressen til modulet, brydes, så siden ikke bliver bredere end skærmen. */
+.fb-guide p,
+.fb-guide li {
+  overflow-wrap: break-word;
+}
+
+.fb-guide code {
+  overflow-wrap: anywhere;
+}
+
+.fb-guide-toc ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.fb-guide-toc a {
+  display: inline-block;
+  min-height: var(--touch-min);
+  padding: var(--space-10) 0;
+}
+

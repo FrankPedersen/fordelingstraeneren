@@ -1,4 +1,5 @@
 import { binomial } from '../domain/combinatorics';
+import { tx } from '../i18n';
 import { ACE, ALL_RANKS, JACK, KING, QUEEN, rankFromSymbol, rankText, TEN, type Rank } from './model/cards';
 import type { Fraction } from './model/fraction';
 import { combinationFrequency, situationFrequency } from './model/frequency';
@@ -404,7 +405,7 @@ export function sortFields(fields: readonly BandField[], by: Grouping): BandFiel
  * parentes: "Kx–xx(3)" (SPEC-notation-sidninger.md).
  */
 export function compactLayout(f: BandField): string {
-  const compact = (text: string) => (text === '–' ? 'renonce' : text.replace(/ /g, ''));
+  const compact = (text: string) => (text === '–' ? tx('renonce', 'void') : text.replace(/ /g, ''));
   return `${compact(f.west)}–${compact(f.east)}${f.count > 1 ? `(${f.count})` : ''}`;
 }
 

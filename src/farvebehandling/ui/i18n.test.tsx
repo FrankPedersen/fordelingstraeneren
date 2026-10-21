@@ -6,6 +6,7 @@ import { setLang } from '../../i18n';
 import { TASK_TYPES } from '../storage';
 import { TEST_BANK } from '../testBank';
 import { grade, makeTask, possibleTypes } from '../training/tasks';
+import { Analysevindue } from './Analysevindue';
 import { Facit } from './Facit';
 import { Opgave } from './Opgave';
 
@@ -47,5 +48,17 @@ describe('Farvebehandlings opgaver på engelsk', () => {
       }
       cleanup();
     }
+  }, 30_000);
+});
+
+describe('Guiden til Analyse på engelsk (SPEC-analyse-modul.md, trin 3)', () => {
+  it('knappen Guide viser den engelske guide, og skærmen har intet dansk ud over appens navn', async () => {
+    render(<Analysevindue bank={TEST_BANK.slice(0, 3)} />);
+    fireEvent.click(screen.getByRole('button', { name: 'Guide' }));
+    await screen.findByRole('heading', { name: 'Guide to Suit Combinations – Analysis' }, { timeout: 10_000 });
+    for (const button of screen.queryAllByRole('button', { name: /^Help: / })) fireEvent.click(button);
+    const text = (document.body.textContent ?? '').replace(/Fordelingstræneren/g, '');
+    const found = text.match(DANISH);
+    expect(found?.[0], found ? text.slice(Math.max(0, (found.index ?? 0) - 60), (found.index ?? 0) + 60) : '').toBeUndefined();
   }, 30_000);
 });

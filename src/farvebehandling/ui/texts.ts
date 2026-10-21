@@ -9,6 +9,14 @@ const DA = {
   title: 'Farvebehandling',
   /** Analyse som selvstændigt modul (SPEC-analyse-modul.md). */
   analysisModule: 'Farvebehandling – Analyse',
+  /** Guiden til Analyse (SPEC-analyse-modul.md, trin 3). */
+  guide: {
+    button: 'Guide',
+    back: 'Tilbage til analysen',
+    contents: 'Indhold',
+    loading: 'Henter guiden …',
+    failed: 'Guiden kunne ikke hentes. Prøv igen, når du er på nettet.',
+  },
   back: 'Tilbage til forsiden',
   backToTraining: 'Tilbage til Træning',
   loading: 'Indlæser farvebehandling …',
@@ -457,6 +465,7 @@ const DA = {
     connections: 'Sikre indgange til bordet (Nord) og hånden (Syd) i de andre farver. Et udspil fra hånden, der er inde, er gratis; et udspil fra den anden hånd bruger en indgang. Vinder modspillet et stik, er ingen hånd inde, og næste udspil bruger en indgang. "Ubegrænset" står over 5 og er som i banken.',
     lead: 'Hånden, der spiller ud til første stik i farven. Vinder du et stik, er hånden med det vindende kort inde. Feltet vises kun, når en hånd har begrænsede indgange.',
     playConnections: 'Et udspil fra hånden, der er inde, er gratis; et udspil fra den anden hånd bruger en indgang, som tælles ned. Vinder modspillet et stik, er ingen hånd inde. Knapperne er grået ud, når hånden ikke kan nås.',
+    guide: 'Sådan bruger du analysen, og sådan regner den.',
     tasks: {
       'vælg-linjen': 'Vælg den linje, der giver størst chance for målet, og gæt chancen. Rigtig linje og rigtigt interval giver fuld score, rigtig linje og forkert interval halv.',
       chancen: 'Linjen er givet; gæt chancen for målet. Grænsen hører til intervallet over: 50,0 % er 50–75 %.',
@@ -477,6 +486,13 @@ type Texts = typeof DA;
 const EN: Texts = {
   title: 'Suit combinations',
   analysisModule: 'Suit combinations – Analysis',
+  guide: {
+    button: 'Guide',
+    back: 'Back to the analysis',
+    contents: 'Contents',
+    loading: 'Loading the guide …',
+    failed: 'The guide could not be loaded. Try again when you are online.',
+  },
   back: 'Back to the front page',
   backToTraining: 'Back to Training',
   loading: 'Loading suit combinations …',
@@ -899,6 +915,7 @@ const EN: Texts = {
     connections: 'Sure entries to dummy (North) and your hand (South) in the other suits. A lead from the hand that is on lead is free; a lead from the other hand uses an entry. If the defenders win a trick, neither hand is on lead, and the next lead uses an entry. "Unlimited" comes after 5 and is as in the bank.',
     lead: 'The hand that leads to the first trick in the suit. When you win a trick, the hand with the winning card is on lead. The field is shown only when a hand has limited entries.',
     playConnections: 'A lead from the hand that is on lead is free; a lead from the other hand uses an entry, which is counted down. If the defenders win a trick, neither hand is on lead. The buttons are greyed out when the hand cannot be reached.',
+    guide: 'How to use the analysis, and how it calculates.',
     tasks: {
       'vælg-linjen': 'Choose the line that gives the best chance of the goal, and guess the chance. Right line and right interval give a full score, right line and wrong interval half.',
       chancen: 'The line is given; guess the chance of the goal. A boundary belongs to the interval above: 50.0 % is 50–75 %.',
