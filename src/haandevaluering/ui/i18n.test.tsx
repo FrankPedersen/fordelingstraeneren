@@ -45,7 +45,8 @@ function strings(value: unknown): string[] {
 function rightAnswer(task: HandTask): HandAnswer {
   const facit = facitOf(task);
   if (facit.exercise === 'add') return { exercise: 'add', terms: facit.terms };
-  if (facit.exercise === 'decision') return { exercise: 'decision', decision: facit.right[0] };
+  if (facit.exercise === 'decision' || facit.exercise === 'form') return { exercise: facit.exercise, decision: facit.right[0] };
+  if (facit.exercise === 'compare') return { exercise: 'compare', method: facit.right };
   if (facit.exercise === 'strain') return { exercise: 'strain', strain: facit.strain };
   return { exercise: facit.exercise, points: facit.points };
 }

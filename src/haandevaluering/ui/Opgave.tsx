@@ -2,7 +2,7 @@ import { SUIT_SYMBOLS } from '../../domain/cards';
 import { callText, chooseCall } from '../../system/interpreter';
 import { Info } from '../../ui/Info';
 import { SuitText } from '../../ui/SuitText';
-import type { Exercise, HandTask } from '../model/generator';
+import { compareMethods, type Exercise, type HandTask, type Method, type MethodComparison } from '../model/generator';
 import { DECISIONS, pOf, type Strain } from '../model/pmodel';
 import type { HandAnswer, Terms } from '../training/scoring';
 import { pointsText } from './format';
@@ -43,7 +43,10 @@ export function situation(task: HandTask): string[] {
     case 'distribution':
     case 'decision':
     case 'partner':
+    case 'compare':
       return [TEXT.fitFound(SUIT_SYMBOLS[task.trump])];
+    case 'form':
+      return [TEXT.fitFound(SUIT_SYMBOLS[task.trump]), TEXT.forms[task.form]];
     case 'wasted':
       return [TEXT.fitFound(SUIT_SYMBOLS[task.trump]), TEXT.shortnessShown(SUIT_SYMBOLS[task.short])];
     case 'add': {
@@ -53,6 +56,14 @@ export function situation(task: HandTask): string[] {
     default:
       return [];
   }
+}
+
+/** Opgave 8: HCP- og Zar-linjerne med tal og beslutning, fx "HCP: 12 + 14 = 26 HCP → udgang (grænse 25)". */
+export function methodLines(m: MethodComparison): string[] {
+  return (['hcp', 'zar'] as const).map((method) => {
+    const c = m[method];
+    return TEXT.methodLine(TEXT.methods[method], c.you, c.partner, c.total, method === 'hcp' ? 'HCP' : 'ZP', TEXT.decisions[c.decision].toLowerCase(), c.limit);
+  });
 }
 
 /** Kontrakten for en udgang i fittens farve, fx 4♠. */
@@ -68,7 +79,7 @@ export function strainSuit(task: HandTask): number {
 /** Opgaven: meldingerne, hænderne og spørgsmålet. Begge hænder vises kun, hvor beslutningen gælder parret. */
 export function Opgave({ task, onAnswer }: { task: HandTask; onAnswer(answer: HandAnswer): void }) {
   const lines = situation(task);
-  const both = task.exercise === 'decision' || task.exercise === 'strain';
+  const both = task.exercise === 'decision' || task.exercise === 'strain' || task.exercise === 'compare' || task.exercise === 'form';
   const points = (exercise: 'honors' | 'distribution' | 'partner' | 'wasted') => (value: number) => onAnswer({ exercise, points: value });
 
   let question;
@@ -121,10 +132,30 @@ export function Opgave({ task, onAnswer }: { task: HandTask; onAnswer(answer: Ha
       );
       break;
     case 'decision':
+    case 'form': {
+      const exercise = task.exercise;
       question = (
         <>
-          <Prompt exercise="decision" text={TEXT.decisionPrompt} />
-          <Choices options={DECISIONS.map((d) => [d, TEXT.decisions[d]] as const)} onPick={(decision) => onAnswer({ exercise: 'decision', decision })} />
+          <Prompt exercise={exercise} text={TEXT.decisionPrompt} />
+          <Choices options={DECISIONS.map((d) => [d, TEXT.decisions[d]] as const)} onPick={(decision) => onAnswer({ exercise, decision })} />
+        </>
+      );
+      break;
+    }
+    case 'compare':
+      // P vises først i facit; HCP og Zar står med tal og beslutning.
+      question = (
+        <>
+          {methodLines(compareMethods(task.hands, task.trump)).map((line) => (
+            <p key={line} className="he-note">
+              {line}
+            </p>
+          ))}
+          <Prompt exercise="compare" text={TEXT.comparePrompt} />
+          <Choices<Method>
+            options={(['hcp', 'zar'] as const).map((method) => [method, TEXT.methods[method]] as const)}
+            onPick={(method) => onAnswer({ exercise: 'compare', method })}
+          />
         </>
       );
       break;

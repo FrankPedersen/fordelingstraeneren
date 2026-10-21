@@ -86,11 +86,13 @@ describe('Facit og scoring (SPEC-haandevaluering.md, Session, scoring og data)',
       const answer: HandAnswer =
         facit.exercise === 'add'
           ? { exercise: 'add', terms: facit.terms }
-          : facit.exercise === 'decision'
-            ? { exercise: 'decision', decision: facit.right[0] }
+          : facit.exercise === 'decision' || facit.exercise === 'form'
+            ? { exercise: facit.exercise, decision: facit.right[0] }
             : facit.exercise === 'strain'
               ? { exercise: 'strain', strain: facit.strain }
-              : { exercise: facit.exercise, points: facit.points };
+              : facit.exercise === 'compare'
+                ? { exercise: 'compare', method: facit.right }
+                : { exercise: facit.exercise, points: facit.points };
       expect(isRight(task, answer), `${task.exercise} ${task.seed}`).toBe(true);
     }
   }, 30_000);
@@ -173,11 +175,13 @@ describe('Sessionen (5 minutter)', () => {
       const answer: HandAnswer =
         facit.exercise === 'add'
           ? { exercise: 'add', terms: facit.terms }
-          : facit.exercise === 'decision'
-            ? { exercise: 'decision', decision: facit.right[0] }
+          : facit.exercise === 'decision' || facit.exercise === 'form'
+            ? { exercise: facit.exercise, decision: facit.right[0] }
             : facit.exercise === 'strain'
               ? { exercise: 'strain', strain: facit.strain }
-              : { exercise: facit.exercise, points: wrong ? -1 : facit.points };
+              : facit.exercise === 'compare'
+                ? { exercise: 'compare', method: wrong ? (facit.right === 'hcp' ? 'zar' : 'hcp') : facit.right }
+                : { exercise: facit.exercise, points: wrong ? -1 : facit.points };
       ({ session, saved } = answerHeTask(session, saved, answer, t));
     }
     return { session, saved, phases };

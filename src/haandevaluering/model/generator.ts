@@ -3,7 +3,21 @@ import { dealWith, type Hands } from '../../domain/dealer';
 import { patternOf } from '../../domain/patterns';
 import { mulberry32, type Rng } from '../../engine/rng';
 import { chooseCall, hcpOf } from '../../system/interpreter';
-import { LIMITS, majorFit, P_MODEL, P_RANGE, pOf, stoppedSuits, type Limits } from './pmodel';
+import {
+  contractFor,
+  gameThreshold,
+  LIMITS,
+  majorFit,
+  P_MODEL,
+  P_RANGE,
+  pOf,
+  rightDecisions,
+  stoppedSuits,
+  zarPoints,
+  type Decision,
+  type Form,
+  type Limits,
+} from './pmodel';
 
 export { P_RANGE };
 
@@ -37,8 +51,8 @@ export const EXERCISES: readonly Exercise[] = [
   'form',
 ];
 
-/** Opgave 8 (Sammenlign metoder) og 9 (Turneringsform) kommer i leverancetrin 4. */
-export const GENERATED: readonly Exercise[] = ['honors', 'distribution', 'add', 'decision', 'partner', 'strain', 'wasted'];
+/** Alle ni opgaver laves af generatoren (opgave 8 og 9 fra leverancetrin 4). */
+export const GENERATED: readonly Exercise[] = EXERCISES;
 
 export type Level = 1 | 2 | 3 | 4 | 5;
 
@@ -119,7 +133,73 @@ export interface WastedTask extends Base {
   short: number;
 }
 
-export type HandTask = HonorsTask | DistributionTask | AddTask | DecisionTask | PartnerTask | StrainTask | WastedTask;
+/**
+ * Opgave 8: HCP og Zar er uenige om udgang eller delkontrakt; hvem har ret? Den rigtige kontrakt er P-modellens
+ * beslutning, og P vises først i facit (Franks svar, 21. oktober 2026).
+ */
+export interface CompareTask extends Base {
+  exercise: 'compare';
+  trump: number;
+}
+
+/** Opgave 9: som opgave 4, men med turneringsformen; P ligger inden for ±2 af formens udgangsgrænse. */
+export interface FormTask extends Base {
+  exercise: 'form';
+  trump: number;
+  form: Form;
+}
+
+export type HandTask =
+  | HonorsTask
+  | DistributionTask
+  | AddTask
+  | DecisionTask
+  | PartnerTask
+  | StrainTask
+  | WastedTask
+  | CompareTask
+  | FormTask;
+
+/** Metoderne i opgave 8. */
+export type Method = 'hcp' | 'zar';
+
+/** En metodes regnestykke for parret: dine og makkers point, summen, udgangsgrænsen og beslutningen. */
+export interface MethodCount {
+  you: number;
+  partner: number;
+  total: number;
+  limit: number;
+  decision: Decision;
+}
+
+export interface MethodComparison {
+  hcp: MethodCount;
+  zar: MethodCount;
+  P: number;
+  /** P-modellens beslutning, som er den rigtige kontrakt i første version. */
+  decision: Decision;
+  /** Metoden, der rammer P's beslutning, når HCP og Zar er uenige, og kun ét svar er rigtigt; ellers null. */
+  right: Method | null;
+}
+
+const methodCount = (you: number, partner: number, limit: number): MethodCount => {
+  const total = you + partner;
+  return { you, partner, total, limit, decision: total >= limit ? 'game' : 'partscore' };
+};
+
+/**
+ * Opgave 8: HCP (udgang fra 25, foreløbig), Zar (udgang fra 52 ZP) og P for parret med fitten. Kun udgang eller
+ * delkontrakt; ligger P inden for ½ point af udgangsgrænsen, er begge svar rigtige, og fordelingen bruges ikke.
+ */
+export function compareMethods(hands: Hands, trump: number): MethodComparison {
+  const hcp = methodCount(hcpOf(hands.S), hcpOf(hands.N), P_MODEL.hcpMetode.udgang);
+  const zar = methodCount(zarPoints(hands.S).zp, zarPoints(hands.N).zp, P_MODEL.zar.udgang);
+  const P = pairP(hands, trump);
+  const decision = contractFor(P);
+  const single = rightDecisions(P).length === 1 && (decision === 'partscore' || decision === 'game');
+  const right = !single || hcp.decision === zar.decision ? null : hcp.decision === decision ? 'hcp' : 'zar';
+  return { hcp, zar, P, decision, right };
+}
 
 /** Kvalitetskravet i opgave 4: P højst så langt fra grænsen (SPEC, Generator 3). */
 export const DECISION_WINDOW = 2;
@@ -230,8 +310,27 @@ export function makeTask(exercise: Exercise, seed: number, limits: Limits = LIMI
       });
       return { exercise, seed, hands, ...value };
     }
-    case 'compare':
-    case 'form':
-      throw new Error(`Opgaven "${exercise}" kommer i leverancetrin 4`);
+    case 'compare': {
+      // Metoden, der skal have ret, vælges med lige stor chance, så HCP og Zar har ret lige ofte.
+      const target: Method = rng.int(2) === 0 ? 'hcp' : 'zar';
+      const { hands, value } = find(rng, (h) => {
+        const fit = majorFit(h.S, h.N);
+        if (fit === null) return null;
+        const m = compareMethods(h, fit);
+        return m.right === target && m.P >= P_RANGE.min && m.P <= P_RANGE.max ? fit : null;
+      });
+      return { exercise, seed, hands, trump: value };
+    }
+    case 'form': {
+      const form = (['impVulnerable', 'impNotVulnerable', 'pairs'] as const)[rng.int(3)];
+      const limit = gameThreshold(form);
+      const { hands, value } = find(rng, (h) => {
+        const fit = majorFit(h.S, h.N);
+        if (fit === null) return null;
+        const P = pairP(h, fit);
+        return Math.abs(P - limit) <= DECISION_WINDOW && P >= P_RANGE.min && P <= P_RANGE.max ? fit : null;
+      });
+      return { exercise, seed, hands, trump: value, form };
+    }
   }
 }

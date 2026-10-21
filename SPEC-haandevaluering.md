@@ -230,6 +230,11 @@ Accepttest i Vitest:
 - [x] Generatoren: alle opgave 4-fordelinger har P inden for ±2 af en grænse, og samme seed giver samme opgave.
 - [x] Sprog: på engelsk står der intet dansk på sporets skærme, og den danske og den engelske tekstfil har samme type.
 - [x] ⓘ: hvert element fra Sprog og hjælp har et ⓘ med en forklaring på begge sprog.
+- [x] Opgave 8, eksempel 1: ♠ E K 7 5 2 ♥ 4 ♦ K D 6 3 ♣ 8 5 2 over for ♠ D 9 6 3 ♥ K 8 7 2 ♦ 9 4 ♣ E 7 3 har 12 + 9 = 21 HCP, 29 + 22 = 51 ZP og P = 17 + 10½ = 27½. Alle tre siger delkontrakt, så fordelingen er ingen opgave 8.
+- [x] Opgave 8, eksempel 2: ♠ B 6 5 ♥ K B 9 2 ♦ 9 8 7 ♣ E K 3 over for ♠ E D 10 ♥ E D 8 7 ♦ 10 6 4 ♣ D 6 4 (fit i ♥): 26 HCP siger udgang, 24 + 26 = 50 ZP delkontrakt, og P = 12 + 15 = 27 giver delkontrakt, så Zar har ret. Facit viser P pr. hånd og forklarer, hvad HCP overså.
+- [x] Opgave 8: HCP og Zar er altid uenige, kun ét svar er rigtigt efter `rightDecisions`, og HCP og Zar har ret lige ofte (200 af 400 i generatoren).
+- [x] Opgave 9: udgangsgrænsen er 27½ ved holdturnering i zonen, 28 uden for zonen og 28½ ved parturnering; P ligger inden for ±2 af formens grænse, og nabovalg inden for ½ point er rigtige.
+- [x] Niveau 4 har opgave 6 og 8, niveau 5 opgave 9 og blandede opgaver fra alle niveauer.
 
 Åbne punkter:
 
@@ -277,9 +282,21 @@ Truffet under bygningen af leverancetrin 1–3 (8. oktober 2026). Ændres kun ef
 12. **Naturlig frekvens:** chancen vises med den mindste af nævnerne 2, 3, 4, 5 og 10, der rammer inden for 2,5 procentpoint (58 % → 3 ud af 5). Ellers står der "næsten altid" fra 95 %, 1 ud af N under 50 % (7 % → 1 ud af 14) og N − 1 ud af N derover.
 13. **Sessionen:** niveaufasen giver opgaver, til 150 s er gået (blød timer), og den samme øvelse kommer ikke to gange i træk. Lynrundens og niveaufasens svar logges; kun niveaufasens tilpasser niveauet. Sporet har ingen ugens boss, da specen ikke nævner en.
 14. **Svarloggen** har øvelse, niveau, score, tid, fase og opgavens seed, så opgaven kan genskabes.
-15. **Opgave 8 og 9** kommer i leverancetrin 4; indtil da giver niveau 4 kun opgave 6, og niveau 5 blander opgave 1–7. Opgave 6 og 7 har brugerflade allerede i leverancetrin 3, da niveau 3 og 4 bruger dem.
+15. **Opgave 8 og 9** er bygget i leverancetrin 4 (21. oktober 2026, grenen `haandevaluering-trin4`; appen før er tagget `v14-foer-haandevaluering-trin4`). Niveau 4 giver opgave 6 og 8, og niveau 5 blander opgave 1–9.
 16. **Regnskabet:** før svaret vises det kun i opgave 5 (din kolonne; spørgsmålet giver alligevel din p), fordi det ellers afslører facit. Efter svaret står det i facit i opgave 2, 4 og 7, i opgave 4 med begge kolonner, P og stikforventningen.
 17. **Meldingerne:** begge hænder er tilfældige, så de konkrete meldinger i wireframen (1♠ – 2♠) laves ikke. Fit-opgaverne viser "Fit fundet i ♠", opgave 7 også "Makker har vist korthed i ♦", og opgave 3 makkers åbning med hp-intervallet fra systemfilen. Opgave 1 og 6 har ingen meldinger.
 18. **Hænderne:** din hånd vises altid, makkers kun i opgave 4 og 6, hvor beslutningen gælder parret. Honnørerne og tieren står med fed.
 19. **Talpanelet:** ½ og ¼ lægges til brøken, der højst er ¾ (12¾ = 1, 2, ½, ¼); ⌫ sletter brøken før cifrene.
 20. **Facit** har overskriften (rigtigt, over tidsgrænsen eller forkert) med XP, dit svar, modellens begrundelse og i opgave 4 stikforventningen, chancen for kontrakten som naturlig frekvens, nabovalget ved grænsen, manglende es og forbeholdet om dobbeltdummy.
+
+**Leverancetrin 4 (21. oktober 2026, godkendt af Frank samme dag)**
+
+21. **Opgave 8 (Franks svar 21. oktober 2026):** "Brug formatet 'HCP eller Zar?' med P skjult til facit. Tag kun hænder, hvor HCP og Zar er uenige, og spring hænder over, hvor begge beslutninger er rigtige efter rightDecisions. Generatoren skal give lige mange opgaver, hvor HCP har ret, og hvor Zar har ret. Facit viser P's regnestykke pr. hånd og forklarer ud fra trumf, korthed, længde og kontroller, hvad den forkerte metode overså." Bygget sådan:
+    - Begge hænder med fit vises, og under dem HCP og Zar med tal og beslutning, fx "HCP: 12 + 14 = 26 HCP → udgang (grænse 25)". Spørgsmålet er "HCP og Zar er uenige. Hvem har ret?" med svarene HCP og Zar.
+    - Kun udgang eller delkontrakt: udgang fra 25 HCP (foreløbig, Åbne punkter), 52 ZP og P = 28½. Fordelinger, hvor P ligger inden for ½ point af udgangsgrænsen, eller hvor P siger slem, bruges ikke (`compareMethods` i `generator.ts`).
+    - Generatoren vælger først med lige stor chance, hvilken metode der skal have ret, og finder så en fordeling.
+    - Facit: HCP- og Zar-linjerne, P pr. hånd ("Dig: honnørpoint 12, p = 12."), P og kontrakten, hvem der har ret, og én sætning om den forkerte metode. HCP: trumflængde og korthed og honnørernes værdi i P (esser, damer, knægte og tiere) over for HCP, fx "HCP overså, at fordelingen giver for lidt: trumflængde og korthed giver 0 og esser, damer, knægte og tiere +1, så 26 HCP bliver kun P = 27." Zar: Zars point for længde og kontroller over for P's trumflængde og korthed i sidefarverne.
+22. **Opgave 9:** som opgave 4 med begge hænder og de fire niveauer, men meldingerne viser turneringsformen ("Holdturnering (IMP) i zonen", "Holdturnering (IMP) uden for zonen" eller "Parturnering"). Formen vælges med lige stor chance, og P ligger inden for ±2 af formens udgangsgrænse (27½, 28 eller 28½); slem- og storeslemsgrænsen er uændrede. Facit har en linje mere, fx "Holdturnering (IMP) i zonen: udgang er rigtig fra ca. 37 % for 4♥, dvs. P ≥ 27½.", og nabovalget følger formens grænse.
+23. **Tests, der er rettet:** `model/generator.test.ts` forventede, at niveau 4 kun havde opgave 6, og at opgave 8 og 9 gav en fejl; `ui/i18n.test.tsx` og `training/training.test.ts` har en hjælpefunktion med det rigtige svar, som nu også dækker opgave 8 og 9. Nye tests: `model/trin4.test.ts` og `ui/trin4.test.tsx` med Franks to eksempler.
+24. **Vejledningen** har fået et punkt om niveau 4 og 5 med opgave 8 og 9 i sporets afsnit.
+
