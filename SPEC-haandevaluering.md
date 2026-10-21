@@ -289,7 +289,7 @@ Truffet under bygningen af leverancetrin 1–3 (8. oktober 2026). Ændres kun ef
 19. **Talpanelet:** ½ og ¼ lægges til brøken, der højst er ¾ (12¾ = 1, 2, ½, ¼); ⌫ sletter brøken før cifrene.
 20. **Facit** har overskriften (rigtigt, over tidsgrænsen eller forkert) med XP, dit svar, modellens begrundelse og i opgave 4 stikforventningen, chancen for kontrakten som naturlig frekvens, nabovalget ved grænsen, manglende es og forbeholdet om dobbeltdummy.
 
-**Leverancetrin 4 (21. oktober 2026)**
+**Leverancetrin 4 (21. oktober 2026, godkendt af Frank samme dag)**
 
 21. **Opgave 8 (Franks svar 21. oktober 2026):** "Brug formatet 'HCP eller Zar?' med P skjult til facit. Tag kun hænder, hvor HCP og Zar er uenige, og spring hænder over, hvor begge beslutninger er rigtige efter rightDecisions. Generatoren skal give lige mange opgaver, hvor HCP har ret, og hvor Zar har ret. Facit viser P's regnestykke pr. hånd og forklarer ud fra trumf, korthed, længde og kontroller, hvad den forkerte metode overså." Bygget sådan:
     - Begge hænder med fit vises, og under dem HCP og Zar med tal og beslutning, fx "HCP: 12 + 14 = 26 HCP → udgang (grænse 25)". Spørgsmålet er "HCP og Zar er uenige. Hvem har ret?" med svarene HCP og Zar.

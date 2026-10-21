@@ -249,4 +249,4 @@ Et nyt, selvstændigt spor i gruppen Vurdering, bygget på grenen `haandevalueri
 - [x] Leverancetrin 3: brugerfladen til opgave 1–7 på dansk og engelsk med ⓘ, sporets talpanel med ½ og ¼, ruten i `App.tsx`, afsnittet i vejledningen og Vurderings ⓘ-tekst.
 - [x] Linjen i `tracks.ts`: Vurdering står på forsiden; de to tests i `src/app/navigation.test.tsx`, der forventede en tom Vurdering, er rettet med Franks godkendelse (8. oktober 2026).
 - [x] Franks godkendelse af leverancetrin 1–3; flettet ind og udgivet på `main` (8. oktober 2026).
-- [x] Leverancetrin 4: opgave 8 (Sammenlign metoder, efter Franks svar 21. oktober 2026) og 9 (Turneringsform), bygget på grenen `haandevaluering-trin4` (appen før er tagget `v14-foer-haandevaluering-trin4`). Valgene står i specen under Claude Codes valg 21–24.
+- [x] Leverancetrin 4: opgave 8 (Sammenlign metoder, efter Franks svar 21. oktober 2026) og 9 (Turneringsform), bygget på grenen `haandevaluering-trin4` (appen før er tagget `v14-foer-haandevaluering-trin4`), godkendt af Frank og udgivet 21. oktober 2026. Valgene står i specen under Claude Codes valg 21–24.
