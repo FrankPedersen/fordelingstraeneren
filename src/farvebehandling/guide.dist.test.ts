@@ -23,7 +23,7 @@ describe('Guiden i den byggede app (SPEC-analyse-modul.md)', () => {
       await build({ root, configFile: join(root, 'vite.config.ts'), logLevel: 'silent', build: { outDir, emptyOutDir: true } });
       const all = files(outDir);
       const read = (f: string) => readFileSync(f).toString('utf8');
-      const name = (f: string) => f.slice(outDir.length + 1).replace(/\/g, '/');
+      const name = (f: string) => f.slice(outDir.length + 1).split('\\').join('/');
       // Det, der hentes ved første indlæsning: index.html, dens script og dets statiske imports (modulepreload).
       const html = read(join(outDir, 'index.html'));
       const initial = [...html.matchAll(/(?:src|href)="\/?([^"]+\.js)"/g)].map((m) => m[1]);
@@ -33,8 +33,8 @@ describe('Guiden i den byggede app (SPEC-analyse-modul.md)', () => {
         const holders = all.filter((f) => f.endsWith('.js') && read(f).includes(marker)).map(name);
         expect(holders, marker).toHaveLength(1);
         expect(initial, marker).not.toContain(holders[0]);
-        // Guiden ligger ikke i Farvebehandlings egen fil, men hentes først, når knappen bruges.
-        expect(read(join(outDir, holders[0])).includes('Farvebehandling – Analyse'), marker).toBe(false);
+        // Guiden ligger ikke i Farvebehandlings egen fil (klassen fb-screen), men hentes først, når knappen bruges.
+        expect(read(join(outDir, holders[0])).includes('fb-screen'), marker).toBe(false);
         expect(sw, marker).toContain(holders[0]);
       }
     } finally {

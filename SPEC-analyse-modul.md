@@ -102,14 +102,14 @@ Trin 2:
 
 Trin 3:
 
-- [ ] Knappen Guide står øverst i Analyse i modulet og i fanen og åbner guiden; Tilbage viser samme kombination og situation som før.
-- [ ] Hver overskrift i `guide-analyse.md` vises på dansk og hver overskrift i `guide-analyse.en.md` på engelsk, og indholdsfortegnelsen linker til afsnittene på niveau 2.
-- [ ] De to filer har samme antal overskrifter med samme nummerering (fx "2.1"), så de ikke kommer ud af takt.
-- [ ] Guidens tabeller vises som tabeller, og ved 390 px rulles de i deres egen boks uden vandret rulning på siden.
-- [ ] Guiden er ikke med i appens første indlæsning, men kan åbnes offline efter første besøg.
-- [ ] På engelsk viser knappen Guide den engelske guide, og skærmen indeholder ingen dansk tekst (testen i `ui/i18n.test.tsx`).
-- [ ] Ingen af guiderne indeholder "bridgehands".
-- [ ] Komponentfilerne indeholder ingen farveværdier og ingen tal med enhed, undtagen 0, 1px-streger og procenter.
+- [x] Knappen Guide står øverst i Analyse i modulet og i fanen og åbner guiden; Tilbage viser samme kombination og situation som før.
+- [x] Hver overskrift i `guide-analyse.md` vises på dansk og hver overskrift i `guide-analyse.en.md` på engelsk, og indholdsfortegnelsen linker til afsnittene på niveau 2.
+- [x] De to filer har samme antal overskrifter med samme nummerering (fx "2.1"), så de ikke kommer ud af takt.
+- [x] Guidens tabeller vises som tabeller, og ved 390 px rulles de i deres egen boks uden vandret rulning på siden.
+- [x] Guiden er ikke med i appens første indlæsning, men kan åbnes offline efter første besøg.
+- [x] På engelsk viser knappen Guide den engelske guide, og skærmen indeholder ingen dansk tekst (testen i `ui/i18n.test.tsx`).
+- [x] Ingen af guiderne indeholder "bridgehands".
+- [x] Komponentfilerne indeholder ingen farveværdier og ingen tal med enhed, undtagen 0, 1px-streger og procenter.
 
 ## Afklaret
 
@@ -138,3 +138,13 @@ Claude Codes bygning af leverancetrin 2 (20. oktober 2026):
 14. **"Linket åbner Analyse direkte på www.kontraktbridge.dk"** er prøvet efter udgivelsen (21. oktober 2026) i Chrome (headless) ved 390 px (mobil) og 1280 px: kortet står på www.kontraktbridge.dk, et tryk åbner `/fordelingstraeneren/#analyse` med overskriften "Farvebehandling – Analyse" og uden faner, og ved 390 px er der ingen vandret rulning på forsiden eller i modulet. Om mig har linket.
 15. **Om mig (Franks svar 20. oktober 2026):** siden Om mig og kontakt (`om-mig/index.html`) har samme liste over trænere i sidefoden og får også linket "Analyse" efter Håndevaluering, så sidefoden er ens på hele kontraktbridge.dk. Siden findes kun på dansk, så linket har ingen `data-en`.
 16. **Udgivelsen ventede på forbindelser (Franks valg 20. oktober 2026; udgivet 21. oktober 2026):** kortets tekst og ⓘ nævner forbindelser, så `analyse-modul` flettes først ind, når SPEC-forbindelser.md (grenen `forbindelser`, trin 3 mangler) er godkendt og flettet ind. Derefter flettes `analyse-modul` ind, og når `#analyse` virker på www.kontraktbridge.dk/fordelingstraeneren/, pushes `analyse-kort` til `main` i `frankpedersen.github.io`.
+
+Claude Codes bygning af leverancetrin 3 på grenen `analyse-modul-guide` (21. oktober 2026; appen før er tagget `v13-foer-analyse-guide`). Guidefilerne er hentet fra Franks gren `guide-analyse`:
+
+17. **Knappen Guide** står øverst i analysen til højre med ⓘ, i `Analysevindue.tsx`, så den findes både i modulet og i fanen. Skærmens overskrift står i `FarvebehandlingScreen.tsx`, som tabellen kun åbner for `analysisOnly`, så knappen står lige under overskriften og ikke på samme linje.
+18. **Visningen** er `ui/Guide.tsx` med en lille tolk, `ui/guideMarkdown.ts`, uden nye afhængigheder. Den klarer overskrifter, afsnit, punkt- og nummerlister, tabeller, fed, kode og links (guiden linker til appens adresse). Guidens titel (#) vises som h2 under skærmens h1, afsnittene (##) som h3 og underafsnittene (###) som h4. Indholdsfortegnelsen "Indhold" / "Contents" står lige under titlen med links til afsnittene på niveau 2; et tryk ruller til afsnittet uden at ændre adressen, fordi appen bruger adressen til skærmene (`#analyse`). "Tilbage til analysen" / "Back to the analysis" står øverst og nederst. Kombinationen og situationen ligger i analysen og er uændrede bagefter.
+19. **Indlæsning og offline:** hver guide hentes med `import('…?raw')`, første gang knappen bruges, og ligger i sin egen fil, som service workeren gemmer med resten af appen (`vite.config.ts` er uændret). `guide.dist.test.ts` bygger appen og tjekker, at filerne ikke hentes ved første indlæsning og står i service workerens liste. I Chrome (headless) på den byggede app åbner guiden også, efter at serveren er slukket.
+20. **Bredden ved 390 px** er målt i Chrome på den byggede app: guiden på dansk og engelsk er 390 px bred, og de brede tabeller (4 på dansk, 3 på engelsk) ruller i deres egen boks. Lange links og kodelinjer brydes. Forsiden og modulet er målt igen og er stadig 390 px.
+21. **Renonce på engelsk:** `compactLayout` skriver "void" på engelsk (fx `Kxxx–void`) og "renonce" på dansk (Franks ønske 21. oktober 2026).
+22. **Tests:** `src/farvebehandling/guide.test.ts` (filerne, tolken og `compactLayout`), `ui/guide.test.tsx` (knappen, Tilbage, overskrifterne, indholdsfortegnelsen, tabellerne og engelsk), `guide.dist.test.ts` (den byggede app) og en test i `ui/i18n.test.tsx`, der undtager appens navn "Fordelingstræneren" som de andre engelsk-tests.
+
