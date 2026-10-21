@@ -160,7 +160,11 @@ Opgaven er et spil under usikkerhed: spilføreren må kun beslutte ud fra de kor
 5. **Beskæring:** ligeværdige kort behandles som ét, og mellemresultater gemmes pr. tilstand.
 6. **Mål:** for hvert mål maksimeres P(stik ≥ mål). Desuden findes linjen med flest stik i gennemsnit (parturnering). Linjer inden for 0,5 procentpoint af den bedste vises alle. Til Hold eller par: når parturneringens linje når målet mere end 0,5 procentpoint sjældnere end målets bedste linje, regnes målets bedste linje også som parturnering (dens trin, derefter flest stik). Målet kommer med, når linjen stadig når målet lige så tit (inden for 0,5 procentpoint) og giver mindst 0,005 stik færre i gennemsnit.
 7. **Kapacitet:** løseren skal klare op til 8 manglende kort.
-8. **Forbindelser:** ubegrænsede i første version. Begrænsede forbindelser er en senere udvidelse.
+8. **Forbindelser:** banken er og bliver regnet med ubegrænsede forbindelser. Med en situation kan løseren regne med begrænsede forbindelser (SPEC-forbindelser.md; leverancetrin 1 er model og spil, trin 2 panelet i Analyse og trin 3 linjerne, egne linjer og Spil den selv).
+   - Situationen har indgange til Nord og Syd i de andre farver (0–5 eller ubegrænset) og hånden, der er inde (standard Syd).
+   - Et udspil fra hånden, der er inde, er gratis; fra den anden hånd bruger det en indgang til den. Udspil kan kun komme fra en hånd, der kan nås.
+   - Vinder spilføreren stikket, er hånden med det vindende kort inde. Vinder modspillet, er ingen hånd inde, og næste udspil bruger en indgang.
+   - En hånd med mindst lige så mange indgange, som den har kort, er ubegrænset. Er begge hænder ubegrænsede, er spillet og svaret præcis som uden forbindelser. Genvejen "modparten har ingen højere kort" gælder kun uden begrænsning.
 9. **Situation** (SPEC-analyse-situation.md): Analyse kan regne en kombination med en situation.
    - Kendte kort i andre farver giver ledige pladser.
    - En grænse for honnørpoint i farven giver vægt 0 til sidninger, hvor en modspiller har for mange.
@@ -354,6 +358,8 @@ Regler for brugerfladen:
   - Med en situation regner løseren i appen med ventevisning, forløbet tid og Stop.
   - Chancerne er betingede, og udelukkede sidninger står ikke i båndet og tabellen.
   - Spil den selv giver kortene efter situationen.
+  - Blokken Forbindelser (SPEC-forbindelser.md) har indgange til Nord og Syd (0–5, "ubegrænset" over 5) og feltet Inde (Nord eller Syd, standard Syd), der kun vises, når en hånd har begrænsede indgange. Chips under bordet, fx "Syd inde · Syd 2 indgange" og "Nord 0 indgange", og forudsætningslinjen, fx "a priori · Syd inde, Nord ubegrænset og Syd 2 indgange · optimalt modspil". Har begge hænder mindst lige så mange indgange, som de har kort, bruges bankens tal.
+  - Med begrænsede forbindelser begynder et udspil, der bruger en indgang, med "Gå ind på hånden (bordet) med en sideindgang, og spil …" (engelsk "Cross to hand (dummy) with a side entry and lead …"). En egen linje, der spiller ud fra en hånd, som ikke kan nås, afvises med trinnets nummer. Spil den selv åbnet fra Analyse grår udspil fra en hånd uden indgang ud, tæller indgangene ned og viser fx "Nord inde · Syd 0 indgange".
 - **Valg af linjer** (SPEC-analyse-situation.md): under linjerne viser "Vis alle udspil" alle første udspil i løserens resultat. Med "Sammenlign" på præcis to linjer viser båndet og tabellen kun dem, og over tabellen står, hvor tit hver vinder alene (antallet er de konkrete sidninger, SPEC-notation-sidninger.md).
 - **Import** (SPEC-analyse-situation.md): over kortvælgeren kan en kombination indsættes som tekst (EK65-B43 eller AK65-J43), som LIN eller som BBO-handviewerens adresse. Et spil giver et valg mellem 8 kombinationer. Appen læser kun teksten og henter intet fra nettet.
 - **Træning:** linjer og forskel er skjult, indtil brugeren har valgt linje og gættet en chance.

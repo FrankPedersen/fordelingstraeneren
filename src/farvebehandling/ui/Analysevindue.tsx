@@ -17,7 +17,7 @@ import {
 } from '../analysis';
 import { cardsText, rankText, type Rank } from '../model/cards';
 import { eveningText } from '../model/frequency';
-import { aprioriFieldCount, isPossible, isStandard, STANDARD, type Situation } from '../model/situation';
+import { aprioriFieldCount, isPossible, isStandard, situationFor, STANDARD, type Situation } from '../model/situation';
 import type { GoalResult, LeadResult } from '../precompute';
 import { createSolver, SolveCancelled } from '../solver/client';
 import type { LineStep } from '../solver/lines';
@@ -110,8 +110,10 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
   const pointValues = useMemo(() => [...new Set(bank.map((b) => b.points))].sort((a, b) => a - b), [bank]);
   const shown = points === null ? bank : bank.filter((b) => b.points === points);
 
-  // Bankens tal bruges kun på standard; ellers regnes kombinationen med situationen, og chancerne er betingede.
-  const standard = isStandard(situation);
+  // Bankens tal bruges kun på standard; ellers regnes kombinationen med situationen, og chancerne er betingede. Har
+  // begge hænder mindst lige så mange indgange, som de har kort, er forbindelserne ubegrænsede (SPEC-forbindelser.md).
+  const standard = isStandard(situationFor(item.north, item.south, situation));
+  const chips = situationChips(situation);
   const situationTag = JSON.stringify(situation);
   const situationKey = `${item.combination.id}|${goal}|${situationTag}`;
   const situationSolved = standard ? null : (situated[situationKey] ?? null);
@@ -373,9 +375,9 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
             arrow={arrow}
             caption={firstLeadText ? TEXT.firstLead(firstLeadText.toLowerCase()) : undefined}
           />
-          {!standard && (
+          {chips.length > 0 && (
             <ul className="fb-situation-chips" aria-label={TEXT.situationPanel.title}>
-              {situationChips(situation).map((chip) => (
+              {chips.map((chip) => (
                 <li key={chip} className="fb-chip fb-chip-situation">
                   {chip}
                 </li>
@@ -407,7 +409,14 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
         <Situationspanel north={item.north} south={item.south} situation={situation} onChange={setSituation} />
 
         {playSeed !== null && solvedGoal && (
-          <SpilSelv key={`${situationKey}:${playSeed}`} item={view} goal={goal} seed={playSeed} onClose={() => setPlaySeed(null)} />
+          <SpilSelv
+            key={`${situationKey}:${playSeed}`}
+            item={view}
+            goal={goal}
+            seed={playSeed}
+            onClose={() => setPlaySeed(null)}
+            connections={situation.entries && (situation.entries.north !== null || situation.entries.south !== null) ? { entries: situation.entries, lead: situation.lead ?? 'S' } : undefined}
+          />
         )}
 
         <section className="card" aria-labelledby="fb-lines">

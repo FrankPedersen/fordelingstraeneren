@@ -3,6 +3,7 @@ import { mulberry32 } from '../../engine/rng';
 import { bandFields, fieldIdOf, linesForGoal, type BankItem } from '../analysis';
 import { cardsText, rankText, TEN, type Rank } from '../model/cards';
 import {
+  canLead,
   dealCards,
   finished,
   followsBestLine,
@@ -11,6 +12,7 @@ import {
   startPlay,
   thirdHandEmpty,
   type Hand,
+  type PlayConnections,
   type PlayState,
   type Seat,
 } from '../play/play';
@@ -28,6 +30,8 @@ interface SpilSelvProps {
   onDone?(state: PlayState): void;
   /** Uden for opgaver: luk spillet. */
   onClose?(): void;
+  /** Begrænsede forbindelser fra situationen i Analyse (SPEC-forbindelser.md). */
+  connections?: PlayConnections;
 }
 
 const seatName = (seat: Seat) => TEXT.seats[seat];
@@ -37,10 +41,10 @@ const seatName = (seat: Seat) => TEXT.seats[seat];
  * normalt modspil. Til sidst vises kortene, resultatet og om spillet fulgte en af løserens bedste linjer, og
  * sidningen lyser op i sandsynlighedsbåndet.
  */
-export function SpilSelv({ item, goal, seed, onDone, onClose }: SpilSelvProps) {
+export function SpilSelv({ item, goal, seed, onDone, onClose, connections }: SpilSelvProps) {
   const [round, setRound] = useState(0);
   const rng = useMemo(() => mulberry32((seed + Math.imul(round, 0x9e3779b1)) >>> 0), [seed, round]);
-  const [state, setState] = useState<PlayState>(() => startPlay(item, dealCards(item, rng)));
+  const [state, setState] = useState<PlayState>(() => startPlay(item, dealCards(item, rng), connections));
   const reported = useRef(false);
   const done = finished(state);
 
@@ -61,12 +65,13 @@ export function SpilSelv({ item, goal, seed, onDone, onClose }: SpilSelvProps) {
     const nextRound = round + 1;
     const nextRng = mulberry32((seed + Math.imul(nextRound, 0x9e3779b1)) >>> 0);
     setRound(nextRound);
-    setState(startPlay(item, dealCards(item, nextRng)));
+    setState(startPlay(item, dealCards(item, nextRng), connections));
   }
 
   const current = state.current;
   const turn: Hand | null = done ? null : current ? (current.leader === 'N' ? 'S' : 'N') : null;
-  const playable = (hand: Hand) => !done && (current ? turn === hand : true);
+  // Et udspil kræver, at hånden kan nås (SPEC-forbindelser.md); uden begrænsning kan begge hænder altid spille ud.
+  const playable = (hand: Hand) => !done && (current ? turn === hand : canLead(state, hand));
   const last = state.tricks[state.tricks.length - 1];
 
   const handButtons = (hand: Hand) => {
@@ -151,7 +156,14 @@ export function SpilSelv({ item, goal, seed, onDone, onClose }: SpilSelvProps) {
           <span className="fb-seat-name">{TEXT.south}</span>
         </div>
       </div>
+      {state.connections && (
+        <div className="with-info">
+          <p className="fb-note">{connectionsText(state.connections)}</p>
+          <Info topic={TEXT.playConnectionsTitle}>{TEXT.help.playConnections}</Info>
+        </div>
+      )}
       {prompt && <p role="status">{prompt}</p>}
+      {done && (state.north.length > 0 || state.south.length > 0) && <p className="fb-note">{TEXT.playStranded}</p>}
       {!current && last && !done && <p className="fb-note">{TEXT.playTrickWon(state.tricks.length, seatName(last.winner))}</p>}
       {done && !onDone && <PlayResult item={item} goal={goal} state={state} />}
       {done && !onDone && (
@@ -163,6 +175,14 @@ export function SpilSelv({ item, goal, seed, onDone, onClose }: SpilSelvProps) {
       )}
     </section>
   );
+}
+
+/** Forbindelserne undervejs, fx "Nord inde · Syd 0 indgange": hånden, der er inde, og de begrænsede indgange. */
+function connectionsText(c: NonNullable<PlayState['connections']>): string {
+  const name = (hand: Hand) => TEXT.situationPanel.hands[hand];
+  const parts = [c.inde ? TEXT.situationPanel.leadChip(name(c.inde)) : TEXT.playNoLead];
+  for (const hand of ['N', 'S'] as const) if (c.entries[hand] !== Infinity) parts.push(TEXT.situationPanel.entries1(name(hand), c.entries[hand]));
+  return parts.join(' · ');
 }
 
 /**

@@ -23,6 +23,17 @@ export function englishCardName(rank: number): string {
 
 /** Et trin fra løserens danske skabeloner på engelsk. */
 export function englishStep(text: string): string {
+  // Et udspil, der bruger en indgang (SPEC-forbindelser.md): "Gå ind på hånden med en sideindgang, og spil …".
+  const entry = /^Gå ind på (bordet|hånden) med en sideindgang, og (spil|slå) (.+)$/.exec(text);
+  if (entry) {
+    const [, from, verb, rest] = entry;
+    const to = hand(from);
+    if (verb === 'slå') return `Cross to ${to} with a side entry and cash ${card(rest.replace(/\.$/, ''))}.`;
+    // Hånden sættes ind efter kortet igen, så de faste skabeloner oversætter trinet, og tages så ud igen.
+    const base = rest.startsWith('lille fra begge hænder') ? rest : rest.replace(new RegExp(`^(lille|${CARD})`), `$1 fra ${from}`);
+    const english = englishStep(base[0].toUpperCase() + base.slice(1)).replace(` from ${to}`, '').replace(/^Lead /, '');
+    return `Cross to ${to} with a side entry and lead ${english[0].toLowerCase()}${english.slice(1)}`;
+  }
   const cash = /^Slå (.+)\.$/.exec(text);
   if (cash) {
     const names = cash[1].split(/, | og /).map(card);
@@ -61,6 +72,8 @@ export function lineErrorText(text: string): string {
     const what = play[2] === 'et lille kort' ? 'a low card' : play[2] === 'det højeste kort' ? 'the highest card' : (LETTER_EN[play[2]] ?? play[2]);
     return `Step ${play[1]}: ${what} cannot be played from ${hand(play[3])}${play[4] ? ' as 3rd hand' : ''}.`;
   }
+  const entry = new RegExp(`^Trin (\\d+): der er ingen indgang til (${HAND}), så der kan ikke spilles ud derfra\\.$`).exec(text);
+  if (entry) return `Step ${entry[1]}: there is no entry to ${hand(entry[2])}, so you cannot lead from there.`;
   const next = /^Trin (\d+): en gren peger på det næste trin \((\d+)\)\.$/.exec(text);
   if (next) return `Step ${next[1]}: a branch points to the next step (${next[2]}).`;
   const missing = /^Trin (\d+): grenen peger på trin (\d+), som ikke findes\.$/.exec(text);

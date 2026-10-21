@@ -1,5 +1,5 @@
 import { binomial } from '../../domain/combinatorics';
-import type { Game } from '../solver/game';
+import type { Game, Hand } from '../solver/game';
 import { missingCards, TEN, type Rank } from './cards';
 import type { Vacant } from './layouts';
 
@@ -8,20 +8,47 @@ import type { Vacant } from './layouts';
  * mange honnørpoint de højst kan have i farven. Betingelserne bliver til ledige pladser (`vacant`) og til vægte på
  * sidningerne, som løseren tager imod (`SubgameOptions.weights`). Filen henter kun typer fra løseren, så appen kan
  * bruge den uden at hente løseren.
+ *
+ * Forbindelserne (SPEC-forbindelser.md): indgangene til Nord og Syd i de andre farver og hånden, der er inde. Uden
+ * feltet `entries` er forbindelserne ubegrænsede som i banken.
  */
 export interface Situation {
   known: { west: number; east: number };
   maxHp: { west: number; east: number };
+  /** Indgange til Nord og Syd: 0–5, null = ubegrænset. Udeladt = ubegrænset for begge. */
+  entries?: { north: Entries; south: Entries };
+  /** Hånden, der er inde ved første udspil; udeladt = Syd. Betyder kun noget, når en hånd har begrænsede indgange. */
+  lead?: Hand;
 }
+export type Entries = number | null;
 export type SituationField = 'known' | 'maxHp';
 export type Seat = 'west' | 'east';
+export type DeclarerSeat = 'north' | 'south';
 
 export const KNOWN_MAX = 13;
 export const HP_MAX = 10;
+export const ENTRIES_MAX = 5;
 export const STANDARD: Situation = { known: { west: 0, east: 0 }, maxHp: { west: HP_MAX, east: HP_MAX } };
 
+const unlimited = (s: Situation) => !s.entries || (s.entries.north === null && s.entries.south === null);
+
 export const isStandard = (s: Situation) =>
-  s.known.west === 0 && s.known.east === 0 && s.maxHp.west === HP_MAX && s.maxHp.east === HP_MAX;
+  s.known.west === 0 && s.known.east === 0 && s.maxHp.west === HP_MAX && s.maxHp.east === HP_MAX && unlimited(s);
+
+/**
+ * Situationen, som den virker for kombinationen: en hånd med mindst lige så mange indgange, som den har kort, er
+ * ubegrænset (hvert udspil fra hånden bruger et af dens kort). Er begge hænder ubegrænsede, fjernes forbindelserne,
+ * så svaret er præcis som uden dem.
+ */
+export function situationFor(north: readonly Rank[], south: readonly Rank[], s: Situation): Situation {
+  if (!s.entries) return s;
+  const entries = {
+    north: s.entries.north !== null && s.entries.north < north.length ? s.entries.north : null,
+    south: s.entries.south !== null && s.entries.south < south.length ? s.entries.south : null,
+  };
+  const { entries: _entries, lead, ...rest } = s;
+  return entries.north === null && entries.south === null ? rest : { ...rest, entries, lead: lead ?? 'S' };
+}
 
 /** Honnørpoint for et kort i farven: E 4, K 3, D 2, B 1, ellers 0. */
 export const honorPoints = (rank: Rank) => (rank >= 11 ? rank - 10 : 0);
@@ -39,11 +66,14 @@ export const hpBinds = (north: readonly Rank[], south: readonly Rank[], s: Situa
   return s.maxHp.west < hp || s.maxHp.east < hp;
 };
 
-/** Spillets indstillinger: ledige pladser, og hullerne deles efter honnørpoint, når en grænse binder. */
-export const gameOptionsFor = (north: readonly Rank[], south: readonly Rank[], s: Situation) => ({
-  vacant: vacantOf(s),
-  splitHonors: hpBinds(north, south, s),
-});
+/**
+ * Spillets indstillinger: ledige pladser, og hullerne deles efter honnørpoint, når en grænse binder. Har en hånd
+ * begrænsede indgange, følger indgangene og hånden, der er inde, med.
+ */
+export function gameOptionsFor(north: readonly Rank[], south: readonly Rank[], s: Situation) {
+  const { entries, lead } = situationFor(north, south, s);
+  return { vacant: vacantOf(s), splitHonors: hpBinds(north, south, s), ...(entries ? { entries, lead } : {}) };
+}
 
 /**
  * Sidningernes vægt i situationen: den a priori-vægt, spillet har med de ledige pladser, når Vests og Østs
@@ -68,11 +98,13 @@ const inRange = (x: number, max: number) => Number.isInteger(x) && x >= 0 && x <
 
 /**
  * Kan situationen lade sig gøre? Felterne skal ligge i deres intervaller, og mindst én konkret sidning af de manglende
- * kort skal have plads hos Vest og Øst og overholde begge hp-grænser.
+ * kort skal have plads hos Vest og Øst og overholde begge hp-grænser. Forbindelserne gør aldrig en sidning umulig.
  */
 export function isPossible(north: readonly Rank[], south: readonly Rank[], s: Situation): boolean {
   if (![s.known.west, s.known.east].every((x) => inRange(x, KNOWN_MAX))) return false;
   if (![s.maxHp.west, s.maxHp.east].every((x) => inRange(x, HP_MAX))) return false;
+  if (s.entries && ![s.entries.north, s.entries.south].every((x) => x === null || inRange(x, ENTRIES_MAX))) return false;
+  if (s.lead !== undefined && s.lead !== 'N' && s.lead !== 'S') return false;
   const missing = missingCards(north, south);
   const n = missing.length;
   const vacant = vacantOf(s);
@@ -104,3 +136,18 @@ export function step(s: Situation, field: SituationField, seat: Seat, delta: 1 |
 /** Kan trinvælgeren trykkes? Et tryk, der ville gøre situationen umulig, er ikke muligt. */
 export const canStep = (north: readonly Rank[], south: readonly Rank[], s: Situation, field: SituationField, seat: Seat, delta: 1 | -1) =>
   isPossible(north, south, step(s, field, seat, delta));
+
+/** Indgangene efter et tryk på − eller + i et felt: "ubegrænset" står over 5. */
+export function stepEntries(s: Situation, seat: DeclarerSeat, delta: 1 | -1): Situation {
+  const entries = s.entries ?? { north: null, south: null };
+  const now = entries[seat];
+  const next = now === null ? ENTRIES_MAX + 1 + delta : now + delta;
+  return { ...s, entries: { ...entries, [seat]: next > ENTRIES_MAX ? null : next } };
+}
+
+/** Kan trinvælgeren for indgange trykkes? Over "ubegrænset" og under 0 kan den ikke. */
+export function canStepEntries(north: readonly Rank[], south: readonly Rank[], s: Situation, seat: DeclarerSeat, delta: 1 | -1) {
+  const now = s.entries?.[seat] ?? null;
+  if ((now === null && delta === 1) || (now === 0 && delta === -1)) return false;
+  return isPossible(north, south, stepEntries(s, seat, delta));
+}

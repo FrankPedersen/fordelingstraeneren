@@ -7,6 +7,10 @@ import type { LineStep } from '../solver/lines';
 /**
  * Spil den selv (opgavetype 7): kortene gives efter sidningernes chance, spilføreren spiller ud fra den hånd, han vil,
  * og lægger 3. håndens kort; modspillerne lægger efter normalt modspil (SPEC-farvebehandling.md, Matematik).
+ *
+ * Åbnet fra Analyse med begrænsede forbindelser (SPEC-forbindelser.md) følger spillet reglerne: udspil fra hånden, der
+ * er inde, er gratis, et udspil fra den anden hånd bruger en indgang, og vinder modspillet, er ingen hånd inde. Kan ingen
+ * hånd med kort nås, er spillet slut.
  */
 
 export type Hand = 'N' | 'S';
@@ -40,6 +44,14 @@ export interface PlayState {
   current: { leader: Hand; lead: Rank; second: Rank } | null;
   /** Spilførerens stik. */
   won: number;
+  /** Forbindelserne, når de er begrænsede: hånden, der er inde (null: modspillet vandt), og indgangene (Infinity = ubegrænset). */
+  connections?: { inde: Hand | null; entries: Record<Hand, number> };
+}
+
+/** Forbindelserne fra situationen i Analyse: indgange til Nord og Syd (null = ubegrænset) og hånden, der er inde. */
+export interface PlayConnections {
+  entries: { north: number | null; south: number | null };
+  lead: Hand;
 }
 
 const desc = (cards: readonly Rank[]) => [...cards].sort((a, b) => b - a);
@@ -72,8 +84,11 @@ export function dealCards(item: BankItem, rng: Rng, weights?: readonly number[])
   return { west: desc(west), east: desc(east), layout };
 }
 
-export function startPlay(item: BankItem, deal: Deal): PlayState {
-  return { north: desc(item.north), south: desc(item.south), west: deal.west, east: deal.east, deal, tricks: [], current: null, won: 0 };
+export function startPlay(item: BankItem, deal: Deal, connections?: PlayConnections): PlayState {
+  const state: PlayState = { north: desc(item.north), south: desc(item.south), west: deal.west, east: deal.east, deal, tricks: [], current: null, won: 0 };
+  if (!connections) return state;
+  const entries = { N: connections.entries.north ?? Infinity, S: connections.entries.south ?? Infinity };
+  return { ...state, connections: { inde: connections.lead, entries } };
 }
 
 /** Alle kort, der endnu ikke er spillet (stikkets kort tæller som spillet). */
@@ -85,15 +100,29 @@ const handOf = (s: PlayState, hand: Hand) => (hand === 'N' ? s.north : s.south);
 const other = (hand: Hand): Hand => (hand === 'N' ? 'S' : 'N');
 const without = (cards: readonly Rank[], card: Rank) => cards.filter((c) => c !== card);
 
-/** Spillet er slut, når spilføreren ikke har flere kort. */
-export function finished(s: PlayState): boolean {
-  return !s.north.length && !s.south.length && !s.current;
+/** Kan spilføreren spille ud fra hånden? Den har kort, og uden begrænsning altid; ellers er den inde eller har en indgang. */
+export function canLead(s: PlayState, hand: Hand): boolean {
+  if (s.current || !handOf(s, hand).length) return false;
+  return !s.connections || s.connections.inde === hand || s.connections.entries[hand] >= 1;
 }
 
-/** Spilføreren spiller ud; 2. hånd lægger efter normalt modspil. */
+/** Spillet er slut, når spilføreren ikke har flere kort, eller når ingen hånd med kort kan nås. */
+export function finished(s: PlayState): boolean {
+  if (s.current) return false;
+  return (!s.north.length && !s.south.length) || (!canLead(s, 'N') && !canLead(s, 'S'));
+}
+
+/** Spilføreren spiller ud; 2. hånd lægger efter normalt modspil. Et udspil fra hånden, der ikke er inde, bruger en indgang. */
 export function playLead(s: PlayState, hand: Hand, card: Rank, rng: Rng): PlayState {
-  if (s.current || !handOf(s, hand).includes(card)) throw new Error('Udspillet er ikke muligt');
-  const after = { ...s, north: hand === 'N' ? without(s.north, card) : s.north, south: hand === 'S' ? without(s.south, card) : s.south };
+  if (!canLead(s, hand) || !handOf(s, hand).includes(card)) throw new Error('Udspillet er ikke muligt');
+  const c = s.connections;
+  const connections = c && c.inde !== hand ? { ...c, entries: { ...c.entries, [hand]: c.entries[hand] - 1 } } : c;
+  const after = {
+    ...s,
+    north: hand === 'N' ? without(s.north, card) : s.north,
+    south: hand === 'S' ? without(s.south, card) : s.south,
+    ...(connections ? { connections } : {}),
+  };
   const defender = hand === 'N' ? 'east' : 'west';
   const second = pickCard(secondHandPlay(after[defender], card, unplayed(after)), rng.next());
   return { ...after, [defender]: without(after[defender], second), current: { leader: hand, lead: card, second } };
@@ -118,7 +147,16 @@ export function playThird(s: PlayState, card: Rank, rng: Rng): PlayState {
   const winner = seats[cards.indexOf(Math.max(...cards))];
   const trick: PlayedTrick = { leader: current.leader, lead: current.lead, second: current.second, third: card, fourth, winner };
   const ours = winner === 'N' || winner === 'S';
-  return { ...after, [defender]: without(after[defender], fourth), current: null, tricks: [...s.tricks, trick], won: s.won + (ours ? 1 : 0) };
+  // Vinder spilføreren, er hånden med det vindende kort inde; vinder modspillet, er ingen hånd inde.
+  const connections = after.connections && { ...after.connections, inde: ours ? (winner as Hand) : null };
+  return {
+    ...after,
+    [defender]: without(after[defender], fourth),
+    current: null,
+    tricks: [...s.tricks, trick],
+    won: s.won + (ours ? 1 : 0),
+    ...(connections ? { connections } : {}),
+  };
 }
 
 /** Et kort efter linjeformatet: "low", "high" eller et bestemt kort. */
