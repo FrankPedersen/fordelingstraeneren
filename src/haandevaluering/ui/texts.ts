@@ -1,11 +1,12 @@
 import type { Card } from '../../domain/cards';
 import { getLang } from '../../i18n';
 import type { Exercise } from '../model/generator';
-import type { Decision } from '../model/pmodel';
+import type { Decision, Form } from '../model/pmodel';
 import type { HeImportError } from '../storage';
 import type { Terms } from '../training/scoring';
 
 const SUITS = ['♠', '♥', '♦', '♣'];
+const lowerFirst = (text: string) => text.charAt(0).toLowerCase() + text.slice(1);
 
 /** Kortets værdi: 0 = 2 … 8 = 10, 9 = knægt, 10 = dame, 11 = konge, 12 = es. */
 const rankWith = (letters: readonly string[]) => (rank: number) => (rank >= 9 ? letters[rank - 9] : `${rank + 2}`);
@@ -40,8 +41,8 @@ const DA = {
     1: 'honnørpoint og makkers krav',
     2: 'fordelingsled, og hvornår de må lægges til',
     3: 'niveaubeslutningen og spildte værdier',
-    4: 'farve eller sans',
-    5: 'blandede opgaver',
+    4: 'farve eller sans og sammenlign metoder',
+    5: 'turneringsform og blandede opgaver',
   } as Record<number, string>,
   streak: 'Streak',
   daysInRow: (n: number): string => (n === 1 ? 'dag i træk' : 'dage i træk'),
@@ -99,6 +100,13 @@ const DA = {
   addPrompt: 'Hvilke led gælder for din hånd nu?',
   terms: { honors: 'Kun honnørpoint', distribution: 'Honnørpoint + fordeling', notrump: 'Sansmodellen' } as Record<Terms, string>,
   decisionPrompt: 'Hvilket niveau?',
+  // Opgave 8: Sammenlign metoder.
+  methods: { hcp: 'HCP', zar: 'Zar' },
+  methodLine: (name: string, you: number, partner: number, total: number, unit: string, decision: string, limit: number) =>
+    `${name}: ${you} + ${partner} = ${total} ${unit} → ${decision} (grænse ${limit})`,
+  comparePrompt: 'HCP og Zar er uenige. Hvem har ret?',
+  // Opgave 9: Turneringsform.
+  forms: { impVulnerable: 'Holdturnering (IMP) i zonen', impNotVulnerable: 'Holdturnering (IMP) uden for zonen', pairs: 'Parturnering' } as Record<Form, string>,
   decisions: { partscore: 'Delkontrakt', game: 'Udgang', slam: 'Lilleslem', grand: 'Storeslem' } as Record<Decision, string>,
   partnerPrompt: (p: string) => `Du har ${p}. Hvad skal makker have til udgang?`,
   strainPrompt: 'Hvilken udgang?',
@@ -129,6 +137,17 @@ const DA = {
   shortSuit: (length: number, suit: string) => `${['renonce', 'singleton', 'dobbeltton'][length]} i ${suit}`,
   wastedPart: (points: string, kings: readonly string[]) => `spildte værdier ${points} (${kings.join(' og ')} over for makkers korthed)`,
   pFacit: (parts: readonly string[], p: string) => `${parts.join(', ')}: p = ${p}.`,
+  pHand: (who: string, parts: readonly string[], p: string) => `${who}: ${lowerFirst(parts.join(', '))}, p = ${p}.`,
+  compareRight: (method: string) => `${method} har ret.`,
+  hcpTooHigh: (dist: string, adj: string, hcp: number, P: string) =>
+    `HCP overså, at fordelingen giver for lidt: trumflængde og korthed giver ${dist} og esser, damer, knægte og tiere ${adj}, så ${hcp} HCP bliver kun P = ${P}.`,
+  hcpTooLow: (dist: string, adj: string, hcp: number, P: string) =>
+    `HCP overså fordelingen: trumflængde og korthed giver ${dist} og esser, damer, knægte og tiere ${adj}, så ${hcp} HCP bliver P = ${P}.`,
+  zarTooHigh: (length: number, controls: number, dist: string) =>
+    `Zar overså, at længde og kontroller ikke er det samme som en fit: Zar giver ${length} ZP for længde og ${controls} ZP for kontroller, men P giver kun ${dist} for trumflængde og korthed i sidefarverne.`,
+  zarTooLow: (length: number, controls: number, dist: string) =>
+    `Zar overså fitten: P giver ${dist} for trumflængde og korthed i sidefarverne, mens Zar kun giver ${length} ZP for længde og ${controls} ZP for kontroller.`,
+  formFacit: (form: string, percent: number, contract: string, limit: string) => `${form}: udgang er rigtig fra ca. ${percent} % for ${contract}, dvs. P ≥ ${limit}.`,
   trumpShortNote: 'Korthed i trumffarven tæller ikke: en kort trumffarve giver ingen stjælestik.',
   onlyKingNote: 'Kun kongen spildes: en dame eller knægt over for makkers korthed koster ikke noget.',
   partnerFacit: (game: string, you: string, needs: string) => `${game} − ${you} = ${needs}: makker skal have ${needs}.`,
@@ -209,7 +228,7 @@ const DA = {
     settings: 'Dit niveau og Håndevalueringens egen eksport og import.',
     data: 'Håndevaluering har sine egne data. Eksportér en kopi som fil; en import viser først et resumé og erstatter så dataene her. De andre spors data røres ikke.',
     level:
-      'Niveau 1: honnørpoint og hvad makker skal have. 2: fordelingsled, og hvornår de må lægges til. 3: niveaubeslutningen og spildte værdier. 4: farve eller sans. 5: blandede opgaver.',
+      'Niveau 1: honnørpoint og hvad makker skal have. 2: fordelingsled, og hvornår de må lægges til. 3: niveaubeslutningen og spildte værdier. 4: farve eller sans og sammenlign metoder. 5: turneringsform og blandede opgaver.',
     exercises: {
       honors: 'Tast honnørpointene: E 5, K 3, D 1½, B ½ og 10 ¼. Genvejen er HCP + 1 pr. es − ½ pr. dame − ½ pr. knægt + ¼ pr. tier. Inden for 8 s giver 10 XP, ellers 5.',
       distribution:
@@ -220,8 +239,9 @@ const DA = {
       partner: 'Udgang kræver P = 28½, så makker skal have 28½ minus dine point. Tast svaret med ½ og ¼.',
       strain: 'Fit først: med en 8+ major-fit giver farvekontrakten 2–4 stik mere end sans. Uden major-fit og med alle fire farver stoppet er 3NT rigtigt.',
       wasted: 'Makker har vist korthed. En konge i den farve er spildt og koster 1; en dame eller knægt koster ikke noget. Tast din p igen.',
-      compare: 'Samme hånd regnet med HCP, Zar og P: hvilken metode giver den rigtige kontrakt? Kommer i en senere version.',
-      form: 'Niveaubeslutningen med zone og holdturnering eller parturnering. Kommer i en senere version.',
+      compare:
+        'Begge hænder med fit, og HCP og Zar med tal og beslutning. De to er uenige: regn P, og vælg den metode, der giver P-modellens kontrakt. Udgang fra 25 HCP (foreløbig), 52 ZP og P = 28½.',
+      form: 'Niveaubeslutningen med turneringsformen: ved holdturnering i zonen er udgang rigtig fra P ≈ 27½ (ca. 37 % for 4M), uden for zonen fra 28 (45 %) og ved parturnering fra 28½ (50 %). Inden for ½ point af grænsen er begge nabovalg rigtige.',
     } as Record<Exercise, string>,
     count:
       'Regnskabet for dig og makker: honnørpoint, trumflængde (1½ pr. trumf ud over 4), korthed i sidefarverne og spildte konger. p er summen, og P er parrets samlede p. Stikforventningen kommer fra tabellen i MODEL.md.',
@@ -259,8 +279,8 @@ const EN: Texts = {
     1: "honour points and partner's needs",
     2: 'distribution points, and when they may be added',
     3: 'the level decision and wasted values',
-    4: 'suit or notrump',
-    5: 'mixed tasks',
+    4: 'suit or notrump and compare methods',
+    5: 'form of scoring and mixed tasks',
   },
   streak: 'Streak',
   daysInRow: (n: number): string => (n === 1 ? 'day in a row' : 'days in a row'),
@@ -314,6 +334,11 @@ const EN: Texts = {
   addPrompt: 'Which terms count for your hand now?',
   terms: { honors: 'Honour points only', distribution: 'Honour points + distribution', notrump: 'The notrump model' },
   decisionPrompt: 'Which level?',
+  methods: { hcp: 'HCP', zar: 'Zar' },
+  methodLine: (name: string, you: number, partner: number, total: number, unit: string, decision: string, limit: number) =>
+    `${name}: ${you} + ${partner} = ${total} ${unit} → ${decision} (limit ${limit})`,
+  comparePrompt: 'HCP and Zar disagree. Which is right?',
+  forms: { impVulnerable: 'Teams (IMPs), vulnerable', impNotVulnerable: 'Teams (IMPs), not vulnerable', pairs: 'Pairs' } as Record<Form, string>,
   decisions: { partscore: 'Partscore', game: 'Game', slam: 'Small slam', grand: 'Grand slam' },
   partnerPrompt: (p: string) => `You have ${p}. What does partner need for game?`,
   strainPrompt: 'Which game?',
@@ -343,6 +368,17 @@ const EN: Texts = {
   shortSuit: (length: number, suit: string) => `${['void', 'singleton', 'doubleton'][length]} in ${suit}`,
   wastedPart: (points: string, kings: readonly string[]) => `wasted values ${points} (${kings.join(' and ')} opposite partner's shortness)`,
   pFacit: (parts: readonly string[], p: string) => `${parts.join(', ')}: p = ${p}.`,
+  pHand: (who: string, parts: readonly string[], p: string) => `${who}: ${lowerFirst(parts.join(', '))}, p = ${p}.`,
+  compareRight: (method: string) => `${method} is right.`,
+  hcpTooHigh: (dist: string, adj: string, hcp: number, P: string) =>
+    `HCP missed that the distribution adds too little: trump length and shortness add ${dist} and aces, queens, jacks and tens ${adj}, so ${hcp} HCP is only P = ${P}.`,
+  hcpTooLow: (dist: string, adj: string, hcp: number, P: string) =>
+    `HCP missed the distribution: trump length and shortness add ${dist} and aces, queens, jacks and tens ${adj}, so ${hcp} HCP becomes P = ${P}.`,
+  zarTooHigh: (length: number, controls: number, dist: string) =>
+    `Zar missed that length and controls are not the same as a fit: Zar gives ${length} ZP for length and ${controls} ZP for controls, but P gives only ${dist} for trump length and shortness in the side suits.`,
+  zarTooLow: (length: number, controls: number, dist: string) =>
+    `Zar missed the fit: P gives ${dist} for trump length and shortness in the side suits, while Zar gives only ${length} ZP for length and ${controls} ZP for controls.`,
+  formFacit: (form: string, percent: number, contract: string, limit: string) => `${form}: game is right from about ${percent} % for ${contract}, i.e. P ≥ ${limit}.`,
   trumpShortNote: 'Shortness in the trump suit does not count: a short trump suit gives no ruffs.',
   onlyKingNote: "Only the king is wasted: a queen or jack opposite partner's shortness costs nothing.",
   partnerFacit: (game: string, you: string, needs: string) => `${game} − ${you} = ${needs}: partner needs ${needs}.`,
@@ -420,7 +456,7 @@ const EN: Texts = {
     settings: 'Your level and the separate export and import of your Hand evaluation data.',
     data: 'Hand evaluation has its own data. Export a copy as a file; an import first shows a summary and then replaces the data here. The data of the other tracks is not touched.',
     level:
-      "Level 1: honour points and what partner needs. 2: distribution points, and when they may be added. 3: the level decision and wasted values. 4: suit or notrump. 5: mixed tasks.",
+      "Level 1: honour points and what partner needs. 2: distribution points, and when they may be added. 3: the level decision and wasted values. 4: suit or notrump and compare methods. 5: form of scoring and mixed tasks.",
     exercises: {
       honors: 'Type the honour points: A 5, K 3, Q 1½, J ½ and 10 ¼. The shortcut is HCP + 1 per ace − ½ per queen − ½ per jack + ¼ per ten. Within 8 s gives 10 XP, otherwise 5.',
       distribution:
@@ -431,8 +467,9 @@ const EN: Texts = {
       partner: 'Game needs P = 28½, so partner needs 28½ minus your points. Type the answer with ½ and ¼.',
       strain: 'Fit first: with an 8+ major fit the suit contract takes 2–4 tricks more than notrump. Without a major fit and with all four suits stopped, 3NT is right.',
       wasted: 'Partner has shown shortness. A king in that suit is wasted and costs 1; a queen or jack costs nothing. Type your p again.',
-      compare: 'The same hand valued with HCP, Zar and P: which method gives the right contract? Coming in a later version.',
-      form: 'The level decision with vulnerability and teams or pairs scoring. Coming in a later version.',
+      compare:
+        "Both hands with a fit, and HCP and Zar with their totals and decisions. The two disagree: work out P and choose the method that gives the P-model's contract. Game from 25 HCP (provisional), 52 ZP and P = 28½.",
+      form: 'The level decision with the form of scoring: at teams vulnerable, game is right from P ≈ 27½ (about 37% for 4M), not vulnerable from 28 (45%) and at pairs from 28½ (50%). Within ½ point of the limit both neighbouring choices are right.',
     },
     count:
       "The count for you and partner: honour points, trump length (1½ per trump beyond 4), shortness in the side suits and wasted kings. p is the sum, and P is the pair's total. The expected tricks come from the table in MODEL.md.",

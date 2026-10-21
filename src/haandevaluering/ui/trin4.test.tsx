@@ -34,7 +34,7 @@ describe('Opgave 8: Sammenlign metoder', () => {
     const onAnswer = vi.fn();
     render(<Opgave task={EXAMPLE} onAnswer={onAnswer} />);
     expect(document.querySelectorAll('.he-hand')).toHaveLength(2);
-    expect(screen.getByText('Fit fundet i ♥')).toBeTruthy();
+    expect(document.body.textContent).toContain('Fit fundet i ♥');
     expect(screen.getByText('HCP: 12 + 14 = 26 HCP → udgang (grænse 25)')).toBeTruthy();
     expect(screen.getByText('Zar: 24 + 26 = 50 ZP → delkontrakt (grænse 52)')).toBeTruthy();
     expect(screen.getByText('HCP og Zar er uenige. Hvem har ret?')).toBeTruthy();

@@ -266,12 +266,19 @@ export function pForGameChance(percent: number): number {
   return a.P + ((b.P - a.P) * (percent - a['4M'])) / (b['4M'] - a['4M']);
 }
 
+/** Chancen for 4M, hvor udgang bliver rigtig ved turneringsformen (SPEC, afklaret fagligt valg 4). */
+export function gameChance(form: Form): number {
+  const t = model.turnering;
+  return form === 'impVulnerable' ? t.impIZonen : form === 'impNotVulnerable' ? t.impUdenForZonen : t.par;
+}
+
 /** Udgangsgrænsen for turneringsformen: chancen fra specen omregnet til P og rundet til nærmeste halve point. */
 export function gameThreshold(form: Form): number {
-  const t = model.turnering;
-  const percent = form === 'impVulnerable' ? t.impIZonen : form === 'impNotVulnerable' ? t.impUdenForZonen : t.par;
-  return Math.round(pForGameChance(percent) * 2) / 2;
+  return Math.round(pForGameChance(gameChance(form)) * 2) / 2;
 }
+
+/** Grænserne ved turneringsformen: udgang efter formen, slem og storeslem som altid (opgave 9). */
+export const formLimits = (form: Form): Limits => ({ ...LIMITS, game: gameThreshold(form) });
 
 // --- Sansmodellen ---
 

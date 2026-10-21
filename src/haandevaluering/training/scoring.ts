@@ -1,11 +1,13 @@
-import type { Exercise, HandTask } from '../model/generator';
-import { pairP } from '../model/generator';
+import type { Exercise, HandTask, Method, MethodCount } from '../model/generator';
+import { compareMethods, pairP } from '../model/generator';
 import {
   chances,
   contractFor,
   controlsOf,
   expectedTricks,
   fitLength,
+  formLimits,
+  gameChance,
   partnerNeeds,
   pOf,
   rightDecisions,
@@ -13,9 +15,13 @@ import {
   stoppedSuits,
   strainFor,
   trumpGain,
+  zarPoints,
+  LIMITS,
   type Chances,
   type Controls,
+  type Limits,
   type Decision,
+  type Form,
   type PBreakdown,
   type Shortcut,
   type Strain,
@@ -34,24 +40,49 @@ export type HandAnswer =
   | { exercise: 'honors' | 'distribution' | 'partner' | 'wasted'; points: number }
   | { exercise: 'add'; terms: Terms }
   | { exercise: 'decision'; decision: Decision }
-  | { exercise: 'strain'; strain: Strain };
+  | { exercise: 'strain'; strain: Strain }
+  | { exercise: 'compare'; method: Method }
+  | { exercise: 'form'; decision: Decision };
+
+/** Niveaubeslutningens facit; opgave 9 har også turneringsformen. */
+interface DecisionFacit {
+  P: number;
+  you: PBreakdown;
+  partner: PBreakdown;
+  tricks: number;
+  chances: Chances;
+  controls: Controls;
+  contract: Decision;
+  /** De rigtige svar: modellens valg og nabovalget inden for ½ point af en grænse. */
+  right: Decision[];
+}
 
 export type Facit =
   | { exercise: 'honors'; points: number; shortcut: Shortcut }
   | { exercise: 'distribution' | 'wasted'; points: number; you: PBreakdown }
   | { exercise: 'partner'; you: number; points: number }
   | { exercise: 'add'; terms: Terms }
+  | ({ exercise: 'decision' } & DecisionFacit)
+  | ({
+      exercise: 'form';
+      form: Form;
+      /** Formens udgangsgrænse og chancen for 4M, den svarer til. */
+      gameLimit: number;
+      gameChance: number;
+    } & DecisionFacit)
   | {
-      exercise: 'decision';
+      exercise: 'compare';
+      hcp: MethodCount;
+      zar: MethodCount;
+      /** Zars point for længde (a + b og a − d) og kontroller, summeret over begge hænder. */
+      zarLength: number;
+      zarControls: number;
       P: number;
       you: PBreakdown;
       partner: PBreakdown;
       tricks: number;
-      chances: Chances;
-      controls: Controls;
-      contract: Decision;
-      /** De rigtige svar: modellens valg og nabovalget inden for ½ point af en grænse. */
-      right: Decision[];
+      decision: Decision;
+      right: Method;
     }
   | {
       exercise: 'strain';
@@ -84,19 +115,34 @@ export function facitOf(task: HandTask): Facit {
     }
     case 'add':
       return { exercise: 'add', terms: task.scenario === 'no-fit' ? 'honors' : task.scenario === 'fit' ? 'distribution' : 'notrump' };
-    case 'decision': {
-      const P = pairP(task.hands, task.trump);
-      const controls = controlsOf(S, N, task.trump);
+    case 'decision':
+      return { exercise: 'decision', ...decisionFacit(task.hands, task.trump) };
+    case 'form': {
+      const limits = formLimits(task.form);
       return {
-        exercise: 'decision',
-        P,
+        exercise: 'form',
+        form: task.form,
+        gameLimit: limits.game,
+        gameChance: gameChance(task.form),
+        ...decisionFacit(task.hands, task.trump, limits),
+      };
+    }
+    case 'compare': {
+      const m = compareMethods(task.hands, task.trump);
+      if (m.right === null) throw new Error(`Opgave 8 uden facit (seed ${task.seed})`);
+      const zar = [zarPoints(S), zarPoints(N)];
+      return {
+        exercise: 'compare',
+        hcp: m.hcp,
+        zar: m.zar,
+        zarLength: zar.reduce((a, z) => a + z.long + z.spread, 0),
+        zarControls: zar.reduce((a, z) => a + z.controls, 0),
+        P: m.P,
         you: pOf(S, { trump: task.trump }),
         partner: pOf(N, { trump: task.trump }),
-        tricks: expectedTricks(P),
-        chances: chances(P),
-        controls,
-        contract: contractFor(P, controls),
-        right: rightDecisions(P, controls),
+        tricks: expectedTricks(m.P),
+        decision: m.decision,
+        right: m.right,
       };
     }
     case 'strain': {
@@ -106,6 +152,22 @@ export function facitOf(task: HandTask): Facit {
       return { exercise: 'strain', strain, stopped: stoppedSuits(S, N), trumps, gain: trumps === null ? null : trumpGain(trumps) };
     }
   }
+}
+
+/** Niveaubeslutningen for parret med fitten efter grænserne (opgave 4 med de faste, opgave 9 med formens). */
+function decisionFacit(hands: HandTask['hands'], trump: number, limits: Limits = LIMITS): DecisionFacit {
+  const P = pairP(hands, trump);
+  const controls = controlsOf(hands.S, hands.N, trump);
+  return {
+    P,
+    you: pOf(hands.S, { trump }),
+    partner: pOf(hands.N, { trump }),
+    tricks: expectedTricks(P),
+    chances: chances(P),
+    controls,
+    contract: contractFor(P, controls, limits),
+    right: rightDecisions(P, controls, limits),
+  };
 }
 
 export function isRight(task: HandTask, answer: HandAnswer): boolean {
@@ -120,7 +182,10 @@ export function isRight(task: HandTask, answer: HandAnswer): boolean {
     case 'add':
       return (answer as { terms: Terms }).terms === facit.terms;
     case 'decision':
+    case 'form':
       return facit.right.includes((answer as { decision: Decision }).decision);
+    case 'compare':
+      return (answer as { method: Method }).method === facit.right;
     case 'strain':
       return (answer as { strain: Strain }).strain === facit.strain;
   }
