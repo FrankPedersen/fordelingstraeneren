@@ -2,9 +2,10 @@ import { tx } from '../i18n';
 
 /**
  * Sidefoden (SPEC-forside-spor.md, Sidefoden): den samme sorte sidefod som på www.kontraktbridge.dk, nederst på forsiden
- * og sporenes skærme, ikke i en session og ikke i dialoger. Om mig, Trænere med de samme fem links som på
- * www.kontraktbridge.dk og Kontakt. De fire spor åbnes i appen med deres adresse (`#fordeling` osv.), så de også virker
- * offline; links ud af appen åbnes i samme vindue og virker kun online.
+ * og sporenes skærme, ikke i en session og ikke i dialoger. Om mig, Trænere med de samme links som på
+ * www.kontraktbridge.dk og Kontakt. De fire spor og modulet Analyse (SPEC-analyse-modul.md) åbnes i appen med deres
+ * adresse (`#fordeling`, `#analyse` osv.), så de også virker offline; links ud af appen åbnes i samme vindue og virker
+ * kun online.
  */
 export function Footer() {
   const tracks = [
@@ -12,6 +13,7 @@ export function Footer() {
     { href: '#pointregnskab', title: tx('Pointregnskab', 'Point count') },
     { href: '#farvebehandling', title: tx('Farvebehandling', 'Suit combinations') },
     { href: '#haandevaluering', title: tx('Håndevaluering', 'Hand evaluation') },
+    { href: '#analyse', title: tx('Analyse', 'Analysis') },
   ];
   return (
     <footer className="site-footer">

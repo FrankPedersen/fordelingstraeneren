@@ -152,7 +152,7 @@ describe('Topbjælken og sidefoden', () => {
     expect(footer()).toBeNull();
   }, 30_000);
 
-  it('topbjælken linker til www.kontraktbridge.dk; sidefodens Trænere har de samme 5 links som www.kontraktbridge.dk', () => {
+  it('topbjælken linker til www.kontraktbridge.dk; sidefodens Trænere har de samme links som www.kontraktbridge.dk', () => {
     render(<App />);
     expect(within(topbar() as HTMLElement).getByRole('link', { name: 'Kontraktbridge' }).getAttribute('href')).toBe('https://www.kontraktbridge.dk/');
     expect(topbar()!.textContent).toBe('7NTKontraktbridgeFordelingstræneren');
@@ -163,6 +163,8 @@ describe('Topbjælken og sidefoden', () => {
       ['Pointregnskab', '#pointregnskab'],
       ['Farvebehandling', '#farvebehandling'],
       ['Håndevaluering', '#haandevaluering'],
+      // Analyse som modul (SPEC-analyse-modul.md, trin 2).
+      ['Analyse', '#analyse'],
     ]);
     expect(within(footer() as HTMLElement).queryByText('Aftaler og notater')).toBeNull();
     expect(within(footer() as HTMLElement).getByRole('link', { name: 'frank.steen.pedersen@gmail.com' }).getAttribute('href')).toBe('mailto:frank.steen.pedersen@gmail.com');

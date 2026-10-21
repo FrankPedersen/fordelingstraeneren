@@ -17,7 +17,8 @@ function storageOf(values: Record<string, string>) {
 }
 
 const NOON = new Date(2026, 9, 17, 12).getTime(); // lørdag 17. oktober 2026 kl. 12
-const ORDER = TRACK_CARDS.map((c) => c.track);
+// Sporene med status; modulet Analyse har ingen (SPEC-analyse-modul.md).
+const ORDER = TRACK_CARDS.filter((c) => c.status !== false).map((c) => c.track);
 
 describe('Status fra sporene (SPEC-forside-spor.md)', () => {
   it('uden data er alle fire spor "ikke startet" uden tal', () => {

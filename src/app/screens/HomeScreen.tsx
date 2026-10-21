@@ -55,12 +55,15 @@ function dayText(day: string): string {
 
 /**
  * Forsiden (SPEC-forside-spor.md): topbjælken, hovedet, I dag (eller Velkomst ved første besøg), de fire spor som kort i
- * grupperne Optælling, Spilføring og Vurdering, Vejledning, Indstillinger og sidefoden. Fordelingssporets elementer står
- * på Fordeling-skærmen (`DistributionScreen.tsx`). Forsiden læser sporenes data, men skriver intet.
+ * grupperne Optælling, Spilføring og Vurdering, Vejledning, Indstillinger og sidefoden. Et kort uden status (modulet
+ * Analyse, SPEC-analyse-modul.md) står i sin gruppe, men tælles ikke med i I dag og Velkomst. Fordelingssporets
+ * elementer står på Fordeling-skærmen (`DistributionScreen.tsx`). Forsiden læser sporenes data, men skriver intet.
  */
 export function HomeScreen(props: HomeScreenProps) {
   const { saved, updateReady, onUpdate, onStart, onClub, onSettings, onLanguage, onGuide, onOpen, onStartTrack } = props;
   const cards = props.cards ?? TRACK_CARDS;
+  // Sporene med status; kun de tæller i I dag og Velkomst og kan foreslås til dagens session.
+  const tracked = cards.filter((card) => card.status !== false);
   const statuses = props.statuses ?? trackStatuses(saved, readableStorage(), Date.now());
   const today = dayOf(Date.now(), saved.settings.dayStartsAtHour);
   const other: Lang = getLang() === 'da' ? 'en' : 'da';
@@ -68,13 +71,13 @@ export function HomeScreen(props: HomeScreenProps) {
   const statusOf = (track: string): TrackStatus =>
     statuses[track] ?? { track, started: false, streak: 0, level: null, grade: null, doneToday: false, due: 0, fresh: 0 };
 
-  const firstVisit = cards.every((card) => !statusOf(card.track).started);
+  const firstVisit = tracked.every((card) => !statusOf(card.track).started);
   const overview = todayOverview(
-    cards.map((c) => c.track),
+    tracked.map((c) => c.track),
     statuses,
   );
-  const nextCard = cards.find((c) => c.track === overview.next);
-  const firstCard = cards[0];
+  const nextCard = tracked.find((c) => c.track === overview.next);
+  const firstCard = tracked[0];
   /** Starter det næste spors session direkte: Fordelings her, de andre sporers på deres skærm. */
   const startTrack = (card: TrackCard) => (card.track === 'fordeling' ? onStart() : (onStartTrack ?? onOpen)?.(card.screen));
 
@@ -97,7 +100,9 @@ export function HomeScreen(props: HomeScreenProps) {
     return <span className="track-badge waiting">{tx('Ikke trænet i dag', 'Not trained today')}</span>;
   }
 
+  /** Et spors kort; et kort uden status (SPEC-analyse-modul.md) har kun navn, pil, beskrivelse og ⓘ. */
   function trackCard(card: TrackCard) {
+    const withStatus = card.status !== false;
     const s = statusOf(card.track);
     const info = `track-${card.track}-info`;
     const level = s.level === null ? null : tx(`Niveau ${s.level}`, `Level ${s.level}`) + (s.grade ? ` · ${GRADE_LABEL[s.grade]}` : '');
@@ -112,7 +117,7 @@ export function HomeScreen(props: HomeScreenProps) {
           </span>
           <span id={info} className="track-card-body">
             <span className="track-card-desc">{both(card.description)}</span>
-            {s.started && (
+            {withStatus && s.started && (
               <span className="track-card-stats">
                 <span>
                   <b>{s.streak}</b> {s.streak === 1 ? tx('dag i træk', 'day in a row') : tx('dage i træk', 'days in a row')}
@@ -120,7 +125,7 @@ export function HomeScreen(props: HomeScreenProps) {
                 {level && <span>{level}</span>}
               </span>
             )}
-            {badge(s)}
+            {withStatus && badge(s)}
           </span>
         </button>
         <Info topic={both(card.title)}>{both(card.help)}</Info>
