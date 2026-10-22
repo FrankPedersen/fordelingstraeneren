@@ -98,16 +98,16 @@ Er en side genereret (fx fra et systemdokument), rettes kilden, og siden bygges 
 
 ## Accepttest
 
-- [ ] www.kontraktbridge.dk/ordbog/ viser 403 opslag, og søgning på "finesse", "knibning" og "kipning" finder alle opslaget Kipning.
-- [ ] Søgning på "blindemand" finder Bordet. Søgning på "indspil" finder Indspil, og Slutspil og Indspil linker til hinanden.
-- [ ] Hvert opslags Relaterede begreber linker til et anker, der findes på siden.
-- [ ] Opslag, hvor Forklaring er den samme som Kort definition, viser kun definitionen.
-- [ ] `build_ordbog.py` fejler, hvis et opslagsord er "Knibning", "Snit" eller "Den blinde".
-- [ ] Sidefoden har kolonnen Opslag med Bridgeordbog på forsiden, Om mig, ordbogen, i Fordelingstræneren og i konventionstræneren, på dansk og engelsk.
-- [ ] Ved 390 px har ordbogssiden og forsiden ingen vandret rulning.
-- [ ] Alle ord i rettelseslisten er rettet, og puljerne er bygget igen med `build_pools.py`.
-- [ ] Fagordstesten består i alle tre repoer og fejler, hvis man skriver "knibning" i en dansk tekst.
-- [ ] `sprogtjek` kører og giver højst de ord, der står i `ordliste.txt`, eller en liste, Frank har set.
+- [x] www.kontraktbridge.dk/ordbog/ viser 403 opslag, og søgning på "finesse", "knibning" og "kipning" finder alle opslaget Kipning.
+- [x] Søgning på "blindemand" finder Bordet. Søgning på "indspil" finder Indspil, og Slutspil og Indspil linker til hinanden.
+- [x] Hvert opslags Relaterede begreber linker til et anker, der findes på siden.
+- [x] Opslag, hvor Forklaring er den samme som Kort definition, viser kun definitionen.
+- [x] `build_ordbog.py` fejler, hvis et opslagsord er "Knibning", "Snit" eller "Den blinde".
+- [x] Sidefoden har kolonnen Opslag med Bridgeordbog på forsiden, Om mig, ordbogen, i Fordelingstræneren og i konventionstræneren, på dansk og engelsk.
+- [x] Ved 390 px har ordbogssiden og forsiden ingen vandret rulning.
+- [x] Alle ord i rettelseslisten er rettet, og puljerne er bygget igen med `build_pools.py` (puljen ff-trial-bids er kun rettet i teksten; se konventionstrænerens kopi af specen, Afklaret 7).
+- [x] Fagordstesten består i alle tre repoer og fejler, hvis man skriver "knibning" i en dansk tekst.
+- [x] `sprogtjek` kører og giver højst de ord, der står i `ordliste.txt`, eller en liste, Frank har set.
 
 ## Afklaret
 
