@@ -44,7 +44,7 @@ describe('Generatoren (SPEC-haandevaluering.md, Generator)', () => {
     expect(makeTask('decision', 1)).not.toEqual(makeTask('decision', 2));
   });
 
-  it('farveopgaverne har en 8+ fit i en major', () => {
+  it('farveopgaverne har et 8+ fit i en major', () => {
     for (const exercise of ['distribution', 'decision', 'partner', 'wasted'] as const) {
       for (const t of tasks(exercise)) expect(majorFit(t.hands.S, t.hands.N), `${exercise} ${t.seed}`).toBe(t.trump);
     }

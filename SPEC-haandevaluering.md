@@ -60,7 +60,7 @@ P = din p + makkers p
 stik ≈ 0,31 × P + 0,75
 ```
 
-Fordelingsleddene (trumflængde og kortfarvepoint) må først lægges til, når fittet er bekræftet. Kortfarvepoint tælles kun i sidefarverne: en kort trumffarve (fx doubleton i en 6-2-fit eller singleton i en 7-1-fit) giver ingen stjælestik og tæller derfor ikke. Trumfleddet regnes som i simuleringernes scripts, så en hånd med færre end 4 trumf får minus (SPEC-haandevaluering-kalibrering.md).
+Fordelingsleddene (trumflængde og kortfarvepoint) må først lægges til, når fittet er bekræftet. Kortfarvepoint tælles kun i sidefarverne: en kort trumffarve (fx doubleton i et 6-2-fit eller singleton i et 7-1-fit) giver ingen stjælestik og tæller derfor ikke. Trumfleddet regnes som i simuleringernes scripts, så en hånd med færre end 4 trumf får minus (SPEC-haandevaluering-kalibrering.md).
 
 **Stikforventning:** appen bruger tabellen nedenfor med lineær interpolation mellem rækkerne, så forventningen aldrig springer. Formlen 0,31 × P + 0,75 bruges kun i forklaringer. Opgaver laves kun for P mellem 24 og 40.
 
@@ -116,7 +116,7 @@ Tabellen beregnes i koden af mønstrene i `src/domain/` (alle 39 mønstre; de 13
 3. **Må det lægges til?** Et kort meldeforløb vises; brugeren vælger, hvilke led der gælder: kun honnørpoint, honnørpoint + fordeling, eller sansmodellen.
 4. **Niveaubeslutningen:** begge hænder vises med bekræftet fit; brugeren vælger delkontrakt, udgang, lilleslem eller storeslem. Facit viser P, stikforventning og chancen som naturlig frekvens, fx "4♠ holder ca. 3 ud af 5 gange".
 5. **Hvad makker skal have:** "Du har 16. Hvad skal makker have til udgang?"
-6. **Farve eller sans:** to hænder med 8+ fit og/eller stoppere; brugeren vælger 4M eller 3NT. Facit (Claude Codes valg): 4M, når der er en 8+ major-fit ("Fit først"); 3NT, når der ikke er en major-fit og alle fire farver er stoppede.
+6. **Farve eller sans:** to hænder med 8+ fit og/eller stoppere; brugeren vælger 4M eller 3NT. Facit (Claude Codes valg): 4M, når der er et 8+ major-fit ("Fit først"); 3NT, når der ikke er et major-fit og alle fire farver er stoppede.
 7. **Spildte værdier:** makker har vist korthed; brugeren regner p igen. Kun kongen koster.
 8. **Sammenlign metoder:** samme hånd regnet med hp, Zar og P; brugeren vælger, hvilken der giver den rigtige kontrakt, og facit forklarer hvorfor. I første version er "den rigtige kontrakt" P-modellens beslutning; med dobbeltdummy-facit i version 2 bliver den fordelingens faktiske resultat. Hp-metoden bruger udgangsgrænsen fra Franks simulering: 23 hp (SPEC-haandevaluering-kalibrering.md).
 9. **Turneringsform:** som opgave 4, men med zone og IMP eller parturnering.
@@ -221,7 +221,7 @@ Accepttest i Vitest:
 - [x] Samme hånd med bekræftet spar-fit: p = 12½ + 1½ + 3 = 17. Før fittet er bekræftet, lægges fordelingsleddene ikke til.
 - [x] P = 29 giver stik ≈ 9,6 og 4M ≈ 58 % (lineær interpolation mellem 28½ og 30), og stikforventningen springer ikke ved tabellens rækker.
 - [x] P = 28½ giver 4M = 50 %, og grænserne 28½, 35 og 41 vælger udgang, lilleslem og storeslem. Fra P = 28 til 29 er både delkontrakt og udgang rigtige.
-- [x] Kortfarvepoint tælles ikke i trumffarven: en 6-2-fit giver ingen doubletonpoint for de 2 trumf, og en 7-1-fit ingen singletonpoint.
+- [x] Kortfarvepoint tælles ikke i trumffarven: et 6-2-fit giver ingen doubletonpoint for de 2 trumf, og et 7-1-fit ingen singletonpoint.
 - [x] Samme hånd i Zar: 12 + 4 + 9 + 4 = 29 ZP, dvs. åbning.
 - [x] Sans: hp + ¼ pr. tier, uden længdepoint.
 - [x] Kortfarvepoint pr. mønster svarer til tabellen og beregnes ud fra mønstrene.

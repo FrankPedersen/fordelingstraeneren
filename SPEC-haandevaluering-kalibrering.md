@@ -74,7 +74,7 @@ Tallene er regnet med appens model og den nye trumflængde.
 
 - [x] Alle eksisterende tests består; tests, der låste den gamle trumflængde, 25 HCP eller es-reglen, er rettet og nævnt under Afklaret.
 - [x] `trumpPoints`: 3 trumf → −1½, 4 → 0, 5 → +1½, 2 → −3, 1 → −4½, 7 → +4½.
-- [x] For parret er trumfleddet 1½ × (fittens længde − 8): 5-3 → 0, 4-4 → 0, 6-2 → 0, 5-4 → +1½, 6-3 → +1½.
+- [x] For parret er trumfleddet 1½ × (fittets længde − 8): 5-3 → 0, 4-4 → 0, 6-2 → 0, 5-4 → +1½, 6-3 → +1½.
 - [x] ♠ E K 7 5 2 ♥ 4 ♦ K D 6 3 ♣ 8 5 2 over for ♠ D 9 6 3 ♥ K 8 7 2 ♦ 9 4 ♣ E 7 3 med fit i ♠: p = 17 og 10½, P = 27½ (uændret, fordi begge har mindst 4 trumf).
 - [x] ♠ E 8 6 ♥ K D 8 ♦ 8 2 ♣ D 10 4 3 2 over for ♠ D B 5 ♥ E 7 6 4 2 ♦ K 7 6 4 ♣ B med fit i ♥: Syds trumfled er −1½ og Nords +1½, P = 25¾ (før 27¼). Opgave 8: HCP 22 → delkontrakt, Zar 52 → udgang, P → delkontrakt, så HCP har ret.
 - [x] `P_MODEL.hcpMetode.udgang` er 23: 23 HCP er udgang, 22 HCP er delkontrakt. Opgave 8 har stadig kun fordelinger, hvor HCP og Zar er uenige, og de har ret lige ofte i generatoren.

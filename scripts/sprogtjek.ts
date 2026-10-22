@@ -28,11 +28,13 @@ function words(text: string): string[] {
   return [...clean.matchAll(WORD)].map((m) => m[0]).filter((w) => w.length >= 3 && w !== w.toUpperCase());
 }
 
+// Et ord som 11-pointshænder giver også ordet pointshænder, som tjekkes.
 const known = new Set(
   readFileSync(`${root}scripts/ordliste.txt`, 'utf8')
     .split(/\r?\n/)
     .map((l) => l.trim().toLowerCase())
-    .filter((l) => l && !l.startsWith('#')),
+    .filter((l) => l && !l.startsWith('#'))
+    .flatMap((l) => [l, ...(l.match(WORD) ?? [])]),
 );
 
 const seen = new Map<string, { count: number; file: string }>();

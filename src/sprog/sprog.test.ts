@@ -36,7 +36,10 @@ describe('Fagordstesten', () => {
     expect(fund('26 HCP')).toEqual([{ word: 'HCP', house: 'hp' }]);
     expect(fund('dobbeltton i ♦')).toEqual([{ word: 'dobbeltton', house: 'doubleton' }]);
     expect(fund('Fitten er bekræftet.')).toEqual([{ word: 'Fitten', house: 'fittet' }]);
-    expect(fund('26 hp, doubleton i ♦, og fittet er bekræftet.')).toEqual([]);
+    expect(fund('ikke det samme som en fit')).toEqual([{ word: 'en fit', house: 'et fit' }]);
+    expect(fund('med en 8+ major-fit')).toEqual([{ word: 'en 8+ major-fit', house: 'et fit' }]);
+    expect(fund('fittens farve')).toEqual([{ word: 'fittens', house: 'fittet' }]);
+    expect(fund('26 hp, doubleton i ♦, og fittet er bekræftet; et 8+ major-fit i en major.')).toEqual([]);
   });
 
   it('engelsk tekst tæller ikke', () => {

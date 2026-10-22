@@ -146,7 +146,7 @@ const DA = {
   hcpTooLow: (dist: string, adj: string, hcp: number, P: string) =>
     `Hp overså fordelingen: trumflængde og korthed giver ${dist} og esser, damer, knægte og tiere ${adj}, så ${hcp} hp bliver P = ${P}.`,
   zarTooHigh: (length: number, controls: number, dist: string) =>
-    `Zar overså, at længde og kontroller ikke er det samme som en fit: Zar giver ${length} ZP for længde og ${controls} ZP for kontroller, men P giver kun ${dist} for trumflængde og korthed i sidefarverne.`,
+    `Zar overså, at længde og kontroller ikke er det samme som et fit: Zar giver ${length} ZP for længde og ${controls} ZP for kontroller, men P giver kun ${dist} for trumflængde og korthed i sidefarverne.`,
   zarTooLow: (length: number, controls: number, dist: string) =>
     `Zar overså fittet: P giver ${dist} for trumflængde og korthed i sidefarverne, mens Zar kun giver ${length} ZP for længde og ${controls} ZP for kontroller.`,
   formFacit: (form: string, percent: number, contract: string, limit: string) => `${form}: udgang er rigtig fra ca. ${percent} % for ${contract}, dvs. P ≥ ${limit}.`,
@@ -242,7 +242,7 @@ const DA = {
       decision:
         'Læg din og makkers p sammen til P. Under 28½ er delkontrakt, fra 28½ udgang, fra 35 lilleslem (højst ét nøglekort må mangle: de fire es og trumfkongen) og fra 41 storeslem (alle fem nøglekort). Inden for ½ point af en grænse er begge nabovalg rigtige.',
       partner: 'Udgang kræver P = 28½, så makker skal have 28½ minus dine point. Tast svaret med ½ og ¼.',
-      strain: 'Fit først: med en 8+ major-fit giver farvekontrakten 2–4 stik mere end sans. Uden major-fit og med alle fire farver stoppet er 3NT rigtigt.',
+      strain: 'Fit først: med et 8+ major-fit giver farvekontrakten 2–4 stik mere end sans. Uden major-fit og med alle fire farver stoppet er 3NT rigtigt.',
       wasted: 'Makker har vist korthed. En konge i den farve er spildt og koster 1; en dame eller knægt koster ikke noget. Tast din p igen.',
       compare:
         'Begge hænder med fit, og hp og Zar med tal og beslutning. De to er uenige: regn P, og vælg den metode, der giver P-modellens kontrakt. Udgang fra 23 hp, 52 ZP og P = 28½.',
@@ -251,7 +251,7 @@ const DA = {
     count:
       'Regnskabet for dig og makker: honnørpoint, trumflængde (1½ pr. trumf ud over 4, minus 1½ pr. trumf under 4), korthed i sidefarverne og spildte konger. p er summen, og P er parrets samlede p. Stikforventningen kommer fra tabellen i MODEL.md.',
     auction:
-      'Meldingerne viser, hvad der er kendt: en bekræftet fit, makkers åbning med hp-intervallet fra systemfilen eller makkers viste korthed. Begge hænder er synlige i denne version.',
+      'Meldingerne viser, hvad der er kendt: et bekræftet fit, makkers åbning med hp-intervallet fra systemfilen eller makkers viste korthed. Begge hænder er synlige i denne version.',
     facit:
       'Facit regnes af P-modellen: honnørpoint, trumflængde og korthed, parrets P og tabellen over stik og chancer. Chancen vises som naturlig frekvens, fx 3 ud af 5 gange.',
     status: 'Sessionens resultat. Streak og XP er Håndevalueringens egne, adskilt fra de andre spor.',

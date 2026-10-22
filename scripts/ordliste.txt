@@ -31,6 +31,8 @@ stjælestik
 streak
 streaken
 syvkortsfarve
+trinene
+Trinene
 ustoppede
 
 # Almindelige ord og forkortelser, som ordbogen ikke har

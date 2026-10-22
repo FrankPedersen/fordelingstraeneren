@@ -105,7 +105,7 @@ Er en side genereret (fx fra et systemdokument), rettes kilden, og siden bygges 
 - [x] `build_ordbog.py` fejler, hvis et opslagsord er "Knibning", "Snit" eller "Den blinde".
 - [x] Sidefoden har kolonnen Opslag med Bridgeordbog på forsiden, Om mig, ordbogen, i Fordelingstræneren og i konventionstræneren, på dansk og engelsk.
 - [x] Ved 390 px har ordbogssiden og forsiden ingen vandret rulning.
-- [x] Alle ord i rettelseslisten er rettet, og puljerne er bygget igen med `build_pools.py` (puljen ff-trial-bids er kun rettet i teksten; se konventionstrænerens kopi af specen, Afklaret 7).
+- [ ] Alle ord i rettelseslisten er rettet, og puljerne er bygget igen med `build_pools.py`. Ordene er rettet i kilderne; puljen ff-trial-bids bygges igen sammen med reglerne fra 17. oktober (konventionstrænerens kopi af specen, Åbne punkter 3).
 - [x] Fagordstesten består i alle tre repoer og fejler, hvis man skriver "knibning" i en dansk tekst.
 - [x] `sprogtjek` kører og giver højst de ord, der står i `ordliste.txt`, eller en liste, Frank har set.
 
@@ -125,8 +125,8 @@ Claude Codes valg i Fordelingstræneren (22. oktober 2026, grenen `sprog-og-ordb
 9. **p-model.json:** kun de danske `afsnit`-tekster har fået hp; nøglerne (`hcp`, `hcpMetode`, `dobbeltton` …) er uændrede, så facitfilen og konventionstrænerens kopi er upåvirkede. Kodekommentarer er ikke rettet.
 10. **MODEL.md og SPEC-haandevaluering.md:** HCP er hp, Dobbeltton er Doubleton og fitten er fittet i dansk tekst, også i tabeller. Specens linje "Engelsk bridgesprog: HCP, points, fit …" er engelsk og står uændret.
 11. **Rettede tests:** `haandevaluering/ui/trin4.test.tsx` og `haandevaluering/ui/kalibrering.test.tsx` forventede den gamle danske ordlyd ("HCP: 12 + 14 = 26 HCP …", "HCP og Zar er uenige", svarknappen "HCP", "dobbeltton i ♦" og "23 HCP" i hjælpen). De engelske forventninger er uændrede.
-12. **Sprogtjek** er `scripts/sprogtjek.ts` med `scripts/ordliste.txt` og bruger samme tekst som fagordstesten. Ordene slås op med Python-pakken `spylls` og da_DK fra npm-pakken dictionary-da (hentes første gang til brugerens cache, den samme som konventionstrænerens). Det giver i dag ét ord til Franks liste: "trinene" i `src/farvebehandling/content/guide-analyse.md` (retskrivningen er *trinnene*).
-13. **Forslag til Frank:** med *fittet* (intetkøn) bør "en fit" i Zar-forklaringen i opgave 8 (`haandevaluering/ui/texts.ts`, `zarTooHigh`) nok være "et fit", som konventionstræneren skriver "et 4-3-fit". Det er ikke rettet, fordi T3 kun nævner fitten.
+12. **Sprogtjek** er `scripts/sprogtjek.ts` med `scripts/ordliste.txt` og bruger samme tekst som fagordstesten. Ordene slås op med Python-pakken `spylls` og da_DK fra npm-pakken dictionary-da (hentes første gang til brugerens cache, den samme som konventionstrænerens). Det gav ét ord, "trinene" i guiden til Analyse. **Franks afgørelse (22. oktober 2026):** "trinene" er rigtigt (trin, trinnet, trin, trinene) og står i ordlisten sammen med "Trinene". Et ord i ordlisten som 11-pointshænder giver også ordets bogstavdel. Værktøjet melder nu ingen ukendte ord.
+13. **Et fit** (Franks valg 22. oktober 2026): med *fittet* er det "et fit" i al dansk tekst. Rettet i opgave 8 (Zar-forklaringen), i hjælpen til Farve eller sans ("et 8+ major-fit") og til meldingerne ("et bekræftet fit"), i kommentarer, testtitler og SPEC-haandevaluering.md; "fittens" er blevet til "fittets". Fagordstesten fejler ved "en fit" (også "en major-fit" og "en 8+ major-fit") og ved "fittens".
 
 Åbne punkter:
 

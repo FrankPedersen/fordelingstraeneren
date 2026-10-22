@@ -84,7 +84,7 @@ export interface HonorsTask extends Base {
 /** Opgave 2: fitten er bekræftet; hvad er din p nu? */
 export interface DistributionTask extends Base {
   exercise: 'distribution';
-  /** Fittens farve: 0 = ♠, 1 = ♥. */
+  /** Fittets farve: 0 = ♠, 1 = ♥. */
   trump: number;
 }
 
@@ -120,7 +120,7 @@ export interface PartnerTask extends Base {
   trump: number;
 }
 
-/** Opgave 6: 4M eller 3NT? Med en major-fit er `trump` fittens farve, ellers null. */
+/** Opgave 6: 4M eller 3NT? Med et major-fit er `trump` fittets farve, ellers null. */
 export interface StrainTask extends Base {
   exercise: 'strain';
   trump: number | null;

@@ -80,8 +80,8 @@ describe('P-modellen (SPEC-haandevaluering.md, accepttest)', () => {
     expect(rightDecisions(29.25)).toEqual(['game']);
   });
 
-  it('kortfarvepoint tælles ikke i trumffarven: en 6-2-fit giver ingen dobbelttonpoint for de 2 trumf, og en 7-1-fit ingen singletonpoint', () => {
-    // 2 trumf (♠) og en dobbeltton i ♦: kun ♦ tæller. Trumflængden er −3 (SPEC-haandevaluering-kalibrering.md).
+  it('kortfarvepoint tælles ikke i trumffarven: et 6-2-fit giver ingen doubletonpoint for de 2 trumf, og et 7-1-fit ingen singletonpoint', () => {
+    // 2 trumf (♠) og en doubleton i ♦: kun ♦ tæller. Trumflængden er −3 (SPEC-haandevaluering-kalibrering.md).
     expect(pOf(parseHand('Q7.KJ84.A5.QT983'), { trump: SPADES })).toMatchObject({ trump: -3, shortness: 1 });
     // 1 trumf (♥) og ingen anden korthed; trumflængden er −4½.
     expect(pOf(parseHand('A853.7.KJ952.Q64'), { trump: 1 })).toMatchObject({ trump: -4.5, shortness: 0 });

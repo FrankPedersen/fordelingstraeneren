@@ -306,7 +306,7 @@ export function notrumpChance(stopped: number): number | null {
   return model.sans.stoppere.raekker.find((r) => r.farver === stopped)?.['3NT'] ?? null;
 }
 
-/** Farve eller sans (Claude Codes valg): 4M med en 8+ major-fit ("Fit først"), 3NT uden major-fit med alle fire farver stoppet. */
+/** Farve eller sans (Claude Codes valg): 4M med et 8+ major-fit ("Fit først"), 3NT uden major-fit med alle fire farver stoppet. */
 export type Strain = 'major' | 'notrump';
 
 export function strainFor(a: readonly Card[], b: readonly Card[]): Strain | null {

@@ -14,7 +14,9 @@ export const IKKE_ORD: readonly { pattern: RegExp; house: string }[] = [
   // T1–T3: hp, doubleton og fittet i dansk tekst; engelsk beholder HCP.
   { pattern: /\bHCP\b/g, house: 'hp' },
   { pattern: /\bdobbeltton[a-zæøå]*/gi, house: 'doubleton' },
-  { pattern: /\bfitten\b/gi, house: 'fittet' },
+  { pattern: /\bfittens?\b/gi, house: 'fittet' },
+  // Et fit, som passer med fittet (Franks valg 22. oktober 2026): en fit, en major-fit, en 8+ major-fit …
+  { pattern: /\ben\s+(?:\S+\s+)?(?:[0-9a-zæøå+]+-)*fit\b/gi, house: 'et fit' },
 ];
 
 export interface Fund {

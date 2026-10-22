@@ -66,10 +66,10 @@ export function methodLines(m: MethodComparison): string[] {
   });
 }
 
-/** Kontrakten for en udgang i fittens farve, fx 4♠. */
+/** Kontrakten for en udgang i fittets farve, fx 4♠. */
 export const gameIn = (trump: number) => `4${SUIT_SYMBOLS[trump]}`;
 
-/** Majoren i Farve eller sans: fittens farve, eller parrets længste major, når der ikke er en fit. */
+/** Majoren i Farve eller sans: fittets farve, eller parrets længste major, når der ikke er et fit. */
 export function strainSuit(task: HandTask): number {
   if (task.exercise === 'strain' && task.trump !== null) return task.trump;
   const [spades, hearts] = [0, 1].map((suit) => [...task.hands.S, ...task.hands.N].filter((c) => Math.floor(c / 13) === suit).length);

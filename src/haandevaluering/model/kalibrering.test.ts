@@ -44,7 +44,7 @@ describe('Trumflængden: 1½ pr. trumf ud over 4, minus 1½ pr. trumf under 4', 
     expect(P_MODEL.trumflaengde.negativ).toBe(true);
   });
 
-  it('for parret er trumfleddet 1½ × (fittens længde − 8): 5-3 → 0, 4-4 → 0, 6-2 → 0, 5-4 → +1½, 6-3 → +1½', () => {
+  it('for parret er trumfleddet 1½ × (fittets længde − 8): 5-3 → 0, 4-4 → 0, 6-2 → 0, 5-4 → +1½, 6-3 → +1½', () => {
     const table: [number, number, number][] = [[5, 3, 0], [4, 4, 0], [6, 2, 0], [5, 4, 1.5], [6, 3, 1.5]];
     for (const [a, b, points] of table) {
       expect(trumpPoints(a) + trumpPoints(b), `${a}-${b}`).toBe(points);
