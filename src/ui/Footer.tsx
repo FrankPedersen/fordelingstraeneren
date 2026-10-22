@@ -3,7 +3,8 @@ import { tx } from '../i18n';
 /**
  * Sidefoden (SPEC-forside-spor.md, Sidefoden): den samme sorte sidefod som på www.kontraktbridge.dk, nederst på forsiden
  * og sporenes skærme, ikke i en session og ikke i dialoger. Om mig, Trænere med de samme links som på
- * www.kontraktbridge.dk, Opslag med Bridgeordbog (SPEC-sprog-og-ordbog.md) og Kontakt. De fire spor og modulet Analyse (SPEC-analyse-modul.md) åbnes i appen med deres
+ * www.kontraktbridge.dk, Opslag med Bridgeordbog (SPEC-sprog-og-ordbog.md) og Kontakt med linket til
+ * kontaktformularen på Om mig (SPEC-kontaktformular.md, del 3). De fire spor og modulet Analyse (SPEC-analyse-modul.md) åbnes i appen med deres
  * adresse (`#fordeling`, `#analyse` osv.), så de også virker offline; links ud af appen åbnes i samme vindue og virker
  * kun online.
  */
@@ -48,8 +49,8 @@ export function Footer() {
       <div className="site-footer-col">
         <h2>{tx('Kontakt', 'Contact')}</h2>
         <p>{tx('Har du fundet en fejl, eller har du en idé til en ny træner? Skriv til mig.', 'Have you found a mistake, or do you have an idea for a new trainer? Write to me.')}</p>
-        <a className="site-footer-mail" href="mailto:frank.steen.pedersen@gmail.com">
-          frank.steen.pedersen@gmail.com
+        <a className="site-footer-mail" href="/om-mig/#kontakt">
+          {tx('Skriv til mig', 'Write to me')}
         </a>
       </div>
       <p className="site-footer-legal">© 2026 Frank Pedersen</p>
