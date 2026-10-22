@@ -86,7 +86,7 @@ Del 2:
 
 Del 3:
 
-- [ ] Sidefoden i Fordelingstræneren har "Skriv til mig" til `/om-mig/#kontakt` på dansk og "Write to me" på engelsk, og e-mailadressen står ikke i den byggede app.
+- [x] Sidefoden i Fordelingstræneren har "Skriv til mig" til `/om-mig/#kontakt` på dansk og "Write to me" på engelsk, og e-mailadressen står ikke i den byggede app.
 
 ## Afklaret
 
