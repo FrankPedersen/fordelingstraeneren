@@ -12,6 +12,8 @@ Kortfarvepoint, storeslem og IMP-grænserne bekræftes uændret.
 
 ## Resultaterne
 
+Datagrundlaget med alle tal, metoden og en henvisning til scriptet står i [docs/resultater-aabne-punkter.md](docs/resultater-aabne-punkter.md).
+
 | Punkt | Franks tal | Beslutning |
 | --- | --- | --- |
 | Trumflængden | Scripterne regner 1½ × (trumf − 4) pr. hånd, også negativt. MODEL.md's tekst ("1½ per trumf du selv har ud over 4") giver 1½ point mere pr. trumf under 4: +1½ ved 5-3, +3 ved 6-2, +4½ ved 7-1. Med scripternes formel: R² 0,794, middelfejl 0,736 stik, 87,5 % rigtige udgangsbeslutninger. Med tekstens: 0,765, 0,844 stik (lover 0,40 stik for meget) og 85,6 % | **Scripternes formel** (Franks valg 21. oktober 2026), skrevet pr. hånd: "1½ pr. trumf ud over 4, minus 1½ pr. trumf under 4" |
@@ -95,11 +97,11 @@ Tallene er regnet med appens model og den nye trumflængde.
 Claude Codes valg under bygningen (22. oktober 2026, grenen `haandevaluering-kalibrering`; appen før er tagget `v15-foer-kalibrering`):
 
 7. **Trumflængden:** `trumflaengde` har feltet `negativ: true`, og `trumpPoints` regner 1½ × (trumf − 4) uden at runde op til 0, når feltet er sat. `over` og `point` er uændrede.
-8. **Nøglekort:** `missingKeyCards` i `pmodel.ts` tæller de manglende es og trumfkongen, og `slamAllowed` tillader højst `slemHoejstManglendeNoeglekort` (1). Nøglen `slemHoejstManglendeEs` er erstattet, ikke beholdt ved siden af, så filen kun har én regel. `grandAllowed` er uændret.
+8. **Nøglekort:** `missingKeyCards` i `pmodel.ts` tæller de manglende es og trumfkongen, og `slamAllowed` tillader højst `slemHoejstManglendeNoeglekort` (1). Nøglen `slemHoejstManglendeEs` er erstattet, ikke beholdt ved siden af, så filen kun har én regel (godkendt af Frank 22. oktober 2026). `grandAllowed` er uændret.
 9. **Facit ved slem:** "Parret mangler 2 nøglekort (♠K og et es), så lilleslem er for meget." eller "… (to es) …"; på engelsk "The pair is missing 2 key cards (♠K and an ace), so small slam is too much." Sætningen vises som før, når P er mindst 34½, og parret mangler mere end ét nøglekort. `controlsNote` i `texts.ts` er erstattet af `keyCardsNote`.
 10. **Et negativt trumfled** bruger facits og regnskabets eksisterende form med minus: "trumflængde −1½ (3 trumf)" i facit og "−1½" i regnskabet. Specens "trumf −1½, korthed 1" er et eksempel.
 11. **Tekster:** ⓘ-teksterne til Fordelingsled og Regnskab har den nye regel, Niveaubeslutningen nøglekortene og Sammenlign metoder 23 HCP. I vejledningen har punktet om fitten reglen og eksemplet med 5-3-fit, og punktet om P har nøglekortene.
-12. **`training/deck.ts` er uændret:** bunken har intet kort om trumflængden, og specen tillader ingen nye korttyper.
+12. **`training/deck.ts` er uændret:** bunken har intet kort om trumflængden, og specen tillader ingen nye korttyper. Der kommer intet kort om trumflængden (Frank, 22. oktober 2026).
 13. **Generatoren:** kun kommentaren til opgave 8 er rettet. Opgaverne regnes med den nye P gennem `pOf`, opgave 8 læser 23 fra `hcpMetode.udgang`, og facit vælger slem efter nøglekortreglen. Ingen opgave udvælges efter es.
 14. **Facitfilen:** nye eksempler `tre-trumf` (hånd), `fit-5-3`, `fit-6-2`, `fit-7-1` og `noeglekort-es-og-trumfkonge` (par); `slem-uden-kontroller` henviser nu hertil. Den første fordeling fra kortgiveren for hver kontrakt er fundet igen med den nye P.
 15. **Rettede tests:**
@@ -107,7 +109,8 @@ Claude Codes valg under bygningen (22. oktober 2026, grenen `haandevaluering-kal
     - `model/trin4.test.ts`: HCP-grænsen 25 er nu 23.
     - `ui/trin4.test.tsx`: "(grænse 25)" og "(limit 25)" er nu 23 i eksempel 2, som stadig er en opgave (26 HCP siger udgang, Zar og P delkontrakt).
     - `training/training.test.ts`: hjælpelinjen for nabovalg ved lilleslem talte es (mindst 3), nu nøglekort (højst ét manglende). Testen bestod også før, men udtrykte es-reglen.
-16. **Konventionstræneren** (`Downloads/Konventionstræner`) har i dag ingen kopi af `p-model.json` eller `p-model.facit.json`. Når den får dem, kopierer Frank begge filer fra `src/haandevaluering/content/`. Dens facittest kræver da de samme regler: trumflængden med `negativ` og nøglekortene med `slemHoejstManglendeNoeglekort`. Konventionstrænerens egne tekster bruger ikke P's trumflængde, men støttepoint (hp + korthed + 1 pr. trumf ud over fem, fx `dealer/ff_trial.py`, `dealer/omvendt_bergen.py` og `viden/2-over-1.html`), så de ændres ikke.
-17. **Lagring:** skemaet og de gemte svar er uændrede. Svarloggens seed giver stadig en opgave, men generatoren vælger fordelinger med den nye P, så et gammelt seed kan give en anden fordeling end dengang.
+16. **Konventionstræneren** (`Downloads/Konventionstræner`) har endnu ingen kopi af `p-model.json` og `p-model.facit.json`. Når den tager P-modellen i brug, kopierer den begge filer fra `src/haandevaluering/content/` og følger de nye regler: trumflængden med `negativ` og nøglekortene med `slemHoejstManglendeNoeglekort`. Dens facittest kræver dem. Dens egne tekster med støttepoint ("1 pr. trumf ud over fem", fx `dealer/ff_trial.py`, `dealer/omvendt_bergen.py` og `viden/2-over-1.html`) ændres ikke (Frank, 22. oktober 2026).
+17. **Lagring:** skemaet er uændret. Gamle seeds må gerne give en anden fordeling, så længe det gemte svar og dets point er uændrede (Frank, 22. oktober 2026). Generatoren vælger fordelinger med den nye P, så et seed i svarloggen kan give en anden fordeling end dengang; svaret og dets point står, som de blev gemt.
+18. **SPEC-haandevaluering.md:** ud over formlen og de åbne punkter er fem steder rettet med henvisning hertil (fagligt valg 5, opgave 8, Afklaret 13 og Claude Codes valg 3 og 21), så specen ikke siger to forskellige ting (godkendt af Frank 22. oktober 2026).
 
 Åbne punkter: ingen.
