@@ -167,7 +167,8 @@ describe('Topbjælken og sidefoden', () => {
       ['Analyse', '#analyse'],
     ]);
     expect(within(footer() as HTMLElement).queryByText('Aftaler og notater')).toBeNull();
-    expect(within(footer() as HTMLElement).getByRole('link', { name: 'frank.steen.pedersen@gmail.com' }).getAttribute('href')).toBe('mailto:frank.steen.pedersen@gmail.com');
+    // SPEC-kontaktformular.md, del 3: kontaktformularen på Om mig i stedet for e-mailadressen.
+    expect(within(footer() as HTMLElement).getByRole('link', { name: 'Skriv til mig' }).getAttribute('href')).toBe('/om-mig/#kontakt');
   });
 
   it('de nye tokens er ens i lys og mørk tilstand og består 4,5:1', () => {
