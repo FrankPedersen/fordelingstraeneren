@@ -240,6 +240,8 @@ Et nyt, selvstændigt spor i gruppen Vurdering, bygget på grenen `haandevalueri
 
 **Beslutninger:** Franks svar står i specen under Afklaret (version 2, 8. oktober 2026): valgene er delkontrakt, udgang, lilleslem og storeslem; stikforventningen er tabellen med interpolation (formlen kun i forklaringer, huskeversionen P/3); kortfarvepoint tælles kun i sidefarverne; nabovalg ved grænsen med grænserne medregnet; opgaver kun for P 24–40. Claude Codes valg står under "Claude Codes valg" (farve eller sans, Leitner-bunken og generatorens krav). Spørg, før du ændrer dem.
 
+**Kalibreringen** (SPEC-haandevaluering-kalibrering.md version 2, Franks valg 21. oktober 2026 efter tallene fra `bridge-model/scripts/aabne_punkter.py`; grenen `haandevaluering-kalibrering`, appen før er tagget `v15-foer-kalibrering`): trumflængden er 1½ × (trumf − 4) pr. hånd, også negativt (`trumflaengde.negativ`), som simuleringernes scripts regner, så tabellen, grænserne og R² passer; HCP-grænsen i opgave 8 er 23; lilleslem kræver højst ét manglende nøglekort (de fire es og trumfkongen, `missingKeyCards`), storeslem alle fem. MODEL.md afsnit 1 har den nye ordlyd og tallene. Valgene står i specen under Afklaret 7–17.
+
 **Status**
 - [x] Leverancetrin 1: model, `p-model.json`, facitfil med script og tests.
 - [x] Leverancetrin 2: generator til opgave 1–7 med seeds og kvalitetskravet for opgave 4 (P inden for ±2 af en grænse).
@@ -250,3 +252,4 @@ Et nyt, selvstændigt spor i gruppen Vurdering, bygget på grenen `haandevalueri
 - [x] Linjen i `tracks.ts`: Vurdering står på forsiden; de to tests i `src/app/navigation.test.tsx`, der forventede en tom Vurdering, er rettet med Franks godkendelse (8. oktober 2026).
 - [x] Franks godkendelse af leverancetrin 1–3; flettet ind og udgivet på `main` (8. oktober 2026).
 - [x] Leverancetrin 4: opgave 8 (Sammenlign metoder, efter Franks svar 21. oktober 2026) og 9 (Turneringsform), bygget på grenen `haandevaluering-trin4` (appen før er tagget `v14-foer-haandevaluering-trin4`), godkendt af Frank og udgivet 21. oktober 2026. Valgene står i specen under Claude Codes valg 21–24.
+- [ ] Kalibreringen (SPEC-haandevaluering-kalibrering.md version 2): trumflængden, HCP-grænsen 23 og nøglekort ved slem, bygget på grenen `haandevaluering-kalibrering` med accepttestene først; venter på Franks godkendelse.

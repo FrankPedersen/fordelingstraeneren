@@ -25,7 +25,7 @@ perfekt spil fra begge sider.
 
 ```
 p = honnørpoint
-  + 1½ per trumf du selv har ud over 4
+  + 1½ pr. trumf du selv har ud over 4, minus 1½ pr. trumf under 4 (for parret det samme som 1½ pr. trumf ud over 8)
   + kortfarvepoint: renonce 5, singleton 3, dobbeltton 1
   − 1 per konge over for makkers viste korthed
 ```
@@ -56,8 +56,15 @@ De to fordelingsled må først lægges til, når fitten er bekræftet.
 
 **Grænser:** udgang P ≥ 28½ · slem P ≥ 35 · storeslem P ≥ 41 (og kontroltjek)
 
+**Kontroltjek:** nøglekort er de fire es og trumfkongen. Lilleslem kræver, at
+parret højst mangler ét nøglekort: ved P ≥ 35 gav 12 stik i 87,8 % uden
+manglende es, 67,7 % med ét manglende es og 29,1 % med to, og ét manglende es
+uden trumfkongen kun 30,6 % (36 fordelinger). Storeslem kræver alle fem: med
+alle fire es gav 13 stik i 73,8 % med trumfkongen og 38,9 % uden (P ≥ 38).
+
 **Præstation:** R² = 0,794, middelfejl 0,74 stik, udgangsbeslutningen korrekt
-i 87,5 % af tilfældene (mod 82,5 % for ren HCP).
+i 87,5 % af tilfældene (mod 82,5 % for ren HCP med udgang fra 23 HCP; 25 HCP
+giver 79,3 %).
 
 ### Hvad makker skal have
 

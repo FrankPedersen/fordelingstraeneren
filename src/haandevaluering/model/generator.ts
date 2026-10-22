@@ -188,7 +188,7 @@ const methodCount = (you: number, partner: number, limit: number): MethodCount =
 };
 
 /**
- * Opgave 8: HCP (udgang fra 25, foreløbig), Zar (udgang fra 52 ZP) og P for parret med fitten. Kun udgang eller
+ * Opgave 8: HCP (udgang fra 23 HCP), Zar (udgang fra 52 ZP) og P for parret med fitten. Kun udgang eller
  * delkontrakt; ligger P inden for ½ point af udgangsgrænsen, er begge svar rigtige, og fordelingen bruges ikke.
  */
 export function compareMethods(hands: Hands, trump: number): MethodComparison {

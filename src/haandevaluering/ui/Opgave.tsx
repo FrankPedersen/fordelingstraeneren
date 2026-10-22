@@ -58,7 +58,7 @@ export function situation(task: HandTask): string[] {
   }
 }
 
-/** Opgave 8: HCP- og Zar-linjerne med tal og beslutning, fx "HCP: 12 + 14 = 26 HCP → udgang (grænse 25)". */
+/** Opgave 8: HCP- og Zar-linjerne med tal og beslutning, fx "HCP: 12 + 14 = 26 HCP → udgang (grænse 23)". */
 export function methodLines(m: MethodComparison): string[] {
   return (['hcp', 'zar'] as const).map((method) => {
     const c = m[method];

@@ -35,7 +35,7 @@ describe('Opgave 8: Sammenlign metoder', () => {
     render(<Opgave task={EXAMPLE} onAnswer={onAnswer} />);
     expect(document.querySelectorAll('.he-hand')).toHaveLength(2);
     expect(document.body.textContent).toContain('Fit fundet i ♥');
-    expect(screen.getByText('HCP: 12 + 14 = 26 HCP → udgang (grænse 25)')).toBeTruthy();
+    expect(screen.getByText('HCP: 12 + 14 = 26 HCP → udgang (grænse 23)')).toBeTruthy();
     expect(screen.getByText('Zar: 24 + 26 = 50 ZP → delkontrakt (grænse 52)')).toBeTruthy();
     expect(screen.getByText('HCP og Zar er uenige. Hvem har ret?')).toBeTruthy();
     expect(document.body.textContent).not.toMatch(/P =|\bp =/);
@@ -52,7 +52,7 @@ describe('Opgave 8: Sammenlign metoder', () => {
     render(<Facit task={EXAMPLE} answer={answer} graded={grade(EXAMPLE, answer, 5_000)} onNext={() => {}} />);
     expect(screen.getByText(/^Rigtigt ·/)).toBeTruthy();
     expect(lines()).toEqual([
-      'HCP: 12 + 14 = 26 HCP → udgang (grænse 25)',
+      'HCP: 12 + 14 = 26 HCP → udgang (grænse 23)',
       'Zar: 24 + 26 = 50 ZP → delkontrakt (grænse 52)',
       'Dig: honnørpoint 12, p = 12.',
       'Makker: honnørpoint 15, p = 15.',
@@ -70,7 +70,7 @@ describe('Opgave 8: Sammenlign metoder', () => {
   it('på engelsk', () => {
     setLang('en');
     render(<Opgave task={EXAMPLE} onAnswer={() => {}} />);
-    expect(screen.getByText('HCP: 12 + 14 = 26 HCP → game (limit 25)')).toBeTruthy();
+    expect(screen.getByText('HCP: 12 + 14 = 26 HCP → game (limit 23)')).toBeTruthy();
     expect(screen.getByText('Zar: 24 + 26 = 50 ZP → partscore (limit 52)')).toBeTruthy();
     expect(screen.getByText('HCP and Zar disagree. Which is right?')).toBeTruthy();
     cleanup();

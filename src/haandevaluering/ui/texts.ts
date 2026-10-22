@@ -162,7 +162,10 @@ const DA = {
     k === 0 ? `${contract} holder næsten aldrig.` : k === n ? `${contract} holder næsten altid.` : `${contract} holder ca. ${k} ud af ${n} gange.`,
   neighbours: (limit: string, below: string, at: string) =>
     `P ligger inden for ½ point af grænsen ${limit}, så både ${below.toLowerCase()} og ${at.toLowerCase()} er rigtige.`,
-  controlsNote: (missing: number) => `Parret mangler ${missing} es, så slem er udelukket (højst ét es må mangle).`,
+  keyCardsNote: (missing: number, king: string | null, aces: number) => {
+    const parts = [king, aces ? ['et es', 'to es', 'tre es', 'fire es'][aces - 1] : null].filter(Boolean);
+    return `Parret mangler ${missing} nøglekort (${parts.join(' og ')}), så lilleslem er for meget.`;
+  },
   caveat: (lo: string, hi: string) => `Tallene er dobbeltdummy (perfekt spil med alle kort synlige) og typisk ${lo}–${hi} stik for optimistiske.`,
   strainMajor: (contract: string, trumps: number, gain: string) => `Fit først: med ${trumps} trumf giver ${contract} ca. ${gain} stik mere end sans.`,
   strainNotrump: (lo: number, hi: number, k: number, n: number) =>
@@ -232,19 +235,19 @@ const DA = {
     exercises: {
       honors: 'Tast honnørpointene: E 5, K 3, D 1½, B ½ og 10 ¼. Genvejen er HCP + 1 pr. es − ½ pr. dame − ½ pr. knægt + ¼ pr. tier. Inden for 8 s giver 10 XP, ellers 5.',
       distribution:
-        'Fitten er bekræftet, så fordelingen tæller: 1½ pr. trumf ud over 4 og korthed 5-3-1 (renonce, singleton, dobbeltton) i sidefarverne. Tast din p; inden for 20 s giver 10 XP.',
+        'Fitten er bekræftet, så fordelingen tæller: 1½ pr. trumf ud over 4, minus 1½ pr. trumf under 4, og korthed 5-3-1 (renonce, singleton, dobbeltton) i sidefarverne. Tast din p; inden for 20 s giver 10 XP.',
       add: 'Fordelingen må først lægges til, når fitten er bekræftet. Uden fit tæller kun honnørpointene, og i sans gælder sansmodellen: HCP + ¼ pr. tier og stoppere i stedet for længde.',
       decision:
-        'Læg din og makkers p sammen til P. Under 28½ er delkontrakt, fra 28½ udgang, fra 35 lilleslem (højst ét es må mangle) og fra 41 storeslem. Inden for ½ point af en grænse er begge nabovalg rigtige.',
+        'Læg din og makkers p sammen til P. Under 28½ er delkontrakt, fra 28½ udgang, fra 35 lilleslem (højst ét nøglekort må mangle: de fire es og trumfkongen) og fra 41 storeslem (alle fem nøglekort). Inden for ½ point af en grænse er begge nabovalg rigtige.',
       partner: 'Udgang kræver P = 28½, så makker skal have 28½ minus dine point. Tast svaret med ½ og ¼.',
       strain: 'Fit først: med en 8+ major-fit giver farvekontrakten 2–4 stik mere end sans. Uden major-fit og med alle fire farver stoppet er 3NT rigtigt.',
       wasted: 'Makker har vist korthed. En konge i den farve er spildt og koster 1; en dame eller knægt koster ikke noget. Tast din p igen.',
       compare:
-        'Begge hænder med fit, og HCP og Zar med tal og beslutning. De to er uenige: regn P, og vælg den metode, der giver P-modellens kontrakt. Udgang fra 25 HCP (foreløbig), 52 ZP og P = 28½.',
+        'Begge hænder med fit, og HCP og Zar med tal og beslutning. De to er uenige: regn P, og vælg den metode, der giver P-modellens kontrakt. Udgang fra 23 HCP, 52 ZP og P = 28½.',
       form: 'Niveaubeslutningen med turneringsformen: ved holdturnering i zonen er udgang rigtig fra P ≈ 27½ (ca. 37 % for 4M), uden for zonen fra 28 (45 %) og ved parturnering fra 28½ (50 %). Inden for ½ point af grænsen er begge nabovalg rigtige.',
     } as Record<Exercise, string>,
     count:
-      'Regnskabet for dig og makker: honnørpoint, trumflængde (1½ pr. trumf ud over 4), korthed i sidefarverne og spildte konger. p er summen, og P er parrets samlede p. Stikforventningen kommer fra tabellen i MODEL.md.',
+      'Regnskabet for dig og makker: honnørpoint, trumflængde (1½ pr. trumf ud over 4, minus 1½ pr. trumf under 4), korthed i sidefarverne og spildte konger. p er summen, og P er parrets samlede p. Stikforventningen kommer fra tabellen i MODEL.md.',
     auction:
       'Meldingerne viser, hvad der er kendt: en bekræftet fit, makkers åbning med hp-intervallet fra systemfilen eller makkers viste korthed. Begge hænder er synlige i denne version.',
     facit:
@@ -393,7 +396,10 @@ const EN: Texts = {
     k === 0 ? `${contract} almost never makes.` : k === n ? `${contract} almost always makes.` : `${contract} makes about ${k} times in ${n}.`,
   neighbours: (limit: string, below: string, at: string) =>
     `P is within ½ point of the limit ${limit}, so both ${below.toLowerCase()} and ${at.toLowerCase()} are right.`,
-  controlsNote: (missing: number) => `The pair is missing ${missing} aces, so slam is ruled out (at most one ace may be missing).`,
+  keyCardsNote: (missing: number, king: string | null, aces: number) => {
+    const parts = [king, aces ? ['an ace', 'two aces', 'three aces', 'four aces'][aces - 1] : null].filter(Boolean);
+    return `The pair is missing ${missing} key cards (${parts.join(' and ')}), so small slam is too much.`;
+  },
   caveat: (lo: string, hi: string) => `The figures are double dummy (perfect play with all cards visible) and typically ${lo}–${hi} tricks too optimistic.`,
   strainMajor: (contract: string, trumps: number, gain: string) => `Fit first: with ${trumps} trumps ${contract} takes about ${gain} tricks more than notrump.`,
   strainNotrump: (lo: number, hi: number, k: number, n: number) =>
@@ -460,19 +466,19 @@ const EN: Texts = {
     exercises: {
       honors: 'Type the honour points: A 5, K 3, Q 1½, J ½ and 10 ¼. The shortcut is HCP + 1 per ace − ½ per queen − ½ per jack + ¼ per ten. Within 8 s gives 10 XP, otherwise 5.',
       distribution:
-        'The fit is confirmed, so distribution counts: 1½ per trump beyond 4 and shortness 5-3-1 (void, singleton, doubleton) in the side suits. Type your p; within 20 s gives 10 XP.',
+        'The fit is confirmed, so distribution counts: 1½ per trump beyond 4, minus 1½ per trump short of 4, and shortness 5-3-1 (void, singleton, doubleton) in the side suits. Type your p; within 20 s gives 10 XP.',
       add: 'Distribution may be added only once the fit is confirmed. Without a fit only the honour points count, and in notrump the notrump model applies: HCP + ¼ per ten and stoppers instead of length.',
       decision:
-        "Add your p and partner's p to get P. Below 28½ is partscore, from 28½ game, from 35 small slam (at most one ace missing) and from 41 grand slam. Within ½ point of a limit both neighbouring choices are right.",
+        "Add your p and partner's p to get P. Below 28½ is partscore, from 28½ game, from 35 small slam (at most one key card missing: the four aces and the trump king) and from 41 grand slam (all five key cards). Within ½ point of a limit both neighbouring choices are right.",
       partner: 'Game needs P = 28½, so partner needs 28½ minus your points. Type the answer with ½ and ¼.',
       strain: 'Fit first: with an 8+ major fit the suit contract takes 2–4 tricks more than notrump. Without a major fit and with all four suits stopped, 3NT is right.',
       wasted: 'Partner has shown shortness. A king in that suit is wasted and costs 1; a queen or jack costs nothing. Type your p again.',
       compare:
-        "Both hands with a fit, and HCP and Zar with their totals and decisions. The two disagree: work out P and choose the method that gives the P-model's contract. Game from 25 HCP (provisional), 52 ZP and P = 28½.",
+        "Both hands with a fit, and HCP and Zar with their totals and decisions. The two disagree: work out P and choose the method that gives the P-model's contract. Game from 23 HCP, 52 ZP and P = 28½.",
       form: 'The level decision with the form of scoring: at teams vulnerable, game is right from P ≈ 27½ (about 37% for 4M), not vulnerable from 28 (45%) and at pairs from 28½ (50%). Within ½ point of the limit both neighbouring choices are right.',
     },
     count:
-      "The count for you and partner: honour points, trump length (1½ per trump beyond 4), shortness in the side suits and wasted kings. p is the sum, and P is the pair's total. The expected tricks come from the table in MODEL.md.",
+      "The count for you and partner: honour points, trump length (1½ per trump beyond 4, minus 1½ per trump short of 4), shortness in the side suits and wasted kings. p is the sum, and P is the pair's total. The expected tricks come from the table in MODEL.md.",
     auction:
       "The bidding shows what is known: a confirmed fit, partner's opening with the HCP range from the system file or partner's shown shortness. Both hands are visible in this version.",
     facit:

@@ -66,9 +66,9 @@ describe('Opgave 8: Sammenlign metoder', () => {
     expect(right.zar / SEEDS.length).toBeGreaterThan(0.4);
   }, 60_000);
 
-  it('HCP-metodens udgangsgrænse er 25 (foreløbig) og Zars 52 ZP', () => {
+  it('HCP-metodens udgangsgrænse er 23 (SPEC-haandevaluering-kalibrering.md) og Zars 52 ZP', () => {
     const hands = deal('AK752.4.KQ63.852', 'Q963.K872.94.A73');
-    expect(compareMethods(hands, 0).hcp.limit).toBe(25);
+    expect(compareMethods(hands, 0).hcp.limit).toBe(23);
     expect(compareMethods(hands, 0).zar.limit).toBe(52);
   });
 });

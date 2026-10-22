@@ -70,18 +70,18 @@ Besked til Claude Code:
 
 Tallene er regnet med appens model og den nye trumflængde.
 
-- [ ] Alle eksisterende tests består; tests, der låste den gamle trumflængde, 25 HCP eller es-reglen, er rettet og nævnt under Afklaret.
-- [ ] `trumpPoints`: 3 trumf → −1½, 4 → 0, 5 → +1½, 2 → −3, 1 → −4½, 7 → +4½.
-- [ ] For parret er trumfleddet 1½ × (fittens længde − 8): 5-3 → 0, 4-4 → 0, 6-2 → 0, 5-4 → +1½, 6-3 → +1½.
-- [ ] ♠ E K 7 5 2 ♥ 4 ♦ K D 6 3 ♣ 8 5 2 over for ♠ D 9 6 3 ♥ K 8 7 2 ♦ 9 4 ♣ E 7 3 med fit i ♠: p = 17 og 10½, P = 27½ (uændret, fordi begge har mindst 4 trumf).
-- [ ] ♠ E 8 6 ♥ K D 8 ♦ 8 2 ♣ D 10 4 3 2 over for ♠ D B 5 ♥ E 7 6 4 2 ♦ K 7 6 4 ♣ B med fit i ♥: Syds trumfled er −1½ og Nords +1½, P = 25¾ (før 27¼). Opgave 8: HCP 22 → delkontrakt, Zar 52 → udgang, P → delkontrakt, så HCP har ret.
-- [ ] `P_MODEL.hcpMetode.udgang` er 23: 23 HCP er udgang, 22 HCP er delkontrakt. Opgave 8 har stadig kun fordelinger, hvor HCP og Zar er uenige, og de har ret lige ofte i generatoren.
-- [ ] `slamAllowed`: alle nøglekort → ja; ét es mangler → ja; trumfkongen mangler → ja; ét es og trumfkongen mangler → nej; to es mangler → nej. `grandAllowed`: alle fem → ja; ét nøglekort mangler → nej.
-- [ ] Med P = 36, ét manglende es og uden trumfkongen er den rigtige beslutning udgang, og facit nævner de to manglende nøglekort.
-- [ ] Opgave 9's grænser er stadig 27½, 28 og 28½.
-- [ ] `p-model.facit.json` er regnet igen af scriptet og har eksempler med 5-3-, 6-2- og 7-1-fit og med ét manglende es uden trumfkongen.
-- [ ] Facit viser et negativt trumfled med minus, fx for Syd i eksemplet ovenfor: "honnørpoint 11¼, trumf −1½, korthed 1, p = 10¾".
-- [ ] Alle nye tekster findes på dansk og engelsk, og de engelske skærme indeholder ingen dansk tekst.
+- [x] Alle eksisterende tests består; tests, der låste den gamle trumflængde, 25 HCP eller es-reglen, er rettet og nævnt under Afklaret.
+- [x] `trumpPoints`: 3 trumf → −1½, 4 → 0, 5 → +1½, 2 → −3, 1 → −4½, 7 → +4½.
+- [x] For parret er trumfleddet 1½ × (fittens længde − 8): 5-3 → 0, 4-4 → 0, 6-2 → 0, 5-4 → +1½, 6-3 → +1½.
+- [x] ♠ E K 7 5 2 ♥ 4 ♦ K D 6 3 ♣ 8 5 2 over for ♠ D 9 6 3 ♥ K 8 7 2 ♦ 9 4 ♣ E 7 3 med fit i ♠: p = 17 og 10½, P = 27½ (uændret, fordi begge har mindst 4 trumf).
+- [x] ♠ E 8 6 ♥ K D 8 ♦ 8 2 ♣ D 10 4 3 2 over for ♠ D B 5 ♥ E 7 6 4 2 ♦ K 7 6 4 ♣ B med fit i ♥: Syds trumfled er −1½ og Nords +1½, P = 25¾ (før 27¼). Opgave 8: HCP 22 → delkontrakt, Zar 52 → udgang, P → delkontrakt, så HCP har ret.
+- [x] `P_MODEL.hcpMetode.udgang` er 23: 23 HCP er udgang, 22 HCP er delkontrakt. Opgave 8 har stadig kun fordelinger, hvor HCP og Zar er uenige, og de har ret lige ofte i generatoren.
+- [x] `slamAllowed`: alle nøglekort → ja; ét es mangler → ja; trumfkongen mangler → ja; ét es og trumfkongen mangler → nej; to es mangler → nej. `grandAllowed`: alle fem → ja; ét nøglekort mangler → nej.
+- [x] Med P = 36, ét manglende es og uden trumfkongen er den rigtige beslutning udgang, og facit nævner de to manglende nøglekort.
+- [x] Opgave 9's grænser er stadig 27½, 28 og 28½.
+- [x] `p-model.facit.json` er regnet igen af scriptet og har eksempler med 5-3-, 6-2- og 7-1-fit og med ét manglende es uden trumfkongen.
+- [x] Facit viser et negativt trumfled med minus, fx for Syd i eksemplet ovenfor: "honnørpoint 11¼, trumf −1½, korthed 1, p = 10¾".
+- [x] Alle nye tekster findes på dansk og engelsk, og de engelske skærme indeholder ingen dansk tekst.
 
 ## Afklaret
 
@@ -91,5 +91,23 @@ Tallene er regnet med appens model og den nye trumflængde.
 4. **Kortfarvepoint tælles kun i sidefarverne**, som i dag.
 5. **Nøglekort ved slem** (Franks valg 21. oktober 2026): ét manglende es uden trumfkongen gav kun 30,6 %, lige så lidt som to manglende es.
 6. **IMP-grænserne** 27½, 28 og 28½ er bekræftet med scripternes P. En udglattet kurve giver 27,7 og 28,1 for 45 % og 50 %; de afrundes til de samme halve point.
+
+Claude Codes valg under bygningen (22. oktober 2026, grenen `haandevaluering-kalibrering`; appen før er tagget `v15-foer-kalibrering`):
+
+7. **Trumflængden:** `trumflaengde` har feltet `negativ: true`, og `trumpPoints` regner 1½ × (trumf − 4) uden at runde op til 0, når feltet er sat. `over` og `point` er uændrede.
+8. **Nøglekort:** `missingKeyCards` i `pmodel.ts` tæller de manglende es og trumfkongen, og `slamAllowed` tillader højst `slemHoejstManglendeNoeglekort` (1). Nøglen `slemHoejstManglendeEs` er erstattet, ikke beholdt ved siden af, så filen kun har én regel. `grandAllowed` er uændret.
+9. **Facit ved slem:** "Parret mangler 2 nøglekort (♠K og et es), så lilleslem er for meget." eller "… (to es) …"; på engelsk "The pair is missing 2 key cards (♠K and an ace), so small slam is too much." Sætningen vises som før, når P er mindst 34½, og parret mangler mere end ét nøglekort. `controlsNote` i `texts.ts` er erstattet af `keyCardsNote`.
+10. **Et negativt trumfled** bruger facits og regnskabets eksisterende form med minus: "trumflængde −1½ (3 trumf)" i facit og "−1½" i regnskabet. Specens "trumf −1½, korthed 1" er et eksempel.
+11. **Tekster:** ⓘ-teksterne til Fordelingsled og Regnskab har den nye regel, Niveaubeslutningen nøglekortene og Sammenlign metoder 23 HCP. I vejledningen har punktet om fitten reglen og eksemplet med 5-3-fit, og punktet om P har nøglekortene.
+12. **`training/deck.ts` er uændret:** bunken har intet kort om trumflængden, og specen tillader ingen nye korttyper.
+13. **Generatoren:** kun kommentaren til opgave 8 er rettet. Opgaverne regnes med den nye P gennem `pOf`, opgave 8 læser 23 fra `hcpMetode.udgang`, og facit vælger slem efter nøglekortreglen. Ingen opgave udvælges efter es.
+14. **Facitfilen:** nye eksempler `tre-trumf` (hånd), `fit-5-3`, `fit-6-2`, `fit-7-1` og `noeglekort-es-og-trumfkonge` (par); `slem-uden-kontroller` henviser nu hertil. Den første fordeling fra kortgiveren for hver kontrakt er fundet igen med den nye P.
+15. **Rettede tests:**
+    - `model/model.test.ts`: "kortfarvepoint tælles ikke i trumffarven" forventede trumflængde 0 for 2 og 1 trumf, nu −3 og −4½. "kontroltjekket" forventede lilleslem med 3 es uden trumfkongen, nu udgang, og en linje med 3 es og trumfkongen (lilleslem) er tilføjet.
+    - `model/trin4.test.ts`: HCP-grænsen 25 er nu 23.
+    - `ui/trin4.test.tsx`: "(grænse 25)" og "(limit 25)" er nu 23 i eksempel 2, som stadig er en opgave (26 HCP siger udgang, Zar og P delkontrakt).
+    - `training/training.test.ts`: hjælpelinjen for nabovalg ved lilleslem talte es (mindst 3), nu nøglekort (højst ét manglende). Testen bestod også før, men udtrykte es-reglen.
+16. **Konventionstræneren** (`Downloads/Konventionstræner`) har i dag ingen kopi af `p-model.json` eller `p-model.facit.json`. Når den får dem, kopierer Frank begge filer fra `src/haandevaluering/content/`. Dens facittest kræver da de samme regler: trumflængden med `negativ` og nøglekortene med `slemHoejstManglendeNoeglekort`. Konventionstrænerens egne tekster bruger ikke P's trumflængde, men støttepoint (hp + korthed + 1 pr. trumf ud over fem, fx `dealer/ff_trial.py`, `dealer/omvendt_bergen.py` og `viden/2-over-1.html`), så de ændres ikke.
+17. **Lagring:** skemaet og de gemte svar er uændrede. Svarloggens seed giver stadig en opgave, men generatoren vælger fordelinger med den nye P, så et gammelt seed kan give en anden fordeling end dengang.
 
 Åbne punkter: ingen.

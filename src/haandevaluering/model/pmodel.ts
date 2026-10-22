@@ -80,9 +80,13 @@ export const SHORTNESS_BY_PATTERN: Readonly<Record<string, number>> = Object.fro
   PATTERNS.map((p) => [p.id, shortnessPoints(p.lengths)]),
 );
 
-/** Ekstra point for egne trumf ud over 4: 1½ pr. trumf. */
+/**
+ * Trumflængden for egne trumf: 1½ pr. trumf ud over 4, minus 1½ pr. trumf under 4, som simuleringernes scripts regner
+ * (SPEC-haandevaluering-kalibrering.md). For parret giver det 1½ pr. trumf ud over 8.
+ */
 export function trumpPoints(trumps: number): number {
-  return Math.max(0, trumps - model.trumflaengde.over) * model.trumflaengde.point;
+  const over = trumps - model.trumflaengde.over;
+  return (model.trumflaengde.negativ ? over : Math.max(0, over)) * model.trumflaengde.point;
 }
 
 export interface PContext {
@@ -196,9 +200,14 @@ export function controlsOf(a: readonly Card[], b: readonly Card[], trump: number
   return { aces: count(both, ACE), trumpKing: both.some((c) => suitOf(c) === trump && rankOf(c) === KING) };
 }
 
-/** Lilleslem kræver, at parret højst mangler ét es; storeslem alle fire es og trumfkongen (SPEC, afklaret 5). */
+/** Parrets manglende nøglekort: de fire es og trumfkongen (SPEC-haandevaluering-kalibrering.md). */
+export function missingKeyCards(c: Controls): number {
+  return 4 - c.aces + (c.trumpKing ? 0 : 1);
+}
+
+/** Lilleslem kræver, at parret højst mangler ét nøglekort; storeslem alle fire es og trumfkongen. */
 export function slamAllowed(c: Controls): boolean {
-  return 4 - c.aces <= model.kontroller.slemHoejstManglendeEs;
+  return missingKeyCards(c) <= model.kontroller.slemHoejstManglendeNoeglekort;
 }
 
 export function grandAllowed(c: Controls): boolean {
