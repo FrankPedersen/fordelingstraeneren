@@ -20,6 +20,7 @@ const cards = await load<typeof import('../src/domain/cards.ts')>('src/domain/ca
 type SuitLetter = import('../src/haandevaluering/model/facit.ts').SuitLetter;
 const LETTERS: SuitLetter[] = ['S', 'H', 'D', 'C'];
 const SPEC = 'SPEC-haandevaluering.md, accepttest';
+const KALIBRERING = 'SPEC-haandevaluering-kalibrering.md';
 
 const hands: import('../src/haandevaluering/model/facit.ts').HandInput[] = [
   { id: 'spec-uden-fit', kilde: SPEC, haand: 'AK752.4.KQ63.852', trumf: null, makkersKorthed: [] },
@@ -29,6 +30,7 @@ const hands: import('../src/haandevaluering/model/facit.ts').HandInput[] = [
   { id: 'renonce-og-syv-trumf', kilde: 'MODEL.md 1', haand: 'AKJ7652..KQ63.85', trumf: 'S', makkersKorthed: [] },
   { id: 'dobbeltton-i-trumf', kilde: `${SPEC} (6-2-fit)`, haand: 'Q7.KJ84.A5.QT983', trumf: 'S', makkersKorthed: [] },
   { id: 'singleton-i-trumf', kilde: `${SPEC} (7-1-fit)`, haand: 'A853.7.KJ952.Q64', trumf: 'H', makkersKorthed: [] },
+  { id: 'tre-trumf', kilde: `${KALIBRERING} (−1½ for 3 trumf)`, haand: 'A86.KQ8.82.QT432', trumf: 'H', makkersKorthed: [] },
   { id: 'tiere-i-sans', kilde: 'MODEL.md 2', haand: 'KT4.QT3.AT52.J93', trumf: null, makkersKorthed: [] },
 ];
 // Tilfældige hænder fra kortgiveren: Syds hånd med og uden den længste major som trumf og en konge over for korthed.
@@ -49,7 +51,11 @@ for (let seed = 1; seed <= 8; seed++) {
 const pairs: import('../src/haandevaluering/model/facit.ts').PairInput[] = [
   { id: 'spec-P-29', kilde: `${SPEC} (makker med p = 12)`, syd: 'AK752.4.KQ63.852', nord: 'Q963.A98.A74.J76' },
   { id: 'storeslem', kilde: 'MODEL.md 1 og SPEC, afklaret 5', syd: 'AKJ752.A4.AK3.A2', nord: 'Q643.K2.Q52.K843' },
-  { id: 'slem-uden-kontroller', kilde: 'SPEC, afklaret 5 (to es mangler)', syd: 'KQJ752.KQ.KQ3.K2', nord: 'A643.A5.J542.QJ4' },
+  { id: 'slem-uden-kontroller', kilde: `${KALIBRERING}, Nøglekortreglen (to es mangler)`, syd: 'KQJ752.KQ.KQ3.K2', nord: 'A643.A5.J542.QJ4' },
+  { id: 'noeglekort-es-og-trumfkonge', kilde: `${KALIBRERING} (P = 36, ét es og trumfkongen mangler)`, syd: 'AQJ752.AK4.AK3.2', nord: '9863.Q76.Q876.K5' },
+  { id: 'fit-5-3', kilde: `${KALIBRERING} (5-3-fit: −1½ og +1½)`, syd: 'A86.KQ8.82.QT432', nord: 'QJ5.A7642.K764.J' },
+  { id: 'fit-6-2', kilde: `${KALIBRERING} (6-2-fit: −3 og +3)`, syd: 'Q7.KJ84.A5.QT983', nord: 'AKJ852.Q3.K74.A2' },
+  { id: 'fit-7-1', kilde: `${KALIBRERING} (7-1-fit: −4½ og +4½)`, syd: 'A853.7.KJ952.Q64', nord: 'K2.AKQ8643.A3.J5' },
 ];
 // Den første fordeling fra kortgiveren for hver kontrakt og for sans med og uden alle stoppere.
 const wanted = new Map<string, string>([

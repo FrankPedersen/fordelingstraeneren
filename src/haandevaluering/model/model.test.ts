@@ -81,10 +81,10 @@ describe('P-modellen (SPEC-haandevaluering.md, accepttest)', () => {
   });
 
   it('kortfarvepoint tælles ikke i trumffarven: en 6-2-fit giver ingen dobbelttonpoint for de 2 trumf, og en 7-1-fit ingen singletonpoint', () => {
-    // 2 trumf (♠) og en dobbeltton i ♦: kun ♦ tæller.
-    expect(pOf(parseHand('Q7.KJ84.A5.QT983'), { trump: SPADES })).toMatchObject({ trump: 0, shortness: 1 });
-    // 1 trumf (♥) og ingen anden korthed.
-    expect(pOf(parseHand('A853.7.KJ952.Q64'), { trump: 1 })).toMatchObject({ trump: 0, shortness: 0 });
+    // 2 trumf (♠) og en dobbeltton i ♦: kun ♦ tæller. Trumflængden er −3 (SPEC-haandevaluering-kalibrering.md).
+    expect(pOf(parseHand('Q7.KJ84.A5.QT983'), { trump: SPADES })).toMatchObject({ trump: -3, shortness: 1 });
+    // 1 trumf (♥) og ingen anden korthed; trumflængden er −4½.
+    expect(pOf(parseHand('A853.7.KJ952.Q64'), { trump: 1 })).toMatchObject({ trump: -4.5, shortness: 0 });
     // Samme hænder uden for trumffarven tæller som mønstret.
     expect(pOf(parseHand('Q7.KJ84.A5.QT983'), { trump: 1 }).shortness).toBe(2);
     expect(pOf(parseHand('A853.7.KJ952.Q64'), { trump: SPADES }).shortness).toBe(3);
@@ -171,8 +171,9 @@ describe('P-modellen: tabellen, stikforventningen og beslutningen', () => {
     expect(rightDecisions(41.75)).toEqual(['grand']);
   });
 
-  it('kontroltjekket: slem kræver højst ét manglende es, storeslem alle fire es og trumfkongen', () => {
-    expect(contractFor(36, { aces: 3, trumpKing: false })).toBe('slam');
+  it('kontroltjekket: lilleslem kræver højst ét manglende nøglekort (de fire es og trumfkongen), storeslem alle fem', () => {
+    expect(contractFor(36, { aces: 3, trumpKing: true })).toBe('slam');
+    expect(contractFor(36, { aces: 3, trumpKing: false })).toBe('game');
     expect(contractFor(36, { aces: 2, trumpKing: true })).toBe('game');
     expect(rightDecisions(35, { aces: 2, trumpKing: true })).toEqual(['game']);
     expect(contractFor(42, { aces: 4, trumpKing: false })).toBe('slam');

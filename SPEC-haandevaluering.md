@@ -50,7 +50,7 @@ Alle konstanter kommer fra MODEL.md og ligger i `src/haandevaluering/content/p-m
 
 ```text
 p = honnørpoint
-  + 1½ pr. trumf ud over 4 (kun egen hånd)
+  + 1½ pr. trumf du selv har ud over 4, minus 1½ pr. trumf under 4 (for parret det samme som 1½ pr. trumf ud over 8)
   + kortfarvepoint: renonce 5, singleton 3, dobbeltton 1 (begge hænder, kun i sidefarverne)
   − 1 pr. konge over for makkers viste korthed
 
@@ -60,7 +60,7 @@ P = din p + makkers p
 stik ≈ 0,31 × P + 0,75
 ```
 
-Fordelingsleddene (trumflængde og kortfarvepoint) må først lægges til, når fitten er bekræftet. Kortfarvepoint tælles kun i sidefarverne: en kort trumffarve (fx dobbeltton i en 6-2-fit eller singleton i en 7-1-fit) giver ingen stjælestik og tæller derfor ikke.
+Fordelingsleddene (trumflængde og kortfarvepoint) må først lægges til, når fitten er bekræftet. Kortfarvepoint tælles kun i sidefarverne: en kort trumffarve (fx dobbeltton i en 6-2-fit eller singleton i en 7-1-fit) giver ingen stjælestik og tæller derfor ikke. Trumfleddet regnes som i simuleringernes scripts, så en hånd med færre end 4 trumf får minus (SPEC-haandevaluering-kalibrering.md).
 
 **Stikforventning:** appen bruger tabellen nedenfor med lineær interpolation mellem rækkerne, så forventningen aldrig springer. Formlen 0,31 × P + 0,75 bruges kun i forklaringer. Opgaver laves kun for P mellem 24 og 40.
 
@@ -107,7 +107,7 @@ Tabellen beregnes i koden af mønstrene i `src/domain/` (alle 39 mønstre; de 13
 2. **Makkers styrke:** i første version er begge hænder synlige, så valgene er delkontrakt, udgang, lilleslem og storeslem. Invit giver kun mening, når makkers hånd ikke er kendt, og kommer i version 2 sammen med opgaver, hvor makkers p skal skønnes ud fra hans meldinger.
 3. **Dobbeltdummy-skævhed:** grænserne bruges som i MODEL.md. Forbeholdet (0,2–0,3 stik optimistisk) vises i forklaringen.
 4. **Turneringsform og zone:** et avanceret niveau. Ved IMP i zonen er udgang rigtig fra ca. 37 % chance (P ≈ 27½), uden for zonen fra ca. 45 % (P ≈ 28), ved parturnering ved 50 % (P = 28½).
-5. **Kontroltjek ved slem:** simpelt i første version. Lilleslem kræver, at parret højst mangler ét es; storeslem kræver alle fire es og trumfkongen. Kontrolspørgsmål som konventioner trænes i konventionstræneren.
+5. **Kontroltjek ved slem:** simpelt i første version. Lilleslem kræver, at parret højst mangler ét nøglekort (de fire es og trumfkongen); storeslem kræver alle fem (rettet fra "højst ét es" i SPEC-haandevaluering-kalibrering.md). Kontrolspørgsmål som konventioner trænes i konventionstræneren.
 
 ## Øvelser og niveauer
 
@@ -118,7 +118,7 @@ Tabellen beregnes i koden af mønstrene i `src/domain/` (alle 39 mønstre; de 13
 5. **Hvad makker skal have:** "Du har 16. Hvad skal makker have til udgang?"
 6. **Farve eller sans:** to hænder med 8+ fit og/eller stoppere; brugeren vælger 4M eller 3NT. Facit (Claude Codes valg): 4M, når der er en 8+ major-fit ("Fit først"); 3NT, når der ikke er en major-fit og alle fire farver er stoppede.
 7. **Spildte værdier:** makker har vist korthed; brugeren regner p igen. Kun kongen koster.
-8. **Sammenlign metoder:** samme hånd regnet med HCP, Zar og P; brugeren vælger, hvilken der giver den rigtige kontrakt, og facit forklarer hvorfor. I første version er "den rigtige kontrakt" P-modellens beslutning; med dobbeltdummy-facit i version 2 bliver den fordelingens faktiske resultat. HCP-metoden bruger udgangsgrænsen fra Franks simulering (se Åbne punkter); indtil den er afklaret, bruges 25 HCP.
+8. **Sammenlign metoder:** samme hånd regnet med HCP, Zar og P; brugeren vælger, hvilken der giver den rigtige kontrakt, og facit forklarer hvorfor. I første version er "den rigtige kontrakt" P-modellens beslutning; med dobbeltdummy-facit i version 2 bliver den fordelingens faktiske resultat. HCP-metoden bruger udgangsgrænsen fra Franks simulering: 23 HCP (SPEC-haandevaluering-kalibrering.md).
 9. **Turneringsform:** som opgave 4, men med zone og IMP eller parturnering.
 
 | Niveau | Indhold |
@@ -238,10 +238,11 @@ Accepttest i Vitest:
 
 Åbne punkter:
 
-- **Kontroltjekket ved slem** er forenklet og skal bekræftes.
-- **HCP-grænsen i opgave 8:** hvilken udgangsgrænse gav 82,5 % i Franks simulering (findes formentlig i `scripts/analyse2.py` eller `scripts/systemer.py`)? Indtil da bruges 25 HCP.
-- **Kortfarvepoint i trumffarven:** reglen om kun at tælle sidefarverne bør efterprøves i `scripts/korthed.py`.
-- **IMP-grænserne** (P ≈ 27½ i zonen, 28 uden for) er aflæst af tabellen og bør efterprøves med Franks data.
+- **Lukket af SPEC-haandevaluering-kalibrering.md** (21. oktober 2026), med tal fra Franks simuleringer:
+  - **Kontroltjekket ved slem:** lilleslem kræver højst ét manglende nøglekort (de fire es og trumfkongen), storeslem alle fem.
+  - **HCP-grænsen i opgave 8** er 23 HCP; den giver de 82,5 %.
+  - **Kortfarvepoint i trumffarven:** kun sidefarverne, bekræftet.
+  - **IMP-grænserne** 27½, 28 og 28½ er bekræftet med simuleringernes P, som appen bruger fra samme spec (trumflængden med minus under 4 trumf).
 - **Version 2:** makkers forventede p ud fra meldingerne og dobbeltdummy-facit pr. fordeling kræver nye kørsler i Franks pipeline.
 
 ## Afklaret
@@ -260,7 +261,7 @@ Claude Codes gennemgang af version 1 (7. oktober 2026) og Franks svar i version 
 10. **Niveauvalgene** er delkontrakt, udgang, lilleslem og storeslem; invit kommer i version 2 (Frank, 8. oktober 2026).
 11. **Nabovalg ved grænsen:** inden for ½ point, grænserne medregnet (Frank, 8. oktober 2026).
 12. **Kortfarvepoint** tælles kun i sidefarverne (Frank, 8. oktober 2026).
-13. **HCP-grænsen i opgave 8** er 25 HCP, indtil Franks simulering viser den (Frank, 8. oktober 2026).
+13. **HCP-grænsen i opgave 8** er 25 HCP, indtil Franks simulering viser den (Frank, 8. oktober 2026). Rettet til 23 HCP i SPEC-haandevaluering-kalibrering.md.
 14. **Storeslem i opgave 4:** opgaverne ligger omkring udgang og lilleslem, så P er højst 35 + 2 = 37. Storeslem er et svarvalg, men aldrig det rigtige i første version (Frank, 8. oktober 2026).
 15. **Forsidens tests:** med linjen i `tracks.ts` står Vurdering på forsiden. To tests i `src/app/navigation.test.tsx` forventer derfor Optælling, Spilføring, Vurdering, og testen for et nyt spor bruger et tænkt spor med et andet navn end Håndevaluering. Vejledningens afsnit om forsidens grupper nævner Håndevaluering (Frank, 8. oktober 2026).
 
@@ -270,7 +271,7 @@ Truffet under bygningen af leverancetrin 1–3 (8. oktober 2026). Ændres kun ef
 
 1. **Farve eller sans:** facit som beskrevet under opgave 6.
 2. **Leitner-bunken (30 kort):** ankrene, korthed 5-3-1, genvejens fire led (vælg blandt fire værdier, fx −½ for en dame), de 13 mønstre, makkers krav for 12, 14, 16, 18, 21 og 24 og stikforventningen (vælg blandt fire stikantal fra tabellen ved P = 24, 26, 28½, 30 eller 32; huskeversionen P/3 peger på det rigtige). Grupperne introduceres på skift, højst 3 nye kort pr. session. Rigtigt inden for 8 s (lynrundens grænse) er hurtigt i Leitner.
-3. **Storeslem som nabovalg** kræver alle fire es og trumfkongen, lilleslem højst ét manglende es.
+3. **Storeslem som nabovalg** kræver alle fire es og trumfkongen, lilleslem højst ét manglende es (fra SPEC-haandevaluering-kalibrering.md højst ét manglende nøglekort).
 4. **Spildte værdier** trækkes kun fra, når fitten er bekræftet, ligesom de andre fordelingsled.
 5. **Stoppere:** en farve er stoppet, når mindst én af hænderne har en stopper efter `hasStopper`.
 6. **Opgave 3** har tre situationer, alle efter makkers åbning fra systemfilen: åbning i farve uden kendt major-fit (åbner han 1♥ eller 1♠, har du højst 2 kort i farven) giver kun honnørpoint; 1♥ eller 1♠ med mindst 3 kort hos dig giver honnørpoint + fordeling; 1NT, når du er balanceret uden firekortsmajor, giver sansmodellen.
@@ -293,7 +294,7 @@ Truffet under bygningen af leverancetrin 1–3 (8. oktober 2026). Ændres kun ef
 
 21. **Opgave 8 (Franks svar 21. oktober 2026):** "Brug formatet 'HCP eller Zar?' med P skjult til facit. Tag kun hænder, hvor HCP og Zar er uenige, og spring hænder over, hvor begge beslutninger er rigtige efter rightDecisions. Generatoren skal give lige mange opgaver, hvor HCP har ret, og hvor Zar har ret. Facit viser P's regnestykke pr. hånd og forklarer ud fra trumf, korthed, længde og kontroller, hvad den forkerte metode overså." Bygget sådan:
     - Begge hænder med fit vises, og under dem HCP og Zar med tal og beslutning, fx "HCP: 12 + 14 = 26 HCP → udgang (grænse 25)". Spørgsmålet er "HCP og Zar er uenige. Hvem har ret?" med svarene HCP og Zar.
-    - Kun udgang eller delkontrakt: udgang fra 25 HCP (foreløbig, Åbne punkter), 52 ZP og P = 28½. Fordelinger, hvor P ligger inden for ½ point af udgangsgrænsen, eller hvor P siger slem, bruges ikke (`compareMethods` i `generator.ts`).
+    - Kun udgang eller delkontrakt: udgang fra 25 HCP (foreløbig; 23 HCP fra SPEC-haandevaluering-kalibrering.md), 52 ZP og P = 28½. Fordelinger, hvor P ligger inden for ½ point af udgangsgrænsen, eller hvor P siger slem, bruges ikke (`compareMethods` i `generator.ts`).
     - Generatoren vælger først med lige stor chance, hvilken metode der skal have ret, og finder så en fordeling.
     - Facit: HCP- og Zar-linjerne, P pr. hånd ("Dig: honnørpoint 12, p = 12."), P og kontrakten, hvem der har ret, og én sætning om den forkerte metode. HCP: trumflængde og korthed og honnørernes værdi i P (esser, damer, knægte og tiere) over for HCP, fx "HCP overså, at fordelingen giver for lidt: trumflængde og korthed giver 0 og esser, damer, knægte og tiere +1, så 26 HCP bliver kun P = 27." Zar: Zars point for længde og kontroller over for P's trumflængde og korthed i sidefarverne.
 22. **Opgave 9:** som opgave 4 med begge hænder og de fire niveauer, men meldingerne viser turneringsformen ("Holdturnering (IMP) i zonen", "Holdturnering (IMP) uden for zonen" eller "Parturnering"). Formen vælges med lige stor chance, og P ligger inden for ±2 af formens udgangsgrænse (27½, 28 eller 28½); slem- og storeslemsgrænsen er uændrede. Facit har en linje mere, fx "Holdturnering (IMP) i zonen: udgang er rigtig fra ca. 37 % for 4♥, dvs. P ≥ 27½.", og nabovalget følger formens grænse.

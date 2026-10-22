@@ -10,9 +10,10 @@
     "T": 0.25
   },
   "trumflaengde": {
-    "afsnit": "MODEL.md 1: 1½ pr. trumf du selv har ud over 4",
+    "afsnit": "MODEL.md 1: 1½ pr. trumf du selv har ud over 4, minus 1½ pr. trumf under 4 (for parret det samme som 1½ pr. trumf ud over 8). Sådan regner simuleringernes scripts, som tabellen, grænserne og R² bygger på (SPEC-haandevaluering-kalibrering.md)",
     "over": 4,
-    "point": 1.5
+    "point": 1.5,
+    "negativ": true
   },
   "kortfarvepoint": {
     "afsnit": "MODEL.md 1 og 3 (5/3/1, tælles i begge hænder, kun i sidefarverne: en kort trumffarve giver ingen stjælestik; SPEC-haandevaluering.md version 2)",
@@ -51,8 +52,8 @@
     "storeslem": 41
   },
   "kontroller": {
-    "afsnit": "SPEC-haandevaluering.md, afklaret fagligt valg 5 (forenklet kontroltjek)",
-    "slemHoejstManglendeEs": 1,
+    "afsnit": "SPEC-haandevaluering-kalibrering.md, Nøglekortreglen: nøglekort er de fire es og trumfkongen; lilleslem kræver, at parret højst mangler ét, og storeslem alle fem (Franks data: ét manglende es uden trumfkongen gav kun 30,6 % lilleslem)",
+    "slemHoejstManglendeNoeglekort": 1,
     "storeslemKraeverTrumfkongen": true
   },
   "sans": {
@@ -86,8 +87,8 @@
     "hcp12Procent": 35
   },
   "hcpMetode": {
-    "afsnit": "SPEC-haandevaluering.md, opgave 8: HCP-metodens udgangsgrænse er foreløbig 25 HCP, indtil Franks simulering viser grænsen bag de 82,5 %",
-    "udgang": 25
+    "afsnit": "MODEL.md 1 og 5 og SPEC-haandevaluering-kalibrering.md: HCP-metodens udgangsgrænse; 23 HCP giver de 82,5 % rigtige udgangsbeslutninger, MODEL.md angiver for ren HCP (Franks kørsel 21. oktober 2026)",
+    "udgang": 23
   },
   "praestation": {
     "afsnit": "MODEL.md 1 og 5 (forklaret varians og korrekt udgangsbeslutning i procent)",

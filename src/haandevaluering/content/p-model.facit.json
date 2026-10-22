@@ -99,10 +99,10 @@
    "facit": {
     "hcp": 12,
     "honnoerpoint": 11.75,
-    "trumflaengde": 0,
+    "trumflaengde": -3,
     "kortfarvepoint": 1,
     "spildte": 0,
-    "p": 12.75,
+    "p": 9.75,
     "sanspoint": 12.25,
     "zar": 27
    }
@@ -116,12 +116,29 @@
    "facit": {
     "hcp": 10,
     "honnoerpoint": 10,
-    "trumflaengde": 0,
+    "trumflaengde": -4.5,
     "kortfarvepoint": 0,
     "spildte": 0,
-    "p": 10,
+    "p": 5.5,
     "sanspoint": 10,
     "zar": 26
+   }
+  },
+  {
+   "id": "tre-trumf",
+   "kilde": "SPEC-haandevaluering-kalibrering.md (−1½ for 3 trumf)",
+   "haand": "A86.KQ8.82.QT432",
+   "trumf": "H",
+   "makkersKorthed": [],
+   "facit": {
+    "hcp": 11,
+    "honnoerpoint": 11.25,
+    "trumflaengde": -1.5,
+    "kortfarvepoint": 1,
+    "spildte": 0,
+    "p": 10.75,
+    "sanspoint": 11.25,
+    "zar": 25
    }
   },
   {
@@ -336,7 +353,7 @@
   },
   {
    "id": "slem-uden-kontroller",
-   "kilde": "SPEC, afklaret 5 (to es mangler)",
+   "kilde": "SPEC-haandevaluering-kalibrering.md, Nøglekortreglen (to es mangler)",
    "syd": "KQJ752.KQ.KQ3.K2",
    "nord": "A643.A5.J542.QJ4",
    "facit": {
@@ -362,22 +379,130 @@
    }
   },
   {
+   "id": "noeglekort-es-og-trumfkonge",
+   "kilde": "SPEC-haandevaluering-kalibrering.md (P = 36, ét es og trumfkongen mangler)",
+   "syd": "AQJ752.AK4.AK3.2",
+   "nord": "9863.Q76.Q876.K5",
+   "facit": {
+    "trumf": "S",
+    "P": 36,
+    "stik": 11.7,
+    "4M": 99,
+    "6M": 64,
+    "7M": 13,
+    "kontrakt": "game",
+    "svar": [
+     "game"
+    ],
+    "makkerSkalHave": 0,
+    "sanspoint": 28,
+    "stoppede": [
+     "S",
+     "H",
+     "D",
+     "C"
+    ],
+    "retning": "major"
+   }
+  },
+  {
+   "id": "fit-5-3",
+   "kilde": "SPEC-haandevaluering-kalibrering.md (5-3-fit: −1½ og +1½)",
+   "syd": "A86.KQ8.82.QT432",
+   "nord": "QJ5.A7642.K764.J",
+   "facit": {
+    "trumf": "H",
+    "P": 25.75,
+    "stik": 8.7125,
+    "4M": 20.125,
+    "6M": 0,
+    "7M": 0,
+    "kontrakt": "partscore",
+    "svar": [
+     "partscore"
+    ],
+    "makkerSkalHave": 17.75,
+    "sanspoint": 22.25,
+    "stoppede": [
+     "S",
+     "H",
+     "D",
+     "C"
+    ],
+    "retning": "major"
+   }
+  },
+  {
+   "id": "fit-6-2",
+   "kilde": "SPEC-haandevaluering-kalibrering.md (6-2-fit: −3 og +3)",
+   "syd": "Q7.KJ84.A5.QT983",
+   "nord": "AKJ852.Q3.K74.A2",
+   "facit": {
+    "trumf": "S",
+    "P": 32.75,
+    "stik": 10.7875,
+    "4M": 93.625,
+    "6M": 20.5,
+    "7M": 2.5,
+    "kontrakt": "game",
+    "svar": [
+     "game"
+    ],
+    "makkerSkalHave": 18.75,
+    "sanspoint": 29.25,
+    "stoppede": [
+     "S",
+     "H",
+     "D",
+     "C"
+    ],
+    "retning": "major"
+   }
+  },
+  {
+   "id": "fit-7-1",
+   "kilde": "SPEC-haandevaluering-kalibrering.md (7-1-fit: −4½ og +4½)",
+   "syd": "A853.7.KJ952.Q64",
+   "nord": "K2.AKQ8643.A3.J5",
+   "facit": {
+    "trumf": "H",
+    "P": 31,
+    "stik": 10.3,
+    "4M": 82.5,
+    "6M": 8.5,
+    "7M": 0.5,
+    "kontrakt": "game",
+    "svar": [
+     "game"
+    ],
+    "makkerSkalHave": 23,
+    "sanspoint": 27,
+    "stoppede": [
+     "S",
+     "H",
+     "D",
+     "C"
+    ],
+    "retning": "major"
+   }
+  },
+  {
    "id": "seed-1",
    "kilde": "kortgiveren, seed 1: delkontrakt",
    "syd": "K94.AT76.65.KJ94",
    "nord": "JT6532.KJ2.97.A6",
    "facit": {
     "trumf": "S",
-    "P": 27,
-    "stik": 9.04,
-    "4M": 33.2,
-    "6M": 0.4,
+    "P": 25.5,
+    "stik": 8.625,
+    "4M": 18.25,
+    "6M": 0,
     "7M": 0,
     "kontrakt": "partscore",
     "svar": [
      "partscore"
     ],
-    "makkerSkalHave": 15.75,
+    "makkerSkalHave": 17.25,
     "sanspoint": 20.5,
     "stoppede": [
      "S",
@@ -394,45 +519,17 @@
    "nord": "KQ76.KJT.42.AQ52",
    "facit": {
     "trumf": "H",
-    "P": 31.5,
-    "stik": 10.45,
-    "4M": 86.75,
-    "6M": 10.75,
-    "7M": 0.75,
+    "P": 30,
+    "stik": 10,
+    "4M": 74,
+    "6M": 4,
+    "7M": 0,
     "kontrakt": "game",
     "svar": [
      "game"
     ],
     "makkerSkalHave": 12.75,
     "sanspoint": 26.5,
-    "stoppede": [
-     "S",
-     "H",
-     "D",
-     "C"
-    ],
-    "retning": "major"
-   }
-  },
-  {
-   "id": "seed-3",
-   "kilde": "kortgiveren, seed 3: lilleslem",
-   "syd": "KQT9762.7.Q.AQ75",
-   "nord": "J8.AQ2.AT7.98432",
-   "facit": {
-    "trumf": "S",
-    "P": 35.5,
-    "stik": 11.55,
-    "4M": 98.75,
-    "6M": 56.25,
-    "7M": 11,
-    "kontrakt": "slam",
-    "svar": [
-     "game",
-     "slam"
-    ],
-    "makkerSkalHave": 5.25,
-    "sanspoint": 24.5,
     "stoppede": [
      "S",
      "H",
@@ -488,6 +585,33 @@
      "D"
     ],
     "retning": null
+   }
+  },
+  {
+   "id": "seed-29",
+   "kilde": "kortgiveren, seed 29: lilleslem",
+   "syd": "KQT83.A764.72.Q8",
+   "nord": "A92.JT82.AKQ85.A",
+   "facit": {
+    "trumf": "S",
+    "P": 36.5,
+    "stik": 11.75,
+    "4M": 99,
+    "6M": 66.5,
+    "7M": 15.75,
+    "kontrakt": "slam",
+    "svar": [
+     "slam"
+    ],
+    "makkerSkalHave": 13.75,
+    "sanspoint": 29.5,
+    "stoppede": [
+     "S",
+     "H",
+     "D",
+     "C"
+    ],
+    "retning": "major"
    }
   }
  ],

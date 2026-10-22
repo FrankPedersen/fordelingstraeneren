@@ -9,6 +9,7 @@ import {
   DECISION_MARGIN,
   formLimits,
   LIMITS,
+  missingKeyCards,
   naturalFrequency,
   notrumpChance,
   P_MODEL,
@@ -23,6 +24,9 @@ import { Regnskab } from './Regnskab';
 import { TEXT, type ShortcutKind } from './texts';
 
 const signed = (v: number) => `${v > 0 ? '+' : '−'} ${pointsText(Math.abs(v))}`;
+
+/** Kongens valør i kortgiverens kort. */
+const KING = 11;
 
 /** Leddene i p for en hånd: honnørpoint, trumflængde, korthed og spildte konger. */
 function pParts(hand: readonly Card[], b: PBreakdown, trump: number, short?: number): string[] {
@@ -58,8 +62,10 @@ function levelSentences(trump: number, facit: Extract<ReturnType<typeof facitOf>
     const limit = [limits.game, limits.slam, limits.grand].find((l) => Math.abs(P - l) <= DECISION_MARGIN)!;
     out.push(TEXT.neighbours(pointsText(limit), TEXT.decisions[contractFor(limit - DECISION_MARGIN, facit.controls, limits)], TEXT.decisions[contractFor(limit, facit.controls, limits)]));
   }
-  if (P >= limits.slam - DECISION_MARGIN && 4 - facit.controls.aces > P_MODEL.kontroller.slemHoejstManglendeEs) {
-    out.push(TEXT.controlsNote(4 - facit.controls.aces));
+  const missing = missingKeyCards(facit.controls);
+  if (P >= limits.slam - DECISION_MARGIN && missing > P_MODEL.kontroller.slemHoejstManglendeNoeglekort) {
+    const king = facit.controls.trumpKing ? null : TEXT.card(trump * 13 + KING);
+    out.push(TEXT.keyCardsNote(missing, king, 4 - facit.controls.aces));
   }
   const [lo, hi] = P_MODEL.dobbeltdummy.stik;
   out.push(TEXT.caveat(formatDecimal(lo, 1), formatDecimal(hi, 1)));
