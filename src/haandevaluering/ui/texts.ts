@@ -7,6 +7,7 @@ import type { Terms } from '../training/scoring';
 
 const SUITS = ['♠', '♥', '♦', '♣'];
 const lowerFirst = (text: string) => text.charAt(0).toLowerCase() + text.slice(1);
+const upperFirst = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
 
 /** Kortets værdi: 0 = 2 … 8 = 10, 9 = knægt, 10 = dame, 11 = konge, 12 = es. */
 const rankWith = (letters: readonly string[]) => (rank: number) => (rank >= 9 ? letters[rank - 9] : `${rank + 2}`);
@@ -57,8 +58,8 @@ const DA = {
   techniqueList: [
     { key: 'anchors', name: 'Ankre', text: 'Udgang, lilleslem og storeslem ved P = 28½ – 35 – 41.' },
     { key: 'tricks', name: 'Stik ≈ P/3', text: 'Huskeversionen af stikforventningen. Den ligger inden for 0,2 stik af tabellen fra P = 24 til 32.' },
-    { key: 'shortcut', name: 'Genvejen', text: 'Honnørpoint = HCP + 1 pr. es − ½ pr. dame − ½ pr. knægt + ¼ pr. tier.' },
-    { key: 'shortness', name: 'Korthed 5-3-1', text: 'Renonce 5, singleton 3 og dobbeltton 1, i begge hænder, men kun i sidefarverne.' },
+    { key: 'shortcut', name: 'Genvejen', text: 'Honnørpoint = hp + 1 pr. es − ½ pr. dame − ½ pr. knægt + ¼ pr. tier.' },
+    { key: 'shortness', name: 'Korthed 5-3-1', text: 'Renonce 5, singleton 3 og doubleton 1, i begge hænder, men kun i sidefarverne.' },
     { key: 'rules', name: 'Tre huskeregler', text: '"Fit først", "Kun kongen spildes" og "Sans tæller stoppere, ikke længde".' },
     { key: 'patterns', name: 'Kortfarvepoint pr. mønster', text: 'Koblingen til fordelingssporet: 4-4-3-2 giver 1, 5-4-3-1 giver 3 og 6-4-3-0 giver 5.' },
   ],
@@ -96,15 +97,16 @@ const DA = {
 
   // Spørgsmålene
   honorsPrompt: 'Hvor mange honnørpoint har du?',
-  distributionPrompt: (suit: string) => `Fitten i ${suit} er bekræftet. Hvad er din p nu?`,
+  distributionPrompt: (suit: string) => `Fittet i ${suit} er bekræftet. Hvad er din p nu?`,
   addPrompt: 'Hvilke led gælder for din hånd nu?',
   terms: { honors: 'Kun honnørpoint', distribution: 'Honnørpoint + fordeling', notrump: 'Sansmodellen' } as Record<Terms, string>,
   decisionPrompt: 'Hvilket niveau?',
   // Opgave 8: Sammenlign metoder.
-  methods: { hcp: 'HCP', zar: 'Zar' },
+  methods: { hcp: 'hp', zar: 'Zar' },
+  pointUnits: { hcp: 'hp', zar: 'ZP' },
   methodLine: (name: string, you: number, partner: number, total: number, unit: string, decision: string, limit: number) =>
-    `${name}: ${you} + ${partner} = ${total} ${unit} → ${decision} (grænse ${limit})`,
-  comparePrompt: 'HCP og Zar er uenige. Hvem har ret?',
+    `${upperFirst(name)}: ${you} + ${partner} = ${total} ${unit} → ${decision} (grænse ${limit})`,
+  comparePrompt: 'Hp og Zar er uenige. Hvem har ret?',
   // Opgave 9: Turneringsform.
   forms: { impVulnerable: 'Holdturnering (IMP) i zonen', impNotVulnerable: 'Holdturnering (IMP) uden for zonen', pairs: 'Parturnering' } as Record<Form, string>,
   decisions: { partscore: 'Delkontrakt', game: 'Udgang', slam: 'Lilleslem', grand: 'Storeslem' } as Record<Decision, string>,
@@ -126,7 +128,7 @@ const DA = {
   next: 'Næste',
   yourAnswer: (text: string) => `Dit svar: ${text}`,
   shortcutFacit: (hcp: number, parts: readonly string[], total: string) =>
-    `Genvejen: ${hcp} HCP${parts.length ? ` ${parts.join(' ')}` : ''} = ${total} honnørpoint.`,
+    `Genvejen: ${hcp} hp${parts.length ? ` ${parts.join(' ')}` : ''} = ${total} honnørpoint.`,
   shortcutPart: (kind: ShortcutKind, count: number, value: string) => {
     const names = { ace: ['es', 'es'], queen: ['dame', 'damer'], jack: ['knægt', 'knægte'], ten: ['tier', 'tiere'] }[kind];
     return `${value} (${count === 1 ? names[0] : `${count} ${names[1]}`})`;
@@ -134,27 +136,27 @@ const DA = {
   honorsPart: (points: string) => `Honnørpoint ${points}`,
   trumpPart: (points: string, trumps: number) => `trumflængde ${points} (${trumps} trumf)`,
   shortnessPart: (points: string, suits: readonly string[]) => `korthed ${points} (${suits.join(', ')})`,
-  shortSuit: (length: number, suit: string) => `${['renonce', 'singleton', 'dobbeltton'][length]} i ${suit}`,
+  shortSuit: (length: number, suit: string) => `${['renonce', 'singleton', 'doubleton'][length]} i ${suit}`,
   wastedPart: (points: string, kings: readonly string[]) => `spildte værdier ${points} (${kings.join(' og ')} over for makkers korthed)`,
   pFacit: (parts: readonly string[], p: string) => `${parts.join(', ')}: p = ${p}.`,
   pHand: (who: string, parts: readonly string[], p: string) => `${who}: ${lowerFirst(parts.join(', '))}, p = ${p}.`,
-  compareRight: (method: string) => `${method} har ret.`,
+  compareRight: (method: string) => `${upperFirst(method)} har ret.`,
   hcpTooHigh: (dist: string, adj: string, hcp: number, P: string) =>
-    `HCP overså, at fordelingen giver for lidt: trumflængde og korthed giver ${dist} og esser, damer, knægte og tiere ${adj}, så ${hcp} HCP bliver kun P = ${P}.`,
+    `Hp overså, at fordelingen giver for lidt: trumflængde og korthed giver ${dist} og esser, damer, knægte og tiere ${adj}, så ${hcp} hp bliver kun P = ${P}.`,
   hcpTooLow: (dist: string, adj: string, hcp: number, P: string) =>
-    `HCP overså fordelingen: trumflængde og korthed giver ${dist} og esser, damer, knægte og tiere ${adj}, så ${hcp} HCP bliver P = ${P}.`,
+    `Hp overså fordelingen: trumflængde og korthed giver ${dist} og esser, damer, knægte og tiere ${adj}, så ${hcp} hp bliver P = ${P}.`,
   zarTooHigh: (length: number, controls: number, dist: string) =>
     `Zar overså, at længde og kontroller ikke er det samme som en fit: Zar giver ${length} ZP for længde og ${controls} ZP for kontroller, men P giver kun ${dist} for trumflængde og korthed i sidefarverne.`,
   zarTooLow: (length: number, controls: number, dist: string) =>
-    `Zar overså fitten: P giver ${dist} for trumflængde og korthed i sidefarverne, mens Zar kun giver ${length} ZP for længde og ${controls} ZP for kontroller.`,
+    `Zar overså fittet: P giver ${dist} for trumflængde og korthed i sidefarverne, mens Zar kun giver ${length} ZP for længde og ${controls} ZP for kontroller.`,
   formFacit: (form: string, percent: number, contract: string, limit: string) => `${form}: udgang er rigtig fra ca. ${percent} % for ${contract}, dvs. P ≥ ${limit}.`,
   trumpShortNote: 'Korthed i trumffarven tæller ikke: en kort trumffarve giver ingen stjælestik.',
   onlyKingNote: 'Kun kongen spildes: en dame eller knægt over for makkers korthed koster ikke noget.',
   partnerFacit: (game: string, you: string, needs: string) => `${game} − ${you} = ${needs}: makker skal have ${needs}.`,
   addFacit: {
-    honors: 'Fitten er ikke bekræftet, så kun honnørpointene tæller. Fordelingen lægges først til, når fitten er fundet.',
-    distribution: 'Makker har mindst 5 kort i farven, og du har mindst 3, så fitten er bekræftet: honnørpoint + trumflængde og korthed.',
-    notrump: 'Efter 1NT og uden firekortsmajor spilles der sans: HCP + ¼ pr. tier, ingen længdepoint, og stopperne tæller.',
+    honors: 'Fittet er ikke bekræftet, så kun honnørpointene tæller. Fordelingen lægges først til, når fittet er fundet.',
+    distribution: 'Makker har mindst 5 kort i farven, og du har mindst 3, så fittet er bekræftet: honnørpoint + trumflængde og korthed.',
+    notrump: 'Efter 1NT og uden firekortsmajor spilles der sans: hp + ¼ pr. tier, ingen længdepoint, og stopperne tæller.',
   } as Record<Terms, string>,
   decisionFacit: (you: string, partner: string, P: string, decision: string) => `P = ${you} + ${partner} = ${P}: ${decision}.`,
   tricksLine: (tricks: string) => `Forventet antal stik: ca. ${tricks}.`,
@@ -169,7 +171,7 @@ const DA = {
   caveat: (lo: string, hi: string) => `Tallene er dobbeltdummy (perfekt spil med alle kort synlige) og typisk ${lo}–${hi} stik for optimistiske.`,
   strainMajor: (contract: string, trumps: number, gain: string) => `Fit først: med ${trumps} trumf giver ${contract} ca. ${gain} stik mere end sans.`,
   strainNotrump: (lo: number, hi: number, k: number, n: number) =>
-    `Ingen major-fit, og alle fire farver er stoppet: 3NT. Ved ${lo}–${hi} HCP holder 3NT ca. ${k} ud af ${n} gange med alle farver stoppet.`,
+    `Ingen major-fit, og alle fire farver er stoppet: 3NT. Ved ${lo}–${hi} hp holder 3NT ca. ${k} ud af ${n} gange med alle farver stoppet.`,
 
   // Opvarmningen
   deckGroups: {
@@ -181,8 +183,8 @@ const DA = {
     stik: 'Stikforventning',
   } as Record<DeckGroup, string>,
   anchorPrompt: { game: 'Grænsen for udgang: P ≥ ?', slam: 'Grænsen for lilleslem: P ≥ ?', grand: 'Grænsen for storeslem: P ≥ ?' } as Record<string, string>,
-  shortnessPrompt: (length: number) => `Kortfarvepoint for en ${['renonce', 'singleton', 'dobbeltton'][length]}?`,
-  shortcutPrompt: (kind: ShortcutKind) => `Genvejen: hvad lægges til HCP pr. ${{ ace: 'es', queen: 'dame', jack: 'knægt', ten: 'tier' }[kind]}?`,
+  shortnessPrompt: (length: number) => `Kortfarvepoint for en ${['renonce', 'singleton', 'doubleton'][length]}?`,
+  shortcutPrompt: (kind: ShortcutKind) => `Genvejen: hvad lægges til hp pr. ${{ ace: 'es', queen: 'dame', jack: 'knægt', ten: 'tier' }[kind]}?`,
   patternPrompt: (pattern: string) => `Kortfarvepoint for mønstret ${pattern}?`,
   tricksPrompt: (P: string) => `P = ${P}. Hvor mange stik i gennemsnit?`,
   deckFacit: (answer: string) => `Facit: ${answer}`,
@@ -222,7 +224,7 @@ const DA = {
 
   help: {
     screen:
-      'Håndevaluering træner at regne din hånd med Franks P-model: honnørpoint (E 5, K 3, D 1½, B ½, 10 ¼), og når fitten er fundet også trumflængde og korthed. Parrets P afgør niveauet. Niveauet stiger, når over 90 % af de seneste 20 svar er rigtige, og falder under 80 %.',
+      'Håndevaluering træner at regne din hånd med Franks P-model: honnørpoint (E 5, K 3, D 1½, B ½, 10 ¼), og når fittet er fundet også trumflængde og korthed. Parrets P afgør niveauet. Niveauet stiger, når over 90 % af de seneste 20 svar er rigtige, og falder under 80 %.',
     today:
       'Dagens plan: opvarmning med nøgletal og kortfarvepoint pr. mønster (de kort, Leitner-systemet har sat til i dag, og op til 3 nye), en lynrunde med honnørpoint og opgaver på dit niveau.',
     start:
@@ -233,17 +235,17 @@ const DA = {
     level:
       'Niveau 1: honnørpoint og hvad makker skal have. 2: fordelingsled, og hvornår de må lægges til. 3: niveaubeslutningen og spildte værdier. 4: farve eller sans og sammenlign metoder. 5: turneringsform og blandede opgaver.',
     exercises: {
-      honors: 'Tast honnørpointene: E 5, K 3, D 1½, B ½ og 10 ¼. Genvejen er HCP + 1 pr. es − ½ pr. dame − ½ pr. knægt + ¼ pr. tier. Inden for 8 s giver 10 XP, ellers 5.',
+      honors: 'Tast honnørpointene: E 5, K 3, D 1½, B ½ og 10 ¼. Genvejen er hp + 1 pr. es − ½ pr. dame − ½ pr. knægt + ¼ pr. tier. Inden for 8 s giver 10 XP, ellers 5.',
       distribution:
-        'Fitten er bekræftet, så fordelingen tæller: 1½ pr. trumf ud over 4, minus 1½ pr. trumf under 4, og korthed 5-3-1 (renonce, singleton, dobbeltton) i sidefarverne. Tast din p; inden for 20 s giver 10 XP.',
-      add: 'Fordelingen må først lægges til, når fitten er bekræftet. Uden fit tæller kun honnørpointene, og i sans gælder sansmodellen: HCP + ¼ pr. tier og stoppere i stedet for længde.',
+        'Fittet er bekræftet, så fordelingen tæller: 1½ pr. trumf ud over 4, minus 1½ pr. trumf under 4, og korthed 5-3-1 (renonce, singleton, doubleton) i sidefarverne. Tast din p; inden for 20 s giver 10 XP.',
+      add: 'Fordelingen må først lægges til, når fittet er bekræftet. Uden fit tæller kun honnørpointene, og i sans gælder sansmodellen: hp + ¼ pr. tier og stoppere i stedet for længde.',
       decision:
         'Læg din og makkers p sammen til P. Under 28½ er delkontrakt, fra 28½ udgang, fra 35 lilleslem (højst ét nøglekort må mangle: de fire es og trumfkongen) og fra 41 storeslem (alle fem nøglekort). Inden for ½ point af en grænse er begge nabovalg rigtige.',
       partner: 'Udgang kræver P = 28½, så makker skal have 28½ minus dine point. Tast svaret med ½ og ¼.',
       strain: 'Fit først: med en 8+ major-fit giver farvekontrakten 2–4 stik mere end sans. Uden major-fit og med alle fire farver stoppet er 3NT rigtigt.',
       wasted: 'Makker har vist korthed. En konge i den farve er spildt og koster 1; en dame eller knægt koster ikke noget. Tast din p igen.',
       compare:
-        'Begge hænder med fit, og HCP og Zar med tal og beslutning. De to er uenige: regn P, og vælg den metode, der giver P-modellens kontrakt. Udgang fra 23 HCP, 52 ZP og P = 28½.',
+        'Begge hænder med fit, og hp og Zar med tal og beslutning. De to er uenige: regn P, og vælg den metode, der giver P-modellens kontrakt. Udgang fra 23 hp, 52 ZP og P = 28½.',
       form: 'Niveaubeslutningen med turneringsformen: ved holdturnering i zonen er udgang rigtig fra P ≈ 27½ (ca. 37 % for 4M), uden for zonen fra 28 (45 %) og ved parturnering fra 28½ (50 %). Inden for ½ point af grænsen er begge nabovalg rigtige.',
     } as Record<Exercise, string>,
     count:
@@ -255,9 +257,9 @@ const DA = {
     status: 'Sessionens resultat. Streak og XP er Håndevalueringens egne, adskilt fra de andre spor.',
     deck: {
       anker: 'Ankrene for niveaubeslutningen: udgang ved P = 28½, lilleslem ved 35 og storeslem ved 41. Tast tallet med ½.',
-      korthed: 'Kortfarvepoint i farvekontrakt: renonce 5, singleton 3 og dobbeltton 1. De tælles i begge hænder, men kun i sidefarverne.',
-      genvej: 'Genvejen fra HCP til honnørpoint: + 1 pr. es, − ½ pr. dame, − ½ pr. knægt og + ¼ pr. tier. Kongen er den samme.',
-      moenster: 'Kortfarvepoint pr. mønster er summen over farverne: 5 for en renonce, 3 for en singleton og 1 for en dobbeltton.',
+      korthed: 'Kortfarvepoint i farvekontrakt: renonce 5, singleton 3 og doubleton 1. De tælles i begge hænder, men kun i sidefarverne.',
+      genvej: 'Genvejen fra hp til honnørpoint: + 1 pr. es, − ½ pr. dame, − ½ pr. knægt og + ¼ pr. tier. Kongen er den samme.',
+      moenster: 'Kortfarvepoint pr. mønster er summen over farverne: 5 for en renonce, 3 for en singleton og 1 for en doubleton.',
       makker: 'Udgang kræver P = 28½, så makker skal have 28½ minus dine point.',
       stik: 'Stikforventningen er tabellen fra MODEL.md. Huskeversionen er P/3, som ligger inden for 0,2 stik fra P = 24 til 32.',
     } as Record<DeckGroup, string>,
@@ -338,6 +340,7 @@ const EN: Texts = {
   terms: { honors: 'Honour points only', distribution: 'Honour points + distribution', notrump: 'The notrump model' },
   decisionPrompt: 'Which level?',
   methods: { hcp: 'HCP', zar: 'Zar' },
+  pointUnits: { hcp: 'HCP', zar: 'ZP' },
   methodLine: (name: string, you: number, partner: number, total: number, unit: string, decision: string, limit: number) =>
     `${name}: ${you} + ${partner} = ${total} ${unit} → ${decision} (limit ${limit})`,
   comparePrompt: 'HCP and Zar disagree. Which is right?',

@@ -39,7 +39,7 @@ Besked til Claude Code:
 
 - **Formål:** brugeren lærer at regne sin hånd rigtigt, at vide *hvornår* fordelingen må lægges til, og at træffe niveaubeslutningen ud fra parrets samlede styrke.
 - **Placering:** fordelingstræneren, gruppen Vurdering. Gruppen vises på forsiden, så snart sporets linje står i `tracks.ts`. Konventionstræneren bruger P-modellen til at generere hænder og forklare facit, men træner den ikke.
-- **To skalaer:** meldinger følger systemets HCP-grænser (4-3-2-1). P bruges til niveaubeslutninger, når fitten er fundet. Sans har sin egen model.
+- **To skalaer:** meldinger følger systemets hp-grænser (4-3-2-1). P bruges til niveaubeslutninger, når fittet er fundet. Sans har sin egen model.
 - **Sprog:** dansk og engelsk som resten af appen (se Sprog og hjælp).
 
 ## Fagligt grundlag
@@ -51,16 +51,16 @@ Alle konstanter kommer fra MODEL.md og ligger i `src/haandevaluering/content/p-m
 ```text
 p = honnørpoint
   + 1½ pr. trumf du selv har ud over 4, minus 1½ pr. trumf under 4 (for parret det samme som 1½ pr. trumf ud over 8)
-  + kortfarvepoint: renonce 5, singleton 3, dobbeltton 1 (begge hænder, kun i sidefarverne)
+  + kortfarvepoint: renonce 5, singleton 3, doubleton 1 (begge hænder, kun i sidefarverne)
   − 1 pr. konge over for makkers viste korthed
 
 honnørpoint = 5·E + 3·K + 1½·D + ½·B + ¼·10
-            = HCP + 1 pr. es − ½ pr. dame − ½ pr. knægt + ¼ pr. tier
+            = hp + 1 pr. es − ½ pr. dame − ½ pr. knægt + ¼ pr. tier
 P = din p + makkers p
 stik ≈ 0,31 × P + 0,75
 ```
 
-Fordelingsleddene (trumflængde og kortfarvepoint) må først lægges til, når fitten er bekræftet. Kortfarvepoint tælles kun i sidefarverne: en kort trumffarve (fx dobbeltton i en 6-2-fit eller singleton i en 7-1-fit) giver ingen stjælestik og tæller derfor ikke. Trumfleddet regnes som i simuleringernes scripts, så en hånd med færre end 4 trumf får minus (SPEC-haandevaluering-kalibrering.md).
+Fordelingsleddene (trumflængde og kortfarvepoint) må først lægges til, når fittet er bekræftet. Kortfarvepoint tælles kun i sidefarverne: en kort trumffarve (fx doubleton i en 6-2-fit eller singleton i en 7-1-fit) giver ingen stjælestik og tæller derfor ikke. Trumfleddet regnes som i simuleringernes scripts, så en hånd med færre end 4 trumf får minus (SPEC-haandevaluering-kalibrering.md).
 
 **Stikforventning:** appen bruger tabellen nedenfor med lineær interpolation mellem rækkerne, så forventningen aldrig springer. Formlen 0,31 × P + 0,75 bruges kun i forklaringer. Opgaver laves kun for P mellem 24 og 40.
 
@@ -82,11 +82,11 @@ Udgang ved P ≥ 28½, lilleslem ved P ≥ 35 og storeslem ved P ≥ 41, slem me
 
 **3. Hvad makker skal have til udgang:** 12 → 16½, 14 → 14½, 16 → 12½, 18 → 10½, 21 → 7½, 24 → 4½ (P = 28½).
 
-**4. Sanskontrakt – en anden model:** point = HCP + ¼ pr. tier, ingen længde- og fladhedspoint. Stoppere tjekkes i alle fire farver med meldegiverens definition (`hasStopper`: es, konge med mindst ét kort ved siden, dame tredje eller knægt fjerde): ved 24–26 HCP holder 3NT i 31 % med 3 stoppede farver og 60 % med 4.
+**4. Sanskontrakt – en anden model:** point = hp + ¼ pr. tier, ingen længde- og fladhedspoint. Stoppere tjekkes i alle fire farver med meldegiverens definition (`hasStopper`: es, konge med mindst ét kort ved siden, dame tredje eller knægt fjerde): ved 24–26 hp holder 3NT i 31 % med 3 stoppede farver og 60 % med 4.
 
 **5. Farve eller sans:** med 8 trumf giver farvekontrakten 2,2 stik mere end sans, med 9 trumf 3,0 og med 10 trumf 3,8. Fit først.
 
-**6. Zar Points som sammenligning:** ZP = HCP + kontroller (es 2, konge 1) + (a + b) + (a − d), hvor a ≥ b ≥ c ≥ d er farvelængderne. Zar åbner ved 26 og regner udgang ved 52. Ifølge MODEL.md forklarer Zar mindre end P (R² 0,730 mod 0,794), åbner 46 % af hænderne mod 35 % med HCP ≥ 12, og Zars stikformel lover ca. ét stik for meget. Zar bruges kun i øvelsen "Sammenlign metoder".
+**6. Zar Points som sammenligning:** ZP = hp + kontroller (es 2, konge 1) + (a + b) + (a − d), hvor a ≥ b ≥ c ≥ d er farvelængderne. Zar åbner ved 26 og regner udgang ved 52. Ifølge MODEL.md forklarer Zar mindre end P (R² 0,730 mod 0,794), åbner 46 % af hænderne mod 35 % med hp ≥ 12, og Zars stikformel lover ca. ét stik for meget. Zar bruges kun i øvelsen "Sammenlign metoder".
 
 **7. Kortfarvepoint pr. mønster** (koblingen til fordelingssporet):
 
@@ -103,7 +103,7 @@ Tabellen beregnes i koden af mønstrene i `src/domain/` (alle 39 mønstre; de 13
 
 **Afklarede faglige valg** (Franks godkendelse 5. oktober 2026; ændres kun efter aftale):
 
-1. **HCP i meldinger, P i vurderingen:** meldeintervaller er HCP; P bruges til niveaubeslutninger efter fit.
+1. **Hp i meldinger, P i vurderingen:** meldeintervaller er hp; P bruges til niveaubeslutninger efter fit.
 2. **Makkers styrke:** i første version er begge hænder synlige, så valgene er delkontrakt, udgang, lilleslem og storeslem. Invit giver kun mening, når makkers hånd ikke er kendt, og kommer i version 2 sammen med opgaver, hvor makkers p skal skønnes ud fra hans meldinger.
 3. **Dobbeltdummy-skævhed:** grænserne bruges som i MODEL.md. Forbeholdet (0,2–0,3 stik optimistisk) vises i forklaringen.
 4. **Turneringsform og zone:** et avanceret niveau. Ved IMP i zonen er udgang rigtig fra ca. 37 % chance (P ≈ 27½), uden for zonen fra ca. 45 % (P ≈ 28), ved parturnering ved 50 % (P = 28½).
@@ -112,13 +112,13 @@ Tabellen beregnes i koden af mønstrene i `src/domain/` (alle 39 mønstre; de 13
 ## Øvelser og niveauer
 
 1. **Honnørpoint:** en hånd vises; brugeren taster honnørpointene (genvejen må bruges). Lynøvelse. Tastaturet har ½ og ¼ (fx 12¾), så sporet får sit eget talpanel; appens fælles talpanel ændres ikke.
-2. **Fordelingsled:** fitten er bekræftet; "Hvad er din p nu?" med trumflængde og kortfarvepoint.
+2. **Fordelingsled:** fittet er bekræftet; "Hvad er din p nu?" med trumflængde og kortfarvepoint.
 3. **Må det lægges til?** Et kort meldeforløb vises; brugeren vælger, hvilke led der gælder: kun honnørpoint, honnørpoint + fordeling, eller sansmodellen.
 4. **Niveaubeslutningen:** begge hænder vises med bekræftet fit; brugeren vælger delkontrakt, udgang, lilleslem eller storeslem. Facit viser P, stikforventning og chancen som naturlig frekvens, fx "4♠ holder ca. 3 ud af 5 gange".
 5. **Hvad makker skal have:** "Du har 16. Hvad skal makker have til udgang?"
 6. **Farve eller sans:** to hænder med 8+ fit og/eller stoppere; brugeren vælger 4M eller 3NT. Facit (Claude Codes valg): 4M, når der er en 8+ major-fit ("Fit først"); 3NT, når der ikke er en major-fit og alle fire farver er stoppede.
 7. **Spildte værdier:** makker har vist korthed; brugeren regner p igen. Kun kongen koster.
-8. **Sammenlign metoder:** samme hånd regnet med HCP, Zar og P; brugeren vælger, hvilken der giver den rigtige kontrakt, og facit forklarer hvorfor. I første version er "den rigtige kontrakt" P-modellens beslutning; med dobbeltdummy-facit i version 2 bliver den fordelingens faktiske resultat. HCP-metoden bruger udgangsgrænsen fra Franks simulering: 23 HCP (SPEC-haandevaluering-kalibrering.md).
+8. **Sammenlign metoder:** samme hånd regnet med hp, Zar og P; brugeren vælger, hvilken der giver den rigtige kontrakt, og facit forklarer hvorfor. I første version er "den rigtige kontrakt" P-modellens beslutning; med dobbeltdummy-facit i version 2 bliver den fordelingens faktiske resultat. Hp-metoden bruger udgangsgrænsen fra Franks simulering: 23 hp (SPEC-haandevaluering-kalibrering.md).
 9. **Turneringsform:** som opgave 4, men med zone og IMP eller parturnering.
 
 | Niveau | Indhold |
@@ -135,7 +135,7 @@ Sværheden tilpasses efter de seneste 20 svar: over 90 % rigtige rykker et nivea
 
 - **Ankre:** udgang, slem, storeslem = 28½ – 35 – 41.
 - **Stik ≈ P/3** som huskeversion. Den ligger inden for 0,2 stik af tabellen fra P = 24 til 32.
-- **Genvejen:** HCP + 1 pr. es − ½ pr. dame − ½ pr. knægt + ¼ pr. tier.
+- **Genvejen:** hp + 1 pr. es − ½ pr. dame − ½ pr. knægt + ¼ pr. tier.
 - **Korthed:** 5-3-1 og tælles i begge hænder.
 - **Tre huskeregler:** "Fit først", "Kun kongen spildes" og "Sans tæller stoppere, ikke længde".
 - **Kobling til fordeling:** kortfarvepoint pr. mønster trænes som en lille Leitner-bunke sammen med nøgletallene. Bunken (Claude Codes valg, 30 kort): de 13 mønstre i tabellen, ankrene (28½, 35, 41), stikforventningen, genvejens fire led, korthed 5-3-1 og de seks rækker i tabellen over, hvad makker skal have.
@@ -217,22 +217,22 @@ Hvert trin leveres på begge sprog og med ⓘ ved sine elementer.
 Accepttest i Vitest:
 
 - [x] Alle eksisterende tests består uændret, og andre nøgler i localStorage er uændrede.
-- [x] ♠ E K 7 5 2 ♥ 4 ♦ K D 6 3 ♣ 8 5 2: HCP 12, honnørpoint 12½ (genvej og formel giver det samme).
-- [x] Samme hånd med bekræftet spar-fit: p = 12½ + 1½ + 3 = 17. Før fitten er bekræftet, lægges fordelingsleddene ikke til.
+- [x] ♠ E K 7 5 2 ♥ 4 ♦ K D 6 3 ♣ 8 5 2: hp 12, honnørpoint 12½ (genvej og formel giver det samme).
+- [x] Samme hånd med bekræftet spar-fit: p = 12½ + 1½ + 3 = 17. Før fittet er bekræftet, lægges fordelingsleddene ikke til.
 - [x] P = 29 giver stik ≈ 9,6 og 4M ≈ 58 % (lineær interpolation mellem 28½ og 30), og stikforventningen springer ikke ved tabellens rækker.
 - [x] P = 28½ giver 4M = 50 %, og grænserne 28½, 35 og 41 vælger udgang, lilleslem og storeslem. Fra P = 28 til 29 er både delkontrakt og udgang rigtige.
-- [x] Kortfarvepoint tælles ikke i trumffarven: en 6-2-fit giver ingen dobbelttonpoint for de 2 trumf, og en 7-1-fit ingen singletonpoint.
+- [x] Kortfarvepoint tælles ikke i trumffarven: en 6-2-fit giver ingen doubletonpoint for de 2 trumf, og en 7-1-fit ingen singletonpoint.
 - [x] Samme hånd i Zar: 12 + 4 + 9 + 4 = 29 ZP, dvs. åbning.
-- [x] Sans: HCP + ¼ pr. tier, uden længdepoint.
+- [x] Sans: hp + ¼ pr. tier, uden længdepoint.
 - [x] Kortfarvepoint pr. mønster svarer til tabellen og beregnes ud fra mønstrene.
 - [x] En konge over for makkers viste korthed trækker 1 fra; en dame eller knægt gør ikke.
 - [x] Facitfilen giver samme resultat i appen og i konventionstrænerens kopi (appens side; konventionstræneren kører testen på sin kopi).
 - [x] Generatoren: alle opgave 4-fordelinger har P inden for ±2 af en grænse, og samme seed giver samme opgave.
 - [x] Sprog: på engelsk står der intet dansk på sporets skærme, og den danske og den engelske tekstfil har samme type.
 - [x] ⓘ: hvert element fra Sprog og hjælp har et ⓘ med en forklaring på begge sprog.
-- [x] Opgave 8, eksempel 1: ♠ E K 7 5 2 ♥ 4 ♦ K D 6 3 ♣ 8 5 2 over for ♠ D 9 6 3 ♥ K 8 7 2 ♦ 9 4 ♣ E 7 3 har 12 + 9 = 21 HCP, 29 + 22 = 51 ZP og P = 17 + 10½ = 27½. Alle tre siger delkontrakt, så fordelingen er ingen opgave 8.
-- [x] Opgave 8, eksempel 2: ♠ B 6 5 ♥ K B 9 2 ♦ 9 8 7 ♣ E K 3 over for ♠ E D 10 ♥ E D 8 7 ♦ 10 6 4 ♣ D 6 4 (fit i ♥): 26 HCP siger udgang, 24 + 26 = 50 ZP delkontrakt, og P = 12 + 15 = 27 giver delkontrakt, så Zar har ret. Facit viser P pr. hånd og forklarer, hvad HCP overså.
-- [x] Opgave 8: HCP og Zar er altid uenige, kun ét svar er rigtigt efter `rightDecisions`, og HCP og Zar har ret lige ofte (200 af 400 i generatoren).
+- [x] Opgave 8, eksempel 1: ♠ E K 7 5 2 ♥ 4 ♦ K D 6 3 ♣ 8 5 2 over for ♠ D 9 6 3 ♥ K 8 7 2 ♦ 9 4 ♣ E 7 3 har 12 + 9 = 21 hp, 29 + 22 = 51 ZP og P = 17 + 10½ = 27½. Alle tre siger delkontrakt, så fordelingen er ingen opgave 8.
+- [x] Opgave 8, eksempel 2: ♠ B 6 5 ♥ K B 9 2 ♦ 9 8 7 ♣ E K 3 over for ♠ E D 10 ♥ E D 8 7 ♦ 10 6 4 ♣ D 6 4 (fit i ♥): 26 hp siger udgang, 24 + 26 = 50 ZP delkontrakt, og P = 12 + 15 = 27 giver delkontrakt, så Zar har ret. Facit viser P pr. hånd og forklarer, hvad hp overså.
+- [x] Opgave 8: hp og Zar er altid uenige, kun ét svar er rigtigt efter `rightDecisions`, og hp og Zar har ret lige ofte (200 af 400 i generatoren).
 - [x] Opgave 9: udgangsgrænsen er 27½ ved holdturnering i zonen, 28 uden for zonen og 28½ ved parturnering; P ligger inden for ±2 af formens grænse, og nabovalg inden for ½ point er rigtige.
 - [x] Niveau 4 har opgave 6 og 8, niveau 5 opgave 9 og blandede opgaver fra alle niveauer.
 
@@ -240,7 +240,7 @@ Accepttest i Vitest:
 
 - **Lukket af SPEC-haandevaluering-kalibrering.md** (21. oktober 2026), med tal fra Franks simuleringer:
   - **Kontroltjekket ved slem:** lilleslem kræver højst ét manglende nøglekort (de fire es og trumfkongen), storeslem alle fem.
-  - **HCP-grænsen i opgave 8** er 23 HCP; den giver de 82,5 %.
+  - **Hp-grænsen i opgave 8** er 23 hp; den giver de 82,5 %.
   - **Kortfarvepoint i trumffarven:** kun sidefarverne, bekræftet.
   - **IMP-grænserne** 27½, 28 og 28½ er bekræftet med simuleringernes P, som appen bruger fra samme spec (trumflængden med minus under 4 trumf).
 - **Version 2:** makkers forventede p ud fra meldingerne og dobbeltdummy-facit pr. fordeling kræver nye kørsler i Franks pipeline.
@@ -261,7 +261,7 @@ Claude Codes gennemgang af version 1 (7. oktober 2026) og Franks svar i version 
 10. **Niveauvalgene** er delkontrakt, udgang, lilleslem og storeslem; invit kommer i version 2 (Frank, 8. oktober 2026).
 11. **Nabovalg ved grænsen:** inden for ½ point, grænserne medregnet (Frank, 8. oktober 2026).
 12. **Kortfarvepoint** tælles kun i sidefarverne (Frank, 8. oktober 2026).
-13. **HCP-grænsen i opgave 8** er 25 HCP, indtil Franks simulering viser den (Frank, 8. oktober 2026). Rettet til 23 HCP i SPEC-haandevaluering-kalibrering.md.
+13. **Hp-grænsen i opgave 8** er 25 hp, indtil Franks simulering viser den (Frank, 8. oktober 2026). Rettet til 23 hp i SPEC-haandevaluering-kalibrering.md.
 14. **Storeslem i opgave 4:** opgaverne ligger omkring udgang og lilleslem, så P er højst 35 + 2 = 37. Storeslem er et svarvalg, men aldrig det rigtige i første version (Frank, 8. oktober 2026).
 15. **Forsidens tests:** med linjen i `tracks.ts` står Vurdering på forsiden. To tests i `src/app/navigation.test.tsx` forventer derfor Optælling, Spilføring, Vurdering, og testen for et nyt spor bruger et tænkt spor med et andet navn end Håndevaluering. Vejledningens afsnit om forsidens grupper nævner Håndevaluering (Frank, 8. oktober 2026).
 
@@ -272,12 +272,12 @@ Truffet under bygningen af leverancetrin 1–3 (8. oktober 2026). Ændres kun ef
 1. **Farve eller sans:** facit som beskrevet under opgave 6.
 2. **Leitner-bunken (30 kort):** ankrene, korthed 5-3-1, genvejens fire led (vælg blandt fire værdier, fx −½ for en dame), de 13 mønstre, makkers krav for 12, 14, 16, 18, 21 og 24 og stikforventningen (vælg blandt fire stikantal fra tabellen ved P = 24, 26, 28½, 30 eller 32; huskeversionen P/3 peger på det rigtige). Grupperne introduceres på skift, højst 3 nye kort pr. session. Rigtigt inden for 8 s (lynrundens grænse) er hurtigt i Leitner.
 3. **Storeslem som nabovalg** kræver alle fire es og trumfkongen, lilleslem højst ét manglende es (fra SPEC-haandevaluering-kalibrering.md højst ét manglende nøglekort).
-4. **Spildte værdier** trækkes kun fra, når fitten er bekræftet, ligesom de andre fordelingsled.
+4. **Spildte værdier** trækkes kun fra, når fittet er bekræftet, ligesom de andre fordelingsled.
 5. **Stoppere:** en farve er stoppet, når mindst én af hænderne har en stopper efter `hasStopper`.
 6. **Opgave 3** har tre situationer, alle efter makkers åbning fra systemfilen: åbning i farve uden kendt major-fit (åbner han 1♥ eller 1♠, har du højst 2 kort i farven) giver kun honnørpoint; 1♥ eller 1♠ med mindst 3 kort hos dig giver honnørpoint + fordeling; 1NT, når du er balanceret uden firekortsmajor, giver sansmodellen.
 7. **Opgave 4:** grænserne udgang og lilleslem vælges lige ofte, og P ligger inden for ±2 af den valgte (Afklaret 14).
-8. **Opgave 5:** dine point er din p med fitten, mellem 10 og 24, så makker altid skal have noget.
-9. **Opgave 6:** farveopgaverne har P i udgangszonen (28½ ≤ P < 35). Sansopgaverne har to balancerede hænder uden major-fit med 24–26 HCP i alt, hvor MODEL.md 2 har tallene for stoppere, og alle fire farver stoppet.
+8. **Opgave 5:** dine point er din p med fittet, mellem 10 og 24, så makker altid skal have noget.
+9. **Opgave 6:** farveopgaverne har P i udgangszonen (28½ ≤ P < 35). Sansopgaverne har to balancerede hænder uden major-fit med 24–26 hp i alt, hvor MODEL.md 2 har tallene for stoppere, og alle fire farver stoppet.
 10. **Opgave 7:** makker har mindst 4 trumf og en singleton eller renonce i en sidefarve (som efter en splinter). En tredjedel af opgaverne har en konge over for kortheden, en tredjedel kun dame eller knægt, resten er frie.
 11. **Turneringsform:** chancerne 37 %, 45 % og 50 % for 4M regnes om til P i tabellen og rundes til nærmeste halve point: 27½, 28 og 28½, som specen siger.
 12. **Naturlig frekvens:** chancen vises med den mindste af nævnerne 2, 3, 4, 5 og 10, der rammer inden for 2,5 procentpoint (58 % → 3 ud af 5). Ellers står der "næsten altid" fra 95 %, 1 ud af N under 50 % (7 % → 1 ud af 14) og N − 1 ud af N derover.
@@ -292,11 +292,11 @@ Truffet under bygningen af leverancetrin 1–3 (8. oktober 2026). Ændres kun ef
 
 **Leverancetrin 4 (21. oktober 2026, godkendt af Frank samme dag)**
 
-21. **Opgave 8 (Franks svar 21. oktober 2026):** "Brug formatet 'HCP eller Zar?' med P skjult til facit. Tag kun hænder, hvor HCP og Zar er uenige, og spring hænder over, hvor begge beslutninger er rigtige efter rightDecisions. Generatoren skal give lige mange opgaver, hvor HCP har ret, og hvor Zar har ret. Facit viser P's regnestykke pr. hånd og forklarer ud fra trumf, korthed, længde og kontroller, hvad den forkerte metode overså." Bygget sådan:
-    - Begge hænder med fit vises, og under dem HCP og Zar med tal og beslutning, fx "HCP: 12 + 14 = 26 HCP → udgang (grænse 25)". Spørgsmålet er "HCP og Zar er uenige. Hvem har ret?" med svarene HCP og Zar.
-    - Kun udgang eller delkontrakt: udgang fra 25 HCP (foreløbig; 23 HCP fra SPEC-haandevaluering-kalibrering.md), 52 ZP og P = 28½. Fordelinger, hvor P ligger inden for ½ point af udgangsgrænsen, eller hvor P siger slem, bruges ikke (`compareMethods` i `generator.ts`).
+21. **Opgave 8 (Franks svar 21. oktober 2026):** "Brug formatet 'Hp eller Zar?' med P skjult til facit. Tag kun hænder, hvor hp og Zar er uenige, og spring hænder over, hvor begge beslutninger er rigtige efter rightDecisions. Generatoren skal give lige mange opgaver, hvor hp har ret, og hvor Zar har ret. Facit viser P's regnestykke pr. hånd og forklarer ud fra trumf, korthed, længde og kontroller, hvad den forkerte metode overså." Bygget sådan:
+    - Begge hænder med fit vises, og under dem hp og Zar med tal og beslutning, fx "Hp: 12 + 14 = 26 hp → udgang (grænse 25)". Spørgsmålet er "Hp og Zar er uenige. Hvem har ret?" med svarene hp og Zar.
+    - Kun udgang eller delkontrakt: udgang fra 25 hp (foreløbig; 23 hp fra SPEC-haandevaluering-kalibrering.md), 52 ZP og P = 28½. Fordelinger, hvor P ligger inden for ½ point af udgangsgrænsen, eller hvor P siger slem, bruges ikke (`compareMethods` i `generator.ts`).
     - Generatoren vælger først med lige stor chance, hvilken metode der skal have ret, og finder så en fordeling.
-    - Facit: HCP- og Zar-linjerne, P pr. hånd ("Dig: honnørpoint 12, p = 12."), P og kontrakten, hvem der har ret, og én sætning om den forkerte metode. HCP: trumflængde og korthed og honnørernes værdi i P (esser, damer, knægte og tiere) over for HCP, fx "HCP overså, at fordelingen giver for lidt: trumflængde og korthed giver 0 og esser, damer, knægte og tiere +1, så 26 HCP bliver kun P = 27." Zar: Zars point for længde og kontroller over for P's trumflængde og korthed i sidefarverne.
+    - Facit: hp- og Zar-linjerne, P pr. hånd ("Dig: honnørpoint 12, p = 12."), P og kontrakten, hvem der har ret, og én sætning om den forkerte metode. Hp: trumflængde og korthed og honnørernes værdi i P (esser, damer, knægte og tiere) over for hp, fx "Hp overså, at fordelingen giver for lidt: trumflængde og korthed giver 0 og esser, damer, knægte og tiere +1, så 26 hp bliver kun P = 27." Zar: Zars point for længde og kontroller over for P's trumflængde og korthed i sidefarverne.
 22. **Opgave 9:** som opgave 4 med begge hænder og de fire niveauer, men meldingerne viser turneringsformen ("Holdturnering (IMP) i zonen", "Holdturnering (IMP) uden for zonen" eller "Parturnering"). Formen vælges med lige stor chance, og P ligger inden for ±2 af formens udgangsgrænse (27½, 28 eller 28½); slem- og storeslemsgrænsen er uændrede. Facit har en linje mere, fx "Holdturnering (IMP) i zonen: udgang er rigtig fra ca. 37 % for 4♥, dvs. P ≥ 27½.", og nabovalget følger formens grænse.
 23. **Tests, der er rettet:** `model/generator.test.ts` forventede, at niveau 4 kun havde opgave 6, og at opgave 8 og 9 gav en fejl; `ui/i18n.test.tsx` og `training/training.test.ts` har en hjælpefunktion med det rigtige svar, som nu også dækker opgave 8 og 9. Nye tests: `model/trin4.test.ts` og `ui/trin4.test.tsx` med Franks to eksempler.
 24. **Vejledningen** har fået et punkt om niveau 4 og 5 med opgave 8 og 9 i sporets afsnit.

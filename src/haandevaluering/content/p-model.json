@@ -57,11 +57,11 @@
     "storeslemKraeverTrumfkongen": true
   },
   "sans": {
-    "afsnit": "MODEL.md 2: point i sans = HCP (4-3-2-1) + ¼ pr. tier, ingen længdepoint og ingen fladhedsstraf",
+    "afsnit": "MODEL.md 2: point i sans = hp (4-3-2-1) + ¼ pr. tier, ingen længdepoint og ingen fladhedsstraf",
     "hcp": { "A": 4, "K": 3, "Q": 2, "J": 1 },
     "T": 0.25,
     "stoppere": {
-      "afsnit": "MODEL.md 2 (ved 24–26 HCP)",
+      "afsnit": "MODEL.md 2 (ved 24–26 hp)",
       "hcp": [24, 26],
       "raekker": [
         { "farver": 3, "stik": 7.97, "3NT": 31 },
@@ -78,7 +78,7 @@
     ]
   },
   "zar": {
-    "afsnit": "MODEL.md 5 og SPEC-haandevaluering.md, Fagligt grundlag 6: ZP = HCP + kontroller + (a + b) + (a − d)",
+    "afsnit": "MODEL.md 5 og SPEC-haandevaluering.md, Fagligt grundlag 6: ZP = hp + kontroller + (a + b) + (a − d)",
     "kontroller": { "A": 2, "K": 1 },
     "aabning": 26,
     "udgang": 52,
@@ -87,7 +87,7 @@
     "hcp12Procent": 35
   },
   "hcpMetode": {
-    "afsnit": "MODEL.md 1 og 5 og SPEC-haandevaluering-kalibrering.md: HCP-metodens udgangsgrænse; 23 HCP giver de 82,5 % rigtige udgangsbeslutninger, MODEL.md angiver for ren HCP (Franks kørsel 21. oktober 2026)",
+    "afsnit": "MODEL.md 1 og 5 og SPEC-haandevaluering-kalibrering.md: hp-metodens udgangsgrænse; 23 hp giver de 82,5 % rigtige udgangsbeslutninger, MODEL.md angiver for ren hp (Franks kørsel 21. oktober 2026)",
     "udgang": 23
   },
   "praestation": {
