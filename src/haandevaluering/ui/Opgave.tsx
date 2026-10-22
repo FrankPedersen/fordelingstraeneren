@@ -58,11 +58,11 @@ export function situation(task: HandTask): string[] {
   }
 }
 
-/** Opgave 8: HCP- og Zar-linjerne med tal og beslutning, fx "HCP: 12 + 14 = 26 HCP → udgang (grænse 23)". */
+/** Opgave 8: hp- og Zar-linjerne med tal og beslutning, fx "Hp: 12 + 14 = 26 hp → udgang (grænse 23)" (HCP på engelsk). */
 export function methodLines(m: MethodComparison): string[] {
   return (['hcp', 'zar'] as const).map((method) => {
     const c = m[method];
-    return TEXT.methodLine(TEXT.methods[method], c.you, c.partner, c.total, method === 'hcp' ? 'HCP' : 'ZP', TEXT.decisions[c.decision].toLowerCase(), c.limit);
+    return TEXT.methodLine(TEXT.methods[method], c.you, c.partner, c.total, TEXT.pointUnits[method], TEXT.decisions[c.decision].toLowerCase(), c.limit);
   });
 }
 

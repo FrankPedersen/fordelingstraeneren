@@ -35,14 +35,14 @@ describe('Opgave 8: Sammenlign metoder', () => {
     render(<Opgave task={EXAMPLE} onAnswer={onAnswer} />);
     expect(document.querySelectorAll('.he-hand')).toHaveLength(2);
     expect(document.body.textContent).toContain('Fit fundet i ♥');
-    expect(screen.getByText('HCP: 12 + 14 = 26 HCP → udgang (grænse 23)')).toBeTruthy();
+    expect(screen.getByText('Hp: 12 + 14 = 26 hp → udgang (grænse 23)')).toBeTruthy();
     expect(screen.getByText('Zar: 24 + 26 = 50 ZP → delkontrakt (grænse 52)')).toBeTruthy();
-    expect(screen.getByText('HCP og Zar er uenige. Hvem har ret?')).toBeTruthy();
+    expect(screen.getByText('Hp og Zar er uenige. Hvem har ret?')).toBeTruthy();
     expect(document.body.textContent).not.toMatch(/P =|\bp =/);
     fireEvent.click(screen.getByRole('button', { name: 'Hjælp: Sammenlign metoder' }));
     expect(screen.getByRole('note').textContent).not.toMatch(/senere/);
     const answers = within(screen.getByRole('group', { name: 'Svar' }));
-    expect(answers.getAllByRole('button').map((b) => b.textContent)).toEqual(['HCP', 'Zar']);
+    expect(answers.getAllByRole('button').map((b) => b.textContent)).toEqual(['hp', 'Zar']);
     fireEvent.click(answers.getByRole('button', { name: 'Zar' }));
     expect(onAnswer).toHaveBeenCalledWith({ exercise: 'compare', method: 'zar' });
   });
@@ -52,19 +52,19 @@ describe('Opgave 8: Sammenlign metoder', () => {
     render(<Facit task={EXAMPLE} answer={answer} graded={grade(EXAMPLE, answer, 5_000)} onNext={() => {}} />);
     expect(screen.getByText(/^Rigtigt ·/)).toBeTruthy();
     expect(lines()).toEqual([
-      'HCP: 12 + 14 = 26 HCP → udgang (grænse 23)',
+      'Hp: 12 + 14 = 26 hp → udgang (grænse 23)',
       'Zar: 24 + 26 = 50 ZP → delkontrakt (grænse 52)',
       'Dig: honnørpoint 12, p = 12.',
       'Makker: honnørpoint 15, p = 15.',
       'P = 12 + 15 = 27: delkontrakt.',
       'Zar har ret.',
-      'HCP overså, at fordelingen giver for lidt: trumflængde og korthed giver 0 og esser, damer, knægte og tiere +1, så 26 HCP bliver kun P = 27.',
+      'Hp overså, at fordelingen giver for lidt: trumflængde og korthed giver 0 og esser, damer, knægte og tiere +1, så 26 hp bliver kun P = 27.',
     ]);
     cleanup();
     const wrong: HandAnswer = { exercise: 'compare', method: 'hcp' };
     render(<Facit task={EXAMPLE} answer={wrong} graded={grade(EXAMPLE, wrong, 5_000)} onNext={() => {}} />);
     expect(screen.getByText(/^Forkert ·/)).toBeTruthy();
-    expect(screen.getByText('Dit svar: HCP')).toBeTruthy();
+    expect(screen.getByText('Dit svar: hp')).toBeTruthy();
   });
 
   it('på engelsk', () => {

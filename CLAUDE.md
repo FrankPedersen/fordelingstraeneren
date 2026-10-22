@@ -29,6 +29,7 @@ Bridge-træningsapp til hånd-fordelinger. Appen er færdig og i brug på https:
 
 - Dansk er standardsproget; engelsk skal dække al tekst (tests i `src/app/i18n.test.tsx`, `src/modes/i18n.test.tsx` og `src/farvebehandling/ui/i18n.test.tsx` søger efter dansk på de engelske skærme).
 - Bridgeterminologi: "bordet" (ikke blindemand), "kipning" (ikke snit), "forbindelser" (ikke broer), "slutspil"/"endplay" (ikke indspil).
+- Husets fagord i dansk tekst (SPEC-sprog-og-ordbog.md, Franks svar 22. oktober 2026): hp (HCP kun på engelsk), doubleton (ikke dobbeltton) og fittet (ikke fitten). Indspil må bruges om den særlige form for slutspil. Fagordstesten `src/sprog/sprog.test.ts` (i `npm test`) læser al dansk synlig tekst med `src/sprog/danskTekst.ts` og fejler ved husets "Ikke"-ord. Stavekontrol med hånden før udgivelse: `node scripts/sprogtjek.ts` (kræver `pip install spylls`; den danske ordbog hentes første gang); rigtige ord, som hunspell ikke kender, står i `scripts/ordliste.txt`.
 - Mønster: faldende med bindestreg (5-4-2-2). Konkret fordeling: ♠♥♦♣ med lighedstegn (2=5=2=4). ♥ og ♦ står med rødt, også i tekst (`src/ui/SuitText.tsx`).
 - Familiefarver: blå (4), grøn (5), rav (6), violet (7+). Aldrig rød eller sort, og farve står aldrig alene uden tekst eller tal.
 
@@ -39,7 +40,8 @@ Bridge-træningsapp til hånd-fordelinger. Appen er færdig og i brug på https:
 - `src/system/`: systemfilen, fortolkeren (`interpreter.ts`) og den forenklede budgivning (`auction.ts`).
 - `src/memory/`: standardbilleder, paladsets rum og stationer, støtteniveauerne og deres visninger.
 - `src/modes/`: én mappe pr. øvelse med opgavegenerator, scoring og visning (`higherLower`, `complete`, `palace`, `read`, `estimate`, `sudoku`).
-- `src/ui/`: fælles komponenter (Skyline, Mønstertastatur, Klubaften, Gitter4x4, LineChart, SuitText, Info til ⓘ, TopBar og Footer fra www.kontraktbridge.dk), `useLang.ts` og `styles.css`.
+- `src/ui/`: fælles komponenter (Skyline, Mønstertastatur, Klubaften, Gitter4x4, LineChart, SuitText, Info til ⓘ, TopBar og Footer fra www.kontraktbridge.dk med kolonnen Opslag og Bridgeordbog), `useLang.ts` og `styles.css`.
+- `src/sprog/`: husets fagord (`fagord.ts`), al dansk synlig tekst (`danskTekst.ts`, kun til tests og `scripts/sprogtjek.ts`) og fagordstesten (SPEC-sprog-og-ordbog.md).
 - `src/i18n.ts`: sproget (`getLang`, `setLang`, `tx`); uden React, så løserens Web Worker kan bruge det. `engine/format.ts` skriver tal med decimalpunktum på engelsk.
 - `src/app/`: sessionsmotoren (`session.ts`), progression, album, kurver og skærmene, også den samlede vejledning (`GuideScreen.tsx`). Den binder motor, domæne og øvelser sammen. `tracks.ts` er forsidens menupunkter, grupper og sporenes kort (SPEC-navigation.md og SPEC-forside-spor.md; et kort med `status: false` har ingen status, SPEC-analyse-modul.md), `status.ts` læser sporenes status til forsiden uden at skrive, og `screens/DistributionScreen.tsx` er Fordeling-skærmen.
 - Testene ligger ved siden af koden (`*.test.ts`). `src/app/App.test.tsx` kører hele flows i jsdom.

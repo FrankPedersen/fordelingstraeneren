@@ -26,15 +26,15 @@ perfekt spil fra begge sider.
 ```
 p = honnørpoint
   + 1½ pr. trumf du selv har ud over 4, minus 1½ pr. trumf under 4 (for parret det samme som 1½ pr. trumf ud over 8)
-  + kortfarvepoint: renonce 5, singleton 3, dobbeltton 1
+  + kortfarvepoint: renonce 5, singleton 3, doubleton 1
   − 1 per konge over for makkers viste korthed
 ```
 
 **Honnørpoint** = `5·E + 3·K + 1½·D + ½·B + ¼·T`
 
-Genvej, matematisk identisk: **HCP + 1 per es − ½ per dame − ½ per knægt + ¼ per tier**
+Genvej, matematisk identisk: **hp + 1 per es − ½ per dame − ½ per knægt + ¼ per tier**
 
-De to fordelingsled må først lægges til, når fitten er bekræftet.
+De to fordelingsled må først lægges til, når fittet er bekræftet.
 
 ### Samlet vurdering
 
@@ -63,7 +63,7 @@ uden trumfkongen kun 30,6 % (36 fordelinger). Storeslem kræver alle fem: med
 alle fire es gav 13 stik i 73,8 % med trumfkongen og 38,9 % uden (P ≥ 38).
 
 **Præstation:** R² = 0,794, middelfejl 0,74 stik, udgangsbeslutningen korrekt
-i 87,5 % af tilfældene (mod 82,5 % for ren HCP med udgang fra 23 HCP; 25 HCP
+i 87,5 % af tilfældene (mod 82,5 % for ren hp med udgang fra 23 hp; 25 hp
 giver 79,3 %).
 
 ### Hvad makker skal have
@@ -84,7 +84,7 @@ giver 79,3 %).
 **Brug ikke farveskalaen i sans.** Den er materialets dårligste dér.
 
 ```
-Point i sans = HCP (4-3-2-1) + ¼ per tier
+Point i sans = hp (4-3-2-1) + ¼ per tier
 Ingen længdepoint. Ingen fladhedsstraf.
 Tjek i stedet alle fire farver for stoppere.
 ```
@@ -94,25 +94,25 @@ Datadrevne honnørværdier i sans, skaleret til es = 4:
 
 ### Længdepoint i sans er værd nul
 
-| Element | HCP-ækvivalent |
+| Element | hp-ækvivalent |
 |---|---|
 | Femkortsfarve | −0,07 |
 | Sekskortsfarve | −0,20 |
 | Syvkortsfarve | −0,31 |
-| Honnørpoint i den lange farve (ud over HCP) | +0,01 |
+| Honnørpoint i den lange farve (ud over hp) | +0,01 |
 | 4-3-3-3-fordeling | −0,05 |
 | Løbefarve (8+ kort, 2+ topkort) | −0,06 |
 
 ### Det der faktisk betyder noget: stoppere
 
-Ved 24–26 HCP:
+Ved 24–26 hp:
 
 | | Gns. stik | 3NT holder |
 |---|---|---|
 | 3 farver stoppet | 7,97 | **31 %** |
 | 4 farver stoppet | 8,74 | **60 %** |
 
-Per stoppet farve: +0,31 HCP-ækvivalent i regressionen, men den direkte
+Per stoppet farve: +0,31 hp-ækvivalent i regressionen, men den direkte
 måling viser 29 procentpoint. Den ustoppede farve er det eneste forhold i
 sansvurdering, der kan måle sig med selve pointtallet.
 
@@ -149,11 +149,11 @@ kontrakttype-specifik.
 
 Fri regression, alt andet konstant:
 
-| Korthed | Stik | HCP-ækvivalent |
+| Korthed | Stik | hp-ækvivalent |
 |---|---|---|
 | Renonce | +1,37 | 4,8 |
 | Singleton | +0,69 | 2,4 |
-| Dobbeltton | +0,21 | 0,7 |
+| Doubleton | +0,21 | 0,7 |
 
 Skalaer afprøvet i formlen:
 
@@ -170,7 +170,7 @@ i støttehånden koster 1,6 procentpoint.
 
 ### Trumflængde
 
-Ved 23–26 HCP: 8 trumf → 9,79 stik · 9 trumf → 10,49 · 10 trumf → 10,81.
+Ved 23–26 hp: 8 trumf → 9,79 stik · 9 trumf → 10,49 · 10 trumf → 10,81.
 Næsten et helt stik mellem 8 og 9 trumf.
 
 ### Spildte værdier
@@ -194,9 +194,9 @@ oven i en model der måler fordeling direkte.
 
 | Metode | R² | Middelfejl |
 |---|---|---|
-| HCP + kortfarvepoint | 0,724 | 0,85 |
+| hp + kortfarvepoint | 0,724 | 0,85 |
 | NLTC (Koelman) | 0,695 | 0,90 |
-| HCP | 0,652 | 0,96 |
+| hp | 0,652 | 0,96 |
 | Kontroller | 0,619 | 1,02 |
 | **LTC (standard)** | **0,538** | **1,11** |
 
@@ -204,10 +204,10 @@ Marginal værdi:
 
 | Model | R² |
 |---|---|
-| HCP + trumflængde + korthed + kontroller | 0,786 |
+| hp + trumflængde + korthed + kontroller | 0,786 |
 | **+ LTC oven i det hele** | **0,789** |
 
-I sans: HCP alene 0,839 → HCP + LTC 0,839. Nul bidrag.
+I sans: hp alene 0,839 → hp + LTC 0,839. Nul bidrag.
 
 **Hvorfor LTC taber:** data giver manglende es 1,00, manglende konge 0,52,
 manglende dame 0,24. Standard-LTC bruger 1/1/1 og behandler altså en
@@ -228,7 +228,7 @@ rammer tættere; data peger på ca. 1,5/0,75/0,35.
 
 ## 5. Zar Points
 
-`ZP = HCP + kontroller + (a + b) + (a − d)` hvor a≥b≥c≥d er farvelængder.
+`ZP = hp + kontroller + (a + b) + (a − d)` hvor a≥b≥c≥d er farvelængder.
 
 Højkortsdelen er 6-4-2-1, som omregnet til 40 er identisk med Four
 Aces-skalaen fra 1930'erne.
@@ -237,14 +237,14 @@ Aces-skalaen fra 1930'erne.
 |---|---|---|
 | Denne models P (med fit-viden) | 0,794 | 87,5 % |
 | **Zar Points (uden fit-viden)** | **0,730** | **85,2 %** |
-| HCP + kontroller | 0,674 | 83,2 % |
-| HCP | 0,652 | 82,5 % |
+| hp + kontroller | 0,674 | 83,2 % |
+| hp | 0,652 | 82,5 % |
 
 Zars grænser testet: ZP 52 → 38 % udgang (zoneaggressivt, men forsvarligt
 ved IMP), ZP 62 → 48 % slem (break-even, velkalibreret). Men Zars egen
 stikformel (ZP−2)/5 har bias **+1,01 stik** — den lover systematisk for meget.
 
-Zar åbner 46 % af hænderne mod 35 % med HCP ≥ 12.
+Zar åbner 46 % af hænderne mod 35 % med hp ≥ 12.
 
 ---
 
@@ -310,7 +310,7 @@ Begrænset til tætte kontrakter (bedste forsvar giver 3–4 stik mod 4M,
 |---|---|---|
 | **Sekvens (KQ/QJ/JT)** | **45,6 %** | 75,2 % |
 | Singleton (n=129) | 44,2 % | **80,6 %** |
-| Dobbeltton, to små | 39,1 % | 71,7 % |
+| Doubleton, to små | 39,1 % | 71,7 % |
 | Fra AK | 39,1 % | 62,7 % |
 | Fra 3-farve u/ sekvens | 38,5 % | 70,6 % |
 | Es uden konge | 36,4 % | 62,9 % |
@@ -327,7 +327,7 @@ Begrænset til tætte kontrakter (bedste forsvar giver 3–4 stik mod 4M,
 | Sekvens | 39,1 % | **66,1 %** |
 | Fra 3-farve u/ sekvens | 32,9 % | 59,6 % |
 | Fra 5+ farve u/ sekvens | 32,9 % | 55,8 % |
-| Dobbeltton, to små | 32,5 % | 60,1 % |
+| Doubleton, to små | 32,5 % | 60,1 % |
 | Fra 4-farve u/ sekvens | 32,1 % | 64,5 % |
 
 | Stil | Slår | Optimalt |
@@ -371,7 +371,7 @@ pip install endplay numpy pandas --break-system-packages
 
 python3 scripts/gen2.py fit 3500 21      # generér fit-fordelinger (gentag med nye seeds)
 python3 scripts/gen3.py ntx 4500 71      # sans, fri fordeling
-python3 scripts/analyse2.py              # hovedanalyse: LTC, HCP, kombinationer
+python3 scripts/analyse2.py              # hovedanalyse: LTC, hp, kombinationer
 python3 scripts/korthed.py               # kortfarvepoint-skalaer
 python3 scripts/skala.py                 # honnørskalaer
 python3 scripts/systemer.py              # sammenligning af offentliggjorte systemer

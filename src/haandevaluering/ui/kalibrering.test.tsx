@@ -39,10 +39,10 @@ afterEach(() => {
 describe('Et negativt trumfled vises med minus', () => {
   it('facit i opgave 8: Syd har trumflængde −1½ (3 trumf) og p = 10¾', () => {
     const lines = facitSentences(HCP_RIGHT);
-    expect(lines).toContain('Dig: honnørpoint 11¼, trumflængde −1½ (3 trumf), korthed +1 (dobbeltton i ♦), p = 10¾.');
+    expect(lines).toContain('Dig: honnørpoint 11¼, trumflængde −1½ (3 trumf), korthed +1 (doubleton i ♦), p = 10¾.');
     expect(lines).toContain('Makker: honnørpoint 10½, trumflængde +1½ (5 trumf), korthed +3 (singleton i ♣), p = 15.');
     expect(lines).toContain('P = 10¾ + 15 = 25¾: delkontrakt.');
-    expect(lines).toContain('HCP har ret.');
+    expect(lines).toContain('Hp har ret.');
     setLang('en');
     expect(facitSentences(HCP_RIGHT)).toContain('You: honour points 11¼, trump length −1½ (3 trumps), shortness +1 (doubleton in ♦), p = 10¾.');
   });
@@ -54,9 +54,9 @@ describe('Et negativt trumfled vises med minus', () => {
     expect([...row.querySelectorAll('td')].map((td) => td.textContent)).toEqual(['−1½', '+1½']);
   });
 
-  it('opgave 8 viser HCP med grænsen 23', () => {
+  it('opgave 8 viser hp med grænsen 23', () => {
     render(<Opgave task={HCP_RIGHT} onAnswer={() => {}} />);
-    expect(screen.getByText('HCP: 11 + 11 = 22 HCP → delkontrakt (grænse 23)')).toBeTruthy();
+    expect(screen.getByText('Hp: 11 + 11 = 22 hp → delkontrakt (grænse 23)')).toBeTruthy();
     expect(screen.getByText('Zar: 25 + 27 = 52 ZP → udgang (grænse 52)')).toBeTruthy();
   });
 });
@@ -83,7 +83,7 @@ describe('Reglerne på dansk og engelsk', () => {
     for (const text of [en.help.count, en.help.exercises.distribution]) expect(text).toContain('1½ per trump beyond 4, minus 1½ per trump short of 4');
     expect(da.help.exercises.decision).toContain('nøglekort');
     expect(en.help.exercises.decision).toContain('key card');
-    expect(da.help.exercises.compare).toContain('23 HCP');
+    expect(da.help.exercises.compare).toContain('23 hp');
     expect(en.help.exercises.compare).toContain('23 HCP');
     expect(da.help.exercises.compare).not.toContain('25');
     expect(en.help.exercises.compare).not.toContain('25');
