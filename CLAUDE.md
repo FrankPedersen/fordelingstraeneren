@@ -13,6 +13,7 @@ Bridge-træningsapp til hånd-fordelinger. Appen er færdig og i brug på https:
 - Brugerens data ligger i browseren og skal kunne læses efter hver opdatering: nye felter er valgfrie, og en ny skemaversion får en migrering i `src/engine/storage.ts`.
 - Lokalt: `npm run dev`. Ikonerne tegnes af `npm run icons`.
 - Tunge tests (jsdom-flows og løkker over mange opgaver) har en tidsgrænse på 30 s, fordi en fuld parallel kørsel lokalt kan tage over standardens 5 s.
+- **Systemdokumentation:** `docs/SYSTEM.md` i forsidens repo (lokalt `../githubUpload/docs/SYSTEM.md`) beskriver hele www.kontraktbridge.dk (de tre repoer, Azure, drift, data og arbejdsgang). Filen er privat: den står i githubUploads `.gitignore` og ligger kun lokalt. Ændrer en opgave noget af det – en ny side eller app, en Azure-ressource, en app-indstilling, udrulning, data der gemmes, eller en beslutning Frank træffer – så opdatér `docs/SYSTEM.md` i samme omgang, også beslutningsloggen og datoen øverst. Hemmeligheder skrives aldrig i filen.
 
 ## Ufravigelige regler
 
