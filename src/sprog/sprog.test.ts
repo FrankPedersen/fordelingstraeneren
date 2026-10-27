@@ -52,15 +52,18 @@ describe('Fagordstesten', () => {
 });
 
 describe('Sidefoden', () => {
-  it('kolonnen Opslag med Bridgeordbog står efter Trænere, på dansk og engelsk', () => {
-    for (const [lang, title, link, trainers] of [
-      ['da', 'Opslag', 'Bridgeordbog', 'Trænere'],
-      ['en', 'Reference', 'Bridge dictionary', 'Trainers'],
+  it('kolonnen Opslag med Bridgeordbog og Scoring i bridge står efter Trænere, på dansk og engelsk', () => {
+    for (const [lang, title, link, scoring, trainers] of [
+      ['da', 'Opslag', 'Bridgeordbog', 'Scoring i bridge', 'Trænere'],
+      ['en', 'Reference', 'Bridge dictionary', 'Scoring in bridge', 'Trainers'],
     ] as const) {
       setLang(lang);
       render(createElement(Footer));
       const column = screen.getByRole('navigation', { name: title });
-      expect(within(column).getByRole('link', { name: link }).getAttribute('href')).toBe('/ordbog/');
+      expect(within(column).getAllByRole('link').map((a) => [a.textContent, a.getAttribute('href')])).toEqual([
+        [link, '/ordbog/'],
+        [scoring, '/scoring/'],
+      ]);
       const navs = screen.getAllByRole('navigation').map((n) => n.getAttribute('aria-labelledby'));
       expect(navs.indexOf(column.getAttribute('aria-labelledby'))).toBe(navs.indexOf(screen.getByRole('navigation', { name: trainers }).getAttribute('aria-labelledby')) + 1);
       cleanup();
