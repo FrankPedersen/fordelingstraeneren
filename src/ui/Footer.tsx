@@ -3,7 +3,8 @@ import { tx } from '../i18n';
 /**
  * Sidefoden (SPEC-forside-spor.md, Sidefoden): den samme sorte sidefod som på www.kontraktbridge.dk, nederst på forsiden
  * og sporenes skærme, ikke i en session og ikke i dialoger. Om mig, Trænere med de samme links som på
- * www.kontraktbridge.dk, Opslag med Bridgeordbog (SPEC-sprog-og-ordbog.md) og Kontakt med linket til
+ * www.kontraktbridge.dk, Opslag med Bridgeordbog (SPEC-sprog-og-ordbog.md) og Scoring i bridge (SPEC-scoring.md,
+ * leverancetrin 4) og Kontakt med linket til
  * kontaktformularen på Om mig (SPEC-kontaktformular.md, del 3). De fire spor og modulet Analyse (SPEC-analyse-modul.md) åbnes i appen med deres
  * adresse (`#fordeling`, `#analyse` osv.), så de også virker offline; links ud af appen åbnes i samme vindue og virker
  * kun online.
@@ -45,6 +46,7 @@ export function Footer() {
       <nav className="site-footer-col" aria-labelledby="site-footer-reference">
         <h2 id="site-footer-reference">{tx('Opslag', 'Reference')}</h2>
         <a href="/ordbog/">{tx('Bridgeordbog', 'Bridge dictionary')}</a>
+        <a href="/scoring/">{tx('Scoring i bridge', 'Scoring in bridge')}</a>
       </nav>
       <div className="site-footer-col">
         <h2>{tx('Kontakt', 'Contact')}</h2>
