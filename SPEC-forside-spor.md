@@ -116,18 +116,20 @@ Pointregnskab, Farvebehandling (også Analyse) og Håndevaluering ændres ikke, 
 
 ## Accepttest
 
-- [ ] Alle eksisterende tests består; kun tests af forsidens opbygning er opdateret, og de er nævnt ved aflevering.
-- [ ] Hver knap åbner den samme skærm som før; fordelingssporets menupunkter åbnes fra Fordeling-skærmen.
-- [ ] Fordeling-skærmen har fordelingssporets elementer med samme indhold og i samme rækkefølge som forsiden før.
-- [ ] Ingen nøgle i localStorage ændres ved at åbne forsiden, et spor eller sidefoden.
-- [ ] I dag tæller rigtigt: et spor er trænet, når dagens session er gennemført, og dagen skifter kl. 04.
-- [ ] Et spor uden data vises som "Ikke startet endnu"; ulæselige data får ikke forsiden til at fejle.
-- [ ] `#farvebehandling` åbner Farvebehandling direkte, også offline, og tilbage-knappen fører til forsiden.
-- [ ] Sidefoden står på forsiden og alle sporenes skærme, men ikke i en session.
-- [ ] Topbjælken står i fuld bredde på forsiden og alle sporenes skærme, men ikke i en session.
-- [ ] Sidefodens Trænere har de samme 5 links som www.kontraktbridge.dk.
-- [ ] De nye tokens består 4,5:1, og `design/tokens.json` er i takt med `styles.css`.
-- [ ] På engelsk står der intet dansk på forsiden, Fordeling-skærmen eller i sidefoden.
+Afkrydset 27. oktober 2026: testene i `src/app/forside.test.tsx`, `status.test.ts`, `navigation.test.tsx`, `src/theme.test.ts` og `src/tokens.test.ts` dækker punkterne, og `npm test` består (704 tests).
+
+- [x] Alle eksisterende tests består; kun tests af forsidens opbygning er opdateret, og de er nævnt ved aflevering.
+- [x] Hver knap åbner den samme skærm som før; fordelingssporets menupunkter åbnes fra Fordeling-skærmen.
+- [x] Fordeling-skærmen har fordelingssporets elementer med samme indhold og i samme rækkefølge som forsiden før.
+- [x] Ingen nøgle i localStorage ændres ved at åbne forsiden, et spor eller sidefoden.
+- [x] I dag tæller rigtigt: et spor er trænet, når dagens session er gennemført, og dagen skifter kl. 04.
+- [x] Et spor uden data vises som "Ikke startet endnu"; ulæselige data får ikke forsiden til at fejle.
+- [x] `#farvebehandling` åbner Farvebehandling direkte, også offline, og tilbage-knappen fører til forsiden.
+- [x] Sidefoden står på forsiden og alle sporenes skærme, men ikke i en session.
+- [x] Topbjælken står i fuld bredde på forsiden og alle sporenes skærme, men ikke i en session.
+- [x] Sidefodens Trænere har de samme 5 links som www.kontraktbridge.dk.
+- [x] De nye tokens består 4,5:1, og `design/tokens.json` er i takt med `styles.css`.
+- [x] På engelsk står der intet dansk på forsiden, Fordeling-skærmen eller i sidefoden.
 
 ## Afklaret
 

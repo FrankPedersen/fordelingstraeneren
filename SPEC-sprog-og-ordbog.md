@@ -105,7 +105,7 @@ Er en side genereret (fx fra et systemdokument), rettes kilden, og siden bygges 
 - [x] `build_ordbog.py` fejler, hvis et opslagsord er "Knibning", "Snit" eller "Den blinde".
 - [x] Sidefoden har kolonnen Opslag med Bridgeordbog på forsiden, Om mig, ordbogen, i Fordelingstræneren og i konventionstræneren, på dansk og engelsk.
 - [x] Ved 390 px har ordbogssiden og forsiden ingen vandret rulning.
-- [ ] Alle ord i rettelseslisten er rettet, og puljerne er bygget igen med `build_pools.py`. Ordene er rettet i kilderne; puljen ff-trial-bids bygges igen sammen med reglerne fra 17. oktober (konventionstrænerens kopi af specen, Åbne punkter 3).
+- [x] Alle ord i rettelseslisten er rettet, og puljerne er bygget igen med `build_pools.py`. Ordene er rettet i kilderne; puljen ff-trial-bids er bygget igen sammen med reglerne fra 17. oktober (konventionstrænerens kopi, Afklaret 14).
 - [x] Fagordstesten består i alle tre repoer og fejler, hvis man skriver "knibning" i en dansk tekst.
 - [x] `sprogtjek` kører og giver højst de ord, der står i `ordliste.txt`, eller en liste, Frank har set.
 
@@ -131,4 +131,4 @@ Claude Codes valg i Fordelingstræneren (22. oktober 2026, grenen `sprog-og-ordb
 Åbne punkter:
 
 1. **T1–T3:** besvaret, se Afklaret 5.
-2. **Ordbogens kvalitet** (Franks arbejde, ikke Claude Codes): 173 af 403 opslagsord er engelske (fx Appeal, Average, Nine (9)); 356 står i kategorien Grundlæggende begreber og 374 på niveau begynder, så filtrene siger ikke meget endnu; i 363 opslag er Forklaring den samme som Kort definition. Siden virker, men ordbogen bliver bedre med danske opslagsord, rigtige kategorier og niveauer og egentlige forklaringer i en version 1.2.
+2. **Ordbogens kvalitet** (Franks arbejde, ikke Claude Codes): opslagsordene er danske fra version 1.2 (forsidens spec, Afklaret 5). Af de 387 opslag står 340 i kategorien Grundlæggende begreber og 358 på niveau begynder, så filtrene siger ikke meget endnu; i 345 opslag er Forklaring den samme som Kort definition (talt 27. oktober 2026). Ordbogen bliver bedre med rigtige kategorier og niveauer og egentlige forklaringer.
