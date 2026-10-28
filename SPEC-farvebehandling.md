@@ -434,12 +434,12 @@ Accepttest i Vitest:
 
 Accepttest for variationen i starten og "Nye kombinationer om dagen" (grenen `farvebehandling-variation`):
 
-- [ ] Dine data viser "Nye kombinationer om dagen" med 2. − og + ændrer tallet fra 1 til 10 (− er låst ved 1 og + ved 10), og tallet gemmes i `farvebehandling:v1` som `settings.newPerDay`. Trænings forside viser derefter det nye antal nye kombinationer.
-- [ ] Med indstillingen på 1, 2 og 3 tilbyder dagen netop så mange nye kombinationer i hyppighedsorden.
-- [ ] Den første dag (indstillingen 1 eller 2) introducerer niveauet kombination 1–4 i hyppighedsorden; hver ny kommer først, når de foregående er øvet i alle mål, og når der er 4, øver niveauet de 4 uden flere introduktioner.
-- [ ] En ny session samme dag, når der er 4, introducerer ingen; dagen efter introduceres netop 2 (standard), selv om der kom 4 den første dag.
-- [ ] Er en af dagens nye ikke øvet i alle mål (fx efter en afbrudt session), venter den ekstra introduktion, til alle dagens emner har et svar.
-- [ ] I appen giver den første session de 4 første kombinationer i hyppighedsorden, hver øvet i alle mål, før lynrunden.
+- [x] Dine data viser "Nye kombinationer om dagen" med 2. − og + ændrer tallet fra 1 til 10 (− er låst ved 1 og + ved 10), og tallet gemmes i `farvebehandling:v1` som `settings.newPerDay`. Trænings forside viser derefter det nye antal nye kombinationer.
+- [x] Med indstillingen på 1, 2 og 3 tilbyder dagen netop så mange nye kombinationer i hyppighedsorden.
+- [x] Den første dag (indstillingen 1 eller 2) introducerer niveauet kombination 1–4 i hyppighedsorden; hver ny kommer først, når de foregående er øvet i alle mål, og når der er 4, øver niveauet de 4 uden flere introduktioner.
+- [x] En ny session samme dag, når der er 4, introducerer ingen; dagen efter introduceres netop 2 (standard), selv om der kom 4 den første dag.
+- [x] Er en af dagens nye ikke øvet i alle mål (fx efter en afbrudt session), venter den ekstra introduktion, til alle dagens emner har et svar.
+- [x] I appen giver den første session de 4 første kombinationer i hyppighedsorden, hver øvet i alle mål, før lynrunden.
 
 Åbne punkter: ingen.
 
