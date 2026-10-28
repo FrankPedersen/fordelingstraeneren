@@ -6,7 +6,7 @@ import { guessInterval } from '../model/guess';
 import { defaultFbSaved, type FbSaved } from '../storage';
 import { ensureStations, palaceRooms, placeOf, setScene, setTechniqueText } from './palace';
 import { filterOptions, logPractice, matchCount, missingHonors, NO_FILTER, practiceItems, PRACTICE_LOG_SIZE } from './practice';
-import { dueItems, dueTomorrow, freshToday, introduce } from './progression';
+import { dueItems, dueTomorrow, freshToday, introduce, parseItemKey } from './progression';
 import {
   answerFb,
   finishFbSession,
@@ -314,7 +314,7 @@ describe('Sessionen', () => {
     expect(practise()).toEqual(goalsOf(bank[0]));
     expect(s.step).toEqual({ kind: 'intro', combination: bank[1].combination.id });
     ({ session: s, saved } = introduceFb(s, saved, bank, bank[1].combination.id, t));
-    // Den næste kombination øves i alle sine mål; derefter øver niveauet de introducerede emner, indtil tiden er gået.
+    // Den næste kombination øves i alle sine mål; med færre end 4 introduceret kommer så den næste samme dag.
     const second: string[] = [];
     for (let k = 0; k < bank[1].combination.goals.length; k++) {
       s = nextFbStep(s, saved, bank, t);
@@ -325,7 +325,7 @@ describe('Sessionen', () => {
     expect(second).toEqual(goalsOf(bank[1]));
     s = nextFbStep(s, saved, bank, t);
     expect(s.phase).toBe('niveau');
-    expect(s.step?.kind).toBe('task');
+    expect(s.step).toEqual({ kind: 'intro', combination: bank[2].combination.id });
     s = nextFbStep(s, saved, bank, T0 + NIVEAU_END);
     expect(s.phase === 'lynrunde' || s.step?.kind === 'status').toBe(true);
   });
@@ -420,6 +420,84 @@ describe('Sessionen', () => {
     expect(done.streak).toMatchObject({ current: 1, best: 1, lastDay: '2026-10-05' });
     const next = finishFbSession(s, done, T0 + DAY);
     expect(next.streak).toMatchObject({ current: 2, lastDay: '2026-10-06' });
+  });
+});
+
+const withNewPerDay = (saved: FbSaved, newPerDay: number): FbSaved => ({ ...saved, settings: { ...saved.settings, newPerDay } });
+const idsOf = (items: readonly BankItem[]) => items.map((b) => b.combination.id);
+
+/**
+ * Kører en session til lynrunden med rigtige svar, 5 s pr. opgave. Giver de gemte data, niveauets trin i rækkefølge
+ * ("intro <id>" eller emnet) og de introducerede kombinationer.
+ */
+function runLevel(saved: FbSaved, start: number, seed: number, first?: FbSession) {
+  let s: FbSession = first ?? startFbSession(saved, bank, start, seed);
+  const steps: string[] = [];
+  let t = start;
+  for (let i = 0; i < 200; i++) {
+    s = nextFbStep(s, saved, bank, t);
+    const step = s.step!;
+    if (step.kind === 'intro') {
+      steps.push(`intro ${step.combination}`);
+      ({ session: s, saved } = introduceFb(s, saved, bank, step.combination, t));
+      continue;
+    }
+    if (step.kind !== 'task' || step.phase === 'lynrunde') break;
+    if (step.phase === 'niveau') steps.push(step.task.item);
+    ({ session: s, saved } = answerFb(s, saved, rightAnswer(step.task), t + 3000));
+    t += 5000;
+  }
+  return { saved, steps, intros: steps.filter((x) => x.startsWith('intro ')).map((x) => x.slice(6)) };
+}
+
+describe('Variation i starten og Nye kombinationer om dagen', () => {
+  it('tilbyder netop så mange nye kombinationer om dagen, som indstillingen siger', () => {
+    for (const n of [1, 2, 3]) {
+      expect(idsOf(freshToday(withNewPerDay(defaultFbSaved(), n), bank, '2026-10-05'))).toEqual(idsOf(bank.slice(0, n)));
+    }
+  });
+
+  it('introducerer kombination 1–4 den første dag, hver først når de foregående er øvet i alle mål', () => {
+    for (const n of [1, 2]) {
+      const { steps, intros } = runLevel(withNewPerDay(defaultFbSaved(), n), T0, 11);
+      expect(intros, `indstillingen ${n}`).toEqual(idsOf(bank.slice(0, 4)));
+      intros.forEach((id, k) => {
+        const before = steps.slice(0, steps.indexOf(`intro ${id}`));
+        for (const prev of intros.slice(0, k)) {
+          for (const g of byId(prev).combination.goals) expect(before, `${id} efter ${prev}`).toContain(itemKey(prev, g));
+        }
+      });
+      // Med 4 introduceret øver niveauet de 4, til tiden er gået.
+      const after = steps.slice(steps.indexOf(`intro ${intros[3]}`) + 1);
+      expect(after.length).toBeGreaterThan(byId(intros[3]).combination.goals.length);
+      expect(after.every((key) => intros.includes(parseItemKey(key).id))).toBe(true);
+    }
+  });
+
+  it('introducerer ingen i en ny session samme dag, når der er 4, og dagen efter netop 2', () => {
+    const day1 = runLevel(defaultFbSaved(), T0, 11);
+    expect(day1.intros).toHaveLength(4);
+    const again = runLevel(day1.saved, T0 + 300_000, 12);
+    expect(again.intros).toEqual([]);
+    const day2 = runLevel(again.saved, T0 + DAY, 13);
+    expect(day2.intros).toEqual(idsOf(bank.slice(4, 6)));
+  });
+
+  it('venter med den ekstra introduktion, til alle dagens nye er øvet i alle mål', () => {
+    // Dagens to er introduceret i en afbrudt session: kun den anden er øvet.
+    let saved = introduceAll(defaultFbSaved(), bank.slice(0, 2), '2026-10-05');
+    const items = { ...saved.items };
+    for (const g of bank[1].combination.goals) {
+      const key = itemKey(bank[1].combination.id, g);
+      items[key] = { ...items[key], log: [{ t: T0, ok: true, ms: 3000 }] };
+    }
+    saved = { ...saved, items };
+    const first: FbSession = { ...startFbSession(saved, bank, T0, 5), due: [], phase: 'niveau' };
+    const { steps, intros } = runLevel(saved, T0, 5, first);
+    expect(steps[0].startsWith('intro ')).toBe(false);
+    expect(intros[0]).toBe(bank[2].combination.id);
+    const before = steps.slice(0, steps.indexOf(`intro ${intros[0]}`));
+    for (const g of bank[0].combination.goals) expect(before).toContain(itemKey(bank[0].combination.id, g));
   });
 });
 
