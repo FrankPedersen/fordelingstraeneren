@@ -12,7 +12,7 @@ Kortfarvepoint, storeslem og IMP-grænserne bekræftes uændret.
 
 ## Resultaterne
 
-Datagrundlaget med alle tal, metoden og en henvisning til scriptet står i [docs/resultater-aabne-punkter.md](docs/resultater-aabne-punkter.md).
+Datagrundlaget med alle tal, metoden og en henvisning til scriptet står i [docs/resultater-aabne-punkter.md](../resultater-aabne-punkter.md).
 
 | Punkt | Franks tal | Beslutning |
 | --- | --- | --- |

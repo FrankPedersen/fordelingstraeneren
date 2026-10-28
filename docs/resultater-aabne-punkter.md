@@ -1,6 +1,6 @@
 # Resultater for de åbne punkter i håndevalueringen
 
-Regnet 21. oktober 2026 til de åbne punkter i SPEC-haandevaluering.md. Franks beslutninger ud fra tallene står i [SPEC-haandevaluering-kalibrering.md](../SPEC-haandevaluering-kalibrering.md); punkterne "Til afgørelse" nedenfor er afgjort dér.
+Regnet 21. oktober 2026 til de åbne punkter i SPEC-haandevaluering.md. Franks beslutninger ud fra tallene står i [SPEC-haandevaluering-kalibrering.md](specs/SPEC-haandevaluering-kalibrering.md); punkterne "Til afgørelse" nedenfor er afgjort dér.
 
 **Data:** `bridge-model/data/fit_deals.csv` med 11.168 fordelinger, hvor N-S har mindst 8 trumf i en major. Facit er dobbeltdummy-stik i trumffarven med den bedste spilfører af nord og syd. Datafilerne er kun læst, ikke ændret. Udgang = mindst 10 stik, og det holder i 35,0 % af fordelingerne.
 
