@@ -410,6 +410,9 @@ const DA = {
     const [y, m, d] = day.split('-').map(Number);
     return `${d}. ${MONTHS_DA[m - 1]} ${y}`;
   },
+  newPerDay: 'Nye kombinationer om dagen',
+  newPerDayLess: 'Færre nye kombinationer om dagen',
+  newPerDayMore: 'Flere nye kombinationer om dagen',
   persistTitle: 'Fast lagring',
   persistFast: 'Fast lagring: ja. Browseren rydder ikke dine data af sig selv.',
   persistTemporary: 'Fast lagring: nej. Browseren kan rydde dine data, fx hvis telefonen mangler plads. Eksportér jævnligt.',
@@ -437,12 +440,13 @@ const DA = {
     tabs: 'Træning: din daglige session på ca. 5 minutter med nye kombinationer og repetition. Selvvalgt: vælg selv, hvad du vil øve, uden at dagsplanen ændres. Analyse: slå enhver kombination op og se linjerne, chancerne og sidningerne.',
     analysisModule:
       'Analysen fra Farvebehandling som selvstændigt modul: slå enhver kombination op, og se linjerne, chancerne og sidningerne, også med kendte kort, hp-grænser og forbindelser. Den findes også som fanen Analyse i Farvebehandling.',
-    today: 'Repetition er emner (kombination × mål), som Leitner-systemet har sat til i dag. Nye kombinationer kommer i hyppighedsorden, højst 2 om dagen, og øves straks i hvert mål.',
+    today: 'Repetition er emner (kombination × mål), som Leitner-systemet har sat til i dag. Nye kombinationer kommer i hyppighedsorden, højst så mange om dagen, som du har valgt under Dine data (standard 2), og øves straks i hvert mål. Før du har mødt 4, kommer der flere samme dag.',
     start: 'Sessionen: repetition (ca. 60 s), niveau med nye kombinationer og de senest introducerede, lynrunde med linje mod linje (60 s) og status. Dagen tæller i farvebehandlings egen streak.',
     palace: 'Hvert rum er en teknik med en huskeregel og et billede; stationerne er kombinationerne i den rækkefølge, du har mødt dem. Du kan skrive din egen huskeregel, dit eget billede og en scene til hver station.',
     club: 'De 100 kombinationer, du oftest møder, som 10 × 10 felter med hyppighed pr. klubaften. Tryk på et felt for detaljer; tekniknapperne fremhæver deres felter, og listen nedenunder har hyppigheden for alle.',
     stats: 'Træfsikkerhed pr. teknik og opgavetype, svageste først, for alle svar og de seneste 30 dage. Dit svageste punkt kan øves direkte i Selvvalgt.',
-    data: 'Eksport og import af farvebehandlings data, fast lagring og hvornår du sidst eksporterede. Fordelingssporet har sin egen eksport under Indstillinger.',
+    data: 'Eksport og import af farvebehandlings data, antallet af nye kombinationer om dagen, fast lagring og hvornår du sidst eksporterede. Fordelingssporet har sin egen eksport under Indstillinger.',
+    newPerDay: 'Så mange nye kombinationer kommer der højst om dagen (1–10). Før du har mødt 4, kommer der flere samme dag, når dagens nye er øvet i alle mål.',
     practice: 'Vælg filtre; tallet i parentes er antallet af kombinationer, og valg med 0 er grået ud. Start giver opgaver af blandede typer. Svarene logges til statistikken, men ændrer ikke dagsplanen.',
     band: 'Sandsynlighedsbåndet har én vandret søjle pr. linje, delt i sidninger efter deres chance. Mørkt felt med ✓: målet nås; lyst felt med ✕: målet nås ikke. Tryk på et felt for at se sidningen ved bordet.',
     lines: 'Linjerne med nummererede trin. "✓ bedst" markerer den bedste; linjer inden for 0,5 procentpoint er lige gode. Tallene forudsætter optimalt modspil og ubegrænsede forbindelser.',
@@ -857,6 +861,9 @@ const EN: Texts = {
     const [y, m, d] = day.split('-').map(Number);
     return `${d} ${MONTHS_EN[m - 1]} ${y}`;
   },
+  newPerDay: 'New combinations per day',
+  newPerDayLess: 'Fewer new combinations per day',
+  newPerDayMore: 'More new combinations per day',
   persistTitle: 'Persistent storage',
   persistFast: 'Persistent storage: yes. The browser will not clear your data on its own.',
   persistTemporary: 'Persistent storage: no. The browser may clear your data, e.g. if the phone runs out of space. Export regularly.',
@@ -887,12 +894,13 @@ const EN: Texts = {
     tabs: 'Training: your daily session of about 5 minutes with new combinations and review. Free practice: choose for yourself what to practise without changing the daily plan. Analysis: look up any combination and see the lines, the chances and the layouts.',
     analysisModule:
       'The analysis from Suit combinations as a separate module: look up any combination and see the lines, the chances and the layouts, also with known cards, HCP limits and entries. It is also the Analysis tab in Suit combinations.',
-    today: 'Review is the items (combination × goal) the Leitner system has scheduled for today. New combinations arrive in order of frequency, at most 2 a day, and are practised at once in each goal.',
+    today: 'Review is the items (combination × goal) the Leitner system has scheduled for today. New combinations arrive in order of frequency, at most as many a day as you have chosen under Your data (2 by default), and are practised at once in each goal. Until you have met 4, more arrive the same day.',
     start: 'The session: review (about 60 s), level with new combinations and the most recently introduced ones, a lightning round with line against line (60 s) and status. The day counts in the suit combinations streak.',
     palace: 'Each room is a technique with a memory rule and an image; the stations are the combinations in the order you met them. You can write your own memory rule, your own image and a scene for each station.',
     club: 'The 100 combinations you meet most often, as 10 × 10 fields with their frequency per club evening. Tap a field for details; the technique buttons highlight their fields, and the list below has the frequency of all of them.',
     stats: 'Accuracy per technique and task type, weakest first, for all answers and the last 30 days. Your weakest spot can be practised directly in Free practice.',
-    data: 'Export and import of the suit combinations data, persistent storage and when you last exported. The distribution track has its own export under Settings.',
+    data: 'Export and import of the suit combinations data, the number of new combinations per day, persistent storage and when you last exported. The distribution track has its own export under Settings.',
+    newPerDay: 'At most this many new combinations arrive each day (1–10). Until you have met 4, more arrive the same day once the day’s new ones have been practised in every goal.',
     practice: 'Choose filters; the number in brackets is the number of combinations, and choices with 0 are greyed out. Start gives tasks of mixed types. Answers are logged for the statistics but do not change the daily plan.',
     band: 'The probability band has one horizontal bar per line, divided into layouts by their chance. Dark field with ✓: goal made; light field with ✕: goal not made. Tap a field to see the layout at the table.',
     lines: 'The lines with numbered steps. "✓ best" marks the best one; lines within 0.5 percentage points are equally good. The figures assume best defence and unlimited entries.',

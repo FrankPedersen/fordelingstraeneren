@@ -254,7 +254,8 @@ Startbank: alle brugbare kombinationer på bridgehands.com's sider 0–9 (se Hyp
 - **Rigtig linje:** den bedste linje eller enhver linje inden for 0,5 procentpoint af den.
 - **Hurtigt:** under 20 s for hele opgaven.
 - **Gætteintervaller:** 0–<25, 25–<50, 50–<75 og 75–100 %. Grænsen hører til intervallet over: 25,0 → 25–50, 50,0 → 50–75, 75,0 → 75–100.
-- **Nye emner:** højst 2 nye kombinationer pr. dag.
+- **Nye emner:** højst så mange nye kombinationer pr. dag, som indstillingen "Nye kombinationer om dagen" under Dine data siger (1–10, standard 2).
+- **Variation i starten** (Franks valg, 28. oktober 2026): er der introduceret færre end 4 kombinationer i alt, introducerer niveauet den næste samme dag, når dagens nye er øvet i alle mål, i stedet for at gentage dem. Den første session får derfor op til 4 kombinationer, og en ny session samme dag fortsætter, til der er 4. Derefter gælder den daglige grænse, og de ekstra tæller ikke med i den næste dags.
 - **Oplåsning:** i hyppighedsorden, så de kombinationer, der opstår oftest ved bordet, kommer først, uanset teknik. En tekniks rum i paladset åbner, når dens første kombination dukker op.
 - **Streak og XP** er adskilt fra fordelingssporet. En dag med kun farvebehandling holder ikke fordelingssporets streak i live. Det er et bevidst valg.
 - **Selvvalgt:** hvert filtervalg viser antallet af kombinationer, og valg med 0 er grået ud. Et filter kan derfor aldrig ramme ingenting.
@@ -270,6 +271,7 @@ Al farvebehandlingens tilstand ligger i ét JSON-objekt under nøglen `farvebeha
 - **Eksport og import:** farvebehandling har sin egen eksport og import under sine egne indstillinger. Fordelingssporets eksport ændres ikke.
 - **Versioner:** ved en ny skemaversion migreres data, og ukendte felter bevares.
 - **Fast lagring** (Franks ønske, 5. oktober 2026): første gang brugeren gemmer noget, beder appen browseren om fast lagring (`navigator.storage.persist()`), så dataene ikke ryddes, fx når telefonen mangler plads. Det gælder hele appen, også fordelingssporets data, men ændrer ikke dem. "Dine data" viser, om lagringen er fast, og hvornår der sidst blev eksporteret.
+- **Nye kombinationer om dagen** (Franks valg, 28. oktober 2026): Dine data har indstillingen med − og + fra 1 til 10, standard 2. Den gemmes i `settings.newPerDay`, som skemaet allerede har; indlæsningen godtager stadig 0–10, så gemte data ikke bliver ugyldige.
 - **Påmindelse om eksport:** er den seneste eksport, eller den første session eller det første svar i Selvvalgt, mindst 30 dage gammel, viser Trænings forside en påmindelse med en knap, der eksporterer.
 
 ## Huskepalads og huskeregler
@@ -430,6 +432,15 @@ Accepttest i Vitest:
 - [x] Optimalt modspil: accepttallene 37,3 %, 53,1 % og 64,7 % holder også med optimalt modspil.
 - [x] Optimalt modspil: med hånden E T 8 2 og bordet K B 9 3 (case 73, 4 stik) giver løseren ikke 100 %. Resultatet sammenlignes med kildens 53 % i valideringsrapporten.
 
+Accepttest for variationen i starten og "Nye kombinationer om dagen" (grenen `farvebehandling-variation`):
+
+- [x] Dine data viser "Nye kombinationer om dagen" med 2. − og + ændrer tallet fra 1 til 10 (− er låst ved 1 og + ved 10), og tallet gemmes i `farvebehandling:v1` som `settings.newPerDay`. Trænings forside viser derefter det nye antal nye kombinationer.
+- [x] Med indstillingen på 1, 2 og 3 tilbyder dagen netop så mange nye kombinationer i hyppighedsorden.
+- [x] Den første dag (indstillingen 1 eller 2) introducerer niveauet kombination 1–4 i hyppighedsorden; hver ny kommer først, når de foregående er øvet i alle mål, og når der er 4, øver niveauet de 4 uden flere introduktioner.
+- [x] En ny session samme dag, når der er 4, introducerer ingen; dagen efter introduceres netop 2 (standard), selv om der kom 4 den første dag.
+- [x] Er en af dagens nye ikke øvet i alle mål (fx efter en afbrudt session), venter den ekstra introduktion, til alle dagens emner har et svar.
+- [x] I appen giver den første session de 4 første kombinationer i hyppighedsorden, hver øvet i alle mål, før lynrunden.
+
 Åbne punkter: ingen.
 
 Afklaret:
@@ -439,4 +450,5 @@ Afklaret:
 - **x i kilden:** case 4 tyder på, at kilden ikke altid lader x tabe til modpartens små kort. Appen bruger "lav", og valideringsrapporterne viser begge fortolkninger og hvilken der passer bedst (godkendt af Frank, 4. oktober 2026).
 - **Fase 2:** løseren kører i browseren i baggrunden (en Web Worker) på forespørgsel (Franks valg, 4. oktober 2026). En kombination uden for banken regnes fra kortvælgeren: først flest stik i gennemsnit, så målene, der er værd at regne, ét ad gangen. Egne linjer regnes på samme måde og gemmes under `ownLines`.
 - **Teknik pr. case:** hver kombination har en teknik efter reglerne i `src/farvebehandling/techniques.ts` (listen står i `content/teknikker.md`); Frank bad om, at forslaget blev færdiggjort (4. oktober 2026).
+- **Variation i starten** (Franks valg, 28. oktober 2026): de første sessioner føltes ens, fordi niveauet kun øver de senest introducerede og den første dag kun havde 2. Niveauet introducerer derfor flere samme dag, til der er 4 (`LEVEL_COMBINATIONS`, niveauets antal), og indstillingen "Nye kombinationer om dagen" kommer i Dine data. "Øvet i alle mål" betyder, at hvert emne for dagens nye kombinationer har mindst ét svar i loggen; så virker reglen også efter en afbrudt session.
 - **Kilden i appen** (SPEC-neutral-kilde.md, 20. oktober 2026): appens synlige tekster og data omtaler banken neutralt som de klassiske farvebehandlinger med inspiration fra Suit Combinations in Bridge (Jethalal M. Shah); udviklerfilerne beholder navnet bridgehands.

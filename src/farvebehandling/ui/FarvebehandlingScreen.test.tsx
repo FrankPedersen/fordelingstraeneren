@@ -205,7 +205,8 @@ describe('Farvebehandling', { timeout: 30_000 }, () => {
   it('kører dagens session: introduktion, opgaver med facit, lynrunde og status', async () => {
     vi.useFakeTimers({ toFake: ['Date'] });
     vi.setSystemTime(T0);
-    const [first, second] = TEST_BANK;
+    const [first] = TEST_BANK;
+    const firstFour = TEST_BANK.slice(0, 4);
     render(<App />);
     const before = localStorage.getItem(STORAGE_KEY);
     click('Farvebehandling');
@@ -240,21 +241,25 @@ describe('Farvebehandling', { timeout: 30_000 }, () => {
       click('Næste opgave');
     }
 
-    // Den næste kombination introduceres og øves i alle sine mål.
-    expect(screen.getByText('Ny kombination')).toBeTruthy();
-    click('Prøv den');
-    for (const _ of second.combination.goals) {
-      answerAnything();
-      click('Næste opgave');
+    // De næste introduceres og øves i alle deres mål, til der er 4 (variationen i starten); så gentager niveauet dem.
+    for (const next of firstFour.slice(1)) {
+      expect(screen.getByText('Ny kombination')).toBeTruthy();
+      click('Prøv den');
+      expect(stored().introduced[next.combination.id]).toBe('2026-10-05');
+      for (const _ of next.combination.goals) {
+        answerAnything();
+        click('Næste opgave');
+      }
     }
-    const keys = [first, second].flatMap((b) => b.combination.goals.map((g) => itemKey(b.combination.id, g)));
+    expect(screen.queryByText('Ny kombination')).toBeNull();
+    const keys = firstFour.flatMap((b) => b.combination.goals.map((g) => itemKey(b.combination.id, g)));
     expect(Object.keys(stored().items).sort()).toEqual(keys.sort());
 
     // Efter niveauet kommer lynrunden med linje mod linje, hvis et af emnerne har den opgave; ellers status.
     vi.setSystemTime(T0 + 211_000);
     answerAnything();
     click('Næste opgave');
-    const lightning = [first, second].some((b) => b.combination.goals.some((g) => possibleTypes(b, g).includes('linje-mod-linje')));
+    const lightning = firstFour.some((b) => b.combination.goals.some((g) => possibleTypes(b, g).includes('linje-mod-linje')));
     if (lightning) {
       expect(screen.getByText('Lynrunde')).toBeTruthy();
       expect(screen.getByText('Tryk på den bedste linje')).toBeTruthy();
@@ -353,6 +358,32 @@ describe('Farvebehandling', { timeout: 30_000 }, () => {
     click('Næste opgave');
     click('Skift filter');
     expect(screen.getByRole('group', { name: 'Teknik' })).toBeTruthy();
+  });
+
+  it('Dine data: Nye kombinationer om dagen fra 1 til 10 gemmes og styrer dagens plan', async () => {
+    await openFarvebehandling();
+    expect(screen.getByText('0 emner til repetition · 2 nye kombinationer')).toBeTruthy();
+    click('Dine data');
+    const group = screen.getByRole('group', { name: 'Nye kombinationer om dagen' });
+    const value = () => group.querySelector('output')!.textContent;
+    const fewer = () => within(group).getByRole('button', { name: 'Færre nye kombinationer om dagen' }) as HTMLButtonElement;
+    const more = () => within(group).getByRole('button', { name: 'Flere nye kombinationer om dagen' }) as HTMLButtonElement;
+    expect(value()).toBe('2');
+    fireEvent.click(more());
+    expect(value()).toBe('3');
+    expect(stored().settings.newPerDay).toBe(3);
+    fireEvent.click(fewer());
+    fireEvent.click(fewer());
+    expect(value()).toBe('1');
+    expect(stored().settings.newPerDay).toBe(1);
+    expect(fewer().disabled).toBe(true);
+    for (let i = 0; i < 9; i++) fireEvent.click(more());
+    expect(value()).toBe('10');
+    expect(more().disabled).toBe(true);
+    expect(stored().settings.newPerDay).toBe(10);
+    for (let i = 0; i < 9; i++) fireEvent.click(fewer());
+    click('Tilbage til Træning');
+    expect(screen.getByText('0 emner til repetition · 1 ny kombination')).toBeTruthy();
   });
 
   it('eksporterer og importerer sine egne data uden at røre fordelingssporets', async () => {

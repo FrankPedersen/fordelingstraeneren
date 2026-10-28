@@ -4,6 +4,10 @@ import { fbExportFileName, fbSummary, parseFbImport, persistence, requestPersist
 import { TEXT } from './texts';
 import { Info } from '../../ui/Info';
 
+/** "Nye kombinationer om dagen" kan sættes fra 1 til 10 (SPEC-farvebehandling.md, Data og lagring). */
+const NEW_PER_DAY_MIN = 1;
+const NEW_PER_DAY_MAX = 10;
+
 interface DataProps {
   saved: FbSaved;
   update(next: FbSaved): void;
@@ -65,6 +69,11 @@ export function Data({ saved, update, onBack }: DataProps) {
     setMessage(TEXT.imported);
   }
 
+  const newPerDay = saved.settings.newPerDay;
+  function setNewPerDay(n: number) {
+    update({ ...saved, settings: { ...saved.settings, newPerDay: Math.min(NEW_PER_DAY_MAX, Math.max(NEW_PER_DAY_MIN, n)) } });
+  }
+
   const summary = incoming ? fbSummary(incoming) : null;
   return (
     <div className="fb-narrow">
@@ -99,6 +108,35 @@ export function Data({ saved, update, onBack }: DataProps) {
             {message}
           </p>
         )}
+      </section>
+      <section className="card" aria-labelledby="fb-new-per-day">
+        <div className="with-info">
+          <h3 id="fb-new-per-day">{TEXT.newPerDay}</h3>
+          <Info topic={TEXT.newPerDay}>{TEXT.help.newPerDay}</Info>
+        </div>
+        <div className="fb-stepper" role="group" aria-label={TEXT.newPerDay}>
+          <button
+            type="button"
+            className="btn small-btn fb-step"
+            aria-label={TEXT.newPerDayLess}
+            disabled={newPerDay <= NEW_PER_DAY_MIN}
+            onClick={() => setNewPerDay(newPerDay - 1)}
+          >
+            −
+          </button>
+          <output className="fb-stepper-value" aria-label={TEXT.newPerDay}>
+            {newPerDay}
+          </output>
+          <button
+            type="button"
+            className="btn small-btn fb-step"
+            aria-label={TEXT.newPerDayMore}
+            disabled={newPerDay >= NEW_PER_DAY_MAX}
+            onClick={() => setNewPerDay(newPerDay + 1)}
+          >
+            +
+          </button>
+        </div>
       </section>
       <section className="card" aria-labelledby="fb-persist">
         <h3 id="fb-persist">{TEXT.persistTitle}</h3>

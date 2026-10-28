@@ -135,13 +135,26 @@ export function levelPool(saved: FbSaved, bank: readonly BankItem[]): string[] {
   return recent.flatMap((b) => b.combination.goals.map((g) => itemKey(b.combination.id, g))).filter((k) => k in saved.items);
 }
 
+/**
+ * Variation i starten: er der introduceret færre end LEVEL_COMBINATIONS kombinationer, kommer den næste samme dag ud
+ * over dagens grænse, når dagens nye er øvet i alle mål (hvert emne har et svar), så niveauet ikke gentager de samme.
+ */
+function startExtra(saved: FbSaved, bank: readonly BankItem[], today: string): BankItem | undefined {
+  if (Object.keys(saved.introduced).length >= LEVEL_COMBINATIONS) return undefined;
+  const practised = Object.entries(saved.introduced)
+    .filter(([, day]) => day === today)
+    .every(([id]) => (find(bank, id)?.combination.goals ?? []).every((g) => (saved.items[itemKey(id, g)]?.log.length ?? 0) > 0));
+  return practised ? bank.find((b) => !(b.combination.id in saved.introduced)) : undefined;
+}
+
 /** Niveau: en ny kombination introduceres og øves straks i hvert mål; derefter de senest introducerede. */
 function levelStep(s: FbSession, saved: FbSaved, bank: readonly BankItem[], now: number): FbStep | null {
   for (const id of s.introduced) {
     const key = find(bank, id)?.combination.goals.map((g) => itemKey(id, g)).find((k) => !s.asked.includes(k));
     if (key) return { kind: 'task', phase: 'niveau', task: taskFor(s, bank, key) };
   }
-  const fresh = freshToday(saved, bank, todayOf(saved, now))[0];
+  const today = todayOf(saved, now);
+  const fresh = freshToday(saved, bank, today)[0] ?? startExtra(saved, bank, today);
   if (fresh) return { kind: 'intro', combination: fresh.combination.id };
   const pool = levelPool(saved, bank);
   if (!pool.length) return null;
