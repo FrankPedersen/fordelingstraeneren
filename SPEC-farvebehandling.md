@@ -441,7 +441,20 @@ Accepttest for variationen i starten og "Nye kombinationer om dagen" (grenen `fa
 - [x] Er en af dagens nye ikke øvet i alle mål (fx efter en afbrudt session), venter den ekstra introduktion, til alle dagens emner har et svar.
 - [x] I appen giver den første session de 4 første kombinationer i hyppighedsorden, hver øvet i alle mål, før lynrunden.
 
-Åbne punkter: ingen.
+Accepttest for kipningerne i linjeteksterne (grenen `linjetekst-kip`, se Afklaret):
+
+- [ ] E D 6 5 / 4 3 2, 3 stik: "Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset." Den gemte linje er lille fra bordet og damen, når Øst lægger lille, ellers esset, og den giver løserens 17,8 %, når løseren spiller den.
+- [ ] E D 6 5 / 4 3 2, 2 stik: "Lille fra bordet til esset. Lille fra begge hænder. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille."
+- [ ] E D 10 / 3 2, 3 stik: "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset."
+- [ ] E K 4 3 2 / D 10, 5 stik: "Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med damen."
+- [ ] K D 8 7 6 5 / 4 3 2, 5 stik: den gemte linje (kongen, når Øst lægger lille) giver løserens 65,6 %, når løseren spiller den.
+- [ ] Uændret: E K D 9 4 / 3 2, 4 stik: "Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, tages den med esset. Slå esset."
+- [ ] Hele banken løst igen (`LINES_VERSION` 2): chancerne er de samme som før, og kun linjetekster, gemte linjer og det, der regnes ud fra dem (stik pr. sidning, Hold eller par og Hvad nu?), ændres.
+- [ ] Regressionstesten mod bogen (`node scripts/bog-regression.ts`) består.
+
+Åbne punkter:
+
+- **"Slå esset." efter en kipning** (Franks valg, 29. oktober 2026: en senere, særskilt ændring): beskrivelsen følger hovedvejen, hvor 4. hånd stikker, når den kan, så teksten stopper, når en tabt kipning afgør målet. E D 6 5 / 4 3 2 (3 stik) slutter derfor efter kipningen og nævner ikke, at esset slås bagefter. At følge vejen, hvor kipningen lykkes, ændrer omkring 409 bedste linjer og husets regel for hovedvejen, så det afgøres for sig.
 
 Afklaret:
 
@@ -451,4 +464,9 @@ Afklaret:
 - **Fase 2:** løseren kører i browseren i baggrunden (en Web Worker) på forespørgsel (Franks valg, 4. oktober 2026). En kombination uden for banken regnes fra kortvælgeren: først flest stik i gennemsnit, så målene, der er værd at regne, ét ad gangen. Egne linjer regnes på samme måde og gemmes under `ownLines`.
 - **Teknik pr. case:** hver kombination har en teknik efter reglerne i `src/farvebehandling/techniques.ts` (listen står i `content/teknikker.md`); Frank bad om, at forslaget blev færdiggjort (4. oktober 2026).
 - **Variation i starten** (Franks valg, 28. oktober 2026): de første sessioner føltes ens, fordi niveauet kun øver de senest introducerede og den første dag kun havde 2. Niveauet introducerer derfor flere samme dag, til der er 4 (`LEVEL_COMBINATIONS`, niveauets antal), og indstillingen "Nye kombinationer om dagen" kommer i Dine data. "Øvet i alle mål" betyder, at hvert emne for dagens nye kombinationer har mindst ét svar i loggen; så virker reglen også efter en afbrudt session.
+- **Kipninger i linjeteksterne** (Franks valg, 29. oktober 2026): linjeteksten for E D 6 5 / 4 3 2 (side 4, nr. 1, 3 stik) var "Lille fra bordet til esset.", selv om linjen kipper med damen, når Øst lægger lille ("til esset" betyder, at 3. hånd lægger esset som sikker vinder). Årsagen: modpartens kort i et hul er én gruppe ligeværdige kort, og beskrivelsen regnede kun en gruppe som lav, når dens højeste kort var under B. B 10 9 8 7 blev derfor en honnør, og teksten beskrev kun svaret på kongen. To rettelser i `solver/describe.ts`:
+  - **A:** det laveste hul, 2. hånd kan lægge fra, er lavt, når det har et kort under B, også når det går op til B eller højere. De andre huller er som før, så fx B 10 alene stadig er en honnør.
+  - **B:** 3. håndens laveste kort hedder kun "lille", når det er under 10. Ellers står kortet med "mod … (kip)" (eller "til …", når det er en sikker vinder), fx E D 10 / 3 2.
+  - Linjeformatet læser "low" i `ifSecondPlays` efter samme regel som A (`solver/lines.ts`), så en gemt linje giver løserens chance, når løseren spiller den; med den gamle læsning ville fx K D 8 7 6 5 / 4 3 2 (5 stik) give 12,4 % i stedet for 65,6 %.
+  - Ordlyden og skabelonerne er uændrede (Franks valg). Chancerne ændres ikke. Scanningen af hele banken fandt 194 bedste linjer i 154 kombinationer (71 i 52 E D-kombinationer), hvor kipningen manglede i teksten, og 29 gemte bedste linjer, der bliver rigtige.
 - **Kilden i appen** (SPEC-neutral-kilde.md, 20. oktober 2026): appens synlige tekster og data omtaler banken neutralt som de klassiske farvebehandlinger med inspiration fra Suit Combinations in Bridge (Jethalal M. Shah); udviklerfilerne beholder navnet bridgehands.
