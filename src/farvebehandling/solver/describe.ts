@@ -1,6 +1,6 @@
-import { cardsData, JACK, TEN, type Rank } from '../model/cards';
+import { cardsData, TEN, type Rank } from '../model/cards';
 import { END, LEAD, type Game, type Hand } from './game';
-import type { Line, LineStep } from './lines';
+import { secondPlaysLow, type Line, type LineStep } from './lines';
 import { itemValues } from './natural';
 
 /**
@@ -138,7 +138,7 @@ export function describeFrom(game: Game, strategy: Int8Array, leadSlot: number, 
     for (let x = 0; x < cc2; x++) {
       const s = cs2 + x;
       if (game.slotHigh[s] === 0) continue;
-      if (game.slotHigh[s] < JACK) lowSlot = s; // det laveste lave kort (sidste)
+      if (secondPlaysLow(game, second, s)) lowSlot = s; // det laveste lave kort (sidste)
       else if (highSlot < 0 && game.slotLow[s] > led.rank) highSlot = s; // en honnør over udspillet
       else if (highSlot < 0 && !led.winner) highSlot = s;
     }
@@ -164,7 +164,8 @@ export function describeFrom(game: Game, strategy: Int8Array, leadSlot: number, 
       const toward = low ?? high;
       if (!toward) text = `lille${from}`;
       else if (toward.winner) text = `lille${from} til ${cardName(toward.rank)}`;
-      else if (toward.lowest) text = 'lille fra begge hænder';
+      // Det laveste kort er kun "lille" under 10; en honnør, der ikke er sikker vinder, er en kipning (fx E D 10 / 3 2).
+      else if (toward.lowest && toward.rank < TEN) text = 'lille fra begge hænder';
       else text = `lille${from} mod ${cardName(toward.rank)} (kip)`;
       if (low && high && high.rank !== low.rank) {
         text += `; lægger ${seat2} en honnør, ${high.lowest ? 'lægges der lille' : `tages den med ${cardName(high.rank)}`}`;
@@ -239,7 +240,7 @@ function consistentThird(game: Game, second: number, thirdFor: (slot: number) =>
     const s = game.childStart[second] + x;
     if (game.slotHigh[s] === 0) continue; // kendt sidning: linjen slutter
     const c = thirdFor(s);
-    (game.slotHigh[s] < JACK ? lows : highs).add(c ? c.rank : 0);
+    (secondPlaysLow(game, second, s) ? lows : highs).add(c ? c.rank : 0);
   }
   return lows.size <= 1 && highs.size <= 1;
 }

@@ -33,6 +33,23 @@ interface OpponentPlay {
   seat: 'V' | 'Ø';
   high: Rank;
   low: Rank;
+  /** 2. hånd lægger lavt (`ifSecondPlays: 'low'`), se secondPlaysLow. */
+  isLow?: boolean;
+}
+
+/**
+ * Lægger 2. hånd lavt med barn-slottet `slot` ved knuden `node`? Et hul er lavt, når dets højeste kort er under B. Det
+ * laveste hul, 2. hånd kan lægge fra, er også lavt, når det har et kort under B, selv om det går op til B eller højere:
+ * kortene i et hul er ligeværdige, så B 10 9 8 7 under damen er små kort (SPEC-farvebehandling.md, Afklaret: kipninger).
+ * Beskrivelsen (describe.ts) skriver linjeformatet efter samme regel, som det læses med her.
+ */
+export function secondPlaysLow(game: Game, node: number, slot: number): boolean {
+  if (game.slotHigh[slot] === 0) return false;
+  if (game.slotHigh[slot] < JACK) return true;
+  if (game.slotLow[slot] >= JACK) return false;
+  const end = game.childStart[node] + game.childCount[node];
+  for (let s = slot + 1; s < end; s++) if (game.slotHigh[s] !== 0) return false;
+  return true;
 }
 
 interface PathState {
@@ -170,7 +187,7 @@ export function lineMask(game: Game, line: Line): LineMask {
     const seat = leader === 'N' ? 'Ø' : 'V';
     for (let x = 0; x < game.childCount[node]; x++) {
       const slot = game.childStart[node] + x;
-      const play = { seat, high: game.slotHigh[slot], low: game.slotLow[slot] } as OpponentPlay;
+      const play = { seat, high: game.slotHigh[slot], low: game.slotLow[slot], isLow: secondPlaysLow(game, node, slot) } as OpponentPlay;
       if (play.high === 0) {
         // Kendt sidning: modspilleren kan ikke bekende, så linjen slutter, og løseren spiller resten optimalt.
         allowSubtree(game.children[slot]);
@@ -194,7 +211,7 @@ export function lineMask(game: Game, line: Line): LineMask {
     if (step.third) {
       const cond = step.third.ifSecondPlays;
       const holds =
-        second.high === 0 ? false : cond === 'low' ? second.high < JACK : second.high >= rankFromSymbol(cond) && rankFromSymbol(cond) >= second.low;
+        second.high === 0 ? false : cond === 'low' ? second.isLow === true : second.high >= rankFromSymbol(cond) && rankFromSymbol(cond) >= second.low;
       want = holds ? step.third.play : step.third.else;
     }
     const card = choose(state.physical[hand], want);
