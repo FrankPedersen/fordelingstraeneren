@@ -454,4 +454,4 @@ Listen er godkendt med disse rettelser, og teksterne er rettet efter dem:
 
 Fundet under rettelsen og rettet efter samme mønster: `persistUnknown` ("… En jævnlig eksport sikrer dem.") ved siden af B16, guidens "**Sammenlign:** kryds præcis to linjer af." ved siden af B10 ("**Sammenlign:** med præcis to linjer krydset af viser båndet og tabellen kun de to, …") og den engelske etiket på importfeltet ("Combination or deal").
 
-Venter på Frank: `docs/MODEL.md` har en tredje sætning i bydeform, "**Brug ikke farveskalaen i sans.** Den er materialets dårligste dér.", som ikke stod på listen. Forslag: "**Farveskalaen bruges ikke i sans.** Den er materialets dårligste dér." Indtil Frank har svaret, står den på testens undtagelsesliste.
+`docs/MODEL.md` havde en tredje sætning i bydeform, "**Brug ikke farveskalaen i sans.** Den er materialets dårligste dér.", som ikke stod på listen. Frank godkendte forslaget "**Farveskalaen bruges ikke i sans.** Den er materialets dårligste dér." 30. oktober 2026, og sætningen er taget af testens undtagelsesliste.

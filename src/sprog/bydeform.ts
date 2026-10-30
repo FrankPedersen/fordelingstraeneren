@@ -101,8 +101,6 @@ export const UNDTAGELSER: readonly (string | RegExp)[] = [
   'Spil mod honnør',
   // Sidefodens sætning venter, til sidefødderne ændres samlet med forsiden og konventionstræneren (A6).
   'Skriv til mig.',
-  // docs/MODEL.md ændres kun med Franks godkendelse; sætningen venter på hans svar (fundet efter listen, 30. oktober 2026).
-  'Brug ikke farveskalaen i sans.** Den er materialets dårligste dér.',
 ];
 
 /** Sætninger, der begynder med et af ordene, men ikke er bydeform: meldingen pas, en knap eller opgave som grundled og lister med navne. */

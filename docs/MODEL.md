@@ -81,7 +81,7 @@ giver 79,3 %).
 
 ## 2. Sanskontrakt — en anden model
 
-**Brug ikke farveskalaen i sans.** Den er materialets dårligste dér.
+**Farveskalaen bruges ikke i sans.** Den er materialets dårligste dér.
 
 ```
 Point i sans = hp (4-3-2-1) + ¼ per tier
