@@ -90,7 +90,8 @@ Trin 1:
 - [x] Fanen Analyse i Farvebehandling virker som i dag, også når den åbnes fra klubaftenen.
 - [x] En egen linje gemt i modulet findes i fanen Analyse, og `farvebehandling:v1` har ingen nye felter.
 - [x] At åbne modulet og kigge skriver intet i lagringen, og forsidens status for Farvebehandling (streak, niveau, I dag) er uændret.
-- [x] Forsidekortet "Analyse" står i Spilføring efter Farvebehandling, har ⓘ og ingen streak.
+- [x] Forsidekortet "Analyse" står i Spilføring efter Farvebehandling, har ⓘ og ingen streak, niveau eller mærke.
+- [x] I dag tæller fortsat 4 spor ("x af 4 spor"), og når alle fire spor er trænet, foreslår knappen aldrig Analyse.
 - [x] Ved 390 px er `document.documentElement.scrollWidth` lig med skærmbredden i modulet.
 - [x] Alle nye tekster findes på dansk og engelsk, og de engelske skærme indeholder ingen dansk tekst.
 
