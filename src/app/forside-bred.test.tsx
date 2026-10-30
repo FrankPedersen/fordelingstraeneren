@@ -131,8 +131,8 @@ describe('Forsiden fra 1000 px (SPEC-forside-bred.md, del 2)', () => {
     const info = wide.find(([s]) => /\.home-group\s*>\s*\.with-info:not\(:first-child\)\s*\.info-btn$/.test(s));
     expect(info?.[1]).toMatch(/position:\s*absolute/);
     const area = wide.find(([s]) => /\.home-group\s*>\s*\.with-info:not\(:first-child\)\s*\.info-btn::after$/.test(s));
-    // Cirklen er 26 px; 9 px til hver side giver 44 px.
-    expect(area?.[1]).toMatch(/inset:\s*-9px;/);
+    // Cirklen er 26 px med en kant på 1 px; ::after regnes fra indersiden (24 px), så 10 px til hver side giver 44 px.
+    expect(area?.[1]).toMatch(/inset:\s*-10px;/);
     expect(wideDecl('.topbar:has(+ .home)')).toMatch(/padding-left:\s*max\(/);
   });
 });

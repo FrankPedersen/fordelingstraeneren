@@ -56,14 +56,14 @@ I dag viser Spil den selv hænderne som rækker af kortfelter uden kompas (Frank
 
 ## Accepttest
 
-- [ ] Ved 1440 px står forsiden centreret: overskriften og sprogknappen øverst, I dag over hele bredden med knappen til højre, og de tre grupper side om side med kortene under hinanden.
-- [ ] Ved 1024 px står de tre grupper stadig side om side; ved 900 px er forsiden præcis som i dag.
-- [ ] Ved 390 px er forsiden uændret, pixel for pixel mod `v25-foer-forside-bred` (skærmbillede før og efter).
-- [ ] Sessioner og sporenes skærme står i midten ved 1440 px og er ellers uændrede.
-- [ ] Sporets ⓘ står i kortet fra 1000 px, åbner forklaringen og kan bruges med tastatur; trykfladen er mindst 44 px.
-- [ ] Ingen vandret rulning ved nogen bredde fra 320 til 1920 px.
-- [ ] `npm test` er grøn, også `src/theme.test.ts` og `src/tokens.test.ts`.
-- [ ] Claude Code viser skærmbilleder ved 390, 900, 1024 og 1440 px, før der flettes.
+- [x] Ved 1440 px står forsiden centreret: overskriften og sprogknappen øverst, I dag over hele bredden med knappen til højre, og de tre grupper side om side med kortene under hinanden.
+- [x] Ved 1024 px står de tre grupper stadig side om side; ved 900 px er forsiden præcis som i dag.
+- [x] Ved 390 px er forsiden uændret, pixel for pixel mod `v25-foer-forside-bred` (skærmbillede før og efter).
+- [x] Sessioner og sporenes skærme står i midten ved 1440 px og er ellers uændrede.
+- [x] Sporets ⓘ står i kortet fra 1000 px, åbner forklaringen og kan bruges med tastatur; trykfladen er mindst 44 px.
+- [x] Ingen vandret rulning ved nogen bredde fra 320 til 1920 px.
+- [x] `npm test` er grøn, også `src/theme.test.ts` og `src/tokens.test.ts`.
+- [x] Claude Code viser skærmbilleder ved 390, 900, 1024 og 1440 px, før der flettes.
 
 Del 3:
 
@@ -86,3 +86,5 @@ Del 3:
 8. **Kolonnernes bredde er `flex: 1 1 280px`**, ikke 300 px (Claude Codes valg): med Windows' rullebjælke (15 px) er der 945 px til kolonnerne ved 1024 px, og 3 × 300 + 2 × 24 = 948 px, så den tredje gruppe ville falde ned. Med 280 px står de tre side om side fra 1000 px.
 9. **Tagget før ændringen** er `v25-foer-forside-bred` (accepttesten nævnte `v18-foer-forside-bred`).
 10. **Accepttesten i koden** (`src/app/forside-bred.test.tsx`) låser markuppen, som CSS'en bygger på (klassen `home`, beholderen `home-groups`, kortet før ⓘ), og at det brede layout kun står i `@media (min-width: 1000px)`; uden for den er `home-groups` kun `display: contents`, så forsiden under 1000 px er som i dag. Layoutet i en rigtig browser tjekkes med skærmbillederne.
+11. **Trykfladen for sporets ⓘ i kortet** er 44 × 44 px (`inset: -10px` på `::after`): `::after` regnes fra indersiden af ⓘ-cirklens kant (24 px), ikke fra de 26 px. Appens øvrige ⓘ har `inset: -9px -6px` og dermed en trykflade på 36 × 42 px; den er ikke ændret, da den ligger uden for afgrænsningen.
+12. **Del 2 i en rigtig browser** (Chrome, 30. oktober 2026): ingen vandret rulning ved 320, 390, 600, 900, 999, 1000, 1024, 1280, 1440 og 1920 px på dansk og engelsk; fra 1000 px er forsiden centreret og højst 1200 px, de tre grupper står side om side (291 px hver ved 1000 px, 299 px ved 1024 px), I dag-knappen står til højre (283 px på dansk, 311 px på engelsk), topbjælkens indhold starter ved forsidens indhold, og sporets ⓘ står i kortet. Forsiden ved 320, 390, 600 og 900 px og sporenes skærme, Indstillinger, Vejledning og en Fordeling-session ved 1440 px er ens byte for byte med `v25-foer-forside-bred`.
