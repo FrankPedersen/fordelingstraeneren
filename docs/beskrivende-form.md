@@ -455,3 +455,15 @@ Listen er godkendt med disse rettelser, og teksterne er rettet efter dem:
 Fundet under rettelsen og rettet efter samme mønster: `persistUnknown` ("… En jævnlig eksport sikrer dem.") ved siden af B16, guidens "**Sammenlign:** kryds præcis to linjer af." ved siden af B10 ("**Sammenlign:** med præcis to linjer krydset af viser båndet og tabellen kun de to, …") og den engelske etiket på importfeltet ("Combination or deal").
 
 `docs/MODEL.md` havde en tredje sætning i bydeform, "**Brug ikke farveskalaen i sans.** Den er materialets dårligste dér.", som ikke stod på listen. Frank godkendte forslaget "**Farveskalaen bruges ikke i sans.** Den er materialets dårligste dér." 30. oktober 2026, og sætningen er taget af testens undtagelsesliste.
+
+## Del 2: sidefoden (grenen `beskrivende-form`, 30. oktober 2026, til godkendelse)
+
+Sammen med forsiden og konventionstræneren (Franks opgave 30. oktober 2026). Appen før er tagget `v28-foer-beskrivende-form`.
+
+- `src/ui/Footer.tsx`
+  - DA nu: Har du fundet en fejl, eller har du en idé til en ny træner? Skriv til mig.
+  - DA forslag: Har du fundet en fejl, eller har du en idé til en ny træner? Så hører jeg gerne fra dig.
+  - EN nu: Have you found a mistake, or do you have an idea for a new trainer? Write to me.
+  - EN forslag: Have you found a mistake, or do you have an idea for a new trainer? I would be glad to hear from you.
+- Linket "Skriv til mig" / "Write to me" bliver.
+- `src/sprog/bydeform.ts`: undtagelsen "Skriv til mig." (A6) fjernes, ingen test søger efter sætningen.

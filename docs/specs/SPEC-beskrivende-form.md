@@ -53,3 +53,10 @@ Kræver noget alligevel en ændring ud over tabellen, skal Claude Code stoppe og
 5. **A1:** løserens linjer i bankens data ("Slå esset.") og deres skabeloner i `describe.ts` bliver, og testen springer dem over. **A2–A4:** huskereglerne, de to sætninger i `docs/MODEL.md` og spørgsmålene i dialoger er skrevet om som foreslået. **A5:** "Første skridt" og "Mønstrets billede" / "The pattern's image". **A6:** sidefodens "Skriv til mig." venter, til sidefødderne ændres samlet med forsiden og konventionstræneren, og står på undtagelseslisten.
 6. **Testen** `src/sprog/bydeform.test.ts` læser al dansk tekst med `danskTekst.ts` og fejler, hvis en sætning eller et led efter kolon eller semikolon begynder med et udsagnsord i bydeform. Bydeformerne, undtagelserne og de falske træf står i `src/sprog/bydeform.ts`. Enkeltord med små bogstaver er kode (fx `'hold'`, `'vælg-linjen'`) og tæller ikke; sætninger deles ikke efter forkortelser som "pr." og "fx."; "pas" (meldingen) og "lav" (tillægsordet) er ikke på listen over bydeformer.
 7. **Den tredje sætning i `docs/MODEL.md`** (Franks godkendelse 30. oktober 2026): "**Brug ikke farveskalaen i sans.**" er blevet til "**Farveskalaen bruges ikke i sans.**". Sætningen stod ikke på listen og var på testens undtagelsesliste, til Frank svarede; nu er den taget af listen. Ændringen er committet direkte på `main` efter Franks ønske, da det kun er én sætning i dokumentationen.
+
+## Del 2: sidefoden (grenen `beskrivende-form`, 30. oktober 2026)
+
+Franks opgave 30. oktober 2026: sidefodens sætning rettes i alle tre repoer på én gang med forsiden og konventionstræneren (deres egne SPEC-beskrivende-form.md). Appen før er tagget `v28-foer-beskrivende-form`. Listen står i `docs/beskrivende-form.md` under Del 2; intet rettes før Franks godkendelse.
+
+- [ ] Sidefoden: "Har du fundet en fejl, eller har du en idé til en ny træner? Så hører jeg gerne fra dig." / "… I would be glad to hear from you."; linket "Skriv til mig" bliver.
+- [ ] Undtagelsen "Skriv til mig." er fjernet fra `src/sprog/bydeform.ts`, og `npm test` er grøn.
