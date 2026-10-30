@@ -64,6 +64,7 @@ I dag viser Spil den selv hænderne som rækker af kortfelter uden kompas (Frank
 - [x] Ingen vandret rulning ved nogen bredde fra 320 til 1920 px.
 - [x] `npm test` er grøn, også `src/theme.test.ts` og `src/tokens.test.ts`.
 - [x] Claude Code viser skærmbilleder ved 390, 900, 1024 og 1440 px, før der flettes.
+- [x] Ved 1440 px er ingen knap på forsiden bredere end 480 px (Franks tilføjelse 30. oktober 2026, se Afklaret 13–14).
 
 Del 3:
 
@@ -83,8 +84,11 @@ Del 3:
 5. **Ingen ny tekst:** linjen "Opslagsværk – ingen daglig session" på Analyse-kortet i mockuppen kommer ikke med.
 6. **Bordet i Spil den selv** følger designsystemets standard for bridgebordet med kompas og hænder som i systemnotatet; kortene kan stadig vælges direkte i hånden (Franks ønske 30. oktober 2026).
 7. **Del 1 kunne ikke genskabes** (30. oktober 2026): i Chrome står forsiden og alle sporenes skærme i midten ved 1360 px (`main` 433–913 af 1345 px, rullebjælken fraregnet), både i `v25-foer-forside-bred` bygget lokalt og på www.kontraktbridge.dk, med og uden data. Frank valgte at gå videre til del 2 uden en rettelse; accepttesten for sessioner og sporenes skærme ved 1440 px gælder stadig.
-8. **Kolonnernes bredde er `flex: 1 1 280px`**, ikke 300 px (Claude Codes valg): med Windows' rullebjælke (15 px) er der 945 px til kolonnerne ved 1024 px, og 3 × 300 + 2 × 24 = 948 px, så den tredje gruppe ville falde ned. Med 280 px står de tre side om side fra 1000 px.
-9. **Tagget før ændringen** er `v25-foer-forside-bred` (accepttesten nævnte `v18-foer-forside-bred`).
+8. **Kolonnernes bredde er `flex: 1 1 280px`**, ikke 300 px (Claude Codes valg, godkendt af Frank 30. oktober 2026): med Windows' rullebjælke (15 px) er der 945 px til kolonnerne ved 1024 px, og 3 × 300 + 2 × 24 = 948 px, så den tredje gruppe ville falde ned. Med 280 px står de tre side om side fra 1000 px.
+9. **Tagget før ændringen** er `v25-foer-forside-bred` (accepttesten nævnte `v18-foer-forside-bred`; godkendt af Frank 30. oktober 2026).
 10. **Accepttesten i koden** (`src/app/forside-bred.test.tsx`) låser markuppen, som CSS'en bygger på (klassen `home`, beholderen `home-groups`, kortet før ⓘ), og at det brede layout kun står i `@media (min-width: 1000px)`; uden for den er `home-groups` kun `display: contents`, så forsiden under 1000 px er som i dag. Layoutet i en rigtig browser tjekkes med skærmbillederne.
 11. **Trykfladen for sporets ⓘ i kortet** er 44 × 44 px (`inset: -10px` på `::after`): `::after` regnes fra indersiden af ⓘ-cirklens kant (24 px), ikke fra de 26 px. Appens øvrige ⓘ har `inset: -9px -6px` og dermed en trykflade på 36 × 42 px; den er ikke ændret, da den ligger uden for afgrænsningen.
 12. **Del 2 i en rigtig browser** (Chrome, 30. oktober 2026): ingen vandret rulning ved 320, 390, 600, 900, 999, 1000, 1024, 1280, 1440 og 1920 px på dansk og engelsk; fra 1000 px er forsiden centreret og højst 1200 px, de tre grupper står side om side (291 px hver ved 1000 px, 299 px ved 1024 px), I dag-knappen står til højre (283 px på dansk, 311 px på engelsk), topbjælkens indhold starter ved forsidens indhold, og sporets ⓘ står i kortet. Forsiden ved 320, 390, 600 og 900 px og sporenes skærme, Indstillinger, Vejledning og en Fordeling-session ved 1440 px er ens byte for byte med `v25-foer-forside-bred`.
+13. **Vejledning og Indstillinger** (Franks valg 30. oktober 2026): fra 1000 px står de side om side som to kolonner. Knapperne i Velkomst, Vejledning og Indstillinger har deres naturlige bredde, dog mindst 280 px som knappen i I dag. Uden ny markup: forsidens rod er fra 1000 px et grid med to kolonner, hvor alt andet spænder over begge.
+14. **Sidefoden** (Franks valg 30. oktober 2026): fra 1000 px står sidefodens kolonner (Om mig, Trænere, Opslag og Kontakt) side om side som på www.kontraktbridge.dk, inden for forsidens 1200 px; ophavslinjen står under dem. Det gælder sidefoden på forsiden; under 1000 px og på sporenes skærme er den uændret.
+15. **Skærmbillederne** ligger i `C:\Users\frank\Kontraktbridge\skaermbilleder\forside-bred\`, uden for repoerne, så de kan deles og ikke kommer i git (Franks valg 30. oktober 2026).

@@ -1707,10 +1707,55 @@ button.cell {
  * bred; under 1000 px er intet ændret.
  */
 @media (min-width: 1000px) {
+  /* Et grid med to kolonner, så Vejledning og Indstillinger kan stå side om side; alt andet spænder over begge. */
   .screen.home {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-content: start;
+    column-gap: 24px;
     max-width: var(--home-width);
     padding-left: 32px;
     padding-right: 32px;
+  }
+
+  .screen.home > * {
+    grid-column: 1 / -1;
+  }
+
+  /* Vejledning og Indstillinger side om side (Afklaret 13). */
+  .home > section.card:not([aria-labelledby]),
+  .home > .two {
+    grid-column: auto;
+    align-self: start;
+  }
+
+  /* Knapperne i Velkomst, Vejledning og Indstillinger har deres naturlige bredde, dog mindst 280 px som i I dag. */
+  .home > [aria-labelledby='welcome'] > .btn,
+  .home > section.card:not([aria-labelledby]) > .btn {
+    justify-self: start;
+    min-width: 280px;
+  }
+
+  .home > .two .btn {
+    flex: 0 0 auto;
+    min-width: 280px;
+  }
+
+  /* Sidefodens kolonner side om side som på www.kontraktbridge.dk, og ophavslinjen under dem (Afklaret 14). */
+  .home .site-footer {
+    grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+    gap: 28px 40px;
+    padding: 32px;
+  }
+
+  .home .site-footer-legal {
+    grid-column: 1 / -1;
+  }
+
+  /* Kolonnerne er selv grids; uden start strækkes deres rækker til den højeste kolonne. */
+  .home .site-footer-about,
+  .home .site-footer-col {
+    align-content: start;
   }
 
   /* Topbjælkens indhold står inden for forsidens bredde. */

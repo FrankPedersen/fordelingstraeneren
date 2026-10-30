@@ -127,6 +127,28 @@ describe('Forsiden fra 1000 px (SPEC-forside-bred.md, del 2)', () => {
     expect(wide.some(([s, d]) => /\[aria-labelledby='today'\]\s*>\s*\.btn/.test(s) && /min-width:\s*280px/.test(d))).toBe(true);
   });
 
+  it('fra 1000 px står Vejledning og Indstillinger side om side, og deres og Velkomsts knapper har naturlig bredde, mindst 280 px (Afklaret 13)', () => {
+    expect(wideDecl('.screen.home')).toMatch(/display:\s*grid/);
+    expect(wideDecl('.screen.home')).toMatch(/grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/);
+    expect(wideDecl('.screen.home > *')).toMatch(/grid-column:\s*1 \/ -1/);
+    for (const selector of ['.home > section.card:not([aria-labelledby])', '.home > .two']) expect(wideDecl(selector), selector).toMatch(/grid-column:\s*auto/);
+    for (const selector of [
+      ".home > [aria-labelledby='welcome'] > .btn",
+      '.home > section.card:not([aria-labelledby]) > .btn',
+      '.home > .two .btn',
+    ]) {
+      expect(wideDecl(selector), selector).toMatch(/min-width:\s*280px/);
+    }
+    expect(wideDecl('.home > .two .btn')).toMatch(/flex:\s*0 0 auto/);
+  });
+
+  it('fra 1000 px står sidefodens kolonner side om side på forsiden med ophavslinjen under (Afklaret 14)', () => {
+    expect(wideDecl('.home .site-footer')).toMatch(/grid-template-columns:[^;]*repeat\(3,\s*minmax\(0,\s*1fr\)\)/);
+    expect(wideDecl('.home .site-footer-legal')).toMatch(/grid-column:\s*1 \/ -1/);
+    // Kun forsidens sidefod: ingen bred regel for .site-footer uden .home.
+    expect(wide.filter(([s]) => s.includes('site-footer') && !s.includes('.home'))).toEqual([]);
+  });
+
   it('fra 1000 px står sporets ⓘ i kortet med en trykflade på mindst 44 px, og topbjælken har forsidens indre bredde', () => {
     const info = wide.find(([s]) => /\.home-group\s*>\s*\.with-info:not\(:first-child\)\s*\.info-btn$/.test(s));
     expect(info?.[1]).toMatch(/position:\s*absolute/);
