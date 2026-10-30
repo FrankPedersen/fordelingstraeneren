@@ -14,8 +14,8 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 **1 stik**
 
 - 74,5 % (bedst): Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.
-- 74,5 %: Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder.
-- 50,5 %: Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
+- 74,5 %: Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
+- 50,5 %: Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
 - 50,5 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.
 
 ## 2. K 6 5 4 / B 3 2
@@ -23,15 +23,15 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 **2 stik**
 
 - 26,5 % (bedst): Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.
-- 26,5 %: Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder.
-- 17,8 %: Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
+- 26,5 %: Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
+- 17,8 %: Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
 - 17,8 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.
 
 **1 stik**
 
-- 93,5 % (bedst): Lille fra begge hænder. Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder.
-- 93,5 %: Lille fra begge hænder. Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder.
-- 77,0 %: Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra begge hænder. Lille fra begge hænder.
+- 93,5 % (bedst): Lille fra begge hænder. Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
+- 93,5 %: Lille fra begge hænder. Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
+- 77,0 %: Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra begge hænder. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
 - 69,0 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder.
 
 ## 3. K B 5 / 4 3 2
@@ -45,10 +45,10 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **1 stik**
 
-- 76,0 % (bedst): Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.
+- 76,0 % (bedst): Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
 - 55,3 %: Lille fra begge hænder. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
 - 50,5 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.
-- 50,5 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
+- 50,5 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
 
 ## 4. K 7 6 5 / B 4 3 2
 
@@ -63,14 +63,14 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 - 50,3 % (bedst): Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.
 - 50,3 %: Lille fra begge hænder. Lille fra begge hænder.
-- 33,9 %: Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
+- 33,9 %: Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
 - 33,9 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.
 
 **1 stik**
 
 - 100,0 % (bedst): Lille fra begge hænder.
 - 100,0 %: Lille fra begge hænder.
-- 86,7 %: Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
+- 86,7 %: Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
 - 86,7 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.
 
 ## 5. E 10 6 5 / 4 3 2
@@ -79,7 +79,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 - 44,8 % (bedst): Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset. Slå esset. Lille fra begge hænder.
 - 40,4 %: Slå esset. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.
-- 40,4 %: Lille fra begge hænder. Slå esset. Lille fra begge hænder.
+- 40,4 %: Lille fra begge hænder. Slå esset. Lille fra bordet mod 10'eren (kip).
 - 35,5 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset. Lille fra begge hænder.
 
 ## 6. E 10 4 3 / 2
@@ -140,7 +140,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 - 75,4 % (bedst): Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, lægges der lille. Slå kongen.
 - 43,2 %: Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Slå 10'eren.
-- 40,8 %: Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder. Slå 10'eren.
+- 40,8 %: Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Lille fra hånden mod knægten (kip). Slå 10'eren.
 - 38,0 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Slå 10'eren.
 
 ## 11. K B 8 7 6 / 5 4 3 2
@@ -154,10 +154,10 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **3 stik**
 
-- 82,8 % (bedst): Lille fra begge hænder. Lille fra begge hænder.
-- 82,8 %: Lille fra begge hænder. Lille fra begge hænder.
+- 82,8 % (bedst): Lille fra begge hænder. Lille fra bordet mod knægten (kip).
+- 82,8 %: Lille fra begge hænder. Lille fra bordet mod knægten (kip).
 - 71,8 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.
-- 71,8 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
+- 71,8 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
 
 **2 stik**
 
@@ -221,10 +221,10 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **1 stik**
 
-- 98,4 % (bedst): Lille fra hånden mod 9'eren (kip); lægger Vest en honnør, lægges der lille. Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder.
+- 98,4 % (bedst): Lille fra hånden mod 9'eren (kip); lægger Vest en honnør, lægges der lille. Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
 - 95,2 %: Lille fra begge hænder. Lille fra begge hænder. Knægten fra bordet; dækker Øst, lægges der lille.
-- 93,5 %: Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra hånden mod 9'eren (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder.
-- 93,5 %: 9'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder.
+- 93,5 %: Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra hånden mod 9'eren (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
+- 93,5 %: 9'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
 - 78,3 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder.
 
 ## 16. E 5 4 3 / 10 9 2
@@ -257,7 +257,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 **3 stik**
 
 - 84,8 % (bedst): Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
-- 76,3 %: Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.
+- 76,3 %: Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Lille fra hånden mod knægten (kip).
 - 73,5 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
 - 70,7 %: Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
 
@@ -309,7 +309,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 **3 stik**
 
 - 84,8 % (bedst): Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Slå esset.
-- 84,8 %: Slå esset. Lille fra begge hænder.
+- 84,8 %: Slå esset. Lille fra bordet mod 10'eren (kip).
 - 82,0 %: 9'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.
 - 82,0 %: Lille fra hånden mod 9'eren (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.
 - 67,8 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset.
@@ -471,7 +471,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **3 stik**
 
-- 18,2 % (bedst): Lille fra begge hænder.
+- 18,2 % (bedst): Lille fra bordet mod knægten (kip).
 - 1,0 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 0,0 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
@@ -550,7 +550,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 **4 stik**
 
 - 90,4 % (bedst): Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset. Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, tages den med esset.
-- 84,8 %: Slå esset. Lille fra begge hænder.
+- 84,8 %: Slå esset. Lille fra bordet mod 10'eren (kip).
 - 82,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, tages den med esset.
 - 76,3 %: Lille fra begge hænder. Slå esset.
 
@@ -572,8 +572,8 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **2 stik**
 
-- 81,3 % (bedst): Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Slå esset.
-- 38,7 %: Lille fra begge hænder. Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Slå esset.
+- 81,3 % (bedst): Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset. Slå esset.
+- 38,7 %: Lille fra begge hænder. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset. Slå esset.
 - 34,9 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Slå esset.
 - 27,3 %: Slå esset. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.
 
@@ -581,7 +581,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **2 stik**
 
-- 77,0 % (bedst): Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Slå esset.
+- 77,0 % (bedst): Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset. Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Slå esset.
 - 26,9 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Slå esset.
 - 9,0 %: Slå esset.
 
@@ -591,7 +591,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 - 40,7 % (bedst): 9'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Slå esset.
 - 40,7 %: Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Slå esset.
-- 40,7 %: Slå esset. Lille fra begge hænder.
+- 40,7 %: Slå esset. Lille fra bordet mod 10'eren (kip).
 - 40,7 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset.
 - 40,7 %: Lille fra begge hænder. Slå esset.
 
@@ -615,11 +615,11 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **3 stik**
 
-- 89,0 % (bedst): Lille fra begge hænder. Lille fra begge hænder.
+- 89,0 % (bedst): Lille fra begge hænder. Lille fra bordet mod knægten (kip).
 - 82,8 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.
-- 82,8 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
-- 82,8 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
-- 82,8 %: Lille fra begge hænder. Lille fra begge hænder.
+- 82,8 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
+- 82,8 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod knægten (kip).
+- 82,8 %: Lille fra begge hænder. Lille fra bordet mod knægten (kip).
 
 **2 stik**
 
@@ -640,10 +640,10 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **2 stik**
 
-- 76,0 % (bedst): Lille fra begge hænder. Lille fra begge hænder.
+- 76,0 % (bedst): Lille fra begge hænder. Lille fra bordet mod knægten (kip).
 - 54,0 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
 - 52,8 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
-- 41,9 %: Lille fra begge hænder. Lille fra begge hænder.
+- 41,9 %: Lille fra begge hænder. Lille fra bordet mod knægten (kip).
 
 ## 42. K B 8 7 6 5 / 10 4 3 2
 
@@ -659,7 +659,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **2 stik**
 
-- 24,7 % (bedst): Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Slå esset.
+- 24,7 % (bedst): Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset. Slå esset.
 - 3,7 %: Slå esset.
 - 2,7 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset.
 
@@ -702,7 +702,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 **6 stik**
 
 - 40,7 % (bedst): Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Slå esset.
-- 40,7 %: Slå esset. Lille fra begge hænder.
+- 40,7 %: Slå esset. Lille fra bordet mod 10'eren (kip).
 - 40,7 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset.
 - 40,7 %: Lille fra begge hænder. Slå esset.
 
@@ -740,17 +740,17 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **2 stik**
 
-- 82,8 % (bedst): Lille fra begge hænder. Lille fra begge hænder.
+- 82,8 % (bedst): Lille fra begge hænder. Lille fra bordet mod knægten (kip).
 - 69,2 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
 - 66,4 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
-- 63,6 %: Lille fra begge hænder. Lille fra begge hænder.
+- 63,6 %: Lille fra begge hænder. Lille fra bordet mod knægten (kip).
 
 ## 49. E 10 9 8 / 5 4 3 2
 
 **2 stik**
 
-- 92,4 % (bedst): Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Lille fra begge hænder.
-- 84,8 %: Slå esset. Lille fra begge hænder.
+- 92,4 % (bedst): Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset. Lille fra begge hænder.
+- 84,8 %: Slå esset. Lille fra bordet mod 10'eren (kip).
 - 83,9 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
 
 ## 50. K 9 8 7 / B 4 3 2
@@ -783,7 +783,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 - 93,8 % (bedst): Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, lægges der lille. Knægten fra bordet; dækker Øst, lægges der lille.
 - 93,8 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Knægten fra bordet; dækker Øst, lægges der lille.
-- 89,0 %: Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
+- 89,0 %: Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
 - 89,0 %: Lille fra begge hænder. Knægten fra bordet; dækker Øst, lægges der lille.
 - 82,8 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.
 
@@ -793,7 +793,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 - 50,0 % (bedst): Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
 - 12,4 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
-- 6,2 %: Lille fra begge hænder.
+- 6,2 %: Lille fra hånden mod knægten (kip).
 
 ## 53. K 7 6 5 4 3 / B 10 9 2
 

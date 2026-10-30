@@ -25,7 +25,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { runnerImport } from 'vite';
 
-const LINES_VERSION = 1;
+const LINES_VERSION = 2;
 const WHAT_NOW_VERSION = 1;
 const PAIRS_VERSION = 1;
 const TRICKS_VERSION = 1;

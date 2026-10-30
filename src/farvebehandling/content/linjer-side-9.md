@@ -14,8 +14,8 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **1 stik**
 
-- 76,3 % (bedst): Lille fra begge hænder. Lille fra begge hænder.
-- 76,3 %: Lille fra begge hænder. Lille fra begge hænder.
+- 76,3 % (bedst): Lille fra begge hænder. Lille fra bordet mod knægten (kip).
+- 76,3 %: Lille fra begge hænder. Lille fra bordet mod knægten (kip).
 - 67,8 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
 
 ## 3. B 10 6 5 / 4 3 2
@@ -23,14 +23,14 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 **1 stik**
 
 - 67,8 % (bedst): Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.
-- 54,4 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder. Lille fra begge hænder.
-- 48,9 %: Lille fra begge hænder. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.
+- 54,4 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder. Lille fra bordet mod 10'eren (kip).
+- 48,9 %: Lille fra begge hænder. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 10'eren (kip).
 
 ## 4. B 6 5 4 / 10 3 2
 
 **1 stik**
 
-- 68,5 % (bedst): Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder. Lille fra begge hænder.
+- 68,5 % (bedst): Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder. Lille fra bordet mod knægten (kip).
 - 54,4 %: 10'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.
 - 49,6 %: Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder. 10'eren fra bordet; dækker Øst, lægges der lille.
 - 35,5 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder. 10'eren fra bordet; dækker Øst, lægges der lille.
@@ -41,7 +41,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 - 83,9 % (bedst): Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, lægges der lille.
 - 83,9 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, lægges der lille.
-- 76,3 %: Lille fra begge hænder. Lille fra begge hænder.
+- 76,3 %: Lille fra begge hænder. Lille fra bordet mod knægten (kip).
 
 ## 6. B 10 9 4 / 3 2
 
@@ -79,6 +79,6 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 **1 stik**
 
 - 72,6 % (bedst): Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.
-- 59,7 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod 8'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.
-- 48,9 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.
-- 48,9 %: Lille fra begge hænder. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.
+- 59,7 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod 8'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 10'eren (kip).
+- 48,9 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 10'eren (kip).
+- 48,9 %: Lille fra begge hænder. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 10'eren (kip).
