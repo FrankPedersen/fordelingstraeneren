@@ -39,6 +39,11 @@
   --radius: 14px;
   /* Forsidens største bredde fra 1000 px (SPEC-forside-bred.md); resten af appen står i kolonnen på 480 px. */
   --home-width: 1200px;
+  /* Spillekortet (tokens.json): hvidt i begge tilstande; bruges af stikket i Spil den selv (SPEC-forside-bred.md, Afklaret 23). */
+  --card-face: #ffffff;
+  --card-edge: #c9ced6;
+  --card-ink: #1c2330;
+  --card-red: #c62828;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -1707,10 +1712,10 @@ button.cell {
  * bred; under 1000 px er intet ændret.
  */
 @media (min-width: 1000px) {
-  /* Et grid med to kolonner, så Vejledning og Indstillinger kan stå side om side; alt andet spænder over begge. */
+  /* Et grid med tre kolonner som gruppernes, så Vejledning og Indstillinger følger dem; alt andet spænder over alle tre. */
   .screen.home {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     align-content: start;
     column-gap: 24px;
     max-width: var(--home-width);
@@ -1722,23 +1727,37 @@ button.cell {
     grid-column: 1 / -1;
   }
 
-  /* Vejledning og Indstillinger side om side (Afklaret 13). */
-  .home > section.card:not([aria-labelledby]),
+  /* Vejledning i de to første kolonner og Indstillinger i den tredje (Afklaret 21). */
+  .home > section.card:not([aria-labelledby]) {
+    grid-column: span 2;
+    align-self: start;
+  }
+
   .home > .two {
     grid-column: auto;
     align-self: start;
   }
 
-  /* Knapperne i Velkomst, Vejledning og Indstillinger har deres naturlige bredde, dog mindst 280 px som i I dag. */
+  /* Knapperne i Velkomst og Vejledning har deres naturlige bredde, dog mindst 280 px som i I dag. */
   .home > [aria-labelledby='welcome'] > .btn,
   .home > section.card:not([aria-labelledby]) > .btn {
     justify-self: start;
     min-width: 280px;
   }
 
-  .home > .two .btn {
-    flex: 0 0 auto;
-    min-width: 280px;
+  /* Indstillinger fylder kolonnen, og dens ⓘ står inde i knappen ved højre kant som sporenes ⓘ i kortet. */
+  .home > .two .with-info {
+    position: relative;
+  }
+
+  .home > .two .info-btn {
+    position: absolute;
+    top: 15px;
+    right: 17px;
+  }
+
+  .home > .two .info-btn::after {
+    inset: -10px;
   }
 
   /* Sidefodens kolonner side om side som på www.kontraktbridge.dk, og ophavslinjen under dem (Afklaret 14). */

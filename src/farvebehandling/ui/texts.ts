@@ -297,7 +297,8 @@ const DA = {
   playStranded: 'Ingen hånd med kort kan nås, så resten af kortene kan ikke hjemtages.',
   playLeadPrompt: 'Spil ud fra bordet eller hånden.',
   playThirdPrompt: (hand: string) => `Læg et kort fra ${hand === 'bordet' ? 'bordet' : 'hånden'}.`,
-  playHidden: (n: number) => (n === 1 ? '? (1 kort)' : `? (${n} kort)`),
+  // Antallet af kort under "♠ ?" i Spil den selv (SPEC-forside-bred.md, Afklaret 22).
+  playCount: (n: number) => (n === 1 ? '1 kort' : `${n} kort`),
   playScore: (won: number, goal: number) => `Dine stik: ${won} · mål ${goal}`,
   playTrickWon: (n: number, seat: string) => `Stik ${n}: ${seat} vandt.`,
   playResult: (won: number, goal: number, made: boolean) =>
@@ -757,7 +758,7 @@ const EN: Texts = {
   playLeadPrompt: 'Lead from dummy or from your hand.',
   // Hånden kommer som TEXT.owners: "dummy" eller "your hand".
   playThirdPrompt: (hand: string) => `Play a card from ${hand}.`,
-  playHidden: (n: number) => (n === 1 ? '? (1 card)' : `? (${n} cards)`),
+  playCount: (n: number) => (n === 1 ? '1 card' : `${n} cards`),
   playScore: (won: number, goal: number) => `Your tricks: ${won} · goal ${goal}`,
   playTrickWon: (n: number, seat: string) => `Trick ${n}: ${seat} won.`,
   playResult: (won: number, goal: number, made: boolean) =>

@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
+import tokens from '../../../design/tokens.json';
 import { setLang } from '../../i18n';
 import { bankItem } from '../testBank';
 import { Bridgebord } from './Bridgebord';
@@ -134,8 +135,10 @@ describe('Rettelserne på grenen forside-bred-2 (SPEC-forside-bred.md, Afklaret 
     expect(c).toMatch(/background:\s*var\(--card-face\)/);
     expect(c).toMatch(/border:\s*1px solid var\(--card-edge\)/);
     expect(c).toMatch(/color:\s*var\(--card-ink\)/);
+    // Kort-tokens står som variabler i :root med værdierne fra tokens.json.
     const styles = fs.readFileSync(`${cwd}/src/ui/styles.css`, 'utf8');
-    for (const [name, value] of [['card-face', '#ffffff'], ['card-edge', '#c9ced6'], ['card-ink', '#1c2330'], ['card-red', '#c62828']]) {
+    for (const name of ['card-face', 'card-edge', 'card-ink', 'card-red']) {
+      const value = tokens.color.tokens.find((t) => t.name === name)!.value.light;
       expect(styles, name).toMatch(new RegExp(`:root\\s*\\{[^}]*--${name}:\\s*${value};`));
     }
     render(<SpilSelv item={ITEM} goal={2} seed={1} onClose={() => {}} />);

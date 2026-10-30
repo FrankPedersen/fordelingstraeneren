@@ -11,6 +11,8 @@ export interface BridgebordPlay {
   onCard(hand: 'N' | 'S', card: Rank): void;
   /** Stikkets kort ved hver side (0 = intet kort i farven); tomt før første udspil. */
   trick: Partial<Record<Seat, number>>;
+  /** Vests og Østs antal kort under "♠ ?"; uden feltet (når spillet er slut) står de rigtige kort. */
+  counts?: { V: number; Ø: number };
 }
 
 interface BridgebordProps {
@@ -34,17 +36,15 @@ interface BridgebordProps {
 export function Bridgebord({ north, south, west, east, arrow = null, caption, play }: BridgebordProps) {
   const missing = ALL_RANKS.filter((r) => !north.includes(r) && !south.includes(r)).sort((a, b) => b - a);
   const missingText = TEXT.missing(missing.length ? missing.map(rankText).join(' ') : '–');
-  // I Spil den selv står kortene i et eget element, så "? (3 kort)" kan findes for sig.
-  const hidden = (cards?: string) =>
-    play ? (
-      <span className="fb-hidden-hand">
-        {TEXT.suit} <span>{cards ?? TEXT.unknown}</span>
-      </span>
-    ) : (
+  // I Spil den selv står antallet af kort på en linje for sig under "♠ ?", så Vest og Øst er smalle.
+  const hidden = (cards: string | undefined, count: number | undefined) => (
+    <>
       <span className="fb-hidden-hand">
         {TEXT.suit} {cards ?? TEXT.unknown}
       </span>
-    );
+      {count !== undefined && <span className="fb-hidden-count">{TEXT.playCount(count)}</span>}
+    </>
+  );
   const trickStarted = !!play && Object.keys(play.trick).length > 0;
   return (
     <figure className={play ? 'fb-table fb-table-play' : 'fb-table'} aria-label={caption ?? TEXT.problem}>
@@ -54,7 +54,7 @@ export function Bridgebord({ north, south, west, east, arrow = null, caption, pl
       </div>
       <div className="fb-seat fb-seat-west">
         <span className="fb-seat-name">{TEXT.west}</span>
-        {hidden(west)}
+        {hidden(west, play?.counts?.V)}
       </div>
       {play ? (
         <div className="fb-compass" aria-live="polite" aria-label={TEXT.playTrick}>
@@ -87,7 +87,7 @@ export function Bridgebord({ north, south, west, east, arrow = null, caption, pl
       )}
       <div className="fb-seat fb-seat-east">
         <span className="fb-seat-name">{TEXT.east}</span>
-        {hidden(east)}
+        {hidden(east, play?.counts?.Ø)}
       </div>
       <div className="fb-seat fb-seat-south">
         {play ? <PlayHand hand="S" ranks={south} play={play} /> : <Hand ranks={south} />}
@@ -105,7 +105,10 @@ export function Bridgebord({ north, south, west, east, arrow = null, caption, pl
 
 const LETTER: Record<Seat, string> = { N: 'N', V: 'W', Ø: 'E', S: 'S' };
 
-/** En side i kompasset: bogstavet og stikkets kort; Østs kort står inden for bogstavet, så kortene vender mod midten. */
+/**
+ * En side i kompasset: bogstavet og stikkets kort som et lille hvidt spillekort (værdien over farvetegnet); Østs kort
+ * står inden for bogstavet, så kortene vender mod midten.
+ */
 function CompassSeat({ seat, play }: { seat: Seat; play: BridgebordPlay }) {
   const letter = <span aria-hidden="true">{TEXT.compass[LETTER[seat] as keyof typeof TEXT.compass]}</span>;
   const card = play.trick[seat];
@@ -113,7 +116,17 @@ function CompassSeat({ seat, play }: { seat: Seat; play: BridgebordPlay }) {
   const shown = (
     <>
       <span className="fb-sr">{TEXT.seats[seat]}</span>
-      <span className={card >= TEN ? 'fb-compass-card fb-honor' : 'fb-compass-card'}>{card ? rankText(card as Rank) : '–'}</span>
+      {card > 0 ? (
+        <span className={card >= TEN ? 'fb-compass-card fb-honor' : 'fb-compass-card'}>
+          <span className="fb-compass-rank">{rankText(card as Rank)}</span>
+          <span className="fb-compass-suit" aria-hidden="true">
+            {TEXT.suit}
+          </span>
+        </span>
+      ) : (
+        // Intet kort i farven: en streg uden kortflade.
+        <span>–</span>
+      )}
     </>
   );
   return (

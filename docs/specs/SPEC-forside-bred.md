@@ -77,12 +77,12 @@ Del 3:
 
 Rettelserne på grenen `forside-bred-2` (Franks valg 30. oktober 2026, se Afklaret 21–24; tagget før er `v26-foer-forside-bred-2`):
 
-- [ ] Fra 1000 px følger Vejledning og Indstillinger gruppernes tre kolonner: Vejledning fylder de to første, og Indstillinger den tredje, med samme kanter som grupperne.
-- [ ] Indstillingers ⓘ står inde i knappen som sporenes ⓘ i kortet, åbner forklaringen under knappen og har en trykflade på mindst 44 px.
-- [ ] Vest og Øst i Spil den selv står ved siderne af kompasset ved alle bredder (320, 390, 480 og 1440 px), som i Analyse, med "♠ ?" og antallet af kort på en linje for sig, fx "4 kort" ("4 cards" på engelsk). Når spillet er slut, står de rigtige kort.
-- [ ] Stikket i kompasset står som små hvide kort (`card-face`, kant i `card-edge`, `card-ink`) ved hver side, og bogstaverne N, V, Ø og S står som før; det seneste stik står til næste udspil.
-- [ ] Under 1000 px er forsiden uændret, og Bridgebord i Analyse, facit og opgaverne er uændret.
-- [ ] Ingen vandret rulning, og `npm test` er grøn. Skærmbillederne i `C:\Users\frank\Kontraktbridge\skaermbilleder\forside-bred\` er opdateret.
+- [x] Fra 1000 px følger Vejledning og Indstillinger gruppernes tre kolonner: Vejledning fylder de to første, og Indstillinger den tredje, med samme kanter som grupperne.
+- [x] Indstillingers ⓘ står inde i knappen som sporenes ⓘ i kortet, åbner forklaringen under knappen og har en trykflade på mindst 44 px.
+- [x] Vest og Øst i Spil den selv står ved siderne af kompasset ved alle bredder (320, 390, 480 og 1440 px), som i Analyse, med "♠ ?" og antallet af kort på en linje for sig, fx "4 kort" ("4 cards" på engelsk). Når spillet er slut, står de rigtige kort.
+- [x] Stikket i kompasset står som små hvide kort (`card-face`, kant i `card-edge`, `card-ink`) ved hver side, og bogstaverne N, V, Ø og S står som før; det seneste stik står til næste udspil.
+- [x] Under 1000 px er forsiden uændret, og Bridgebord i Analyse, facit og opgaverne er uændret.
+- [x] Ingen vandret rulning, og `npm test` er grøn. Skærmbillederne i `C:\Users\frank\Kontraktbridge\skaermbilleder\forside-bred\` er opdateret.
 
 ## Afklaret
 
@@ -110,3 +110,4 @@ Rettelserne på grenen `forside-bred-2` (Franks valg 30. oktober 2026, se Afklar
 22. **Vest og Øst ved siderne af kompasset ved alle bredder** (Franks valg 30. oktober 2026, afløser Afklaret 17): bordet i Spil den selv bruger Analyses grid, og Nord og Syd står over hele bredden, så hænderne har plads. Under "♠ ?" står antallet af kort på en linje for sig, fx "4 kort" / "4 cards" (`playCount` i `texts.ts`, i stedet for "? (4 kort)"), så Vest og Øst er smalle nok ved 390 og 320 px. Når spillet er slut, står de rigtige kort, og de må bryde over flere linjer. Den eksisterende test i `FarvebehandlingScreen.test.tsx`, der søgte efter "? (n kort)", søger nu efter "n kort".
 23. **Stikket som små hvide kort** (Franks valg 30. oktober 2026, afløser accepttestens "table, table-text, accent og accent-soft er de eneste farver i bordet"): hvert spillet kort står som et lille spillekort med kortets værdi over ♠ i `card-face` med kant i `card-edge` og tekst i `card-ink`, ved sidens bogstav. Kort-tokens findes allerede i `tokens.json` (Lynaflæsning bruger værdierne); de står nu også som variabler i `:root` i `styles.css`, så farvebehandlingen kan bruge dem uden rå farver. Farvebehandlingen viser altid ♠, så `card-red` (♥ og ♦) bruges ikke endnu.
 24. **Skærmlæsere** hører stadig sidens navn og kortet ("Nord 4"); farvetegnet på de små kort er skjult for dem, da farven altid er den samme.
+25. **Rettelserne i en rigtig browser** (Chrome, 30. oktober 2026): fra 1000 px flugter Vejledning med gruppe 1–2 og Indstillinger med gruppe 3 på pixlen ved 1000, 1024, 1280, 1440 og 1920 px, og Indstillingers ⓘ står i knappen med en trykflade på 44 × 44 px. Spil den selv har Vest og Øst ved siderne af kompasset ved 320, 390, 480 og 1440 px på dansk og engelsk, også med 7 kort i en hånd og i 16 spil spillet til ende, uden vandret rulning. Et kort uden for farven står som "–" uden kortflade. Forsiden under 1000 px, sporenes skærme, Analyse og introduktionen er stadig ens byte for byte med `v25-foer-forside-bred`. `npm test` er grøn (733 tests).
