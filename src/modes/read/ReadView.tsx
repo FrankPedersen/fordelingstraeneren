@@ -39,8 +39,8 @@ export function ReadView({ task, answer, reveal, skylines, show, sorted, onAnswe
   const right = answer !== undefined && checkRead(task, answer);
   const prompt = showing
     ? show === 'tap'
-      ? tx('Se hånden, og tryk Klar', 'Look at the hand, and tap Ready')
-      : tx('Se hånden …', 'Look at the hand …')
+      ? tx('Hånden står, til du trykker Klar', 'The hand stays until you tap Ready')
+      : tx('Hånden vises …', 'The hand is shown …')
     : reveal
       ? tx('Hånden', 'The hand')
       : tx('Hvilket mønster var det?', 'Which pattern was it?');
@@ -51,8 +51,8 @@ export function ReadView({ task, answer, reveal, skylines, show, sorted, onAnswe
         <p className="prompt">{prompt}</p>
         <Info topic={tx('Lynaflæsning', 'Lightning reading')}>
           {tx(
-            'Tæl farverne i hånden, og tast mønstret: de fire længder, længste først eller i vilkårlig rækkefølge. Svartiden måles fra, hånden er skjult. Under Indstillinger kan hånden vises sorteret efter farve eller kun et øjeblik.',
-            'Count the suits in the hand and type the pattern: the four lengths, longest first or in any order. The answer time is measured from when the hand is hidden. Under Settings the hand can be shown sorted by suit or only for a moment.',
+            'Mønstret er farvernes længder i hånden: de fire længder, længste først eller i vilkårlig rækkefølge. Svartiden måles fra, hånden er skjult. Under Indstillinger kan hånden vises sorteret efter farve eller kun et øjeblik.',
+            'The pattern is the lengths of the suits in the hand: the four lengths, longest first or in any order. The answer time is measured from when the hand is hidden. Under Settings the hand can be shown sorted by suit or only for a moment.',
           )}
         </Info>
       </div>

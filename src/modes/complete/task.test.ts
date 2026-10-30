@@ -90,8 +90,8 @@ describe('Fuldfør – opgaver', () => {
 
   it('formulerer opgaven på dansk', () => {
     expect(shownText(task)).toBe('5♠ og 4♥');
-    expect(instructionText(task)).toBe('Tast de mulige mønstre – hyppigste først.');
-    expect(instructionText({ ...task, all: false })).toBe('Tast de tre hyppigste mønstre – hyppigste først.');
-    expect(instructionText({ ...task, count: 1 })).toBe('Tast mønstret.');
+    expect(instructionText(task)).toBe('Hvilke mønstre er mulige? Hyppigste først.');
+    expect(instructionText({ ...task, all: false })).toBe('Hvilke tre mønstre er hyppigst? Hyppigste først.');
+    expect(instructionText({ ...task, count: 1 })).toBe('Hvilket mønster er det?');
   });
 });

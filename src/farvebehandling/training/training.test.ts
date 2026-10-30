@@ -510,7 +510,7 @@ describe('Paladset', () => {
     expect(rooms.map((r) => r.technique.name)).toEqual(techniques.map((t) => t.name));
     const safety = rooms.find((r) => r.technique.id === 'sikkerhedsspil')!;
     expect(safety.stations.map((s) => [s.combination, s.order])).toEqual([['K54-AJ32', 1], ['432-AKJ5', 2]]);
-    expect(safety.rule).toBe('Sikr målet, ikke maksimum.');
+    expect(safety.rule).toBe('Målet før maksimum.');
     expect(placeOf(saved, bank, techniques, '432-AKJ5')?.station?.order).toBe(2);
     expect(placeOf(saved, bank, techniques, 'J32-AK4')).toMatchObject({ room: { technique: { id: 'fald-eller-kip' } }, station: null });
   });
@@ -527,7 +527,7 @@ describe('Paladset', () => {
     saved = setTechniqueText(saved, 'spil-mod-honnoer', 'image', ' ');
     saved = setScene(saved, 'J32-AK54', '');
     room = palaceRooms(saved, bank, techniques).find((r) => r.technique.id === 'spil-mod-honnoer')!;
-    expect(room).toMatchObject({ rule: 'Spil mod det kort, du vil gøre til stik.', ownRule: false, ownImage: false });
+    expect(room).toMatchObject({ rule: 'Udspillet går mod det kort, der skal blive stik.', ownRule: false, ownImage: false });
     expect(room.stations[0].scene).toBeUndefined();
     expect(saved.palace.techniques).toEqual({});
   });

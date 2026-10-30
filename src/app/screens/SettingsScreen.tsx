@@ -96,8 +96,8 @@ export function SettingsScreen({ saved, onSave, onBack }: SettingsScreenProps) {
         </div>
         <p className="muted small">
           {tx(
-            'Dine data ligger kun i denne browser på denne enhed. Eksportér dem jævnligt, og importér filen, hvis du skifter enhed eller browser.',
-            'Your data is stored only in this browser on this device. Export it regularly, and import the file if you change device or browser.',
+            'Dine data ligger kun i denne browser på denne enhed. En jævnlig eksport sikrer dem, og filen kan importeres, hvis du skifter enhed eller browser.',
+            'Your data is stored only in this browser on this device. A regular export keeps it safe, and the file can be imported if you change device or browser.',
           )}
         </p>
         <button type="button" className="btn" onClick={exportData}>
@@ -137,8 +137,8 @@ export function SettingsScreen({ saved, onSave, onBack }: SettingsScreenProps) {
           <h2>{tx('Hurtige svar', 'Fast answers')}</h2>
           <Info topic={tx('Hurtige svar', 'Fast answers')}>
             {tx(
-              'Tærsklen er den tid, et svar højst må tage for at tælle som hurtigt. Kun hurtige rigtige svar rykker emnet op i Leitner-systemet; langsomme rigtige svar bliver stående. Tryk − og + for at justere.',
-              'The threshold is the longest time an answer may take to count as fast. Only fast right answers move the item up in the Leitner system; slow right answers stay where they are. Tap − and + to adjust.',
+              'Tærsklen er den tid, et svar højst må tage for at tælle som hurtigt. Kun hurtige rigtige svar rykker emnet op i Leitner-systemet; langsomme rigtige svar bliver stående. − og + justerer tærsklen.',
+              'The threshold is the longest time an answer may take to count as fast. Only fast right answers move the item up in the Leitner system; slow right answers stay where they are. − and + adjust the threshold.',
             )}
           </Info>
         </div>
@@ -274,7 +274,7 @@ function ImportSummary({ current, incoming, onConfirm, onCancel }: ImportSummary
   ];
   return (
     <section className="card" aria-labelledby="import-title">
-      <h2 id="import-title">{tx('Importér filen?', 'Import the file?')}</h2>
+      <h2 id="import-title">{tx('Skal filen importeres?', 'Should the file be imported?')}</h2>
       <p className="muted small">{tx('Filen erstatter alle dine nuværende data.', 'The file replaces all your current data.')}</p>
       <table className="summary">
         <thead>

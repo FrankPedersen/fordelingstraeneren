@@ -86,7 +86,7 @@ giver 79,3 %).
 ```
 Point i sans = hp (4-3-2-1) + ¼ per tier
 Ingen længdepoint. Ingen fladhedsstraf.
-Tjek i stedet alle fire farver for stoppere.
+I stedet tjekkes alle fire farver for stoppere.
 ```
 
 Datadrevne honnørværdier i sans, skaleret til es = 4:
@@ -142,7 +142,7 @@ Test af hele modellen med forskellige offentliggjorte skalaer:
 | Robertson 7-5-3-2-1 | 0,773 | 86,7 % | **0,847** |
 | Milton Work 4-3-2-1 | 0,764 | 86,1 % | 0,839 |
 
-Bemærk: modellens egen skala er **dårligst i sans**. Skalaen er
+Bemærkning: modellens egen skala er **dårligst i sans**. Skalaen er
 kontrakttype-specifik.
 
 ### Kortfarvepoint: 5/3/1, ikke 3/2/1

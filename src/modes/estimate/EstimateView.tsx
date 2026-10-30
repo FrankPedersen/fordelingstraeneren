@@ -24,8 +24,8 @@ export function EstimateView({ task, answer, reveal, onAnswer }: EstimateViewPro
         </p>
         <Info topic={tx('Klubaften-estimat', 'Club evening estimate')}>
           {tx(
-            'Tast dit bud på, hvor mange af 100 hænder (25 spil × 4) der har mønstret. Svaret er rigtigt inden for ±1 op til 10 og ±2 derover.',
-            'Type your estimate of how many of 100 hands (25 boards × 4) have the pattern. The answer is right within ±1 up to 10 and ±2 above.',
+            'Buddet er, hvor mange af 100 hænder (25 spil × 4) der har mønstret. Svaret er rigtigt inden for ±1 op til 10 og ±2 derover.',
+            'The estimate is how many of 100 hands (25 boards × 4) have the pattern. The answer is right within ±1 up to 10 and ±2 above.',
           )}
         </Info>
       </div>

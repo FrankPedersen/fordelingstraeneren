@@ -121,7 +121,7 @@ export function LineChart({ title, points, format, yMax }: LineChartProps) {
               <strong>{shown.value === null ? tx('ingen data', 'no data') : format(shown.value)}</strong> · {shown.label}
             </>
           ) : (
-            tx('Tryk på kurven for at se en uge.', 'Tap the curve to see a week.')
+            tx('Et tryk på kurven viser en uge.', 'Tapping the curve shows a week.')
           )}
         </p>
       </div>

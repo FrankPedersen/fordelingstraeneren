@@ -56,8 +56,8 @@ export function CompleteView({ task, submitted, reveal, skylines = true, onAnswe
         </p>
         <Info topic={tx('Fuldfør mønsteret', 'Complete the pattern')}>
           {tx(
-            'Tast de mulige mønstre på mønstertastaturet, hyppigste først: de fire længder i vilkårlig rækkefølge, og den fjerde udfyldes selv. ↑ flytter et mønster op, ✕ fjerner det. Rigtige mønstre i rigtig rækkefølge giver fuld score, rigtige mønstre i forkert rækkefølge halv.',
-            'Type the possible patterns on the pattern keypad, most frequent first: the four lengths in any order, and the fourth fills itself in. ↑ moves a pattern up, ✕ removes it. Right patterns in the right order give a full score, right patterns in the wrong order half.',
+            'Du taster de mulige mønstre på mønstertastaturet, hyppigste først: de fire længder i vilkårlig rækkefølge, og den fjerde udfyldes selv. ↑ flytter et mønster op, ✕ fjerner det. Rigtige mønstre i rigtig rækkefølge giver fuld score, rigtige mønstre i forkert rækkefølge halv.',
+            'You type the possible patterns on the pattern keypad, most frequent first: the four lengths in any order, and the fourth fills itself in. ↑ moves a pattern up, ✕ removes it. Right patterns in the right order give a full score, right patterns in the wrong order half.',
           )}
         </Info>
       </div>
@@ -96,7 +96,7 @@ export function CompleteView({ task, submitted, reveal, skylines = true, onAnswe
                 )}
               </li>
             ))}
-            {entries.length === 0 && <li className="entries-empty">{tx('Tast et mønster nedenfor.', 'Type a pattern below.')}</li>}
+            {entries.length === 0 && <li className="entries-empty">{tx('Mønstrene, du taster nedenfor, står her.', 'The patterns you type below appear here.')}</li>}
           </ol>
           {note && <p className="note">{note}</p>}
           {!locked && (

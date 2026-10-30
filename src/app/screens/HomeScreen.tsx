@@ -172,8 +172,8 @@ export function HomeScreen(props: HomeScreenProps) {
             </p>
             <p className="muted small">
               {tx(
-                'Start med Fordeling, hvis du er i tvivl. Du kan altid skifte spor her på forsiden.',
-                'Start with Distribution if you are unsure. You can always switch tracks here on the home screen.',
+                'Fordeling er et godt sted at begynde, hvis du er i tvivl. Du kan altid skifte spor her på forsiden.',
+                'Distribution is a good place to begin if you are unsure. You can always switch tracks here on the home screen.',
               )}
             </p>
             <button type="button" className="btn primary" onClick={onStart}>
@@ -253,8 +253,8 @@ export function HomeScreen(props: HomeScreenProps) {
             <h2>{tx('Vejledning', 'Guide')}</h2>
             <p className="muted small">
               {tx(
-                'Sådan bruger du appen: sessionen, øvelserne, husketeknikkerne, farvebehandling, sprog og dine data. Tryk på ⓘ ved et element for at få en kort forklaring.',
-                'How to use the app: the session, the exercises, the memory techniques, suit combinations, language and your data. Tap ⓘ next to an element for a short explanation.',
+                'Sådan bruger du appen: sessionen, øvelserne, husketeknikkerne, farvebehandling, sprog og dine data. ⓘ ved et element giver en kort forklaring.',
+                'How to use the app: the session, the exercises, the memory techniques, suit combinations, language and your data. ⓘ next to an element gives a short explanation.',
               )}
             </p>
             <button type="button" className="btn small-btn" onClick={onGuide}>

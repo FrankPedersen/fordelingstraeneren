@@ -5,7 +5,7 @@ import { setLang } from '../../i18n';
 import { TEST_BANK } from '../testBank';
 import { Analysevindue } from './Analysevindue';
 
-// SPEC-analyse-situation.md, leverancetrin 3: feltet "Indsæt kombination eller spil" over kortvælgeren i Analyse.
+// SPEC-analyse-situation.md, leverancetrin 3: feltet "Kombination eller spil" (før "Indsæt kombination eller spil") over kortvælgeren i Analyse.
 // Importen regner intet; løseren bruges ikke her.
 vi.mock('../solver/client', () => ({
   SolveCancelled: class extends Error {},
@@ -32,7 +32,7 @@ describe('Import i Analyse', { timeout: 60_000 }, () => {
   it('Bordet-hånden stilles op direkte; findes kombinationen i banken, bruges bankens tal', () => {
     render(<Analysevindue bank={TEST_BANK} />);
     click('Kortvælger');
-    importText('Indsæt kombination eller spil', 'Importér', '5432-EDB76');
+    importText('Kombination eller spil', 'Importér', '5432-EDB76');
     // E D B 7 6 / 5 4 3 2 står i banken: linjerne vises straks, og der er intet at regne.
     expect(screen.queryByText(/findes ikke i banken/)).toBeNull();
     expect(screen.getAllByRole('article').length).toBeGreaterThan(0);
@@ -44,8 +44,8 @@ describe('Import i Analyse', { timeout: 60_000 }, () => {
   it('et spil giver 8 kombinationer at vælge imellem, og den valgte står i kortvælgeren', () => {
     render(<Analysevindue bank={TEST_BANK} />);
     click('Kortvælger');
-    importText('Indsæt kombination eller spil', 'Importér', LIN);
-    const choices = screen.getByRole('group', { name: 'Vælg en kombination fra spillet' });
+    importText('Kombination eller spil', 'Importér', LIN);
+    const choices = screen.getByRole('group', { name: 'Kombinationerne i spillet' });
     expect(within(choices).getAllByRole('button')).toHaveLength(8);
     fireEvent.click(within(choices).getByRole('button', { name: '♦ E D B 9 7 5 – 6 3 2 (Nord–Syd)' }));
     expect(within(choices).getByRole('button', { name: '♠ E K 8 7 3 – 10 9 4 (Øst–Vest)' })).toBeTruthy();
@@ -58,20 +58,20 @@ describe('Import i Analyse', { timeout: 60_000 }, () => {
   it('fejl siger, hvad der er galt, og hvordan det rettes', () => {
     render(<Analysevindue bank={TEST_BANK} />);
     click('Kortvælger');
-    importText('Indsæt kombination eller spil', 'Importér', 'AK6-AJ4');
+    importText('Kombination eller spil', 'Importér', 'AK6-AJ4');
     expect(screen.getByRole('alert').textContent).toMatch(/Kortet E står to gange/);
-    importText('Indsæt kombination eller spil', 'Importér', 'https://tinyurl.com/2p8x7k');
-    expect(screen.getByRole('alert').textContent).toMatch(/kort link\. Åbn spillet i handvieweren og kopiér den lange adresse/);
+    importText('Kombination eller spil', 'Importér', 'https://tinyurl.com/2p8x7k');
+    expect(screen.getByRole('alert').textContent).toMatch(/kort link\. Handviewerens lange adresse virker også; den står i adresselinjen/);
   });
 
   it('på engelsk står der ingen dansk', () => {
     setLang('en');
     render(<Analysevindue bank={TEST_BANK} />);
     click('Card picker');
-    importText('Paste a combination or a deal', 'Import', LIN);
-    const choices = screen.getByRole('group', { name: 'Choose a combination from the deal' });
+    importText('Combination or deal', 'Import', LIN);
+    const choices = screen.getByRole('group', { name: 'The combinations in the deal' });
     expect(within(choices).getByRole('button', { name: '♦ A Q J 9 7 5 – 6 3 2 (North–South)' })).toBeTruthy();
-    importText('Paste a combination or a deal', 'Import', 'AK6-AJ4');
+    importText('Combination or deal', 'Import', 'AK6-AJ4');
     expect(screen.getByRole('alert').textContent).toMatch(/The card A appears twice/);
     for (const button of screen.queryAllByRole('button', { name: /^Help: / })) fireEvent.click(button);
     const field = document.querySelector('.fb-import')?.textContent ?? '';

@@ -43,10 +43,10 @@ function playOut() {
 /** Svarer på farvebehandlings opgave, uanset type (som i FarvebehandlingScreen.test.tsx, men på engelsk). */
 function answerAnything() {
   if (screen.queryByRole('region', { name: 'Play it yourself' })) return playOut();
-  const holes = screen.queryByRole('group', { name: 'Where does the line fail? Choose the layout.' });
+  const holes = screen.queryByRole('group', { name: 'Where does the line fail? The answer is one of the layouts.' });
   if (holes) return fireEvent.click(within(holes).getAllByRole('button')[0]);
   const lines = screen.queryAllByRole('button', { name: /^Line [A-D]: / });
-  if (screen.queryByText('Tap the best line')) return fireEvent.click(lines[0]);
+  if (screen.queryByText('Which line is better?')) return fireEvent.click(lines[0]);
   if (lines.length) fireEvent.click(lines[0]);
   const guess = screen.queryByRole('group', { name: /^How big is the chance|^Guess the chance/ });
   if (guess) fireEvent.click(within(guess).getAllByRole('button')[1]);

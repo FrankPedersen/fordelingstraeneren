@@ -80,13 +80,13 @@ export function SudokuView({ task, onDone }: SudokuViewProps) {
     <div className="task sudoku">
       <div className="with-info">
         <p className="prompt">
-          {tx("Find Østs og Vests fordeling", "Find East's and West's distribution")}
+          {tx('Hvad er Østs og Vests fordeling?', "What are East's and West's distributions?")}
           {task.hard && <span className="badge boss">{tx('Ugens boss · dobbelt XP', 'Weekly boss · double XP')}</span>}
         </p>
         <Info topic="13-sudoku">
           {tx(
-            'Tryk på en celle i Østs eller Vests række, og tast antallet af kort. "Noter" lader dig skrive flere muligheder i en celle. Hent ledetråde én ad gangen, og tryk "Lås", når hele fordelingen er udfyldt: point = grundpoint × (ledetråde tilbage + 1), og en forkert lås koster grundpointene.',
-            "Tap a cell in East's or West's row and type the number of cards. \"Notes\" lets you write several possibilities in a cell. Fetch clues one at a time, and tap \"Lock\" when the whole distribution is filled in: points = base points × (clues left + 1), and a wrong lock costs the base points.",
+            'Du vælger en celle i Østs eller Vests række med et tryk og taster antallet af kort. "Noter" lader dig skrive flere muligheder i en celle. Du henter ledetråde én ad gangen, og "Lås" låser fordelingen, når den er udfyldt: point = grundpoint × (ledetråde tilbage + 1), og en forkert lås koster grundpointene.',
+            "You choose a cell in East's or West's row with a tap and type the number of cards. \"Notes\" lets you write several possibilities in a cell. You fetch clues one at a time, and \"Lock\" locks the distribution when it is filled in: points = base points × (clues left + 1), and a wrong lock costs the base points.",
           )}
         </Info>
       </div>

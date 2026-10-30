@@ -65,7 +65,7 @@ describe('Øvelserne på engelsk', () => {
 
   it('Lynaflæsning viser A K Q J og engelske tekster', () => {
     render(<ReadView task={makeRandomReadTask(7, 3000)} reveal={false} skylines show="tap" sorted={false} onAnswer={noop} />);
-    expect(document.body.textContent).toMatch(/Look at the hand/);
+    expect(document.body.textContent).toMatch(/The hand (stays until you tap Ready|is shown)/);
     expect(document.body.textContent).not.toMatch(/[EDB](?=[♠♥♦♣])/);
     expectEnglish('Lynaflæsning');
   });

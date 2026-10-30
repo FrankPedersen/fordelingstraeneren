@@ -61,8 +61,8 @@ export function HigherLowerView({ task, chosen, reveal, onAnswer }: HigherLowerV
         <p className="prompt">{tx('Hvilket mønster er hyppigst?', 'Which pattern is more frequent?')}</p>
         <Info topic={tx('Højere/lavere', 'Higher/lower')}>
           {tx(
-            'Tryk på det mønster, der forekommer oftest. Er forskellen under 2 %, er "≈ Lige hyppige" rigtigt, fx 5-4-2-2 mod 4-3-3-3. Søjlerne er farvernes længder, længste først.',
-            'Tap the pattern that occurs more often. If the difference is under 2 %, "≈ Equally frequent" is right, e.g. 5-4-2-2 against 4-3-3-3. The bars are the suit lengths, longest first.',
+            'Det rigtige svar er det mønster, der forekommer oftest. Er forskellen under 2 %, er "≈ Lige hyppige" rigtigt, fx 5-4-2-2 mod 4-3-3-3. Søjlerne er farvernes længder, længste først.',
+            'The right answer is the pattern that occurs more often. If the difference is under 2 %, "≈ Equally frequent" is right, e.g. 5-4-2-2 against 4-3-3-3. The bars are the suit lengths, longest first.',
           )}
         </Info>
       </div>

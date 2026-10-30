@@ -18,7 +18,7 @@ const List = ({ items }: { items: string[] }) => (
 function sections(): Section[] {
   return [
     {
-      title: tx('Kom i gang', 'Getting started'),
+      title: tx('Første skridt', 'Getting started'),
       body: (
         <>
           <p>
@@ -29,8 +29,8 @@ function sections(): Section[] {
           </p>
           <List
             items={[
-              tx('Tryk på knappen under I dag på forsiden: den starter dagens session i det næste spor. Appen vælger selv opgaverne.', 'Tap the button under Today on the front page: it starts today\'s session in the next track. The app chooses the tasks.'),
-              tx('Tryk på ⓘ ved et element for at få en kort forklaring lige der.', 'Tap ⓘ next to an element for a short explanation right there.'),
+              tx('Knappen under I dag på forsiden starter dagens session i det næste spor. Appen vælger selv opgaverne.', 'The button under Today on the front page starts today\'s session in the next track. The app chooses the tasks.'),
+              tx('ⓘ ved et element viser en kort forklaring lige der.', 'ⓘ next to an element shows a short explanation right there.'),
               tx('Knappen øverst på forsiden skifter mellem dansk og engelsk.', 'The button at the top of the front page switches between Danish and English.'),
               tx('Alt gemmes i din browser. Ingen login og ingen server.', 'Everything is saved in your browser. No login and no server.'),
             ]}
@@ -111,13 +111,13 @@ function sections(): Section[] {
       body: (
         <List
           items={[
-            tx('Mønstertastaturet: tast de fire længder i vilkårlig rækkefølge; den fjerde udfyldes selv. "10+" er den lange farve.', 'The pattern keypad: type the four lengths in any order; the fourth fills itself in. "10+" is the long suit.'),
-            tx('Højere/lavere: tryk på det hyppigste af to mønstre, eller ≈, når de er lige hyppige (under 2 % forskel).', 'Higher/lower: tap the more frequent of two patterns, or ≈ when they are equally frequent (less than 2 % apart).'),
+            tx('Mønstertastaturet: du taster de fire længder i vilkårlig rækkefølge; den fjerde udfyldes selv. "10+" er den lange farve.', 'The pattern keypad: you type the four lengths in any order; the fourth fills itself in. "10+" is the long suit.'),
+            tx('Højere/lavere: svaret er det hyppigste af to mønstre, eller ≈, når de er lige hyppige (under 2 % forskel).', 'Higher/lower: the answer is the more frequent of two patterns, or ≈ when they are equally frequent (less than 2 % apart).'),
             tx('Fuldfør mønsteret: ud fra 1–2 kendte farvelængder taster du de mulige mønstre, hyppigste først.', 'Complete the pattern: from 1–2 known suit lengths you type the possible patterns, most frequent first.'),
-            tx('Lynaflæsning: en tilfældig hånd vises; tast dens mønster. Hånden står, til du trykker Klar (eller i t ms, se Indstillinger).', 'Lightning reading: a random hand is shown; type its pattern. The hand stays until you tap Ready (or for t ms, see Settings).'),
+            tx('Lynaflæsning: en tilfældig hånd vises, og du taster dens mønster. Hånden står, til du trykker Klar (eller i t ms, se Indstillinger).', 'Lightning reading: a random hand is shown, and you type its pattern. The hand stays until you tap Ready (or for t ms, see Settings).'),
             tx('Paladsvandring: station → mønster (tastes) og mønster → station (vælges på ruten).', 'Palace walk: station → pattern (typed) and pattern → station (chosen on the route).'),
             tx('Klubaften-estimat: hvor mange af aftenens 100 hænder har et givet mønster? Rigtigt inden for ±1 (±2 over 10).', 'Club evening estimate: how many of the evening’s 100 hands have a given pattern? Right within ±1 (±2 above 10).'),
-            tx('13-sudoku: udled alle fire hænders længder ud fra meldinger og spilhændelser. Lås fordelingen, når du er sikker; jo færre ledetråde, jo flere point.', '13-sudoku: work out the lengths of all four hands from the bidding and play events. Lock the distribution when you are sure; the fewer clues, the more points.'),
+            tx('13-sudoku: du udleder alle fire hænders længder af meldinger og spilhændelser og låser fordelingen, når du er sikker; jo færre ledetråde, jo flere point.', '13-sudoku: you work out the lengths of all four hands from the bidding and play events and lock the distribution when you are sure; the fewer clues, the more points.'),
           ]}
         />
       ),
@@ -141,7 +141,7 @@ function sections(): Section[] {
       body: (
         <List
           items={[
-            tx('Huskepalads: de 13 hyppigste mønstre på 13 stationer på en rute, du kender; de episke ligger på Loftet. Navngiv stationerne og skriv en scene.', 'Memory palace: the 13 most frequent patterns on 13 stations along a route you know; the epic ones live in the Attic. Name the stations and write a scene.'),
+            tx('Huskepalads: de 13 hyppigste mønstre på 13 stationer på en rute, du kender; de episke ligger på Loftet. Stationerne får navne og hver sin scene.', 'Memory palace: the 13 most frequent patterns on 13 stations along a route you know; the epic ones live in the Attic. The stations get names and a scene each.'),
             tx('Skyline: hvert mønster tegnes som fire faldende søjler med et billede, der udspringer af formen. Du kan skrive dit eget billede.', 'Skyline: every pattern is drawn as four descending bars with an image that grows out of the shape. You can write your own image.'),
             tx('Familiefarver: længste farve giver farven: blå (4), grøn (5), rav (6) og violet (7+). Der står altid tekst eller tal ved.', 'Family colours: the longest suit gives the colour: blue (4), green (5), amber (6) and violet (7+). There is always text or a number with it.'),
             tx('Album: 39 pladser; et mønster samles første gang, det optræder i en tilfældig hånd.', 'Album: 39 slots; a pattern is collected the first time it appears in a random hand.'),
@@ -165,7 +165,7 @@ function sections(): Section[] {
             items={[
               tx('Træning: din egen daglige session med repetition, niveau, lynrunde og status, egen streak og XP.', 'Training: your own daily session with review, level, lightning round and status, its own streak and XP.'),
               tx('Opgavetyperne: Vælg linjen, Hvor stor er chancen?, Linje mod linje, Nyt mål, Hvad nu?, Find hullet, Spil den selv, Med optælling og Hold eller par.', 'Task types: Choose the line, How big is the chance?, Line against line, New goal, What now?, Find the hole, Play it yourself, With counting and Teams or pairs.'),
-              tx('Selvvalgt: vælg teknik, antal kort, manglende honnører og mål; svarene logges, men ændrer ikke dagsplanen.', 'Free practice: choose technique, number of cards, missing honours and goal; answers are logged but do not change the daily plan.'),
+              tx('Selvvalgt: du vælger frit teknik, antal kort, manglende honnører og mål; svarene logges, men ændrer ikke dagsplanen.', 'Free practice: you choose technique, number of cards, missing honours and goal freely; answers are logged but do not change the daily plan.'),
               tx('Analyse: bankens kombinationer, kortvælgeren (regner også kombinationer uden for banken), linjerne, sandsynlighedsbåndet og dine egne linjer.', 'Analysis: the bank’s combinations, the card picker (also solves combinations outside the bank), the lines, the probability band and your own lines.'),
               tx('Paladset, Klubaften (de 100 hyppigste kombinationer), Statistik (dine svage punkter) og Dine data findes på Trænings forside.', 'The palace, Club evening (the 100 most frequent combinations), Statistics (your weak spots) and Your data are on the Training front page.'),
             ]}
@@ -236,7 +236,7 @@ function sections(): Section[] {
         <List
           items={[
             tx('Alt ligger i din browser på denne enhed. Fordelingssporet og farvebehandling har hver deres data og hver deres eksport.', 'Everything is stored in your browser on this device. The distribution track and suit combinations each have their own data and their own export.'),
-            tx('Eksportér jævnligt: Indstillinger → Sikkerhedskopi, og i farvebehandling Træning → Dine data.', 'Export regularly: Settings → Backup, and in suit combinations Training → Your data.'),
+            tx('En jævnlig eksport sikrer dine data: Indstillinger → Sikkerhedskopi, og i farvebehandling Træning → Dine data.', 'A regular export keeps your data safe: Settings → Backup, and in suit combinations Training → Your data.'),
             tx('Appen beder browseren om fast lagring og minder dig om at eksportere, når det er over en måned siden.', 'The app asks the browser for persistent storage and reminds you to export when it has been more than a month.'),
             tx('En ny version vises som en knap på forsiden; appen genindlæser aldrig midt i en session.', 'A new version shows up as a button on the front page; the app never reloads in the middle of a session.'),
           ]}

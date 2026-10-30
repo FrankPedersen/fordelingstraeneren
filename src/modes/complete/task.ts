@@ -96,7 +96,7 @@ export function shownText(task: CompleteTask): string {
 }
 
 export function instructionText(task: CompleteTask): string {
-  if (task.count === 1) return tx('Tast mønstret.', 'Type the pattern.');
-  if (task.all) return tx('Tast de mulige mønstre – hyppigste først.', 'Type the possible patterns – most frequent first.');
-  return tx('Tast de tre hyppigste mønstre – hyppigste først.', 'Type the three most frequent patterns – most frequent first.');
+  if (task.count === 1) return tx('Hvilket mønster er det?', 'Which pattern is it?');
+  if (task.all) return tx('Hvilke mønstre er mulige? Hyppigste først.', 'Which patterns are possible? Most frequent first.');
+  return tx('Hvilke tre mønstre er hyppigst? Hyppigste først.', 'Which three patterns are most frequent? Most frequent first.');
 }

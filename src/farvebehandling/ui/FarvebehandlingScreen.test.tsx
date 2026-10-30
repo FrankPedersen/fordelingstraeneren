@@ -83,10 +83,10 @@ function playOut() {
 /** Svarer på den opgave, der står på skærmen, uanset type. */
 function answerAnything() {
   if (screen.queryByRole('region', { name: 'Spil den selv' })) return playOut();
-  const holes = screen.queryByRole('group', { name: 'Hvor taber linjen? Vælg sidningen.' });
+  const holes = screen.queryByRole('group', { name: 'Hvor taber linjen? Svaret er en af sidningerne.' });
   if (holes) return fireEvent.click(within(holes).getAllByRole('button')[0]);
   const lines = screen.queryAllByRole('button', { name: /^Linje [A-D]: / });
-  if (screen.queryByText('Tryk på den bedste linje')) return fireEvent.click(lines[0]);
+  if (screen.queryByText('Hvilken linje er bedst?')) return fireEvent.click(lines[0]);
   if (lines.length) fireEvent.click(lines[0]);
   const guess = screen.queryByRole('group', { name: /^Hvor stor er chancen|^Gæt chancen/ });
   if (guess) fireEvent.click(within(guess).getAllByRole('button')[1]);
@@ -188,7 +188,7 @@ describe('Farvebehandling', { timeout: 30_000 }, () => {
     click('Analyse');
     click('Spil den selv ▶');
     const region = screen.getByRole('region', { name: 'Spil den selv' });
-    expect(within(region).getByText('Spil ud fra bordet eller hånden.')).toBeTruthy();
+    expect(within(region).getByText('Udspillet kan komme fra bordet eller hånden.')).toBeTruthy();
     // Antallet af kort står på en linje for sig under "♠ ?" (SPEC-forside-bred.md, Afklaret 22).
     expect(within(region).getAllByText(/^\d+ kort$/)).toHaveLength(2);
     playOut();
@@ -198,7 +198,7 @@ describe('Farvebehandling', { timeout: 30_000 }, () => {
     expect(within(band).getAllByRole('button').some((b) => b.getAttribute('aria-pressed') === 'true')).toBe(true);
     expect(within(region).queryAllByText(/^\d+ kort$/)).toHaveLength(0);
     fireEvent.click(within(region).getByRole('button', { name: 'Ny fordeling' }));
-    expect(within(region).getByText('Spil ud fra bordet eller hånden.')).toBeTruthy();
+    expect(within(region).getByText('Udspillet kan komme fra bordet eller hånden.')).toBeTruthy();
     fireEvent.click(within(region).getByRole('button', { name: 'Luk' }));
     expect(screen.queryByRole('region', { name: 'Spil den selv' })).toBeNull();
   });
@@ -263,7 +263,7 @@ describe('Farvebehandling', { timeout: 30_000 }, () => {
     const lightning = firstFour.some((b) => b.combination.goals.some((g) => possibleTypes(b, g).includes('linje-mod-linje')));
     if (lightning) {
       expect(screen.getByText('Lynrunde')).toBeTruthy();
-      expect(screen.getByText('Tryk på den bedste linje')).toBeTruthy();
+      expect(screen.getByText('Hvilken linje er bedst?')).toBeTruthy();
       vi.setSystemTime(T0 + 275_000);
       answerAnything();
       click('Næste opgave');
@@ -400,7 +400,7 @@ describe('Farvebehandling', { timeout: 30_000 }, () => {
     click('Dine data');
     expect(screen.getByText('Du har ikke eksporteret dine data endnu.')).toBeTruthy();
     // jsdom kan ikke oplyse om fast lagring.
-    expect(await screen.findByText('Browseren oplyser ikke, om dine data gemmes fast. Eksportér jævnligt.')).toBeTruthy();
+    expect(await screen.findByText('Browseren oplyser ikke, om dine data gemmes fast. En jævnlig eksport sikrer dem.')).toBeTruthy();
     click('Eksportér');
     expect(JSON.parse(await created[0].text())).toEqual(defaultFbSaved());
     expect(screen.getByText('Filen er gemt.')).toBeTruthy();

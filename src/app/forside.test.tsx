@@ -55,7 +55,7 @@ describe('Forsiden (SPEC-forside-spor.md)', () => {
     expect(screen.getByRole('meter', { name: 'Spor trænet i dag' }).getAttribute('aria-valuenow')).toBe('1');
     expect(screen.getByText('Næste: Pointregnskab, med 2 emner til repetition. Ca. 5 minutter.')).toBeTruthy();
     expect(describedBy('Fordeling')).toBe('De 39 mønstre og deres hyppighed4 dage i trækNiveau 1 · almindelig✓ Trænet i dag');
-    expect(describedBy('Pointregnskab')).toBe('Tæl honnørpoint under spillet1 dag i trækNiveau 22 emner til repetition');
+    expect(describedBy('Pointregnskab')).toBe('Honnørpoint under spillet1 dag i trækNiveau 22 emner til repetition');
     expect(describedBy('Farvebehandling')).toMatch(/Ikke startet endnu$/);
     expect(snapshot()).toBe(stored);
     // Knappen starter sporets session direkte (Afklaret punkt 1), uden topbjælke og sidefod.
