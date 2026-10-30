@@ -15,3 +15,4 @@ Afsluttede specer til Fordelingstræneren. De levende beskrivelser bliver i rode
 - [SPEC-sprog-og-ordbog.md](SPEC-sprog-og-ordbog.md) – husets fagord, fagordstesten og Bridgeordbog under Opslag i sidefoden; fælles for de tre repoer (udgivet 22. oktober 2026).
 - [SPEC-kontaktformular.md](SPEC-kontaktformular.md) – sidefodens link til kontaktformularen på Om mig i stedet for e-mailadressen (udgivet 22. oktober 2026).
 - [SPEC-forside-bred.md](SPEC-forside-bred.md) – forsiden på computer fra 1000 px med grupperne side om side, og bridgebordet med kompas i Spil den selv (udgivet 30. oktober 2026; rettet på grenen `forside-bred-2` samme dag).
+- [SPEC-beskrivende-form.md](SPEC-beskrivende-form.md) – instruktioner og forklaringer i beskrivende form, ikke i bydeform, og testen for bydeform (udgivet 30. oktober 2026).
