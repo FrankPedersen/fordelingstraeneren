@@ -37,6 +37,8 @@
   --footer-text: #f2f3f4;
   --footer-accent: #ff9f4a;
   --radius: 14px;
+  /* Forsidens største bredde fra 1000 px (SPEC-forside-bred.md); resten af appen står i kolonnen på 480 px. */
+  --home-width: 1200px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -1446,6 +1448,11 @@ button.cell {
   gap: 12px;
 }
 
+/* Grupperne i én beholder (SPEC-forside-bred.md); under 1000 px står de som før direkte i skærmens kolonne. */
+.home-groups {
+  display: contents;
+}
+
 /* Vejledningen */
 .guide details {
   border-top: 1px solid var(--line);
@@ -1692,4 +1699,126 @@ button.cell {
 
 .home-head h1 {
   flex: 1 1 auto;
+}
+
+/*
+ * Forsiden på computer (SPEC-forside-bred.md, tegning B): fra 1000 px er forsiden højst home-width bred med 32 px
+ * sidemargen, I dag står over hele bredden med knappen til højre, og grupperne står side om side. Kun forsiden bliver
+ * bred; under 1000 px er intet ændret.
+ */
+@media (min-width: 1000px) {
+  /* Et grid med to kolonner, så Vejledning og Indstillinger kan stå side om side; alt andet spænder over begge. */
+  .screen.home {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-content: start;
+    column-gap: 24px;
+    max-width: var(--home-width);
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .screen.home > * {
+    grid-column: 1 / -1;
+  }
+
+  /* Vejledning og Indstillinger side om side (Afklaret 13). */
+  .home > section.card:not([aria-labelledby]),
+  .home > .two {
+    grid-column: auto;
+    align-self: start;
+  }
+
+  /* Knapperne i Velkomst, Vejledning og Indstillinger har deres naturlige bredde, dog mindst 280 px som i I dag. */
+  .home > [aria-labelledby='welcome'] > .btn,
+  .home > section.card:not([aria-labelledby]) > .btn {
+    justify-self: start;
+    min-width: 280px;
+  }
+
+  .home > .two .btn {
+    flex: 0 0 auto;
+    min-width: 280px;
+  }
+
+  /* Sidefodens kolonner side om side som på www.kontraktbridge.dk, og ophavslinjen under dem (Afklaret 14). */
+  .home .site-footer {
+    grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
+    gap: 28px 40px;
+    padding: 32px;
+  }
+
+  .home .site-footer-legal {
+    grid-column: 1 / -1;
+  }
+
+  /* Kolonnerne er selv grids; uden start strækkes deres rækker til den højeste kolonne. */
+  .home .site-footer-about,
+  .home .site-footer-col {
+    align-content: start;
+  }
+
+  /* Topbjælkens indhold står inden for forsidens bredde. */
+  .topbar:has(+ .home) {
+    padding-left: max(32px, calc((100% - var(--home-width)) / 2 + 32px));
+    padding-right: max(32px, calc((100% - var(--home-width)) / 2 + 32px));
+  }
+
+  /* I dag: teksten til venstre og knappen til højre i samme kort. */
+  .home > [aria-labelledby='today'] {
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 24px;
+    align-items: center;
+  }
+
+  .home > [aria-labelledby='today'] > * {
+    grid-column: 1;
+  }
+
+  .home > [aria-labelledby='today'] > .btn {
+    grid-column: 2;
+    grid-row: 1 / span 4;
+    min-width: 280px;
+  }
+
+  /* Tre lige brede kolonner, der falder ned under hinanden, hvis der ikke er plads (se Afklaret 8 om 280 px). */
+  .home-groups {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 24px;
+  }
+
+  .home .home-group {
+    flex: 1 1 280px;
+    min-width: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  /* Gruppens overskrift med ⓘ og en streg under. */
+  .home-group > .with-info:first-child {
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  /* Sporets ⓘ står i kortets øverste række ved pilen, så kortet fylder kolonnen; forklaringen kommer under kortet. */
+  .home-group > .with-info:not(:first-child) {
+    position: relative;
+  }
+
+  .home-group > .with-info:not(:first-child) .track-card-head {
+    margin-right: 38px;
+  }
+
+  .home-group > .with-info:not(:first-child) .info-btn {
+    position: absolute;
+    top: 16px;
+    right: 17px;
+  }
+
+  /* ::after regnes fra indersiden af kanten (24 px), så -10px giver en trykflade på 44 × 44 px. */
+  .home-group > .with-info:not(:first-child) .info-btn::after {
+    inset: -10px;
+  }
 }

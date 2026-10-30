@@ -136,7 +136,7 @@ export function HomeScreen(props: HomeScreenProps) {
   return (
     <>
       <TopBar />
-      <main className="screen">
+      <main className="screen home">
         <header className="home-head">
           <h1>Fordelingstræneren</h1>
           {onLanguage && (
@@ -227,22 +227,26 @@ export function HomeScreen(props: HomeScreenProps) {
           </section>
         )}
 
-        {onOpen &&
-          GROUPS.map((group) => {
-            const own = cards.filter((card) => card.group === group.id);
-            if (!own.length) return null;
-            return (
-              <section key={group.id} className="home-group" aria-labelledby={`group-${group.id}`}>
-                <div className="with-info">
-                  <h2 id={`group-${group.id}`} className="eyebrow">
-                    {both(group.title)}
-                  </h2>
-                  <Info topic={both(group.title)}>{both(group.help)}</Info>
-                </div>
-                {own.map(trackCard)}
-              </section>
-            );
-          })}
+        {/* Grupperne står side om side fra 1000 px (SPEC-forside-bred.md); under det er beholderen display: contents. */}
+        {onOpen && (
+          <div className="home-groups">
+            {GROUPS.map((group) => {
+              const own = cards.filter((card) => card.group === group.id);
+              if (!own.length) return null;
+              return (
+                <section key={group.id} className="home-group" aria-labelledby={`group-${group.id}`}>
+                  <div className="with-info">
+                    <h2 id={`group-${group.id}`} className="eyebrow">
+                      {both(group.title)}
+                    </h2>
+                    <Info topic={both(group.title)}>{both(group.help)}</Info>
+                  </div>
+                  {own.map(trackCard)}
+                </section>
+              );
+            })}
+          </div>
+        )}
 
         {onGuide && (
           <section className="card">

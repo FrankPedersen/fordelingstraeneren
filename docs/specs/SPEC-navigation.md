@@ -69,7 +69,7 @@ Listen har én linje pr. menupunkt, ikke pr. spor, fordi fordelingssporet har fl
 
 ## Layout
 
-Forsiden ligger i appens 480 px-kolonne. Wireframen er designgrundlaget; designet kan ændres senere i Claude Design.
+Forsiden ligger i appens 480 px-kolonne. Wireframen er designgrundlaget; designet kan ændres senere i Claude Design. Fra 1000 px står forsiden bredt med grupperne side om side (SPEC-forside-bred.md, oktober 2026); under 1000 px er den som her.
 
 ```text
 ┌──────────────────────────────────┐
