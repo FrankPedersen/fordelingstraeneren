@@ -127,19 +127,22 @@ describe('Forsiden fra 1000 px (SPEC-forside-bred.md, del 2)', () => {
     expect(wide.some(([s, d]) => /\[aria-labelledby='today'\]\s*>\s*\.btn/.test(s) && /min-width:\s*280px/.test(d))).toBe(true);
   });
 
-  it('fra 1000 px står Vejledning og Indstillinger side om side, og deres og Velkomsts knapper har naturlig bredde, mindst 280 px (Afklaret 13)', () => {
+  it('fra 1000 px følger Vejledning og Indstillinger gruppernes tre kolonner, og Velkomsts og Vejlednings knapper har naturlig bredde, mindst 280 px (Afklaret 13 og 21)', () => {
     expect(wideDecl('.screen.home')).toMatch(/display:\s*grid/);
-    expect(wideDecl('.screen.home')).toMatch(/grid-template-columns:\s*repeat\(2,\s*minmax\(0,\s*1fr\)\)/);
+    // Tre lige brede kolonner med 24 px imellem, som grupperne.
+    expect(wideDecl('.screen.home')).toMatch(/grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)/);
+    expect(wideDecl('.screen.home')).toMatch(/column-gap:\s*24px/);
     expect(wideDecl('.screen.home > *')).toMatch(/grid-column:\s*1 \/ -1/);
-    for (const selector of ['.home > section.card:not([aria-labelledby])', '.home > .two']) expect(wideDecl(selector), selector).toMatch(/grid-column:\s*auto/);
-    for (const selector of [
-      ".home > [aria-labelledby='welcome'] > .btn",
-      '.home > section.card:not([aria-labelledby]) > .btn',
-      '.home > .two .btn',
-    ]) {
+    expect(wideDecl('.home > section.card:not([aria-labelledby])')).toMatch(/grid-column:\s*span 2/);
+    expect(wideDecl('.home > section.card:not([aria-labelledby])')).not.toMatch(/grid-column:\s*auto/);
+    expect(wideDecl('.home > .two')).toMatch(/grid-column:\s*auto/);
+    for (const selector of [".home > [aria-labelledby='welcome'] > .btn", '.home > section.card:not([aria-labelledby]) > .btn']) {
       expect(wideDecl(selector), selector).toMatch(/min-width:\s*280px/);
     }
-    expect(wideDecl('.home > .two .btn')).toMatch(/flex:\s*0 0 auto/);
+    // Indstillinger fylder den tredje kolonne og har sit ⓘ inde i knappen som sporenes, med en trykflade på 44 px.
+    expect(wideDecl('.home > .two .btn')).not.toMatch(/flex:\s*0 0 auto/);
+    expect(wideDecl('.home > .two .info-btn')).toMatch(/position:\s*absolute/);
+    expect(wideDecl('.home > .two .info-btn::after')).toMatch(/inset:\s*-10px/);
   });
 
   it('fra 1000 px står sidefodens kolonner side om side på forsiden med ophavslinjen under (Afklaret 14)', () => {

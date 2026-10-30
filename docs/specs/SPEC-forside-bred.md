@@ -75,6 +75,15 @@ Del 3:
 - [x] Spillet, modspillet og bedømmelsen er uændrede: de eksisterende tests af Spil den selv (også `spilselv-forbindelser.test.tsx`) er grønne.
 - [x] Teksterne findes på dansk og engelsk, og `src/theme.test.ts` er grøn (ingen nye farver; `table`, `table-text`, `accent` og `accent-soft` er de eneste farver i bordet).
 
+Rettelserne på grenen `forside-bred-2` (Franks valg 30. oktober 2026, se Afklaret 21–24; tagget før er `v26-foer-forside-bred-2`):
+
+- [ ] Fra 1000 px følger Vejledning og Indstillinger gruppernes tre kolonner: Vejledning fylder de to første, og Indstillinger den tredje, med samme kanter som grupperne.
+- [ ] Indstillingers ⓘ står inde i knappen som sporenes ⓘ i kortet, åbner forklaringen under knappen og har en trykflade på mindst 44 px.
+- [ ] Vest og Øst i Spil den selv står ved siderne af kompasset ved alle bredder (320, 390, 480 og 1440 px), som i Analyse, med "♠ ?" og antallet af kort på en linje for sig, fx "4 kort" ("4 cards" på engelsk). Når spillet er slut, står de rigtige kort.
+- [ ] Stikket i kompasset står som små hvide kort (`card-face`, kant i `card-edge`, `card-ink`) ved hver side, og bogstaverne N, V, Ø og S står som før; det seneste stik står til næste udspil.
+- [ ] Under 1000 px er forsiden uændret, og Bridgebord i Analyse, facit og opgaverne er uændret.
+- [ ] Ingen vandret rulning, og `npm test` er grøn. Skærmbillederne i `C:\Users\frank\Kontraktbridge\skaermbilleder\forside-bred\` er opdateret.
+
 ## Afklaret
 
 1. **Tegning B** er valgt: grupperne side om side (Franks valg 30. oktober 2026).
@@ -97,3 +106,7 @@ Del 3:
 18. **Kompasset i spillet** er før første udspil som i Analyse (N, V, Ø, S og "… mangler"). Under spillet står kortet ved sidens bogstav ("N 4", "V 9", "10 Ø", "S K"); Østs kort står inden for bogstavet, så kortene vender mod midten, og et kort uden for farven står som "–". Kompasset har `aria-live="polite"` med navnet Stikket, og skærmlæsere hører sidens navn ("Nord 4").
 19. **Bridgebord uden `play`** giver præcis samme markup som i `v25-foer-forside-bred` (`ui/spilselv-bord.test.tsx` sammenligner HTML'en), og Analyse ved 390 og 1440 px og Farvebehandlings introduktion ved 390 og 1440 px er ens byte for byte med v25.
 20. **Del 3 i en rigtig browser** (Chrome, 30. oktober 2026): Spil den selv med K 7 6 5 / 4 3 2 og to kombinationer med 7 kort i en hånd (E B 8 7 6 5 4 / K 3 2 og E D B 5 4 3 2 / 8 7 6) ved 320, 390, 480 og 1440 px på dansk og engelsk: ingen vandret rulning, kortene er mindst 44 × 44 px, og stikket står med 4 kort i kompasset. `npm test` er grøn (731 tests).
+21. **Vejledning og Indstillinger i tre kolonner** (Franks valg 30. oktober 2026, afløser Afklaret 13 for Indstillinger): fra 1000 px er forsidens grid tre lige brede kolonner med 24 px imellem, ligesom grupperne. Vejledning fylder de to første og Indstillinger den tredje; Indstillinger-knappen fylder kolonnen (mindst 291 px ved 1000 px), og dens ⓘ står inde i knappen ved højre kant som sporenes ⓘ i kortet, med en trykflade på 44 × 44 px. Knappen i Vejledning og knapperne i Velkomst har stadig deres naturlige bredde, mindst 280 px.
+22. **Vest og Øst ved siderne af kompasset ved alle bredder** (Franks valg 30. oktober 2026, afløser Afklaret 17): bordet i Spil den selv bruger Analyses grid, og Nord og Syd står over hele bredden, så hænderne har plads. Under "♠ ?" står antallet af kort på en linje for sig, fx "4 kort" / "4 cards" (`playCount` i `texts.ts`, i stedet for "? (4 kort)"), så Vest og Øst er smalle nok ved 390 og 320 px. Når spillet er slut, står de rigtige kort, og de må bryde over flere linjer. Den eksisterende test i `FarvebehandlingScreen.test.tsx`, der søgte efter "? (n kort)", søger nu efter "n kort".
+23. **Stikket som små hvide kort** (Franks valg 30. oktober 2026, afløser accepttestens "table, table-text, accent og accent-soft er de eneste farver i bordet"): hvert spillet kort står som et lille spillekort med kortets værdi over ♠ i `card-face` med kant i `card-edge` og tekst i `card-ink`, ved sidens bogstav. Kort-tokens findes allerede i `tokens.json` (Lynaflæsning bruger værdierne); de står nu også som variabler i `:root` i `styles.css`, så farvebehandlingen kan bruge dem uden rå farver. Farvebehandlingen viser altid ♠, så `card-red` (♥ og ♦) bruges ikke endnu.
+24. **Skærmlæsere** hører stadig sidens navn og kortet ("Nord 4"); farvetegnet på de små kort er skjult for dem, da farven altid er den samme.
