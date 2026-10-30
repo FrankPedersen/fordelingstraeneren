@@ -934,30 +934,21 @@
 
 /*
  * Bordet i Spil den selv er Bridgebord (SPEC-forside-bred.md, del 3) med samme mål, skrift og farver som i Analyse.
- * Vest og Øst står ved siden af kompasset, når der er plads til ni trykflader; ellers over og under det (uden media
- * queries: flex-basis bliver hele bredden under grænsen og 0 over den).
+ * Vest og Øst står ved siderne af kompasset ved alle bredder; Nord og Syd står over hele bredden, så hænderne har plads.
  */
 .fb-table-play {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  grid-template-areas:
+    'north north north'
+    'west center east'
+    'south south south';
+  column-gap: var(--space-4);
 }
 
-.fb-table-play .fb-seat-north,
-.fb-table-play .fb-seat-south {
-  flex: 1 0 100%;
-}
-
-.fb-table-play .fb-seat-west,
-.fb-table-play .fb-seat-east {
-  flex: 0 1 calc((var(--touch-min) * 9 - 100%) * 999);
-}
-
-.fb-table-play .fb-compass {
-  margin: 0 auto;
-}
-
-.fb-table-play .fb-hidden-hand {
+/* Antallet af kort under "♠ ?" på en linje for sig, så Vest og Øst er smalle nok ved 320 px (Afklaret 22). */
+.fb-hidden-count {
+  color: var(--muted);
+  font-size: var(--type-small);
+  font-weight: 600;
   white-space: nowrap;
 }
 
@@ -987,11 +978,33 @@
   border-color: var(--accent);
 }
 
-/* Stikket i kompasset: kortet ved sidens bogstav. */
+/*
+ * Vests og Østs rigtige kort, når spillet er slut, på én linje som i systemnotatet (Afklaret 26). Med 1 rem og 4 px
+ * mellem kolonnerne er der plads ved 320 px, også når en modspiller har alle seks kort (Franks valg).
+ */
+.fb-revealed {
+  font-size: var(--type-h3);
+  white-space: nowrap;
+}
+
+/* Stikket i kompasset: små hvide spillekort ved sidens bogstav (Afklaret 23). */
 .fb-compass-seat {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
   gap: var(--space-4);
+}
+
+.fb-compass-card {
+  display: inline-grid;
+  justify-items: center;
+  min-width: calc(var(--touch-min) / 2);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--card-edge);
+  border-radius: var(--radius-4);
+  background: var(--card-face);
+  color: var(--card-ink);
+  font-size: var(--type-small);
+  line-height: 1.1;
 }
 
 /* Egne linjer */

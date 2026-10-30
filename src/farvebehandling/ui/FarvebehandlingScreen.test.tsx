@@ -189,13 +189,14 @@ describe('Farvebehandling', { timeout: 30_000 }, () => {
     click('Spil den selv ▶');
     const region = screen.getByRole('region', { name: 'Spil den selv' });
     expect(within(region).getByText('Spil ud fra bordet eller hånden.')).toBeTruthy();
-    expect(within(region).getAllByText(/^\? \(\d+ kort\)$/)).toHaveLength(2);
+    // Antallet af kort står på en linje for sig under "♠ ?" (SPEC-forside-bred.md, Afklaret 22).
+    expect(within(region).getAllByText(/^\d+ kort$/)).toHaveLength(2);
     playOut();
     expect(within(region).getByText(/stik – målet/)).toBeTruthy();
     expect(within(region).getByText('Fordelingen, du spillede mod, lyser op i båndet.')).toBeTruthy();
     const band = within(region).getByRole('group', { name: 'Forskellen' });
     expect(within(band).getAllByRole('button').some((b) => b.getAttribute('aria-pressed') === 'true')).toBe(true);
-    expect(within(region).queryAllByText(/^\? \(/)).toHaveLength(0);
+    expect(within(region).queryAllByText(/^\d+ kort$/)).toHaveLength(0);
     fireEvent.click(within(region).getByRole('button', { name: 'Ny fordeling' }));
     expect(within(region).getByText('Spil ud fra bordet eller hånden.')).toBeTruthy();
     fireEvent.click(within(region).getByRole('button', { name: 'Luk' }));

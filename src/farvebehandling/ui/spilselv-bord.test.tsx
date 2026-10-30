@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
+import tokens from '../../../design/tokens.json';
 import { setLang } from '../../i18n';
 import { bankItem } from '../testBank';
 import { Bridgebord } from './Bridgebord';
@@ -29,7 +30,8 @@ const cards = (owner: string) =>
     .getAllByRole('button')
     .filter((b) => b.getAttribute('aria-label')?.startsWith(`${owner}: `)) as HTMLButtonElement[];
 const card = (owner: string, rank: string) => within(region()).getByRole('button', { name: `${owner}: ${rank}` }) as HTMLButtonElement;
-const atSeat = (seat: string) => table().querySelector(`.fb-compass [data-seat="${seat}"] .fb-compass-card`)?.textContent ?? null;
+/** Kortet ved en side i kompasset: værdien på det lille hvide kort (Afklaret 23). */
+const atSeat = (seat: string) => table().querySelector(`.fb-compass [data-seat="${seat}"] .fb-compass-card .fb-compass-rank`)?.textContent ?? null;
 
 afterEach(() => {
   cleanup();
@@ -48,7 +50,11 @@ describe('Bordet i Spil den selv (SPEC-forside-bred.md, del 3)', () => {
     expect(t.querySelector('.fb-seat-south .fb-hand')?.textContent).toBe('♠K765');
     expect(card('din hånd', 'K').classList.contains('fb-honor')).toBe(true);
     expect(card('din hånd', '7').classList.contains('fb-honor')).toBe(false);
-    for (const seat of ['west', 'east']) expect(t.querySelector(`.fb-seat-${seat} .fb-hidden-hand`)?.textContent).toMatch(/^♠ \? \(\d+ kort\)$/);
+    // "♠ ?" som i Analyse og antallet af kort på en linje for sig (Afklaret 22).
+    for (const seat of ['west', 'east']) {
+      expect(t.querySelector(`.fb-seat-${seat} .fb-hidden-hand`)?.textContent).toBe('♠ ?');
+      expect(t.querySelector(`.fb-seat-${seat} .fb-hidden-count`)?.textContent).toMatch(/^\d+ kort$/);
+    }
     // Før første udspil står de manglende kort i kompasset som i Analyse.
     expect(t.querySelector('.fb-compass .fb-compass-missing')?.textContent).toBe('E D B 10 9 8 mangler');
     expect(t.querySelector('.fb-compass')?.getAttribute('aria-live')).toBe('polite');
@@ -93,7 +99,7 @@ describe('Bordet i Spil den selv (SPEC-forside-bred.md, del 3)', () => {
     render(<SpilSelv item={ITEM} goal={2} seed={1} onClose={() => {}} />);
     const text = table().textContent ?? '';
     expect(text).toMatch(/North · dummy/);
-    expect(text).toMatch(/\? \(\d+ cards\)/);
+    expect(text).toMatch(/\d+ cards/);
     expect(text).not.toMatch(/[æøåÆØÅ]|\b(kort|mangler|bordet|Nord|Syd|Vest)\b/);
   });
 
@@ -113,6 +119,61 @@ describe('Bordet i Spil den selv (SPEC-forside-bred.md, del 3)', () => {
         expect(['touch-min', 'space-4', 'radius-8', 'accent', 'accent-soft'], `${sel.trim()}: ${name}`).toContain(name);
       }
     }
+  });
+});
+
+describe('Rettelserne på grenen forside-bred-2 (SPEC-forside-bred.md, Afklaret 22–23)', () => {
+  it('Vest og Øst står ved siderne af kompasset ved alle bredder: Analyses grid med Nord og Syd over hele bredden', () => {
+    expect(decl('.fb-table-play')).toMatch(/grid-template-areas:\s*'north north north'\s*'west center east'\s*'south south south'/);
+    expect(decl('.fb-table-play')).not.toMatch(/display:\s*flex/);
+    // Ingen regel lægger Vest og Øst over og under kompasset.
+    expect(css).not.toMatch(/\.fb-table-play\s+\.fb-seat-(west|east)/);
+  });
+
+  it('stikket står som små hvide kort i card-face med kant i card-edge og tekst i card-ink, og farvetegnet er skjult for skærmlæsere', () => {
+    const c = decl('.fb-compass-card');
+    expect(c).toMatch(/background:\s*var\(--card-face\)/);
+    expect(c).toMatch(/border:\s*1px solid var\(--card-edge\)/);
+    expect(c).toMatch(/color:\s*var\(--card-ink\)/);
+    // Kort-tokens står som variabler i :root med værdierne fra tokens.json.
+    const styles = fs.readFileSync(`${cwd}/src/ui/styles.css`, 'utf8');
+    for (const name of ['card-face', 'card-edge', 'card-ink', 'card-red']) {
+      const value = tokens.color.tokens.find((t) => t.name === name)!.value.light;
+      expect(styles, name).toMatch(new RegExp(`:root\\s*\\{[^}]*--${name}:\\s*${value};`));
+    }
+    render(<SpilSelv item={ITEM} goal={2} seed={1} onClose={() => {}} />);
+    fireEvent.click(card('bordet', '2'));
+    const suit = table().querySelector('.fb-compass [data-seat="N"] .fb-compass-card .fb-compass-suit')!;
+    expect(suit.textContent).toBe('♠');
+    expect(suit.getAttribute('aria-hidden')).toBe('true');
+  });
+});
+
+describe('Vests og Østs kort, når spillet er slut (SPEC-forside-bred.md, Afklaret 26)', () => {
+  it('står som i systemnotatet uden mellemrum på én linje, og skærmlæsere hører kortene enkeltvis', () => {
+    render(<SpilSelv item={ITEM} goal={2} seed={1} onClose={() => {}} />);
+    for (let i = 0; i < 20; i++) {
+      const next = [...cards('bordet'), ...cards('din hånd')].find((b) => !b.disabled);
+      if (!next) break;
+      fireEvent.click(next);
+    }
+    const heardAll: string[] = [];
+    for (const seat of ['west', 'east']) {
+      const hand = table().querySelector(`.fb-seat-${seat} .fb-hidden-hand`)!;
+      const shown = hand.querySelector('[aria-hidden="true"]')!.textContent!;
+      const heard = hand.querySelector('.fb-sr')!.textContent!;
+      expect(shown, seat).toMatch(/^♠ (E?D?B?(10)?9?8?|–)$/);
+      expect(heard, seat).toMatch(/^(–|(E|D|B|10|9|8)( (E|D|B|10|9|8))*)$/);
+      expect(shown.slice(2), seat).toBe(heard.split(' ').join(''));
+      expect(table().querySelector(`.fb-seat-${seat} .fb-hidden-count`), seat).toBeNull();
+      if (heard !== '–') heardAll.push(...heard.split(' '));
+    }
+    // Til sammen har Vest og Øst modpartens seks kort.
+    expect(heardAll.sort()).toEqual(['10', '8', '9', 'B', 'D', 'E']);
+    // Hånden brydes ikke over flere linjer; ved 320 px er der plads med 1 rem og 4 px mellem kolonnerne (Franks valg).
+    expect(decl('.fb-revealed')).toMatch(/white-space:\s*nowrap/);
+    expect(decl('.fb-revealed')).toMatch(/font-size:\s*var\(--type-h3\)/);
+    expect(decl('.fb-table-play')).toMatch(/column-gap:\s*var\(--space-4\)/);
   });
 });
 
