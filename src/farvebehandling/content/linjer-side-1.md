@@ -317,14 +317,14 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **5 stik**
 
-- 42,0 % (bedst): Lille fra begge hænder; lægger Vest en honnør, tages den med damen.
+- 42,0 % (bedst): Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med damen.
 - 35,5 %: Slå damen, esset og kongen.
 - 35,5 %: 10'eren fra bordet; dækker Øst, tages stikket med esset, ellers læg esset. Lille fra hånden til damen. Slå kongen.
 - 35,5 %: Slå esset. Lille fra hånden til damen. Slå kongen.
 
 **4 stik**
 
-- 92,0 % (bedst): Lille fra begge hænder; lægger Vest en honnør, tages den med damen. Lille fra hånden til damen.
+- 92,0 % (bedst): Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med damen. Lille fra hånden til damen.
 - 86,4 %: Slå damen og esset.
 - 84,0 %: 10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra hånden til damen.
 - 84,0 %: Slå esset. Lille fra hånden til damen.
@@ -390,7 +390,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **4 stik**
 
-- 50,0 % (bedst): Lille fra begge hænder; lægger Øst en honnør, tages den med esset.
+- 50,0 % (bedst): Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.
 - 22,3 %: Slå esset, kongen og damen.
 - 0,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 

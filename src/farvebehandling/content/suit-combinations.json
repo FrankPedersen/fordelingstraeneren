@@ -15,12 +15,22 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder.",
-     "steps": []
+     "text": "Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.",
+     "steps": [
+      {
+       "leadFrom": "N",
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "low"
+       }
+      }
+     ]
     },
     {
      "id": "B",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -30,7 +40,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra begge hænder. Lille fra begge hænder.",
+     "text": "Lille fra begge hænder. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
@@ -50,7 +60,7 @@
   },
   {
    "id": "5432-K876",
-   "technique": "sikkerhedsspil",
+   "technique": "spil-mod-honnoer",
    "north": "5432",
    "south": "K876",
    "goals": [
@@ -61,12 +71,22 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder.",
-     "steps": []
+     "text": "Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.",
+     "steps": [
+      {
+       "leadFrom": "N",
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "low"
+       }
+      }
+     ]
     },
     {
      "id": "B",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -76,7 +96,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra begge hænder. Lille fra begge hænder.",
+     "text": "Lille fra begge hænder. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
@@ -107,12 +127,22 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet til esset.",
-     "steps": []
+     "text": "Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
+     "steps": [
+      {
+       "leadFrom": "N",
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "Q",
+        "else": "A"
+       }
+      }
+     ]
     },
     {
      "id": "B",
-     "text": "Slå esset. Lille fra begge hænder.",
+     "text": "Slå esset. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
@@ -122,7 +152,7 @@
     },
     {
      "id": "C",
-     "text": "Damen fra hånden; dækker Vest, lægges der lille.",
+     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -132,7 +162,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder. Lille fra bordet til esset.",
+     "text": "Lille fra begge hænder. Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -172,7 +202,7 @@
     },
     {
      "id": "B",
-     "text": "Damen fra hånden; dækker Vest, lægges der lille.",
+     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -212,7 +242,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Damen fra bordet; dækker Øst, lægges der lille.",
+     "text": "Damen fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "N",
@@ -222,12 +252,22 @@
     },
     {
      "id": "B",
-     "text": "Lille fra begge hænder.",
-     "steps": []
+     "text": "Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.",
+     "steps": [
+      {
+       "leadFrom": "N",
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "low"
+       }
+      }
+     ]
     },
     {
      "id": "C",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -237,8 +277,18 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder.",
-     "steps": []
+     "text": "Lille fra hånden mod damen (kip); lægger Vest en honnør, lægges der lille.",
+     "steps": [
+      {
+       "leadFrom": "S",
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "Q",
+        "else": "low"
+       }
+      }
+     ]
     }
    ],
    "source": {
@@ -252,7 +302,7 @@
   },
   {
    "id": "5432-Q876",
-   "technique": "sikkerhedsspil",
+   "technique": "begraenset-valg",
    "north": "5432",
    "south": "Q876",
    "goals": [
@@ -263,12 +313,22 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder.",
-     "steps": []
+     "text": "Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.",
+     "steps": [
+      {
+       "leadFrom": "N",
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "Q",
+        "else": "low"
+       }
+      }
+     ]
     },
     {
      "id": "B",
-     "text": "Damen fra hånden; dækker Vest, lægges der lille.",
+     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -298,7 +358,7 @@
   },
   {
    "id": "432-AQ765",
-   "technique": "sikkerhedsspil",
+   "technique": "enkelt-kipning",
    "north": "432",
    "south": "AQ765",
    "goals": [
@@ -310,12 +370,22 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet til esset.",
-     "steps": []
+     "text": "Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
+     "steps": [
+      {
+       "leadFrom": "N",
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "Q",
+        "else": "A"
+       }
+      }
+     ]
     },
     {
      "id": "B",
-     "text": "Slå esset. Lille fra begge hænder.",
+     "text": "Slå esset. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
@@ -325,7 +395,7 @@
     },
     {
      "id": "C",
-     "text": "Damen fra hånden; dækker Vest, lægges der lille.",
+     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -335,7 +405,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder. Lille fra bordet til esset.",
+     "text": "Lille fra begge hænder. Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -356,7 +426,7 @@
   },
   {
    "id": "432-Q8765",
-   "technique": "sikkerhedsspil",
+   "technique": "begraenset-valg",
    "north": "432",
    "south": "Q8765",
    "goals": [
@@ -368,12 +438,22 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder.",
-     "steps": []
+     "text": "Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.",
+     "steps": [
+      {
+       "leadFrom": "N",
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "Q",
+        "else": "low"
+       }
+      }
+     ]
     },
     {
      "id": "B",
-     "text": "Damen fra hånden; dækker Vest, lægges der lille.",
+     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -404,7 +484,7 @@
   },
   {
    "id": "432-AQ5",
-   "technique": "sikkerhedsspil",
+   "technique": "spil-mod-honnoer",
    "north": "432",
    "south": "AQ5",
    "goals": [
@@ -414,14 +494,14 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet til esset. Lille fra begge hænder.",
+     "text": "Lille fra bordet til esset. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "N",
        "card": "low",
        "third": {
         "ifSecondPlays": "low",
-        "play": "low",
+        "play": "A",
         "else": "A"
        }
       }
@@ -429,7 +509,7 @@
     },
     {
      "id": "B",
-     "text": "Slå esset. Lille fra begge hænder.",
+     "text": "Slå esset. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
@@ -439,7 +519,7 @@
     },
     {
      "id": "C",
-     "text": "Damen fra hånden; dækker Vest, lægges der lille.",
+     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -449,7 +529,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder. Lille fra bordet til esset.",
+     "text": "Lille fra begge hænder. Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -519,7 +599,7 @@
   },
   {
    "id": "5432-AQ76",
-   "technique": "sikkerhedsspil",
+   "technique": "enkelt-kipning",
    "north": "5432",
    "south": "AQ76",
    "goals": [
@@ -530,12 +610,22 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet til esset.",
-     "steps": []
+     "text": "Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
+     "steps": [
+      {
+       "leadFrom": "N",
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "Q",
+        "else": "A"
+       }
+      }
+     ]
     },
     {
      "id": "B",
-     "text": "Slå esset. Lille fra begge hænder.",
+     "text": "Slå esset. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
@@ -545,7 +635,7 @@
     },
     {
      "id": "C",
-     "text": "Damen fra hånden; dækker Vest, lægges der lille.",
+     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -555,7 +645,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder. Lille fra bordet til esset.",
+     "text": "Lille fra begge hænder. Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -575,7 +665,7 @@
   },
   {
    "id": "432-K98765",
-   "technique": "sikkerhedsspil",
+   "technique": "begraenset-valg",
    "north": "432",
    "south": "K98765",
    "goals": [
@@ -587,12 +677,22 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder.",
-     "steps": []
+     "text": "Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.",
+     "steps": [
+      {
+       "leadFrom": "N",
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "low"
+       }
+      }
+     ]
     },
     {
      "id": "B",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -634,7 +734,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra begge hænder.",
+     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": []
     },
     {
@@ -654,7 +754,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder.",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
@@ -690,7 +790,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra begge hænder.",
+     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "N",
@@ -725,7 +825,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder.",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
@@ -816,7 +916,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra begge hænder.",
+     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "N",
@@ -851,7 +951,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder.",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
@@ -887,8 +987,18 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet til esset.",
-     "steps": []
+     "text": "Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
+     "steps": [
+      {
+       "leadFrom": "N",
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "Q",
+        "else": "A"
+       }
+      }
+     ]
     },
     {
      "id": "B",
@@ -902,7 +1012,7 @@
     },
     {
      "id": "C",
-     "text": "Damen fra hånden; dækker Vest, lægges der lille.",
+     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -997,7 +1107,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra begge hænder.",
+     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "N",
@@ -1075,7 +1185,7 @@
        "card": "low",
        "third": {
         "ifSecondPlays": "low",
-        "play": "low",
+        "play": "A",
         "else": "A"
        }
       },
@@ -1121,7 +1231,7 @@
   },
   {
    "id": "32-QT54",
-   "technique": "dobbelt-kipning",
+   "technique": "begraenset-valg",
    "north": "32",
    "south": "QT54",
    "goals": [
@@ -1614,7 +1724,7 @@
   },
   {
    "id": "432-QJ765",
-   "technique": "spil-mod-honnoer",
+   "technique": "begraenset-valg",
    "north": "432",
    "south": "QJ765",
    "goals": [
@@ -1626,7 +1736,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.",
+     "text": "Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "N",
@@ -1689,7 +1799,7 @@
        "card": "low",
        "third": {
         "ifSecondPlays": "low",
-        "play": "low",
+        "play": "A",
         "else": "A"
        }
       }
@@ -1738,8 +1848,18 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet til esset.",
-     "steps": []
+     "text": "Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
+     "steps": [
+      {
+       "leadFrom": "N",
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "Q",
+        "else": "A"
+       }
+      }
+     ]
     },
     {
      "id": "B",
@@ -1753,7 +1873,7 @@
     },
     {
      "id": "C",
-     "text": "Damen fra hånden; dækker Vest, lægges der lille.",
+     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -1784,7 +1904,7 @@
   },
   {
    "id": "432-KQ8765",
-   "technique": "sikkerhedsspil",
+   "technique": "spil-mod-honnoer",
    "north": "432",
    "south": "KQ8765",
    "goals": [
@@ -1795,12 +1915,22 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder. Slå damen.",
-     "steps": []
+     "text": "Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Slå damen.",
+     "steps": [
+      {
+       "leadFrom": "N",
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "low"
+       }
+      }
+     ]
     },
     {
      "id": "B",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille. Slå damen.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå damen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -1830,7 +1960,7 @@
   },
   {
    "id": "5432-Q9876",
-   "technique": "sikkerhedsspil",
+   "technique": "begraenset-valg",
    "north": "5432",
    "south": "Q9876",
    "goals": [
@@ -1841,7 +1971,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder. Lille fra begge hænder.",
+     "text": "Lille fra begge hænder. Lille fra bordet mod damen (kip).",
      "steps": [
       {
        "leadFrom": "N",
@@ -1851,7 +1981,7 @@
     },
     {
      "id": "B",
-     "text": "Damen fra hånden; dækker Vest, lægges der lille. Lille fra begge hænder.",
+     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "S",
@@ -1865,7 +1995,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra begge hænder. Lille fra begge hænder.",
+     "text": "Lille fra begge hænder. Lille fra bordet mod damen (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -1902,7 +2032,7 @@
        "card": "low",
        "third": {
         "ifSecondPlays": "low",
-        "play": "low",
+        "play": "A",
         "else": "A"
        }
       },
@@ -2117,7 +2247,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder. Lille fra begge hænder.",
+     "text": "Lille fra begge hænder. Lille fra bordet mod knægten (kip).",
      "steps": [
       {
        "leadFrom": "N",
@@ -2145,7 +2275,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra begge hænder. Lille fra begge hænder.",
+     "text": "Lille fra begge hænder. Lille fra bordet mod knægten (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -2223,7 +2353,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.",
+     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": []
     },
     {
@@ -2238,7 +2368,7 @@
     },
     {
      "id": "C",
-     "text": "10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.",
+     "text": "10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
@@ -2374,7 +2504,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder. Slå esset. Lille fra begge hænder.",
+     "text": "Lille fra begge hænder. Slå esset. Lille fra bordet mod 10'eren (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -2404,7 +2534,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.",
+     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": []
     },
     {
@@ -2419,7 +2549,7 @@
     },
     {
      "id": "C",
-     "text": "10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.",
+     "text": "10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
@@ -2559,7 +2689,7 @@
   },
   {
    "id": "T32-Q654",
-   "technique": "dobbelt-kipning",
+   "technique": "begraenset-valg",
    "north": "T32",
    "south": "Q654",
    "goals": [
@@ -2644,7 +2774,7 @@
     },
     {
      "id": "B",
-     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder. Lille fra begge hænder.",
+     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder. Lille fra bordet mod 10'eren (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -2654,7 +2784,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra begge hænder. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.",
+     "text": "Lille fra begge hænder. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 10'eren (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -2718,7 +2848,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder. Lille fra begge hænder.",
+     "text": "Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder. Lille fra bordet mod knægten (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -2742,7 +2872,7 @@
   },
   {
    "id": "T2-Q543",
-   "technique": "spil-mod-honnoer",
+   "technique": "begraenset-valg",
    "north": "T2",
    "south": "Q543",
    "goals": [
@@ -3375,7 +3505,7 @@
        "card": "low",
        "third": {
         "ifSecondPlays": "low",
-        "play": "low",
+        "play": "A",
         "else": "A"
        }
       },
@@ -3666,7 +3796,7 @@
   },
   {
    "id": "32-QT654",
-   "technique": "dobbelt-kipning",
+   "technique": "begraenset-valg",
    "north": "32",
    "south": "QT654",
    "goals": [
@@ -3744,7 +3874,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet til esset. Slå kongen. Lille fra begge hænder.",
+     "text": "Lille fra bordet til esset. Slå kongen. Lille fra bordet mod 10'eren (kip).",
      "steps": [
       {
        "leadFrom": "N",
@@ -3763,7 +3893,7 @@
     },
     {
      "id": "C",
-     "text": "Slå esset og kongen. Lille fra begge hænder.",
+     "text": "Slå esset og kongen. Lille fra bordet mod 10'eren (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -3827,7 +3957,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra bordet til esset.",
+     "text": "10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     },
     {
@@ -4263,7 +4393,7 @@
   },
   {
    "id": "32-QJ7654",
-   "technique": "spil-mod-honnoer",
+   "technique": "begraenset-valg",
    "north": "32",
    "south": "QJ7654",
    "goals": [
@@ -4275,7 +4405,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.",
+     "text": "Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "N",
@@ -4628,7 +4758,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Damen fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Damen fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     },
     {
@@ -4663,7 +4793,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden mod damen (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra hånden mod damen (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     }
    ],
@@ -4758,7 +4888,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -4808,7 +4938,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -4925,7 +5055,7 @@
        "card": "low",
        "third": {
         "ifSecondPlays": "low",
-        "play": "low",
+        "play": "A",
         "else": "A"
        }
       }
@@ -4992,7 +5122,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder.",
+     "text": "Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
@@ -5330,12 +5460,12 @@
     },
     {
      "id": "C",
-     "text": "Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder; lægger Vest en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille. Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med esset.",
      "steps": []
     },
     {
      "id": "D",
-     "text": "Damen fra hånden; dækker Vest, tages stikket med esset, ellers lad den løbe. Lille fra begge hænder; lægger Vest en honnør, tages den med esset.",
+     "text": "Damen fra hånden; dækker Vest, tages stikket med esset, ellers lad den løbe. Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med esset.",
      "steps": []
     },
     {
@@ -5391,7 +5521,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder; lægger Vest en honnør, tages den med damen.",
+     "text": "Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med damen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -5406,7 +5536,7 @@
     },
     {
      "id": "D",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Vest en honnør, tages den med damen.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med damen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -5528,7 +5658,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder; lægger Vest en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille. Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -5543,7 +5673,7 @@
     },
     {
      "id": "D",
-     "text": "Knægten fra hånden; dækker Vest, tages stikket med esset, ellers lad den løbe. Lille fra begge hænder; lægger Vest en honnør, tages den med esset.",
+     "text": "Knægten fra hånden; dækker Vest, tages stikket med esset, ellers lad den løbe. Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -5603,7 +5733,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder. Slå 10'eren.",
+     "text": "Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Lille fra hånden mod knægten (kip). Slå 10'eren.",
      "steps": []
     },
     {
@@ -6486,7 +6616,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.",
+     "text": "Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "N",
@@ -6501,7 +6631,7 @@
     },
     {
      "id": "B",
-     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.",
+     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
@@ -6511,7 +6641,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra begge hænder. Lille fra begge hænder.",
+     "text": "Lille fra begge hænder. Lille fra bordet mod damen (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -6541,7 +6671,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra begge hænder.",
+     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "N",
@@ -6576,7 +6706,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder.",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
@@ -7150,7 +7280,7 @@
   },
   {
    "id": "432-QT765",
-   "technique": "dobbelt-kipning",
+   "technique": "begraenset-valg",
    "north": "432",
    "south": "QT765",
    "goals": [
@@ -7226,7 +7356,7 @@
        "card": "low",
        "third": {
         "ifSecondPlays": "low",
-        "play": "low",
+        "play": "A",
         "else": "A"
        }
       },
@@ -7284,7 +7414,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra bordet til esset.",
+     "text": "10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     },
     {
@@ -7314,7 +7444,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet til esset.",
+     "text": "Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -7405,12 +7535,22 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder.",
-     "steps": []
+     "text": "Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.",
+     "steps": [
+      {
+       "leadFrom": "N",
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "low"
+       }
+      }
+     ]
     },
     {
      "id": "B",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -7601,7 +7741,7 @@
     },
     {
      "id": "D",
-     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers læg knægten. Lille fra begge hænder.",
+     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers læg knægten. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
@@ -7696,7 +7836,7 @@
   },
   {
    "id": "5432-KT76",
-   "technique": "dobbelt-kipning",
+   "technique": "begraenset-valg",
    "north": "5432",
    "south": "KT76",
    "goals": [
@@ -7707,7 +7847,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.",
+     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": []
     },
     {
@@ -7722,7 +7862,7 @@
     },
     {
      "id": "C",
-     "text": "10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.",
+     "text": "10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
@@ -7732,7 +7872,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder. Lille fra begge hænder.",
+     "text": "Lille fra begge hænder. Lille fra bordet mod 10'eren (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -7861,7 +8001,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra begge hænder. Lille fra begge hænder.",
+     "text": "Lille fra begge hænder. Lille fra bordet mod knægten (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -7880,7 +8020,7 @@
   },
   {
    "id": "J2-AQ6543",
-   "technique": "sikkerhedsspil",
+   "technique": "spil-mod-honnoer",
    "north": "J2",
    "south": "AQ6543",
    "goals": [
@@ -7906,7 +8046,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet til esset. Lille fra begge hænder.",
+     "text": "Lille fra bordet til esset. Lille fra hånden mod knægten (kip).",
      "steps": [
       {
        "leadFrom": "N",
@@ -7921,7 +8061,7 @@
     },
     {
      "id": "C",
-     "text": "Slå esset. Lille fra begge hænder.",
+     "text": "Slå esset. Lille fra hånden mod knægten (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -8052,7 +8192,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Damen fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Damen fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     },
     {
@@ -8072,7 +8212,7 @@
     },
     {
      "id": "C",
-     "text": "Slå esset. Lille fra begge hænder.",
+     "text": "Slå esset. Lille fra hånden mod damen (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -8087,7 +8227,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden mod damen (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra hånden mod damen (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     }
    ],
@@ -8111,7 +8251,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Damen fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med kongen.",
+     "text": "Damen fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -8141,7 +8281,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden mod damen (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder; lægger Øst en honnør, tages den med kongen.",
+     "text": "Lille fra hånden mod damen (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med kongen.",
      "steps": []
     }
    ],
@@ -9061,7 +9201,7 @@
   },
   {
    "id": "432-KQ95",
-   "technique": "sikkerhedsspil",
+   "technique": "begraenset-valg",
    "north": "432",
    "south": "KQ95",
    "goals": [
@@ -9128,7 +9268,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, tages den med esset. Lille fra bordet til esset.",
+     "text": "Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, tages den med esset. Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     },
     {
@@ -9153,7 +9293,7 @@
     },
     {
      "id": "D",
-     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet til esset.",
+     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -10388,12 +10528,12 @@
     },
     {
      "id": "C",
-     "text": "Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder; lægger Vest en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille. Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med esset.",
      "steps": []
     },
     {
      "id": "D",
-     "text": "Damen fra hånden; dækker Vest, tages stikket med esset, ellers lad den løbe. Lille fra begge hænder; lægger Vest en honnør, tages den med esset.",
+     "text": "Damen fra hånden; dækker Vest, tages stikket med esset, ellers lad den løbe. Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med esset.",
      "steps": []
     },
     {
@@ -10450,12 +10590,12 @@
     },
     {
      "id": "C",
-     "text": "Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder; lægger Vest en honnør, tages den med damen.",
+     "text": "Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med damen.",
      "steps": []
     },
     {
      "id": "D",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Vest en honnør, tages den med damen.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med damen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -10546,7 +10686,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "9'eren fra bordet; dækker Øst, lægges der lille, ellers læg damen. Lille fra begge hænder.",
+     "text": "9'eren fra bordet; dækker Øst, lægges der lille, ellers læg damen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "N",
@@ -10623,7 +10763,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     },
     {
@@ -10678,7 +10818,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -10703,7 +10843,7 @@
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -11518,7 +11658,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra bordet til kongen. Lille fra begge hænder; lægger Vest en honnør, tages den med esset.",
+     "text": "Lille fra bordet til kongen. Lille fra hånden mod knægten (kip); lægger Vest en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -11533,7 +11673,7 @@
     },
     {
      "id": "D",
-     "text": "Slå kongen. Lille fra begge hænder; lægger Vest en honnør, tages den med esset.",
+     "text": "Slå kongen. Lille fra hånden mod knægten (kip); lægger Vest en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -12267,7 +12407,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Damen fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Damen fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     },
     {
@@ -12302,7 +12442,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden mod damen (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra hånden mod damen (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     }
    ],
@@ -12461,7 +12601,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Damen fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med kongen.",
+     "text": "Damen fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -12491,7 +12631,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden mod damen (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder; lægger Øst en honnør, tages den med kongen.",
+     "text": "Lille fra hånden mod damen (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med kongen.",
      "steps": []
     }
    ],
@@ -12604,7 +12744,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder; lægger Vest en honnør, tages den med esset. Slå esset. Lille fra hånden.",
+     "text": "Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med esset. Slå esset. Lille fra hånden.",
      "steps": [
       {
        "leadFrom": "S",
@@ -13358,7 +13498,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     },
     {
@@ -13443,7 +13583,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder; lægger Vest en honnør, tages den med esset. Slå esset.",
+     "text": "Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med esset. Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -13482,7 +13622,7 @@
     },
     {
      "id": "B",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med damen.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med damen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -13546,7 +13686,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra hånden mod 10'eren (kip).",
      "steps": []
     }
    ],
@@ -14475,7 +14615,7 @@
   },
   {
    "id": "432-AQ965",
-   "technique": "dobbelt-kipning",
+   "technique": "begraenset-valg",
    "north": "432",
    "south": "AQ965",
    "goals": [
@@ -14487,12 +14627,12 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, tages den med esset. Lille fra bordet til esset.",
+     "text": "Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, tages den med esset. Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     },
     {
      "id": "B",
-     "text": "Slå esset. Lille fra begge hænder.",
+     "text": "Slå esset. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
@@ -14512,7 +14652,7 @@
     },
     {
      "id": "D",
-     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet til esset.",
+     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -14522,7 +14662,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra begge hænder. Lille fra bordet til esset.",
+     "text": "Lille fra begge hænder. Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -14796,7 +14936,7 @@
     },
     {
      "id": "C",
-     "text": "Slå esset. Lille fra begge hænder.",
+     "text": "Slå esset. Lille fra bordet mod 10'eren (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -15070,7 +15210,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder. Lille fra begge hænder.",
+     "text": "Lille fra begge hænder. Lille fra bordet mod 10'eren (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -15131,7 +15271,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra begge hænder. Lille fra begge hænder.",
+     "text": "Lille fra begge hænder. Lille fra bordet mod 10'eren (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -15246,7 +15386,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra bordet til esset.",
+     "text": "10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     },
     {
@@ -15549,7 +15689,7 @@
     },
     {
      "id": "B",
-     "text": "Slå esset. Lille fra begge hænder.",
+     "text": "Slå esset. Lille fra bordet mod knægten (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -16886,7 +17026,7 @@
     },
     {
      "id": "C",
-     "text": "Slå esset. Lille fra begge hænder.",
+     "text": "Slå esset. Lille fra hånden mod damen (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -17829,7 +17969,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Damen fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Damen fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     },
     {
@@ -17864,7 +18004,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden mod damen (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra hånden mod damen (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     }
    ],
@@ -17966,7 +18106,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Lille fra bordet til esset.",
+     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     },
     {
@@ -17991,7 +18131,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder. Lille fra bordet til esset.",
+     "text": "Lille fra begge hænder. Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -18174,7 +18314,7 @@
   },
   {
    "id": "32-KT9",
-   "technique": "sikkerhedsspil",
+   "technique": "dobbelt-kipning",
    "north": "32",
    "south": "KT9",
    "goals": [
@@ -18184,7 +18324,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder. Lille fra begge hænder.",
+     "text": "Lille fra bordet mod 10'eren (kip). Lille fra begge hænder.",
      "steps": []
     },
     {
@@ -18218,7 +18358,7 @@
   },
   {
    "id": "32-QT9",
-   "technique": "sikkerhedsspil",
+   "technique": "dobbelt-kipning",
    "north": "32",
    "south": "QT9",
    "goals": [
@@ -18228,7 +18368,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra bordet mod 10'eren (kip).",
      "steps": []
     },
     {
@@ -18345,7 +18485,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Lille fra bordet til esset.",
+     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     },
     {
@@ -18370,7 +18510,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder. Lille fra bordet til esset.",
+     "text": "Lille fra begge hænder. Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -18553,7 +18693,7 @@
   },
   {
    "id": "432-KT9",
-   "technique": "sikkerhedsspil",
+   "technique": "dobbelt-kipning",
    "north": "432",
    "south": "KT9",
    "goals": [
@@ -18563,7 +18703,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder. Lille fra begge hænder.",
+     "text": "Lille fra bordet mod 10'eren (kip). Lille fra begge hænder.",
      "steps": []
     },
     {
@@ -18597,7 +18737,7 @@
   },
   {
    "id": "432-QT9",
-   "technique": "sikkerhedsspil",
+   "technique": "dobbelt-kipning",
    "north": "432",
    "south": "QT9",
    "goals": [
@@ -18607,7 +18747,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra bordet mod 10'eren (kip).",
      "steps": []
     },
     {
@@ -19102,7 +19242,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Damen fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Damen fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     },
     {
@@ -19137,7 +19277,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden mod damen (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra hånden mod damen (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     }
    ],
@@ -19151,7 +19291,7 @@
   },
   {
    "id": "QT92-A543",
-   "technique": "sikkerhedsspil",
+   "technique": "dobbelt-kipning",
    "north": "QT92",
    "south": "A543",
    "goals": [
@@ -20013,7 +20153,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder. Lille fra begge hænder. Lille fra hånden.",
+     "text": "Lille fra begge hænder. Lille fra hånden mod knægten (kip). Lille fra hånden.",
      "steps": []
     }
    ],
@@ -20278,7 +20418,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra bordet til esset. Lille fra begge hænder; lægger Vest en honnør, tages den med kongen.",
+     "text": "Lille fra bordet til esset. Lille fra hånden mod knægten (kip); lægger Vest en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -20293,7 +20433,7 @@
     },
     {
      "id": "D",
-     "text": "Slå esset. Lille fra begge hænder; lægger Vest en honnør, tages den med kongen.",
+     "text": "Slå esset. Lille fra hånden mod knægten (kip); lægger Vest en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -21156,12 +21296,12 @@
     },
     {
      "id": "C",
-     "text": "Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder; lægger Vest en honnør, tages den med damen.",
+     "text": "Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med damen.",
      "steps": []
     },
     {
      "id": "D",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Vest en honnør, tages den med damen.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med damen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -21441,7 +21581,7 @@
     },
     {
      "id": "B",
-     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod 8'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.",
+     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod 8'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 10'eren (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -21451,7 +21591,7 @@
     },
     {
      "id": "C",
-     "text": "8'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.",
+     "text": "8'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 10'eren (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -21461,7 +21601,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.",
+     "text": "Lille fra begge hænder. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 10'eren (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -22197,7 +22337,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder; lægger Vest en honnør, tages den med esset.",
+     "text": "Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -22433,7 +22573,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet til esset. Lille fra begge hænder; lægger Øst en honnør, tages den med kongen.",
+     "text": "Lille fra bordet til esset. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -22448,7 +22588,7 @@
     },
     {
      "id": "B",
-     "text": "Slå esset. Lille fra begge hænder; lægger Øst en honnør, tages den med kongen.",
+     "text": "Slå esset. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -23137,7 +23277,7 @@
   },
   {
    "id": "5432-AQ96",
-   "technique": "dobbelt-kipning",
+   "technique": "begraenset-valg",
    "north": "5432",
    "south": "AQ96",
    "goals": [
@@ -23148,12 +23288,12 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, tages den med esset. Lille fra bordet til esset.",
+     "text": "Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, tages den med esset. Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     },
     {
      "id": "B",
-     "text": "Slå esset. Lille fra begge hænder.",
+     "text": "Slå esset. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
@@ -23173,7 +23313,7 @@
     },
     {
      "id": "D",
-     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet til esset.",
+     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -23183,7 +23323,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra begge hænder. Lille fra bordet til esset.",
+     "text": "Lille fra begge hænder. Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -23841,7 +23981,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder; lægger Vest en honnør, tages den med damen.",
+     "text": "Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med damen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -24496,7 +24636,7 @@
   },
   {
    "id": "432-KT8765",
-   "technique": "dobbelt-kipning",
+   "technique": "begraenset-valg",
    "north": "432",
    "south": "KT8765",
    "goals": [
@@ -24779,7 +24919,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -24849,7 +24989,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra begge hænder. 10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
+     "text": "Lille fra hånden mod knægten (kip). 10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -26546,7 +26686,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -26655,7 +26795,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra begge hænder; lægger Vest en honnør, tages den med kongen. Slå kongen og esset.",
+     "text": "Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med kongen. Slå kongen og esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -26744,7 +26884,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     },
     {
@@ -26844,7 +26984,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra begge hænder; lægger Vest en honnør, tages den med esset. Slå esset.",
+     "text": "Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med esset. Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -26878,12 +27018,12 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra bordet mod 10'eren (kip).",
      "steps": []
     },
     {
      "id": "B",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med damen.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med damen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -26922,7 +27062,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -26947,7 +27087,7 @@
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -26976,7 +27116,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra bordet mod knægten (kip).",
      "steps": []
     },
     {
@@ -27372,7 +27512,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     },
     {
@@ -27452,7 +27592,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder. Damen fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
+     "text": "Lille fra hånden mod 10'eren (kip). Damen fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
      "steps": []
     }
    ],
@@ -27496,7 +27636,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder; lægger Vest en honnør, tages den med esset. Lille fra begge hænder; lægger Vest en honnør, tages den med esset.",
+     "text": "Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med esset. Lille fra begge hænder; lægger Vest en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -27530,12 +27670,12 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder; lægger Øst en honnør, tages den med damen.",
+     "text": "Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med damen.",
      "steps": []
     },
     {
      "id": "B",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med damen.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med damen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -27594,7 +27734,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra hånden mod 10'eren (kip).",
      "steps": []
     }
    ],
@@ -27618,7 +27758,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -27643,7 +27783,7 @@
     },
     {
      "id": "C",
-     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -27697,7 +27837,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra begge hænder. 10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
+     "text": "Lille fra hånden mod knægten (kip). 10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -27840,7 +27980,7 @@
   },
   {
    "id": "K2-AJT93",
-   "technique": "sikkerhedsspil",
+   "technique": "enkelt-kipning",
    "north": "K2",
    "south": "AJT93",
    "goals": [
@@ -27850,7 +27990,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Slå kongen. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Slå kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -27904,7 +28044,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden til kongen. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra hånden til kongen. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -28000,7 +28140,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet til esset. Lille fra begge hænder; lægger Øst en honnør, tages den med kongen.",
+     "text": "Lille fra bordet til esset. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -28015,7 +28155,7 @@
     },
     {
      "id": "B",
-     "text": "Slå esset. Lille fra begge hænder; lægger Øst en honnør, tages den med kongen.",
+     "text": "Slå esset. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -28445,7 +28585,7 @@
   },
   {
    "id": "A32-QT9654",
-   "technique": "sikkerhedsspil",
+   "technique": "dobbelt-kipning",
    "north": "A32",
    "south": "QT9654",
    "goals": [
@@ -29435,7 +29575,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -29475,7 +29615,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -29586,7 +29726,7 @@
     },
     {
      "id": "C",
-     "text": "Slå esset. Lille fra begge hænder. Slå damen.",
+     "text": "Slå esset. Lille fra hånden mod knægten (kip). Slå damen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -30755,7 +30895,7 @@
     },
     {
      "id": "B",
-     "text": "Slå esset. Lille fra begge hænder.",
+     "text": "Slå esset. Lille fra bordet mod 10'eren (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -31152,7 +31292,7 @@
   },
   {
    "id": "32-AT98",
-   "technique": "sikkerhedsspil",
+   "technique": "enkelt-kipning",
    "north": "32",
    "south": "AT98",
    "goals": [
@@ -31162,7 +31302,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Slå esset.",
+     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset. Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Slå esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -31247,7 +31387,7 @@
     },
     {
      "id": "C",
-     "text": "Slå esset. Lille fra begge hænder.",
+     "text": "Slå esset. Lille fra bordet mod 10'eren (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -31349,7 +31489,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra begge hænder.",
+     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "N",
@@ -31374,7 +31514,7 @@
     },
     {
      "id": "D",
-     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers læg knægten. Lille fra begge hænder.",
+     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers læg knægten. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
@@ -31403,7 +31543,7 @@
   },
   {
    "id": "32-KT98",
-   "technique": "sikkerhedsspil",
+   "technique": "dobbelt-kipning",
    "north": "32",
    "south": "KT98",
    "goals": [
@@ -31413,7 +31553,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder. Lille fra begge hænder.",
+     "text": "Lille fra bordet mod 10'eren (kip). Lille fra begge hænder.",
      "steps": []
     },
     {
@@ -31447,7 +31587,7 @@
   },
   {
    "id": "32-QT98",
-   "technique": "sikkerhedsspil",
+   "technique": "dobbelt-kipning",
    "north": "32",
    "south": "QT98",
    "goals": [
@@ -31457,7 +31597,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra bordet mod 10'eren (kip).",
      "steps": []
     },
     {
@@ -31491,7 +31631,7 @@
   },
   {
    "id": "QT2-A76543",
-   "technique": "sikkerhedsspil",
+   "technique": "dobbelt-kipning",
    "north": "QT2",
    "south": "A76543",
    "goals": [
@@ -32199,7 +32339,7 @@
   },
   {
    "id": "432-Q9865",
-   "technique": "dobbelt-kipning",
+   "technique": "begraenset-valg",
    "north": "432",
    "south": "Q9865",
    "goals": [
@@ -32615,7 +32755,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra begge hænder.",
+     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "N",
@@ -32649,7 +32789,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder.",
+     "text": "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
@@ -32886,7 +33026,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -32937,7 +33077,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra bordet mod 10'eren (kip).",
      "steps": []
     },
     {
@@ -33104,7 +33244,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -33166,7 +33306,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -33312,7 +33452,7 @@
     },
     {
      "id": "B",
-     "text": "Slå esset. Lille fra begge hænder.",
+     "text": "Slå esset. Lille fra bordet mod knægten (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -33468,7 +33608,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra hånden mod knægten (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -33512,7 +33652,7 @@
     },
     {
      "id": "B",
-     "text": "Slå esset. Lille fra begge hænder.",
+     "text": "Slå esset. Lille fra bordet mod knægten (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -33561,7 +33701,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -33601,7 +33741,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -33782,7 +33922,7 @@
   },
   {
    "id": "QT92-A6543",
-   "technique": "sikkerhedsspil",
+   "technique": "dobbelt-kipning",
    "north": "QT92",
    "south": "A6543",
    "goals": [
@@ -33928,7 +34068,7 @@
     },
     {
      "id": "B",
-     "text": "Slå esset. Lille fra begge hænder.",
+     "text": "Slå esset. Lille fra bordet mod knægten (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -34060,12 +34200,12 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.",
+     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod damen (kip).",
      "steps": []
     },
     {
      "id": "B",
-     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.",
+     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod 10'eren (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -34079,7 +34219,7 @@
     },
     {
      "id": "C",
-     "text": "10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.",
+     "text": "10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod damen (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -34089,7 +34229,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder. Lille fra begge hænder.",
+     "text": "Lille fra begge hænder. Lille fra bordet mod damen (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -34289,7 +34429,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     },
     {
@@ -34344,7 +34484,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Slå esset.",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset. Slå esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -34674,7 +34814,7 @@
   },
   {
    "id": "432-KT98",
-   "technique": "sikkerhedsspil",
+   "technique": "dobbelt-kipning",
    "north": "432",
    "south": "KT98",
    "goals": [
@@ -34684,7 +34824,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder. Lille fra begge hænder.",
+     "text": "Lille fra bordet mod 10'eren (kip). Lille fra begge hænder.",
      "steps": []
     },
     {
@@ -35686,7 +35826,7 @@
   },
   {
    "id": "2-AT98",
-   "technique": "sikkerhedsspil",
+   "technique": "enkelt-kipning",
    "north": "2",
    "south": "AT98",
    "goals": [
@@ -35696,7 +35836,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Slå esset.",
+     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset. Slå esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -35844,7 +35984,7 @@
   },
   {
    "id": "2-QT98",
-   "technique": "sikkerhedsspil",
+   "technique": "dobbelt-kipning",
    "north": "2",
    "south": "QT98",
    "goals": [
@@ -35854,7 +35994,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra bordet mod 10'eren (kip).",
      "steps": []
     },
     {
@@ -35968,7 +36108,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -35983,7 +36123,7 @@
     },
     {
      "id": "B",
-     "text": "Slå esset. Lille fra begge hænder; lægger Øst en honnør, tages den med kongen.",
+     "text": "Slå esset. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -36023,7 +36163,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -36133,7 +36273,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     },
     {
@@ -36188,12 +36328,12 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder; lægger Øst en honnør, tages den med damen.",
+     "text": "Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med damen.",
      "steps": []
     },
     {
      "id": "B",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med damen.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med damen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -36222,7 +36362,7 @@
   },
   {
    "id": "5432-AJT9",
-   "technique": "fald-eller-kip",
+   "technique": "begraenset-valg",
    "north": "5432",
    "south": "AJT9",
    "goals": [
@@ -36232,7 +36372,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -37090,7 +37230,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra hånden mod knægten (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -37401,7 +37541,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -37452,7 +37592,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra bordet mod 10'eren (kip).",
      "steps": []
     },
     {
@@ -37523,7 +37663,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder. Damen fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
+     "text": "Lille fra hånden mod 10'eren (kip). Damen fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
      "steps": []
     }
    ],
@@ -37569,7 +37709,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra hånden mod 10'eren (kip).",
      "steps": []
     }
    ],
@@ -37620,7 +37760,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra begge hænder. Slå esset.",
+     "text": "Lille fra hånden mod knægten (kip). Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -37752,7 +37892,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Slå kongen. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Slå kongen. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -37777,7 +37917,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra bordet til esset. Lille fra begge hænder; lægger Vest en honnør, tages den med kongen.",
+     "text": "Lille fra bordet til esset. Lille fra hånden mod knægten (kip); lægger Vest en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -37792,7 +37932,7 @@
     },
     {
      "id": "D",
-     "text": "Slå esset. Lille fra begge hænder; lægger Vest en honnør, tages den med kongen.",
+     "text": "Slå esset. Lille fra hånden mod knægten (kip); lægger Vest en honnør, tages den med kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -37817,7 +37957,7 @@
     },
     {
      "id": "F",
-     "text": "Lille fra hånden til kongen. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra hånden til kongen. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -39525,7 +39665,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet til esset. Lille fra begge hænder.",
+     "text": "Lille fra bordet til esset. Lille fra hånden mod knægten (kip).",
      "steps": [
       {
        "leadFrom": "N",
@@ -39540,7 +39680,7 @@
     },
     {
      "id": "C",
-     "text": "Slå esset. Lille fra begge hænder.",
+     "text": "Slå esset. Lille fra hånden mod knægten (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -39759,7 +39899,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra begge hænder. Slå esset.",
+     "text": "Lille fra bordet mod 10'eren (kip). Slå esset.",
      "steps": []
     },
     {
@@ -40197,7 +40337,7 @@
   },
   {
    "id": "A2-QT96543",
-   "technique": "sikkerhedsspil",
+   "technique": "dobbelt-kipning",
    "north": "A2",
    "south": "QT96543",
    "goals": [
@@ -40284,7 +40424,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet til esset. Lille fra begge hænder.",
+     "text": "Lille fra bordet til esset. Lille fra bordet mod knægten (kip).",
      "steps": [
       {
        "leadFrom": "N",
@@ -40299,7 +40439,7 @@
     },
     {
      "id": "B",
-     "text": "Slå esset. Lille fra begge hænder.",
+     "text": "Slå esset. Lille fra bordet mod knægten (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -40379,7 +40519,7 @@
     },
     {
      "id": "B",
-     "text": "Slå esset. Lille fra begge hænder.",
+     "text": "Slå esset. Lille fra bordet mod 10'eren (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -40442,7 +40582,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.",
+     "text": "Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "N",
@@ -40457,7 +40597,7 @@
     },
     {
      "id": "B",
-     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.",
+     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.",
      "steps": [
       {
        "leadFrom": "S",
@@ -40467,7 +40607,7 @@
     },
     {
      "id": "C",
-     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.",
+     "text": "9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod damen (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -40477,7 +40617,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder. Lille fra begge hænder.",
+     "text": "Lille fra begge hænder. Lille fra bordet mod damen (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -41061,7 +41201,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -42097,7 +42237,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra hånden mod 10'eren (kip).",
      "steps": []
     }
    ],
@@ -42235,7 +42375,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset.",
+     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
      "steps": []
     },
     {
@@ -42290,7 +42430,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra bordet mod 10'eren (kip).",
      "steps": []
     },
     {
@@ -42338,7 +42478,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Slå esset.",
+     "text": "Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset. Slå esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -42764,7 +42904,7 @@
   },
   {
    "id": "5432-AT98",
-   "technique": "sikkerhedsspil",
+   "technique": "fald-eller-kip",
    "north": "5432",
    "south": "AT98",
    "goals": [
@@ -42774,7 +42914,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Lille fra begge hænder.",
+     "text": "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset. Lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "N",
@@ -42789,7 +42929,7 @@
     },
     {
      "id": "B",
-     "text": "Slå esset. Lille fra begge hænder.",
+     "text": "Slå esset. Lille fra bordet mod 10'eren (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -42818,7 +42958,7 @@
   },
   {
    "id": "5432-KT98",
-   "technique": "sikkerhedsspil",
+   "technique": "dobbelt-kipning",
    "north": "5432",
    "south": "KT98",
    "goals": [
@@ -42828,7 +42968,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder. Lille fra begge hænder.",
+     "text": "Lille fra bordet mod 10'eren (kip). Lille fra begge hænder.",
      "steps": []
     },
     {
@@ -42961,7 +43101,7 @@
   },
   {
    "id": "5432-K9876",
-   "technique": "sikkerhedsspil",
+   "technique": "begraenset-valg",
    "north": "5432",
    "south": "K9876",
    "goals": [
@@ -42973,12 +43113,22 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra begge hænder.",
-     "steps": []
+     "text": "Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.",
+     "steps": [
+      {
+       "leadFrom": "N",
+       "card": "low",
+       "third": {
+        "ifSecondPlays": "low",
+        "play": "K",
+        "else": "low"
+       }
+      }
+     ]
     },
     {
      "id": "B",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
      "steps": [
       {
        "leadFrom": "S",
@@ -43421,7 +43571,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra hånden mod knægten (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -43655,7 +43805,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra bordet mod 10'eren (kip).",
      "steps": [
       {
        "leadFrom": "N",
@@ -43700,7 +43850,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra bordet mod 10'eren (kip).",
      "steps": [
       {
        "leadFrom": "N",
@@ -44420,7 +44570,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra hånden mod 10'eren (kip).",
      "steps": []
     }
    ],
@@ -44725,7 +44875,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra hånden mod 10'eren (kip).",
      "steps": []
     }
    ],
@@ -44780,7 +44930,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra begge hænder. Slå esset.",
+     "text": "Lille fra hånden mod knægten (kip). Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -44838,7 +44988,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra begge hænder. Slå esset.",
+     "text": "Lille fra hånden mod knægten (kip). Slå esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -44882,7 +45032,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra begge hænder.",
+     "text": "Lille fra hånden mod knægten (kip).",
      "steps": [
       {
        "leadFrom": "S",
@@ -45189,7 +45339,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra begge hænder; lægger Vest en honnør, tages den med esset.",
+     "text": "Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med esset.",
      "steps": [
       {
        "leadFrom": "S",

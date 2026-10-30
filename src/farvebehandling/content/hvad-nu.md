@@ -8,54 +8,54 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **1 stik** · første runde: Nord 5 · Øst x · Syd 8 · Vest E (9,0 % af spillene)
 
-- 100,0 % (bedst): Lille fra bordet og lille fra hånden.
+- 100,0 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
 - 100,0 %: Lille fra hånden og lille fra bordet.
-- 37,5 %: Damen fra hånden; dækker Vest, lægges der lille.
+- 37,5 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 ## 8. D 8 7 6 5 / 4 3 2
 
 **2 stik** · første runde: Nord 4 · Øst x · Syd 8 · Vest E (9,0 % af spillene)
 
-- 100,0 % (bedst): Lille fra bordet og lille fra hånden.
+- 100,0 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
 - 100,0 %: Lille fra hånden og lille fra bordet.
-- 37,5 %: Damen fra hånden; dækker Vest, lægges der lille.
+- 37,5 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 ## 12. K 9 8 7 6 5 / 4 3 2
 
 **4 stik** · første runde: Nord 4 · Øst D · Syd 9 · Vest B (78,0 % af spillene)
 
-- 76,1 % (bedst): Lille fra bordet og lille fra hånden.
-- 52,2 %: Kongen fra hånden; dækker Vest, lægges der lille.
+- 76,1 % (bedst): Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
+- 52,2 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 52,2 %: Lille fra hånden og lille fra bordet.
 
 ## 21. D 10 5 4 / 3 2
 
 **1 stik** · første runde: Nord 3 · Øst x · Syd 10 · Vest E (37,1 % af spillene)
 
-- 66,2 % (bedst): Lille fra bordet og lille fra hånden.
+- 66,2 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
 - 30,7 %: Lille fra hånden og lille fra bordet. Lille fra hånden.
-- 0,0 %: Damen fra hånden; dækker Vest, lægges der lille.
+- 0,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 ## 28. D B 7 6 5 / 4 3 2
 
 **3 stik** · første runde: Nord 4 · Øst x · Syd D · Vest E (68,4 % af spillene)
 
-- 59,5 % (bedst): Lille fra bordet og lille fra hånden.
+- 59,5 % (bedst): Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.
 - 34,7 %: Lille fra hånden og lille fra bordet.
-- 0,0 %: Knægten fra hånden; dækker Vest, lægges der lille.
+- 0,0 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 **2 stik** · første runde: Nord 4 · Øst x · Syd D · Vest E (68,4 % af spillene)
 
-- 87,6 % (bedst): Lille fra bordet og lille fra hånden.
+- 87,6 % (bedst): Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.
 - 87,6 %: Lille fra hånden og lille fra bordet.
-- 79,3 %: Knægten fra hånden; dækker Vest, lægges der lille.
+- 79,3 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 ## 32. D 9 8 7 6 / 5 4 3 2
 
 **3 stik** · første runde: Nord 5 · Øst B · Syd 9 · Vest E (19,2 % af spillene)
 
-- 100,0 % (bedst): Lille fra bordet og lille fra hånden.
-- 35,3 %: Damen fra hånden; dækker Vest, lægges der lille.
+- 100,0 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
+- 35,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 35,3 %: Lille fra hånden og lille fra bordet.
 
 ## 36. B 8 7 6 / 5 4 3 2
@@ -70,44 +70,44 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **1 stik** · første runde: Nord 4 · Øst x · Syd 10 · Vest B (45,2 % af spillene)
 
-- 52,7 % (bedst): Lille fra bordet og lille fra hånden. Lille fra begge hænder.
-- 46,4 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder.
-- 39,3 %: Damen fra hånden; dækker Vest, lægges der lille. Lille fra begge hænder.
+- 52,7 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.
+- 46,4 %: Lille fra hånden og lille fra bordet. Lille fra bordet mod damen (kip).
+- 39,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
 
 **1 stik** · første runde: Nord 4 · Øst x · Syd 10 · Vest E (34,6 % af spillene)
 
-- 86,0 % (bedst): Lille fra bordet og lille fra hånden. Lille fra begge hænder.
-- 86,0 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder.
-- 46,3 %: Damen fra hånden; dækker Vest, lægges der lille. Lille fra begge hænder.
+- 86,0 % (bedst): Lille fra bordet og lille fra hånden. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
+- 86,0 %: Lille fra hånden og lille fra bordet. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
+- 46,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
 
 ## 44. D 6 5 4 / 10 3 2
 
 **1 stik** · første runde: Syd 6 · Vest x · Nord 10 · Øst B (45,2 % af spillene)
 
-- 60,7 % (bedst): Lille fra bordet og lille fra hånden. Lille fra begge hænder.
-- 60,7 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder.
-- 39,3 %: Damen fra hånden; dækker Vest, lægges der lille. Lille fra begge hænder.
+- 60,7 % (bedst): Lille fra bordet og lille fra hånden. Lille fra bordet mod damen (kip).
+- 60,7 %: Lille fra hånden og lille fra bordet. Lille fra bordet mod damen (kip).
+- 39,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
 
 **1 stik** · første runde: Syd 6 · Vest x · Nord 10 · Øst E (34,6 % af spillene)
 
-- 65,0 % (bedst): Lille fra bordet og lille fra hånden. Lille fra begge hænder.
-- 65,0 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder.
-- 46,3 %: Damen fra hånden; dækker Vest, lægges der lille. Lille fra begge hænder.
+- 65,0 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.
+- 65,0 %: Lille fra hånden og lille fra bordet. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
+- 46,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
 
 ## 45. B 10 6 5 / 4 3 2
 
 **1 stik** · første runde: Nord 4 · Øst x · Syd B · Vest E (79,8 % af spillene)
 
 - 65,1 % (bedst): Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.
-- 48,4 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder.
+- 48,4 %: Lille fra hånden og lille fra bordet. Lille fra bordet mod 10'eren (kip).
 - 42,3 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
 
 ## 46. B 6 5 4 / 10 3 2
 
 **1 stik** · første runde: Syd 6 · Vest x · Nord 10 · Øst E (79,8 % af spillene)
 
-- 60,5 % (bedst): Lille fra bordet og lille fra hånden. Lille fra begge hænder.
-- 60,5 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder.
+- 60,5 % (bedst): Lille fra bordet og lille fra hånden. Lille fra bordet mod knægten (kip).
+- 60,5 %: Lille fra hånden og lille fra bordet. Lille fra bordet mod knægten (kip).
 - 42,3 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
 
 **1 stik** · første runde: Syd 6 · Vest E · Nord 3 · Øst x (10,3 % af spillene)
@@ -121,22 +121,22 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **1 stik** · første runde: Nord 10 · Øst E · Syd 5 · Vest x (37,1 % af spillene)
 
-- 33,8 % (bedst): Lille fra bordet og lille fra hånden.
+- 33,8 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
 - 30,7 %: Lille fra hånden og lille fra bordet. Lille fra hånden.
-- 0,0 %: Damen fra hånden; dækker Vest, lægges der lille.
+- 0,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 ## 59. D 10 6 5 4 / 3 2
 
 **2 stik** · første runde: Nord 3 · Øst x · Syd 10 · Vest E (34,6 % af spillene)
 
-- 74,3 % (bedst): Lille fra bordet og lille fra hånden. Lille fra hånden.
+- 74,3 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille. Lille fra hånden.
 - 50,9 %: Lille fra hånden og lille fra bordet. Lille fra hånden.
-- 46,3 %: Damen fra hånden; dækker Vest, lægges der lille. Lille fra hånden.
+- 46,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra hånden.
 
 **1 stik** · første runde: Nord 3 · Øst x · Syd 10 · Vest E (34,6 % af spillene)
 
-- 100,0 % (bedst): Lille fra bordet og lille fra hånden.
-- 93,0 %: Damen fra hånden; dækker Vest, lægges der lille.
+- 100,0 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
+- 93,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 93,0 %: Lille fra hånden og lille fra bordet.
 
 ## 64. K 10 5 4 / B 3 2
@@ -152,9 +152,9 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **4 stik** · første runde: Nord 3 · Øst x · Syd D · Vest E (68,4 % af spillene)
 
-- 59,5 % (bedst): Lille fra bordet og lille fra hånden.
+- 59,5 % (bedst): Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.
 - 34,7 %: Lille fra hånden og lille fra bordet.
-- 0,0 %: Knægten fra hånden; dækker Vest, lægges der lille.
+- 0,0 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 ## 71. D B 10 5 4 / 3 2
 
@@ -168,16 +168,16 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **2 stik** · første runde: Syd 4 · Vest x · Nord 10 · Øst B (49,3 % af spillene)
 
-- 10,5 % (bedst): Lille fra bordet og lille fra hånden.
+- 10,5 % (bedst): Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
 - 8,9 %: Lille fra hånden og lille fra bordet.
-- 0,0 %: Kongen fra hånden; dækker Vest, lægges der lille.
+- 0,0 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 ## 79. E B 4 3 / 10 2
 
 **2 stik** · første runde: Syd 4 · Vest K · Nord 2 · Øst x (1,7 % af spillene)
 
 - 100,0 % (bedst): 10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod 10'eren (kip).
 - 42,9 %: Slå esset. Lille fra hånden.
 - 0,0 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
@@ -196,7 +196,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 - 80,0 % (bedst): Lille fra bordet til esset. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, lægges der lille.
 - 80,0 %: Slå esset. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, lægges der lille.
-- 70,3 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.
+- 70,3 %: Lille fra hånden og lille fra bordet. Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.
 - 39,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset.
 
 ## 87. K 5 4 3 / B 10 2
@@ -252,8 +252,8 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **3 stik** · første runde: Nord 5 · Øst x · Syd D · Vest E (58,8 % af spillene)
 
-- 78,8 % (bedst): Lille fra bordet og lille fra hånden.
-- 57,7 %: Knægten fra hånden; dækker Vest, lægges der lille.
+- 78,8 % (bedst): Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.
+- 57,7 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 57,7 %: Lille fra hånden og lille fra bordet.
 
 **3 stik** · første runde: Nord 5 · Øst E · Syd 8 · Vest x (19,2 % af spillene)
@@ -299,8 +299,8 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **3 stik** · første runde: Nord 4 · Øst x · Syd 10 · Vest B (45,2 % af spillene)
 
-- 81,3 % (bedst): Lille fra bordet og lille fra hånden.
-- 75,0 %: Kongen fra hånden; dækker Vest, lægges der lille.
+- 81,3 % (bedst): Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
+- 75,0 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 30,0 %: Lille fra hånden og lille fra bordet.
 
 ## 107. E B 10 6 5 / 4 3 2
@@ -337,36 +337,36 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **2 stik** · første runde: Nord 4 · Øst x · Syd 10 · Vest B (39,0 % af spillene)
 
-- 85,5 % (bedst): Lille fra bordet og lille fra hånden.
-- 78,3 %: Damen fra hånden; dækker Vest, lægges der lille.
+- 85,5 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
+- 78,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 78,3 %: Lille fra hånden og lille fra bordet.
 
 **2 stik** · første runde: Nord 4 · Øst x · Syd 10 · Vest E (29,4 % af spillene)
 
-- 100,0 % (bedst): Lille fra bordet og lille fra hånden.
+- 100,0 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
 - 100,0 %: Lille fra hånden og lille fra bordet.
-- 80,8 %: Damen fra hånden; dækker Vest, lægges der lille.
+- 80,8 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 ## 112. E D 5 4 3 / 10 2
 
 **3 stik** · første runde: Syd 5 · Vest x · Nord 10 · Øst B (48,0 % af spillene)
 
-- 60,5 % (bedst): Lille fra bordet til esset. Slå esset.
+- 60,5 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset. Slå esset.
 - 53,8 %: Slå esset. Lille fra hånden.
 - 53,8 %: Lille fra hånden og lille fra bordet. Slå esset.
-- 37,0 %: Damen fra hånden; dækker Vest, lægges der lille. Slå esset.
+- 37,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset.
 
 **2 stik** · første runde: Syd 5 · Vest x · Nord 10 · Øst B (48,0 % af spillene)
 
-- 97,5 % (bedst): Lille fra bordet til esset.
+- 97,5 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.
 - 87,4 %: Slå esset.
-- 87,4 %: Damen fra hånden; dækker Vest, lægges der lille.
+- 87,4 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 87,4 %: Lille fra hånden og lille fra bordet.
 
 **2 stik** · første runde: Syd 5 · Vest B · Nord 2 · Øst x (2,8 % af spillene)
 
 - 100,0 % (bedst): 10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod 10'eren (kip).
 - 57,1 %: Slå esset.
 - 57,1 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
@@ -374,8 +374,8 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **3 stik** · første runde: Syd 5 · Vest x · Nord 10 · Øst B (48,0 % af spillene)
 
-- 40,3 % (bedst): Lille fra bordet og lille fra hånden. Slå damen.
-- 37,0 %: Kongen fra hånden; dækker Vest, lægges der lille. Slå damen.
+- 40,3 % (bedst): Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Slå damen.
+- 37,0 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå damen.
 - 16,8 %: Lille fra hånden og lille fra bordet.
 
 ## 115. E B 10 4 3 / 2
@@ -392,23 +392,23 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 - 45,4 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.
 - 37,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
-- 37,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
-- 37,0 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder.
+- 37,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod damen (kip).
+- 37,0 %: Lille fra hånden og lille fra bordet. Lille fra bordet mod damen (kip).
 
 **1 stik** · første runde: Nord 4 · Øst x · Syd 6 · Vest B (19,2 % af spillene)
 
-- 83,2 % (bedst): Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.
-- 70,6 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
-- 70,6 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder.
+- 83,2 % (bedst): Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod damen (kip).
+- 70,6 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod damen (kip).
+- 70,6 %: Lille fra hånden og lille fra bordet. Lille fra bordet mod damen (kip).
 - 45,4 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
 
 ## 119. K 10 7 6 / 5 4 3 2
 
 **2 stik** · første runde: Nord 5 · Øst x · Syd 10 · Vest D (58,8 % af spillene)
 
-- 40,4 % (bedst): Lille fra bordet og lille fra hånden.
+- 40,4 % (bedst): Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
 - 23,1 %: Lille fra hånden og lille fra bordet.
-- 0,0 %: Kongen fra hånden; dækker Vest, lægges der lille.
+- 0,0 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 ## 120. D 10 7 6 / 5 4 3 2
 
@@ -516,23 +516,23 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **2 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest B (68,4 % af spillene)
 
-- 68,7 % (bedst): Lille fra bordet og lille fra hånden. Slå damen.
-- 41,6 %: Kongen fra hånden; dækker Vest, lægges der lille. Slå damen.
+- 68,7 % (bedst): Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille. Slå damen.
+- 41,6 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå damen.
 - 11,8 %: Lille fra hånden og lille fra bordet.
 
 **2 stik** · første runde: Nord 4 · Øst B · Syd K · Vest x (5,0 % af spillene)
 
-- 100,0 % (bedst): Lille fra bordet og lille fra hånden. Lille fra begge hænder.
-- 100,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
-- 100,0 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder.
+- 100,0 % (bedst): Lille fra bordet og lille fra hånden. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
+- 100,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
+- 100,0 %: Lille fra hånden og lille fra bordet. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
 - 35,5 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, lægges der lille.
 
 ## 141. E D 9 5 / 4 3 2
 
 **2 stik** · første runde: Nord 4 · Øst x · Syd 5 · Vest B (9,0 % af spillene)
 
-- 100,0 % (bedst): Lille fra bordet til esset. Lille fra begge hænder.
-- 100,0 %: Slå esset. Lille fra begge hænder.
+- 100,0 % (bedst): Lille fra bordet til esset. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
+- 100,0 %: Slå esset. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
 - 82,1 %: Lille fra hånden og lille fra bordet. Slå esset.
 - 80,4 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset.
 
@@ -541,7 +541,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **2 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest 10 (45,2 % af spillene)
 
 - 52,7 % (bedst): Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset. Slå esset.
-- 46,4 %: Slå esset. Lille fra begge hænder.
+- 46,4 %: Slå esset. Lille fra bordet mod knægten (kip).
 - 42,5 %: Lille fra hånden og lille fra bordet. Slå esset.
 - 39,3 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset.
 
@@ -549,7 +549,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 - 86,0 % (bedst): Lille fra bordet til esset. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.
 - 86,0 %: Slå esset. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.
-- 70,6 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.
+- 70,6 %: Lille fra hånden og lille fra bordet. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.
 - 46,3 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset.
 
 ## 143. K 5 4 3 / B 9 2
@@ -570,31 +570,31 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **1 stik** · første runde: Syd 5 · Vest x · Nord 9 · Øst 10 (45,2 % af spillene)
 
-- 96,4 % (bedst): Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder.
+- 96,4 % (bedst): Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
 - 86,6 %: Lille fra bordet og lille fra hånden. Knægten fra bordet; dækker Øst, lægges der lille.
-- 83,0 %: Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
+- 83,0 %: Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
 - 53,6 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
 
 **1 stik** · første runde: Syd 5 · Vest 10 · Nord 2 · Øst x (6,2 % af spillene)
 
 - 100,0 % (bedst): Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod knægten (kip).
 - 54,5 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
 
 ## 146. D 10 9 5 / 4 3 2
 
 **1 stik** · første runde: Nord 4 · Øst x · Syd 10 · Vest B (45,2 % af spillene)
 
-- 81,3 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.
-- 67,9 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder.
-- 59,8 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
+- 81,3 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, lægges der lille.
+- 67,9 %: Lille fra hånden og lille fra bordet. Lille fra bordet mod damen (kip).
+- 59,8 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, lægges der lille.
 
 **1 stik** · første runde: Nord 4 · Øst x · Syd 10 · Vest E (34,6 % af spillene)
 
 - 100,0 % (bedst): Lille fra bordet og lille fra hånden. Lille fra begge hænder.
 - 100,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, lægges der lille.
 - 100,0 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder.
-- 86,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
+- 86,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
 
 ## 147. D 5 4 3 / B 9 2
 
@@ -607,8 +607,8 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **1 stik** · første runde: Syd 5 · Vest x · Nord 9 · Øst 10 (45,2 % af spillene)
 
-- 92,9 % (bedst): Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder.
-- 79,5 %: Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
+- 92,9 % (bedst): Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
+- 79,5 %: Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
 - 67,9 %: Lille fra bordet og lille fra hånden. Knægten fra bordet; dækker Øst, lægges der lille.
 - 39,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
 
@@ -624,22 +624,22 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **2 stik** · første runde: Nord 4 · Øst D · Syd K · Vest x (5,0 % af spillene)
 
 - 100,0 % (bedst): Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, lægges der lille.
-- 100,0 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder.
+- 100,0 %: Lille fra hånden og lille fra bordet. Lille fra bordet mod 10'eren (kip).
 - 35,5 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, lægges der lille.
 
 ## 149. D 5 4 3 / 10 9 2
 
 **1 stik** · første runde: Syd 5 · Vest x · Nord 10 · Øst B (45,2 % af spillene)
 
-- 92,9 % (bedst): Lille fra hånden mod 9'eren (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder.
-- 79,5 %: 9'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
-- 67,9 %: Lille fra bordet og lille fra hånden. Lille fra begge hænder.
+- 92,9 % (bedst): Lille fra hånden mod 9'eren (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
+- 79,5 %: 9'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
+- 67,9 %: Lille fra bordet og lille fra hånden. Lille fra bordet mod damen (kip).
 - 39,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
 
 **1 stik** · første runde: Syd 5 · Vest x · Nord 10 · Øst E (34,6 % af spillene)
 
-- 100,0 % (bedst): Lille fra hånden mod 9'eren (kip); lægger Vest en honnør, lægges der lille. Lille fra begge hænder.
-- 65,0 %: 9'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
+- 100,0 % (bedst): Lille fra hånden mod 9'eren (kip); lægger Vest en honnør, lægges der lille. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
+- 65,0 %: 9'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
 - 65,0 %: Lille fra bordet og lille fra hånden. Lille fra begge hænder.
 - 60,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
 
@@ -670,10 +670,10 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **3 stik** · første runde: Syd 6 · Vest x · Nord 10 · Øst B (45,2 % af spillene)
 
-- 81,3 % (bedst): Lille fra hånden og lille fra bordet.
-- 75,0 %: Damen fra bordet; dækker Øst, tages stikket med esset.
+- 81,3 % (bedst): Lille fra hånden mod damen (kip); lægger Vest en honnør, lægges der lille.
+- 75,0 %: Damen fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.
 - 75,0 %: Lille fra bordet til esset.
-- 75,0 %: Slå esset.
+- 75,0 %: Esset fra hånden; læg damen.
 
 ## 161. K 6 5 4 3 / D 10 2
 
@@ -696,7 +696,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **3 stik** · første runde: Syd 6 · Vest D · Nord 2 · Øst x (6,2 % af spillene)
 
 - 100,0 % (bedst): Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod knægten (kip).
 - 54,5 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 ## 163. D B 5 4 3 / 9 2
@@ -770,13 +770,13 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **3 stik** · første runde: Nord 2 · Øst 10 · Syd E · Vest x (2,8 % af spillene)
 
 - 100,0 % (bedst): Knægten fra bordet; dækker Øst, tages stikket med kongen, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod knægten (kip).
 - 57,1 %: Slå kongen. Lille fra begge hænder.
 
 **3 stik** · første runde: Nord 2 · Øst x · Syd E · Vest 10 (2,8 % af spillene)
 
 - 100,0 % (bedst): Knægten fra bordet; dækker Øst, tages stikket med kongen, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod knægten (kip).
 - 57,1 %: Slå kongen. Lille fra begge hænder.
 
 ## 177. E D 9 4 / B 3 2
@@ -877,7 +877,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **3 stik** · første runde: Syd 4 · Vest x · Nord D · Øst E (48,0 % af spillene)
 
-- 48,4 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med kongen.
+- 48,4 % (bedst): Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med kongen.
 - 16,8 %: Slå kongen.
 - 0,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
@@ -1042,17 +1042,17 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **4 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest B (58,8 % af spillene)
 
-- 40,4 % (bedst): Lille fra bordet til esset.
+- 40,4 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.
 - 23,1 %: Slå esset.
-- 0,0 %: Damen fra hånden; dækker Vest, lægges der lille.
+- 0,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
 **3 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest B (58,8 % af spillene)
 
-- 90,4 % (bedst): Lille fra bordet til esset.
+- 90,4 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.
 - 90,4 %: Slå esset.
 - 90,4 %: Lille fra hånden og lille fra bordet.
-- 80,8 %: Damen fra hånden; dækker Vest, lægges der lille.
+- 80,8 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 ## 216. E 10 9 5 4 / D 3 2
 
@@ -1197,15 +1197,15 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **4 stik** · første runde: Syd 6 · Vest x · Nord 10 · Øst B (45,2 % af spillene)
 
-- 93,8 % (bedst): Lille fra bordet til esset.
+- 93,8 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.
 - 75,0 %: Slå esset.
-- 75,0 %: Damen fra hånden; dækker Vest, lægges der lille.
+- 75,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 75,0 %: Lille fra hånden og lille fra bordet.
 
 **4 stik** · første runde: Syd 6 · Vest B · Nord 2 · Øst x (6,2 % af spillene)
 
 - 100,0 % (bedst): 10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod 10'eren (kip).
 - 54,5 %: Slå esset.
 - 54,5 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
@@ -1229,7 +1229,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **4 stik** · første runde: Syd 6 · Vest K · Nord 2 · Øst x (9,0 % af spillene)
 
 - 100,0 % (bedst): 10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod 10'eren (kip).
 - 37,5 %: Slå esset.
 - 37,5 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
@@ -1269,7 +1269,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **3 stik** · første runde: Syd 4 · Vest 10 · Nord 2 · Øst x (2,8 % af spillene)
 
 - 100,0 % (bedst): Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod knægten (kip).
 - 57,1 %: Slå esset.
 - 57,1 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
@@ -1372,13 +1372,13 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **3 stik** · første runde: Nord 2 · Øst B · Syd E · Vest x (2,8 % af spillene)
 
 - 100,0 % (bedst): Damen fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod damen (kip).
 - 57,1 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 **3 stik** · første runde: Nord 2 · Øst x · Syd E · Vest B (2,8 % af spillene)
 
 - 100,0 % (bedst): Damen fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod damen (kip).
 - 57,1 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 ## 247. K D 10 9 4 / 3 2
@@ -1457,7 +1457,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **3 stik** · første runde: Syd 3 · Vest x · Nord D · Øst K (49,3 % af spillene)
 
-- 10,5 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med esset.
+- 10,5 % (bedst): Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.
 - 8,9 %: Slå esset.
 - 0,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
@@ -1500,7 +1500,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **3 stik** · første runde: Nord D · Øst x · Syd 5 · Vest K (45,2 % af spillene)
 
-- 51,3 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med esset.
+- 51,3 % (bedst): Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.
 - 30,0 %: Slå esset.
 - 0,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
@@ -1599,13 +1599,13 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **4 stik** · første runde: Nord 2 · Øst 10 · Syd E · Vest x (6,2 % af spillene)
 
 - 100,0 % (bedst): Knægten fra bordet; dækker Øst, tages stikket med kongen, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod knægten (kip).
 - 54,5 %: Slå kongen.
 
 **4 stik** · første runde: Nord 2 · Øst x · Syd E · Vest 10 (6,2 % af spillene)
 
 - 100,0 % (bedst): Knægten fra bordet; dækker Øst, tages stikket med kongen, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod knægten (kip).
 - 54,5 %: Slå kongen.
 
 ## 295. E B 5 4 3 / K 9 2
@@ -1632,7 +1632,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **4 stik** · første runde: Nord 2 · Øst x · Syd E · Vest 10 (6,2 % af spillene)
 
 - 100,0 % (bedst): Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod knægten (kip).
 - 54,5 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 ## 299. E 9 5 4 3 / D B 2
@@ -1685,31 +1685,31 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **3 stik** · første runde: Syd 9 · Vest x · Nord 2 · Øst B (45,2 % af spillene)
 
 - 100,0 % (bedst): Damen fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod damen (kip).
 - 75,0 %: Slå esset.
 
 ## 309. D 9 8 5 / 4 3 2
 
 **1 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest B (58,8 % af spillene)
 
-- 68,4 % (bedst): Lille fra bordet mod 8'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.
-- 53,3 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
-- 53,3 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder.
+- 68,4 % (bedst): Lille fra bordet mod 8'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod damen (kip).
+- 53,3 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod damen (kip).
+- 53,3 %: Lille fra hånden og lille fra bordet. Lille fra bordet mod damen (kip).
 - 45,1 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
 
 ## 310. B 10 8 5 / 4 3 2
 
 **1 stik** · første runde: Nord 4 · Øst x · Syd B · Vest E (68,4 % af spillene)
 
-- 68,1 % (bedst): Lille fra bordet mod 8'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.
+- 68,1 % (bedst): Lille fra bordet mod 8'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 10'eren (kip).
 - 48,6 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
-- 48,6 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
-- 48,6 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder.
+- 48,6 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod 10'eren (kip).
+- 48,6 %: Lille fra hånden og lille fra bordet. Lille fra bordet mod 10'eren (kip).
 
 **1 stik** · første runde: Nord 4 · Øst x · Syd B · Vest E (11,4 % af spillene)
 
 - 89,4 % (bedst): Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 8'eren (kip); lægger Øst en honnør, lægges der lille.
-- 89,4 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder.
+- 89,4 %: Lille fra hånden og lille fra bordet. Lille fra bordet mod 10'eren (kip).
 - 46,8 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra bordet mod 8'eren (kip); lægger Øst en honnør, lægges der lille.
 
 ## 314. E K B 9 4 3 / 2
@@ -1755,7 +1755,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 - 53,8 % (bedst): Slå esset. Lille fra hånden.
 - 53,8 %: Lille fra hånden til esset. Lille fra hånden.
-- 37,0 %: Damen fra hånden; dækker Vest, lægges der lille. Lille fra hånden.
+- 37,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra hånden.
 
 **3 stik** · første runde: Syd 5 · Vest x · Nord 10 · Øst K (24,8 % af spillene)
 
@@ -1766,13 +1766,13 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **2 stik** · første runde: Nord E · Øst B · Syd 5 · Vest x (2,8 % af spillene)
 
 - 100,0 % (bedst): 10'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod 10'eren (kip).
 - 57,1 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 **2 stik** · første runde: Nord E · Øst x · Syd 5 · Vest B (2,8 % af spillene)
 
 - 100,0 % (bedst): 10'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod 10'eren (kip).
 - 57,1 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 ## 321. K D 10 9 4 3 / 2
@@ -1803,7 +1803,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **2 stik** · første runde: Syd 3 · Vest K · Nord 2 · Øst x (1,7 % af spillene)
 
 - 100,0 % (bedst): 10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod 10'eren (kip).
 - 42,9 %: Slå esset. Knægten fra hånden.
 - 0,0 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset.
 
@@ -1821,7 +1821,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 - 84,1 % (bedst): 10'eren fra bordet; dækker Øst, lægges der lille.
 - 52,2 %: Kongen fra hånden; dækker Vest, lægges der lille.
-- 52,2 %: Lille fra hånden og lille fra bordet.
+- 52,2 %: Lille fra hånden mod 10'eren (kip).
 
 **3 stik** · første runde: Nord 4 · Øst D · Syd K · Vest E (19,2 % af spillene)
 
@@ -1840,9 +1840,9 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **3 stik** · første runde: Nord 5 · Øst x · Syd 9 · Vest B (58,8 % af spillene)
 
-- 40,4 % (bedst): Lille fra bordet til esset.
+- 40,4 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.
 - 23,1 %: Slå esset.
-- 0,0 %: Damen fra hånden; dækker Vest, lægges der lille.
+- 0,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
 ## 336. E D 9 8 4 / 3 2
@@ -1996,7 +1996,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **5 stik** · første runde: Nord 2 · Øst 10 · Syd E · Vest x (6,2 % af spillene)
 
 - 100,0 % (bedst): Knægten fra bordet; dækker Øst, tages stikket med kongen, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod knægten (kip).
 - 54,5 %: Slå kongen.
 - 54,5 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
@@ -2094,8 +2094,8 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **4 stik** · første runde: Nord 4 · Øst x · Syd 10 · Vest D (39,0 % af spillene)
 
-- 84,1 % (bedst): Lille fra bordet og lille fra hånden.
-- 52,2 %: Kongen fra hånden; dækker Vest, lægges der lille.
+- 84,1 % (bedst): Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
+- 52,2 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 52,2 %: Lille fra hånden og lille fra bordet.
 
 ## 353. E 10 5 4 / K 8 3 2
@@ -2229,7 +2229,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd 9 · Vest 10 (49,3 % af spillene)
 
-- 51,8 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med esset.
+- 51,8 % (bedst): Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.
 - 35,9 %: Slå esset og kongen.
 - 0,0 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
@@ -2263,7 +2263,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **3 stik** · første runde: Syd 3 · Vest D · Nord K · Øst x (1,7 % af spillene)
 
 - 100,0 % (bedst): 10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod 10'eren (kip).
 - 42,9 %: Slå esset. Lille fra hånden.
 - 0,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
@@ -2279,7 +2279,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd 10 · Vest B (49,3 % af spillene)
 
-- 25,4 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med esset.
+- 25,4 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.
 - 8,9 %: Slå esset.
 - 0,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
@@ -2438,7 +2438,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **4 stik** · første runde: Nord K · Øst x · Syd 3 · Vest D (4,0 % af spillene)
 
 - 60,0 % (bedst): 8'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.
-- 60,0 %: Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med esset.
+- 60,0 %: Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.
 - 40,0 %: Slå esset.
 - 0,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
@@ -2461,7 +2461,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **3 stik** · første runde: Syd 4 · Vest x · Nord 9 · Øst 10 (48,0 % af spillene)
 
 - 87,4 % (bedst): Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.
-- 87,4 %: Lille fra hånden og lille fra bordet.
+- 87,4 %: Lille fra hånden mod knægten (kip).
 - 53,8 %: Slå esset. Lille fra hånden.
 - 37,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset.
 
@@ -2525,7 +2525,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **3 stik** · første runde: Syd 4 · Vest x · Nord 9 · Øst 10 (48,0 % af spillene)
 
 - 87,4 % (bedst): Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
-- 87,4 %: Lille fra hånden og lille fra bordet.
+- 87,4 %: Lille fra hånden mod knægten (kip).
 - 37,0 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå damen.
 
 **3 stik** · første runde: Syd 4 · Vest x · Nord 9 · Øst E (24,8 % af spillene)
@@ -2760,7 +2760,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **2 stik** · første runde: Nord 3 · Øst x · Syd 9 · Vest 10 (48,0 % af spillene)
 
-- 61,7 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med esset. Slå esset.
+- 61,7 % (bedst): Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset. Slå esset.
 - 24,4 %: Slå esset.
 - 9,2 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset.
 
@@ -2793,7 +2793,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 - 84,1 % (bedst): 10'eren fra bordet; dækker Øst, lægges der lille.
 - 52,2 %: Kongen fra hånden; dækker Vest, lægges der lille.
-- 52,2 %: Lille fra hånden og lille fra bordet.
+- 52,2 %: Lille fra hånden mod 10'eren (kip).
 
 **4 stik** · første runde: Nord 3 · Øst D · Syd K · Vest E (19,2 % af spillene)
 
@@ -2851,15 +2851,15 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **2 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest B (39,0 % af spillene)
 
-- 92,8 % (bedst): Lille fra bordet og lille fra hånden.
-- 78,3 %: Damen fra hånden; dækker Vest, lægges der lille.
+- 92,8 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
+- 78,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 78,3 %: Lille fra hånden og lille fra bordet.
 
 **2 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest E (9,0 % af spillene)
 
-- 100,0 % (bedst): Lille fra bordet og lille fra hånden.
+- 100,0 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
 - 100,0 %: Lille fra hånden og lille fra bordet.
-- 37,5 %: Damen fra hånden; dækker Vest, lægges der lille.
+- 37,5 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 ## 461. E D B 9 5 4 3 / 2
 
@@ -2912,14 +2912,14 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **5 stik** · første runde: Syd 8 · Vest x · Nord B · Øst E (58,8 % af spillene)
 
-- 78,8 % (bedst): Lille fra bordet og lille fra hånden.
-- 57,7 %: Damen fra hånden; dækker Vest, lægges der lille.
+- 78,8 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
+- 57,7 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 57,7 %: Lille fra hånden og lille fra bordet.
 
 **5 stik** · første runde: Syd 8 · Vest E · Nord 2 · Øst x (19,2 % af spillene)
 
 - 100,0 % (bedst): Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod knægten (kip).
 - 35,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 ## 468. E K 9 8 3 / B 2
@@ -2934,14 +2934,14 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **4 stik** · første runde: Nord 2 · Øst 10 · Syd E · Vest x (2,8 % af spillene)
 
 - 100,0 % (bedst): Knægten fra bordet; dækker Øst, tages stikket med kongen, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod knægten (kip).
 - 57,1 %: Slå kongen.
 - 57,1 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 **4 stik** · første runde: Nord 2 · Øst x · Syd E · Vest 10 (2,8 % af spillene)
 
 - 100,0 % (bedst): Knægten fra bordet; dækker Øst, tages stikket med kongen, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod knægten (kip).
 - 57,1 %: Slå kongen.
 - 57,1 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
@@ -3030,7 +3030,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **3 stik** · første runde: Nord 5 · Øst x · Syd 7 · Vest 10 (26,0 % af spillene)
 
-- 76,1 % (bedst): Lille fra bordet og lille fra hånden.
+- 76,1 % (bedst): Lille fra bordet mod knægten (kip).
 - 52,2 %: Kongen fra hånden; dækker Vest, lægges der lille.
 - 52,2 %: Knægten fra hånden; dækker Vest, lægges der lille.
 
@@ -3070,8 +3070,8 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **2 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest B (68,4 % af spillene)
 
-- 87,6 % (bedst): Lille fra bordet til esset. Lille fra begge hænder.
-- 87,6 %: Slå esset. Lille fra begge hænder.
+- 87,6 % (bedst): Lille fra bordet til esset. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
+- 87,6 %: Slå esset. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.
 - 70,1 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.
 - 56,9 %: Lille fra hånden og lille fra bordet. Slå esset.
 
@@ -3093,8 +3093,8 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **2 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest 10 (45,2 % af spillene)
 
-- 77,3 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med esset. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.
-- 67,9 %: Slå esset. Lille fra begge hænder.
+- 77,3 % (bedst): Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.
+- 67,9 %: Slå esset. Lille fra bordet mod knægten (kip).
 - 45,2 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Slå esset.
 
 **2 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest K (34,6 % af spillene)
@@ -3102,7 +3102,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med esset. Slå esset.
 - 100,0 %: Slå esset. Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.
 - 100,0 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.
-- 70,6 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.
+- 70,6 %: Lille fra hånden og lille fra bordet. Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.
 
 ## 499. K 10 9 8 / 4 3 2
 
@@ -3135,13 +3135,13 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **4 stik** · første runde: Nord E · Øst B · Syd 6 · Vest x (6,2 % af spillene)
 
 - 100,0 % (bedst): 10'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod 10'eren (kip).
 - 54,5 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 **4 stik** · første runde: Nord E · Øst x · Syd 6 · Vest B (6,2 % af spillene)
 
 - 100,0 % (bedst): 10'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod 10'eren (kip).
 - 54,5 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 ## 513. E 10 9 8 / 2
@@ -3155,7 +3155,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **3 stik** · første runde: Nord 5 · Øst x · Syd 10 · Vest B (45,2 % af spillene)
 
-- 51,3 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med esset.
+- 51,3 % (bedst): Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.
 - 30,0 %: Slå esset.
 - 0,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
@@ -3163,7 +3163,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **3 stik** · første runde: Nord 5 · Øst x · Syd K · Vest E (45,2 % af spillene)
 
-- 51,3 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med damen.
+- 51,3 % (bedst): Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med damen.
 - 30,0 %: Slå damen.
 - 0,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
@@ -3171,7 +3171,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **3 stik** · første runde: Nord 5 · Øst x · Syd B · Vest K (68,4 % af spillene)
 
-- 67,8 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med esset.
+- 67,8 % (bedst): Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.
 - 34,7 %: Slå esset.
 - 0,0 %: 10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
@@ -3180,7 +3180,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **6 stik** · første runde: Nord 2 · Øst x · Syd E · Vest B (13,0 % af spillene)
 
 - 100,0 % (bedst): 10'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod 10'eren (kip).
 - 52,2 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 ## 526. E D B 9 8 3 / 2
@@ -3235,13 +3235,13 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **3 stik** · første runde: Nord 9 · Øst 10 · Syd E · Vest x (2,8 % af spillene)
 
 - 100,0 % (bedst): Knægten fra bordet; dækker Øst, tages stikket med kongen, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod knægten (kip).
 - 57,1 %: Slå kongen. Lille fra begge hænder.
 
 **3 stik** · første runde: Nord 9 · Øst x · Syd E · Vest 10 (2,8 % af spillene)
 
 - 100,0 % (bedst): Knægten fra bordet; dækker Øst, tages stikket med kongen, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod knægten (kip).
 - 57,1 %: Slå kongen. Lille fra begge hænder.
 
 ## 534. E K 4 3 2 / B 10 9
@@ -3281,12 +3281,12 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 - 45,0 % (bedst): 10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.
 - 30,0 %: Slå esset.
-- 0,0 %: Lille fra hånden og lille fra bordet.
+- 0,0 %: Lille fra hånden mod 10'eren (kip).
 
 **3 stik** · første runde: Syd 5 · Vest x · Nord 10 · Øst B (45,2 % af spillene)
 
 - 100,0 % (bedst): Damen fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod damen (kip).
 - 75,0 %: Slå esset.
 
 ## 542. K 5 4 3 2 / D 10 9
@@ -3301,7 +3301,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **3 stik** · første runde: Syd 5 · Vest x · Nord 10 · Øst B (45,2 % af spillene)
 
 - 100,0 % (bedst): Damen fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod damen (kip).
 - 75,0 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 ## 543. E 5 4 3 2 / B 10 9
@@ -3309,7 +3309,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **3 stik** · første runde: Nord B · Øst x · Syd 5 · Vest K (22,0 % af spillene)
 
 - 100,0 % (bedst): 10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod 10'eren (kip).
 - 61,5 %: Slå esset.
 
 ## 545. D 10 8 7 / 2
@@ -3500,7 +3500,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **4 stik** · første runde: Syd 5 · Vest x · Nord 9 · Øst 10 (45,2 % af spillene)
 
 - 100,0 % (bedst): Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod knægten (kip).
 - 75,0 %: Slå esset.
 - 75,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
@@ -3532,7 +3532,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **4 stik** · første runde: Syd 5 · Vest x · Nord 9 · Øst 10 (45,2 % af spillene)
 
 - 100,0 % (bedst): Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod knægten (kip).
 - 75,0 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 ## 572. D 9 5 4 3 2 / E 10
@@ -3540,13 +3540,13 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **5 stik** · første runde: Nord E · Øst B · Syd 5 · Vest x (6,2 % af spillene)
 
 - 100,0 % (bedst): 10'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod 10'eren (kip).
 - 54,5 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 **5 stik** · første runde: Nord E · Øst x · Syd 5 · Vest B (6,2 % af spillene)
 
 - 100,0 % (bedst): 10'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod 10'eren (kip).
 - 54,5 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 ## 573. E B 10 8 5 4 3 / 2
@@ -3609,8 +3609,8 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **5 stik** · første runde: Nord 3 · Øst x · Syd D · Vest E (39,0 % af spillene)
 
-- 84,1 % (bedst): Lille fra bordet og lille fra hånden.
-- 52,2 %: Knægten fra hånden; dækker Vest, lægges der lille.
+- 84,1 % (bedst): Lille fra bordet mod knægten (kip); lægger Øst en honnør, lægges der lille.
+- 52,2 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 52,2 %: Lille fra hånden og lille fra bordet.
 
 **5 stik** · første runde: Nord 3 · Øst 10 · Syd D · Vest E (19,8 % af spillene)
@@ -3659,17 +3659,17 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **1 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest D (68,4 % af spillene)
 
-- 94,1 % (bedst): Lille fra bordet og lille fra hånden. Lille fra begge hænder.
-- 79,9 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder.
+- 94,1 % (bedst): Lille fra bordet og lille fra hånden. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
+- 79,9 %: Lille fra hånden og lille fra bordet. Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
 - 62,8 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
 
 ## 586. D 9 8 7 / 4 3 2
 
 **1 stik** · første runde: Nord 4 · Øst x · Syd 9 · Vest B (58,8 % af spillene)
 
-- 79,4 % (bedst): Lille fra bordet og lille fra hånden. Lille fra begge hænder.
+- 79,4 % (bedst): Lille fra bordet og lille fra hånden. Lille fra bordet mod damen (kip).
 - 56,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe. Lille fra begge hænder.
-- 53,3 %: Lille fra hånden og lille fra bordet. Lille fra begge hænder.
+- 53,3 %: Lille fra hånden og lille fra bordet. Lille fra bordet mod damen (kip).
 
 ## 588. E D 9 8 / B 4 3 2
 
@@ -3731,13 +3731,13 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **4 stik** · første runde: Nord 9 · Øst 10 · Syd E · Vest x (6,2 % af spillene)
 
 - 100,0 % (bedst): Knægten fra bordet; dækker Øst, tages stikket med kongen, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod knægten (kip).
 - 54,5 %: Slå kongen.
 
 **4 stik** · første runde: Nord 9 · Øst x · Syd E · Vest 10 (6,2 % af spillene)
 
 - 100,0 % (bedst): Knægten fra bordet; dækker Øst, tages stikket med kongen, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod knægten (kip).
 - 54,5 %: Slå kongen.
 
 ## 601. E D 4 3 2 / B 9 8
@@ -3753,7 +3753,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **4 stik** · første runde: Nord D · Øst K · Syd E · Vest x (45,2 % af spillene)
 
 - 100,0 % (bedst): 10'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod 10'eren (kip).
 - 75,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 **4 stik** · første runde: Nord D · Øst x · Syd 4 · Vest K (45,2 % af spillene)
@@ -3761,7 +3761,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 51,3 % (bedst): 10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.
 - 30,0 %: Slå esset.
 - 0,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
-- 0,0 %: Lille fra hånden og lille fra bordet.
+- 0,0 %: Lille fra hånden mod 10'eren (kip).
 
 ## 611. E D 10 8 / 5 4 3 2
 
@@ -3776,7 +3776,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **2 stik** · første runde: Nord 5 · Øst x · Syd 9 · Vest 10 (39,0 % af spillene)
 
-- 68,1 % (bedst): Lille fra bordet og lille fra hånden.
+- 68,1 % (bedst): Lille fra bordet mod knægten (kip).
 - 26,1 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 26,1 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
@@ -3806,8 +3806,8 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **3 stik** · første runde: Nord 5 · Øst D · Syd 9 · Vest B (78,0 % af spillene)
 
-- 76,1 % (bedst): Lille fra bordet og lille fra hånden.
-- 52,2 %: Kongen fra hånden; dækker Vest, lægges der lille.
+- 76,1 % (bedst): Lille fra bordet mod kongen (kip); lægger Øst en honnør, lægges der lille.
+- 52,2 %: Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 - 52,2 %: Lille fra hånden og lille fra bordet.
 
 ## 617. E K 9 8 7 3 / B 2
@@ -3948,7 +3948,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 51,3 % (bedst): 10'eren fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.
 - 30,0 %: Slå esset.
 - 0,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
-- 0,0 %: Lille fra hånden og lille fra bordet.
+- 0,0 %: Lille fra hånden mod 10'eren (kip).
 
 ## 637. D B 9 8 7 / E 2
 
@@ -3964,20 +3964,20 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 - 76,1 % (bedst): Knægten fra bordet; dækker Øst, lægges der lille.
 - 52,2 %: Kongen fra hånden; dækker Vest, lægges der lille.
-- 52,2 %: Lille fra hånden og lille fra bordet.
+- 52,2 %: Lille fra hånden mod knægten (kip).
 
 ## 646. D 7 6 5 4 3 2 / E 10
 
 **6 stik** · første runde: Nord E · Øst B · Syd 7 · Vest x (13,0 % af spillene)
 
 - 100,0 % (bedst): 10'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod 10'eren (kip).
 - 52,2 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 **6 stik** · første runde: Nord E · Øst x · Syd 7 · Vest B (13,0 % af spillene)
 
 - 100,0 % (bedst): 10'eren fra bordet; dækker Øst, lægges der lille, ellers lad den løbe.
-- 100,0 %: Lille fra hånden og lille fra bordet.
+- 100,0 %: Lille fra hånden mod 10'eren (kip).
 - 52,2 %: Damen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.
 
 ## 652. E D 9 7 6 / B 8 2
