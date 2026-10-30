@@ -932,7 +932,37 @@
   margin: 0;
 }
 
-.fb-play-hand {
+/*
+ * Bordet i Spil den selv er Bridgebord (SPEC-forside-bred.md, del 3) med samme mål, skrift og farver som i Analyse.
+ * Vest og Øst står ved siden af kompasset, når der er plads til ni trykflader; ellers over og under det (uden media
+ * queries: flex-basis bliver hele bredden under grænsen og 0 over den).
+ */
+.fb-table-play {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.fb-table-play .fb-seat-north,
+.fb-table-play .fb-seat-south {
+  flex: 1 0 100%;
+}
+
+.fb-table-play .fb-seat-west,
+.fb-table-play .fb-seat-east {
+  flex: 0 1 calc((var(--touch-min) * 9 - 100%) * 999);
+}
+
+.fb-table-play .fb-compass {
+  margin: 0 auto;
+}
+
+.fb-table-play .fb-hidden-hand {
+  white-space: nowrap;
+}
+
+/* Hånden som i systemnotatet; kortene er knapper med en trykflade på mindst 44 px og uden synlig kant. */
+.fb-hand-play {
   display: inline-flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -940,56 +970,28 @@
   gap: var(--space-4);
 }
 
-.fb-play-card {
+.fb-hand-card {
   min-width: var(--touch-min);
   min-height: var(--touch-min);
-  padding: 0 var(--space-6);
-  border: 1px solid var(--line);
+  padding: 0 var(--space-4);
+  border: 1px solid transparent;
   border-radius: var(--radius-8);
-  background: var(--surface);
-  color: var(--text);
-  font-size: var(--type-prompt);
-  font-variant-numeric: tabular-nums;
+  background: transparent;
+  color: inherit;
+  font: inherit;
 }
 
-.fb-play-card:disabled {
-  opacity: 0.55;
+/* Hånden i turen: som andre valgbare elementer (SPEC-tema.md). */
+.fb-hand-card:not(:disabled) {
+  background: var(--accent-soft);
+  border-color: var(--accent);
 }
 
-/* Stikket som et lille kompas: Nord øverst, Syd nederst, Vest til venstre og Øst til højre. */
-.fb-play-trick {
-  grid-area: center;
-  display: grid;
-  grid-template-areas:
-    '. n .'
-    'w . e'
-    '. s .';
-  gap: var(--space-2) var(--space-8);
-  align-items: center;
-  justify-items: center;
-  font-size: var(--type-h2);
-  font-variant-numeric: tabular-nums;
-}
-
-.fb-trick-seat {
-  display: grid;
-  justify-items: center;
-}
-
-.fb-trick-N {
-  grid-area: n;
-}
-
-.fb-trick-S {
-  grid-area: s;
-}
-
-.fb-trick-W {
-  grid-area: w;
-}
-
-.fb-trick-E {
-  grid-area: e;
+/* Stikket i kompasset: kortet ved sidens bogstav. */
+.fb-compass-seat {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-4);
 }
 
 /* Egne linjer */

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { mulberry32 } from '../../engine/rng';
 import { bandFields, fieldIdOf, linesForGoal, type BankItem } from '../analysis';
-import { cardsText, rankText, TEN, type Rank } from '../model/cards';
+import { cardsText, rankText, type Rank } from '../model/cards';
 import {
   canLead,
   dealCards,
@@ -16,6 +16,7 @@ import {
   type PlayState,
   type Seat,
 } from '../play/play';
+import { Bridgebord } from './Bridgebord';
 import { Linjekort } from './Linjekort';
 import { Sandsynlighedsbånd } from './Sandsynlighedsbånd';
 import { TEXT } from './texts';
@@ -74,32 +75,7 @@ export function SpilSelv({ item, goal, seed, onDone, onClose, connections }: Spi
   const playable = (hand: Hand) => !done && (current ? turn === hand : canLead(state, hand));
   const last = state.tricks[state.tricks.length - 1];
 
-  const handButtons = (hand: Hand) => {
-    const cards = hand === 'N' ? state.north : state.south;
-    const owner = hand === 'N' ? TEXT.owners.N : TEXT.owners.S;
-    return (
-      <span className="fb-play-hand">
-        <span className="fb-suit" aria-hidden="true">
-          {TEXT.suit}
-        </span>
-        {cards.length === 0 && <span>–</span>}
-        {cards.map((c) => (
-          <button
-            key={c}
-            type="button"
-            className={`fb-play-card${c >= TEN ? ' fb-honor' : ''}`}
-            disabled={!playable(hand)}
-            aria-label={`${owner}: ${rankText(c)}`}
-            onClick={() => (current ? setState(playThird(state, c, rng)) : lead(hand, c))}
-          >
-            {rankText(c)}
-          </button>
-        ))}
-      </span>
-    );
-  };
-
-  // Det stik, der vises i midten: det igangværende eller det senest spillede.
+  // Det stik, der vises i kompasset: det igangværende eller det senest spillede, til næste udspil.
   const seatsFor = (leader: Hand): Seat[] => (leader === 'N' ? ['N', 'Ø', 'S', 'V'] : ['S', 'V', 'N', 'Ø']);
   const shown = current
     ? [
@@ -130,32 +106,18 @@ export function SpilSelv({ item, goal, seed, onDone, onClose, connections }: Spi
           </button>
         )}
       </header>
-      <div className="fb-table fb-play-table">
-        <div className="fb-seat fb-seat-north">
-          <span className="fb-seat-name">{TEXT.north}</span>
-          {handButtons('N')}
-        </div>
-        <div className="fb-seat fb-seat-west">
-          <span className="fb-seat-name">{TEXT.west}</span>
-          <span className="fb-hidden-hand">{hidden(state.west, state.deal.west)}</span>
-        </div>
-        <div className="fb-play-trick" aria-live="polite" aria-label={TEXT.playTrick}>
-          {shown.map(({ seat, card }) => (
-            <span key={seat} className={`fb-trick-seat fb-trick-${seat === 'Ø' ? 'E' : seat === 'V' ? 'W' : seat}`}>
-              <span className="fb-seat-name">{seatName(seat)}</span>
-              <span className={card >= TEN ? 'fb-honor' : undefined}>{card ? rankText(card) : '–'}</span>
-            </span>
-          ))}
-        </div>
-        <div className="fb-seat fb-seat-east">
-          <span className="fb-seat-name">{TEXT.east}</span>
-          <span className="fb-hidden-hand">{hidden(state.east, state.deal.east)}</span>
-        </div>
-        <div className="fb-seat fb-seat-south">
-          {handButtons('S')}
-          <span className="fb-seat-name">{TEXT.south}</span>
-        </div>
-      </div>
+      <Bridgebord
+        north={state.north}
+        south={state.south}
+        west={hidden(state.west, state.deal.west)}
+        east={hidden(state.east, state.deal.east)}
+        play={{
+          canPlay: playable,
+          cardLabel: (hand, c) => `${hand === 'N' ? TEXT.owners.N : TEXT.owners.S}: ${rankText(c)}`,
+          onCard: (hand, c) => (current ? setState(playThird(state, c, rng)) : lead(hand, c)),
+          trick: Object.fromEntries(shown.map(({ seat, card }) => [seat, card])),
+        }}
+      />
       {state.connections && (
         <div className="with-info">
           <p className="fb-note">{connectionsText(state.connections)}</p>

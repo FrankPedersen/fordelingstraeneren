@@ -68,12 +68,12 @@ I dag viser Spil den selv hænderne som rækker af kortfelter uden kompas (Frank
 
 Del 3:
 
-- [ ] Spil den selv viser bordet med kompas i `table` og hænderne som "♠ D432", præcis som Bridgebord i Analyse (skærmbilleder af begge ved 390 og 1440 px side om side).
-- [ ] Kortene i den hånd, der er i turen, kan vælges med mus, tryk og tastatur; de andre er deaktiverede. Trykfladen er mindst 44 px.
-- [ ] Stikkets kort står i kompasset ved den rigtige side, og det seneste stik står, til næste udspil.
-- [ ] Bridgebord i Analyse, facit og opgaverne er uændret (skærmbilleder før og efter).
-- [ ] Spillet, modspillet og bedømmelsen er uændrede: de eksisterende tests af Spil den selv (også `spilselv-forbindelser.test.tsx`) er grønne.
-- [ ] Teksterne findes på dansk og engelsk, og `src/theme.test.ts` er grøn (ingen nye farver; `table`, `table-text`, `accent` og `accent-soft` er de eneste farver i bordet).
+- [x] Spil den selv viser bordet med kompas i `table` og hænderne som "♠ D432", præcis som Bridgebord i Analyse (skærmbilleder af begge ved 390 og 1440 px side om side).
+- [x] Kortene i den hånd, der er i turen, kan vælges med mus, tryk og tastatur; de andre er deaktiverede. Trykfladen er mindst 44 px.
+- [x] Stikkets kort står i kompasset ved den rigtige side, og det seneste stik står, til næste udspil.
+- [x] Bridgebord i Analyse, facit og opgaverne er uændret (skærmbilleder før og efter).
+- [x] Spillet, modspillet og bedømmelsen er uændrede: de eksisterende tests af Spil den selv (også `spilselv-forbindelser.test.tsx`) er grønne.
+- [x] Teksterne findes på dansk og engelsk, og `src/theme.test.ts` er grøn (ingen nye farver; `table`, `table-text`, `accent` og `accent-soft` er de eneste farver i bordet).
 
 ## Afklaret
 
@@ -92,3 +92,8 @@ Del 3:
 13. **Vejledning og Indstillinger** (Franks valg 30. oktober 2026): fra 1000 px står de side om side som to kolonner. Knapperne i Velkomst, Vejledning og Indstillinger har deres naturlige bredde, dog mindst 280 px som knappen i I dag. Uden ny markup: forsidens rod er fra 1000 px et grid med to kolonner, hvor alt andet spænder over begge.
 14. **Sidefoden** (Franks valg 30. oktober 2026): fra 1000 px står sidefodens kolonner (Om mig, Trænere, Opslag og Kontakt) side om side som på www.kontraktbridge.dk, inden for forsidens 1200 px; ophavslinjen står under dem. Det gælder sidefoden på forsiden; under 1000 px og på sporenes skærme er den uændret.
 15. **Skærmbillederne** ligger i `C:\Users\frank\Kontraktbridge\skaermbilleder\forside-bred\`, uden for repoerne, så de kan deles og ikke kommer i git (Franks valg 30. oktober 2026).
+16. **Skærmlæsernes navne på kortene** er de samme som før ("bordet: D", "din hånd: 3", på engelsk "dummy: Q"), ikke specens eksempel "Nord: dronning" (Claude Codes valg): de eksisterende tests af Spil den selv, som skal være grønne, finder kortene ved de navne.
+17. **Vest og Øst på en smal skærm** står ved siden af kompasset, når bordet er mindst ni trykflader bredt (396 px), og ellers over og under det. Komponentreglen tillader ingen media queries, så `flex-basis: calc((var(--touch-min) * 9 - 100%) * 999)` bliver hele bredden under grænsen og 0 over den. Ved 320 og 390 px står de over og under kompasset; i appens kolonne på 480 px og i Analyse står de ved siden af.
+18. **Kompasset i spillet** er før første udspil som i Analyse (N, V, Ø, S og "… mangler"). Under spillet står kortet ved sidens bogstav ("N 4", "V 9", "10 Ø", "S K"); Østs kort står inden for bogstavet, så kortene vender mod midten, og et kort uden for farven står som "–". Kompasset har `aria-live="polite"` med navnet Stikket, og skærmlæsere hører sidens navn ("Nord 4").
+19. **Bridgebord uden `play`** giver præcis samme markup som i `v25-foer-forside-bred` (`ui/spilselv-bord.test.tsx` sammenligner HTML'en), og Analyse ved 390 og 1440 px og Farvebehandlings introduktion ved 390 og 1440 px er ens byte for byte med v25.
+20. **Del 3 i en rigtig browser** (Chrome, 30. oktober 2026): Spil den selv med K 7 6 5 / 4 3 2 og to kombinationer med 7 kort i en hånd (E B 8 7 6 5 4 / K 3 2 og E D B 5 4 3 2 / 8 7 6) ved 320, 390, 480 og 1440 px på dansk og engelsk: ingen vandret rulning, kortene er mindst 44 × 44 px, og stikket står med 4 kort i kompasset. `npm test` er grøn (731 tests).
