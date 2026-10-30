@@ -11,8 +11,10 @@ export interface BridgebordPlay {
   onCard(hand: 'N' | 'S', card: Rank): void;
   /** Stikkets kort ved hver side (0 = intet kort i farven); tomt før første udspil. */
   trick: Partial<Record<Seat, number>>;
-  /** Vests og Østs antal kort under "♠ ?"; uden feltet (når spillet er slut) står de rigtige kort. */
+  /** Vests og Østs antal kort under "♠ ?", mens spillet står på. */
   counts?: { V: number; Ø: number };
+  /** Vests og Østs rigtige kort, når spillet er slut; de står som i systemnotatet ("♠ EDB8"). */
+  revealed?: { V: readonly Rank[]; Ø: readonly Rank[] };
 }
 
 interface BridgebordProps {
@@ -54,7 +56,7 @@ export function Bridgebord({ north, south, west, east, arrow = null, caption, pl
       </div>
       <div className="fb-seat fb-seat-west">
         <span className="fb-seat-name">{TEXT.west}</span>
-        {hidden(west, play?.counts?.V)}
+        {play?.revealed ? <RevealedHand ranks={play.revealed.V} /> : hidden(west, play?.counts?.V)}
       </div>
       {play ? (
         <div className="fb-compass" aria-live="polite" aria-label={TEXT.playTrick}>
@@ -87,7 +89,7 @@ export function Bridgebord({ north, south, west, east, arrow = null, caption, pl
       )}
       <div className="fb-seat fb-seat-east">
         <span className="fb-seat-name">{TEXT.east}</span>
-        {hidden(east, play?.counts?.Ø)}
+        {play?.revealed ? <RevealedHand ranks={play.revealed.Ø} /> : hidden(east, play?.counts?.Ø)}
       </div>
       <div className="fb-seat fb-seat-south">
         {play ? <PlayHand hand="S" ranks={south} play={play} /> : <Hand ranks={south} />}
@@ -133,6 +135,22 @@ function CompassSeat({ seat, play }: { seat: Seat; play: BridgebordPlay }) {
     <span className="fb-compass-seat" data-seat={seat}>
       {seat === 'Ø' ? shown : letter}
       {seat === 'Ø' ? letter : shown}
+    </span>
+  );
+}
+
+/**
+ * Vests eller Østs rigtige kort, når Spil den selv er slut: som i systemnotatet uden mellemrum ("♠ EDB8"), så hånden
+ * står på én linje ved 320 px; skærmlæsere får kortene med mellemrum.
+ */
+function RevealedHand({ ranks }: { ranks: readonly Rank[] }) {
+  const cards = [...ranks].sort((a, b) => b - a).map(rankText);
+  return (
+    <span className="fb-hidden-hand fb-revealed">
+      <span aria-hidden="true">
+        {TEXT.suit} {cards.length ? cards.join('') : '–'}
+      </span>
+      <span className="fb-sr">{cards.length ? cards.join(' ') : '–'}</span>
     </span>
   );
 }

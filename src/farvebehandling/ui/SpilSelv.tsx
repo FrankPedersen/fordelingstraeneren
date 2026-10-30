@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { mulberry32 } from '../../engine/rng';
 import { bandFields, fieldIdOf, linesForGoal, type BankItem } from '../analysis';
-import { cardsText, rankText, type Rank } from '../model/cards';
+import { rankText, type Rank } from '../model/cards';
 import {
   canLead,
   dealCards,
@@ -107,10 +107,9 @@ export function SpilSelv({ item, goal, seed, onDone, onClose, connections }: Spi
       <Bridgebord
         north={state.north}
         south={state.south}
-        west={done ? cardsText(state.deal.west) : undefined}
-        east={done ? cardsText(state.deal.east) : undefined}
         play={{
           counts: done ? undefined : { V: state.west.length, Ø: state.east.length },
+          revealed: done ? { V: state.deal.west, Ø: state.deal.east } : undefined,
           canPlay: playable,
           cardLabel: (hand, c) => `${hand === 'N' ? TEXT.owners.N : TEXT.owners.S}: ${rankText(c)}`,
           onCard: (hand, c) => (current ? setState(playThird(state, c, rng)) : lead(hand, c)),

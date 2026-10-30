@@ -149,6 +149,34 @@ describe('Rettelserne på grenen forside-bred-2 (SPEC-forside-bred.md, Afklaret 
   });
 });
 
+describe('Vests og Østs kort, når spillet er slut (SPEC-forside-bred.md, Afklaret 26)', () => {
+  it('står som i systemnotatet uden mellemrum på én linje, og skærmlæsere hører kortene enkeltvis', () => {
+    render(<SpilSelv item={ITEM} goal={2} seed={1} onClose={() => {}} />);
+    for (let i = 0; i < 20; i++) {
+      const next = [...cards('bordet'), ...cards('din hånd')].find((b) => !b.disabled);
+      if (!next) break;
+      fireEvent.click(next);
+    }
+    const heardAll: string[] = [];
+    for (const seat of ['west', 'east']) {
+      const hand = table().querySelector(`.fb-seat-${seat} .fb-hidden-hand`)!;
+      const shown = hand.querySelector('[aria-hidden="true"]')!.textContent!;
+      const heard = hand.querySelector('.fb-sr')!.textContent!;
+      expect(shown, seat).toMatch(/^♠ (E?D?B?(10)?9?8?|–)$/);
+      expect(heard, seat).toMatch(/^(–|(E|D|B|10|9|8)( (E|D|B|10|9|8))*)$/);
+      expect(shown.slice(2), seat).toBe(heard.split(' ').join(''));
+      expect(table().querySelector(`.fb-seat-${seat} .fb-hidden-count`), seat).toBeNull();
+      if (heard !== '–') heardAll.push(...heard.split(' '));
+    }
+    // Til sammen har Vest og Øst modpartens seks kort.
+    expect(heardAll.sort()).toEqual(['10', '8', '9', 'B', 'D', 'E']);
+    // Hånden brydes ikke over flere linjer; ved 320 px er der plads med 1 rem og 4 px mellem kolonnerne (Franks valg).
+    expect(decl('.fb-revealed')).toMatch(/white-space:\s*nowrap/);
+    expect(decl('.fb-revealed')).toMatch(/font-size:\s*var\(--type-h3\)/);
+    expect(decl('.fb-table-play')).toMatch(/column-gap:\s*var\(--space-4\)/);
+  });
+});
+
 describe('Bridgebord uden spil er uændret (SPEC-forside-bred.md, del 3)', () => {
   // Markuppen fra v25-foer-forside-bred, før Bridgebord fik de valgfrie felter til Spil den selv.
   const BEFORE = ["<figure class=\"fb-table\" aria-label=\"Problemet\"><div class=\"fb-seat fb-seat-north\"><span class=\"fb-seat-name\">Nord · bordet</span><span class=\"fb-hand\"><span aria-hidden=\"true\"><span class=\"fb-suit\">♠</span><span class=\"fb-honor\">B</span><span>4</span><span>3</span><span>2</span></span><span class=\"fb-sr\">B 4 3 2</span></span></div><div class=\"fb-seat fb-seat-west\"><span class=\"fb-seat-name\">Vest</span><span class=\"fb-hidden-hand\">♠ ?</span></div><div class=\"fb-compass\"><span class=\"fb-compass-row\" aria-hidden=\"true\">N</span><span class=\"fb-compass-row fb-compass-middle\"><span aria-hidden=\"true\">V</span><span class=\"fb-compass-missing\">K D 9 8 7 mangler</span><span aria-hidden=\"true\">Ø</span></span><span class=\"fb-compass-row\" aria-hidden=\"true\">S</span></div><div class=\"fb-seat fb-seat-east\"><span class=\"fb-seat-name\">Øst</span><span class=\"fb-hidden-hand\">♠ ?</span></div><div class=\"fb-seat fb-seat-south\"><span class=\"fb-hand\"><span aria-hidden=\"true\"><span class=\"fb-suit\">♠</span><span class=\"fb-honor\">E</span><span class=\"fb-honor\">10</span><span>6</span><span>5</span></span><span class=\"fb-sr\">E 10 6 5</span></span><span class=\"fb-seat-name\">Syd · dig</span></div></figure>", "<figure class=\"fb-table\" aria-label=\"Første udspil: lille fra bordet\"><div class=\"fb-seat fb-seat-north\"><span class=\"fb-seat-name\">Nord · bordet</span><span class=\"fb-hand\"><span aria-hidden=\"true\"><span class=\"fb-suit\">♠</span><span>4</span><span>3</span><span>2</span></span><span class=\"fb-sr\">4 3 2</span></span></div><div class=\"fb-seat fb-seat-west\"><span class=\"fb-seat-name\">Vest</span><span class=\"fb-hidden-hand\">♠ D 9</span></div><div class=\"fb-compass\"><span class=\"fb-compass-row\" aria-hidden=\"true\">N</span><span class=\"fb-compass-row fb-compass-middle\"><span aria-hidden=\"true\">V</span><span class=\"fb-compass-missing\">E D B 10 9 8 mangler</span><span aria-hidden=\"true\">Ø</span></span><span class=\"fb-compass-row\" aria-hidden=\"true\">S</span></div><div class=\"fb-seat fb-seat-east\"><span class=\"fb-seat-name\">Øst</span><span class=\"fb-hidden-hand\">♠ E B 10 8</span></div><div class=\"fb-seat fb-seat-south\"><span class=\"fb-hand\"><span aria-hidden=\"true\"><span class=\"fb-suit\">♠</span><span class=\"fb-honor\">K</span><span>7</span><span>6</span><span>5</span></span><span class=\"fb-sr\">K 7 6 5</span></span><span class=\"fb-seat-name\">Syd · dig</span></div><figcaption class=\"fb-note\"><span aria-hidden=\"true\">↓ </span>Første udspil: lille fra bordet</figcaption></figure>"];

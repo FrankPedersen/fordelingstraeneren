@@ -941,6 +941,7 @@
     'north north north'
     'west center east'
     'south south south';
+  column-gap: var(--space-4);
 }
 
 /* Antallet af kort under "♠ ?" på en linje for sig, så Vest og Øst er smalle nok ved 320 px (Afklaret 22). */
@@ -975,6 +976,15 @@
 .fb-hand-card:not(:disabled) {
   background: var(--accent-soft);
   border-color: var(--accent);
+}
+
+/*
+ * Vests og Østs rigtige kort, når spillet er slut, på én linje som i systemnotatet (Afklaret 26). Med 1 rem og 4 px
+ * mellem kolonnerne er der plads ved 320 px, også når en modspiller har alle seks kort (Franks valg).
+ */
+.fb-revealed {
+  font-size: var(--type-h3);
+  white-space: nowrap;
 }
 
 /* Stikket i kompasset: små hvide spillekort ved sidens bogstav (Afklaret 23). */
