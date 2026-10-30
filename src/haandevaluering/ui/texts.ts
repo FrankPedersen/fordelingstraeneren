@@ -29,7 +29,7 @@ const DA = {
   title: 'Håndevaluering',
   back: 'Tilbage til forsiden',
   backToHome: 'Tilbage til Håndevaluering',
-  saveFailed: 'Dine data kunne ikke gemmes i browseren. Eksportér en kopi under Indstillinger.',
+  saveFailed: 'Dine data kunne ikke gemmes i browseren. En kopi kan eksporteres under Indstillinger.',
 
   rank: rankDa,
   card: (card: Card) => `${SUITS[Math.floor(card / 13)]}${rankDa(card % 13)}`,
@@ -199,7 +199,7 @@ const DA = {
 
   // Indstillinger og data
   levelInfo: 'Niveau',
-  dataHelp: 'Håndevalueringens data ligger kun i denne browser. Gem en kopi som fil, og hent den igen på en anden enhed.',
+  dataHelp: 'Håndevalueringens data ligger kun i denne browser. En kopi kan gemmes som fil og hentes igen på en anden enhed.',
   exportData: 'Eksportér data',
   importData: 'Importér data',
   importFile: 'Vælg en fil med Håndevalueringens data',
@@ -212,7 +212,7 @@ const DA = {
     invalid: 'Filen er ugyldig.',
   } as Record<HeImportError, string>,
   importSummary: (xp: number, items: number, sessions: number, streak: number) =>
-    `Filen har ${xp} XP, ${items} kort i bunken, ${sessions} sessioner og en streak på ${streak}. Erstat dataene her?`,
+    `Filen har ${xp} XP, ${items} kort i bunken, ${sessions} sessioner og en streak på ${streak}. Skal dataene her erstattes?`,
   cancel: 'Annullér',
   replace: 'Erstat',
   lastExport: (date: string) => `Seneste eksport: ${date}.`,
@@ -231,21 +231,21 @@ const DA = {
       'En session tager ca. 5 minutter: opvarmning (45 s), lynrunde (45 s), niveauopgaver (150 s) og status. Timeren er blød, så opgaven, du er i gang med, gøres altid færdig. Dagen tæller i streaken, når status vises.',
     techniques: 'Nøgletallene og huskereglerne fra P-modellen. Ankrene, genvejen, korthed, stikforventningen og kortfarvepoint pr. mønster øves i opvarmningen.',
     settings: 'Dit niveau og Håndevalueringens egen eksport og import.',
-    data: 'Håndevaluering har sine egne data. Eksportér en kopi som fil; en import viser først et resumé og erstatter så dataene her. De andre spors data røres ikke.',
+    data: 'Håndevaluering har sine egne data. En kopi kan eksporteres som fil; en import viser først et resumé og erstatter så dataene her. De andre spors data røres ikke.',
     level:
       'Niveau 1: honnørpoint og hvad makker skal have. 2: fordelingsled, og hvornår de må lægges til. 3: niveaubeslutningen og spildte værdier. 4: farve eller sans og sammenlign metoder. 5: turneringsform og blandede opgaver.',
     exercises: {
-      honors: 'Tast honnørpointene: E 5, K 3, D 1½, B ½ og 10 ¼. Genvejen er hp + 1 pr. es − ½ pr. dame − ½ pr. knægt + ¼ pr. tier. Inden for 8 s giver 10 XP, ellers 5.',
+      honors: 'Honnørpointene er E 5, K 3, D 1½, B ½ og 10 ¼. Genvejen er hp + 1 pr. es − ½ pr. dame − ½ pr. knægt + ¼ pr. tier. Inden for 8 s giver 10 XP, ellers 5.',
       distribution:
-        'Fittet er bekræftet, så fordelingen tæller: 1½ pr. trumf ud over 4, minus 1½ pr. trumf under 4, og korthed 5-3-1 (renonce, singleton, doubleton) i sidefarverne. Tast din p; inden for 20 s giver 10 XP.',
+        'Fittet er bekræftet, så fordelingen tæller: 1½ pr. trumf ud over 4, minus 1½ pr. trumf under 4, og korthed 5-3-1 (renonce, singleton, doubleton) i sidefarverne. Svaret er din p; inden for 20 s giver 10 XP.',
       add: 'Fordelingen må først lægges til, når fittet er bekræftet. Uden fit tæller kun honnørpointene, og i sans gælder sansmodellen: hp + ¼ pr. tier og stoppere i stedet for længde.',
       decision:
-        'Læg din og makkers p sammen til P. Under 28½ er delkontrakt, fra 28½ udgang, fra 35 lilleslem (højst ét nøglekort må mangle: de fire es og trumfkongen) og fra 41 storeslem (alle fem nøglekort). Inden for ½ point af en grænse er begge nabovalg rigtige.',
-      partner: 'Udgang kræver P = 28½, så makker skal have 28½ minus dine point. Tast svaret med ½ og ¼.',
+        'Parrets P er din og makkers p lagt sammen. Under 28½ er delkontrakt, fra 28½ udgang, fra 35 lilleslem (højst ét nøglekort må mangle: de fire es og trumfkongen) og fra 41 storeslem (alle fem nøglekort). Inden for ½ point af en grænse er begge nabovalg rigtige.',
+      partner: 'Udgang kræver P = 28½, så makker skal have 28½ minus dine point. Du taster svaret med ½ og ¼.',
       strain: 'Fit først: med et 8+ major-fit giver farvekontrakten 2–4 stik mere end sans. Uden major-fit og med alle fire farver stoppet er 3NT rigtigt.',
-      wasted: 'Makker har vist korthed. En konge i den farve er spildt og koster 1; en dame eller knægt koster ikke noget. Tast din p igen.',
+      wasted: 'Makker har vist korthed. En konge i den farve er spildt og koster 1; en dame eller knægt koster ikke noget. Svaret er din nye p.',
       compare:
-        'Begge hænder med fit, og hp og Zar med tal og beslutning. De to er uenige: regn P, og vælg den metode, der giver P-modellens kontrakt. Udgang fra 23 hp, 52 ZP og P = 28½.',
+        'Begge hænder med fit, og hp og Zar med tal og beslutning. De to er uenige, og svaret er den metode, der giver P-modellens kontrakt. Udgang fra 23 hp, 52 ZP og P = 28½.',
       form: 'Niveaubeslutningen med turneringsformen: ved holdturnering i zonen er udgang rigtig fra P ≈ 27½ (ca. 37 % for 4M), uden for zonen fra 28 (45 %) og ved parturnering fra 28½ (50 %). Inden for ½ point af grænsen er begge nabovalg rigtige.',
     } as Record<Exercise, string>,
     count:
@@ -256,7 +256,7 @@ const DA = {
       'Facit regnes af P-modellen: honnørpoint, trumflængde og korthed, parrets P og tabellen over stik og chancer. Chancen vises som naturlig frekvens, fx 3 ud af 5 gange.',
     status: 'Sessionens resultat. Streak og XP er Håndevalueringens egne, adskilt fra de andre spor.',
     deck: {
-      anker: 'Ankrene for niveaubeslutningen: udgang ved P = 28½, lilleslem ved 35 og storeslem ved 41. Tast tallet med ½.',
+      anker: 'Ankrene for niveaubeslutningen: udgang ved P = 28½, lilleslem ved 35 og storeslem ved 41. Du taster tallet med ½.',
       korthed: 'Kortfarvepoint i farvekontrakt: renonce 5, singleton 3 og doubleton 1. De tælles i begge hænder, men kun i sidefarverne.',
       genvej: 'Genvejen fra hp til honnørpoint: + 1 pr. es, − ½ pr. dame, − ½ pr. knægt og + ¼ pr. tier. Kongen er den samme.',
       moenster: 'Kortfarvepoint pr. mønster er summen over farverne: 5 for en renonce, 3 for en singleton og 1 for en doubleton.',
@@ -272,7 +272,7 @@ const EN: Texts = {
   title: 'Hand evaluation',
   back: 'Back to the front page',
   backToHome: 'Back to Hand evaluation',
-  saveFailed: 'Your data could not be saved in the browser. Export a copy under Settings.',
+  saveFailed: 'Your data could not be saved in the browser. A copy can be exported under Settings.',
 
   rank: rankEn,
   card: (card: Card) => `${SUITS[Math.floor(card / 13)]}${rankEn(card % 13)}`,
@@ -431,7 +431,7 @@ const EN: Texts = {
   toHome: 'To the Hand evaluation front page',
 
   levelInfo: 'Level',
-  dataHelp: 'Your Hand evaluation data is stored only in this browser. Save a copy as a file and load it again on another device.',
+  dataHelp: 'Your Hand evaluation data is stored only in this browser. A copy can be saved as a file and loaded again on another device.',
   exportData: 'Export data',
   importData: 'Import data',
   importFile: 'Choose a file with Hand evaluation data',
@@ -444,7 +444,7 @@ const EN: Texts = {
     invalid: 'The file is invalid.',
   },
   importSummary: (xp: number, items: number, sessions: number, streak: number) =>
-    `The file has ${xp} XP, ${items} cards in the deck, ${sessions} sessions and a streak of ${streak}. Replace the data here?`,
+    `The file has ${xp} XP, ${items} cards in the deck, ${sessions} sessions and a streak of ${streak}. Should the data here be replaced?`,
   cancel: 'Cancel',
   replace: 'Replace',
   lastExport: (date: string) => `Last export: ${date}.`,
@@ -463,21 +463,21 @@ const EN: Texts = {
       'A session takes about 5 minutes: warm-up (45 s), lightning round (45 s), level tasks (150 s) and status. The timer is soft, so the task you are working on is always finished. The day counts in your streak when the status is shown.',
     techniques: 'The key numbers and rules of the P-model. The anchors, the shortcut, shortness, the expected tricks and shortness points per pattern are practised in the warm-up.',
     settings: 'Your level and the separate export and import of your Hand evaluation data.',
-    data: 'Hand evaluation has its own data. Export a copy as a file; an import first shows a summary and then replaces the data here. The data of the other tracks is not touched.',
+    data: 'Hand evaluation has its own data. A copy can be exported as a file; an import first shows a summary and then replaces the data here. The data of the other tracks is not touched.',
     level:
       "Level 1: honour points and what partner needs. 2: distribution points, and when they may be added. 3: the level decision and wasted values. 4: suit or notrump and compare methods. 5: form of scoring and mixed tasks.",
     exercises: {
-      honors: 'Type the honour points: A 5, K 3, Q 1½, J ½ and 10 ¼. The shortcut is HCP + 1 per ace − ½ per queen − ½ per jack + ¼ per ten. Within 8 s gives 10 XP, otherwise 5.',
+      honors: 'The honour points are A 5, K 3, Q 1½, J ½ and 10 ¼. The shortcut is HCP + 1 per ace − ½ per queen − ½ per jack + ¼ per ten. Within 8 s gives 10 XP, otherwise 5.',
       distribution:
-        'The fit is confirmed, so distribution counts: 1½ per trump beyond 4, minus 1½ per trump short of 4, and shortness 5-3-1 (void, singleton, doubleton) in the side suits. Type your p; within 20 s gives 10 XP.',
+        'The fit is confirmed, so distribution counts: 1½ per trump beyond 4, minus 1½ per trump short of 4, and shortness 5-3-1 (void, singleton, doubleton) in the side suits. The answer is your p; within 20 s gives 10 XP.',
       add: 'Distribution may be added only once the fit is confirmed. Without a fit only the honour points count, and in notrump the notrump model applies: HCP + ¼ per ten and stoppers instead of length.',
       decision:
-        "Add your p and partner's p to get P. Below 28½ is partscore, from 28½ game, from 35 small slam (at most one key card missing: the four aces and the trump king) and from 41 grand slam (all five key cards). Within ½ point of a limit both neighbouring choices are right.",
-      partner: 'Game needs P = 28½, so partner needs 28½ minus your points. Type the answer with ½ and ¼.',
+        "The pair's P is your p and partner's p added together. Below 28½ is partscore, from 28½ game, from 35 small slam (at most one key card missing: the four aces and the trump king) and from 41 grand slam (all five key cards). Within ½ point of a limit both neighbouring choices are right.",
+      partner: 'Game needs P = 28½, so partner needs 28½ minus your points. You type the answer with ½ and ¼.',
       strain: 'Fit first: with an 8+ major fit the suit contract takes 2–4 tricks more than notrump. Without a major fit and with all four suits stopped, 3NT is right.',
-      wasted: 'Partner has shown shortness. A king in that suit is wasted and costs 1; a queen or jack costs nothing. Type your p again.',
+      wasted: 'Partner has shown shortness. A king in that suit is wasted and costs 1; a queen or jack costs nothing. The answer is your new p.',
       compare:
-        "Both hands with a fit, and HCP and Zar with their totals and decisions. The two disagree: work out P and choose the method that gives the P-model's contract. Game from 23 HCP, 52 ZP and P = 28½.",
+        "Both hands with a fit, and HCP and Zar with their totals and decisions. The two disagree, and the answer is the method that gives the P-model's contract. Game from 23 HCP, 52 ZP and P = 28½.",
       form: 'The level decision with the form of scoring: at teams vulnerable, game is right from P ≈ 27½ (about 37% for 4M), not vulnerable from 28 (45%) and at pairs from 28½ (50%). Within ½ point of the limit both neighbouring choices are right.',
     },
     count:
@@ -488,7 +488,7 @@ const EN: Texts = {
       "The answer is worked out by the P-model: honour points, trump length and shortness, the pair's P and the table of tricks and chances. The chance is shown as a natural frequency, e.g. 3 times in 5.",
     status: 'The result of the session. The streak and XP belong to Hand evaluation, separate from the other tracks.',
     deck: {
-      anker: 'The anchors of the level decision: game at P = 28½, small slam at 35 and grand slam at 41. Type the number with ½.',
+      anker: 'The anchors of the level decision: game at P = 28½, small slam at 35 and grand slam at 41. You type the number with ½.',
       korthed: 'Shortness points in a suit contract: void 5, singleton 3 and doubleton 1. They count in both hands, but only in the side suits.',
       genvej: 'The shortcut from HCP to honour points: + 1 per ace, − ½ per queen, − ½ per jack and + ¼ per ten. The king is the same.',
       moenster: 'Shortness points per pattern are the sum over the suits: 5 for a void, 3 for a singleton and 1 for a doubleton.',

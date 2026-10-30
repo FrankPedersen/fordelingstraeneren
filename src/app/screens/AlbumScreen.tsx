@@ -31,8 +31,8 @@ export function AlbumScreen({ saved, onSave, onBack }: AlbumScreenProps) {
         <h1>Album</h1>
         <Info topic="Album">
           {tx(
-            'Tryk på en plads for at se mønstrets grad, hyppighed og placeringer og skrive dit eget billede. Et "?" er et mønster, du ikke har mødt endnu; tallet viser, hvor sjældent det er. Legendariske pladser har knappen "Lås op med tre spørgsmål".',
-            'Tap a slot to see the pattern’s grade, frequency and arrangements and to write your own image. A "?" is a pattern you have not met yet; the number shows how rare it is. Legendary slots have the button "Unlock with three questions".',
+            'Et tryk på en plads viser mønstrets grad, hyppighed og placeringer, og der kan du skrive dit eget billede. Et "?" er et mønster, du ikke har mødt endnu; tallet viser, hvor sjældent det er. Legendariske pladser har knappen "Lås op med tre spørgsmål".',
+            'Tapping a slot shows the pattern’s grade, frequency and arrangements, and there you can write your own image. A "?" is a pattern you have not met yet; the number shows how rare it is. Legendary slots have the button "Unlock with three questions".',
           )}
         </Info>
       </header>
@@ -133,7 +133,7 @@ function SlotDialog({ saved, pattern, onSave, onClose }: SlotDialogProps) {
               <span>{tx('Billede', 'Image')}</span>
               <input
                 value={saved.images[pattern.id] ?? ''}
-                placeholder={image?.own ? '' : (image?.name ?? tx('Skriv dit eget billede', 'Write your own image'))}
+                placeholder={image?.own ? '' : (image?.name ?? tx('Dit eget billede', 'Your own image'))}
                 onChange={(e) => setImage(e.target.value)}
               />
             </label>

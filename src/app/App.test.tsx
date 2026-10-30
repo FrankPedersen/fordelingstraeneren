@@ -147,7 +147,7 @@ describe('App', () => {
     click('Fordeling');
     click('Huskepalads');
     expect(screen.getByText(/Låses op på niveau 2/)).toBeTruthy();
-    click(/Navngiv stationen.*Trappen/);
+    click(/Stationen har intet navn endnu.*Trappen/);
     fireEvent.change(screen.getByLabelText('Stationens navn'), { target: { value: 'Hoveddøren' } });
     click('Brug skabelonen');
     expect((screen.getByLabelText('Scene') as HTMLTextAreaElement).value).toBe('Ved Hoveddøren: Trappen ');
@@ -205,7 +205,7 @@ describe('App', () => {
     // Lynrunden er slut efter 60 s; der er stadig tid til sudokuen.
     vi.setSystemTime(new Date(2026, 9, 2, 12, 3, 45));
     act(() => vi.advanceTimersByTime(3000));
-    expect(screen.getByText(/Find Østs og Vests fordeling/)).toBeTruthy();
+    expect(screen.getByText(/Hvad er Østs og Vests fordeling\?/)).toBeTruthy();
     expect(screen.getAllByRole('listitem').length).toBeGreaterThanOrEqual(1);
     for (const seat of ['Øst', 'Vest']) {
       for (const suit of ['spar', 'hjerter', 'ruder', 'klør']) {
@@ -257,7 +257,7 @@ describe('App', () => {
       type: 'application/json',
     });
     fireEvent.change(document.querySelector('input[type="file"]')!, { target: { files: [file] } });
-    expect(await screen.findByText('Importér filen?')).toBeTruthy();
+    expect(await screen.findByText('Skal filen importeres?')).toBeTruthy();
     expect(screen.getByText('4.321')).toBeTruthy();
     expect(localStorage.getItem(STORAGE_KEY)).toBeNull();
     click('Overskriv mine data');

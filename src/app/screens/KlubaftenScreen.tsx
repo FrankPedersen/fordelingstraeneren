@@ -12,8 +12,8 @@ export function KlubaftenScreen({ onBack }: { onBack(): void }) {
         <h1>{tx('Klubaften', 'Club evening')}</h1>
         <Info topic={tx('Klubaften', 'Club evening')}>
           {tx(
-            'Tryk på et mønster under gitteret for at fremhæve dets hænder; tryk igen for at se alle. Farven viser den længste farve: blå 4, grøn 5, rav 6 og violet 7+.',
-            'Tap a pattern below the grid to highlight its hands; tap again to see all. The colour shows the longest suit: blue 4, green 5, amber 6 and violet 7+.',
+            'Et tryk på et mønster under gitteret fremhæver dets hænder; et nyt tryk viser alle igen. Farven viser den længste farve: blå 4, grøn 5, rav 6 og violet 7+.',
+            'Tapping a pattern below the grid highlights its hands; tapping again shows them all. The colour shows the longest suit: blue 4, green 5, amber 6 and violet 7+.',
           )}
         </Info>
       </header>

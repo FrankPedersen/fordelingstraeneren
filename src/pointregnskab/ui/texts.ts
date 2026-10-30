@@ -33,7 +33,7 @@ const DA = {
   title: 'Pointregnskab',
   back: 'Tilbage til forsiden',
   backToHome: 'Tilbage til Pointregnskab',
-  saveFailed: 'Dine data kunne ikke gemmes i browseren. Eksportér en kopi under Indstillinger.',
+  saveFailed: 'Dine data kunne ikke gemmes i browseren. En kopi kan eksporteres under Indstillinger.',
 
   rank: rankDa,
   card: (card: Card) => `${SUITS[Math.floor(card / 13)]}${rankDa(card % 13)}`,
@@ -110,7 +110,7 @@ const DA = {
   plays: (seat: string, card: string) => `${seat} lægger ${card}`,
   noClues: 'Ingen honnører er faldet endnu.',
   clueCounter: (n: number, total: number) => `${n} af ${total}`,
-  watch: 'Tæl med: honnørerne vises én ad gangen.',
+  watch: 'Honnørerne vises én ad gangen, mens du tæller med.',
   unseen: 'Usete honnører',
   notes: { W: 'V', E: 'Ø', open: '?' } as Record<Note, string>,
   noteNames: { none: 'intet notat', W: 'Vest', E: 'Øst', open: 'usikker' } as Record<Note | 'none', string>,
@@ -205,7 +205,7 @@ const DA = {
   // Indstillinger og data
   levelInfo: 'Niveau',
   runningInfo: (seconds: string) => `Visningstid i løbende tælling: ${seconds} s pr. honnør.`,
-  dataHelp: 'Pointregnskabs data ligger kun i denne browser. Gem en kopi som fil, og hent den igen på en anden enhed.',
+  dataHelp: 'Pointregnskabs data ligger kun i denne browser. En kopi kan gemmes som fil og hentes igen på en anden enhed.',
   exportData: 'Eksportér data',
   importData: 'Importér data',
   importFile: 'Vælg en fil med Pointregnskabs data',
@@ -218,7 +218,7 @@ const DA = {
     invalid: 'Filen er ugyldig.',
   } as Record<PrImportError, string>,
   importSummary: (xp: number, items: number, sessions: number, streak: number) =>
-    `Filen har ${xp} XP, ${items} kort i bunken, ${sessions} sessioner og en streak på ${streak}. Erstat dataene her?`,
+    `Filen har ${xp} XP, ${items} kort i bunken, ${sessions} sessioner og en streak på ${streak}. Skal dataene her erstattes?`,
   cancel: 'Annullér',
   replace: 'Erstat',
   lastExport: (date: string) => `Seneste eksport: ${date}.`,
@@ -236,20 +236,20 @@ const DA = {
     start:
       'En session tager ca. 5 minutter: opvarmning (45 s), regnestykket (45 s), niveau (3–4 opgaver) og status. Timeren er blød, så opgaven, du er i gang med, gøres altid færdig. Dagen tæller i streaken, når status vises.',
     techniques: 'Fire måder at holde regnskab på ved bordet. Blokkene og intervalkortene øves i opvarmningen.',
-    blocks: 'Tæl honnørerne i en farve som én blok: E K = 7, E D = 6, K D = 5, E K D = 9, D B = 3. Tast blokkens point; inden for 5 s er hurtigt.',
+    blocks: 'Honnørerne i en farve tælles som én blok: E K = 7, E D = 6, K D = 5, E K D = 9, D B = 3. Svaret er blokkens point; inden for 5 s er hurtigt.',
     rangeCards:
-      'Meldingernes hp-intervaller fra systemfilen, fx 1NT 15–17 og pas i åbningsposition højst 11. Vælg det interval, meldingen viser. Kun intervallerne øves her, ikke konventionerne.',
+      'Meldingernes hp-intervaller fra systemfilen, fx 1NT 15–17 og pas i åbningsposition højst 11. Svaret er det interval, meldingen viser. Kun intervallerne øves her, ikke konventionerne.',
     settings: 'Dit niveau, visningstiden i løbende tælling og Pointregnskabs egen eksport og import.',
-    data: 'Pointregnskab har sine egne data. Eksportér en kopi som fil; en import viser først et resumé og erstatter så dataene her. De andre spors data røres ikke.',
+    data: 'Pointregnskab har sine egne data. En kopi kan eksporteres som fil; en import viser først et resumé og erstatter så dataene her. De andre spors data røres ikke.',
     level:
       'Niveau 1: ét interval og én uset honnør. 2: flere usete honnører. 3: begge modspillere har et interval, så restintervallet skal bruges. 4: honnørerne vises én ad gangen, og regnskabspanelet er skjult. 5: fuldt regnskab med længder.',
     exercises: {
-      sum: 'Tæl Nords og Syds honnørpoint, og træk dem fra 40. Tast svaret; inden for 5 s giver 10 XP, ellers 5.',
+      sum: 'Modpartens honnørpoint er 40 minus Nords og Syds. Du taster svaret; inden for 5 s giver 10 XP, ellers 5.',
       running:
-        'Honnørerne vises én ad gangen, som de falder. Hold regnskab i hovedet, og tast til sidst, hvor mange point Vest og Øst har vist. Ét af to tal rigtigt giver halvt. Visningstiden bliver kortere efter rigtige svar og længere efter fejl.',
-      can: 'Kan modspilleren have honnøren med de point, hans meldinger tillader? Svar ja, hvis han kan; nej kun, hvis den sikkert sidder hos den anden.',
-      who: 'Svar Vest eller Øst, hvis honnøren sidder samme sted i alle placeringer, der passer med meldingerne og de viste point; ellers "kan ikke afgøres". At svare sikkert, når det ikke kan afgøres, er forkert.',
-      finesse: 'Kip mod den modspiller, der sikkert har honnøren. Sidder den ikke sikkert hos nogen af dem, er det et gæt.',
+        'Honnørerne vises én ad gangen, som de falder. Du holder regnskab i hovedet og taster til sidst, hvor mange point Vest og Øst har vist. Ét af to tal rigtigt giver halvt. Visningstiden bliver kortere efter rigtige svar og længere efter fejl.',
+      can: 'Kan modspilleren have honnøren med de point, hans meldinger tillader? Svaret er ja, hvis han kan; nej kun, hvis den sikkert sidder hos den anden.',
+      who: 'Svaret er Vest eller Øst, hvis honnøren sidder samme sted i alle placeringer, der passer med meldingerne og de viste point; ellers "kan ikke afgøres". At svare sikkert, når det ikke kan afgøres, er forkert.',
+      finesse: 'Kipningen går mod den modspiller, der sikkert har honnøren. Sidder den ikke sikkert hos nogen af dem, er det et gæt.',
       full: 'Som Hvem har den?, men Vests og Østs farvelængder fra en 13-sudoku er kendt: ingen kan have flere honnører i en farve, end han har kort i den.',
     } as Record<Exercise, string>,
     panel:
@@ -257,7 +257,7 @@ const DA = {
     auction:
       'Øst og Vests meldinger med hp-intervallerne fra systemfilen. Pas i åbningsposition viser højst 11 hp. Svarerens pas viser 0–5 efter en åbning i 1 farve og 0–7 efter 1NT, men kun når Nord–Syd har passet imellem. Nord–Syds meldinger indgår ikke; kun kontrakten vises.',
     stream: 'Honnørerne, modspillerne har lagt, med den nyeste øverst. De tæller som vist.',
-    chips: 'De honnører, du ikke har set. Tryk på en chip for at notere V, Ø eller ? (giver ikke point). Notaterne er slået fra fra niveau 4.',
+    chips: 'De honnører, du ikke har set. Et tryk på en chip noterer V, Ø eller ? (giver ikke point). Notaterne er slået fra fra niveau 4.',
     lengths: 'Vests og Østs længder i ♠♥♦♣-orden fra en 13-sudoku. Ingen modspiller kan have flere honnører i en farve, end han har kort i den.',
     facit:
       'Begrundelsen kommer fra løseren, der gennemgår alle måder, de usete honnører kan sidde på, og beholder dem, der passer med meldinger og viste point. Restintervallet er det, hver modspiller kan have tilbage.',
@@ -271,7 +271,7 @@ const EN: Texts = {
   title: 'Point count',
   back: 'Back to the front page',
   backToHome: 'Back to Point count',
-  saveFailed: 'Your data could not be saved in the browser. Export a copy under Settings.',
+  saveFailed: 'Your data could not be saved in the browser. A copy can be exported under Settings.',
 
   rank: rankEn,
   card: (card: Card) => `${SUITS[Math.floor(card / 13)]}${rankEn(card % 13)}`,
@@ -300,7 +300,7 @@ const EN: Texts = {
   techniqueList: [
     { key: 'top', name: 'Count down from the top', text: 'Highest possible minus shown is the most he has left. "West has at most 17 and has shown 14, so he cannot have the ace."' },
     { key: 'anchors', name: 'Anchors', text: '40 in all and 10 per hand on average. A partner who passed a one-level suit opening has at most 5.' },
-    { key: 'blocks', name: 'Blocks', text: 'Count the honours in a suit as one block: A K = 7, A Q = 6, K Q = 5, A K Q = 9, Q J = 3.' },
+    { key: 'blocks', name: 'Blocks', text: 'The honours in a suit are counted as one block: A K = 7, A Q = 6, K Q = 5, A K Q = 9, Q J = 3.' },
     { key: 'ranges', name: 'Range cards', text: 'The HCP ranges of the calls in the system file, e.g. 1NT 15–17 and a weak two 5–11.' },
   ],
   settings: 'Settings',
@@ -344,7 +344,7 @@ const EN: Texts = {
   plays: (seat: string, card: string) => `${seat} plays ${card}`,
   noClues: 'No honours have fallen yet.',
   clueCounter: (n: number, total: number) => `${n} of ${total}`,
-  watch: 'Keep count: the honours are shown one at a time.',
+  watch: 'The honours are shown one at a time while you keep count.',
   unseen: 'Unseen honours',
   notes: { W: 'W', E: 'E', open: '?' },
   noteNames: { none: 'no note', W: 'West', E: 'East', open: 'unsure' },
@@ -429,7 +429,7 @@ const EN: Texts = {
 
   levelInfo: 'Level',
   runningInfo: (seconds: string) => `Display time in the running count: ${seconds} s per honour.`,
-  dataHelp: 'Your Point count data is stored only in this browser. Save a copy as a file and load it again on another device.',
+  dataHelp: 'Your Point count data is stored only in this browser. A copy can be saved as a file and loaded again on another device.',
   exportData: 'Export data',
   importData: 'Import data',
   importFile: 'Choose a file with Point count data',
@@ -442,7 +442,7 @@ const EN: Texts = {
     invalid: 'The file is invalid.',
   },
   importSummary: (xp: number, items: number, sessions: number, streak: number) =>
-    `The file has ${xp} XP, ${items} cards in the deck, ${sessions} sessions and a streak of ${streak}. Replace the data here?`,
+    `The file has ${xp} XP, ${items} cards in the deck, ${sessions} sessions and a streak of ${streak}. Should the data here be replaced?`,
   cancel: 'Cancel',
   replace: 'Replace',
   lastExport: (date: string) => `Last export: ${date}.`,
@@ -460,20 +460,20 @@ const EN: Texts = {
     start:
       'A session takes about 5 minutes: warm-up (45 s), the sum (45 s), level (3–4 tasks) and status. The timer is soft, so the task you are working on is always finished. The day counts in your streak when the status is shown.',
     techniques: 'Four ways to keep count at the table. The blocks and range cards are practised in the warm-up.',
-    blocks: 'Count the honours in a suit as one block: A K = 7, A Q = 6, K Q = 5, A K Q = 9, Q J = 3. Type the points of the block; within 5 s is fast.',
+    blocks: 'The honours in a suit are counted as one block: A K = 7, A Q = 6, K Q = 5, A K Q = 9, Q J = 3. The answer is the points of the block; within 5 s is fast.',
     rangeCards:
-      'The HCP ranges of the calls in the system file, e.g. 1NT 15–17 and a pass in opening position at most 11. Choose the range the call shows. Only the ranges are practised here, not the conventions.',
+      'The HCP ranges of the calls in the system file, e.g. 1NT 15–17 and a pass in opening position at most 11. The answer is the range the call shows. Only the ranges are practised here, not the conventions.',
     settings: 'Your level, the display time in the running count and the separate export and import of your Point count data.',
-    data: 'Point count has its own data. Export a copy as a file; an import first shows a summary and then replaces the data here. The data of the other tracks is not touched.',
+    data: 'Point count has its own data. A copy can be exported as a file; an import first shows a summary and then replaces the data here. The data of the other tracks is not touched.',
     level:
       'Level 1: one range and one unseen honour. 2: several unseen honours. 3: both defenders have a range, so the range left must be used. 4: the honours are shown one at a time and the count panel is hidden. 5: full count with lengths.',
     exercises: {
-      sum: "Count North's and South's high-card points and subtract them from 40. Type the answer; within 5 s gives 10 XP, otherwise 5.",
+      sum: "The opponents' high-card points are 40 minus North's and South's. You type the answer; within 5 s gives 10 XP, otherwise 5.",
       running:
-        'The honours are shown one at a time as they fall. Keep count in your head, and at the end type how many points West and East have shown. One of two numbers right gives half. The display time gets shorter after right answers and longer after mistakes.',
-      can: 'Can the defender have the honour with the points his bidding allows? Answer yes if he can; no only if it is surely with the other defender.',
-      who: "Answer West or East if the honour is in the same place in every placement that fits the bidding and the points shown; otherwise \"can't tell\". Answering as if sure when it can't be told is wrong.",
-      finesse: 'Finesse against the defender who surely has the honour. If it is not surely with either of them, it is a guess.',
+        'The honours are shown one at a time as they fall. You keep count in your head and at the end type how many points West and East have shown. One of two numbers right gives half. The display time gets shorter after right answers and longer after mistakes.',
+      can: 'Can the defender have the honour with the points his bidding allows? The answer is yes if he can; no only if it is surely with the other defender.',
+      who: "The answer is West or East if the honour is in the same place in every placement that fits the bidding and the points shown; otherwise \"can't tell\". Answering as if sure when it can't be told is wrong.",
+      finesse: 'The finesse goes against the defender who surely has the honour. If it is not surely with either of them, it is a guess.',
       full: 'Like Who has it?, but the suit lengths of West and East from a 13-sudoku are known: nobody can have more honours in a suit than he has cards in it.',
     },
     panel:
@@ -481,7 +481,7 @@ const EN: Texts = {
     auction:
       "East and West's calls with the HCP ranges from the system file. A pass in opening position shows at most 11 HCP. Responder's pass shows 0–5 after a one-level suit opening and 0–7 after 1NT, but only when North–South passed in between. North–South's calls are not counted; only the contract is shown.",
     stream: 'The honours the defenders have played, newest first. They count as shown.',
-    chips: 'The honours you have not seen. Tap a chip to note W, E or ? (no points). Notes are off from level 4.',
+    chips: 'The honours you have not seen. Tapping a chip notes W, E or ? (no points). Notes are off from level 4.',
     lengths: "West's and East's lengths in ♠♥♦♣ order from a 13-sudoku. No defender can have more honours in a suit than he has cards in it.",
     facit:
       'The reason comes from the solver, which goes through every way the unseen honours can lie and keeps those that fit the bidding and the points shown. The range left is what each defender can have left.',

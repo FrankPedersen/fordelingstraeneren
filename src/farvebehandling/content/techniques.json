@@ -5,11 +5,11 @@
    "id": "enkelt-kipning",
    "name": "Enkelt kipning",
    "order": 1,
-   "rule": "Spil mod honnøren, ikke fra den.",
+   "rule": "Udspillet går mod honnøren, ikke fra den.",
    "image": "Indbrudstyven, der lister ind bag vagten",
    "en": {
     "name": "Single finesse",
-    "rule": "Lead towards the honour, not away from it.",
+    "rule": "The lead goes towards the honour, not away from it.",
     "image": "The burglar sneaking in behind the guard"
    }
   },
@@ -29,11 +29,11 @@
    "id": "spil-mod-honnoer",
    "name": "Spil mod honnør",
    "order": 3,
-   "rule": "Spil mod det kort, du vil gøre til stik.",
+   "rule": "Udspillet går mod det kort, der skal blive stik.",
    "image": "Stigen op mod honnøren",
    "en": {
     "name": "Lead towards an honour",
-    "rule": "Lead towards the card you want to make a trick.",
+    "rule": "The lead goes towards the card that is to become a trick.",
     "image": "The ladder up to the honour"
    }
   },
@@ -41,11 +41,11 @@
    "id": "dobbelt-kipning",
    "name": "Dobbelt kipning",
    "order": 4,
-   "rule": "Kip først mod det laveste hul.",
+   "rule": "Den første kipning går mod det laveste hul.",
    "image": "To låger, hvor den nederste åbnes først",
    "en": {
     "name": "Double finesse",
-    "rule": "Finesse against the lower gap first.",
+    "rule": "The first finesse goes against the lower gap.",
     "image": "Two gates, the lower one opened first"
    }
   },
@@ -53,11 +53,11 @@
    "id": "sikkerhedsspil",
    "name": "Sikkerhedsspil",
    "order": 5,
-   "rule": "Sikr målet, ikke maksimum.",
+   "rule": "Målet før maksimum.",
    "image": "Sikkerhedsselen",
    "en": {
     "name": "Safety play",
-    "rule": "Secure the goal, not the maximum.",
+    "rule": "The goal before the maximum.",
     "image": "The seat belt"
    }
   },

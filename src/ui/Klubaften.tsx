@@ -47,7 +47,7 @@ export function Klubaften({ highlight }: KlubaftenProps) {
             <strong>{active.id}</strong>: {tx(`${active.per100} af 100 hænder`, `${active.per100} of 100 hands`)}
           </>
         ) : (
-          tx('Vælg et mønster for at se dets hænder.', 'Choose a pattern to see its hands.')
+          tx('Hænderne står her, når et mønster er valgt.', 'The hands appear here when a pattern is chosen.')
         )}
       </p>
       <div className="club-legend">

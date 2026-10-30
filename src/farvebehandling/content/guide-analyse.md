@@ -26,7 +26,7 @@ Opgavebanken har 657 kombinationer fra de klassiske farvebehandlinger med inspir
 
 ### 2.1 Analysér en kombination
 
-Tryk kortene ind i kortvælgeren for bordet (Nord) og hånden (Syd), og vælg målet i stik. De kort, du ikke vælger, sidder hos modparten. Bordet vises som et klassisk diagram med Nord øverst, Syd nederst og de manglende kort i midten.
+Du trykker kortene ind i kortvælgeren for bordet (Nord) og hånden (Syd) og vælger målet i stik. De kort, du ikke vælger, sidder hos modparten. Bordet vises som et klassisk diagram med Nord øverst, Syd nederst og de manglende kort i midten.
 
 Du kan også indsætte kombinationen i feltet "Indsæt kombination eller spil" over kortvælgeren og trykke Importér:
 
@@ -71,13 +71,13 @@ I eksemplet med E D B 10 over 6 5 4 3 2 mangler K 9 8 7, og linjen "lille fra be
 
 Mærket "afgør" viser de sidninger, hvor linjerne giver forskelligt resultat. Som standard sammenlignes de viste linjer.
 
-- **Sammenlign:** kryds præcis to linjer af. Båndet og tabellen viser så kun de to, og "afgør" gælder dem. Over tabellen står, hvor tit hver linje vinder alene, fx "Linje A vinder alene i 3 sidninger (14,0 %), linje B i 1 (6,2 %)". Forskellen mellem de to tal er forskellen mellem linjernes chance.
+- **Sammenlign:** med præcis to linjer krydset af viser båndet og tabellen kun de to, og "afgør" gælder dem. Over tabellen står, hvor tit hver linje vinder alene, fx "Linje A vinder alene i 3 sidninger (14,0 %), linje B i 1 (6,2 %)". Forskellen mellem de to tal er forskellen mellem linjernes chance.
 - **Vis alle udspil:** viser alle første udspil, også dem langt under den bedste og dem med 0 %, fx "damen fra bordet". De viste linjer beholder deres bogstaver.
 - **Egne linjer:** du kan skrive din egen linje i linjeeditoren og få den regnet og sammenlignet ved siden af løserens.
 
 ### 2.4 Situationen
 
-Panelet Situationen under bordet bruger det, du ved fra meldingerne og spillet. Tryk "Angiv situationen", og sæt felterne med − og +:
+Panelet Situationen under bordet bruger det, du ved fra meldingerne og spillet. "Angiv situationen" åbner felterne, som sættes med − og +:
 
 | Felt | Vest | Øst | Standard |
 | --- | --- | --- | --- |

@@ -102,10 +102,10 @@ describe('Analyse som selvstændigt modul (SPEC-analyse-modul.md, trin 1)', { ti
     render(<App />);
     const play = screen.getByRole('region', { name: 'Spilføring' });
     expect(within(play).getAllByRole('button', { name: /^(Farvebehandling|Analyse)$/ }).map((b) => b.getAttribute('aria-label'))).toEqual(['Farvebehandling', 'Analyse']);
-    expect(describedBy('Analyse')).toBe('Slå en kombination op · linjer, chancer og sidninger');
+    expect(describedBy('Analyse')).toBe('Opslag af kombinationer · linjer, chancer og sidninger');
     fireEvent.click(within(play).getByRole('button', { name: 'Hjælp: Analyse' }));
     expect(within(play).getByRole('note').textContent).toBe(
-      'Analysen fra Farvebehandling som selvstændigt modul: slå enhver kombination op, og se linjerne, chancerne og sidningerne, også med kendte kort, hp-grænser og forbindelser. Den findes også som fanen Analyse i Farvebehandling.',
+      'Analysen fra Farvebehandling som selvstændigt modul: enhver kombination kan slås op med linjerne, chancerne og sidningerne, også med kendte kort, hp-grænser og forbindelser. Den findes også som fanen Analyse i Farvebehandling.',
     );
     expect(screen.getByRole('heading', { name: '1 af 4 spor er trænet' })).toBeTruthy();
     expect(screen.getByText(/^Næste: Pointregnskab/)).toBeTruthy();
@@ -115,7 +115,7 @@ describe('Analyse som selvstændigt modul (SPEC-analyse-modul.md, trin 1)', { ti
     render(<App />);
     expect(screen.getByRole('heading', { name: 'Velkommen' })).toBeTruthy();
     expect(describedBy('Farvebehandling')).toMatch(/Ikke startet endnu$/);
-    expect(describedBy('Analyse')).toBe('Slå en kombination op · linjer, chancer og sidninger');
+    expect(describedBy('Analyse')).toBe('Opslag af kombinationer · linjer, chancer og sidninger');
   });
 
   it('når alle fire spor er trænet, foreslår I dag ikke Analyse', () => {
@@ -195,7 +195,7 @@ describe('Analyse som selvstændigt modul (SPEC-analyse-modul.md, trin 1)', { ti
     render(<App />);
     click('Skift sprog til engelsk');
     const play = screen.getByRole('region', { name: 'Declarer play' });
-    expect(describedBy('Analysis')).toBe('Look up a combination · lines, chances and layouts');
+    expect(describedBy('Analysis')).toBe('Combination look-up · lines, chances and layouts');
     fireEvent.click(within(play).getByRole('button', { name: 'Help: Analysis' }));
     const help = within(play).getByRole('note').textContent ?? '';
     expect(help).toMatch(/^The analysis from Suit combinations as a separate module/);

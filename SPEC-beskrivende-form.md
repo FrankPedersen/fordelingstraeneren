@@ -36,16 +36,20 @@ Kræver noget alligevel en ændring ud over tabellen, skal Claude Code stoppe og
 
 ## Accepttest
 
-- [ ] Listen i `docs/beskrivende-form.md` er godkendt af Frank.
-- [ ] Alle instruktioner og forklaringer på listen står i beskrivende form på dansk og engelsk med den godkendte ordlyd.
-- [ ] Knapper, links og navne på opgaver og øvelser er uændrede.
-- [ ] Testen for bydeform fejler, hvis en dansk instruktion begynder med et udsagnsord i bydeform, også efter kolon og semikolon, og består for knapperne og navnene på undtagelseslisten.
-- [ ] Ingen ændringer i logik, data eller layout: kun tekststrenge og testene er ændret, og bankens filer er uændrede.
-- [ ] `npm test` er grøn, og `node scripts/sprogtjek.ts` finder ingen ukendte ord.
-- [ ] Skærmbilleder af tre skærme med ændret tekst ligger i `C:\Users\frank\Kontraktbridge\skaermbilleder\beskrivende-form\`.
+- [x] Listen i `docs/beskrivende-form.md` er godkendt af Frank.
+- [x] Alle instruktioner og forklaringer på listen står i beskrivende form på dansk og engelsk med den godkendte ordlyd.
+- [x] Knapper, links og navne på opgaver og øvelser er uændrede.
+- [x] Testen for bydeform fejler, hvis en dansk instruktion begynder med et udsagnsord i bydeform, også efter kolon og semikolon, og består for knapperne og navnene på undtagelseslisten.
+- [x] Ingen ændringer i logik, data eller layout: kun tekststrenge og testene er ændret, og bankens filer er uændrede.
+- [x] `npm test` er grøn, og `node scripts/sprogtjek.ts` finder ingen ukendte ord.
+- [x] Skærmbilleder af tre skærme med ændret tekst ligger i `C:\Users\frank\Kontraktbridge\skaermbilleder\beskrivende-form\`.
 
 ## Afklaret
 
 1. **Reglen** og undtagelserne er Franks valg 30. oktober 2026.
 2. **Fordelingstræneren først**; konventionstræneren og forsiden tages bagefter som en særskilt opgave.
-3. **Åbne spørgsmål til Frank** står i listen under "Til afgørelse": løserens linjer i bankens data, huskereglerne, `docs/MODEL.md`, spørgsmålene i dialoger, to overskrifter og sidefodens sætning.
+3. **Listen er godkendt** (Frank, 30. oktober 2026) med rettelser til F3, B4, B5 og B6; de står i `docs/beskrivende-form.md` under Godkendelse.
+4. **"Du" som grundled** er beskrivende form (Franks valg 30. oktober 2026): mange passive -es-former i træk undgås, og hvor tre eller flere stod tæt, er "du" brugt, fx "Du taster svaret med ½ og ¼."
+5. **A1:** løserens linjer i bankens data ("Slå esset.") og deres skabeloner i `describe.ts` bliver, og testen springer dem over. **A2–A4:** huskereglerne, de to sætninger i `docs/MODEL.md` og spørgsmålene i dialoger er skrevet om som foreslået. **A5:** "Første skridt" og "Mønstrets billede" / "The pattern's image". **A6:** sidefodens "Skriv til mig." venter, til sidefødderne ændres samlet med forsiden og konventionstræneren, og står på undtagelseslisten.
+6. **Testen** `src/sprog/bydeform.test.ts` læser al dansk tekst med `danskTekst.ts` og fejler, hvis en sætning eller et led efter kolon eller semikolon begynder med et udsagnsord i bydeform. Bydeformerne, undtagelserne og de falske træf står i `src/sprog/bydeform.ts`. Enkeltord med små bogstaver er kode (fx `'hold'`, `'vælg-linjen'`) og tæller ikke; sætninger deles ikke efter forkortelser som "pr." og "fx."; "pas" (meldingen) og "lav" (tillægsordet) er ikke på listen over bydeformer.
+7. **Åbent:** `docs/MODEL.md` har en tredje sætning i bydeform, "**Brug ikke farveskalaen i sans.** Den er materialets dårligste dér.", som ikke stod på listen. Den står på undtagelseslisten, til Frank har svaret på forslaget "**Farveskalaen bruges ikke i sans.**".

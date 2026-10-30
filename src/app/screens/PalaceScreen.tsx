@@ -53,15 +53,15 @@ export function PalaceScreen({ saved, onSave, onBack }: PalaceScreenProps) {
         <h1>{tx('Huskepalads', 'Memory palace')}</h1>
         <Info topic={tx('Huskepalads', 'Memory palace')}>
           {tx(
-            'Tryk på en station for at navngive den, skrive dit eget billede og en scene. Rum 2, rum 3 og Loftet åbner, når du når de næste niveauer. Paladsvandring i sessionen øver ruten begge veje.',
-            'Tap a station to name it and write your own image and a scene. Room 2, room 3 and the Attic open as you reach the next levels. Palace walk in the session practises the route both ways.',
+            'Et tryk på en station åbner den, så du kan navngive den og skrive dit eget billede og en scene. Rum 2, rum 3 og Loftet åbner, når du når de næste niveauer. Paladsvandring i sessionen øver ruten begge veje.',
+            'Tapping a station opens it, so you can name it and write your own image and a scene. Room 2, room 3 and the Attic open as you reach the next levels. Palace walk in the session practises the route both ways.',
           )}
         </Info>
       </header>
       <p className="muted small">
         {tx(
-          'Vælg en rute, du kender udenad – fx dit hjem, klubben eller en fast gåtur – og læg 13 stationer på den. Station n rummer mønstret med rang n. Skriv en scene til hver station.',
-          'Choose a route you know by heart – your home, the club or a regular walk – and place 13 stations along it. Station n holds the pattern with rank n. Write a scene for each station.',
+          'Paladset er en rute, du kender udenad – fx dit hjem, klubben eller en fast gåtur – med 13 stationer. Station n rummer mønstret med rang n, og hver station har sin scene.',
+          'The palace is a route you know by heart – your home, the club or a regular walk – with 13 stations along it. Station n holds the pattern with rank n, and each station has its own scene.',
         )}
       </p>
 
@@ -96,7 +96,7 @@ export function PalaceScreen({ saved, onSave, onBack }: PalaceScreenProps) {
                       </span>
                       <input
                         value={saved.images[p.id] ?? ''}
-                        placeholder={tx('Skriv dit eget billede', 'Write your own image')}
+                        placeholder={tx('Dit eget billede', 'Your own image')}
                         onChange={(e) => setImage(p.id, e.target.value)}
                       />
                     </label>
@@ -117,7 +117,7 @@ export function PalaceScreen({ saved, onSave, onBack }: PalaceScreenProps) {
                         <span className="station-number">{i + 1}</span>
                         <Skyline id={station.patternId} size="sm" label={false} />
                         <span className="grow">
-                          <strong>{station.name.trim() || tx('Navngiv stationen', 'Name the station')}</strong>
+                          <strong>{station.name.trim() || tx('Stationen har intet navn endnu', 'The station has no name yet')}</strong>
                           <span className="muted small"> · {imageOf(saved, station.patternId)?.name}</span>
                         </span>
                         <span aria-hidden="true">{editing === i ? '▴' : '▾'}</span>
@@ -199,7 +199,7 @@ function StationEditor({ saved, station, number, onStation, onImage }: StationEd
         </button>
       )}
       <p className="muted small">
-        {tx('Gør billedet overdrevet, lad det bevæge sig, og lad det røre ved stationen.', 'Make the image exaggerated, let it move, and let it touch the station.')}
+        {tx('Et godt billede er overdrevet, bevæger sig og rører ved stationen.', 'A good image is exaggerated, moves and touches the station.')}
       </p>
     </div>
   );

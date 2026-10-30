@@ -26,7 +26,7 @@ The bank has 657 combinations from the classic suit combinations, inspired by Su
 
 ### 2.1 Analyse a combination
 
-Tap the cards into the card picker for dummy (North) and your hand (South), and choose the goal in tricks. The cards you do not choose are held by the opponents. The table is shown as a classic diagram with North at the top, South at the bottom and the missing cards in the middle.
+You tap the cards into the card picker for dummy (North) and your hand (South) and choose the goal in tricks. The cards you do not choose are held by the opponents. The table is shown as a classic diagram with North at the top, South at the bottom and the missing cards in the middle.
 
 You can also paste the combination into the field "Paste a combination or a deal" above the card picker and tap Import:
 
@@ -71,13 +71,13 @@ In the example with A Q J 10 opposite 6 5 4 3 2, K 9 8 7 are missing, and the li
 
 The label "decides" shows the layouts where the lines give different results. By default the lines shown are compared.
 
-- **Compare:** tick exactly two lines. The band and the table then show only those two, and "decides" applies to them. Above the table you see how often each line wins alone, e.g. "Line A wins alone in 3 layouts (14.0 %), line B in 1 (6.2 %)". The difference between the two figures is the difference between the lines' chances.
+- **Compare:** with exactly two lines ticked, the band and the table show only those two, and "decides" applies to them. Above the table you see how often each line wins alone, e.g. "Line A wins alone in 3 layouts (14.0 %), line B in 1 (6.2 %)". The difference between the two figures is the difference between the lines' chances.
 - **Show all first leads:** shows every first lead, also those far below the best one and those with 0 %, e.g. "the queen from dummy". The lines shown keep their letters.
 - **Your lines:** you can write your own line in the line editor and have it worked out and compared next to the solver's.
 
 ### 2.4 The situation
 
-The panel The situation below the table uses what you know from the bidding and the play. Tap "Set the situation", and set the fields with − and +:
+The panel The situation below the table uses what you know from the bidding and the play. "Set the situation" opens the fields, which are set with − and +:
 
 | Field | West | East | Default |
 | --- | --- | --- | --- |

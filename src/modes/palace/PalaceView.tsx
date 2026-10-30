@@ -32,7 +32,7 @@ export function PalaceView({ task, route, answer, reveal, skylines, onAnswer }: 
         <div className="with-info">
           <p className="prompt">{tx(`Hvilket mønster bor ved station ${place}?`, `Which pattern lives at station ${place}?`)}</p>
           <Info topic={tx('Paladsvandring', 'Palace walk')}>
-            {tx('Paladsvandring øver ruten i dit huskepalads begge veje: tast mønstret, der bor ved en station, eller vælg stationen, hvor et mønster bor. Station n rummer mønstret med rang n; de episke mønstre bor på Loftet.', 'Palace walk practises the route in your memory palace both ways: type the pattern that lives at a station, or choose the station where a pattern lives. Station n holds the pattern with rank n; the epic patterns live in the Attic.')}
+            {tx('Paladsvandring øver ruten i dit huskepalads begge veje: fra stationen til mønstret, der bor dér, og fra mønstret til stationen, hvor det bor. Station n rummer mønstret med rang n; de episke mønstre bor på Loftet.', 'Palace walk practises the route in your memory palace both ways: from a station to the pattern that lives there, and from a pattern to the station where it lives. Station n holds the pattern with rank n; the epic patterns live in the Attic.')}
           </Info>
         </div>
         <p className="instruction">
@@ -74,7 +74,7 @@ export function PalaceView({ task, route, answer, reveal, skylines, onAnswer }: 
       <div className="with-info">
         <p className="prompt">{tx(`Hvor på ruten bor ${pattern.id}?`, `Where on the route does ${pattern.id} live?`)}</p>
         <Info topic={tx('Paladsvandring', 'Palace walk')}>
-          {tx('Paladsvandring øver ruten i dit huskepalads begge veje: tast mønstret, der bor ved en station, eller vælg stationen, hvor et mønster bor. Station n rummer mønstret med rang n; de episke mønstre bor på Loftet.', 'Palace walk practises the route in your memory palace both ways: type the pattern that lives at a station, or choose the station where a pattern lives. Station n holds the pattern with rank n; the epic patterns live in the Attic.')}
+          {tx('Paladsvandring øver ruten i dit huskepalads begge veje: fra stationen til mønstret, der bor dér, og fra mønstret til stationen, hvor det bor. Station n rummer mønstret med rang n; de episke mønstre bor på Loftet.', 'Palace walk practises the route in your memory palace both ways: from a station to the pattern that lives there, and from a pattern to the station where it lives. Station n holds the pattern with rank n; the epic patterns live in the Attic.')}
         </Info>
       </div>
       <div className="center">

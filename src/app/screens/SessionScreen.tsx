@@ -191,7 +191,7 @@ export function SessionScreen({ saved, onSave, onExit }: SessionScreenProps) {
       <PresentationCard
         saved={saved}
         patternId={current.patternId}
-        title={tx('Husk', 'Remember')}
+        title={tx('Mønstrets billede', 'The pattern’s image')}
         onContinue={() =>
           isCurrent(view) && setRun({ ...runRef.current, view: { kind: 'step', step: current.next, shownAt: Date.now() } })
         }
@@ -275,7 +275,7 @@ export function SessionScreen({ saved, onSave, onExit }: SessionScreenProps) {
       {confirmExit && (
         <div className="overlay" role="dialog" aria-modal="true" aria-labelledby="exit-title">
           <div className="dialog">
-            <h2 id="exit-title">{tx('Afbryd sessionen?', 'Stop the session?')}</h2>
+            <h2 id="exit-title">{tx('Skal sessionen afbrydes?', 'Should the session be stopped?')}</h2>
             <p>
               {tx(
                 'Dine svar er gemt, men dagen tæller først i din streak, når en session er gennemført.',

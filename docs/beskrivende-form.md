@@ -438,3 +438,20 @@ Sætninger, der begynder med et ord, der kan være bydeform, men ikke er det her
 ## Testen (efter godkendelsen)
 
 `src/sprog/bydeform.test.ts` læser al dansk tekst med `danskTekst.ts` som fagordstesten og fejler, hvis en sætning begynder med et udsagnsord i bydeform, også efter kolon og semikolon. Listen over bydeformer og listen over undtagelser (gruppe 1, 2 og 5 og de valg, Frank træffer i gruppe 4) står i `src/sprog/bydeform.ts`. Bankens linjer springes over, hvis A1 bliver som foreslået.
+
+## Godkendelse (Frank, 30. oktober 2026)
+
+Listen er godkendt med disse rettelser, og teksterne er rettet efter dem:
+
+- **F3** med navneord: "Honnørpoint under spillet", "Opslag af kombinationer · linjer, chancer og sidninger" og "Håndvurdering med P-modellen" / "High-card points during play", "Combination look-up · lines, chances and layouts" og "Hand evaluation with the P-model".
+- **B4 og B6:** "Feltet tager imod en kombination …" / "The field accepts a combination …".
+- **B5:** "Handviewerens lange adresse virker også; den står i adresselinjen, når spillet er åbnet dér." / "The hand viewer's long address works too; it is in the address bar when the deal is open there."
+- **Generelt:** mange passive -es-former i træk undgås. "Du" som grundled er beskrivende form og bruges, hvor tre eller flere -es-former stod tæt, fx "Du taster svaret med ½ og ¼." (H3), "Du vælger en celle … og taster antallet af kort" (Ø18), "Du holder regnskab i hovedet og taster til sidst …" (P4), "du udleder … og låser fordelingen" (F12), "Mønstertastaturet: du taster …" (F9), "Du taster de mulige mønstre …" (Ø11), "en tilfældig hånd vises, og du taster dens mønster" (F11), "Du trykker kortene ind …" (B17) og "Selvvalgt: du vælger frit …" (F14).
+- **A1:** løserens linjer bliver, og testen springer bankens data og `describe.ts` over.
+- **A2:** huskereglerne som foreslået. **A3:** de to sætninger i `docs/MODEL.md` som foreslået. **A4:** som foreslået.
+- **A5:** "Første skridt" og "Mønstrets billede" / "The pattern's image".
+- **A6:** sidefodens sætning venter, til sidefødderne ændres samlet med forsiden og konventionstræneren.
+
+Fundet under rettelsen og rettet efter samme mønster: `persistUnknown` ("… En jævnlig eksport sikrer dem.") ved siden af B16, guidens "**Sammenlign:** kryds præcis to linjer af." ved siden af B10 ("**Sammenlign:** med præcis to linjer krydset af viser båndet og tabellen kun de to, …") og den engelske etiket på importfeltet ("Combination or deal").
+
+Venter på Frank: `docs/MODEL.md` har en tredje sætning i bydeform, "**Brug ikke farveskalaen i sans.** Den er materialets dårligste dér.", som ikke stod på listen. Forslag: "**Farveskalaen bruges ikke i sans.** Den er materialets dårligste dér." Indtil Frank har svaret, står den på testens undtagelsesliste.
