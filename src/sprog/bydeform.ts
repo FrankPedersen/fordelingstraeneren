@@ -12,7 +12,7 @@ export const BYDEFORMER: ReadonlySet<string> = new Set(
   `afbryd angiv annullér behold bemærk brug byg eksportér erstat find fjern flyt fold følg fortsæt gem gentag giv gruppér
   gå gæt hent hold husk importér indsæt kig kip klik kom kopiér kryds lad luk lås læg læs markér navngiv noter notér
   nulstil opdatér overskriv prøv regn ret ryd sammenlign se send sikr skift skriv slet slå spil spring start stop svar sæt
-  tag tast tjek træk tryk tæl tænk udfyld udled undgå vent vis vælg vurdér øv åbn`.split(/\s+/),
+  tag tast tjek træk træn tryk tæl tænk udfyld udled undgå vent vis vælg vurdér øv åbn`.split(/\s+/),
 );
 
 /**

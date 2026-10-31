@@ -60,3 +60,9 @@ Franks opgave 30. oktober 2026: sidefodens sætning rettes i alle tre repoer på
 
 - [x] Sidefoden: "Har du fundet en fejl, eller har du en idé til en ny træner? Så hører jeg gerne fra dig." / "… I would be glad to hear from you."; linket "Skriv til mig" bliver.
 - [x] Undtagelsen "Skriv til mig." er fjernet fra `src/sprog/bydeform.ts`, og `npm test` er grøn (739 tests), og `node scripts/sprogtjek.ts` finder ingen ukendte ord.
+
+Franks svar 31. oktober 2026 på det, der blev fundet bagefter:
+
+- [ ] Meta-beskrivelsen (`description` og `og:description`) begynder "Bridgetræning fem minutter om dagen: …", og `src/app/meta.test.ts` tjekker, at den står i beskrivende form; "træn" står på listen over bydeformer.
+- [ ] `npm test` er grøn, og `node scripts/sprogtjek.ts` finder ingen ukendte ord.
+- [ ] Når alle tests i de tre repoer er grønne, er fletningen godkendt: Fordelingstræneren udgives efter forsiden, og den udgivne app er tjekket.
