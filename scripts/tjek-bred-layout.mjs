@@ -3,7 +3,8 @@
 // ved siden af. Begge åbnes i Chrome eller Edge uden vindue; tilfældighederne og tiden er låst, så opgaverne er de samme
 // hver gang, og hver skærm får sin egen tomme lagring.
 //
-//   node scripts/tjek-bred-layout.mjs
+//   node scripts/tjek-bred-layout.mjs              alle skærme
+//   node scripts/tjek-bred-layout.mjs analyse      kun Analyse i pixelsammenligningen
 //
 // Ved 1280 px står bordet til venstre og opgaven til højre med toppene ud for hinanden, og indholdet er højst 1120 px
 // bredt i midten. Bordet står fast, når der rulles. Pointregnskab, Håndevaluering, Spil den selv og en session med
@@ -12,7 +13,7 @@
 // Ved 999 og 390 px er skærmene pixel for pixel som før; rettelsen af trinafstanden lægges på appen før, så den ikke
 // tæller som en forskel. Kræver Node 22+, git og Chrome eller Edge.
 import { spawn, spawnSync } from 'node:child_process';
-import { existsSync, lstatSync, mkdtempSync, rmSync, symlinkSync, unlinkSync } from 'node:fs';
+import { existsSync, lstatSync, mkdirSync, mkdtempSync, rmSync, symlinkSync, unlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -20,6 +21,9 @@ import { createServer } from 'vite';
 
 const ROD = fileURLToPath(new URL('..', import.meta.url));
 const TAG = 'v30-foer-bred-layout';
+// Skærmnavne som argumenter begrænser pixelsammenligningen til dem; en forskel gemmes som billeder her.
+const KUN = process.argv.slice(2);
+const FORSKELLE = join(tmpdir(), 'tjek-bred-layout');
 const CHROME = [
   process.env.CHROME,
   'C:/Program Files/Google/Chrome/Application/chrome.exe',
@@ -137,12 +141,18 @@ async function chrome() {
           }
           return sti;
         },
+        /** Hele siden, når den står stille: to billeder i træk skal være ens (Analyse regner færdig bagefter). */
         async billede() {
           await kør(`window.scrollTo(0, 0); document.head.insertAdjacentHTML('beforeend', '<style>${TRIN_RETTET}</style>')`);
-          await vent(300);
-          const h = await kør('Math.max(document.documentElement.scrollHeight, innerHeight)');
-          const r = await send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true, clip: { x: 0, y: 0, width: bredde, height: h, scale: 1 } });
-          return r.result.data;
+          let forrige;
+          for (let i = 0; i < 8; i++) {
+            await vent(400);
+            const h = await kør('Math.max(document.documentElement.scrollHeight, innerHeight)');
+            const r = await send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true, clip: { x: 0, y: 0, width: bredde, height: h, scale: 1 } });
+            if (r.result.data === forrige) break;
+            forrige = r.result.data;
+          }
+          return forrige;
         },
         async luk() {
           ws.close();
@@ -207,7 +217,8 @@ const SKÆRME = {
 async function toSpalter(s, beholder, navn, { toppe = false } = {}) {
   const l = await s.kasse(`${beholder} > .wide-left`);
   const r = await s.kør(`(() => {
-    const b = [...document.querySelectorAll(${JSON.stringify(beholder)})].find((e) => e.getClientRects().length > 0);
+    // Beholderen kan selv være display: contents (Analyses kolonner), så den findes på sin synlige venstre spalte.
+    const b = [...document.querySelectorAll(${JSON.stringify(beholder)})].find((e) => e.querySelector(':scope > .wide-left')?.getClientRects().length > 0);
     const l = b?.querySelector(':scope > .wide-left')?.getBoundingClientRect();
     if (!b || !l) return null;
     const højre = b.querySelector(':scope > .wide-right');
@@ -219,6 +230,8 @@ async function toSpalter(s, beholder, navn, { toppe = false } = {}) {
   if (!l || !r) return tjek(false, `${navn}: to spalter`, `venstre ${JSON.stringify(l)}, højre ${JSON.stringify(r)}`);
   tjek(l.right <= r.left && r.top < l.bottom && l.top < r.bottom, `${navn}: to spalter side om side`, `venstre ${l.left}–${l.right}, højre ${r.left}–${r.right}`);
   if (toppe) tjek(ca(l.top, r.top), `${navn}: toppene ud for hinanden`, `venstre ${l.top}, højre ${r.top}`);
+  const bredde = await s.kør('document.documentElement.scrollWidth - innerWidth');
+  tjek(bredde <= 0, `${navn}: intet stikker ud til siden`, `${bredde} px for bredt`);
   return { l, r };
 }
 
@@ -323,8 +336,10 @@ try {
   await s.luk();
 
   for (const [skærm, beholder, navn, toppe] of [
+    ['facit', '.fb-facit', 'Facit', false],
     ['spilSelv', '.fb-play', 'Spil den selv', true],
     ['selvvalgt', '.fb-task', 'Selvvalgt', true],
+    ['analyse', '.fb-analysis > .fb-column', 'Analyse', false],
     ['pointregnskab', '.pr-screen .task', 'Pointregnskab', false],
     ['håndevaluering', '.he-screen .task', 'Håndevaluering', false],
     ['tastatur', '.session .task', 'Session med tastatur', false],
@@ -360,15 +375,22 @@ try {
 
   // Under 1000 px er intet ændret. Chrome kan en sjælden gang kantutjævne en enkelt pixel tekst anderledes, når maskinen
   // har travlt, så en forskel prøves én gang til med nye faner; en rigtig forskel kommer igen.
-  for (const skærm of Object.keys(SKÆRME)) {
+  for (const skærm of Object.keys(SKÆRME).filter((k) => !KUN.length || KUN.includes(k))) {
     for (const bredde of [999, 390]) {
-      let forskel;
+      let forskel, billeder;
       for (let forsøg = 0; forsøg < 2 && forskel !== ''; forsøg++) {
         const sNu = await åbn(skærm, bredde, 900, NU);
         const sFør = await åbn(skærm, bredde, 900, FØR);
-        forskel = await sammenlign(await sNu.billede(), await sFør.billede(), sNu);
+        billeder = [await sNu.billede(), await sFør.billede()];
+        forskel = await sammenlign(...billeder, sNu);
         await sNu.luk();
         await sFør.luk();
+      }
+      if (forskel) {
+        mkdirSync(FORSKELLE, { recursive: true });
+        writeFileSync(join(FORSKELLE, `${skærm}-${bredde}-nu.png`), Buffer.from(billeder[0], 'base64'));
+        writeFileSync(join(FORSKELLE, `${skærm}-${bredde}-foer.png`), Buffer.from(billeder[1], 'base64'));
+        forskel += ` (billederne står i ${FORSKELLE})`;
       }
       tjek(!forskel, `${skærm} ved ${bredde} px: som før`, forskel);
     }
