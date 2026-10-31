@@ -35,25 +35,25 @@ const ACE = parseCards('A'), KQJ32 = parseCards('KQJ32');
 afterEach(() => setLang('da'));
 
 describe('Linjerne med forbindelser (SPEC-forbindelser.md, trin 3)', { timeout: 300_000 }, () => {
-  it('et udspil, der bruger en indgang til hånden: "Gå ind på hånden med en sideindgang, og spil …"', () => {
+  it('et udspil, der bruger en indgang til hånden: "Hånden nås med en sideindgang, og der spilles …"', () => {
     // E D 6 5 / 4 3 2: bordet er inde, så udspillet fra hånden bruger dens ene indgang.
     const lead = solved(AQ65, X432, 3, connections('N', null, 1)).leads.find((l) => l.hand === 'S')!;
     // Kipningen står i teksten (SPEC-farvebehandling.md, Afklaret: kipninger i linjeteksterne).
-    expect(lead.steps[0]).toBe('Gå ind på hånden med en sideindgang, og spil lille mod damen (kipning); lægger Vest en honnør, tages den med esset.');
+    expect(lead.steps[0]).toBe('Hånden nås med en sideindgang, og der spilles lille mod damen (kipning); lægger Vest en honnør, tages den med esset.');
     setLang('en');
     expect(stepText(lead.steps[0])).toBe(
-      'Cross to hand with a side entry and lead low towards the queen (finesse); if West plays an honour, win with the ace.',
+      'Hand is reached with a side entry, and low is led towards the queen (finesse); if West plays an honour, it is won with the ace.',
     );
     expect(stepText(lead.steps[0])).not.toMatch(/[æøå]|(fra|og|lille|spil|hånden|bordet)/i);
   });
 
-  it('et udspil, der bruger en indgang til bordet: "Gå ind på bordet med en sideindgang, og spil …"', () => {
+  it('et udspil, der bruger en indgang til bordet: "Bordet nås med en sideindgang, og der spilles …"', () => {
     const lead = best(X432, AQ65, 3, connections('S', 1, null));
     expect(lead.hand).toBe('N');
-    expect(lead.steps[0]).toBe('Gå ind på bordet med en sideindgang, og spil lille mod damen (kipning); lægger Øst en honnør, tages den med esset.');
+    expect(lead.steps[0]).toBe('Bordet nås med en sideindgang, og der spilles lille mod damen (kipning); lægger Øst en honnør, tages den med esset.');
     setLang('en');
     expect(stepText(lead.steps[0])).toBe(
-      'Cross to dummy with a side entry and lead low towards the queen (finesse); if East plays an honour, win with the ace.',
+      'Dummy is reached with a side entry, and low is led towards the queen (finesse); if East plays an honour, it is won with the ace.',
     );
   });
 
@@ -62,16 +62,16 @@ describe('Linjerne med forbindelser (SPEC-forbindelser.md, trin 3)', { timeout: 
   });
 
   it('de engelske skabeloner for sideindgange', () => {
-    expect(englishStep('Gå ind på bordet med en sideindgang, og spil lille mod damen (kipning).')).toBe(
-      'Cross to dummy with a side entry and lead low towards the queen (finesse).',
+    expect(englishStep('Bordet nås med en sideindgang, og der spilles lille mod damen (kipning).')).toBe(
+      'Dummy is reached with a side entry, and low is led towards the queen (finesse).',
     );
-    expect(englishStep('Gå ind på hånden med en sideindgang, og spil lille til esset.')).toBe('Cross to hand with a side entry and lead low to the ace.');
-    expect(englishStep('Gå ind på hånden med en sideindgang, og spil lille.')).toBe('Cross to hand with a side entry and lead low.');
-    expect(englishStep('Gå ind på bordet med en sideindgang, og spil damen; dækker Øst, tages stikket med esset, ellers lad den løbe.')).toBe(
-      'Cross to dummy with a side entry and lead the queen; if East covers, win with the ace, otherwise let it run.',
+    expect(englishStep('Hånden nås med en sideindgang, og der spilles lille til esset.')).toBe('Hand is reached with a side entry, and low is led to the ace.');
+    expect(englishStep('Hånden nås med en sideindgang, og der spilles lille.')).toBe('Hand is reached with a side entry, and low is led.');
+    expect(englishStep('Bordet nås med en sideindgang, og der spilles damen; dækker Øst, tages stikket med esset, ellers løber den.')).toBe(
+      'Dummy is reached with a side entry, and the queen is led; if East covers, the trick is won with the ace, otherwise it runs.',
     );
-    expect(englishStep('Gå ind på hånden med en sideindgang, og spil lille fra begge hænder.')).toBe('Cross to hand with a side entry and lead low from both hands.');
-    expect(englishStep('Gå ind på hånden med en sideindgang, og slå kongen.')).toBe('Cross to hand with a side entry and cash the king.');
+    expect(englishStep('Hånden nås med en sideindgang, og der spilles lille fra begge hænder.')).toBe('Hand is reached with a side entry, and low is played from both hands.');
+    expect(englishStep('Hånden nås med en sideindgang, og kongen slås.')).toBe('Hand is reached with a side entry, and the king is cashed.');
   });
 });
 

@@ -116,6 +116,12 @@ describe('Opgavebanken', () => {
     expect(techniquesReport(bank, solutions, techniquesFile.techniques, whatNow)).toBe(lf(techniquesText));
   });
 
+  it('E D 6 5 / 4 3 2: (kipning) og linjerne i beskrivende form (SPEC-sprog-kipning-toppe)', () => {
+    const leads = (goal: number) => solutions['432-AQ65'].goals[String(goal)].leads.map((l) => l.steps);
+    expect(leads(3)[0]).toEqual(['Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset.']);
+    expect(leads(2)).toContainEqual(['Damen fra hånden; dækker Vest, lægges der lille, ellers løber den.', 'Esset slås.', 'Lille fra begge hænder.']);
+  });
+
   it('foreslår teknikker, der passer med linjerne', () => {
     const technique = (id: string) => bank.find((b) => b.id === id)!.technique;
     // E K 5 4 / B 3 2: lille fra hånden mod knægten, der står uden støtte.

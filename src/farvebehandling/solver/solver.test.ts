@@ -185,7 +185,7 @@ describe('Løseren med optimalt modspil', { timeout: 120_000 }, () => {
     const [finesse, drop] = queen.options;
     expect(finesse.steps[0]).toMatch(/^Lille fra hånden mod 10'eren \(kipning\)/);
     expect(percent(finesse.value)).toBe(64.7);
-    expect(drop.steps).toEqual(['Slå kongen.']);
+    expect(drop.steps).toEqual(['Kongen slås.']);
     expect(percent(drop.value)).toBe(35.3);
     // Vest lægger en honnør: ingen kipning er mulig mod Øst, så der er intet rimeligt valg, og situationen udelades.
     expect(situations.some((s) => s.trick[3].card === 'D')).toBe(false);

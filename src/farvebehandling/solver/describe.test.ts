@@ -21,20 +21,20 @@ describe('Linjerne på dansk', { timeout: 120_000 }, () => {
     const solution = solveGame(game);
     const best = solution.leads[solution.best];
     const text = describeLine(game, best.strategy, best.slot);
-    expect(text.steps).toEqual(["Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset.", 'Slå esset.']);
+    expect(text.steps).toEqual(["Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset.", 'Esset slås.']);
     // Linjen i linjeformatet er gyldig og giver samme chance, når løseren spiller videre efter sidste trin.
     expect(validateLine(game, { ...text.line, id: 'A' })).toEqual([]);
     expect(solveLine(game, { ...text.line, id: 'A' }).value).toBeCloseTo(best.value, 6);
     // Esset først giver 6,8 %.
     const ace = solution.leads.find((l) => l.lead.hand === 'S' && l.lead.high === 14)!;
-    expect(describeLine(game, ace.strategy, ace.slot).steps).toEqual(['Slå esset.']);
+    expect(describeLine(game, ace.strategy, ace.slot).steps).toEqual(['Esset slås.']);
   });
 
   it('E K B 3 2 / 7 6 5 4, 5 stik: slå esset og kongen', () => {
     const game = buildGame(parseCards('AKJ32'), parseCards('7654'), { objective: goal(5) });
     const solution = solveGame(game);
     const best = solution.leads[solution.best];
-    expect(describeLine(game, best.strategy, best.slot).steps).toEqual(['Slå esset og kongen.']);
+    expect(describeLine(game, best.strategy, best.slot).steps).toEqual(['Esset og kongen slås.']);
   });
 
   it('E D 6 5 / 4 3 2, 3 stik: mod damen (kipning), og den gemte linje giver løserens chance', () => {
@@ -73,7 +73,7 @@ describe('Linjerne på dansk', { timeout: 120_000 }, () => {
 
   it("E K D 9 4 / 3 2, 4 stik: uændret, B 10 alene er stadig en honnør", () => {
     const { text } = bestLine('32', 'AKQ94', 4);
-    expect(text.steps).toEqual(["Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset.", 'Slå esset.']);
+    expect(text.steps).toEqual(["Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset.", 'Esset slås.']);
   });
 
   it('nævner en gren, når 3. hånd skal reagere på en honnør', () => {
