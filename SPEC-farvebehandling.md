@@ -171,7 +171,7 @@ Opgaven er et spil under usikkerhed: spilføreren må kun beslutte ud fra de kor
    - Binder en grænse, deles hullerne efter honnørpoint, så vægtene er eksakte.
    - Chancerne er betingede af situationen. Bankens tal er og bliver a priori.
 
-**Resultat.** Løseren giver et strategitræ. Det gemmes i linjeformatet fra afsnittet Opgavebank og oversættes til dansk med faste sætningsskabeloner: en kort hovedlinje, fx "Slå esset, derefter kipning mod damen", og grene, hvor de er nødvendige, fx "Lægger Øst en honnør, …". Frank godkender teksterne for startbanken.
+**Resultat.** Løseren giver et strategitræ. Det gemmes i linjeformatet fra afsnittet Opgavebank og oversættes til dansk med faste sætningsskabeloner: en kort hovedlinje, fx "Esset slås, derefter kipning mod damen", og grene, hvor de er nødvendige, fx "Lægger Øst en honnør, …". Frank godkender teksterne for startbanken.
 
 **Alternative linjer.** Opgavetype 1 og 3 skal have 2–4 linjer at vælge imellem. Alternativerne er løserens bedste linje for hvert andet første udspil, højst tre, som hver ligger mere end 0,5 procentpoint under den bedste. For B432 / ET65 og 3 stik er det fx "esset først" og "B'en fra bordet" ved siden af "lille mod T'en"; tallene fastlægges af løseren.
 
@@ -308,8 +308,8 @@ Alle skærme følger én læseretning: problem → linjer → forskel → detalj
 ├──────────────────────────────────────────────────────────┤
 │ LINJERNE                                                 │
 │ ┌ Linje A – 37,3 % ✓ bedst ──┐ ┌ Linje B – 6,8 % ────────┐ │
-│ │ 1. Lille mod 10 (kipning) │ │ 1. Slå esset           │ │
-│ │ 2. Slå esset              │ │ 2. Lille mod 10        │ │
+│ │ 1. Lille mod 10 (kipning) │ │ 1. Esset slås          │ │
+│ │ 2. Esset slås             │ │ 2. Lille mod 10        │ │
 │ └───────────────────────────┘ └────────────────────────┘ │
 │ a priori · ubegrænsede forbindelser · optimalt modspil    │
 ├──────────────────────────────────────────────────────────┤
@@ -361,7 +361,7 @@ Regler for brugerfladen:
   - Chancerne er betingede, og udelukkede sidninger står ikke i båndet og tabellen.
   - Spil den selv giver kortene efter situationen.
   - Blokken Forbindelser (SPEC-forbindelser.md) har indgange til Nord og Syd (0–5, "ubegrænset" over 5) og feltet Inde (Nord eller Syd, standard Syd), der kun vises, når en hånd har begrænsede indgange. Chips under bordet, fx "Syd inde · Syd 2 indgange" og "Nord 0 indgange", og forudsætningslinjen, fx "a priori · Syd inde, Nord ubegrænset og Syd 2 indgange · optimalt modspil". Har begge hænder mindst lige så mange indgange, som de har kort, bruges bankens tal.
-  - Med begrænsede forbindelser begynder et udspil, der bruger en indgang, med "Gå ind på hånden (bordet) med en sideindgang, og spil …" (engelsk "Cross to hand (dummy) with a side entry and lead …"). En egen linje, der spiller ud fra en hånd, som ikke kan nås, afvises med trinnets nummer. Spil den selv åbnet fra Analyse grår udspil fra en hånd uden indgang ud, tæller indgangene ned og viser fx "Nord inde · Syd 0 indgange".
+  - Med begrænsede forbindelser begynder et udspil, der bruger en indgang, med "Hånden (Bordet) nås med en sideindgang, og der spilles …" (engelsk "Hand (Dummy) is reached with a side entry, and … is led"); trinene står i beskrivende form (SPEC-sprog-kipning-toppe). En egen linje, der spiller ud fra en hånd, som ikke kan nås, afvises med trinnets nummer. Spil den selv åbnet fra Analyse grår udspil fra en hånd uden indgang ud, tæller indgangene ned og viser fx "Nord inde · Syd 0 indgange".
 - **Valg af linjer** (SPEC-analyse-situation.md): under linjerne viser "Vis alle udspil" alle første udspil i løserens resultat. Med "Sammenlign" på præcis to linjer viser båndet og tabellen kun dem, og over tabellen står, hvor tit hver vinder alene (antallet er de konkrete sidninger, SPEC-notation-sidninger.md).
 - **Analyse som modul** (SPEC-analyse-modul.md): adressen `#analyse` og kortet "Analyse" i forsidens gruppe Spilføring (efter Farvebehandling, uden streak og uden plads i I dag) åbner Analyse alene med overskriften "Farvebehandling – Analyse" og uden fanerne Træning og Selvvalgt. Det er samme skærm, bank og lagring som fanen Analyse, som er uændret. Knappen Guide øverst i analysen, i modulet og i fanen, viser guiden til analysen på appens sprog med indholdsfortegnelse og Tilbage til analysen.
 - **Import** (SPEC-analyse-situation.md): over kortvælgeren kan en kombination indsættes som tekst (EK65-B43 eller AK65-J43), som LIN eller som BBO-handviewerens adresse. Et spil giver et valg mellem 8 kombinationer. Appen læser kun teksten og henter intet fra nettet.
@@ -448,7 +448,7 @@ Accepttest for kipningerne i linjeteksterne (grenen `linjetekst-kip`, se Afklare
 - [x] E D 10 / 3 2, 3 stik: "Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset."
 - [x] E K 4 3 2 / D 10, 5 stik: "Lille fra hånden mod 10'eren (kipning); lægger Vest en honnør, tages den med damen."
 - [x] K D 8 7 6 5 / 4 3 2, 5 stik: den gemte linje (kongen, når Øst lægger lille) giver løserens 65,6 %, når løseren spiller den.
-- [x] Uændret: E K D 9 4 / 3 2, 4 stik: "Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset. Slå esset."
+- [x] Uændret: E K D 9 4 / 3 2, 4 stik: "Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset. Esset slås."
 - [x] Hele banken løst igen (`LINES_VERSION` 2): chancerne er de samme som før, og kun linjetekster, gemte linjer og det, der regnes ud fra dem (stik pr. sidning, Hold eller par og Hvad nu?), ændres.
 - [x] Regressionstesten mod bogen (`node scripts/bog-regression.ts`) består.
 

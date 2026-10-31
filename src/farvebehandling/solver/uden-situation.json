@@ -2818,7 +2818,7 @@
        0
       ],
       "steps": [
-       "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
+       "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den.",
        "Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset."
       ],
       "line": [
@@ -2857,7 +2857,7 @@
       ],
       "steps": [
        "Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset.",
-       "Slå esset."
+       "Esset slås."
       ],
       "line": [
        {
@@ -2894,7 +2894,7 @@
        0
       ],
       "steps": [
-       "Slå esset."
+       "Esset slås."
       ],
       "line": [
        {
@@ -2926,8 +2926,8 @@
        0
       ],
       "steps": [
-       "10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
-       "Slå esset."
+       "10'eren fra hånden; dækker Vest, lægges der lille, ellers løber den.",
+       "Esset slås."
       ],
       "line": [
        {
@@ -2960,7 +2960,7 @@
       ],
       "steps": [
        "Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille.",
-       "Slå esset."
+       "Esset slås."
       ],
       "line": [
        {
@@ -3228,8 +3228,8 @@
        0
       ],
       "steps": [
-       "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
-       "Slå esset."
+       "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den.",
+       "Esset slås."
       ],
       "line": [
        {
@@ -3303,7 +3303,7 @@
        1
       ],
       "steps": [
-       "Slå esset."
+       "Esset slås."
       ],
       "line": [
        {
@@ -3335,8 +3335,8 @@
        1
       ],
       "steps": [
-       "10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
-       "Slå esset."
+       "10'eren fra hånden; dækker Vest, lægges der lille, ellers løber den.",
+       "Esset slås."
       ],
       "line": [
        {
@@ -3369,7 +3369,7 @@
       ],
       "steps": [
        "Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille.",
-       "Slå esset."
+       "Esset slås."
       ],
       "line": [
        {
@@ -3637,7 +3637,7 @@
        1
       ],
       "steps": [
-       "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
+       "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den.",
        "Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset."
       ],
       "line": [
@@ -3676,7 +3676,7 @@
       ],
       "steps": [
        "Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset.",
-       "Slå esset."
+       "Esset slås."
       ],
       "line": [
        {
@@ -3713,7 +3713,7 @@
        2
       ],
       "steps": [
-       "Slå esset."
+       "Esset slås."
       ],
       "line": [
        {
@@ -3745,8 +3745,8 @@
        2
       ],
       "steps": [
-       "10'eren fra hånden; dækker Vest, lægges der lille, ellers lad den løbe.",
-       "Slå esset."
+       "10'eren fra hånden; dækker Vest, lægges der lille, ellers løber den.",
+       "Esset slås."
       ],
       "line": [
        {
@@ -3779,7 +3779,7 @@
       ],
       "steps": [
        "Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille.",
-       "Slå esset."
+       "Esset slås."
       ],
       "line": [
        {
@@ -3822,7 +3822,7 @@
     ],
     "steps": [
      "Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset.",
-     "Slå esset."
+     "Esset slås."
     ],
     "line": [
      {
@@ -4042,7 +4042,7 @@
        0
       ],
       "steps": [
-       "Slå esset og kongen."
+       "Esset og kongen slås."
       ],
       "line": [
        {
@@ -4061,7 +4061,7 @@
       "low": 11,
       "value": 0,
       "exact": "0",
-      "upper": 0.000019402985074626865,
+      "upper": 1.9402985074626865e-05,
       "certified": true,
       "layouts": [
        0,
@@ -4074,7 +4074,7 @@
        0
       ],
       "steps": [
-       "Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe."
+       "Knægten fra bordet; dækker Øst, lægges der lille, ellers løber den."
       ],
       "line": [
        {
@@ -4131,7 +4131,7 @@
       ],
       "steps": [
        "Lille fra hånden til esset.",
-       "Slå kongen."
+       "Kongen slås."
       ],
       "line": [
        {
@@ -4356,7 +4356,7 @@
        1
       ],
       "steps": [
-       "Slå esset."
+       "Esset slås."
       ],
       "line": [
        {
@@ -4384,7 +4384,7 @@
        0
       ],
       "steps": [
-       "Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe."
+       "Knægten fra bordet; dækker Øst, lægges der lille, ellers løber den."
       ],
       "line": [
        {
@@ -4661,7 +4661,7 @@
        4
       ],
       "steps": [
-       "Slå esset og kongen."
+       "Esset og kongen slås."
       ],
       "line": [
        {
@@ -4693,7 +4693,7 @@
        3
       ],
       "steps": [
-       "Knægten fra bordet; dækker Øst, lægges der lille, ellers lad den løbe."
+       "Knægten fra bordet; dækker Øst, lægges der lille, ellers løber den."
       ],
       "line": [
        {
@@ -4750,7 +4750,7 @@
       ],
       "steps": [
        "Lille fra hånden til esset.",
-       "Slå kongen."
+       "Kongen slås."
       ],
       "line": [
        {

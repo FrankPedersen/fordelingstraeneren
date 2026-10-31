@@ -139,5 +139,8 @@ export function bydeform(text: string): string[] {
   return out;
 }
 
-/** Filer, testen springer over: løserens linjer i bankens data og deres skabeloner (A1, Franks valg 30. oktober 2026). */
-export const IKKE_INSTRUKTIONER: readonly RegExp[] = [/^src\/farvebehandling\/content\/app\/side-\d+\.json$/, /^src\/farvebehandling\/solver\/describe\.ts$/];
+/**
+ * Filer, testen springer over. Løserens linjer i bankens data og deres skabeloner var undtaget (A1, Franks valg
+ * 30. oktober 2026); siden 31. oktober 2026 følger de også beskrivende form (SPEC-sprog-kipning-toppe), så listen er tom.
+ */
+export const IKKE_INSTRUKTIONER: readonly RegExp[] = [];

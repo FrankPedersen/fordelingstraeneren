@@ -37,6 +37,8 @@ describe('Fagordstesten', () => {
       expect(fund(`Man skal ${ord} mod damen.`).map((f) => f.word), ord).toEqual([ord]);
     }
     expect(fund('Lille fra bordet mod kongen (kip)')).toHaveLength(1);
+    // Teknikkens id i brugerens data er kode, ikke tekst.
+    expect(fund('fald-eller-kip')).toEqual([]);
     for (const tekst of ['Fald eller kipning', 'Med 9 kort spil på fald.', 'fald = 53,1 %']) {
       expect(fund(tekst).map((f) => f.house), tekst).toEqual(['toppe farven']);
     }

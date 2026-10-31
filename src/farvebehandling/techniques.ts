@@ -48,7 +48,7 @@ const RESTRICTED_MIN = 0.05;
 const NAME_RANK: Record<string, Rank> = { esset: 14, kongen: 13, damen: 12, knægten: 11 };
 const NAME = String.raw`(esset|kongen|damen|knægten|\d+'eren)`;
 const TOWARD = new RegExp(String.raw`mod ${NAME} \(kipning\)`, 'i');
-const RUN = new RegExp(String.raw`${NAME} fra (?:bordet|hånden); [^.]*lad den løbe`, 'i');
+const RUN = new RegExp(String.raw`${NAME} fra (?:bordet|hånden); [^.]*(?:løber den|den løber)`, 'i');
 const DUCK = /lille fra begge hænder/i;
 
 function rankOfName(name: string): Rank {
@@ -95,7 +95,7 @@ function restrictedChoice(
       if (s.probability < RESTRICTED_MIN) continue;
       const best = s.options[0];
       const worse = s.options.find((o) => plausible(o, best.value) && best.value - o.value > NEAR_BEST);
-      if (!worse || !/\(kipning\)|lad den løbe/.test(best.steps[0])) continue;
+      if (!worse || !/\(kipning\)|løber den|den løber/.test(best.steps[0])) continue;
       for (const t of s.trick) {
         if ((t.seat !== 'V' && t.seat !== 'Ø') || !(t.card in DISPLAY_SYMBOL || t.card === '10')) continue;
         const r = rankFromSymbol(DISPLAY_SYMBOL[t.card] ?? t.card);

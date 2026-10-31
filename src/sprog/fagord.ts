@@ -29,6 +29,8 @@ export interface Fund {
 
 /** Alle "Ikke"-ord i en dansk tekst. */
 export function fund(text: string): Fund[] {
+  // Et id i kode og data (fx teknikken 'fald-eller-kip', som brugerens data bruger) er ikke tekst.
+  if (/^[a-z0-9æøå]+(?:-[a-z0-9æøå]+)+$/.test(text.trim())) return [];
   const out: Fund[] = [];
   for (const { pattern, house } of IKKE_ORD) {
     for (const m of text.matchAll(pattern)) {
