@@ -12,13 +12,12 @@ export const BYDEFORMER: ReadonlySet<string> = new Set(
   `afbryd angiv annullér behold bemærk brug byg eksportér erstat find fjern flyt fold følg fortsæt gem gentag giv gruppér
   gå gæt hent hold husk importér indsæt kig kip klik kom kopiér kryds lad luk lås læg læs markér navngiv noter notér
   nulstil opdatér overskriv prøv regn ret ryd sammenlign se send sikr skift skriv slet slå spil spring start stop svar sæt
-  tag tast tjek træk tryk tæl tænk udfyld udled undgå vent vis vælg vurdér øv åbn`.split(/\s+/),
+  tag tast tjek træk træn tryk tæl tænk udfyld udled undgå vent vis vælg vurdér øv åbn`.split(/\s+/),
 );
 
 /**
- * Knapper, links og navne på opgaver og øvelser, der bliver i bydeform (gruppe 1 og 2 i docs/beskrivende-form.md), og
- * sidefodens sætning, der venter på forsiden og konventionstræneren (A6). Et regulært udtryk dækker en tekst med et
- * indsat navn eller tal.
+ * Knapper, links og navne på opgaver og øvelser, der bliver i bydeform (gruppe 1 og 2 i docs/beskrivende-form.md). Et
+ * regulært udtryk dækker en tekst med et indsat navn eller tal.
  */
 export const UNDTAGELSER: readonly (string | RegExp)[] = [
   // Knapper og links
@@ -99,8 +98,6 @@ export const UNDTAGELSER: readonly (string | RegExp)[] = [
   'Regn oppefra',
   'Fald eller kip',
   'Spil mod honnør',
-  // Sidefodens sætning venter, til sidefødderne ændres samlet med forsiden og konventionstræneren (A6).
-  'Skriv til mig.',
 ];
 
 /** Sætninger, der begynder med et af ordene, men ikke er bydeform: meldingen pas, en knap eller opgave som grundled og lister med navne. */
