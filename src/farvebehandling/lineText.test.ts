@@ -8,13 +8,13 @@ import { TEST_BANK } from './testBank';
 afterEach(() => setLang('da'));
 
 /** Danske ord fra løserens skabeloner, som ikke må stå tilbage på engelsk. */
-const DANISH = /[æøåÆØÅ]|\b(fra|lille|mod|kip|slå|lægger|dækker|ellers|læg|bordet|hånden|tages|stikket|løbe|honnør|begge|esset|kongen|damen|knægten|eren)\b/i;
+const DANISH = /[æøåÆØÅ]|\b(fra|lille|mod|kipning|slå|lægger|dækker|ellers|læg|bordet|hånden|tages|stikket|løbe|honnør|begge|esset|kongen|damen|knægten|eren)\b/i;
 
 describe('Linjerne på engelsk', () => {
   it('oversætter skabelonerne', () => {
     expect(englishStep('Slå kongen og esset.')).toBe('Cash the king and the ace.');
     expect(englishStep('Slå esset, kongen og damen.')).toBe('Cash the ace, the king and the queen.');
-    expect(englishStep('Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.')).toBe(
+    expect(englishStep('Lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset.')).toBe(
       'Low from dummy towards the jack (finesse); if East plays an honour, win with the ace.',
     );
     expect(englishStep('Lille fra hånden til esset.')).toBe('Low from hand to the ace.');

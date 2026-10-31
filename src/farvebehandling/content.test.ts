@@ -99,7 +99,7 @@ describe('Opgavebanken', () => {
 
   it('har seks teknikker med huskeregel og standardbillede', () => {
     expect(techniquesFile.techniques.map((t) => t.name)).toEqual([
-      'Enkelt kipning', 'Fald eller kip', 'Spil mod honnør', 'Dobbelt kipning', 'Sikkerhedsspil', 'Begrænset valg',
+      'Enkelt kipning', 'Toppe eller kipning', 'Spil mod honnør', 'Dobbelt kipning', 'Sikkerhedsspil', 'Begrænset valg',
     ]);
     for (const t of techniquesFile.techniques) {
       expect(t.rule.length).toBeGreaterThan(10);

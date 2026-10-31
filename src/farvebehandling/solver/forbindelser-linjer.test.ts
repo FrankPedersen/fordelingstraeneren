@@ -39,7 +39,7 @@ describe('Linjerne med forbindelser (SPEC-forbindelser.md, trin 3)', { timeout: 
     // E D 6 5 / 4 3 2: bordet er inde, så udspillet fra hånden bruger dens ene indgang.
     const lead = solved(AQ65, X432, 3, connections('N', null, 1)).leads.find((l) => l.hand === 'S')!;
     // Kipningen står i teksten (SPEC-farvebehandling.md, Afklaret: kipninger i linjeteksterne).
-    expect(lead.steps[0]).toBe('Gå ind på hånden med en sideindgang, og spil lille mod damen (kip); lægger Vest en honnør, tages den med esset.');
+    expect(lead.steps[0]).toBe('Gå ind på hånden med en sideindgang, og spil lille mod damen (kipning); lægger Vest en honnør, tages den med esset.');
     setLang('en');
     expect(stepText(lead.steps[0])).toBe(
       'Cross to hand with a side entry and lead low towards the queen (finesse); if West plays an honour, win with the ace.',
@@ -50,7 +50,7 @@ describe('Linjerne med forbindelser (SPEC-forbindelser.md, trin 3)', { timeout: 
   it('et udspil, der bruger en indgang til bordet: "Gå ind på bordet med en sideindgang, og spil …"', () => {
     const lead = best(X432, AQ65, 3, connections('S', 1, null));
     expect(lead.hand).toBe('N');
-    expect(lead.steps[0]).toBe('Gå ind på bordet med en sideindgang, og spil lille mod damen (kip); lægger Øst en honnør, tages den med esset.');
+    expect(lead.steps[0]).toBe('Gå ind på bordet med en sideindgang, og spil lille mod damen (kipning); lægger Øst en honnør, tages den med esset.');
     setLang('en');
     expect(stepText(lead.steps[0])).toBe(
       'Cross to dummy with a side entry and lead low towards the queen (finesse); if East plays an honour, win with the ace.',
@@ -62,7 +62,7 @@ describe('Linjerne med forbindelser (SPEC-forbindelser.md, trin 3)', { timeout: 
   });
 
   it('de engelske skabeloner for sideindgange', () => {
-    expect(englishStep('Gå ind på bordet med en sideindgang, og spil lille mod damen (kip).')).toBe(
+    expect(englishStep('Gå ind på bordet med en sideindgang, og spil lille mod damen (kipning).')).toBe(
       'Cross to dummy with a side entry and lead low towards the queen (finesse).',
     );
     expect(englishStep('Gå ind på hånden med en sideindgang, og spil lille til esset.')).toBe('Cross to hand with a side entry and lead low to the ace.');

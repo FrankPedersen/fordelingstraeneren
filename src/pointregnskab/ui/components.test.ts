@@ -46,3 +46,11 @@ describe('Pointregnskabets komponenter', () => {
     expect(literalText('<p>Næste</p><p>{TEXT.next}</p>')).toEqual(['Næste']);
   });
 });
+
+describe('Kipningsretning (SPEC-sprog-kipning-toppe)', () => {
+  it('spørger med kipning som navneord; engelsk er uændret', async () => {
+    const { TEXTS } = await import('./texts');
+    expect(TEXTS.da.finessePrompt('♣D')).toBe('Kipningen går mod ♣D. Hvilken vej?');
+    expect(TEXTS.en.finessePrompt('♣Q')).toBe('You must finesse against ♣Q. Which way?');
+  });
+});

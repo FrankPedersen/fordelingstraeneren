@@ -25,11 +25,22 @@ describe('Fagordstesten', () => {
   });
 
   it('fejler, hvis man skriver "knibning" i en dansk tekst', () => {
-    expect(fund('Spil en knibning mod damen.')).toEqual([{ word: 'knibning', house: 'kipning, kippe' }]);
+    expect(fund('Spil en knibning mod damen.')).toEqual([{ word: 'knibning', house: 'kipning' }]);
     expect(danishStrings("tx('Tag en knibning', 'Take a finesse')").flatMap(fund)).toHaveLength(1);
     expect(fund('Læg kortene på blindemand, og brug broerne.')).toHaveLength(2);
     expect(fund('I snit giver linjen 2,3 stik.')).toEqual([]);
     expect(fund('Et snit mod damen.')).toHaveLength(1);
+  });
+
+  it('kipning altid som navneord og toppe i stedet for fald (Franks valg 31. oktober 2026)', () => {
+    for (const ord of ['kip', 'kippe', 'kipper', 'kippes', 'kippet', 'Kip']) {
+      expect(fund(`Man skal ${ord} mod damen.`).map((f) => f.word), ord).toEqual([ord]);
+    }
+    expect(fund('Lille fra bordet mod kongen (kip)')).toHaveLength(1);
+    for (const tekst of ['Fald eller kipning', 'Med 9 kort spil på fald.', 'fald = 53,1 %']) {
+      expect(fund(tekst).map((f) => f.house), tekst).toEqual(['toppe farven']);
+    }
+    expect(fund('Kipning, kipningen og kipninger; toppe og toppes; damen falder. Lille fra bordet mod kongen (kipning).')).toEqual([]);
   });
 
   it('T1–T3: hp, doubleton og fittet i dansk tekst', () => {

@@ -11,7 +11,7 @@ import { Facit } from './Facit';
 import { Opgave } from './Opgave';
 
 /** Danske bogstaver og ord fra opgaverne og løserens linjer, som ikke må stå på skærmen på engelsk. */
-const DANISH = /[æøåÆØÅ]|\b(og|af|til|med|ikke|eller|linje|linjen|kort|stik|bordet|hånden|fra|lille|mod|kip|slå|lægger|dækker|ellers|ingen|hvor|hvad|vælg|tryk|svar|sidning|sidninger|chancen|målet)\b/i;
+const DANISH = /[æøåÆØÅ]|\b(og|af|til|med|ikke|eller|linje|linjen|kort|stik|bordet|hånden|fra|lille|mod|kipning|slå|lægger|dækker|ellers|ingen|hvor|hvad|vælg|tryk|svar|sidning|sidninger|chancen|målet)\b/i;
 
 function expectEnglish(where: string) {
   for (const button of screen.queryAllByRole('button', { name: /^Help: / })) fireEvent.click(button);

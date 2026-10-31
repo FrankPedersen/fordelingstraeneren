@@ -88,7 +88,7 @@ describe('Spil den selv', () => {
 });
 
 describe('Hold eller par', () => {
-  // K 5 4 / E B 3 2, 3 stik: slå kongen og esset (holdkamp) eller kip (parturnering).
+  // K 5 4 / E B 3 2, 3 stik: slå kongen og esset (holdkamp) eller kipningen (parturnering).
   const item = bankItem('K54-AJ32');
   const task = makeTask('hold-eller-par', item, 3, mulberry32(1));
   if (task.type !== 'hold-eller-par') throw new Error('forkert type');

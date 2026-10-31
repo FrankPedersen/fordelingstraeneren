@@ -392,7 +392,7 @@ describe('Generatoren', () => {
     expect(makeTask('who', 3, 1)).not.toEqual(makeTask('who', 3, 2));
   });
 
-  it('Kipningsretning spørger kun om honnører, Nord–Syd kan kippe mod', () => {
+  it('Kipningsretning spørger kun om honnører, som Nord–Syd kan tage en kipning mod', () => {
     for (const t of all.filter((t) => t.exercise === 'finesse')) {
       const ns = [...t.hands.N, ...t.hands.S];
       expect(ns).toContain(t.card - 1);
