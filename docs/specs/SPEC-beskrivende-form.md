@@ -63,6 +63,6 @@ Franks opgave 30. oktober 2026: sidefodens sætning rettes i alle tre repoer på
 
 Franks svar 31. oktober 2026 på det, der blev fundet bagefter:
 
-- [ ] Meta-beskrivelsen (`description` og `og:description`) begynder "Bridgetræning fem minutter om dagen: …", og `src/app/meta.test.ts` tjekker, at den står i beskrivende form; "træn" står på listen over bydeformer.
-- [ ] `npm test` er grøn, og `node scripts/sprogtjek.ts` finder ingen ukendte ord.
-- [ ] Når alle tests i de tre repoer er grønne, er fletningen godkendt: Fordelingstræneren udgives efter forsiden, og den udgivne app er tjekket.
+- [x] Meta-beskrivelsen (`description` og `og:description`) begynder "Bridgetræning fem minutter om dagen: …", og `src/app/meta.test.ts` tjekker, at den står i beskrivende form; "træn" står på listen over bydeformer.
+- [x] `npm test` er grøn (740 tests), og `node scripts/sprogtjek.ts` finder ingen ukendte ord.
+- [x] Alle tests i de tre repoer er grønne, og Fordelingstræneren er flettet ind på `main` efter Franks godkendelse og udgivet efter forsiden.
