@@ -16,7 +16,9 @@ Gælder i al dansk tekst på sitet og i ordbogen (Franks valg 22. oktober 2026).
 | Husets ord | Ikke | Engelsk |
 | --- | --- | --- |
 | bordet | blindemand, den blinde | dummy |
-| kipning, kippe, dobbelt kipning | knibning, snit, dobbeltknibning | finesse |
+| kipning, dobbelt kipning – altid som navneord; udsagnsordet skrives om, fx "Lille fra bordet mod kongen (kipning)", "Kipningen går mod ♣D" og "Med 8 kort tages kipningen" (Franks valg 31. oktober 2026) | kip, kippe, kipper, kippes, kippet; knibning, snit, dobbeltknibning | finesse |
+| toppe farven: spille på, at en honnør falder; "damen falder" og opslaget Fald er stadig rigtige (Franks valg 31. oktober 2026) | fald som navn på teknikken | play for the drop |
+| frafald, falde fra – kun om hold-up (Franks valg 31. oktober 2026) | — | hold-up |
 | forbindelser, indgang | broer | entries |
 | slutspil om det generelle; indspil kun om den særlige form, hvor en modspiller sættes ind | — (begge ord er rigtige, se Afklaret 3) | endplay, throw-in |
 
