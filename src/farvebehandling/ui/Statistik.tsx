@@ -71,7 +71,7 @@ export function Statistik({ bank, saved, techniques, onPractice, onBack }: Stati
   const weak = weakest(byTechnique);
 
   return (
-    <div className="fb-narrow">
+    <div className="fb-narrow card-grid">
       <header className="screen-head">
         <button type="button" className="round" aria-label={TEXT.backToTraining} onClick={onBack}>
           ←

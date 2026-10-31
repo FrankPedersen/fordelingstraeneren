@@ -1,3 +1,4 @@
+import { BoardColumn } from '../../ui/BoardColumn';
 import type { BankItem } from '../analysis';
 import { eveningText } from '../model/frequency';
 import type { Room } from '../training/palace';
@@ -17,15 +18,19 @@ interface IntroduktionProps {
  */
 export function Introduktion({ item, room, onNext }: IntroduktionProps) {
   return (
-    <section className="card fb-intro" aria-label={TEXT.newCombination}>
-      <p className="eyebrow">{TEXT.newCombination}</p>
-      <Bridgebord north={item.north} south={item.south} />
-      <p className="prompt">{TEXT.goalsText(item.combination.goals)}</p>
-      <p className="fb-note">{TEXT.combination(eveningText(item.frequency))}</p>
-      {room && <Rumkort room={room} station={room.stations.length + 1} fresh />}
-      <button type="button" className="btn primary wide" onClick={onNext}>
-        {TEXT.tryIt}
-      </button>
+    <section className="card fb-intro cols" aria-label={TEXT.newCombination}>
+      <BoardColumn>
+        <p className="eyebrow">{TEXT.newCombination}</p>
+        <Bridgebord north={item.north} south={item.south} />
+      </BoardColumn>
+      <div className="wide-right">
+        <p className="prompt">{TEXT.goalsText(item.combination.goals)}</p>
+        <p className="fb-note">{TEXT.combination(eveningText(item.frequency))}</p>
+        {room && <Rumkort room={room} station={room.stations.length + 1} fresh />}
+        <button type="button" className="btn primary wide" onClick={onNext}>
+          {TEXT.tryIt}
+        </button>
+      </div>
     </section>
   );
 }

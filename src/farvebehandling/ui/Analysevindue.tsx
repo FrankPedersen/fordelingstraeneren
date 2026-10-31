@@ -36,6 +36,7 @@ import { assumptionsText, situationChips, situationItem, Situationspanel } from 
 import { allLinesForGoal, leadKey, uniqueWinners } from './linjevalg';
 import { TEXT } from './texts';
 import { lineErrorText, stepText } from '../lineText';
+import { BoardColumn } from '../../ui/BoardColumn';
 import { Info } from '../../ui/Info';
 
 interface AnalysevindueProps {
@@ -310,7 +311,7 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
           <Info topic={TEXT.guide.button}>{TEXT.help.guide}</Info>
         </div>
       </div>
-      <div className="fb-analysis">
+      <div className="fb-analysis cols">
         <div className="fb-column">
           <section className="card" aria-labelledby="fb-choose">
   <div className="with-info">
@@ -388,6 +389,7 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
             )}
           </section>
 
+          <BoardColumn>
           <section className="card" aria-labelledby="fb-problem">
             <h2 id="fb-problem">{TEXT.problem}</h2>
             <Bridgebord
@@ -438,9 +440,11 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
               goal={goal}
               seed={playSeed}
               onClose={() => setPlaySeed(null)}
+              split={false}
               connections={situation.entries && (situation.entries.north !== null || situation.entries.south !== null) ? { entries: situation.entries, lead: situation.lead ?? 'S' } : undefined}
             />
           )}
+          </BoardColumn>
 
           <section className="card" aria-labelledby="fb-lines">
   <div className="with-info">

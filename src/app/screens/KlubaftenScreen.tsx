@@ -4,7 +4,7 @@ import { Info } from '../../ui/Info';
 
 export function KlubaftenScreen({ onBack }: { onBack(): void }) {
   return (
-    <main className="screen">
+    <main className="screen text-screen">
       <header className="screen-head">
         <button type="button" className="round" aria-label={tx('Tilbage', 'Back')} onClick={onBack}>
           ←

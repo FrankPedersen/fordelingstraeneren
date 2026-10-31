@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { registerSW } from 'virtual:pwa-register';
 import App from './app/App';
 import './ui/styles.css';
+// Tokens som --wide-width og --board-column bruges af alle skærme fra 1000 px (SPEC-bred-layout.md).
+import './farvebehandling/ui/tokens.css';
 
 const root = createRoot(document.getElementById('root')!);
 let updateSW: (reloadPage?: boolean) => Promise<void> = async () => {};

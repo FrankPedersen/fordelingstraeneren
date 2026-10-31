@@ -1,4 +1,5 @@
 import { patternById } from '../../domain/patterns';
+import { BoardColumn } from '../../ui/BoardColumn';
 import { Klubaften } from '../../ui/Klubaften';
 import { NumberPad } from '../../ui/NumberPad';
 import { Skyline } from '../../ui/Skyline';
@@ -17,7 +18,7 @@ interface EstimateViewProps {
 export function EstimateView({ task, answer, reveal, onAnswer }: EstimateViewProps) {
   const pattern = patternById(task.patternId);
   return (
-    <div className="task">
+    <div className="task cols">
       <div className="with-info">
         <p className="prompt">
           {tx(`Hvor mange af aftenens 100 hænder er ${pattern.id}?`, `How many of the evening's 100 hands are ${pattern.id}?`)}
@@ -29,9 +30,11 @@ export function EstimateView({ task, answer, reveal, onAnswer }: EstimateViewPro
           )}
         </Info>
       </div>
-      <div className="center">
-        <Skyline id={pattern.id} />
-      </div>
+      <BoardColumn>
+        <div className="center">
+          <Skyline id={pattern.id} />
+        </div>
+      </BoardColumn>
       {answer === undefined ? <NumberPad onSubmit={onAnswer} /> : <p className="note">{tx('Dit svar:', 'Your answer:')} {answer}</p>}
       {reveal && (
         <>

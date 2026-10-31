@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { getLang } from '../../i18n';
+import { BoardColumn } from '../../ui/BoardColumn';
 import { parseGuide, parseInline, type GuideBlock } from './guideMarkdown';
 import { TEXT } from './texts';
 
@@ -157,7 +158,7 @@ export function Guide({ onBack }: { onBack(): void }) {
           {blocks.slice(0, titleAt + 1).map((b, i) => (
             <Block key={i} block={b} />
           ))}
-          {toc}
+          <BoardColumn>{toc}</BoardColumn>
           {blocks.slice(titleAt + 1).map((b, i) => (
             <Block key={titleAt + 1 + i} block={b} />
           ))}

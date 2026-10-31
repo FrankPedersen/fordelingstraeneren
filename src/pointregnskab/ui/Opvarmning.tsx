@@ -1,3 +1,4 @@
+import { BoardColumn } from '../../ui/BoardColumn';
 import { Info } from '../../ui/Info';
 import { NumberPad } from '../../ui/NumberPad';
 import { SuitText } from '../../ui/SuitText';
@@ -19,11 +20,13 @@ export function Opvarmning({ task, onAnswer, result, onNext }: OpvarmningProps) 
   const facit =
     task.kind === 'block' ? TEXT.blockFacit(name, task.block.points) : TEXT.rangeFacit(name, rangeText(task.card.allowed));
   return (
-    <div className="task">
-      <p className="pr-eyebrow">{task.kind === 'block' ? TEXT.blocks : TEXT.rangeCards}</p>
-      <p className="pr-deck-card">
-        <SuitText text={name} />
-      </p>
+    <div className="task cols">
+      <BoardColumn>
+        <p className="pr-eyebrow">{task.kind === 'block' ? TEXT.blocks : TEXT.rangeCards}</p>
+        <p className="pr-deck-card">
+          <SuitText text={name} />
+        </p>
+      </BoardColumn>
       <div className="with-info">
         <p className="prompt">{task.kind === 'block' ? TEXT.blockPrompt : TEXT.rangePrompt}</p>
         <Info topic={task.kind === 'block' ? TEXT.blocks : TEXT.rangeCards}>

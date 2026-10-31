@@ -57,7 +57,7 @@ export default function HaandevalueringScreen({ onBack, start = false }: { onBac
   return (
     <>
       {frame && <TopBar />}
-      <main className="screen he-screen">
+      <main className={`screen he-screen${view === 'session' ? ' wide-screen' : view === 'settings' ? ' wide-screen settings-grid' : ''}`}>
         <header className="screen-head">
           <button type="button" className="round" aria-label={TEXT.back} onClick={onBack}>
             ←

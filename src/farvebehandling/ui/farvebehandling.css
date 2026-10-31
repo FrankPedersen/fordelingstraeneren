@@ -1075,7 +1075,8 @@
   font-weight: 700;
 }
 
-.fb-step {
+/* Kun stepperens knapper; linjekortenes trin (span.fb-step) har samme afstand i alle linjer (SPEC-bred-layout.md). */
+.btn.fb-step {
   min-width: var(--touch-min);
   min-height: var(--touch-min);
 }

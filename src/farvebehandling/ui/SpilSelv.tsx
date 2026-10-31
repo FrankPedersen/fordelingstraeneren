@@ -20,6 +20,7 @@ import { Bridgebord } from './Bridgebord';
 import { Linjekort } from './Linjekort';
 import { Sandsynlighedsbånd } from './Sandsynlighedsbånd';
 import { TEXT } from './texts';
+import { BoardColumn } from '../../ui/BoardColumn';
 import { Info } from '../../ui/Info';
 
 interface SpilSelvProps {
@@ -33,6 +34,8 @@ interface SpilSelvProps {
   onClose?(): void;
   /** Begrænsede forbindelser fra situationen i Analyse (SPEC-forbindelser.md). */
   connections?: PlayConnections;
+  /** Fra 1000 px: bordet i venstre spalte og resten i højre (SPEC-bred-layout.md). Fra i Analyse, hvor spillet står i en spalte. */
+  split?: boolean;
 }
 
 const seatName = (seat: Seat) => TEXT.seats[seat];
@@ -42,7 +45,7 @@ const seatName = (seat: Seat) => TEXT.seats[seat];
  * normalt modspil. Til sidst vises kortene, resultatet og om spillet fulgte en af løserens bedste linjer, og
  * sidningen lyser op i sandsynlighedsbåndet.
  */
-export function SpilSelv({ item, goal, seed, onDone, onClose, connections }: SpilSelvProps) {
+export function SpilSelv({ item, goal, seed, onDone, onClose, connections, split = true }: SpilSelvProps) {
   const [round, setRound] = useState(0);
   const rng = useMemo(() => mulberry32((seed + Math.imul(round, 0x9e3779b1)) >>> 0), [seed, round]);
   const [state, setState] = useState<PlayState>(() => startPlay(item, dealCards(item, rng), connections));
@@ -93,8 +96,8 @@ export function SpilSelv({ item, goal, seed, onDone, onClose, connections }: Spi
       : TEXT.playLeadPrompt;
 
   return (
-    <section className="card fb-play" aria-label={TEXT.playTitle}>
-      <header className="fb-room-row">
+    <section className={`card fb-play${split ? ' cols' : ''}`} aria-label={TEXT.playTitle}>
+      <header className="fb-room-row wide-full">
         <h2>{TEXT.playTitle}</h2>
         <Info topic={TEXT.playTitle}>{TEXT.help.play}</Info>
         <span className="fb-note">{TEXT.playScore(state.won, goal)}</span>
@@ -104,6 +107,7 @@ export function SpilSelv({ item, goal, seed, onDone, onClose, connections }: Spi
           </button>
         )}
       </header>
+      <BoardColumn>
       <Bridgebord
         north={state.north}
         south={state.south}
@@ -116,6 +120,8 @@ export function SpilSelv({ item, goal, seed, onDone, onClose, connections }: Spi
           trick: Object.fromEntries(shown.map(({ seat, card }) => [seat, card])),
         }}
       />
+      </BoardColumn>
+      <div className="wide-right">
       {state.connections && (
         <div className="with-info">
           <p className="fb-note">{connectionsText(state.connections)}</p>
@@ -133,6 +139,7 @@ export function SpilSelv({ item, goal, seed, onDone, onClose, connections }: Spi
           </button>
         </div>
       )}
+      </div>
     </section>
   );
 }

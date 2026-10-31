@@ -73,7 +73,7 @@ export function Selvvalgt({ bank, saved, update, techniques, startTechnique }: S
 
   if (run) {
     return (
-      <div className="fb-narrow">
+      <div className="fb-narrow fb-run">
         <div className="session-bar">
           <span className="phase">{TEXT.tabs.practice}</span>
           <button type="button" className="btn small-btn fb-push" onClick={() => setRun(null)}>

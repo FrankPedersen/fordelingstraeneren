@@ -35,7 +35,7 @@ export function Klubaften({ bank, techniques, onOpen, onBack }: KlubaftenProps) 
     .filter(({ b }) => !technique || b.combination.technique === technique);
 
   return (
-    <div className="fb-narrow">
+    <div className="fb-narrow fb-club">
       <header className="screen-head">
         <button type="button" className="round" aria-label={TEXT.backToTraining} onClick={onBack}>
           ←

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { SEAT_NAMES } from '../../domain/dealer';
 import { distributionText } from '../../domain/patterns';
+import { BoardColumn } from '../../ui/BoardColumn';
 import { PatternKeypad } from '../../ui/PatternKeypad';
 import { Skyline } from '../../ui/Skyline';
 import { SuitText } from '../../ui/SuitText';
@@ -49,19 +50,21 @@ export function CompleteView({ task, submitted, reveal, skylines = true, onAnswe
   }
 
   return (
-    <div className="task">
-      <div className="with-info">
-        <p className="prompt">
-          {SEAT_NAMES[task.seat]} {tx('har vist', 'has shown')} <SuitText text={shownText(task)} />.
-        </p>
-        <Info topic={tx('Fuldfør mønsteret', 'Complete the pattern')}>
-          {tx(
-            'Du taster de mulige mønstre på mønstertastaturet, hyppigste først: de fire længder i vilkårlig rækkefølge, og den fjerde udfyldes selv. ↑ flytter et mønster op, ✕ fjerner det. Rigtige mønstre i rigtig rækkefølge giver fuld score, rigtige mønstre i forkert rækkefølge halv.',
-            'You type the possible patterns on the pattern keypad, most frequent first: the four lengths in any order, and the fourth fills itself in. ↑ moves a pattern up, ✕ removes it. Right patterns in the right order give a full score, right patterns in the wrong order half.',
-          )}
-        </Info>
-      </div>
-      <p className="instruction">{instructionText(task)}</p>
+    <div className="task cols">
+      <BoardColumn>
+        <div className="with-info">
+          <p className="prompt">
+            {SEAT_NAMES[task.seat]} {tx('har vist', 'has shown')} <SuitText text={shownText(task)} />.
+          </p>
+          <Info topic={tx('Fuldfør mønsteret', 'Complete the pattern')}>
+            {tx(
+              'Du taster de mulige mønstre på mønstertastaturet, hyppigste først: de fire længder i vilkårlig rækkefølge, og den fjerde udfyldes selv. ↑ flytter et mønster op, ✕ fjerner det. Rigtige mønstre i rigtig rækkefølge giver fuld score, rigtige mønstre i forkert rækkefølge halv.',
+              'You type the possible patterns on the pattern keypad, most frequent first: the four lengths in any order, and the fourth fills itself in. ↑ moves a pattern up, ✕ removes it. Right patterns in the right order give a full score, right patterns in the wrong order half.',
+            )}
+          </Info>
+        </div>
+        <p className="instruction">{instructionText(task)}</p>
+      </BoardColumn>
 
       {reveal ? (
         <Facit task={task} answer={entries} skylines={skylines} />

@@ -23,7 +23,7 @@ export function AlbumScreen({ saved, onSave, onBack }: AlbumScreenProps) {
   const collected = grades.reduce((sum, g) => sum + g.slots.filter((s) => s.entry).length, 0);
 
   return (
-    <main className="screen">
+    <main className="screen wide-screen card-grid">
       <header className="screen-head">
         <button type="button" className="round" aria-label={tx('Tilbage', 'Back')} onClick={onBack}>
           ←

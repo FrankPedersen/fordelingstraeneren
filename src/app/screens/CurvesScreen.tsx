@@ -18,7 +18,7 @@ export function CurvesScreen({ saved, onBack }: { saved: Saved; onBack(): void }
   const grades = GRADES.filter((g) => weeks.some((w) => w.grades[g] !== undefined));
 
   return (
-    <main className="screen">
+    <main className="screen wide-screen card-grid">
       <header className="screen-head">
         <button type="button" className="round" aria-label={tx('Tilbage', 'Back')} onClick={onBack}>
           ←
