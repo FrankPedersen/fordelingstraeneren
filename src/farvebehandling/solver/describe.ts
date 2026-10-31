@@ -166,7 +166,7 @@ export function describeFrom(game: Game, strategy: Int8Array, leadSlot: number, 
       else if (toward.winner) text = `lille${from} til ${cardName(toward.rank)}`;
       // Det laveste kort er kun "lille" under 10; en honnør, der ikke er sikker vinder, er en kipning (fx E D 10 / 3 2).
       else if (toward.lowest && toward.rank < TEN) text = 'lille fra begge hænder';
-      else text = `lille${from} mod ${cardName(toward.rank)} (kip)`;
+      else text = `lille${from} mod ${cardName(toward.rank)} (kipning)`;
       if (low && high && high.rank !== low.rank) {
         text += `; lægger ${seat2} en honnør, ${high.lowest ? 'lægges der lille' : `tages den med ${cardName(high.rank)}`}`;
       }

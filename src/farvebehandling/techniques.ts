@@ -8,18 +8,18 @@ import { cardName } from './solver/describe';
  * Forslag til teknik pr. kombination (åbent punkt i specen: "Teknik pr. case"). Reglerne bruger løserens linjer:
  *
  * 0. **Begrænset valg:** i første runde af den bedste linje falder én af to eller flere ligeværdige honnører hos
- *    modparten (Hvad nu?, i mindst 5 % af spillene), og så er det klart bedst at kippe mod den anden.
+ *    modparten (Hvad nu?, i mindst 5 % af spillene), og så er kipningen mod den anden klart bedst.
  * 1. **Sikkerhedsspil:** til et lavere mål giver linjen med flest stik i gennemsnit mere end 0,5 procentpoint mindre
  *    end den bedste linje for målet. Målet kræver altså en anden linje end maksimum.
  * 2. **Hovedmålet** er det mål, hvor valget betyder mest: størst afstand fra den bedste linje til den bedste forkerte.
  *    Mål under 25 % tæller kun, hvis alle mål ligger under.
  * 3. **Hovedlinjens første kipning** afgør resten (er flere linjer lige gode, vælges den mest lærerige: dobbelt kipning,
- *    så enkelt kipning, så spil mod honnør, så et sikkerhedsspil og til sidst fald): ligger modpartens kort over kortet, der kippes med, i to huller
+ *    så enkelt kipning, så spil mod honnør, så et sikkerhedsspil og til sidst toppe): ligger modpartens kort over kipningskortet i to huller
  *    (fx K og B over E D 10), er det en dobbelt kipning. Er kortet det højeste, der er tilbage i sin hånd, spilles der
- *    mod en honnør. Ellers er det en enkelt kipning; mod damen eller knægten med 8 kort eller flere fald eller kip.
+ *    mod en honnør. Ellers er det en enkelt kipning; mod damen eller knægten med 8 kort eller flere toppe eller kipning.
  * 4. **Små kort fra begge hænder** er en kipning, når håndens laveste kort har en eller to af modpartens kort over sig
  *    og mindst ét under sig; ellers gives stikket væk med vilje (sikkerhedsspil).
- * 5. **Ingen kipning:** fald eller kip.
+ * 5. **Ingen kipning:** toppe eller kipning.
  *
  * Begrænset valg kræver to ligeværdige honnører hos modparten, fx D og B, når spilføreren har kongen og 10'eren.
  */
@@ -47,7 +47,7 @@ const RESTRICTED_MIN = 0.05;
 
 const NAME_RANK: Record<string, Rank> = { esset: 14, kongen: 13, damen: 12, knægten: 11 };
 const NAME = String.raw`(esset|kongen|damen|knægten|\d+'eren)`;
-const TOWARD = new RegExp(String.raw`mod ${NAME} \(kip\)`, 'i');
+const TOWARD = new RegExp(String.raw`mod ${NAME} \(kipning\)`, 'i');
 const RUN = new RegExp(String.raw`${NAME} fra (?:bordet|hånden); [^.]*lad den løbe`, 'i');
 const DUCK = /lille fra begge hænder/i;
 
@@ -95,7 +95,7 @@ function restrictedChoice(
       if (s.probability < RESTRICTED_MIN) continue;
       const best = s.options[0];
       const worse = s.options.find((o) => plausible(o, best.value) && best.value - o.value > NEAR_BEST);
-      if (!worse || !/\(kip\)|lad den løbe/.test(best.steps[0])) continue;
+      if (!worse || !/\(kipning\)|lad den løbe/.test(best.steps[0])) continue;
       for (const t of s.trick) {
         if ((t.seat !== 'V' && t.seat !== 'Ø') || !(t.card in DISPLAY_SYMBOL || t.card === '10')) continue;
         const r = rankFromSymbol(DISPLAY_SYMBOL[t.card] ?? t.card);
@@ -156,12 +156,12 @@ export function proposeTechnique(
   const below = (r: Rank) => missing.filter((m) => m < r).length;
   /** Huller over kortet med modpartskort i: to huller (fx K og B over E D 10) er en dobbelt kipning. */
   const gapsAbove = (r: Rank) => new Set(missing.filter((m) => m > r).map((m) => ours.filter((o) => o > m).length)).size;
-  /** Kortet, der kippes mod: modpartens laveste kort over kipningskortet. */
+  /** Kortet, kipningen går mod: modpartens laveste kort over kipningskortet. */
   const target = (r: Rank) => Math.min(...missing.filter((m) => m > r));
-  // Fald eller kip gælder damen og knægten med 8 kort eller flere; kongen og esset kippes.
+  // Toppe eller kipning gælder damen og knægten med 8 kort eller flere; mod kongen og esset tages kipningen.
   const single = (r: Rank, why: string): TechniqueProposal =>
     count >= 8 && (target(r) === QUEEN || target(r) === JACK)
-      ? { technique: 'fald-eller-kip', goal, reason: `${why} med ${count} kort: fald eller kip.` }
+      ? { technique: 'fald-eller-kip', goal, reason: `${why} med ${count} kort: toppe eller kipning.` }
       : { technique: 'enkelt-kipning', goal, reason: `${why} med ${count} kort.` };
   const finesse = (r: Rank, why: string): TechniqueProposal =>
     gapsAbove(r) >= 2
@@ -178,7 +178,7 @@ export function proposeTechnique(
       const f = rankOfName(first.m[1]);
       const name = cardName(f);
       if (first.re === RUN) return finesse(f, `${name[0].toUpperCase()}${name.slice(1)} spilles ud og løber`);
-      if (gapsAbove(f) >= 2) return finesse(f, `Der kippes mod ${name}`);
+      if (gapsAbove(f) >= 2) return finesse(f, `Kipningen går mod ${name}`);
       const hand = n.includes(f) ? n : so;
       const played = namedBefore(text, first.m.index);
       if (!hand.some((r) => r > f && !played.has(r))) {
@@ -191,16 +191,16 @@ export function proposeTechnique(
       const lowest = (hand: Rank[]) => Math.min(...hand.filter((r) => !played.has(r)));
       const card = Math.max(lowest(n), lowest(so));
       if (above(card) >= 1 && above(card) <= 2 && below(card) >= 1) {
-        return finesse(card, `Små kort fra begge hænder kipper med ${cardName(card)}`);
+        return finesse(card, `Små kort fra begge hænder giver en kipning med ${cardName(card)}`);
       }
       return { technique: 'sikkerhedsspil', goal, reason: 'Små kort fra begge hænder giver et stik væk for at sikre resten.' };
     }
-    // Ingen kipning: der spilles på fald.
-    return { technique: 'fald-eller-kip', goal, reason: `Linjen spiller på fald med ${count} kort.` };
+    // Ingen kipning: farven toppes.
+    return { technique: 'fald-eller-kip', goal, reason: `Linjen topper farven med ${count} kort.` };
   };
   const priority = (p: TechniqueProposal) =>
     p.technique === 'dobbelt-kipning' ? 0
-      : p.technique === 'enkelt-kipning' || (p.technique === 'fald-eller-kip' && !p.reason.startsWith('Linjen spiller på fald')) ? 1
+      : p.technique === 'enkelt-kipning' || (p.technique === 'fald-eller-kip' && !p.reason.startsWith('Linjen topper farven')) ? 1
       : p.technique === 'spil-mod-honnoer' ? 2
       : p.technique === 'sikkerhedsspil' ? 3
       : 4;
@@ -237,10 +237,10 @@ export function techniquesReport(
     '',
     '0. **Begrænset valg:** i første runde af den bedste linje falder én af to eller flere ligeværdige honnører hos modparten (i mindst 5 % af spillene), og så er kipning klart bedst.',
     '1. **Sikkerhedsspil:** til et lavere mål giver linjen med flest stik i gennemsnit mere end 0,5 procentpoint mindre end den bedste linje.',
-    '2. **Hovedmålet** er det mål, hvor valget af linje betyder mest. Mål under 25 % tæller kun, hvis alle mål ligger under. Er flere linjer lige gode (inden for 0,5 procentpoint), vælges den mest lærerige: dobbelt kipning, enkelt kipning, spil mod honnør, sikkerhedsspil, fald.',
-    '3. **Hovedlinjens første kipning:** modpartens kort over kortet ligger i to huller (fx K og B over E D 10) = dobbelt kipning; spilles der mod det højeste kort, der er tilbage i hånden = spil mod honnør; ellers enkelt kipning, mod damen eller knægten med 8 kort eller flere fald eller kip.',
+    '2. **Hovedmålet** er det mål, hvor valget af linje betyder mest. Mål under 25 % tæller kun, hvis alle mål ligger under. Er flere linjer lige gode (inden for 0,5 procentpoint), vælges den mest lærerige: dobbelt kipning, enkelt kipning, spil mod honnør, sikkerhedsspil, toppe.',
+    '3. **Hovedlinjens første kipning:** modpartens kort over kortet ligger i to huller (fx K og B over E D 10) = dobbelt kipning; spilles der mod det højeste kort, der er tilbage i hånden = spil mod honnør; ellers enkelt kipning, mod damen eller knægten med 8 kort eller flere toppe eller kipning.',
     '4. **Små kort fra begge hænder** er en kipning (som i punkt 3), når det laveste kort har en eller to af modpartens kort over sig; ellers et sikkerhedsspil.',
-    '5. **Ingen kipning:** fald eller kip.',
+    '5. **Ingen kipning:** toppe eller kipning.',
     '',
     '',
   ];

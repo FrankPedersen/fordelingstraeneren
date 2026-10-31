@@ -44,7 +44,7 @@ export function englishStep(text: string): string {
     .replace(new RegExp(`^lille fra (${HAND}) og lille fra (${HAND})`, 'i'), (_, a: string, b: string) => `Low from ${hand(a)} and low from ${hand(b)}`)
     .replace(/^lille fra begge hænder/i, 'Low from both hands')
     .replace(new RegExp(`^lille fra (${HAND}) til (${CARD})`, 'i'), (_, h: string, c: string) => `Low from ${hand(h)} to ${card(c)}`)
-    .replace(new RegExp(`^lille fra (${HAND}) mod (${CARD}) \\(kip\\)`, 'i'), (_, h: string, c: string) => `Low from ${hand(h)} towards ${card(c)} (finesse)`)
+    .replace(new RegExp(`^lille fra (${HAND}) mod (${CARD}) \\(kipning\\)`, 'i'), (_, h: string, c: string) => `Low from ${hand(h)} towards ${card(c)} (finesse)`)
     .replace(new RegExp(`^lille fra (${HAND})`, 'i'), (_, h: string) => `Low from ${hand(h)}`)
     .replace(new RegExp(`^(${CARD}) fra (${HAND})`, 'i'), (_, c: string, h: string) => `Lead ${card(c)} from ${hand(h)}`)
     .replace(/; lægger (Vest|Øst) en honnør, lægges der lille/g, (_, s: string) => `; if ${seat(s)} plays an honour, play low`)

@@ -282,7 +282,7 @@ Løseren er kontrolleret mod fire kilder:
 
 | Kilde | Omfang | Resultat |
 | --- | --- | --- |
-| Accepttests i Vitest | B432 / E1065, fald eller kip, begrænset valg, forbindelser m.fl. | Alle består |
+| Accepttests i Vitest | B432 / E1065, toppe eller kipning, begrænset valg, forbindelser m.fl. | Alle består |
 | De klassiske farvebehandlinger (inspiration: Suit Combinations in Bridge, Jethalal M. Shah) | Alle brugbare cases, begge fortolkninger af x | 14 mål og 3 cases fjernet som kildefejl; resten bruger løserens tal |
 | The Official Encyclopedia of Bridge | 55 kombinationer, 92 mål, 28 gennemsnit | Inden for 0,5 procentpoint, kendte afvigelser dokumenteret |
 | Uafhængig beregning | 11 eksempler | Samme procent med to decimaler i alle |

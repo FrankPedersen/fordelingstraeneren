@@ -2819,7 +2819,7 @@
       ],
       "steps": [
        "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
-       "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset."
+       "Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset."
       ],
       "line": [
        {
@@ -2856,7 +2856,7 @@
        0
       ],
       "steps": [
-       "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
+       "Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset.",
        "Slå esset."
       ],
       "line": [
@@ -2959,7 +2959,7 @@
        0
       ],
       "steps": [
-       "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.",
+       "Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille.",
        "Slå esset."
       ],
       "line": [
@@ -3368,7 +3368,7 @@
        1
       ],
       "steps": [
-       "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.",
+       "Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille.",
        "Slå esset."
       ],
       "line": [
@@ -3638,7 +3638,7 @@
       ],
       "steps": [
        "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe.",
-       "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset."
+       "Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset."
       ],
       "line": [
        {
@@ -3675,7 +3675,7 @@
        2
       ],
       "steps": [
-       "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
+       "Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset.",
        "Slå esset."
       ],
       "line": [
@@ -3778,7 +3778,7 @@
        2
       ],
       "steps": [
-       "Lille fra hånden mod knægten (kip); lægger Vest en honnør, lægges der lille.",
+       "Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille.",
        "Slå esset."
       ],
       "line": [
@@ -3821,7 +3821,7 @@
      0
     ],
     "steps": [
-     "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.",
+     "Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset.",
      "Slå esset."
     ],
     "line": [

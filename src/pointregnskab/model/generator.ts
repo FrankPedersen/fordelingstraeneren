@@ -126,7 +126,7 @@ function runningTask(seed: number, level: Level, rng: Rng): RunningTask {
   return { exercise: 'running', seed, level, hands, m: opponentsPoints(hands.N, hands.S), clues, shown };
 }
 
-/** Kan Nord–Syd kippe mod honnøren? De har kortet lige under og et højere kort i farven. */
+/** Kan Nord–Syd tage en kipning mod honnøren? De har kortet lige under og et højere kort i farven. */
 export function canFinesse(hands: Hands, card: Card): boolean {
   const ns = [...hands.N, ...hands.S];
   const top = (Math.floor(card / 13) + 1) * 13;

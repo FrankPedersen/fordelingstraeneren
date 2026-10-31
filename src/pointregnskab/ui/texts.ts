@@ -122,7 +122,7 @@ const DA = {
   runningEast: 'Og Øst?',
   canPrompt: (seat: string, card: string) => `Kan ${seat} have ${card}?`,
   whoPrompt: (card: string) => `Hvem har ${card}?`,
-  finessePrompt: (card: string) => `Du skal kippe mod ${card}. Hvilken vej?`,
+  finessePrompt: (card: string) => `Kipningen går mod ${card}. Hvilken vej?`,
   yes: 'Ja',
   no: 'Nej',
   cantTell: 'Kan ikke afgøres',

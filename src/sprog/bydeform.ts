@@ -96,7 +96,6 @@ export const UNDTAGELSER: readonly (string | RegExp)[] = [
   'Vælg selv',
   'Sammenlign metoder',
   'Regn oppefra',
-  'Fald eller kip',
   'Spil mod honnør',
 ];
 
