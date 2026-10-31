@@ -132,7 +132,7 @@ const playFrom = (rank: number) => (game: Game, node: number) => {
 };
 
 describe('Løseren med optimalt modspil', { timeout: 120_000 }, () => {
-  it('vælger fald med bordet E K B 3 2 og hånden 7 6 5 4 (53,1 %) frem for kipning (51,4 %)', () => {
+  it('topper farven med bordet E K B 3 2 og hånden 7 6 5 4 (53,1 %) frem for kipningen (51,4 %)', () => {
     const north = parseCards('AKJ32'), south = parseCards('7654');
     const game = buildGame(north, south, { objective: goal(5) });
     const best = solveGame(game);
@@ -148,7 +148,7 @@ describe('Løseren med optimalt modspil', { timeout: 120_000 }, () => {
     expect(percent(solveLine(game, finesse).value)).toBe(51.4);
   });
 
-  it('begrænset valg: kipper mod knægten, når Øst lægger damen under esset eller kongen (64,7 %)', () => {
+  it('begrænset valg: kipningen går mod knægten, når Øst lægger damen under esset eller kongen (64,7 %)', () => {
     const game = buildGame(parseCards('AKT32'), parseCards('7654'), { objective: goal(5) });
     const solution = solveGame(game);
     // Linjen, der begynder med en top-honnør fra bordet (Øst er 2. hånd).
@@ -159,7 +159,7 @@ describe('Løseren med optimalt modspil', { timeout: 120_000 }, () => {
     expect(game.kind[second]).toBe(LEAD);
     const leadSlot = game.childStart[second] + top.strategy[second];
     expect(game.slotHand[leadSlot]).toBe(1); // fra hånden
-    // Vest lægger lavt: bordet kipper med 10'eren.
+    // Vest lægger lavt: bordet tager kipningen med 10'eren.
     const third = follow(game, top.strategy, second, [playFrom(9)]);
     expect(game.kind[third]).toBe(THIRD);
     const finesseSlot = game.childStart[third] + top.strategy[third];
@@ -172,7 +172,7 @@ describe('Løseren med optimalt modspil', { timeout: 120_000 }, () => {
     expect(percent(singleton / (singleton + doubleton))).toBe(64.7);
   });
 
-  it('Hvad nu?: efter Østs dame under esset vinder kipningen 64,7 % og fald 35,3 % (begrænset valg)', () => {
+  it('Hvad nu?: efter Østs dame under esset vinder kipningen 64,7 % og at toppe 35,3 % (begrænset valg)', () => {
     const game = buildGame(parseCards('AKT32'), parseCards('7654'), { objective: goal(5) });
     const solution = solveGame(game);
     const top = solution.leads.find((l) => l.lead.hand === 'N' && l.lead.high === 14)!;
@@ -183,9 +183,9 @@ describe('Løseren med optimalt modspil', { timeout: 120_000 }, () => {
     expect(percent(queen.probability)).toBe(19.2);
     expect(queen.posterior.reduce((a, b) => a + b, 0)).toBeCloseTo(1, 12);
     const [finesse, drop] = queen.options;
-    expect(finesse.steps[0]).toMatch(/^Lille fra hånden mod 10'eren \(kip\)/);
+    expect(finesse.steps[0]).toMatch(/^Lille fra hånden mod 10'eren \(kipning\)/);
     expect(percent(finesse.value)).toBe(64.7);
-    expect(drop.steps).toEqual(['Slå kongen.']);
+    expect(drop.steps).toEqual(['Kongen slås.']);
     expect(percent(drop.value)).toBe(35.3);
     // Vest lægger en honnør: ingen kipning er mulig mod Øst, så der er intet rimeligt valg, og situationen udelades.
     expect(situations.some((s) => s.trick[3].card === 'D')).toBe(false);

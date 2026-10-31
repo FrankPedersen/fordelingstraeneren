@@ -96,7 +96,7 @@ Seks øvelser fører fra regnestykket til det fulde regnskab ved bordet.
 2. **Løbende tælling** (Running count): honnørerne vises én ad gangen, som de falder, uden notatfelt. Til sidst: "Hvor mange point har Vest vist? Og Øst?" Visningstiden starter på 2 s pr. kort og tilpasses (se Session).
 3. **Kan han have den?** (Can he have it?): "Kan Øst have ♠E?" Ja eller nej.
 4. **Hvem har den?** (Who has it?): "Hvem har ♣D?" Vest, Øst eller kan ikke afgøres.
-5. **Kipningsretning** (Finesse direction): "Du skal kippe mod ♣D. Hvilken vej?" Svaret er Vest, Øst eller "det er et gæt".
+5. **Kipningsretning** (Finesse direction): "Kipningen går mod ♣D. Hvilken vej?" Svaret er Vest, Øst eller "det er et gæt".
 6. **Fuldt regnskab** (Full count): længder fra en 13-sudoku og point i samme opgave.
 
 "Kan ikke afgøres" og "det er et gæt" er altid gyldige svar. At vide, hvornår man ikke ved det, er en del af færdigheden.

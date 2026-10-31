@@ -42,9 +42,9 @@ Example: dummy has A Q J 10, your hand 6 5 4 3 2, and the goal is 5 tricks.
 
 | Line | Chance of 5 tricks |
 | --- | --- |
-| Low from both hands; if West plays an honour, win with the ace | 50.00 % |
-| Cash the ace | 12.43 % |
-| The queen from dummy; if East covers, play low, otherwise let it run | 0 % |
+| Low from both hands; if West plays an honour, it is won with the ace | 50.00 % |
+| The ace is cashed | 12.43 % |
+| The queen from dummy; if East covers, low is played, otherwise it runs | 0 % |
 
 Each line is on a line card with numbered steps and if/then branches. Below the steps is the line's average number of tricks. The analysis shows the best line for each first lead: all lines within 0.5 percentage points of the best one and up to three alternatives further down.
 
@@ -117,7 +117,7 @@ The field On lead is shown only when a hand has limited entries. The rules are:
 - **If the defenders win the trick,** neither hand is on lead, and the next lead uses an entry, whichever hand you lead from.
 - **Many entries are the same as unlimited:** a hand with at least as many entries as it has cards counts as unlimited. If both hands do, the bank's figures are used.
 
-Your choices are shown as chips below the table, e.g. "South on lead · South 2 entries", and in the assumptions, e.g. "a priori · South on lead, North unlimited and South 2 entries · best defence". A lead that uses an entry appears in the line as e.g. "Cross to hand with a side entry and lead low to the ace." A line of your own that leads from a hand without an entry is rejected with a message saying which step it is. In Play it yourself, opened from Analysis, the entries are counted down, and the buttons for a hand that cannot be reached are greyed out.
+Your choices are shown as chips below the table, e.g. "South on lead · South 2 entries", and in the assumptions, e.g. "a priori · South on lead, North unlimited and South 2 entries · best defence". A lead that uses an entry appears in the line as e.g. "Hand is reached with a side entry, and low is led to the ace." A line of your own that leads from a hand without an entry is rejected with a message saying which step it is. In Play it yourself, opened from Analysis, the entries are counted down, and the buttons for a hand that cannot be reached are greyed out.
 
 The blocked suit shows what the entries mean. Dummy has the ace alone, and your hand has K Q J 3 2:
 
@@ -162,10 +162,10 @@ The table shows the solver's result for 11 combinations, most of them from the b
 | A Q J 10 | 6 5 4 3 2 | 5 | Low from both hands | 50.00 % | Example |
 | A Q J 10 | 6 5 4 3 2 | 5 | Same, side suit 5-2 with West | 42.11 % | Example |
 | J 5 | A Q 7 6 4 2 | 5 | The jack from dummy | 76.30 % | Kelsey |
-| J 5 | A Q 7 4 3 2 | 5 | Cash the ace | 73.48 % | Kelsey |
+| J 5 | A Q 7 4 3 2 | 5 | The ace is cashed | 73.48 % | Kelsey |
 | Q 10 4 | A 9 8 6 3 2 | 5 | Low towards the 10 | 81.35 % | Dormer |
-| Q 10 4 | A 8 7 6 3 2 | 5 | Cash the ace | 78.00 % | Dormer |
-| A 5 | J 10 6 4 3 | 3 | Cash the ace | 66.21 % | Kelsey |
+| Q 10 4 | A 8 7 6 3 2 | 5 | The ace is cashed | 78.00 % | Dormer |
+| A 5 | J 10 6 4 3 | 3 | The ace is cashed | 66.21 % | Kelsey |
 | J 6 5 | A K 7 2 | 3 | Low to the ace | 72.04 % | Villy Dam |
 | K Q J 6 | 8 7 3 | 3 | Low towards the king | 70.83 % | Villy Dam |
 | Q J 6 | A 7 4 2 | 3 | Low towards the queen | 70.83 % | Root |
@@ -243,7 +243,7 @@ Lines within 0.5 percentage points of the best one count as equally good. The li
 
 ### 4.7 From strategy to text
 
-The solver's result is a strategy tree. It is turned into a short main line and the branches that are needed, with fixed sentence templates, e.g. "The jack from dummy; if East covers, win with the ace, otherwise let it run". If a lead uses an entry, the step begins with "Cross to hand with a side entry" or "Cross to dummy with a side entry". Each template exists in Danish and English. After the last step of the line the solver plays the rest optimally from what has been seen.
+The solver's result is a strategy tree. It is turned into a short main line and the branches that are needed, with fixed sentence templates, e.g. "The jack from dummy; if East covers, the trick is won with the ace, otherwise it runs". If a lead uses an entry, the step begins with "Hand is reached with a side entry" or "Dummy is reached with a side entry". The steps are descriptive, e.g. "The ace is cashed." Each template exists in Danish and English. After the last step of the line the solver plays the rest optimally from what has been seen.
 
 ### 4.8 Frequency
 

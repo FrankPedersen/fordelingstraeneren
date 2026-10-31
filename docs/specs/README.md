@@ -16,3 +16,4 @@ Afsluttede specer til Fordelingstræneren. De levende beskrivelser bliver i rode
 - [SPEC-kontaktformular.md](SPEC-kontaktformular.md) – sidefodens link til kontaktformularen på Om mig i stedet for e-mailadressen (udgivet 22. oktober 2026).
 - [SPEC-forside-bred.md](SPEC-forside-bred.md) – forsiden på computer fra 1000 px med grupperne side om side, og bridgebordet med kompas i Spil den selv (udgivet 30. oktober 2026; rettet på grenen `forside-bred-2` samme dag).
 - [SPEC-beskrivende-form.md](SPEC-beskrivende-form.md) – instruktioner og forklaringer i beskrivende form, ikke i bydeform, og testen for bydeform (udgivet 30. oktober 2026).
+- [SPEC-sprog-kipning-toppe.md](SPEC-sprog-kipning-toppe.md) – kipning altid som navneord, toppe farven, frafald kun om hold-up, Toppe eller kipning og linjeteksterne i beskrivende form; banken bygget igen med `LINES_VERSION` 3 (udgivet 31. oktober 2026).

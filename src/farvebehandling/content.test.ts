@@ -99,7 +99,7 @@ describe('Opgavebanken', () => {
 
   it('har seks teknikker med huskeregel og standardbillede', () => {
     expect(techniquesFile.techniques.map((t) => t.name)).toEqual([
-      'Enkelt kipning', 'Fald eller kip', 'Spil mod honnør', 'Dobbelt kipning', 'Sikkerhedsspil', 'Begrænset valg',
+      'Enkelt kipning', 'Toppe eller kipning', 'Spil mod honnør', 'Dobbelt kipning', 'Sikkerhedsspil', 'Begrænset valg',
     ]);
     for (const t of techniquesFile.techniques) {
       expect(t.rule.length).toBeGreaterThan(10);
@@ -114,6 +114,12 @@ describe('Opgavebanken', () => {
       expect(b.technique, b.id).toBe(proposeTechnique(b.north, b.south, b.goals, solutions[b.id], whatNow[b.id]).technique);
     }
     expect(techniquesReport(bank, solutions, techniquesFile.techniques, whatNow)).toBe(lf(techniquesText));
+  });
+
+  it('E D 6 5 / 4 3 2: (kipning) og linjerne i beskrivende form (SPEC-sprog-kipning-toppe)', () => {
+    const leads = (goal: number) => solutions['432-AQ65'].goals[String(goal)].leads.map((l) => l.steps);
+    expect(leads(3)[0]).toEqual(['Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset.']);
+    expect(leads(2)).toContainEqual(['Damen fra hånden; dækker Vest, lægges der lille, ellers løber den.', 'Esset slås.', 'Lille fra begge hænder.']);
   });
 
   it('foreslår teknikker, der passer med linjerne', () => {

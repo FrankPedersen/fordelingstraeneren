@@ -15,10 +15,10 @@
   },
   {
    "id": "fald-eller-kip",
-   "name": "Fald eller kip",
+   "name": "Toppe eller kipning",
    "order": 2,
-   "rule": "Med 8 kort kipper man, med 9 slår man.",
-   "image": "Vægten: 8 vipper mod kipning, 9 mod fald",
+   "rule": "Med 8 kort tages kipningen, med 9 toppes farven.",
+   "image": "Vægten: 8 vipper mod kipningen, 9 mod at toppe farven",
    "en": {
     "name": "Drop or finesse",
     "rule": "With 8 cards finesse, with 9 play for the drop.",
@@ -65,7 +65,7 @@
    "id": "begraenset-valg",
    "name": "Begrænset valg",
    "order": 6,
-   "rule": "Lagde de en honnør, havde de nok ikke valget – kip.",
+   "rule": "Lagde de en honnør, havde de nok ikke valget – så tages kipningen.",
    "image": "Gæsten, der kun havde én stol at vælge",
    "en": {
     "name": "Restricted choice",

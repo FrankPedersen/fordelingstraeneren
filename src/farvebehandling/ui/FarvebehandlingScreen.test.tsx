@@ -330,6 +330,14 @@ describe('Farvebehandling', { timeout: 30_000 }, () => {
     });
   });
 
+  it('Selvvalgt viser teknikken "Toppe eller kipning" med 94 kombinationer (SPEC-sprog-kipning-toppe)', async () => {
+    await openFarvebehandling();
+    click('Selvvalgt');
+    const teknik = within(screen.getByRole('group', { name: 'Teknik' }));
+    expect(teknik.getByRole('button', { name: 'Toppe eller kipning (94)' })).toBeTruthy();
+    expect(teknik.queryByRole('button', { name: /Fald eller kip/ })).toBeNull();
+  });
+
   it('Selvvalgt viser antal pr. filtervalg, grår valg med 0 ud og logger uden at røre dagsplanen', async () => {
     await openFarvebehandling();
     click('Selvvalgt');

@@ -14,6 +14,7 @@ const card = (name: string) => {
   return CARD_EN[lower] ?? `the ${lower.replace("'eren", '')}`;
 };
 const hand = (name: string) => (name.toLowerCase() === 'bordet' ? 'dummy' : 'hand');
+const capital = (s: string) => `${s[0].toUpperCase()}${s.slice(1)}`;
 const seat = (name: string) => (name === 'Vest' ? 'West' : 'East');
 
 /** Kortets engelske navn ud fra rangen: "the ace", "the 10". */
@@ -23,38 +24,43 @@ export function englishCardName(rank: number): string {
 
 /** Et trin fra løserens danske skabeloner på engelsk. */
 export function englishStep(text: string): string {
-  // Et udspil, der bruger en indgang (SPEC-forbindelser.md): "Gå ind på hånden med en sideindgang, og spil …".
-  const entry = /^Gå ind på (bordet|hånden) med en sideindgang, og (spil|slå) (.+)$/.exec(text);
+  // Et udspil, der bruger en indgang (SPEC-forbindelser.md): "Hånden nås med en sideindgang, og der spilles …".
+  const entry = /^(Bordet|Hånden) nås med en sideindgang, og (?:der spilles (.+)|(.+) slås\.)$/.exec(text);
   if (entry) {
-    const [, from, verb, rest] = entry;
+    const [, from, rest, cashed] = entry;
     const to = hand(from);
-    if (verb === 'slå') return `Cross to ${to} with a side entry and cash ${card(rest.replace(/\.$/, ''))}.`;
+    const reached = `${to[0].toUpperCase()}${to.slice(1)} is reached with a side entry`;
+    if (cashed) return `${reached}, and ${card(cashed)} is cashed.`;
     // Hånden sættes ind efter kortet igen, så de faste skabeloner oversætter trinet, og tages så ud igen.
-    const base = rest.startsWith('lille fra begge hænder') ? rest : rest.replace(new RegExp(`^(lille|${CARD})`), `$1 fra ${from}`);
-    const english = englishStep(base[0].toUpperCase() + base.slice(1)).replace(` from ${to}`, '').replace(/^Lead /, '');
-    return `Cross to ${to} with a side entry and lead ${english[0].toLowerCase()}${english.slice(1)}`;
+    const base = rest.startsWith('lille fra begge hænder') ? rest : rest.replace(new RegExp(`^(lille|${CARD})`), `$1 fra ${from.toLowerCase()}`);
+    const english = englishStep(base[0].toUpperCase() + base.slice(1)).replace(` from ${to}`, '');
+    const led = english
+      .replace(/^Low from both hands/, 'low is played from both hands')
+      .replace(/^Low\b/, 'low is led')
+      .replace(/^The (\w+)/, (_, c: string) => `the ${c} is led`);
+    return `${reached}, and ${led}`;
   }
-  const cash = /^Slå (.+)\.$/.exec(text);
+  const cash = /^(.+) slås\.$/.exec(text);
   if (cash) {
     const names = cash[1].split(/, | og /).map(card);
     const list = names.length > 1 ? `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}` : names[0];
-    return `Cash ${list}.`;
+    return `${list[0].toUpperCase()}${list.slice(1)} ${names.length > 1 ? 'are' : 'is'} cashed.`;
   }
   return text
     .replace(new RegExp(`^lille fra (${HAND}) og lille fra (${HAND})`, 'i'), (_, a: string, b: string) => `Low from ${hand(a)} and low from ${hand(b)}`)
     .replace(/^lille fra begge hænder/i, 'Low from both hands')
     .replace(new RegExp(`^lille fra (${HAND}) til (${CARD})`, 'i'), (_, h: string, c: string) => `Low from ${hand(h)} to ${card(c)}`)
-    .replace(new RegExp(`^lille fra (${HAND}) mod (${CARD}) \\(kip\\)`, 'i'), (_, h: string, c: string) => `Low from ${hand(h)} towards ${card(c)} (finesse)`)
+    .replace(new RegExp(`^lille fra (${HAND}) mod (${CARD}) \\(kipning\\)`, 'i'), (_, h: string, c: string) => `Low from ${hand(h)} towards ${card(c)} (finesse)`)
     .replace(new RegExp(`^lille fra (${HAND})`, 'i'), (_, h: string) => `Low from ${hand(h)}`)
-    .replace(new RegExp(`^(${CARD}) fra (${HAND})`, 'i'), (_, c: string, h: string) => `Lead ${card(c)} from ${hand(h)}`)
-    .replace(/; lægger (Vest|Øst) en honnør, lægges der lille/g, (_, s: string) => `; if ${seat(s)} plays an honour, play low`)
-    .replace(new RegExp(`; lægger (Vest|Øst) en honnør, tages den med (${CARD})`, 'g'), (_, s: string, c: string) => `; if ${seat(s)} plays an honour, win with ${card(c)}`)
-    .replace(/; dækker (Vest|Øst), lægges der lille/g, (_, s: string) => `; if ${seat(s)} covers, play low`)
-    .replace(new RegExp(`; dækker (Vest|Øst), tages stikket med (${CARD})`, 'g'), (_, s: string, c: string) => `; if ${seat(s)} covers, win with ${card(c)}`)
-    .replace(/, ellers lad den løbe/g, ', otherwise let it run')
-    .replace(/; lad den løbe/g, '; let it run')
-    .replace(new RegExp(`, ellers læg (${CARD})`, 'g'), (_, c: string) => `, otherwise play ${card(c)}`)
-    .replace(new RegExp(`; læg (${CARD})`, 'g'), (_, c: string) => `; play ${card(c)}`);
+    .replace(new RegExp(`^(${CARD}) fra (${HAND})`, 'i'), (_, c: string, h: string) => `${capital(card(c))} from ${hand(h)}`)
+    .replace(/; lægger (Vest|Øst) en honnør, lægges der lille/g, (_, s: string) => `; if ${seat(s)} plays an honour, low is played`)
+    .replace(new RegExp(`; lægger (Vest|Øst) en honnør, tages den med (${CARD})`, 'g'), (_, s: string, c: string) => `; if ${seat(s)} plays an honour, it is won with ${card(c)}`)
+    .replace(/; dækker (Vest|Øst), lægges der lille/g, (_, s: string) => `; if ${seat(s)} covers, low is played`)
+    .replace(new RegExp(`; dækker (Vest|Øst), tages stikket med (${CARD})`, 'g'), (_, s: string, c: string) => `; if ${seat(s)} covers, the trick is won with ${card(c)}`)
+    .replace(/, ellers løber den/g, ', otherwise it runs')
+    .replace(/; den løber/g, '; it runs')
+    .replace(new RegExp(`, ellers lægges (${CARD})`, 'g'), (_, c: string) => `, otherwise ${card(c)} is played`)
+    .replace(new RegExp(`; (${CARD}) lægges`, 'g'), (_, c: string) => `; ${card(c)} is played`);
 }
 
 /** Et trin på det aktuelle sprog. */

@@ -4,10 +4,10 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 
 0. **Begrænset valg:** i første runde af den bedste linje falder én af to eller flere ligeværdige honnører hos modparten (i mindst 5 % af spillene), og så er kipning klart bedst.
 1. **Sikkerhedsspil:** til et lavere mål giver linjen med flest stik i gennemsnit mere end 0,5 procentpoint mindre end den bedste linje.
-2. **Hovedmålet** er det mål, hvor valget af linje betyder mest. Mål under 25 % tæller kun, hvis alle mål ligger under. Er flere linjer lige gode (inden for 0,5 procentpoint), vælges den mest lærerige: dobbelt kipning, enkelt kipning, spil mod honnør, sikkerhedsspil, fald.
-3. **Hovedlinjens første kipning:** modpartens kort over kortet ligger i to huller (fx K og B over E D 10) = dobbelt kipning; spilles der mod det højeste kort, der er tilbage i hånden = spil mod honnør; ellers enkelt kipning, mod damen eller knægten med 8 kort eller flere fald eller kip.
+2. **Hovedmålet** er det mål, hvor valget af linje betyder mest. Mål under 25 % tæller kun, hvis alle mål ligger under. Er flere linjer lige gode (inden for 0,5 procentpoint), vælges den mest lærerige: dobbelt kipning, enkelt kipning, spil mod honnør, sikkerhedsspil, toppe.
+3. **Hovedlinjens første kipning:** modpartens kort over kortet ligger i to huller (fx K og B over E D 10) = dobbelt kipning; spilles der mod det højeste kort, der er tilbage i hånden = spil mod honnør; ellers enkelt kipning, mod damen eller knægten med 8 kort eller flere toppe eller kipning.
 4. **Små kort fra begge hænder** er en kipning (som i punkt 3), når det laveste kort har en eller to af modpartens kort over sig; ellers et sikkerhedsspil.
-5. **Ingen kipning:** fald eller kip.
+5. **Ingen kipning:** toppe eller kipning.
 
 
 ## Enkelt kipning (102)
@@ -56,7 +56,7 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 355 | E 3 2 / D B 9 | 3 | Damen spilles ud og løber med 6 kort. |
 | 357 | E 3 2 / B 10 9 | 2 | Knægten spilles ud og løber med 6 kort. |
 | 363 | D B 9 6 5 / E 4 3 2 | 5, 4 | Damen spilles ud og løber med 9 kort. |
-| 374 | E K D 9 / 3 2 | 4 | Små kort fra begge hænder kipper med 9'eren med 6 kort. |
+| 374 | E K D 9 / 3 2 | 4 | Små kort fra begge hænder giver en kipning med 9'eren med 6 kort. |
 | 377 | E D B 9 / 3 2 | 4, 3 | Kipning mod damen med 6 kort. |
 | 379 | E K 10 9 / 3 2 | 4, 3 | Kipning mod 10'eren med 6 kort. |
 | 380 | E 9 3 2 / K 10 | 3 | Kipning mod 10'eren med 6 kort. |
@@ -71,7 +71,7 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 412 | E B 9 8 4 3 / 2 | 5, 4, 3, 2 | Kipning mod knægten med 7 kort. |
 | 420 | E 10 9 3 / K 8 2 | 4, 3 | 10'eren spilles ud og løber med 7 kort. |
 | 421 | E B 8 / 10 3 2 | 2 | 10'eren spilles ud og løber med 6 kort. |
-| 425 | E 10 4 3 2 / K 9 | 4, 3 | Små kort fra begge hænder kipper med 9'eren med 7 kort. |
+| 425 | E 10 4 3 2 / K 9 | 4, 3 | Små kort fra begge hænder giver en kipning med 9'eren med 7 kort. |
 | 431 | E D 4 3 / B 9 8 2 | 4, 3 | Kipning mod damen med 8 kort. |
 | 432 | E 9 8 4 / D B 3 2 | 4, 3 | Damen spilles ud og løber med 8 kort. |
 | 445 | E 10 9 8 / 3 2 | 2 | Kipning mod 10'eren med 6 kort. |
@@ -117,104 +117,104 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 | 654 | E D 7 4 3 2 / B 9 8 | 6 | Kipning mod damen med 9 kort. |
 | 657 | E D B 5 4 3 2 / 8 7 6 | 7 | Kipning mod damen med 10 kort. |
 
-## Fald eller kip (94)
+## Toppe eller kipning (94)
 
 | Rang | Hånd / bordet | Mål | Begrundelse |
 | --- | --- | --- | --- |
-| 20 | E K D 6 5 4 / 3 2 | 6, 5 | Linjen spiller på fald med 8 kort. |
-| 29 | E K D 7 6 5 / 4 3 2 | 6 | Linjen spiller på fald med 9 kort. |
-| 33 | E K D 6 / 5 4 3 2 | 4 | Linjen spiller på fald med 8 kort. |
-| 48 | E K 4 / B 3 2 | 3 | Linjen spiller på fald med 6 kort. |
-| 77 | E K D 7 6 5 4 / 3 2 | 7 | Linjen spiller på fald med 9 kort. |
-| 90 | E 10 6 5 / K 4 3 2 | 4, 3 | Kipning mod 10'eren med 8 kort: fald eller kip. |
-| 96 | B 7 6 5 4 / E K 3 2 | 5, 4 | Linjen spiller på fald med 9 kort. |
-| 102 | E 10 6 5 4 / K 3 2 | 5, 4, 3 | Kipning mod 10'eren med 8 kort: fald eller kip. |
-| 111 | E K D 6 5 4 3 / 2 | 7, 6 | Linjen spiller på fald med 8 kort. |
-| 153 | E K D 10 5 4 / 3 2 | 6, 5 | Linjen spiller på fald med 8 kort. |
-| 154 | E K B 10 5 4 / 3 2 | 6, 5 | Kipning mod knægten med 8 kort: fald eller kip. |
-| 158 | E K D 10 5 / 4 3 2 | 5, 4 | Linjen spiller på fald med 8 kort. |
-| 166 | E K 10 6 5 / D 4 3 2 | 5 | Linjen spiller på fald med 9 kort. |
-| 168 | E B 7 6 5 / 10 4 3 2 | 4 | Linjen spiller på fald med 9 kort. |
-| 191 | E K D 4 3 2 / – | 5, 4 | Linjen spiller på fald med 6 kort. |
-| 195 | E 10 5 4 / K 9 3 2 | 4, 3 | Kipning mod 10'eren med 8 kort: fald eller kip. |
-| 199 | E K D B 3 / 2 | 5 | Linjen spiller på fald med 6 kort. |
-| 204 | E B 8 7 6 / K 5 4 3 2 | 5 | Linjen spiller på fald med 10 kort. |
-| 208 | E B 9 5 4 / K 3 2 | 5, 4, 3 | Kipning mod knægten med 8 kort: fald eller kip. |
-| 225 | E K 10 6 5 4 / D 3 2 | 6 | Linjen spiller på fald med 9 kort. |
-| 253 | E K 9 3 / D 2 | 4 | Linjen spiller på fald med 6 kort. |
-| 267 | E K B 3 2 / – | 3 | Linjen spiller på fald med 5 kort. |
-| 274 | E K 9 5 / D 4 3 2 | 4 | Linjen spiller på fald med 8 kort. |
-| 281 | E K B 9 5 4 / 3 2 | 6, 5, 4 | Kipning mod knægten med 8 kort: fald eller kip. |
-| 286 | E 10 7 6 5 4 / D 3 2 | 5 | Linjen spiller på fald med 9 kort. |
-| 290 | E B 7 6 5 4 / 10 3 2 | 5 | Linjen spiller på fald med 9 kort. |
-| 293 | E K D 5 4 3 2 / – | 7, 6, 5 | Linjen spiller på fald med 7 kort. |
-| 301 | E K 10 9 5 / 4 3 2 | 5, 4, 3 | Kipning mod 10'eren med 8 kort: fald eller kip. |
-| 313 | E K D 9 4 3 / 2 | 6, 5, 4 | Linjen spiller på fald med 7 kort. |
-| 325 | E K D 10 6 5 4 / 3 2 | 7 | Linjen spiller på fald med 9 kort. |
-| 326 | E K D 10 6 / 5 4 3 2 | 5 | Linjen spiller på fald med 9 kort. |
-| 332 | E B 10 6 5 4 3 / 2 | 6, 5, 4 | Kipning mod knægten med 8 kort: fald eller kip. |
-| 333 | E K 10 4 / D 9 3 2 | 4 | Linjen spiller på fald med 8 kort. |
-| 358 | E B 9 5 4 / K 10 3 2 | 5 | Linjen spiller på fald med 9 kort. |
-| 359 | E B 6 5 4 / K 9 3 2 | 5 | Linjen spiller på fald med 9 kort. |
-| 360 | E 9 6 5 4 / K B 3 2 | 5 | Linjen spiller på fald med 9 kort. |
-| 361 | B 10 9 5 4 / E K 3 2 | 5 | Linjen spiller på fald med 9 kort. |
-| 364 | E K 9 6 5 / 10 4 3 2 | 5, 4 | Linjen spiller på fald med 9 kort. |
-| 366 | E 10 9 6 5 / D 4 3 2 | 5, 4 | Linjen spiller på fald med 9 kort. |
-| 367 | E 10 6 5 4 / D 9 3 2 | 5, 4 | Linjen spiller på fald med 9 kort. |
-| 387 | E K B 5 4 3 2 / – | 6, 5, 4 | Linjen spiller på fald med 7 kort. |
-| 388 | E B 8 7 6 5 4 / K 3 2 | 7 | Linjen spiller på fald med 10 kort. |
-| 399 | E K 10 9 3 / D 2 | 5 | Linjen spiller på fald med 7 kort. |
-| 401 | E K D 10 / 5 4 3 2 | 4 | Linjen spiller på fald med 8 kort. |
-| 402 | E K B 10 / 5 4 3 2 | 4 | Kipning mod knægten med 8 kort: fald eller kip. |
-| 403 | E K 9 6 5 4 / B 3 2 | 6 | Linjen spiller på fald med 9 kort. |
-| 407 | E 10 9 6 5 4 / D 3 2 | 6, 5 | Linjen spiller på fald med 9 kort. |
-| 415 | E 10 7 6 5 4 3 / 2 | 5, 4 | Kipning mod 10'eren med 8 kort: fald eller kip. |
-| 416 | E K D B 3 2 / – | 6, 5 | Linjen spiller på fald med 6 kort. |
-| 427 | E K 9 4 / D 8 3 2 | 4 | Linjen spiller på fald med 8 kort. |
-| 446 | E 10 7 6 5 / 9 4 3 2 | 4, 3 | 9'eren spilles ud og løber med 9 kort: fald eller kip. |
-| 452 | D 7 6 5 4 3 / E 10 2 | 5 | Linjen spiller på fald med 9 kort. |
-| 465 | E B 10 9 5 4 3 / 2 | 6, 5 | Kipning mod knægten med 8 kort: fald eller kip. |
-| 467 | E K D B 4 3 2 / – | 7, 6 | Linjen spiller på fald med 7 kort. |
-| 472 | E K D 10 3 2 / – | 6, 5, 4 | Linjen spiller på fald med 6 kort. |
-| 473 | E K B 10 3 2 / – | 6, 5 | Linjen spiller på fald med 6 kort. |
-| 476 | E K D 10 9 3 / 2 | 6, 5 | Linjen spiller på fald med 7 kort. |
-| 489 | E K D 9 / 2 | 4 | Linjen spiller på fald med 5 kort. |
-| 500 | E K B 10 9 4 3 / 2 | 7 | Kipning mod knægten med 8 kort: fald eller kip. |
-| 501 | B 10 9 4 3 2 / E | 5, 4, 3 | Linjen spiller på fald med 7 kort. |
-| 502 | E B 9 6 5 4 3 / 2 | 6, 5, 4 | Kipning mod knægten med 8 kort: fald eller kip. |
-| 505 | E B 8 5 4 3 / K 2 | 6, 5, 4 | Kipning mod knægten med 8 kort: fald eller kip. |
-| 507 | E K D 9 3 2 / – | 6, 5, 4 | Linjen spiller på fald med 6 kort. |
-| 511 | E 10 9 5 4 / D 8 3 2 | 5, 4 | Linjen spiller på fald med 9 kort. |
-| 517 | E K D 10 9 / 3 2 | 5 | Linjen spiller på fald med 7 kort. |
-| 519 | E K 10 9 / 5 4 3 2 | 4, 3 | Kipning mod 10'eren med 8 kort: fald eller kip. |
-| 525 | E B 6 5 4 3 / K 9 2 | 6 | Linjen spiller på fald med 9 kort. |
-| 530 | E B 9 6 5 / K 10 4 3 2 | 5 | Linjen spiller på fald med 10 kort. |
-| 531 | E K B 10 2 / – | 4 | Linjen spiller på fald med 5 kort. |
-| 534 | E K 4 3 2 / B 10 9 | 5 | Knægten spilles ud og løber med 8 kort: fald eller kip. |
-| 546 | E 10 8 3 / K B 9 2 | 4 | Kipning mod 10'eren med 8 kort: fald eller kip. |
-| 553 | E D B 9 8 7 / 6 5 4 3 2 | 6 | Linjen spiller på fald med 11 kort. |
-| 555 | E B 10 8 7 / 6 5 4 3 2 | 4 | Kipning mod knægten med 10 kort: fald eller kip. |
-| 569 | E 10 5 4 3 2 / K 9 | 6, 5, 4 | Små kort fra begge hænder kipper med 9'eren med 8 kort: fald eller kip. |
-| 579 | E 10 9 7 6 5 4 / 3 2 | 6, 5 | Kipning mod 10'eren med 9 kort: fald eller kip. |
-| 581 | E K D 9 4 3 2 / – | 7, 6, 5 | Linjen spiller på fald med 7 kort. |
-| 587 | E K D 10 9 / 2 | 5 | Linjen spiller på fald med 6 kort. |
-| 589 | E 10 9 8 / K 4 3 2 | 4, 3 | Kipning mod 10'eren med 8 kort: fald eller kip. |
-| 592 | E K 9 7 6 5 / B 4 3 2 | 6 | Linjen spiller på fald med 10 kort. |
-| 608 | E K 9 7 6 / B 5 4 3 2 | 5 | Linjen spiller på fald med 10 kort. |
-| 613 | E 10 9 8 / 5 4 3 2 | 2 | Kipning mod 10'eren med 8 kort: fald eller kip. |
-| 615 | K 9 6 5 4 3 / E B 10 2 | 6 | Linjen spiller på fald med 10 kort. |
-| 618 | E K D 10 9 3 2 / – | 6, 5 | Linjen spiller på fald med 7 kort. |
-| 620 | E K B 8 4 3 2 / – | 6, 5, 4 | Linjen spiller på fald med 7 kort. |
-| 622 | E K 5 4 3 2 / B 10 9 | 6 | Linjen spiller på fald med 9 kort. |
-| 626 | 10 9 8 7 / K D 2 | 3 | Linjen spiller på fald med 7 kort. |
-| 627 | E K 9 7 6 5 4 / B 3 2 | 7 | Linjen spiller på fald med 10 kort. |
-| 633 | E K 6 5 4 / 10 9 8 3 2 | 5 | Linjen spiller på fald med 10 kort. |
-| 639 | E K B 9 8 7 3 / 2 | 7, 6 | Kipning mod knægten med 8 kort: fald eller kip. |
-| 642 | E 6 5 4 3 2 / B 10 9 | 5 | Knægten spilles ud og løber med 9 kort: fald eller kip. |
-| 643 | E 5 4 3 2 / B 10 9 8 | 4 | Knægten spilles ud og løber med 9 kort: fald eller kip. |
-| 649 | D 8 5 4 3 2 / E 10 9 | 6, 5 | Linjen spiller på fald med 9 kort. |
-| 655 | E D 10 9 8 7 / 6 5 4 3 2 | 6 | Linjen spiller på fald med 11 kort. |
-| 656 | K 6 5 4 3 2 / E B 9 8 | 6 | Linjen spiller på fald med 10 kort. |
+| 20 | E K D 6 5 4 / 3 2 | 6, 5 | Linjen topper farven med 8 kort. |
+| 29 | E K D 7 6 5 / 4 3 2 | 6 | Linjen topper farven med 9 kort. |
+| 33 | E K D 6 / 5 4 3 2 | 4 | Linjen topper farven med 8 kort. |
+| 48 | E K 4 / B 3 2 | 3 | Linjen topper farven med 6 kort. |
+| 77 | E K D 7 6 5 4 / 3 2 | 7 | Linjen topper farven med 9 kort. |
+| 90 | E 10 6 5 / K 4 3 2 | 4, 3 | Kipning mod 10'eren med 8 kort: toppe eller kipning. |
+| 96 | B 7 6 5 4 / E K 3 2 | 5, 4 | Linjen topper farven med 9 kort. |
+| 102 | E 10 6 5 4 / K 3 2 | 5, 4, 3 | Kipning mod 10'eren med 8 kort: toppe eller kipning. |
+| 111 | E K D 6 5 4 3 / 2 | 7, 6 | Linjen topper farven med 8 kort. |
+| 153 | E K D 10 5 4 / 3 2 | 6, 5 | Linjen topper farven med 8 kort. |
+| 154 | E K B 10 5 4 / 3 2 | 6, 5 | Kipning mod knægten med 8 kort: toppe eller kipning. |
+| 158 | E K D 10 5 / 4 3 2 | 5, 4 | Linjen topper farven med 8 kort. |
+| 166 | E K 10 6 5 / D 4 3 2 | 5 | Linjen topper farven med 9 kort. |
+| 168 | E B 7 6 5 / 10 4 3 2 | 4 | Linjen topper farven med 9 kort. |
+| 191 | E K D 4 3 2 / – | 5, 4 | Linjen topper farven med 6 kort. |
+| 195 | E 10 5 4 / K 9 3 2 | 4, 3 | Kipning mod 10'eren med 8 kort: toppe eller kipning. |
+| 199 | E K D B 3 / 2 | 5 | Linjen topper farven med 6 kort. |
+| 204 | E B 8 7 6 / K 5 4 3 2 | 5 | Linjen topper farven med 10 kort. |
+| 208 | E B 9 5 4 / K 3 2 | 5, 4, 3 | Kipning mod knægten med 8 kort: toppe eller kipning. |
+| 225 | E K 10 6 5 4 / D 3 2 | 6 | Linjen topper farven med 9 kort. |
+| 253 | E K 9 3 / D 2 | 4 | Linjen topper farven med 6 kort. |
+| 267 | E K B 3 2 / – | 3 | Linjen topper farven med 5 kort. |
+| 274 | E K 9 5 / D 4 3 2 | 4 | Linjen topper farven med 8 kort. |
+| 281 | E K B 9 5 4 / 3 2 | 6, 5, 4 | Kipning mod knægten med 8 kort: toppe eller kipning. |
+| 286 | E 10 7 6 5 4 / D 3 2 | 5 | Linjen topper farven med 9 kort. |
+| 290 | E B 7 6 5 4 / 10 3 2 | 5 | Linjen topper farven med 9 kort. |
+| 293 | E K D 5 4 3 2 / – | 7, 6, 5 | Linjen topper farven med 7 kort. |
+| 301 | E K 10 9 5 / 4 3 2 | 5, 4, 3 | Kipning mod 10'eren med 8 kort: toppe eller kipning. |
+| 313 | E K D 9 4 3 / 2 | 6, 5, 4 | Linjen topper farven med 7 kort. |
+| 325 | E K D 10 6 5 4 / 3 2 | 7 | Linjen topper farven med 9 kort. |
+| 326 | E K D 10 6 / 5 4 3 2 | 5 | Linjen topper farven med 9 kort. |
+| 332 | E B 10 6 5 4 3 / 2 | 6, 5, 4 | Kipning mod knægten med 8 kort: toppe eller kipning. |
+| 333 | E K 10 4 / D 9 3 2 | 4 | Linjen topper farven med 8 kort. |
+| 358 | E B 9 5 4 / K 10 3 2 | 5 | Linjen topper farven med 9 kort. |
+| 359 | E B 6 5 4 / K 9 3 2 | 5 | Linjen topper farven med 9 kort. |
+| 360 | E 9 6 5 4 / K B 3 2 | 5 | Linjen topper farven med 9 kort. |
+| 361 | B 10 9 5 4 / E K 3 2 | 5 | Linjen topper farven med 9 kort. |
+| 364 | E K 9 6 5 / 10 4 3 2 | 5, 4 | Linjen topper farven med 9 kort. |
+| 366 | E 10 9 6 5 / D 4 3 2 | 5, 4 | Linjen topper farven med 9 kort. |
+| 367 | E 10 6 5 4 / D 9 3 2 | 5, 4 | Linjen topper farven med 9 kort. |
+| 387 | E K B 5 4 3 2 / – | 6, 5, 4 | Linjen topper farven med 7 kort. |
+| 388 | E B 8 7 6 5 4 / K 3 2 | 7 | Linjen topper farven med 10 kort. |
+| 399 | E K 10 9 3 / D 2 | 5 | Linjen topper farven med 7 kort. |
+| 401 | E K D 10 / 5 4 3 2 | 4 | Linjen topper farven med 8 kort. |
+| 402 | E K B 10 / 5 4 3 2 | 4 | Kipning mod knægten med 8 kort: toppe eller kipning. |
+| 403 | E K 9 6 5 4 / B 3 2 | 6 | Linjen topper farven med 9 kort. |
+| 407 | E 10 9 6 5 4 / D 3 2 | 6, 5 | Linjen topper farven med 9 kort. |
+| 415 | E 10 7 6 5 4 3 / 2 | 5, 4 | Kipning mod 10'eren med 8 kort: toppe eller kipning. |
+| 416 | E K D B 3 2 / – | 6, 5 | Linjen topper farven med 6 kort. |
+| 427 | E K 9 4 / D 8 3 2 | 4 | Linjen topper farven med 8 kort. |
+| 446 | E 10 7 6 5 / 9 4 3 2 | 4, 3 | 9'eren spilles ud og løber med 9 kort: toppe eller kipning. |
+| 452 | D 7 6 5 4 3 / E 10 2 | 5 | Linjen topper farven med 9 kort. |
+| 465 | E B 10 9 5 4 3 / 2 | 6, 5 | Kipning mod knægten med 8 kort: toppe eller kipning. |
+| 467 | E K D B 4 3 2 / – | 7, 6 | Linjen topper farven med 7 kort. |
+| 472 | E K D 10 3 2 / – | 6, 5, 4 | Linjen topper farven med 6 kort. |
+| 473 | E K B 10 3 2 / – | 6, 5 | Linjen topper farven med 6 kort. |
+| 476 | E K D 10 9 3 / 2 | 6, 5 | Linjen topper farven med 7 kort. |
+| 489 | E K D 9 / 2 | 4 | Linjen topper farven med 5 kort. |
+| 500 | E K B 10 9 4 3 / 2 | 7 | Kipning mod knægten med 8 kort: toppe eller kipning. |
+| 501 | B 10 9 4 3 2 / E | 5, 4, 3 | Linjen topper farven med 7 kort. |
+| 502 | E B 9 6 5 4 3 / 2 | 6, 5, 4 | Kipning mod knægten med 8 kort: toppe eller kipning. |
+| 505 | E B 8 5 4 3 / K 2 | 6, 5, 4 | Kipning mod knægten med 8 kort: toppe eller kipning. |
+| 507 | E K D 9 3 2 / – | 6, 5, 4 | Linjen topper farven med 6 kort. |
+| 511 | E 10 9 5 4 / D 8 3 2 | 5, 4 | Linjen topper farven med 9 kort. |
+| 517 | E K D 10 9 / 3 2 | 5 | Linjen topper farven med 7 kort. |
+| 519 | E K 10 9 / 5 4 3 2 | 4, 3 | Kipning mod 10'eren med 8 kort: toppe eller kipning. |
+| 525 | E B 6 5 4 3 / K 9 2 | 6 | Linjen topper farven med 9 kort. |
+| 530 | E B 9 6 5 / K 10 4 3 2 | 5 | Linjen topper farven med 10 kort. |
+| 531 | E K B 10 2 / – | 4 | Linjen topper farven med 5 kort. |
+| 534 | E K 4 3 2 / B 10 9 | 5 | Knægten spilles ud og løber med 8 kort: toppe eller kipning. |
+| 546 | E 10 8 3 / K B 9 2 | 4 | Kipning mod 10'eren med 8 kort: toppe eller kipning. |
+| 553 | E D B 9 8 7 / 6 5 4 3 2 | 6 | Linjen topper farven med 11 kort. |
+| 555 | E B 10 8 7 / 6 5 4 3 2 | 4 | Kipning mod knægten med 10 kort: toppe eller kipning. |
+| 569 | E 10 5 4 3 2 / K 9 | 6, 5, 4 | Små kort fra begge hænder giver en kipning med 9'eren med 8 kort: toppe eller kipning. |
+| 579 | E 10 9 7 6 5 4 / 3 2 | 6, 5 | Kipning mod 10'eren med 9 kort: toppe eller kipning. |
+| 581 | E K D 9 4 3 2 / – | 7, 6, 5 | Linjen topper farven med 7 kort. |
+| 587 | E K D 10 9 / 2 | 5 | Linjen topper farven med 6 kort. |
+| 589 | E 10 9 8 / K 4 3 2 | 4, 3 | Kipning mod 10'eren med 8 kort: toppe eller kipning. |
+| 592 | E K 9 7 6 5 / B 4 3 2 | 6 | Linjen topper farven med 10 kort. |
+| 608 | E K 9 7 6 / B 5 4 3 2 | 5 | Linjen topper farven med 10 kort. |
+| 613 | E 10 9 8 / 5 4 3 2 | 2 | Kipning mod 10'eren med 8 kort: toppe eller kipning. |
+| 615 | K 9 6 5 4 3 / E B 10 2 | 6 | Linjen topper farven med 10 kort. |
+| 618 | E K D 10 9 3 2 / – | 6, 5 | Linjen topper farven med 7 kort. |
+| 620 | E K B 8 4 3 2 / – | 6, 5, 4 | Linjen topper farven med 7 kort. |
+| 622 | E K 5 4 3 2 / B 10 9 | 6 | Linjen topper farven med 9 kort. |
+| 626 | 10 9 8 7 / K D 2 | 3 | Linjen topper farven med 7 kort. |
+| 627 | E K 9 7 6 5 4 / B 3 2 | 7 | Linjen topper farven med 10 kort. |
+| 633 | E K 6 5 4 / 10 9 8 3 2 | 5 | Linjen topper farven med 10 kort. |
+| 639 | E K B 9 8 7 3 / 2 | 7, 6 | Kipning mod knægten med 8 kort: toppe eller kipning. |
+| 642 | E 6 5 4 3 2 / B 10 9 | 5 | Knægten spilles ud og løber med 9 kort: toppe eller kipning. |
+| 643 | E 5 4 3 2 / B 10 9 8 | 4 | Knægten spilles ud og løber med 9 kort: toppe eller kipning. |
+| 649 | D 8 5 4 3 2 / E 10 9 | 6, 5 | Linjen topper farven med 9 kort. |
+| 655 | E D 10 9 8 7 / 6 5 4 3 2 | 6 | Linjen topper farven med 11 kort. |
+| 656 | K 6 5 4 3 2 / E B 9 8 | 6 | Linjen topper farven med 10 kort. |
 
 ## Spil mod honnør (69)
 
@@ -294,119 +294,119 @@ Genereret af `scripts/solve.ts` til godkendelse (åbent punkt i specen: "Teknik 
 
 | Rang | Hånd / bordet | Mål | Begrundelse |
 | --- | --- | --- | --- |
-| 10 | K 5 4 / B 3 2 | 2, 1 | Der kippes mod knægten, og modpartens kort over den ligger i to huller. |
-| 15 | K B 5 / 4 3 2 | 2, 1 | Der kippes mod knægten, og modpartens kort over den ligger i to huller. |
-| 38 | K 10 4 / 3 2 | 1 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 39 | D 10 4 / 3 2 | 1 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 42 | D 10 5 / 4 3 2 | 1 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 74 | E 4 3 / D 10 2 | 3, 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 78 | K D 4 3 / 10 2 | 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 87 | K 5 4 3 / B 10 2 | 2 | Der kippes mod knægten, og modpartens kort over den ligger i to huller. |
-| 93 | E 6 5 4 / D 10 3 2 | 3, 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 99 | K B 8 7 6 / 5 4 3 2 | 4, 3, 2 | Der kippes mod knægten, og modpartens kort over den ligger i to huller. |
-| 112 | E D 5 4 3 / 10 2 | 4, 3, 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 116 | K 4 3 / B 9 2 | 2, 1 | Der kippes mod knægten, og modpartens kort over den ligger i to huller. |
-| 120 | D 10 7 6 / 5 4 3 2 | 2, 1 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 125 | K 10 3 / D 2 | 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 143 | K 5 4 3 / B 9 2 | 2, 1 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 146 | D 10 9 5 / 4 3 2 | 2, 1 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 157 | D B 9 3 / 2 | 2, 1 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 162 | K 6 5 4 3 / B 10 2 | 4, 3, 2 | Der kippes mod knægten, og modpartens kort over den ligger i to huller. |
-| 164 | E D 10 / 4 3 2 | 3, 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 185 | E 10 9 4 / D 3 2 | 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 186 | E 10 4 3 / D 9 2 | 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 190 | D 4 3 2 / E 10 | 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 196 | E 10 5 4 / D 9 3 2 | 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 200 | E D 10 / 3 2 | 3, 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 201 | D 3 2 / E 10 | 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 203 | K 3 2 / D 10 | 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 216 | E 10 9 5 4 / D 3 2 | 5, 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 217 | E B 9 6 5 / 4 3 2 | 4, 3, 2 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 221 | D 10 9 6 5 / 4 3 2 | 3, 2, 1 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 226 | E D 6 5 4 3 / 10 2 | 5, 4 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 10 | K 5 4 / B 3 2 | 2, 1 | Kipningen går mod knægten, og modpartens kort over den ligger i to huller. |
+| 15 | K B 5 / 4 3 2 | 2, 1 | Kipningen går mod knægten, og modpartens kort over den ligger i to huller. |
+| 38 | K 10 4 / 3 2 | 1 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 39 | D 10 4 / 3 2 | 1 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 42 | D 10 5 / 4 3 2 | 1 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 74 | E 4 3 / D 10 2 | 3, 2 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 78 | K D 4 3 / 10 2 | 2 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 87 | K 5 4 3 / B 10 2 | 2 | Kipningen går mod knægten, og modpartens kort over den ligger i to huller. |
+| 93 | E 6 5 4 / D 10 3 2 | 3, 2 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 99 | K B 8 7 6 / 5 4 3 2 | 4, 3, 2 | Kipningen går mod knægten, og modpartens kort over den ligger i to huller. |
+| 112 | E D 5 4 3 / 10 2 | 4, 3, 2 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 116 | K 4 3 / B 9 2 | 2, 1 | Kipningen går mod knægten, og modpartens kort over den ligger i to huller. |
+| 120 | D 10 7 6 / 5 4 3 2 | 2, 1 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 125 | K 10 3 / D 2 | 2 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 143 | K 5 4 3 / B 9 2 | 2, 1 | Kipningen går mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 146 | D 10 9 5 / 4 3 2 | 2, 1 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 157 | D B 9 3 / 2 | 2, 1 | Kipningen går mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 162 | K 6 5 4 3 / B 10 2 | 4, 3, 2 | Kipningen går mod knægten, og modpartens kort over den ligger i to huller. |
+| 164 | E D 10 / 4 3 2 | 3, 2 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 185 | E 10 9 4 / D 3 2 | 3 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 186 | E 10 4 3 / D 9 2 | 3 | Kipningen går mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 190 | D 4 3 2 / E 10 | 2 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 196 | E 10 5 4 / D 9 3 2 | 3 | Kipningen går mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 200 | E D 10 / 3 2 | 3, 2 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 201 | D 3 2 / E 10 | 2 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 203 | K 3 2 / D 10 | 2 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 216 | E 10 9 5 4 / D 3 2 | 5, 4, 3 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 217 | E B 9 6 5 / 4 3 2 | 4, 3, 2 | Kipningen går mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 221 | D 10 9 6 5 / 4 3 2 | 3, 2, 1 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 226 | E D 6 5 4 3 / 10 2 | 5, 4 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 231 | E 10 8 3 / 2 | 2 | 8'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 235 | E B 9 4 3 / K 2 | 5, 4, 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 236 | K B 9 4 3 / E 2 | 5, 4, 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 245 | E D 10 9 4 / 3 2 | 5, 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 247 | K D 10 9 4 / 3 2 | 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 263 | K B 9 / 3 2 | 2, 1 | Der kippes mod knægten, og modpartens kort over den ligger i to huller. |
-| 265 | K 10 9 / 3 2 | 1 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 266 | D 10 9 / 3 2 | 1 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 272 | K 10 9 / 4 3 2 | 1 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 273 | D 10 9 / 4 3 2 | 1 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 279 | E 10 9 5 / D 4 3 2 | 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 280 | E 5 4 3 / D 10 9 2 | 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 304 | E D 10 9 5 / 4 3 2 | 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 235 | E B 9 4 3 / K 2 | 5, 4, 3 | Kipningen går mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 236 | K B 9 4 3 / E 2 | 5, 4, 3 | Kipningen går mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 245 | E D 10 9 4 / 3 2 | 5, 4, 3 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 247 | K D 10 9 4 / 3 2 | 4, 3 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 263 | K B 9 / 3 2 | 2, 1 | Kipningen går mod knægten, og modpartens kort over den ligger i to huller. |
+| 265 | K 10 9 / 3 2 | 1 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 266 | D 10 9 / 3 2 | 1 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 272 | K 10 9 / 4 3 2 | 1 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 273 | D 10 9 / 4 3 2 | 1 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 279 | E 10 9 5 / D 4 3 2 | 3 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 280 | E 5 4 3 / D 10 9 2 | 4, 3 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 304 | E D 10 9 5 / 4 3 2 | 4, 3 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 305 | E 9 5 4 3 / D 10 2 | 4, 3 | 9'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 308 | K 10 8 4 / B 3 2 | 3 | Der kippes mod 8'eren, og modpartens kort over den ligger i to huller. |
-| 314 | E K B 9 4 3 / 2 | 6, 5, 4, 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 315 | E D B 9 3 / 2 | 4, 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 317 | K D B 9 3 / 2 | 4, 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 320 | D 5 4 3 2 / E 10 | 4, 3, 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 331 | K D 10 6 5 4 3 / 2 | 6, 5, 4 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 350 | E 10 9 5 4 3 / D 2 | 5, 4 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 354 | E K 9 / B 3 2 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 356 | E 10 9 / D 3 2 | 3, 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 372 | K 10 8 5 4 / B 3 2 | 4, 3, 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 375 | E K B 9 / 3 2 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 376 | E B 3 2 / K 9 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 378 | E D 3 2 / B 9 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 382 | E D 10 9 / 3 2 | 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 383 | D 9 3 2 / E 10 | 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 384 | K D 10 9 / 3 2 | 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 386 | K B 10 9 / 3 2 | 3 | Der kippes mod knægten, og modpartens kort over den ligger i to huller. |
-| 392 | E D 10 9 / 4 3 2 | 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 393 | E 4 3 2 / D 10 9 | 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 394 | D 4 3 2 / E 10 9 | 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 396 | K 4 3 2 / D 10 9 | 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 408 | D 10 9 6 5 4 / E 3 2 | 6, 5 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 409 | K D 10 8 4 3 / 2 | 5, 4, 3, 2 | Der kippes mod 8'eren, og modpartens kort over den ligger i to huller. |
-| 411 | E B 10 8 4 3 / 2 | 5, 4, 3, 2 | Der kippes mod 8'eren, og modpartens kort over den ligger i to huller. |
+| 308 | K 10 8 4 / B 3 2 | 3 | Kipningen går mod 8'eren, og modpartens kort over den ligger i to huller. |
+| 314 | E K B 9 4 3 / 2 | 6, 5, 4, 3 | Kipningen går mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 315 | E D B 9 3 / 2 | 4, 3 | Kipningen går mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 317 | K D B 9 3 / 2 | 4, 3 | Kipningen går mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 320 | D 5 4 3 2 / E 10 | 4, 3, 2 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 331 | K D 10 6 5 4 3 / 2 | 6, 5, 4 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 350 | E 10 9 5 4 3 / D 2 | 5, 4 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 354 | E K 9 / B 3 2 | 3 | Små kort fra begge hænder giver en kipning med 9'eren, og modpartens kort over den ligger i to huller. |
+| 356 | E 10 9 / D 3 2 | 3, 2 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 372 | K 10 8 5 4 / B 3 2 | 4, 3, 2 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 375 | E K B 9 / 3 2 | 4, 3 | Små kort fra begge hænder giver en kipning med 9'eren, og modpartens kort over den ligger i to huller. |
+| 376 | E B 3 2 / K 9 | 3 | Små kort fra begge hænder giver en kipning med 9'eren, og modpartens kort over den ligger i to huller. |
+| 378 | E D 3 2 / B 9 | 3 | Små kort fra begge hænder giver en kipning med 9'eren, og modpartens kort over den ligger i to huller. |
+| 382 | E D 10 9 / 3 2 | 4, 3 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 383 | D 9 3 2 / E 10 | 3 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 384 | K D 10 9 / 3 2 | 3 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 386 | K B 10 9 / 3 2 | 3 | Kipningen går mod knægten, og modpartens kort over den ligger i to huller. |
+| 392 | E D 10 9 / 4 3 2 | 4, 3 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 393 | E 4 3 2 / D 10 9 | 3 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 394 | D 4 3 2 / E 10 9 | 3 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 396 | K 4 3 2 / D 10 9 | 3 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 408 | D 10 9 6 5 4 / E 3 2 | 6, 5 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 409 | K D 10 8 4 3 / 2 | 5, 4, 3, 2 | Kipningen går mod 8'eren, og modpartens kort over den ligger i to huller. |
+| 411 | E B 10 8 4 3 / 2 | 5, 4, 3, 2 | Kipningen går mod 8'eren, og modpartens kort over den ligger i to huller. |
 | 413 | E B 8 5 4 3 / 2 | 4, 3, 2 | 8'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
 | 422 | K 9 8 / B 3 2 | 2, 1 | Knægten spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 423 | E D 4 3 2 / B 9 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 424 | D B 4 3 2 / E 9 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 426 | K D 4 3 2 / B 9 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 436 | K 10 8 5 / B 4 3 2 | 3, 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 448 | D 9 7 6 5 / B 4 3 2 | 3 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 449 | K 10 9 8 / 3 2 | 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 450 | D 10 9 8 / 3 2 | 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 451 | E 7 6 5 4 3 / D 10 2 | 6, 5, 4 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 423 | E D 4 3 2 / B 9 | 4, 3 | Små kort fra begge hænder giver en kipning med 9'eren, og modpartens kort over den ligger i to huller. |
+| 424 | D B 4 3 2 / E 9 | 4, 3 | Små kort fra begge hænder giver en kipning med 9'eren, og modpartens kort over den ligger i to huller. |
+| 426 | K D 4 3 2 / B 9 | 4, 3 | Små kort fra begge hænder giver en kipning med 9'eren, og modpartens kort over den ligger i to huller. |
+| 436 | K 10 8 5 / B 4 3 2 | 3, 2 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 448 | D 9 7 6 5 / B 4 3 2 | 3 | Kipningen går mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 449 | K 10 9 8 / 3 2 | 2 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 450 | D 10 9 8 / 3 2 | 2 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 451 | E 7 6 5 4 3 / D 10 2 | 6, 5, 4 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 459 | D 10 9 4 3 / E 8 2 | 5, 4 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 464 | K D 10 9 5 4 3 / 2 | 6, 5 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 470 | E 10 9 / D 2 | 3, 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 471 | D 10 9 / E 2 | 3, 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 484 | E 6 5 4 3 / D 10 9 2 | 5, 4 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 487 | K B 9 7 6 / 5 4 3 2 | 4, 3, 2 | Der kippes mod knægten, og modpartens kort over den ligger i to huller. |
-| 490 | E D B 9 / 2 | 4, 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 491 | K D B 9 / 2 | 3 | Små kort fra begge hænder kipper med 9'eren, og modpartens kort over den ligger i to huller. |
-| 492 | E D 10 9 / 2 | 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 499 | K 10 9 8 / 4 3 2 | 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 464 | K D 10 9 5 4 3 / 2 | 6, 5 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 470 | E 10 9 / D 2 | 3, 2 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 471 | D 10 9 / E 2 | 3, 2 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 484 | E 6 5 4 3 / D 10 9 2 | 5, 4 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 487 | K B 9 7 6 / 5 4 3 2 | 4, 3, 2 | Kipningen går mod knægten, og modpartens kort over den ligger i to huller. |
+| 490 | E D B 9 / 2 | 4, 3 | Små kort fra begge hænder giver en kipning med 9'eren, og modpartens kort over den ligger i to huller. |
+| 491 | K D B 9 / 2 | 3 | Små kort fra begge hænder giver en kipning med 9'eren, og modpartens kort over den ligger i to huller. |
+| 492 | E D 10 9 / 2 | 4, 3 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 499 | K 10 9 8 / 4 3 2 | 2 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 503 | K B 8 7 6 5 / 10 4 3 2 | 5 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
 | 512 | D 6 5 4 3 2 / E 10 | 4, 3 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 516 | D 10 9 8 / 2 | 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 521 | E D 10 9 / 5 4 3 2 | 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 526 | E D B 9 8 3 / 2 | 6, 5, 4 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 536 | E D 3 2 / B 9 8 | 4, 3 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
-| 539 | E 10 9 8 / D 3 2 | 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 516 | D 10 9 8 / 2 | 2 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 521 | E D 10 9 / 5 4 3 2 | 4, 3 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 526 | E D B 9 8 3 / 2 | 6, 5, 4 | Kipningen går mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 536 | E D 3 2 / B 9 8 | 4, 3 | Små kort fra begge hænder giver en kipning med 8'eren, og modpartens kort over den ligger i to huller. |
+| 539 | E 10 9 8 / D 3 2 | 4, 3 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 540 | D 10 9 8 / E 3 2 | 4, 3 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 541 | E 5 4 3 2 / D 10 9 | 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 542 | K 5 4 3 2 / D 10 9 | 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 565 | E K 9 8 / B 2 | 4, 3 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
+| 541 | E 5 4 3 2 / D 10 9 | 4, 3 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 542 | K 5 4 3 2 / D 10 9 | 4, 3 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 565 | E K 9 8 / B 2 | 4, 3 | Små kort fra begge hænder giver en kipning med 8'eren, og modpartens kort over den ligger i to huller. |
 | 571 | D 10 9 8 / E 2 | 3 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
 | 572 | D 9 5 4 3 2 / E 10 | 5, 4 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 576 | E 10 9 6 5 4 3 / D 2 | 7, 6 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 577 | D 10 9 6 5 4 3 / E 2 | 7, 6 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 576 | E 10 9 6 5 4 3 / D 2 | 7, 6 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 577 | D 10 9 6 5 4 3 / E 2 | 7, 6 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 584 | K 9 8 7 / B 3 2 | 3, 2 | Knægten spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 590 | E 10 9 8 / D 4 3 2 | 4, 3 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 591 | K 4 3 2 / D 10 9 8 | 3 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
+| 590 | E 10 9 8 / D 4 3 2 | 4, 3 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 591 | K 4 3 2 / D 10 9 8 | 3 | Små kort fra begge hænder giver en kipning med 8'eren, og modpartens kort over den ligger i to huller. |
 | 602 | E 9 4 3 2 / D 10 8 | 5, 4 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
-| 603 | E D B 9 8 / 2 | 5, 4 | Små kort fra begge hænder kipper med 8'eren, og modpartens kort over den ligger i to huller. |
-| 605 | E D 10 9 8 / 2 | 5, 4 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 606 | K D 10 9 8 / 2 | 4 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 614 | K 10 9 8 / 5 4 3 2 | 2 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
-| 617 | E K 9 8 7 3 / B 2 | 6, 5 | Der kippes mod 9'eren, og modpartens kort over den ligger i to huller. |
-| 619 | E 10 9 8 5 4 3 / D 2 | 7, 6 | Der kippes mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 603 | E D B 9 8 / 2 | 5, 4 | Små kort fra begge hænder giver en kipning med 8'eren, og modpartens kort over den ligger i to huller. |
+| 605 | E D 10 9 8 / 2 | 5, 4 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 606 | K D 10 9 8 / 2 | 4 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 614 | K 10 9 8 / 5 4 3 2 | 2 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
+| 617 | E K 9 8 7 3 / B 2 | 6, 5 | Kipningen går mod 9'eren, og modpartens kort over den ligger i to huller. |
+| 619 | E 10 9 8 5 4 3 / D 2 | 7, 6 | Kipningen går mod 10'eren, og modpartens kort over den ligger i to huller. |
 | 629 | D 4 3 2 / E 10 8 7 | 4, 3, 2 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
 | 636 | E 9 7 3 2 / D 10 8 | 5, 4 | 10'eren spilles ud og løber, og modpartens kort over den ligger i to huller. |
 | 644 | K 5 4 3 2 / B 10 9 8 | 4 | Knægten spilles ud og løber, og modpartens kort over den ligger i to huller. |

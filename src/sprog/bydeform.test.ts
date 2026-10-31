@@ -1,11 +1,37 @@
 import { describe, expect, it } from 'vitest';
 import { bydeform, IKKE_INSTRUKTIONER } from './bydeform';
 import { danishStrings, danishTexts } from './danskTekst';
+import { englishStep } from '../farvebehandling/lineText';
+import { TEST_BANK } from '../farvebehandling/testBank';
 
 // Accepttesten i SPEC-beskrivende-form.md: instruktioner og forklaringer står i beskrivende form, ikke i bydeform.
 // Knapper, links og navne på opgaver og øvelser står på undtagelseslisten i bydeform.ts.
 
 describe('Beskrivende form', () => {
+  // Linjeteksterne følger også beskrivende form, på dansk og engelsk (SPEC-sprog-kipning-toppe, Afklaret 3).
+  it('linjeteksterne i banken og i Hvad nu? står i beskrivende form på dansk og engelsk', { timeout: 30_000 }, () => {
+    const steps = new Set<string>();
+    for (const item of TEST_BANK) {
+      for (const goal of Object.values(item.solution.goals)) for (const lead of goal.leads) for (const s of lead.steps) steps.add(s);
+      for (const situations of Object.values(item.whatNow)) for (const s of situations) for (const o of s.options) for (const t of o.steps) steps.add(t);
+    }
+    expect(steps.size).toBeGreaterThan(100);
+    const engelsk = /^(Cash|Lead|Play|Win|Let|Cross|Take|Duck|Run)\b|[;,] (play|win|let|cash|lead|take)\b|otherwise (play|let)\b/;
+    const errors = [...steps].flatMap((s) => [
+      ...bydeform(s).map((hit) => `"${hit}" i "${s}"`),
+      ...(/\bellers (lad|læg)\b/.test(s) ? [`"ellers lad/læg" i "${s}"`] : []),
+      ...(engelsk.test(englishStep(s)) ? [`engelsk: "${englishStep(s)}"`] : []),
+    ]);
+    expect(errors).toEqual([]);
+  });
+
+  it('fejler på løserens gamle skabeloner i bydeform', () => {
+    expect(bydeform('Slå esset.')).toEqual(['Slå esset.']);
+    expect(bydeform('Gå ind på hånden med en sideindgang, og spil lille.')).toHaveLength(1);
+    expect(bydeform('Esset slås.')).toEqual([]);
+    expect(bydeform('Damen fra hånden; dækker Vest, lægges der lille, ellers løber den.')).toEqual([]);
+  });
+
   it('al dansk synlig tekst er i beskrivende form', { timeout: 30_000 }, () => {
     const errors = danishTexts()
       .filter(({ file }) => !IKKE_INSTRUKTIONER.some((r) => r.test(file)))

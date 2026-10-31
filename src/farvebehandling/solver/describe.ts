@@ -11,8 +11,11 @@ import { itemValues } from './natural';
  * Beskrivelsen stopper, når resultatet er afgjort i alle sidninger. Linjeformatet får trinene frem til det første
  * sted, hvor næste udspil afhænger af, hvad modspillet lagde; derefter spiller løseren videre ("Efter sidste trin").
  *
- * Med begrænsede forbindelser (SPEC-forbindelser.md) begynder et udspil, der bruger en indgang, med "Gå ind på hånden
- * (bordet) med en sideindgang, og spil …"; hånden står så ikke igen efter kortet. Uden begrænsning er teksterne som før.
+ * Med begrænsede forbindelser (SPEC-forbindelser.md) begynder et udspil, der bruger en indgang, med "Hånden (bordet)
+ * nås med en sideindgang, og der spilles …"; hånden står så ikke igen efter kortet. Uden begrænsning er teksterne som før.
+ *
+ * Trinene står i beskrivende form (SPEC-sprog-kipning-toppe, Franks valg 31. oktober 2026): "Esset slås.", "ellers løber
+ * den" og "ellers lægges 9'eren", ikke "Slå esset.", "ellers lad den løbe" og "ellers læg 9'eren".
  */
 export interface LineDescription {
   steps: string[];
@@ -154,11 +157,11 @@ export function describeFrom(game: Game, strategy: Int8Array, leadSlot: number, 
     let text: string;
     let cash: Rank | null = null;
     const ledLow = led.lowest && led.rank < TEN;
-    // Et udspil, der bruger en indgang, nævner hånden i "Gå ind på …", ikke efter kortet.
+    // Et udspil, der bruger en indgang, nævner hånden i "Hånden nås …", ikke efter kortet.
     const entry = game.slotEntry[slot] === 1;
     const from = entry ? '' : ` fra ${HAND_NAME[hand]}`;
     if (led.winner && (!low || low.lowest) && (!high || high.lowest)) {
-      text = ledLow ? `lille${from}` : `slå ${cardName(led.rank)}`;
+      text = ledLow ? `lille${from}` : `${cardName(led.rank)} slås`;
       if (!ledLow) cash = led.rank;
     } else if (ledLow) {
       const toward = low ?? high;
@@ -166,18 +169,19 @@ export function describeFrom(game: Game, strategy: Int8Array, leadSlot: number, 
       else if (toward.winner) text = `lille${from} til ${cardName(toward.rank)}`;
       // Det laveste kort er kun "lille" under 10; en honnør, der ikke er sikker vinder, er en kipning (fx E D 10 / 3 2).
       else if (toward.lowest && toward.rank < TEN) text = 'lille fra begge hænder';
-      else text = `lille${from} mod ${cardName(toward.rank)} (kip)`;
+      else text = `lille${from} mod ${cardName(toward.rank)} (kipning)`;
       if (low && high && high.rank !== low.rank) {
         text += `; lægger ${seat2} en honnør, ${high.lowest ? 'lægges der lille' : `tages den med ${cardName(high.rank)}`}`;
       }
     } else {
       text = `${cardName(led.rank)}${from}`;
       if (covers && high) text += `; dækker ${seat2}, ${high.lowest ? 'lægges der lille' : `tages stikket med ${cardName(high.rank)}`}`;
-      if (low) text += `${covers && high ? ', ellers' : ';'} ${low.lowest ? 'lad den løbe' : `læg ${cardName(low.rank)}`}`;
+      if (low && covers && high) text += `, ellers ${low.lowest ? 'løber den' : `lægges ${cardName(low.rank)}`}`;
+      else if (low) text += `; ${low.lowest ? 'den løber' : `${cardName(low.rank)} lægges`}`;
     }
     if (entry) {
-      // "Slå" med en indgang slås ikke sammen med de andre "slå"-trin.
-      text = `gå ind på ${HAND_NAME[hand]} med en sideindgang, og ${cash !== null ? text : `spil ${text}`}`;
+      // Et kort, der slås med en indgang, slås ikke sammen med de andre trin, hvor kort slås.
+      text = `${HAND_NAME[hand]} nås med en sideindgang, og ${cash !== null ? text : `der spilles ${text}`}`;
       cash = null;
     }
     parts.push({ text, cash });
@@ -219,7 +223,7 @@ export function describeFrom(game: Game, strategy: Int8Array, leadSlot: number, 
   return { steps: joinCash(parts), line: { id: '', text: '', steps: lineSteps } };
 }
 
-/** "Slå esset" og "slå kongen" i træk bliver til "Slå esset og kongen". */
+/** "Esset slås" og "kongen slås" i træk bliver til "Esset og kongen slås". */
 function joinCash(parts: { text: string; cash: Rank | null }[]): string[] {
   const steps: string[] = [];
   for (let i = 0; i < parts.length; i++) {
@@ -227,7 +231,7 @@ function joinCash(parts: { text: string; cash: Rank | null }[]): string[] {
       const names = [cardName(parts[i].cash!)];
       while (i + 1 < parts.length && parts[i + 1].cash !== null) names.push(cardName(parts[++i].cash!));
       const list = names.length > 1 ? `${names.slice(0, -1).join(', ')} og ${names[names.length - 1]}` : names[0];
-      steps.push(`Slå ${list}.`);
+      steps.push(`${capital(list)} slås.`);
     } else steps.push(`${capital(parts[i].text)}.`);
   }
   return steps;

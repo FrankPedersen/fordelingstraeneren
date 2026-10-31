@@ -8,20 +8,24 @@ import { TEST_BANK } from './testBank';
 afterEach(() => setLang('da'));
 
 /** Danske ord fra løserens skabeloner, som ikke må stå tilbage på engelsk. */
-const DANISH = /[æøåÆØÅ]|\b(fra|lille|mod|kip|slå|lægger|dækker|ellers|læg|bordet|hånden|tages|stikket|løbe|honnør|begge|esset|kongen|damen|knægten|eren)\b/i;
+const DANISH = /[æøåÆØÅ]|\b(fra|lille|mod|kipning|slå|lægger|dækker|ellers|læg|bordet|hånden|tages|stikket|løbe|honnør|begge|esset|kongen|damen|knægten|eren)\b/i;
 
 describe('Linjerne på engelsk', () => {
   it('oversætter skabelonerne', () => {
-    expect(englishStep('Slå kongen og esset.')).toBe('Cash the king and the ace.');
-    expect(englishStep('Slå esset, kongen og damen.')).toBe('Cash the ace, the king and the queen.');
-    expect(englishStep('Lille fra bordet mod knægten (kip); lægger Øst en honnør, tages den med esset.')).toBe(
-      'Low from dummy towards the jack (finesse); if East plays an honour, win with the ace.',
+    expect(englishStep('Kongen og esset slås.')).toBe('The king and the ace are cashed.');
+    expect(englishStep('Esset, kongen og damen slås.')).toBe('The ace, the king and the queen are cashed.');
+    expect(englishStep('Lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset.')).toBe(
+      'Low from dummy towards the jack (finesse); if East plays an honour, it is won with the ace.',
     );
     expect(englishStep('Lille fra hånden til esset.')).toBe('Low from hand to the ace.');
-    expect(englishStep("10'eren fra hånden; dækker Vest, tages stikket med kongen, ellers lad den løbe.")).toBe(
-      'Lead the 10 from hand; if West covers, win with the king, otherwise let it run.',
+    expect(englishStep("10'eren fra hånden; dækker Vest, tages stikket med kongen, ellers løber den.")).toBe(
+      'The 10 from hand; if West covers, the trick is won with the king, otherwise it runs.',
     );
-    expect(englishStep('Damen fra bordet; læg 9\'eren.')).toBe('Lead the queen from dummy; play the 9.');
+    expect(englishStep('Damen fra bordet; 9\'eren lægges.')).toBe('The queen from dummy; the 9 is played.');
+    expect(englishStep('Damen fra bordet; dækker Øst, lægges der lille, ellers lægges 9\'eren.')).toBe(
+      'The queen from dummy; if East covers, low is played, otherwise the 9 is played.',
+    );
+    expect(englishStep("10'eren fra bordet; den løber.")).toBe('The 10 from dummy; it runs.');
     expect(englishStep('Lille fra bordet og lille fra hånden.')).toBe('Low from dummy and low from hand.');
   });
 
@@ -40,10 +44,10 @@ describe('Linjerne på engelsk', () => {
   });
 
   it('følger det valgte sprog, også kortenes bogstaver, hyppigheden og løserens fejl', () => {
-    expect(stepText('Slå esset.')).toBe('Slå esset.');
+    expect(stepText('Esset slås.')).toBe('Esset slås.');
     expect(cardsText([14, 13, 12, 11, 10])).toBe('E K D B 10');
     setLang('en');
-    expect(stepText('Slå esset.')).toBe('Cash the ace.');
+    expect(stepText('Esset slås.')).toBe('The ace is cashed.');
     expect(cardsText([14, 13, 12, 11, 10])).toBe('A K Q J 10');
     expect(cardLetter('D')).toBe('Q');
     expect(eveningText({ num: 1n, den: 11n })).toBe('about 2.3 times per club evening');

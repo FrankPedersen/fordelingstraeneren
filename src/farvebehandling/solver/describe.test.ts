@@ -21,25 +21,25 @@ describe('Linjerne på dansk', { timeout: 120_000 }, () => {
     const solution = solveGame(game);
     const best = solution.leads[solution.best];
     const text = describeLine(game, best.strategy, best.slot);
-    expect(text.steps).toEqual(["Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.", 'Slå esset.']);
+    expect(text.steps).toEqual(["Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset.", 'Esset slås.']);
     // Linjen i linjeformatet er gyldig og giver samme chance, når løseren spiller videre efter sidste trin.
     expect(validateLine(game, { ...text.line, id: 'A' })).toEqual([]);
     expect(solveLine(game, { ...text.line, id: 'A' }).value).toBeCloseTo(best.value, 6);
     // Esset først giver 6,8 %.
     const ace = solution.leads.find((l) => l.lead.hand === 'S' && l.lead.high === 14)!;
-    expect(describeLine(game, ace.strategy, ace.slot).steps).toEqual(['Slå esset.']);
+    expect(describeLine(game, ace.strategy, ace.slot).steps).toEqual(['Esset slås.']);
   });
 
   it('E K B 3 2 / 7 6 5 4, 5 stik: slå esset og kongen', () => {
     const game = buildGame(parseCards('AKJ32'), parseCards('7654'), { objective: goal(5) });
     const solution = solveGame(game);
     const best = solution.leads[solution.best];
-    expect(describeLine(game, best.strategy, best.slot).steps).toEqual(['Slå esset og kongen.']);
+    expect(describeLine(game, best.strategy, best.slot).steps).toEqual(['Esset og kongen slås.']);
   });
 
-  it('E D 6 5 / 4 3 2, 3 stik: mod damen (kip), og den gemte linje giver løserens chance', () => {
+  it('E D 6 5 / 4 3 2, 3 stik: mod damen (kipning), og den gemte linje giver løserens chance', () => {
     const { game, lead, text } = bestLine('432', 'AQ65', 3);
-    expect(text.steps).toEqual(['Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset.']);
+    expect(text.steps).toEqual(['Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset.']);
     expect(text.line.steps).toEqual([{ leadFrom: 'N', card: 'low', third: { ifSecondPlays: 'low', play: 'Q', else: 'A' } }]);
     expect(validateLine(game, { ...text.line, id: 'A' })).toEqual([]);
     expect(solveLine(game, { ...text.line, id: 'A' }).value).toBeCloseTo(lead.value, 6);
@@ -50,19 +50,19 @@ describe('Linjerne på dansk', { timeout: 120_000 }, () => {
     expect(text.steps).toEqual([
       'Lille fra bordet til esset.',
       'Lille fra begge hænder.',
-      'Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille.',
+      'Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille.',
     ]);
     expect(solveLine(game, { ...text.line, id: 'A' }).value).toBeCloseTo(lead.value, 6);
   });
 
   it("E D 10 / 3 2, 3 stik: 10'eren er ikke lille", () => {
     const { text } = bestLine('32', 'AQT', 3);
-    expect(text.steps[0]).toBe("Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset.");
+    expect(text.steps[0]).toBe("Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset.");
   });
 
   it("E K 4 3 2 / D 10, 5 stik: bordets 10'er er ikke lille", () => {
     const { text } = bestLine('QT', 'AK432', 5);
-    expect(text.steps[0]).toBe("Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med damen.");
+    expect(text.steps[0]).toBe("Lille fra hånden mod 10'eren (kipning); lægger Vest en honnør, tages den med damen.");
   });
 
   it('K D 8 7 6 5 / 4 3 2, 5 stik: den gemte linje giver løserens chance', () => {
@@ -73,7 +73,7 @@ describe('Linjerne på dansk', { timeout: 120_000 }, () => {
 
   it("E K D 9 4 / 3 2, 4 stik: uændret, B 10 alene er stadig en honnør", () => {
     const { text } = bestLine('32', 'AKQ94', 4);
-    expect(text.steps).toEqual(["Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, tages den med esset.", 'Slå esset.']);
+    expect(text.steps).toEqual(["Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset.", 'Esset slås.']);
   });
 
   it('nævner en gren, når 3. hånd skal reagere på en honnør', () => {

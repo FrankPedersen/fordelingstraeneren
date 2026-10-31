@@ -43,8 +43,8 @@ Eksempel: bordet har E D B 10, hånden 6 5 4 3 2, og målet er 5 stik.
 | Linje | Chance for 5 stik |
 | --- | --- |
 | Lille fra begge hænder; lægger Vest en honnør, tages den med esset | 50,00 % |
-| Slå esset | 12,43 % |
-| Damen fra bordet; dækker Øst, lægges der lille, ellers lad den løbe | 0 % |
+| Esset slås | 12,43 % |
+| Damen fra bordet; dækker Øst, lægges der lille, ellers løber den | 0 % |
 
 Hver linje står på et linjekort med nummererede trin og hvis/så-grene. Under trinene står linjens gennemsnitlige antal stik. Analysen viser den bedste linje for hvert første udspil: alle linjer inden for 0,5 procentpoint af den bedste og op til tre alternativer, der ligger længere nede.
 
@@ -117,7 +117,7 @@ Feltet Inde vises kun, når en hånd har begrænsede indgange. Reglerne er:
 - **Vinder modspillet stikket,** er ingen hånd inde, og næste udspil bruger en indgang, uanset hvilken hånd du spiller ud fra.
 - **Mange indgange er det samme som ubegrænset:** har en hånd mindst lige så mange indgange, som den har kort, regnes den som ubegrænset. Er begge hænder det, bruges bankens tal.
 
-Valgene står som chips under bordet, fx "Syd inde · Syd 2 indgange", og i forudsætningslinjen, fx "a priori · Syd inde, Nord ubegrænset og Syd 2 indgange · optimalt modspil". Et udspil, der bruger en indgang, står i linjen som fx "Gå ind på hånden med en sideindgang, og spil lille til esset." En egen linje, der spiller ud fra en hånd uden indgang, afvises med en besked om, hvilket trin det gælder. I Spil den selv, åbnet fra Analyse, tælles indgangene ned, og knapperne for en hånd, der ikke kan nås, er grået ud.
+Valgene står som chips under bordet, fx "Syd inde · Syd 2 indgange", og i forudsætningslinjen, fx "a priori · Syd inde, Nord ubegrænset og Syd 2 indgange · optimalt modspil". Et udspil, der bruger en indgang, står i linjen som fx "Hånden nås med en sideindgang, og der spilles lille til esset." En egen linje, der spiller ud fra en hånd uden indgang, afvises med en besked om, hvilket trin det gælder. I Spil den selv, åbnet fra Analyse, tælles indgangene ned, og knapperne for en hånd, der ikke kan nås, er grået ud.
 
 Den blokerede farve viser, hvad forbindelserne betyder. Bordet har esset alene, og hånden har K D B 3 2:
 
@@ -162,10 +162,10 @@ Tabellen viser løserens resultat for 11 kombinationer, de fleste fra bridgelitt
 | E D B 10 | 6 5 4 3 2 | 5 | Lille fra begge hænder | 50,00 % | Eksempel |
 | E D B 10 | 6 5 4 3 2 | 5 | Samme, sidefarve 5-2 hos Vest | 42,11 % | Eksempel |
 | B 5 | E D 7 6 4 2 | 5 | Knægten fra bordet | 76,30 % | Kelsey |
-| B 5 | E D 7 4 3 2 | 5 | Slå esset | 73,48 % | Kelsey |
+| B 5 | E D 7 4 3 2 | 5 | Esset slås | 73,48 % | Kelsey |
 | D 10 4 | E 9 8 6 3 2 | 5 | Lille mod 10'eren | 81,35 % | Dormer |
-| D 10 4 | E 8 7 6 3 2 | 5 | Slå esset | 78,00 % | Dormer |
-| E 5 | B 10 6 4 3 | 3 | Slå esset | 66,21 % | Kelsey |
+| D 10 4 | E 8 7 6 3 2 | 5 | Esset slås | 78,00 % | Dormer |
+| E 5 | B 10 6 4 3 | 3 | Esset slås | 66,21 % | Kelsey |
 | B 6 5 | E K 7 2 | 3 | Lille til esset | 72,04 % | Villy Dam |
 | K D B 6 | 8 7 3 | 3 | Lille mod kongen | 70,83 % | Villy Dam |
 | D B 6 | E 7 4 2 | 3 | Lille mod damen | 70,83 % | Root |
@@ -243,7 +243,7 @@ Linjer inden for 0,5 procentpoint af den bedste regnes som lige gode. Grænsen k
 
 ### 4.7 Fra strategi til tekst
 
-Løserens resultat er et strategitræ. Det oversættes til en kort hovedlinje og de grene, der er nødvendige, med faste sætningsskabeloner, fx "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers lad den løbe". Bruger et udspil en indgang, begynder trinnet med "Gå ind på hånden med en sideindgang" eller "Gå ind på bordet med en sideindgang". Hver skabelon findes på dansk og engelsk. Efter linjens sidste trin spiller løseren resten optimalt ud fra det, der er set.
+Løserens resultat er et strategitræ. Det oversættes til en kort hovedlinje og de grene, der er nødvendige, med faste sætningsskabeloner, fx "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den". Bruger et udspil en indgang, begynder trinnet med "Hånden nås med en sideindgang" eller "Bordet nås med en sideindgang". Trinene står i beskrivende form, fx "Esset slås." Hver skabelon findes på dansk og engelsk. Efter linjens sidste trin spiller løseren resten optimalt ud fra det, der er set.
 
 ### 4.8 Hyppighed
 
@@ -282,7 +282,7 @@ Løseren er kontrolleret mod fire kilder:
 
 | Kilde | Omfang | Resultat |
 | --- | --- | --- |
-| Accepttests i Vitest | B432 / E1065, fald eller kip, begrænset valg, forbindelser m.fl. | Alle består |
+| Accepttests i Vitest | B432 / E1065, toppe eller kipning, begrænset valg, forbindelser m.fl. | Alle består |
 | De klassiske farvebehandlinger (inspiration: Suit Combinations in Bridge, Jethalal M. Shah) | Alle brugbare cases, begge fortolkninger af x | 14 mål og 3 cases fjernet som kildefejl; resten bruger løserens tal |
 | The Official Encyclopedia of Bridge | 55 kombinationer, 92 mål, 28 gennemsnit | Inden for 0,5 procentpoint, kendte afvigelser dokumenteret |
 | Uafhængig beregning | 11 eksempler | Samme procent med to decimaler i alle |

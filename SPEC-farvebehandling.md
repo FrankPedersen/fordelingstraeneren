@@ -81,7 +81,7 @@ Her er v_V og v_Ø de ledige pladser hos Vest og Øst. Uden anden viden er v_V =
 | 3-1 | 6,22 % |
 | 4-0 | 4,78 % |
 
-Spil på fald vinder i 53,1 %, esset først og så kipning i 51,4 %. Fald vinder på Dx hos Øst (3 × 6,78 %), kipning på Dxx hos Vest (3 × 6,22 %).
+At toppe farven vinder i 53,1 %, esset først og så kipning i 51,4 %. At toppe vinder på Dx hos Øst (3 × 6,78 %), kipningen på Dxx hos Vest (3 × 6,22 %).
 
 Forudsætninger, som skal stå synligt ved hvert resultat:
 
@@ -171,7 +171,7 @@ Opgaven er et spil under usikkerhed: spilføreren må kun beslutte ud fra de kor
    - Binder en grænse, deles hullerne efter honnørpoint, så vægtene er eksakte.
    - Chancerne er betingede af situationen. Bankens tal er og bliver a priori.
 
-**Resultat.** Løseren giver et strategitræ. Det gemmes i linjeformatet fra afsnittet Opgavebank og oversættes til dansk med faste sætningsskabeloner: en kort hovedlinje, fx "Slå esset, kip derefter mod damen", og grene, hvor de er nødvendige, fx "Lægger Øst en honnør, …". Frank godkender teksterne for startbanken.
+**Resultat.** Løseren giver et strategitræ. Det gemmes i linjeformatet fra afsnittet Opgavebank og oversættes til dansk med faste sætningsskabeloner: en kort hovedlinje, fx "Esset slås, derefter kipning mod damen", og grene, hvor de er nødvendige, fx "Lægger Øst en honnør, …". Frank godkender teksterne for startbanken.
 
 **Alternative linjer.** Opgavetype 1 og 3 skal have 2–4 linjer at vælge imellem. Alternativerne er løserens bedste linje for hvert andet første udspil, højst tre, som hver ligger mere end 0,5 procentpoint under den bedste. For B432 / ET65 og 3 stik er det fx "esset først" og "B'en fra bordet" ved siden af "lille mod T'en"; tallene fastlægges af løseren.
 
@@ -285,11 +285,11 @@ Godkendt. Standardbillederne er udgangspunktet, og brugeren kan erstatte dem:
 | Teknik | Huskeregel | Standardbillede |
 | --- | --- | --- |
 | Enkelt kipning | Spil mod honnøren, ikke fra den. | Indbrudstyven, der lister ind bag vagten |
-| Fald eller kip | Med 8 kort kipper man, med 9 slår man. | Vægten: 8 vipper mod kipning, 9 mod fald |
+| Toppe eller kipning | Med 8 kort tages kipningen, med 9 toppes farven. | Vægten: 8 vipper mod kipningen, 9 mod at toppe farven |
 | Spil mod honnør | Spil mod det kort, du vil gøre til stik. | Stigen op mod honnøren |
-| Dobbelt kipning | Kip først mod det laveste hul. | To låger, hvor den nederste åbnes først |
+| Dobbelt kipning | Den første kipning går mod det laveste hul. | To låger, hvor den nederste åbnes først |
 | Sikkerhedsspil | Sikr målet, ikke maksimum. | Sikkerhedsselen |
-| Begrænset valg | Lagde de en honnør, havde de nok ikke valget – kip. | Gæsten, der kun havde én stol at vælge |
+| Begrænset valg | Lagde de en honnør, havde de nok ikke valget – så tages kipningen. | Gæsten, der kun havde én stol at vælge |
 
 ## Layout og brugerflade
 
@@ -308,8 +308,8 @@ Alle skærme følger én læseretning: problem → linjer → forskel → detalj
 ├──────────────────────────────────────────────────────────┤
 │ LINJERNE                                                 │
 │ ┌ Linje A – 37,3 % ✓ bedst ──┐ ┌ Linje B – 6,8 % ────────┐ │
-│ │ 1. Lille mod 10 (kip)     │ │ 1. Slå esset           │ │
-│ │ 2. Slå esset              │ │ 2. Lille mod 10        │ │
+│ │ 1. Lille mod 10 (kipning) │ │ 1. Esset slås          │ │
+│ │ 2. Esset slås             │ │ 2. Lille mod 10        │ │
 │ └───────────────────────────┘ └────────────────────────┘ │
 │ a priori · ubegrænsede forbindelser · optimalt modspil    │
 ├──────────────────────────────────────────────────────────┤
@@ -329,8 +329,8 @@ Alle skærme følger én læseretning: problem → linjer → forskel → detalj
  1 · OPGAVE            2 · FACIT               3 · HVORFOR
 ┌──────────────────┐ ┌──────────────────┐ ┌──────────────────┐
 │   ♠ B 4 3 2      │ │ Du valgte A ✓    │ │ Huskeregel       │
-│ V ?   ↓   Ø ?    │ │ Bedst: A 37,3 %  │ │ "Kip mod den     │
-│   ♠ E 10 6 5     │ │ Dit gæt: 25–50 ✓ │ │  honnør …"       │
+│ V ?   ↓   Ø ?    │ │ Bedst: A 37,3 %  │ │ "Udspillet går   │
+│   ♠ E 10 6 5     │ │ Dit gæt: 25–50 ✓ │ │  mod honnøren …" │
 │ Mål: 3 stik      │ │ A ███▓░░██░░     │ │ [billede: rum 2] │
 │ Vælg linje:      │ │ B ██░░░░░░░░     │ │                  │
 │ (A) (B) (C)      │ │ Uenige i 3 sidn. │ │ [Vis alle        │
@@ -361,7 +361,7 @@ Regler for brugerfladen:
   - Chancerne er betingede, og udelukkede sidninger står ikke i båndet og tabellen.
   - Spil den selv giver kortene efter situationen.
   - Blokken Forbindelser (SPEC-forbindelser.md) har indgange til Nord og Syd (0–5, "ubegrænset" over 5) og feltet Inde (Nord eller Syd, standard Syd), der kun vises, når en hånd har begrænsede indgange. Chips under bordet, fx "Syd inde · Syd 2 indgange" og "Nord 0 indgange", og forudsætningslinjen, fx "a priori · Syd inde, Nord ubegrænset og Syd 2 indgange · optimalt modspil". Har begge hænder mindst lige så mange indgange, som de har kort, bruges bankens tal.
-  - Med begrænsede forbindelser begynder et udspil, der bruger en indgang, med "Gå ind på hånden (bordet) med en sideindgang, og spil …" (engelsk "Cross to hand (dummy) with a side entry and lead …"). En egen linje, der spiller ud fra en hånd, som ikke kan nås, afvises med trinnets nummer. Spil den selv åbnet fra Analyse grår udspil fra en hånd uden indgang ud, tæller indgangene ned og viser fx "Nord inde · Syd 0 indgange".
+  - Med begrænsede forbindelser begynder et udspil, der bruger en indgang, med "Hånden (Bordet) nås med en sideindgang, og der spilles …" (engelsk "Hand (Dummy) is reached with a side entry, and … is led"); trinene står i beskrivende form (SPEC-sprog-kipning-toppe). En egen linje, der spiller ud fra en hånd, som ikke kan nås, afvises med trinnets nummer. Spil den selv åbnet fra Analyse grår udspil fra en hånd uden indgang ud, tæller indgangene ned og viser fx "Nord inde · Syd 0 indgange".
 - **Valg af linjer** (SPEC-analyse-situation.md): under linjerne viser "Vis alle udspil" alle første udspil i løserens resultat. Med "Sammenlign" på præcis to linjer viser båndet og tabellen kun dem, og over tabellen står, hvor tit hver vinder alene (antallet er de konkrete sidninger, SPEC-notation-sidninger.md).
 - **Analyse som modul** (SPEC-analyse-modul.md): adressen `#analyse` og kortet "Analyse" i forsidens gruppe Spilføring (efter Farvebehandling, uden streak og uden plads i I dag) åbner Analyse alene med overskriften "Farvebehandling – Analyse" og uden fanerne Træning og Selvvalgt. Det er samme skærm, bank og lagring som fanen Analyse, som er uændret. Knappen Guide øverst i analysen, i modulet og i fanen, viser guiden til analysen på appens sprog med indholdsfortegnelse og Tilbage til analysen.
 - **Import** (SPEC-analyse-situation.md): over kortvælgeren kan en kombination indsættes som tekst (EK65-B43 eller AK65-J43), som LIN eller som BBO-handviewerens adresse. Et spil giver et valg mellem 8 kombinationer. Appen læser kun teksten og henter intet fra nettet.
@@ -413,7 +413,7 @@ Accepttest i Vitest:
 - [x] Ledige pladser 13/13 giver præcis de samme tal som a priori.
 - [x] B432 / ET65: linje A = 37,3 % for 3 stik og 94,3 % for 2 stik; linje B = 6,8 % for 3 stik og 100 % for 2 stik.
 - [x] B432 / ET65, sidningen Kxx–Dx: linje A giver 3 stik, linje B giver 2.
-- [x] Bordet E K B 3 2, hånden 7 6 5 4: fald = 53,1 %, esset først og så kipning = 51,4 %.
+- [x] Bordet E K B 3 2, hånden 7 6 5 4: toppe = 53,1 %, esset først og så kipning = 51,4 %.
 - [x] Begrænset valg: kipning efter Østs dame = 64,7 %.
 - [x] Validering: en opgave med et umuligt trin eller en `goto` til næste trin afvises.
 - [x] Normalt modspil (Spil den selv): 2. hånd lægger lavt, dækker T eller højere med det billigste kort, der slår, og vælger tilfældigt mellem ligeværdige kort; 4. hånd vinder billigst, hvis makkers kort ikke allerede vinder.
@@ -424,9 +424,9 @@ Accepttest i Vitest:
 - [x] Hyppighed pr. spil: E K x x / B x x = 0,747 % (1 ud af 134) og E K B x / x x x = 0,498 % (1 ud af 201).
 - [x] Es og konge uden damen, 8 kort i farven: 10,56 % pr. spil.
 - [x] Hyppighederne i `damen-mangler-hyppighed.csv` kan genberegnes præcist af appen, og rangordenen er den samme.
-- [x] Løseren vælger fald med bordet E K B 3 2 og hånden 7 6 5 4 (53,1 %) frem for kipning (51,4 %).
+- [x] Løseren topper farven med bordet E K B 3 2 og hånden 7 6 5 4 (53,1 %) frem for kipningen (51,4 %).
 - [x] Løserens bedste linje i B432 / ET65 giver 37,3 % for 3 stik og 100 % for 2 stik.
-- [x] Begrænset valg: med bordet E K T 3 2 og hånden 7 6 5 4 kipper løseren mod knægten, når Øst lægger damen under esset eller kongen, og omvendt.
+- [x] Begrænset valg: med bordet E K T 3 2 og hånden 7 6 5 4 tager løseren kipningen mod knægten, når Øst lægger damen under esset eller kongen, og omvendt.
 - [x] Løseren bruger ikke kort, spilføreren ikke har set: to sidninger, der ser ens ud for spilføreren, får samme beslutning.
 - [x] Valideringsrapporten dækker alle brugbare cases fra siden "damen mangler", med begge fortolkninger af x og også cases med 8 manglende kort.
 - [x] Optimalt modspil: accepttallene 37,3 %, 53,1 % og 64,7 % holder også med optimalt modspil.
@@ -443,12 +443,12 @@ Accepttest for variationen i starten og "Nye kombinationer om dagen" (grenen `fa
 
 Accepttest for kipningerne i linjeteksterne (grenen `linjetekst-kip`, se Afklaret):
 
-- [x] E D 6 5 / 4 3 2, 3 stik: "Lille fra bordet mod damen (kip); lægger Øst en honnør, tages den med esset." Den gemte linje er lille fra bordet og damen, når Øst lægger lille, ellers esset, og den giver løserens 17,8 %, når løseren spiller den.
-- [x] E D 6 5 / 4 3 2, 2 stik: "Lille fra bordet til esset. Lille fra begge hænder. Lille fra bordet mod damen (kip); lægger Øst en honnør, lægges der lille."
-- [x] E D 10 / 3 2, 3 stik: "Lille fra bordet mod 10'eren (kip); lægger Øst en honnør, tages den med esset."
-- [x] E K 4 3 2 / D 10, 5 stik: "Lille fra hånden mod 10'eren (kip); lægger Vest en honnør, tages den med damen."
+- [x] E D 6 5 / 4 3 2, 3 stik: "Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset." Den gemte linje er lille fra bordet og damen, når Øst lægger lille, ellers esset, og den giver løserens 17,8 %, når løseren spiller den.
+- [x] E D 6 5 / 4 3 2, 2 stik: "Lille fra bordet til esset. Lille fra begge hænder. Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille."
+- [x] E D 10 / 3 2, 3 stik: "Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset."
+- [x] E K 4 3 2 / D 10, 5 stik: "Lille fra hånden mod 10'eren (kipning); lægger Vest en honnør, tages den med damen."
 - [x] K D 8 7 6 5 / 4 3 2, 5 stik: den gemte linje (kongen, når Øst lægger lille) giver løserens 65,6 %, når løseren spiller den.
-- [x] Uændret: E K D 9 4 / 3 2, 4 stik: "Lille fra bordet mod 9'eren (kip); lægger Øst en honnør, tages den med esset. Slå esset."
+- [x] Uændret: E K D 9 4 / 3 2, 4 stik: "Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset. Esset slås."
 - [x] Hele banken løst igen (`LINES_VERSION` 2): chancerne er de samme som før, og kun linjetekster, gemte linjer og det, der regnes ud fra dem (stik pr. sidning, Hold eller par og Hvad nu?), ændres.
 - [x] Regressionstesten mod bogen (`node scripts/bog-regression.ts`) består.
 
@@ -465,9 +465,9 @@ Afklaret:
 - **Fase 2:** løseren kører i browseren i baggrunden (en Web Worker) på forespørgsel (Franks valg, 4. oktober 2026). En kombination uden for banken regnes fra kortvælgeren: først flest stik i gennemsnit, så målene, der er værd at regne, ét ad gangen. Egne linjer regnes på samme måde og gemmes under `ownLines`.
 - **Teknik pr. case:** hver kombination har en teknik efter reglerne i `src/farvebehandling/techniques.ts` (listen står i `content/teknikker.md`); Frank bad om, at forslaget blev færdiggjort (4. oktober 2026).
 - **Variation i starten** (Franks valg, 28. oktober 2026): de første sessioner føltes ens, fordi niveauet kun øver de senest introducerede og den første dag kun havde 2. Niveauet introducerer derfor flere samme dag, til der er 4 (`LEVEL_COMBINATIONS`, niveauets antal), og indstillingen "Nye kombinationer om dagen" kommer i Dine data. "Øvet i alle mål" betyder, at hvert emne for dagens nye kombinationer har mindst ét svar i loggen; så virker reglen også efter en afbrudt session.
-- **Kipninger i linjeteksterne** (Franks valg, 29. oktober 2026): linjeteksten for E D 6 5 / 4 3 2 (side 4, nr. 1, 3 stik) var "Lille fra bordet til esset.", selv om linjen kipper med damen, når Øst lægger lille ("til esset" betyder, at 3. hånd lægger esset som sikker vinder). Årsagen: modpartens kort i et hul er én gruppe ligeværdige kort, og beskrivelsen regnede kun en gruppe som lav, når dens højeste kort var under B. B 10 9 8 7 blev derfor en honnør, og teksten beskrev kun svaret på kongen. To rettelser i `solver/describe.ts`:
+- **Kipninger i linjeteksterne** (Franks valg, 29. oktober 2026): linjeteksten for E D 6 5 / 4 3 2 (side 4, nr. 1, 3 stik) var "Lille fra bordet til esset.", selv om linjen tager kipningen med damen, når Øst lægger lille ("til esset" betyder, at 3. hånd lægger esset som sikker vinder). Årsagen: modpartens kort i et hul er én gruppe ligeværdige kort, og beskrivelsen regnede kun en gruppe som lav, når dens højeste kort var under B. B 10 9 8 7 blev derfor en honnør, og teksten beskrev kun svaret på kongen. To rettelser i `solver/describe.ts`:
   - **A:** det laveste hul, 2. hånd kan lægge fra, er lavt, når det har et kort under B, også når det går op til B eller højere. De andre huller er som før, så fx B 10 alene stadig er en honnør.
-  - **B:** 3. håndens laveste kort hedder kun "lille", når det er under 10. Ellers står kortet med "mod … (kip)" (eller "til …", når det er en sikker vinder), fx E D 10 / 3 2.
+  - **B:** 3. håndens laveste kort hedder kun "lille", når det er under 10. Ellers står kortet med "mod … (kipning)" (eller "til …", når det er en sikker vinder), fx E D 10 / 3 2.
   - Linjeformatet læser "low" i `ifSecondPlays` efter samme regel som A (`solver/lines.ts`), så en gemt linje giver løserens chance, når løseren spiller den; med den gamle læsning ville fx K D 8 7 6 5 / 4 3 2 (5 stik) give 12,4 % i stedet for 65,6 %.
   - Ordlyden og skabelonerne er uændrede (Franks valg). Chancerne ændres ikke. Scanningen af hele banken fandt 194 bedste linjer i 154 kombinationer (71 i 52 E D-kombinationer), hvor kipningen manglede i teksten, og 29 gemte bedste linjer, der bliver rigtige.
   - Banken løst igen 29.–30. oktober 2026 (10 processer, ca. 3 timer): chancerne (værdi, nøjagtig brøk, øvre grænse og sidninger) er de samme for alle 5.577 udspil i målene og for flest stik. 577 trin i målene og 424 for flest stik har ny tekst; 58 gemte linjer er ændret (38 for målene, heraf 24, der var tomme, og 20 for flest stik), og alle 58 giver løserens chance, når løseren spiller dem, ligesom en stikprøve på 226 af de uændrede med en regel for 3. hånd. To bivirkninger af A: 59 trin efter et honnørudspil får ", ellers lad den løbe" (fx K 7 6 5 / 4 3 2: "Kongen fra hånden; dækker Vest, lægges der lille, ellers lad den løbe."), og E 7 6 5 4 3 / D 10 2 (5 stik og flest stik, linjen, der begynder med lille mod 10'eren) får "Esset fra hånden; læg damen." i stedet for "Slå esset.": Vests laveste hul går op til B og er nu lave kort, så teksten viser, hvad bordet lægger efter løserens strategi.

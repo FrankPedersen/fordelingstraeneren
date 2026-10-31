@@ -234,7 +234,7 @@ describe('Opgaverne', () => {
     expect(task.options[hold]).toMatchObject({ value: 0.770497, tricks: 2.770497, correct: true });
     expect(task.options[par].tricks).toBeCloseTo(2.867391, 6);
     expect(task.options[par].value).toBeCloseTo(0.6898, 4);
-    expect(task.options[hold].line.lead.steps[0]).toBe('Slå kongen og esset.');
+    expect(task.options[hold].line.lead.steps[0]).toBe('Kongen og esset slås.');
     // Parturneringens linje står i båndet som målet nået (1) eller ej (0).
     expect(new Set(task.options[par].line.lead.layouts)).toEqual(new Set([0, 1]));
     expect(grade(task, { forms: { hold, par }, ms: 1 }, 20_000)).toMatchObject({ score: 1, lineCorrect: true, fast: true });
