@@ -50,7 +50,7 @@ export function Footer() {
       </nav>
       <div className="site-footer-col">
         <h2>{tx('Kontakt', 'Contact')}</h2>
-        <p>{tx('Har du fundet en fejl, eller har du en idé til en ny træner? Skriv til mig.', 'Have you found a mistake, or do you have an idea for a new trainer? Write to me.')}</p>
+        <p>{tx('Har du fundet en fejl, eller har du en idé til en ny træner? Så hører jeg gerne fra dig.', 'Have you found a mistake, or do you have an idea for a new trainer? I would be glad to hear from you.')}</p>
         <a className="site-footer-mail" href="/om-mig/#kontakt">
           {tx('Skriv til mig', 'Write to me')}
         </a>

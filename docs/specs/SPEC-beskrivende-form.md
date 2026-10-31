@@ -58,5 +58,5 @@ Kræver noget alligevel en ændring ud over tabellen, skal Claude Code stoppe og
 
 Franks opgave 30. oktober 2026: sidefodens sætning rettes i alle tre repoer på én gang med forsiden og konventionstræneren (deres egne SPEC-beskrivende-form.md). Appen før er tagget `v28-foer-beskrivende-form`. Listen står i `docs/beskrivende-form.md` under Del 2; intet rettes før Franks godkendelse.
 
-- [ ] Sidefoden: "Har du fundet en fejl, eller har du en idé til en ny træner? Så hører jeg gerne fra dig." / "… I would be glad to hear from you."; linket "Skriv til mig" bliver.
-- [ ] Undtagelsen "Skriv til mig." er fjernet fra `src/sprog/bydeform.ts`, og `npm test` er grøn.
+- [x] Sidefoden: "Har du fundet en fejl, eller har du en idé til en ny træner? Så hører jeg gerne fra dig." / "… I would be glad to hear from you."; linket "Skriv til mig" bliver.
+- [x] Undtagelsen "Skriv til mig." er fjernet fra `src/sprog/bydeform.ts`, og `npm test` er grøn (739 tests), og `node scripts/sprogtjek.ts` finder ingen ukendte ord.

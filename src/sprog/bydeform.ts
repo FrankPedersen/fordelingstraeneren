@@ -16,9 +16,8 @@ export const BYDEFORMER: ReadonlySet<string> = new Set(
 );
 
 /**
- * Knapper, links og navne på opgaver og øvelser, der bliver i bydeform (gruppe 1 og 2 i docs/beskrivende-form.md), og
- * sidefodens sætning, der venter på forsiden og konventionstræneren (A6). Et regulært udtryk dækker en tekst med et
- * indsat navn eller tal.
+ * Knapper, links og navne på opgaver og øvelser, der bliver i bydeform (gruppe 1 og 2 i docs/beskrivende-form.md). Et
+ * regulært udtryk dækker en tekst med et indsat navn eller tal.
  */
 export const UNDTAGELSER: readonly (string | RegExp)[] = [
   // Knapper og links
@@ -99,8 +98,6 @@ export const UNDTAGELSER: readonly (string | RegExp)[] = [
   'Regn oppefra',
   'Fald eller kip',
   'Spil mod honnør',
-  // Sidefodens sætning venter, til sidefødderne ændres samlet med forsiden og konventionstræneren (A6).
-  'Skriv til mig.',
 ];
 
 /** Sætninger, der begynder med et af ordene, men ikke er bydeform: meldingen pas, en knap eller opgave som grundled og lister med navne. */

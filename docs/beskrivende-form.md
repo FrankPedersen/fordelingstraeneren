@@ -467,3 +467,7 @@ Sammen med forsiden og konventionstræneren (Franks opgave 30. oktober 2026). Ap
   - EN forslag: Have you found a mistake, or do you have an idea for a new trainer? I would be glad to hear from you.
 - Linket "Skriv til mig" / "Write to me" bliver.
 - `src/sprog/bydeform.ts`: undtagelsen "Skriv til mig." (A6) fjernes, ingen test søger efter sætningen.
+
+**Godkendt** (Frank, 30. oktober 2026): sætningen rettes kun dér, hvor den står (forsidens liste, A1 valg a), og undtagelsen "Skriv til mig." er fjernet fra `src/sprog/bydeform.ts`.
+
+**Fundet bagefter (venter på Franks svar):** meta-beskrivelsen i `index.html` (`description` og `og:description`) begynder i bydeform: "Træn bridge fem minutter om dagen: de 39 fordelinger, …". `danskTekst.ts` læser ikke sidens `<head>`, og "træn" var ikke på listen over bydeformer, så hverken skanningen eller testen så den. Forslag: "Bridgetræning fem minutter om dagen: de 39 fordelinger, pointregnskab under spillet, farvebehandling og håndevaluering med P-modellen. Gratis og uden login." `src/app/meta.test.ts` søger efter begyndelsen og rettes med.
