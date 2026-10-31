@@ -58,7 +58,7 @@ export default function PointregnskabScreen({ onBack, start = false }: { onBack(
   return (
     <>
       {frame && <TopBar />}
-      <main className="screen pr-screen">
+      <main className={`screen pr-screen${view === 'session' ? ' wide-screen' : view === 'settings' ? ' wide-screen settings-grid' : ''}`}>
         <header className="screen-head">
           <button type="button" className="round" aria-label={TEXT.back} onClick={onBack}>
             ←

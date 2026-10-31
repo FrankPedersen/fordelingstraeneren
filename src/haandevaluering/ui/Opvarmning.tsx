@@ -1,3 +1,4 @@
+import { BoardColumn } from '../../ui/BoardColumn';
 import { Info } from '../../ui/Info';
 import { SuitText } from '../../ui/SuitText';
 import { trickMnemonic } from '../model/pmodel';
@@ -45,14 +46,16 @@ interface OpvarmningProps {
 export function Opvarmning({ task, onAnswer, result, onNext }: OpvarmningProps) {
   const group = task.key.split(':')[0] as DeckGroup;
   return (
-    <div className="task">
-      <div className="with-info">
-        <p className="he-eyebrow">{TEXT.deckGroups[group]}</p>
-        <Info topic={TEXT.deckGroups[group]}>{TEXT.help.deck[group]}</Info>
-      </div>
-      <p className="he-deck-card">
-        <SuitText text={prompt(task)} />
-      </p>
+    <div className="task cols">
+      <BoardColumn>
+        <div className="with-info">
+          <p className="he-eyebrow">{TEXT.deckGroups[group]}</p>
+          <Info topic={TEXT.deckGroups[group]}>{TEXT.help.deck[group]}</Info>
+        </div>
+        <p className="he-deck-card">
+          <SuitText text={prompt(task)} />
+        </p>
+      </BoardColumn>
       {result ? (
         <section className={`feedback ${result.ok ? 'ok' : 'bad'}`}>
           <p className="feedback-title">

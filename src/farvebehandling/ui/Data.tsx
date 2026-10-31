@@ -76,7 +76,7 @@ export function Data({ saved, update, onBack }: DataProps) {
 
   const summary = incoming ? fbSummary(incoming) : null;
   return (
-    <div className="fb-narrow">
+    <div className="fb-narrow settings-grid">
       <header className="screen-head">
         <button type="button" className="round" aria-label={TEXT.backToTraining} onClick={onBack}>
           ←

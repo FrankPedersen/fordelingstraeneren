@@ -76,7 +76,7 @@ export function SettingsScreen({ saved, onSave, onBack }: SettingsScreenProps) {
   }
 
   return (
-    <main className="screen">
+    <main className="screen wide-screen settings-grid">
       <header className="screen-head">
         <button type="button" className="round" aria-label={tx('Tilbage', 'Back')} onClick={onBack}>
           ←

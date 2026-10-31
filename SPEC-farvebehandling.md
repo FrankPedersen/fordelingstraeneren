@@ -368,6 +368,7 @@ Regler for brugerfladen:
 - **Træning:** linjer og forskel er skjult, indtil brugeren har valgt linje og gættet en chance.
 - **Tone:** kollegial og adskiller beslutning fra resultat, fx "God beslutning – sidningen var imod dig".
 - **Tilgængelighed:** trykflader mindst 44 px og kontrast mindst 4,5:1. Undtagelse: klubaftenens 10 × 10 felter er mindre på smalle skærme; listen under dem har trykflader i fuld størrelse.
+- **Bredt layout** (SPEC-bred-layout.md, bud A, Franks valg 31. oktober 2026): fra 1000 px er rammen højst 1120 px bred, og en opgave står i to spalter: bordet i en venstre spalte på 420 px, der står fast, og målet, linjerne, chancen og facit til højre. Bordet er lidt større dér (kompasset 210 px, hænderne 1.6rem). Analyse har Vælg kombination over hele bredden, statistikken står i et gitter, og guiden har indholdsfortegnelsen til venstre. Under 1000 px er alt som før.
 
 ## Designarbejde i Claude Design
 

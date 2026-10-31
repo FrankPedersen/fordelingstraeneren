@@ -251,7 +251,7 @@ export function SessionScreen({ saved, onSave, onExit }: SessionScreenProps) {
   }
 
   return (
-    <main className="screen session">
+    <main className="screen session wide-screen">
       <header className="session-bar">
         <span className="phase">{phaseLabel(phase)}</span>
         <span className="session-meta">

@@ -178,7 +178,7 @@ export function Facit({ task, answer, graded, onNext }: FacitProps) {
   }
   else if (facit.exercise === 'distribution' || facit.exercise === 'wasted') count = <Regnskab you={facit.you} />;
   return (
-    <div className="task">
+    <div className="task cols">
       <section className={`feedback ${graded.right ? 'ok' : 'bad'}`} aria-label={TEXT.facit}>
         <div className="with-info">
           <p className="feedback-title">

@@ -1,5 +1,6 @@
-import type { ReactNode } from 'react';
+import type { MouseEvent, ReactNode } from 'react';
 import { tx } from '../../i18n';
+import { BoardColumn } from '../../ui/BoardColumn';
 
 interface Section {
   title: string;
@@ -248,22 +249,47 @@ function sections(): Section[] {
 
 /** Den samlede vejledning: hvert afsnit kan foldes ud. */
 export function GuideScreen({ onBack }: { onBack(): void }) {
+  const list = sections();
+  // Fra 1000 px (SPEC-bred-layout.md): indholdsfortegnelsen åbner afsnittet og ruller til det uden at ændre adressen.
+  const show = (event: MouseEvent, i: number) => {
+    event.preventDefault();
+    const details = document.getElementById(`guide-${i}`) as HTMLDetailsElement | null;
+    if (!details) return;
+    details.open = true;
+    details.scrollIntoView?.({ block: 'start' });
+  };
   return (
-    <main className="screen guide">
+    <main className="screen guide wide-screen">
       <header className="screen-head">
         <button type="button" className="round" aria-label={tx('Tilbage', 'Back')} onClick={onBack}>
           ←
         </button>
         <h1>{tx('Vejledning', 'Guide')}</h1>
       </header>
-      <section className="card">
-        {sections().map((s, i) => (
-          <details key={s.title} open={i === 0}>
-            <summary>{s.title}</summary>
-            {s.body}
-          </details>
-        ))}
-      </section>
+      <div className="guide-cols">
+        <BoardColumn>
+          <nav className="guide-toc" aria-label={tx('Indhold', 'Contents')}>
+            <h2>{tx('Indhold', 'Contents')}</h2>
+            <ul>
+              {list.map((s, i) => (
+                <li key={s.title}>
+                  <a href={`#guide-${i}`} onClick={(event) => show(event, i)}>
+                    {s.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </BoardColumn>
+        <section className="card">
+          {list.map((s, i) => (
+            <details key={s.title} id={`guide-${i}`} open={i === 0}>
+              <summary>{s.title}</summary>
+              {s.body}
+            </details>
+          ))}
+        </section>
+      </div>
     </main>
   );
 }

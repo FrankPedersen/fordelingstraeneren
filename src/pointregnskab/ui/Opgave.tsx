@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import type { Card } from '../../domain/cards';
 import { hcpOf } from '../../system/interpreter';
+import { BoardColumn } from '../../ui/BoardColumn';
 import { Info } from '../../ui/Info';
 import { NumberPad } from '../../ui/NumberPad';
 import { SuitText } from '../../ui/SuitText';
@@ -88,9 +89,11 @@ export function Opgave({ task, showMs, onQuestion, onAnswer }: OpgaveProps) {
 
   if (task.exercise === 'sum') {
     return (
-      <div className="task">
-        <Hånd label={TEXT.dummy} cards={task.hands.N} />
-        <Hånd label={TEXT.you} cards={task.hands.S} />
+      <div className="task cols">
+        <BoardColumn>
+          <Hånd label={TEXT.dummy} cards={task.hands.N} />
+          <Hånd label={TEXT.you} cards={task.hands.S} />
+        </BoardColumn>
         <Prompt exercise="sum" text={TEXT.sumPrompt} />
         <NumberPad onSubmit={(points) => onAnswer({ exercise: 'sum', points })} />
       </div>
@@ -98,7 +101,7 @@ export function Opgave({ task, showMs, onQuestion, onAnswer }: OpgaveProps) {
   }
 
   if (task.exercise === 'running') {
-    return <div className="task">{asked ? <RunningAnswer onAnswer={onAnswer} /> : flashing}</div>;
+    return <div className="task cols">{asked ? <RunningAnswer onAnswer={onAnswer} /> : <BoardColumn>{flashing}</BoardColumn>}</div>;
   }
 
   return <PlacementView task={task} flashing={flashing} asked={asked} onAnswer={onAnswer} />;
@@ -173,7 +176,8 @@ function PlacementView({
   }
 
   return (
-    <div className="task">
+    <div className="task cols">
+      <BoardColumn>
       <Meldelinje auction={task.auction} />
       <Hånd label={TEXT.dummy} cards={task.hands.N} hp={hcpOf(task.hands.N)} />
       <Hånd label={TEXT.you} cards={task.hands.S} hp={hcpOf(task.hands.S)} />
@@ -186,6 +190,7 @@ function PlacementView({
           <Info topic={TEXT.lengths}>{TEXT.help.lengths}</Info>
         </div>
       )}
+      </BoardColumn>
       {!hidden && <Regnskabspanel ledger={task.ledger} />}
       {asked ? (
         <>

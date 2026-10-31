@@ -1,4 +1,5 @@
 import { useState, type ReactNode } from 'react';
+import { BoardColumn } from '../../ui/BoardColumn';
 import { SuitText } from '../../ui/SuitText';
 import type { LineView } from '../analysis';
 import { rankFromSymbol, type Rank } from '../model/cards';
@@ -201,13 +202,17 @@ export function Opgave({ task, optionalGuess = false, onAnswer }: OpgaveProps) {
   }
 
   return (
-    <section className="card fb-task" aria-label={TEXT.goalPrompt(goal)}>
-      <Bridgebord north={hands.north} south={hands.south} />
-      <div className="with-info">
-        <p className="prompt">{TEXT.goalPrompt(goal)}</p>
-        <Info topic={TEXT.taskNames[task.type]}>{TEXT.help.tasks[task.type]}</Info>
+    <section className="card fb-task cols" aria-label={TEXT.goalPrompt(goal)}>
+      <BoardColumn>
+        <Bridgebord north={hands.north} south={hands.south} />
+      </BoardColumn>
+      <div className="wide-right">
+        <div className="with-info">
+          <p className="prompt">{TEXT.goalPrompt(goal)}</p>
+          <Info topic={TEXT.taskNames[task.type]}>{TEXT.help.tasks[task.type]}</Info>
+        </div>
+        {body}
       </div>
-      {body}
     </section>
   );
 }

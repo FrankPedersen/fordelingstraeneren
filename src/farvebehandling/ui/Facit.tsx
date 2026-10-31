@@ -14,6 +14,7 @@ import { Rumkort } from './Rumkort';
 import { Sandsynlighedsbånd } from './Sandsynlighedsbånd';
 import { PlayResult, SpilSelv } from './SpilSelv';
 import { TEXT } from './texts';
+import { BoardColumn } from '../../ui/BoardColumn';
 import { Info } from '../../ui/Info';
 
 interface FacitProps {
@@ -153,7 +154,7 @@ export function Facit({ task, answer, graded, reward, place, onNext }: FacitProp
   }
 
   return (
-    <div className="fb-facit">
+    <div className="fb-facit cols">
       <section className={`feedback ${graded.score > 0 ? 'ok' : 'bad'}`} role="status">
         <span className="feedback-title">{title}</span>
         {tone && <span>{tone}</span>}
@@ -165,6 +166,7 @@ export function Facit({ task, answer, graded, reward, place, onNext }: FacitProp
 
       {task.type === 'hold-eller-par' && <Turneringsformer goal={task.goal} options={task.options} letters={lines.map((l) => l.letter)} />}
 
+      <BoardColumn>
       <section className="card" aria-labelledby="fb-facit-problem">
         <h2 id="fb-facit-problem">{TEXT.goalPrompt(task.goal)}</h2>
         {task.type === 'hvad-nu' ? (
@@ -177,6 +179,7 @@ export function Facit({ task, answer, graded, reward, place, onNext }: FacitProp
           <Bridgebord north={task.bank.north} south={task.bank.south} west={field?.west} east={field?.east} />
         )}
       </section>
+      </BoardColumn>
 
       <section className="card" aria-labelledby="fb-facit-difference">
 <div className="with-info">

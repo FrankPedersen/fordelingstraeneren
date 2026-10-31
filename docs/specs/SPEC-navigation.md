@@ -69,7 +69,7 @@ Listen har én linje pr. menupunkt, ikke pr. spor, fordi fordelingssporet har fl
 
 ## Layout
 
-Forsiden ligger i appens 480 px-kolonne. Wireframen er designgrundlaget; designet kan ændres senere i Claude Design. Fra 1000 px står forsiden bredt med grupperne side om side (SPEC-forside-bred.md, oktober 2026); under 1000 px er den som her.
+Forsiden ligger i appens 480 px-kolonne. Wireframen er designgrundlaget; designet kan ændres senere i Claude Design. Fra 1000 px står forsiden bredt med grupperne side om side (SPEC-forside-bred.md, oktober 2026); under 1000 px er den som her. De andre skærme står fra 1000 px i højst 1120 px med opgaven i to spalter: bordet, hånden eller mønsteret til venstre i 420 px, der står fast, og spørgsmålet, svaret og facit til højre (SPEC-bred-layout.md, bud A, 31. oktober 2026).
 
 ```text
 ┌──────────────────────────────────┐

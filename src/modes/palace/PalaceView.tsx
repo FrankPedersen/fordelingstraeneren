@@ -1,5 +1,6 @@
 import { patternById } from '../../domain/patterns';
 import { LOFT_ROOM, placeOf, type RouteRoom } from '../../memory/palace';
+import { BoardColumn } from '../../ui/BoardColumn';
 import { PatternKeypad } from '../../ui/PatternKeypad';
 import { Skyline } from '../../ui/Skyline';
 import { checkPalace, type PalaceAnswer, type PalaceTask } from './task';
@@ -28,7 +29,7 @@ export function PalaceView({ task, route, answer, reveal, skylines, onAnswer }: 
     const typed = answer && 'pattern' in answer ? answer.pattern : undefined;
     const right = answer !== undefined && checkPalace(task, answer);
     return (
-      <div className="task">
+      <div className="task cols">
         <div className="with-info">
           <p className="prompt">{tx(`Hvilket mønster bor ved station ${place}?`, `Which pattern lives at station ${place}?`)}</p>
           <Info topic={tx('Paladsvandring', 'Palace walk')}>
@@ -70,16 +71,18 @@ export function PalaceView({ task, route, answer, reveal, skylines, onAnswer }: 
       .join(' ');
 
   return (
-    <div className="task">
+    <div className="task cols">
       <div className="with-info">
         <p className="prompt">{tx(`Hvor på ruten bor ${pattern.id}?`, `Where on the route does ${pattern.id} live?`)}</p>
         <Info topic={tx('Paladsvandring', 'Palace walk')}>
           {tx('Paladsvandring øver ruten i dit huskepalads begge veje: fra stationen til mønstret, der bor dér, og fra mønstret til stationen, hvor det bor. Station n rummer mønstret med rang n; de episke mønstre bor på Loftet.', 'Palace walk practises the route in your memory palace both ways: from a station to the pattern that lives there, and from a pattern to the station where it lives. Station n holds the pattern with rank n; the epic patterns live in the Attic.')}
         </Info>
       </div>
-      <div className="center">
-        <Skyline id={pattern.id} />
-      </div>
+      <BoardColumn>
+        <div className="center">
+          <Skyline id={pattern.id} />
+        </div>
+      </BoardColumn>
       {route
         .filter((r) => r.open)
         .map((r) => (

@@ -1,5 +1,6 @@
 import { SUIT_SYMBOLS } from '../../domain/cards';
 import { callText, chooseCall } from '../../system/interpreter';
+import { BoardColumn } from '../../ui/BoardColumn';
 import { Info } from '../../ui/Info';
 import { SuitText } from '../../ui/SuitText';
 import { compareMethods, type Exercise, type HandTask, type Method, type MethodComparison } from '../model/generator';
@@ -177,12 +178,14 @@ export function Opgave({ task, onAnswer }: { task: HandTask; onAnswer(answer: Ha
   }
 
   return (
-    <div className="task">
-      {lines.length > 0 && <Meldinger lines={lines} />}
-      <div className="he-hands">
-        <Hånd label={TEXT.you} cards={task.hands.S} />
-        {both && <Hånd label={TEXT.partner} cards={task.hands.N} />}
-      </div>
+    <div className="task cols">
+      <BoardColumn>
+        {lines.length > 0 && <Meldinger lines={lines} />}
+        <div className="he-hands">
+          <Hånd label={TEXT.you} cards={task.hands.S} />
+          {both && <Hånd label={TEXT.partner} cards={task.hands.N} />}
+        </div>
+      </BoardColumn>
       {question}
     </div>
   );

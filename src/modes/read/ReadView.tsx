@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { SUIT_SYMBOLS, suitLengths, type Card } from '../../domain/cards';
 import { distributionText } from '../../domain/patterns';
+import { BoardColumn } from '../../ui/BoardColumn';
 import { PatternKeypad } from '../../ui/PatternKeypad';
 import { Skyline } from '../../ui/Skyline';
 import { checkRead, rankLabel, type ReadTask } from './task';
@@ -46,7 +47,7 @@ export function ReadView({ task, answer, reveal, skylines, show, sorted, onAnswe
       : tx('Hvilket mønster var det?', 'Which pattern was it?');
 
   return (
-    <div className="task">
+    <div className="task cols">
       <div className="with-info">
         <p className="prompt">{prompt}</p>
         <Info topic={tx('Lynaflæsning', 'Lightning reading')}>
@@ -56,6 +57,7 @@ export function ReadView({ task, answer, reveal, skylines, show, sorted, onAnswe
           )}
         </Info>
       </div>
+      <BoardColumn>
       {reveal ? (
         <SortedHand cards={task.cards} />
       ) : showing && sorted ? (
@@ -78,6 +80,7 @@ export function ReadView({ task, answer, reveal, skylines, show, sorted, onAnswe
           )}
         </div>
       )}
+      </BoardColumn>
       {showing && show === 'tap' && (
         <button type="button" className="btn primary" onClick={() => setHiddenAt(Date.now())}>
           {tx('Klar – skjul hånden', 'Ready – hide the hand')}

@@ -30,6 +30,8 @@
   --button-height: 56px;
   --choice-height: 64px;
   --analysis-width: 1280px;
+  --wide-width: 1120px;
+  --board-column: 420px;
   --bank-height: 360px;
 
   --type-h1: 1.6rem;

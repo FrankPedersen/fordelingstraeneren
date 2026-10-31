@@ -1,5 +1,6 @@
 import { compareFrequency } from '../../domain/compare';
 import { patternById } from '../../domain/patterns';
+import { BoardColumn } from '../../ui/BoardColumn';
 import { Skyline } from '../../ui/Skyline';
 import { patternPercent } from '../../ui/text';
 import type { HigherLowerAnswer, HigherLowerTask } from './task';
@@ -56,7 +57,7 @@ export function HigherLowerView({ task, chosen, reveal, onAnswer }: HigherLowerV
   };
 
   return (
-    <div className="task">
+    <div className="task cols">
       <div className="with-info">
         <p className="prompt">{tx('Hvilket mønster er hyppigst?', 'Which pattern is more frequent?')}</p>
         <Info topic={tx('Højere/lavere', 'Higher/lower')}>
@@ -66,10 +67,12 @@ export function HigherLowerView({ task, chosen, reveal, onAnswer }: HigherLowerV
           )}
         </Info>
       </div>
-      <div className="pair">
-        {option('a')}
-        {option('b')}
-      </div>
+      <BoardColumn>
+        <div className="pair">
+          {option('a')}
+          {option('b')}
+        </div>
+      </BoardColumn>
       <button
         type="button"
         className={`${classes('equal')} equal`}

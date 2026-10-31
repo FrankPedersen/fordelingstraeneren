@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { Defender } from '../../domain/sudoku';
+import { BoardColumn } from '../../ui/BoardColumn';
 import { Gitter4x4, type GridCell } from '../../ui/Gitter4x4';
 import { SuitText } from '../../ui/SuitText';
 import { SUDOKU_BASE, sudokuPoints, type SudokuTask } from './task';
@@ -77,7 +78,7 @@ export function SudokuView({ task, onDone }: SudokuViewProps) {
   }
 
   return (
-    <div className="task sudoku">
+    <div className="task sudoku cols">
       <div className="with-info">
         <p className="prompt">
           {tx('Hvad er Østs og Vests fordeling?', "What are East's and West's distributions?")}
@@ -94,7 +95,9 @@ export function SudokuView({ task, onDone }: SudokuViewProps) {
         {tx('Alle rækker og søjler summer til 13. Ledetrådene kommer én ad gangen.', 'All rows and columns add up to 13. The clues come one at a time.')}
       </p>
 
-      <Gitter4x4 rows={rows} selected={result ? null : selected} onSelect={(r, c) => setSelected([r, c])} />
+      <BoardColumn>
+        <Gitter4x4 rows={rows} selected={result ? null : selected} onSelect={(r, c) => setSelected([r, c])} />
+      </BoardColumn>
 
       <ol className="clues">
         {task.clues.slice(0, result ? task.clues.length : revealed).map((clue, i) => (
