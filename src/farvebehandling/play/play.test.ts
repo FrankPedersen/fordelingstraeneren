@@ -71,6 +71,27 @@ describe('Spil den selv', () => {
     expect(followsBestLine(item, 3, s)).toBe(false);
   });
 
+  it('2 / E K B 5 4 3, 5 stik: den, der følger teksten på grenen med honnøren, har fulgt linjen (SPEC-linjeformat-39.md)', () => {
+    const honnør = bankItem('2-AKJ543');
+    const hånd = (west: string, east: string): Deal => {
+      const w = parseCards(west), e = parseCards(east);
+      const layout = honnør.solution.layouts.findIndex((l) =>
+        honnør.solution.gaps.every((gap, g) => w.filter((r) => r <= gap.high && r >= gap.low).length === l.west[g]),
+      );
+      return { west: w, east: e, layout };
+    };
+    // Lille fra bordet, Øst har damen alene, esset tager stikket, og kongen følger.
+    let s = startPlay(honnør, hånd('T9876', 'Q'));
+    s = playLead(s, 'N', 2, first);
+    expect(s.current?.second).toBe(12);
+    s = playThird(s, 14, first);
+    const fulgt = playThird(playLead(s, 'S', 13, first), 0, first);
+    expect(followsBestLine(honnør, 5, fulgt)).toBe(true);
+    // En lille fra hånden i stedet for kongen følger ikke linjen.
+    const ikke = playThird(playLead(s, 'S', 3, first), 0, first);
+    expect(followsBestLine(honnør, 5, ikke)).toBe(false);
+  });
+
   it('lægger intet kort, når 3. hånd ikke kan bekende', () => {
     const void_ = bankItem('-AKJ32');
     let s = startPlay(void_, dealCards(void_, mulberry32(3)));
