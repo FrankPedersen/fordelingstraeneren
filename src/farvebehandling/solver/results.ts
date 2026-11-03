@@ -54,20 +54,13 @@ export function shownLeadTricks(
 }
 
 /**
- * Én linjes stik pr. sidning med flest stik efter dens trin. Spillet for et mål slutter, når målet er nået eller umuligt,
- * men spillet med flest stik fortsætter, så et senere trin kan nås, efter at dets kort er spillet (fx esset). Så bruges
- * de første trin, der kan spilles, og derefter spiller løseren for flest stik.
+ * Én linjes stik pr. sidning med flest stik efter dens trin: alle trinene ligger fast, og derefter spiller løseren for
+ * flest stik. En linje, som linjeformatet afviser, giver en fejl (SPEC-linjeformat-39.md).
  */
 export function leadTricks(north: readonly Rank[], south: readonly Rank[], lead: LeadResult, game: { current: Game | null } = { current: null }): number[] {
   const steps = lead.line.length ? lead.line : [{ leadFrom: lead.hand, card: cardsData([lead.high as Rank]) }];
   game.current ??= buildGame(north, south, { objective: { kind: 'tricks' } });
-  for (let n = steps.length; ; n--) {
-    try {
-      return [...solveLine(game.current, { id: 'stik', text: '', steps: steps.slice(0, n) }).layoutValues];
-    } catch (error) {
-      if (n <= 1) throw error;
-    }
-  }
+  return [...solveLine(game.current, { id: 'stik', text: '', steps }).layoutValues];
 }
 
 export type CombinationBase = Omit<CombinationSolution, 'goals' | 'tricks'>;

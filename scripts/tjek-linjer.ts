@@ -1,5 +1,5 @@
 // Tæller, hvor mange gemte linjer i banken linjeformatet afviser (SPEC-linjeformat-39.md). Hver linje prøves i sit eget
-// spil, og en linje for et mål også i spillet med flest stik, hvor stik pr. sidning regnes. Tager ca. 4½ minut.
+// spil, og en linje for et mål også i spillet med flest stik, hvor stik pr. sidning regnes. Tager 5–7 minutter.
 //
 //   node scripts/tjek-linjer.ts
 //

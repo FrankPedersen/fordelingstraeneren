@@ -8,7 +8,7 @@ import { leadTricks } from './results';
 
 /**
  * De 31 kombinationer, hvor linjeformatet afviste en gemt linje med LINES_VERSION 3 (SPEC-linjeformat-39.md). Hele banken
- * tjekkes af `node scripts/tjek-linjer.ts` (ca. 4½ minut); her ligger de kombinationer, fejlen faktisk fandtes i.
+ * tjekkes af `node scripts/tjek-linjer.ts` (5–7 minutter); her ligger de kombinationer, fejlen faktisk fandtes i.
  */
 const BERØRTE = [
   '2-AKJ543', '2-AKJ943', '2-AKJ9873', '2-AKJT43', '2-AKQ93', '2-AKQ943', '2-AKQT3', '2-AKT98', '432-AKT95', '5432-AKT9', 'A2-KJ943',

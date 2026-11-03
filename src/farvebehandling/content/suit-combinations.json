@@ -1368,11 +1368,7 @@
       },
       {
        "leadFrom": "S",
-       "card": "A"
-      },
-      {
-       "leadFrom": "S",
-       "card": "K"
+       "card": "high"
       }
      ]
     },
@@ -3121,11 +3117,11 @@
       },
       {
        "leadFrom": "N",
-       "card": "A"
+       "card": "high"
       },
       {
        "leadFrom": "N",
-       "card": "K"
+       "card": "high"
       }
      ]
     },
