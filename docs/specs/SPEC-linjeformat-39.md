@@ -1,6 +1,6 @@
 # SPEC-linjeformat-39
 
-3. november 2026 · Franks opgave, skrevet af Claude Code · Bygget på grenen `linjeformat-39` (før: `v31-foer-linjeformat-39`). Der flettes først efter Franks godkendelse.
+3. november 2026 · Franks opgave, skrevet af Claude Code · Bygget på grenen `linjeformat-39` (før: `v31-foer-linjeformat-39`), godkendt af Frank og udgivet 3. november 2026.
 
 Specen lukker det åbne punkt "Gemte linjer, som linjeformatet afviser" i SPEC-farvebehandling.md. Punktet "Esset slås." efter en kipning er en særskilt ændring, der tages bagefter.
 
