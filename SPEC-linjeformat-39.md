@@ -1,6 +1,6 @@
 # SPEC-linjeformat-39
 
-3. november 2026 · Franks opgave, skrevet af Claude Code · **Intet er bygget.** Frank tager stilling, før der bygges. Arbejdet sker bagefter på grenen `linjeformat-39`, og `main` tagges først `v31-foer-linjeformat-39`.
+3. november 2026 · Franks opgave, skrevet af Claude Code · Bygget på grenen `linjeformat-39` (før: `v31-foer-linjeformat-39`). Der flettes først efter Franks godkendelse.
 
 Specen lukker det åbne punkt "Gemte linjer, som linjeformatet afviser" i SPEC-farvebehandling.md. Punktet "Esset slås." efter en kipning er en særskilt ændring, der tages bagefter.
 
@@ -10,8 +10,8 @@ Specen lukker det åbne punkt "Gemte linjer, som linjeformatet afviser" i SPEC-f
 - **Årsagen:** fejlen ligger i `describe.ts`, ikke i løseren, `lines.ts` eller linjeformatet.
 - **Rettelsen:** et kort, der er brugt på en gren, bliver `high`. Følger trinet så ikke løserens plan, slutter linjen før det.
 - **Følgerne:** ingen tekst og ingen chance ændrer sig. 39 linjer får andre trin, heraf de 14 bedste. Gennemsnittet af stik ændrer sig på 9 viste linjer.
-- **Banken:** kun 31 af 660 cases løses forfra, hvilket vurderes til 15–20 minutter mod godt 3 timer for hele banken.
-- **To nye fund:** dommen i Spil den selv er forkert på de afviste linjer (SPEC-farvebehandling.md siger, at "intet går i stykker", og det passer ikke). Og 23 andre linjer viser noget andet end løserens plan, uden at formatet afviser dem (Frank afgør, hvornår de tages).
+- **Banken:** kun 31 af 660 cases løses forfra; det tog 17 minutter mod godt 3 timer for hele banken.
+- **To nye fund:** dommen i Spil den selv var forkert på de afviste linjer (SPEC-farvebehandling.md sagde, at "intet går i stykker"). Og 23 andre linjer viser noget andet end løserens plan, uden at formatet afviser dem; de tages sammen med punktet "Esset slås." (Franks valg).
 
 ## Optælling
 
@@ -115,7 +115,7 @@ Alle er prøvet på de 39 linjer:
 | Færre trin (3 → 2) | 0 | 7 |
 | Færre trin (3 → 1) | 0 | 5 |
 
-Teksten står uændret, fordi den følger hovedvejen. Den er altså stadig kun bogstavelig på hovedvejen (se Til Franks afgørelse, punkt 2).
+Teksten står uændret, fordi den følger hovedvejen. Den er altså stadig kun bogstavelig på hovedvejen (se Franks afgørelser, punkt 2).
 
 ### Chancerne
 
@@ -151,10 +151,8 @@ Hold eller par er uændret: ingen af de 8 bedste linjer for et mål har et tal f
 
 | Vej | Hvad der sker | Tid |
 | --- | --- | --- |
-| **Kun de berørte (forslaget)** | De 31 cases løses forfra, og `--assemble` samler banken | **ca. 15–20 min** med 10 processer (vurderet) |
+| **Kun de berørte (valgt)** | De 31 cases løses forfra, og `--assemble` samler banken | **17 min** med 10 processer (målt 3. november) |
 | Hele banken | Alle 660 cases løses forfra | **ca. 3 timer 12 min** med 10 processer (målt 29.–30. oktober) |
-
-Målingerne bag vurderingen: de 31 kombinationer tog tilsammen 61 procesminutter og højst knap 6 minutter for én. Den rigtige kørsel regner også stik, Hold eller par, Hvad nu? og den anden læsning af x.
 
 `LINES_VERSION` bliver 4. De 629 andre filer i mellemlageret får versionen skrevet ind i en engangskørsel uden for repoet, som 31. oktober.
 
@@ -181,7 +179,7 @@ Dommen i Spil den selv kan vende sig: i 3 2 / B 10 5 4 får den, der følger lø
 
 Alle 23 beholder chancen, hvis linjen bliver ét trin kortere (17 går fra 2 til 1 trin og 6 fra 3 til 2). Ingen af dem bliver tom. Teksten ændres ikke.
 
-De 23 er ikke med i afgrænsningen nedenfor, medmindre Frank beslutter det (se Til Franks afgørelse, punkt 1).
+De 23 er ikke med i afgrænsningen nedenfor (Franks valg; se Franks afgørelser, punkt 1).
 
 ## Afgrænsning
 
@@ -193,7 +191,7 @@ De 23 er ikke med i afgrænsningen nedenfor, medmindre Frank beslutter det (se T
 | `scripts/solve.ts` | `LINES_VERSION` bliver 4 | resten |
 | `content/solutions.json`, `suit-combinations.json`, `app/side-N.json` | `line` for de 39 linjer i bilaget og `tricks` for de 11 linjer ovenfor | alt andet, også chancerne |
 | `content/linjer-side-N.md`, `teknikker.md`, `techniques.json`, `hvad-nu.*`, `validering-side-N.md`, `hyppighed.csv`, `kildefejl.json` | intet | de skal være byte for byte ens |
-| `scripts/tjek-linjer.ts` (ny) | tæller afviste linjer i hele banken (ca. 4½ minut i én proces) | |
+| `scripts/tjek-linjer.ts` (ny) | tæller afviste linjer i hele banken (5–7 minutter i én proces) | |
 | `src/farvebehandling/solver/linjer-spilbare.test.ts` (ny) | fast test i `npm test` af de 31 kombinationer | |
 | `SPEC-farvebehandling.md`, `CLAUDE.md`, `docs/specs/README.md`, `../SYSTEM.md` | det åbne punkt lukkes, og sætningen "intet går i stykker" rettes; de 23 og punktet om "Esset slås." står tilbage som åbne punkter | |
 
@@ -203,31 +201,43 @@ Punktet "Esset slås." efter en kipning og de 23 linjer bygges ikke her.
 
 Skrives først, som altid.
 
-- [ ] `node scripts/tjek-linjer.ts`: linjeformatet afviser **ingen** af de gemte linjer (i dag 39 af 6.974).
-- [ ] 2 / E K B 5 4 3 (5 stik) har en linje, hvor **trin 2 kan spilles efter alle grene af trin 1**: trinene er lille fra bordet (3. hånd B, eller E mod en honnør), `high`, `high`. Når Øst lægger damen, og esset tager stikket, er trin 2 kongen.
-- [ ] Alle 39 linjer har trinene i bilagets sidste kolonne.
-- [ ] Alle 39 giver den gemte chance, når løseren spiller dem som helhed, og de af dem, der gælder et mål, kan også spilles i spillet med flest stik.
-- [ ] **Chancerne er uændrede:** `value`, `exact`, `upper`, `certified` og `layouts` er ens for alle 8.500 udspil sammenlignet med tagget `v31-foer-linjeformat-39`, og det samme gælder `pairs` og Hvad nu?.
-- [ ] **Teksterne er uændrede:** `steps` er ens for alle 8.500 udspil, og rapporterne i afgrænsningen er byte for byte ens.
-- [ ] Kun de 39 linjer har andre trin, og kun de 11 linjer i tabellen har andre `tricks`, med de nævnte gennemsnit.
-- [ ] Spil den selv: på de 8 linjer er dommen "fulgt", når spilleren følger teksten på grenen med honnøren. En spiller, der ikke følger linjen, får stadig "ikke fulgt".
-- [ ] `leadTricks` regner ikke længere på en kortere linje.
-- [ ] `npm test` er grøn, `node scripts/bog-regression.ts` består, og `node scripts/sprogtjek.ts` finder ingen ukendte ord.
+- [x] `node scripts/tjek-linjer.ts`: linjeformatet afviser **ingen** af de gemte linjer (i dag 39 af 6.974).
+- [x] 2 / E K B 5 4 3 (5 stik) har en linje, hvor **trin 2 kan spilles efter alle grene af trin 1**: trinene er lille fra bordet (3. hånd B, eller E mod en honnør), `high`, `high`. Når Øst lægger damen, og esset tager stikket, er trin 2 kongen.
+- [x] Alle 39 linjer har trinene i bilagets sidste kolonne.
+- [x] Alle 39 giver den gemte chance, når løseren spiller dem som helhed, og de af dem, der gælder et mål, kan også spilles i spillet med flest stik.
+- [x] **Chancerne er uændrede:** `value`, `exact`, `upper`, `certified` og `layouts` er ens for alle 8.500 udspil sammenlignet med tagget `v31-foer-linjeformat-39`, og det samme gælder `pairs` og Hvad nu?.
+- [x] **Teksterne er uændrede:** `steps` er ens for alle 8.500 udspil, og rapporterne i afgrænsningen er byte for byte ens.
+- [x] Kun de 39 linjer har andre trin, og kun de 11 linjer i tabellen har andre `tricks`, med de nævnte gennemsnit.
+- [x] Spil den selv: på de 8 linjer er dommen "fulgt", når spilleren følger teksten på grenen med honnøren. En spiller, der ikke følger linjen, får stadig "ikke fulgt".
+- [x] `leadTricks` regner ikke længere på en kortere linje.
+- [x] `npm test` er grøn, `node scripts/bog-regression.ts` består, og `node scripts/sprogtjek.ts` finder ingen ukendte ord.
 
-## Når det er bygget
+## Ti eksempler til punktet "Esset slås."
 
-Claude Code stopper før fletning, og Frank får ud over testresultaterne:
+Franks ønske: ti eksempler før og efter, før punktet "Esset slås." efter en kipning besluttes. Eksemplerne viser reglen fra SPEC-farvebehandling.md: hovedvejen følger den vej, hvor kipningen lykkes, så 4. hånd lægger lavt. Den er kun prøvet i hukommelsen og er ikke bygget. Chancerne ændrer sig ikke.
 
-1. Listen over de 39 linjer før og efter og de 11 ændrede gennemsnit.
-2. **Ti eksempler før og efter på "Esset slås." efter en kipning** (Franks ønske), så han kan beslutte det særskilte punkt. Eksemplerne viser, hvad den ændring ville give; den bygges ikke her.
+Blandt de 154 bedste linjer med en kipning i de 110 hyppigste kombinationer ændres 96. Reglen trækker begge veje: den tilføjer tekst nogle steder og fjerner den andre steder.
 
-## Til Franks afgørelse
+| | Kombination | Mål | I dag | Hvis kipningen lykkes |
+| --- | --- | --- | --- | --- |
+| 1 | 4 3 2 / E D 6 5 | 3 (17,8 %) | Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. | … tages den med esset. **Esset slås. Lille fra begge hænder.** |
+| 2 | 4 3 2 / E D 7 6 5 | 4 (33,9 %) | Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. | … tages den med esset. **Esset slås.** |
+| 3 | 4 3 2 / E K B 5 | 4 (17,8 %) | Lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. | … tages den med esset. **Esset og kongen slås.** |
+| 4 | 4 3 2 / K 7 6 5 | 2 (17,8 %) | Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. | … lægges der lille. **Lille fra begge hænder. Lille fra begge hænder.** |
+| 5 | 3 2 / E K D 9 4 | 4 (89,6 %) | Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset. **Esset slås.** | Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset. |
+| 6 | 2 / E K B 5 4 3 | 5 (59,8 %) | … tages den med esset. **Esset og kongen slås.** | … tages den med esset. **Esset slås.** |
+| 7 | B 3 2 / E K 5 4 | 3 (69,0 %) | Lille fra bordet til esset. Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. **Kongen slås.** | Lille fra bordet til esset. Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. |
+| 8 | B 3 2 / K 5 4 | 1 (74,5 %) | Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. **Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille.** | Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. |
+| 9 | 4 3 2 / D B 9 6 5 | 3 (71,8 %) | Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Lille fra bordet **mod 9'eren** (kipning); lægger Øst en honnør, lægges der lille. | … Lille fra bordet **mod knægten** (kipning); lægger Øst en honnør, lægges der lille. |
+| 10 | 4 3 2 / K D 8 7 6 5 | 5 (65,6 %) | Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. **Damen slås.** | … lægges der lille. **Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille.** |
 
-1. **De 23 linjer, der viser noget andet end løserens plan.**
-   - *Anbefaling: tages sammen med "Esset slås." efter en kipning.* Begge handler om, hvordan `describe.ts` læser hovedvejen, og begge kræver en løsning af hele banken, så de godt 3 timer kun skal bruges én gang.
-   - *Alternativ: med på denne gren.* Så skal hele banken løses, for reglen kan ikke afgøres ud fra de gemte data, og antallet af andre linjer, reglen rører, kendes først derefter.
-2. **Teksten på grenen med honnøren.** "Lægger Øst en honnør, tages den med esset. Esset og kongen slås." er kun bogstavelig på hovedvejen. *Anbefaling: den bliver, som den er, indtil de ti eksempler foreligger*, fordi hovedvejen er husets regel, og punktet "Esset slås." netop handler om den.
-3. **Kun de 31 cases eller hele banken.** *Anbefaling: kun de 31.* Rettelsen kan ikke røre de andre, og accepttesten kontrollerer det. Hele banken giver ikke mere sikkerhed for chancerne, men koster godt 3 timer.
+## Franks afgørelser
+
+Frank svarede ja til de tre anbefalinger 3. november 2026.
+
+1. **De 23 linjer, der viser noget andet end løserens plan,** tages sammen med "Esset slås." efter en kipning. Begge handler om, hvordan `describe.ts` læser hovedvejen, og begge kræver en løsning af hele banken, så de godt 3 timer kun skal bruges én gang.
+2. **Teksten på grenen med honnøren** bliver, som den er, indtil de ti eksempler er vurderet. "Lægger Øst en honnør, tages den med esset. Esset og kongen slås." er kun bogstavelig på hovedvejen.
+3. **Kun de 31 cases** er løst forfra. Rettelsen kan ikke røre de andre, og accepttesten har kontrolleret det.
 
 ## Afklaret
 
@@ -236,6 +246,7 @@ Claude Code stopper før fletning, og Frank får ud over testresultaterne:
 3. **Målingerne** er kørt med midlertidige scripts uden for repoet på `main` (`336e10b`), kun i hukommelsen. Hverken repoet eller mellemlageret er ændret.
 4. **Reglen "følger løserens valg"** er strengere end nødvendigt: på 8 af de 39 linjer slutter den et trin eller to tidligere, end chancen kræver. Det er valgt, fordi den ikke kræver en ny løsning og derfor også er billig i browseren, når Analyse regner en kombination uden for banken.
 5. **Kun afviste linjer rettes.** Det holder ændringen på de 39 og lader alle andre linjer stå byte for byte.
+6. **Resultatet af accepttesten mod tagget:** af 8.500 udspil er præcis de 39 linjer og de 11 stik pr. sidning ændret, og chancer og tekster er ens. `node scripts/tjek-linjer.ts` afviser 0 af 6.974, og regressionen mod bogen består (120 af 120 tal).
 
 ## Bilag: de 39 linjer
 
