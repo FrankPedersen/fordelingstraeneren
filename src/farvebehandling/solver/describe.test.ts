@@ -37,6 +37,30 @@ describe('Linjerne på dansk', { timeout: 120_000 }, () => {
     expect(describeLine(game, best.strategy, best.slot).steps).toEqual(['Esset og kongen slås.']);
   });
 
+  it('2 / E K B 5 4 3, 5 stik: det højeste kort i trin 2 og 3, så linjen kan spilles på alle grene (SPEC-linjeformat-39.md)', () => {
+    const { game, lead, text } = bestLine('2', 'AKJ543', 5);
+    expect(text.steps).toEqual(['Lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset.', 'Esset og kongen slås.']);
+    expect(text.line.steps).toEqual([
+      { leadFrom: 'N', card: 'low', third: { ifSecondPlays: 'low', play: 'J', else: 'A' } },
+      { leadFrom: 'S', card: 'high' },
+      { leadFrom: 'S', card: 'high' },
+    ]);
+    expect(validateLine(game, { ...text.line, id: 'A' })).toEqual([]);
+    expect(solveLine(game, { ...text.line, id: 'A' }).value).toBeCloseTo(lead.value, 6);
+  });
+
+  it('B 3 2 / E K 9 4, 3 stik: linjen slutter før et trin, der ikke følger løserens plan, og beholder chancen (SPEC-linjeformat-39.md)', () => {
+    const game = buildGame(parseCards('J32'), parseCards('AK94'), { objective: goal(3) });
+    const lead = solveGame(game).leads[0];
+    const text = describeLine(game, lead.strategy, lead.slot);
+    expect(text.steps).toEqual(['Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den.', 'Esset og kongen slås.']);
+    expect(text.line.steps).toEqual([
+      { leadFrom: 'N', card: 'J', third: { ifSecondPlays: 'low', play: 'low', else: 'A' } },
+      { leadFrom: 'S', card: 'high' },
+    ]);
+    expect(solveLine(game, { ...text.line, id: 'A' }).value).toBeCloseTo(lead.value, 6);
+  });
+
   it('E D 6 5 / 4 3 2, 3 stik: mod damen (kipning), og den gemte linje giver løserens chance', () => {
     const { game, lead, text } = bestLine('432', 'AQ65', 3);
     expect(text.steps).toEqual(['Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset.']);

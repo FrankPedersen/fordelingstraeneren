@@ -1,6 +1,6 @@
 import { cardsData, TEN, type Rank } from '../model/cards';
-import { END, LEAD, type Game, type Hand } from './game';
-import { secondPlaysLow, type Line, type LineStep } from './lines';
+import { END, LEAD, THIRD, type Game, type Hand } from './game';
+import { lineMask, secondPlaysLow, type Line, type LineStep } from './lines';
 import { itemValues } from './natural';
 
 /**
@@ -114,7 +114,69 @@ export function playTrick(game: Game, state: WalkState, slot: number, s2: number
 }
 
 export function describeLine(game: Game, strategy: Int8Array, leadSlot: number): LineDescription {
-  return describeFrom(game, strategy, leadSlot, initialState(game), itemValues(game, game.root, strategy));
+  const described = describeFrom(game, strategy, leadSlot, initialState(game), itemValues(game, game.root, strategy));
+  return { ...described, line: { ...described.line, steps: playableSteps(game, strategy, leadSlot, described.line.steps) } };
+}
+
+const lineOf = (steps: LineStep[]) => ({ id: '', text: '', steps });
+const isConcrete = (card: string) => card !== 'low' && card !== 'high';
+
+/**
+ * Trinet med færrest mulige kort udskiftet med "high", så det kan spilles på alle grene. `earlier` er trinene før det.
+ * null, hvis det ikke kan lade sig gøre.
+ */
+function playableStep(game: Game, earlier: LineStep[], step: LineStep): LineStep | null {
+  const fields: ((s: LineStep) => void)[] = [];
+  if (isConcrete(step.card)) fields.push((s) => { s.card = 'high'; });
+  if (step.third && isConcrete(step.third.play)) fields.push((s) => { s.third!.play = 'high'; });
+  if (step.third && isConcrete(step.third.else)) fields.push((s) => { s.third!.else = 'high'; });
+  const subsets = Array.from({ length: 1 << fields.length }, (_, m) => m).sort((a, b) => bitCount(a) - bitCount(b) || a - b);
+  for (const subset of subsets) {
+    const candidate: LineStep = { ...step, ...(step.third ? { third: { ...step.third } } : {}) };
+    fields.forEach((change, i) => { if (subset & (1 << i)) change(candidate); });
+    if (!lineMask(game, lineOf([...earlier, candidate])).errors.length) return candidate;
+  }
+  return null;
+}
+
+function bitCount(n: number): number {
+  let count = 0;
+  for (let m = n; m; m >>= 1) count += m & 1;
+  return count;
+}
+
+/** Tillader trinene løserens eget valg på alle de grene, løseren kan komme ud på? */
+function followsStrategy(game: Game, strategy: Int8Array, leadSlot: number, steps: LineStep[]): boolean {
+  const { allowed } = lineMask(game, lineOf(steps));
+  const visit = (node: number): boolean => {
+    const kind = game.kind[node];
+    if (kind === END) return true;
+    const start = game.childStart[node];
+    if (kind === LEAD || kind === THIRD) {
+      const slot = start + strategy[node];
+      return allowed[slot] === 1 && visit(game.children[slot]);
+    }
+    for (let x = 0; x < game.childCount[node]; x++) if (!visit(game.children[start + x])) return false;
+    return true;
+  };
+  return allowed[leadSlot] === 1 && visit(game.children[leadSlot]);
+}
+
+/**
+ * Trinene skrives fra hovedvejen, men gælder på alle grene. Ligeværdige kort er ét kort i løserens træ, så et konkret
+ * kort kan være brugt på en anden gren: i 2 / E K B 5 4 3 tager esset en honnør fra Øst i trin 1, og trin 2 er så kongen.
+ * Afviser linjeformatet linjen, bliver sådan et kort "high", og linjen slutter før et trin, der ikke følger løserens
+ * valg på alle grene; derefter spiller løseren videre. Andre linjer er uændrede (SPEC-linjeformat-39.md).
+ */
+function playableSteps(game: Game, strategy: Int8Array, leadSlot: number, steps: LineStep[]): LineStep[] {
+  if (!lineMask(game, lineOf(steps)).errors.length) return steps;
+  const playable: LineStep[] = [];
+  for (const step of steps) {
+    const next = playableStep(game, playable, step);
+    if (!next || !followsStrategy(game, strategy, leadSlot, [...playable, next])) break;
+    playable.push(next);
+  }
+  return playable;
 }
 
 /** Beskriver linjen fra udspillet `leadSlot` i stillingen `state`; `values` er strategiens værdi pr. item. */
