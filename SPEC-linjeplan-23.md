@@ -96,7 +96,7 @@ Skrives først, som altid.
 
 ## Stik pr. sidning
 
-Kun de 17 linjer har andre `tricks`, og de er målt i banken mod tagget. Tallene stiger, fordi løseren spiller frit efter sidste trin. Gruppe C ændrer ingen.
+Kun de 17 linjer har andre `tricks`, og de er målt i banken mod tagget. Ingen gennemsnit falder, for løseren spiller frit efter sidste trin. Gruppe C ændrer ingen.
 
 | Kombination (bordet / hånden) | Mål | Gruppe | Stik i gennemsnit | Sidninger ændret |
 | --- | --- | --- | --- | --- |
