@@ -252,7 +252,7 @@ async function toSpalter(s, beholder, navn, { toppe = false } = {}) {
   if (!l || !r) return tjek(false, `${navn}: to spalter`, `venstre ${JSON.stringify(l)}, højre ${JSON.stringify(r)}`);
   tjek(l.right <= r.left && r.top < l.bottom && l.top < r.bottom, `${navn}: to spalter side om side`, `venstre ${l.left}–${l.right}, højre ${r.left}–${r.right}`);
   if (toppe) tjek(ca(l.top, r.top), `${navn}: toppene ud for hinanden`, `venstre ${l.top}, højre ${r.top}`);
-  const bredde = await s.kør('document.documentElement.scrollWidth - innerWidth');
+  const bredde = await s.kør('document.documentElement.scrollWidth - document.documentElement.clientWidth');
   tjek(bredde <= 0, `${navn}: intet stikker ud til siden`, `${bredde} px for bredt`);
   return { l, r };
 }
@@ -408,7 +408,7 @@ async function analyseSomTegningen(s) {
       forskel: k(q('#fb-difference')), gruppe: k(q('[aria-labelledby="fb-difference"] .fb-segment')),
       tabel: (() => { const t = q('.fb-analysis .fb-table-scroll'); return { ud: t.scrollWidth - t.clientWidth, linjer: lines.length }; })(),
       knapBredde: k(q('[aria-labelledby="fb-situation"] .fb-room-row .btn'))?.width, sitBredde: k(sit).width,
-      forBred: document.documentElement.scrollWidth - innerWidth,
+      forBred: document.documentElement.scrollWidth - document.documentElement.clientWidth,
     };
   })()`);
   tjek(ca(d.segment?.top + d.segment?.height / 2, d.overskrift?.top + d.overskrift?.height / 2, 8) && d.segment.right > d.valg.left + d.valg.width * 0.7, 'Analyse som tegningen: Banken og Kortvælger står i overskriften til højre', JSON.stringify(d.segment));
@@ -583,7 +583,7 @@ try {
         const rk = new Map();
         for (const e of kort) { const t = Math.round(e.getBoundingClientRect().top); rk.set(t, (rk.get(t) ?? 0) + 1); }
         const inde = kort.every((e) => e.scrollWidth <= e.clientWidth + 1);
-        return { rækker: [...rk.values()], inde, info: [...document.querySelectorAll('.info-btn')].filter((b) => b.offsetParent !== null).length, ud: document.documentElement.scrollWidth - innerWidth };
+        return { rækker: [...rk.values()], inde, info: [...document.querySelectorAll('.info-btn')].filter((b) => b.offsetParent !== null).length, ud: document.documentElement.scrollWidth - document.documentElement.clientWidth };
       })()`);
       tjek(JSON.stringify(r.rækker) === JSON.stringify(rækker), `Linjekortene ved ${bredde} px, ${valg.slice(1)}: rækker af ${rækker.join(' og ')}`, JSON.stringify(r.rækker));
       tjek(r.inde && r.ud <= 0, `Linjekortene ved ${bredde} px, ${valg.slice(1)}: intet stikker ud`, JSON.stringify(r));

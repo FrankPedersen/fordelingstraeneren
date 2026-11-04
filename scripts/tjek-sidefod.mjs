@@ -96,7 +96,7 @@ const MÅL = `(() => {
     knap: knap.innerText.replace(/\\s+/g, ' ').trim(),
     linje: f.querySelector('.site-footer-about p').getClientRects().length > 0,
     legal: f.querySelector('.site-footer-legal').innerText.replace(/\\s+/g, ' ').trim(),
-    ud: document.documentElement.scrollWidth - innerWidth,
+    ud: document.documentElement.scrollWidth - document.documentElement.clientWidth,
     tekst: t(f),
   };
 })()`;
@@ -126,8 +126,19 @@ try {
       tjek(f.ud <= 0, `${hvor}: intet stikker ud`, `${f.ud} px`);
     }
     await åbn(skærm, 320, 700);
-    const ud = await kør('document.documentElement.scrollWidth - innerWidth');
+    const ud = await kør('document.documentElement.scrollWidth - document.documentElement.clientWidth');
     tjek(ud <= 0, `${skærm || 'forsiden'} ved 320 px: intet stikker ud`, `${ud} px`);
+  }
+  // Knappen står inden for sidefodens polstring ved de smalle bredder og på begge sprog; teksten må brække.
+  // "Stikker ud" måles mod clientWidth: i mobilvisning vokser innerWidth med det, der stikker ud, så tjekket aldrig ville fejle.
+  for (const sprog of ['dansk', 'engelsk']) {
+    for (const bredde of [390, 360, 320]) {
+      await åbn('', bredde);
+      const ud = await kør(`(() => { const f = document.querySelector('footer.site-footer'); const r = f.getBoundingClientRect().right - parseFloat(getComputedStyle(f).paddingRight); return Math.round(f.querySelector('.site-footer-cta').getBoundingClientRect().right - r); })()`);
+      tjek(ud <= 0, `Knappen ved ${bredde} px på ${sprog}: inden for polstringen`, `${ud} px`);
+    }
+    await kør(`document.querySelector('.home-head button').click()`);
+    await vent(400);
   }
   // Ens i mørk tilstand.
   await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: 'dark' }] });

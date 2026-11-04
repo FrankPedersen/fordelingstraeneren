@@ -23,7 +23,7 @@ Sidefoden laves ens med forsidens nye, kompakte sidefod efter målene under Afkl
 ## Accepttest
 
 - [x] `src/sidefod.test.tsx`: indholdet og rækkefølgen, Om mig og Kontakt er væk, og engelsk.
-- [x] `node scripts/tjek-sidefod.mjs`: målene ved 1280 og 390 px på forsiden og alle spor; intet stikker ud ved 320 px; samme flade i mørk tilstand.
+- [x] `node scripts/tjek-sidefod.mjs`: målene ved 1280 og 390 px på forsiden og alle spor; intet stikker ud ved 320 px; knappen står inden for polstringen ved 390, 360 og 320 px på begge sprog; samme flade i mørk tilstand.
 - [x] `node scripts/tjek-bred-layout.mjs`: resten er pixel for pixel som før ved 999 og 390 px, med sidefoden skjult i begge apps.
 - [x] `npm test` og `node scripts/sprogtjek.ts` er grønne.
 
@@ -35,3 +35,4 @@ Giv Frank skærmbilleder ved 1280 og 390 px af sidefoden. Frank godkender, før 
 2. **Linkene** til sporene er appens egne (`#fordeling` osv.), så de også virker offline. Konventionstræner, Bridgeordbog, Scoring i bridge og Om mig og kontakt går ud af appen.
 3. **Farverne** er forsidens og ens i lys og mørk tilstand: `footer-bg`, `footer-text` og `footer-accent` og forsidens grå toner.
 4. **Forsidens særregel** med tre kolonner fra 1000 px (`.home .site-footer`) er væk, for sidefoden er nu ens på alle skærme.
+5. **Knappens tekst må brække,** som på forsiden: ved 360 px står "Om mig og kontakt" på to linjer og ved 320 px på tre, og på engelsk er den på to linjer allerede ved 390 px. Uden det stak knappen 28 px ud af skærmen ved 320 px.
