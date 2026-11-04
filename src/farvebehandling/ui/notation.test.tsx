@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { mulberry32 } from '../../engine/rng';
 import { setLang } from '../../i18n';
@@ -81,16 +81,14 @@ describe('Sidningstabellen med antal og chance pr. sidning (SPEC-notation-sidnin
     expect(text).toContain(decisive.find((f) => f.count > 1) ? '(' : '');
   });
 
-  it('ⓘ ved Chance-overskriften forklarer notationen; der kommer ingen ny kolonne', () => {
+  it('den samlede ⓘ ved kortet forklarer notationen; der kommer ingen ny kolonne', () => {
     table('fordeling', lines);
     const header = [...document.querySelectorAll('.fb-layout-table thead th')];
     expect(header).toHaveLength(4 + lines.length);
-    fireEvent.click(within(header[2] as HTMLElement).getByRole('button', { name: 'Hjælp: Chance' }));
-    expect(
-      screen.getByText(
-        'Rækken samler sidninger, der kun adskiller sig i små kort (x). Tallet i parentes er antallet af sidninger; under chancen står chancen for hver af dem.',
-      ),
-    ).toBeTruthy();
+    expect(TEXT.help.layoutsList.find((t) => t.id === 'chance')?.text).toBe(
+      'Rækken samler sidninger, der kun adskiller sig i små kort (x). Tallet i parentes er antallet af sidninger; under chancen står chancen for hver af dem.',
+    );
+    expect(header[2].querySelector('.info-btn')).toBeNull();
     // Tabellen står fortsat i sin rullekasse.
     expect(document.querySelector('.fb-table-scroll > .fb-layout-table')).not.toBeNull();
   });
@@ -113,9 +111,9 @@ describe('Sidningstabellen med antal og chance pr. sidning (SPEC-notation-sidnin
       for (const key of ['layoutRow', 'groupSummary', 'decisiveSummary', 'eachChance', 'countSuffix'] as const) {
         expect(typeof TEXT[key], `${lang} ${key}`).toBe('function');
       }
-      expect(TEXT.help.chanceColumn.length, lang).toBeGreaterThan(40);
+      expect(TEXT.help.layoutsList.find((t) => t.id === 'chance')!.text.length, lang).toBeGreaterThan(40);
     }
-    expect(TEXT.help.chanceColumn).toMatch(/^The row collects layouts/);
+    expect(TEXT.help.layoutsList.find((t) => t.id === 'chance')!.text).toMatch(/^The row collects layouts/);
     const fields = sortFields(bandFields(item, lines), 'honnører');
     render(<LayoutList fields={fields} lines={lines} selected={null} onSelect={() => {}} grouping="honnører" showAll />);
     for (const button of screen.queryAllByRole('button', { name: /^Help: / })) fireEvent.click(button);

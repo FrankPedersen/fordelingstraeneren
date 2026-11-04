@@ -76,8 +76,9 @@ describe('Situationen i Analyse', { timeout: 120_000 }, () => {
     times('Maks. hp i farven, Øst: én mindre', 7);
     expect(screen.getByRole('status', { name: 'Maks. hp i farven, Øst' }).textContent).toBe('3');
     expect(button('Maks. hp i farven, Øst: én mindre').disabled).toBe(true);
-    fireEvent.click(screen.getByRole('button', { name: 'Hjælp: Maks. hp i farven' }));
-    expect(screen.getByRole('note').textContent).toMatch(/umulig/);
+    // Forklaringen står i den samlede ⓘ ved Problemet (SPEC-design-som-forsiden.md, Del 3).
+    fireEvent.click(screen.getByRole('button', { name: 'Hjælp: Problemet' }));
+    expect(screen.getByRole('note').textContent).toMatch(/Maks\. hp i farven.*umulig/);
   });
 
   it('med en situation regnes i browseren: chips, forudsætningslinjen, betingede chancer og udelukkede sidninger', async () => {

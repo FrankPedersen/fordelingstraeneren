@@ -128,7 +128,6 @@ export default function FarvebehandlingScreen({ onBack, start = false, analysisO
           {analysisOnly ? (
             <>
               <h1>{TEXT.analysisModule}</h1>
-              <Info topic={TEXT.analysisModule}>{TEXT.help.analysisModule}</Info>
             </>
           ) : (
             <>
@@ -150,7 +149,8 @@ export default function FarvebehandlingScreen({ onBack, start = false, analysisO
                   </button>
                 ))}
               </nav>
-              <Info topic={TEXT.title}>{TEXT.help.tabs}</Info>
+              {/* I Analyse er Guide hjælpen til skærmen (SPEC-design-som-forsiden.md, Del 3). */}
+              {tab !== 'analysis' && <Info topic={TEXT.title}>{TEXT.help.tabs}</Info>}
             </>
           )}
         </header>

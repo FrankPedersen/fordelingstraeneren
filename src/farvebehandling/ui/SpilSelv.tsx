@@ -21,7 +21,7 @@ import { Linjekort } from './Linjekort';
 import { Sandsynlighedsbånd } from './Sandsynlighedsbånd';
 import { TEXT } from './texts';
 import { BoardColumn } from '../../ui/BoardColumn';
-import { Info } from '../../ui/Info';
+import { Info, InfoList } from '../../ui/Info';
 
 interface SpilSelvProps {
   item: BankItem;
@@ -105,7 +105,9 @@ export function SpilSelv({ item, goal, seed, onDone, onClose, connections, split
     <section ref={root} className={`card fb-play${split ? ' cols' : ''}`} aria-label={TEXT.playTitle}>
       <header className="fb-room-row wide-full">
         <h2>{TEXT.playTitle}</h2>
-        <Info topic={TEXT.playTitle}>{TEXT.help.play}</Info>
+        <Info topic={TEXT.playTitle}>
+          <InfoList topics={TEXT.help.playList.filter((t) => t.id !== 'connections' || state.connections)} />
+        </Info>
         <span className="fb-note">{TEXT.playScore(state.won, goal)}</span>
         {onClose && (
           <button type="button" className="btn small-btn" onClick={onClose}>
@@ -131,7 +133,6 @@ export function SpilSelv({ item, goal, seed, onDone, onClose, connections, split
       {state.connections && (
         <div className="with-info">
           <p className="fb-note">{connectionsText(state.connections)}</p>
-          <Info topic={TEXT.playConnectionsTitle}>{TEXT.help.playConnections}</Info>
         </div>
       )}
       {prompt && <p role="status">{prompt}</p>}

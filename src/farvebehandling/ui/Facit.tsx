@@ -15,7 +15,7 @@ import { Sandsynlighedsbånd } from './Sandsynlighedsbånd';
 import { PlayResult, SpilSelv } from './SpilSelv';
 import { TEXT } from './texts';
 import { BoardColumn } from '../../ui/BoardColumn';
-import { Info } from '../../ui/Info';
+import { Info, InfoList } from '../../ui/Info';
 
 interface FacitProps {
   task: FbTask;
@@ -28,6 +28,9 @@ interface FacitProps {
 }
 
 const percent = (p: number) => `${formatDecimal(100 * p, 1)} %`;
+
+/** Emnerne i facits ⓘ ved Linjerne: det, der findes i facit (SPEC-design-som-forsiden.md, Del 3). */
+const FACIT_TOPICS = ['lines', 'average', 'result'];
 
 /** Opgavens linjer med bogstaverne fra opgaven; den bedste markeres. */
 function facitLines(task: FbTask): LineView[] {
@@ -138,7 +141,12 @@ export function Facit({ task, answer, graded, reward, place, onNext }: FacitProp
       <div className="fb-facit">
         {place && <Rumkort room={place.room} station={place.station?.order ?? null} scene={place.station?.scene} />}
         <section className="card" aria-labelledby="fb-all-layouts">
-          <h2 id="fb-all-layouts">{TEXT.allLayouts}</h2>
+          <div className="with-info">
+            <h2 id="fb-all-layouts">{TEXT.allLayouts}</h2>
+            <Info topic={TEXT.allLayouts}>
+              <InfoList topics={TEXT.help.layoutsList} />
+            </Info>
+          </div>
           <GroupingButtons grouping={grouping} onChange={setGrouping} />
           <LayoutList fields={fields} lines={lines} selected={selected} onSelect={setSelected} grouping={grouping} />
         </section>
@@ -201,7 +209,9 @@ export function Facit({ task, answer, graded, reward, place, onNext }: FacitProp
       <section className="card" aria-labelledby="fb-facit-lines">
 <div className="with-info">
           <h2 id="fb-facit-lines">{TEXT.lines}</h2>
-          <Info topic={TEXT.lines}>{TEXT.help.lines}</Info>
+          <Info topic={TEXT.lines}>
+            <InfoList topics={TEXT.help.linesList.filter((t) => FACIT_TOPICS.includes(t.id))} />
+          </Info>
         </div>
         <div className="fb-lines">
           {lines.map((l, i) => (

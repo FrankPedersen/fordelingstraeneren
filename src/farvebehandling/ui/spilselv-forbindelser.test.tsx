@@ -58,7 +58,7 @@ describe('Spil den selv med forbindelser (SPEC-forbindelser.md, trin 3)', { time
     expect(within(play).getByText('Nord inde · Syd 0 indgange')).toBeTruthy();
     expect(card('din hånd: 4').disabled).toBe(true);
     expect(card('bordet: K').disabled).toBe(false);
-    fireEvent.click(within(play).getByRole('button', { name: 'Hjælp: Forbindelser i spillet' }));
+    fireEvent.click(within(play).getByRole('button', { name: 'Hjælp: Spil den selv' }));
     expect(within(play).getByRole('note').textContent).toMatch(/indgang/);
   });
 
@@ -68,7 +68,7 @@ describe('Spil den selv med forbindelser (SPEC-forbindelser.md, trin 3)', { time
     click('Set the situation');
     const play = await openPlay('Entries to South: one less', 'On lead', 'North', 'Play it yourself ▶');
     expect(within(play).getByText('North on lead · South 0 entries')).toBeTruthy();
-    fireEvent.click(within(play).getByRole('button', { name: 'Help: Entries in play' }));
+    fireEvent.click(within(play).getByRole('button', { name: 'Help: Play it yourself' }));
     const note = within(play).getByRole('note').textContent ?? '';
     expect(note).not.toMatch(/[æøåÆØÅ]|\b(og|inde|indgang|indgange|hånden|bordet|udspil)\b/i);
   });

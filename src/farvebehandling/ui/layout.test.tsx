@@ -6,6 +6,7 @@ import { bandFields, disagreements, linesForGoal, sortFields } from '../analysis
 import { TEST_BANK } from '../testBank';
 import { LayoutList } from './Analysevindue';
 import { Linjekort } from './Linjekort';
+import { TEXT } from './texts';
 
 // Fanebjælkens stylesheet tjekkes i tabs.test.ts, som kører i Node og kan læse filen.
 
@@ -23,7 +24,7 @@ afterEach(() => {
 });
 
 describe('Analysevinduets layout (SPEC-analysevindue-layout.md)', () => {
-  it('bankens viste linjer har stik pr. sidning, og gennemsnittet står på linjekortet med ⓘ på begge sprog', () => {
+  it('bankens viste linjer har stik pr. sidning, og snittet står på linjekortet på begge sprog, og forklaringen står i den samlede ⓘ', () => {
     let checked = 0;
     for (const b of TEST_BANK) {
       for (const g of b.combination.goals) {
@@ -37,20 +38,18 @@ describe('Analysevinduets layout (SPEC-analysevindue-layout.md)', () => {
     expect(checked).toBeGreaterThan(1000);
     const line = lines[0];
     render(<Linjekort line={line} />);
-    const text = `Flest stik i gennemsnit: ${line.average!.toFixed(2).replace('.', ',')} stik`;
+    const text = `Flest stik i snit: ${line.average!.toFixed(2).replace('.', ',')}`;
     expect(screen.getByText(text)).toBeTruthy();
-    fireEvent.click(screen.getByRole('button', { name: 'Hjælp: Stik i gennemsnit' }));
-    expect(screen.getByText(/vægtet efter chance/)).toBeTruthy();
+    expect(TEXT.help.linesList.find((t) => t.id === 'average')?.text).toMatch(/vægtet efter chance/);
     cleanup();
     setLang('en');
     render(<Linjekort line={line} />);
-    expect(screen.getByText(`Average tricks: ${line.average!.toFixed(2)}`)).toBeTruthy();
-    fireEvent.click(screen.getByRole('button', { name: 'Help: Average tricks' }));
-    expect(screen.getByText(/weighted by chance/)).toBeTruthy();
+    expect(screen.getByText(`Avg. tricks: ${line.average!.toFixed(2)}`)).toBeTruthy();
+    expect(TEXT.help.linesList.find((t) => t.id === 'average')?.text).toMatch(/weighted by chance/);
     cleanup();
     // Før svaret vises gennemsnittet ikke.
     render(<Linjekort line={line} hideResult />);
-    expect(screen.queryByText(/Average tricks/)).toBeNull();
+    expect(screen.queryByText(/Avg\. tricks/)).toBeNull();
   }, 30_000);
 
   it('tabellen har én kolonne pr. viste linje, de afgørende sidninger først, og hvert felt har ✓ eller ✕ og stik', () => {

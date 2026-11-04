@@ -52,8 +52,8 @@ describe('Guiden i Analyse (SPEC-analyse-modul.md, trin 3)', { timeout: 30_000 }
     // Øverst: før alle analysens øvrige knapper (efter skærmens hoved).
     const buttons = [...document.querySelectorAll('main button')].filter((b) => !b.closest('header'));
     expect(buttons[0]).toBe(guide);
-    fireEvent.click(screen.getByRole('button', { name: 'Hjælp: Guide' }));
-    expect(screen.getByText('Sådan bruger du analysen, og sådan regner den.')).toBeTruthy();
+    // Guide er selv hjælpen til skærmen og har ingen ⓘ (SPEC-design-som-forsiden.md, Del 3).
+    expect(document.querySelector('.fb-guide-bar .info-btn')).toBeNull();
     fireEvent.click(guide);
     expect(await screen.findByRole('heading', { name: 'Guide til Farvebehandling – Analyse' }, WAIT)).toBeTruthy();
   });
@@ -120,8 +120,7 @@ describe('Guiden i Analyse (SPEC-analyse-modul.md, trin 3)', { timeout: 30_000 }
   it('på engelsk viser knappen Guide den engelske guide', async () => {
     setLang('en');
     render(<Analysevindue bank={BANK} />);
-    fireEvent.click(screen.getByRole('button', { name: 'Help: Guide' }));
-    expect(screen.getByText('How to use the analysis, and how it calculates.')).toBeTruthy();
+    expect(document.querySelector('.fb-guide-bar .info-btn')).toBeNull();
     click('Guide');
     await screen.findByRole('heading', { name: 'Guide to Suit Combinations – Analysis' }, WAIT);
     const shown = screen.getAllByRole('heading').map((h) => h.textContent);

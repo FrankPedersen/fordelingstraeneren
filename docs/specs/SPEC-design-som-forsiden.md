@@ -48,15 +48,23 @@ Skærmbilleder til Frank efter Del 2: 1280 og 390 px af Analyse (også rullet ti
 
 I alt 5 ⓘ, uanset antal linjer. Hver samlet ⓘ har en kort liste med fed overskrift pr. emne og én eller to sætninger i beskrivende form, og intet indhold går tabt. Facit i Træning følger samme regel. Engelsk følger med.
 
+Frank tilføjede 4. november 2026:
+
+1. **Linjekortene:** "Flest stik i snit: 1,86" i stedet for "Flest stik i gennemsnit: 1,86 stik", og på engelsk "Avg. tricks: 1.86".
+2. **Med præcis fire linjer** står linjekortene 2 × 2 fra 1000 px. Med tre eller færre står de i én række, og med fem eller flere i rækker af tre.
+3. **Tab-rækkefølgen følger det, man ser:** Spil den selv flyttes efter Situationen i HTML'en. Det gælder også på mobil, hvor det kommer til at stå under Situationen. `scripts/tjek-bred-layout.mjs` tjekker, at intet andet flytter sig.
+
+Til Frank: de samlede ⓘ-tekster for Linjerne og Problemet før og efter, og skærmbilleder ved 1280 og 390 px af Analyse med fire linjer. Frank godkender, før der flettes.
+
 ## Accepttest
 
 - [x] Del 1: farverne og skriften i tabellen er brugt overalt; ingen #5b6b82 eller system-ui tilbage; mørk tilstand har kontrast 4,5:1; `tokens.test.ts` består.
 - [x] Del 2: punkt 1–6 (sidefoden under Åbne punkter); `node scripts/tjek-bred-layout.mjs` er grøn, også overlap og pixelsammenligninger; Analyse ved 1280 px ligner `Analyse.png`.
-- [ ] Del 3: Analyse med tre linjer og udfyldt situation har præcis 5 ⓘ; ingen ⓘ ved Guide eller i titellinjen; hver samlet ⓘ indeholder alle emner fra de gamle.
+- [x] Del 3: Analyse med tre linjer og udfyldt situation har præcis 5 ⓘ; ingen ⓘ ved Guide eller i titellinjen; hver samlet ⓘ indeholder alle emner fra de gamle.
 - [ ] Under 1000 px er layoutet som før (Del 2 og 3 ændrer kun ⓘ og farver dér).
 - [ ] `npm test`, fagordstesten og testen for beskrivende form er grønne.
 
-Giv Frank skærmbilleder ved 1280 og 390 px af forsiden, Træning, Analyse og Pointregnskab efter Del 1 og Del 3 (Del 2 har sin egen liste ovenfor), og vis de samlede ⓘ-tekster for Linjerne og Problemet før og efter. Frank godkender hver del, før der flettes.
+Giv Frank skærmbilleder ved 1280 og 390 px af forsiden, Træning, Analyse og Pointregnskab efter Del 1 (Del 2 og Del 3 har deres egne lister ovenfor). Frank godkender hver del, før der flettes.
 
 ## Konventionstræneren
 
@@ -81,6 +89,15 @@ Den bruger allerede Subtle Gradient (samme værdier som forsiden). Kun `multi-sv
 15. **De afgørende sidninger og Resultatet:** de står side om side fra 1200 px, i forholdet 1,4 : 1 og ikke tegningens 1,2 : 1, fordi eksemplet på tegningen kun har tre linjer. Under 1200 px og med mere end fire linjer står de under hinanden, så alle kolonner kan ses uden at rulle. Fra 1000 px hedder kolonnerne kun A, B, C, og kolonnen "afgør" er væk, når kun de afgørende sidninger vises, for mærket står over tabellen.
 16. **Referencebillederne** ligger ikke i git: `scripts/tjek-bred-layout.mjs` starter appen fra tagget `v34-foer-analyse-layout` (appen efter Del 1) i en midlertidig worktree og sammenligner ved 999 og 390 px. Rettelsen af den deaktiverede primærknap lægges på referencen, så den ikke tæller som en forskel.
 17. **Konventionstræneren:** `multi-svar-traener.html` fik det brede layout med `SPEC-bred-layout.md` og er ikke en del af Del 2.
+18. **Valgene fra Del 2:** De afgørende sidninger og Resultatet i 1,4 : 1 og under hinanden med mere end fire linjer, Guide over Vælg kombination og noterne på tegningen, der ikke er bygget, står, som de er (Franks godkendelse 4. november 2026).
+19. **Hvor de gamle ⓘ er gået hen (Del 3):** feltet "Kombination eller spil" har mistet sin ⓘ, og teksten står under Vælg kombination, så der også er 5 ⓘ i kortvælgeren. Kortvælgerens tekst, der før ikke blev vist, står nu samme sted. Ordet "Sammenlign" under linjekortene var kun ⓘ's anker og er væk, for hvert kort har afkrydsningen. Teksterne, der havde tre sætninger, er skrevet sammen til to uden at miste indhold, og "✓ bedst" hedder nu "✓ Bedste linje" som på kortet.
+20. **Spil den selv har sin egen ⓘ, mens det er åbent,** med spillet, snittet og forbindelserne, når de er begrænsede. Analyse har derfor 5 ⓘ, og 6, mens der spilles. Sådan er det også fra facit, hvor spillet er en skærm for sig.
+21. **Titellinjen:** ⓘ er væk i Analyse, både i fanen og i modulet, fordi Guide allerede forklarer fanerne og modulet (kapitel 1). I Træning og Selvvalgt bliver ⓘ ved fanerne, for dér er der ingen Guide.
+22. **Facit:** Linjerne samler linjerne, snittet og resultatet, Alle sidninger under Hvorfor har de tre emner fra De afgørende sidninger, og Resultatet har ingen ⓘ.
+23. **Linjekortene efter antal** gælder fra 1000 px. Tre kort i en række er smalle under 1200 px, så Sammenlign står dér på sin egen linje under snittet. Med én eller to linjer fylder kortene hele bredden.
+24. **Pixelsammenligningen i Del 3:** referencen er `v35-foer-analyse-info`. På Analyse, Guide, Facit og Spil den selv skjules ⓘ og Spil den selv i begge apps, "Sammenlign" fjernes, og referencen får snittets nye tekst; så er skærmene pixel for pixel ens ved 999 og 390 px. Rækkefølgen af knapper og links er også den samme, bortset fra at Spil den selv nu kommer lige efter Angiv situationen.
+
+25. **Valgene fra Del 3** (Franks godkendelse 4. november 2026): Spil den selv har sin egen ⓘ, mens det er åbent, ordet Sammenlign under linjekortene er væk, Vælg kombination samler også feltet Kombination eller spil og kortvælgeren, og fanernes ⓘ bliver i Træning og Selvvalgt.
 
 ## Åbne punkter
 

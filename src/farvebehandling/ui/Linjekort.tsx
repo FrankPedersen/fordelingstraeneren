@@ -3,7 +3,6 @@ import { formatDecimal } from '../../engine/format';
 import type { LineView } from '../analysis';
 import { TEXT } from './texts';
 import { stepText } from '../lineText';
-import { Info } from '../../ui/Info';
 
 interface LinjekortProps {
   line: LineView;
@@ -78,7 +77,6 @@ export function Linjekort({ line, hideResult = false, chosen = false, selected =
       {!hideResult && line.average != null && (
         <div className="with-info">
           <span className="fb-note">{TEXT.average(formatDecimal(line.average, 2))}</span>
-          <Info topic={TEXT.averageTopic}>{TEXT.help.average}</Info>
         </div>
       )}
     </article>

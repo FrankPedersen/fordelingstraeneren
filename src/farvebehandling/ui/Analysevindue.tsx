@@ -37,7 +37,7 @@ import { allLinesForGoal, leadKey, uniqueWinners } from './linjevalg';
 import { TEXT } from './texts';
 import { lineErrorText, stepText } from '../lineText';
 import { BoardColumn } from '../../ui/BoardColumn';
-import { Info } from '../../ui/Info';
+import { Info, InfoList } from '../../ui/Info';
 
 interface AnalysevindueProps {
   bank: readonly BankItem[];
@@ -308,7 +308,6 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
           <button type="button" className="btn small-btn" onClick={() => setGuide(true)}>
             {TEXT.guide.button}
           </button>
-          <Info topic={TEXT.guide.button}>{TEXT.help.guide}</Info>
         </div>
       </div>
       <div className="fb-analysis cols">
@@ -316,7 +315,9 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
           <section className="card" aria-labelledby="fb-choose">
   <div className="with-info">
             <h2 id="fb-choose">{TEXT.choose}</h2>
-            <Info topic={TEXT.choose}>{TEXT.help.choose}</Info>
+            <Info topic={TEXT.choose}>
+              <InfoList topics={TEXT.help.chooseList} />
+            </Info>
           </div>
             <div className="fb-segment" role="group" aria-label={TEXT.choose}>
               <button type="button" className={`btn small-btn${mode === 'bank' ? ' selected' : ''}`} aria-pressed={mode === 'bank'} onClick={() => setMode('bank')}>
@@ -392,7 +393,12 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
 
           <BoardColumn>
           <section className="card" aria-labelledby="fb-problem">
-            <h2 id="fb-problem">{TEXT.problem}</h2>
+            <div className="with-info">
+              <h2 id="fb-problem">{TEXT.problem}</h2>
+              <Info topic={TEXT.problem}>
+                <InfoList topics={TEXT.help.problemList} />
+              </Info>
+            </div>
             <Bridgebord
               north={item.north}
               south={item.south}
@@ -412,7 +418,6 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
             )}
             <div className="fb-goals" role="group" aria-label={TEXT.goalLabel}>
               <span>{TEXT.goalLabel}</span>
-              <Info topic={TEXT.goalLabel}>{TEXT.help.goals}</Info>
               {item.combination.goals.map((g) => (
                 <button
                   key={g}
@@ -425,14 +430,15 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
                 </button>
               ))}
             </div>
-            {solvedGoal && playSeed === null && (
-              <button type="button" className="btn small-btn fb-play-start" onClick={() => setPlaySeed(randomSeed())}>
-                {TEXT.playButton}
-              </button>
-            )}
           </section>
 
           <Situationspanel north={item.north} south={item.south} situation={situation} onChange={setSituation} />
+
+          {solvedGoal && playSeed === null && (
+            <button type="button" className="btn small-btn fb-play-start" onClick={() => setPlaySeed(randomSeed())}>
+              {TEXT.playButton}
+            </button>
+          )}
 
           {playSeed !== null && solvedGoal && (
             <SpilSelv
@@ -450,7 +456,9 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
           <section className="card" aria-labelledby="fb-lines">
   <div className="with-info">
             <h2 id="fb-lines">{TEXT.lines}</h2>
-            <Info topic={TEXT.lines}>{TEXT.help.lines}</Info>
+            <Info topic={TEXT.lines}>
+              <InfoList topics={TEXT.help.linesList} />
+            </Info>
           </div>
             {pending && (
               <div className="fb-room-row">
@@ -464,7 +472,7 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
             )}
             {!pending && !solvedGoal && <p className="fb-note">{TEXT.goalNotSolved}</p>}
             {!solvedGoal && mode !== 'picker' && busyNote}
-            <div className="fb-lines">
+            <div className={`fb-lines fb-lines-${Math.min(lines.length, 5)}`}>
               {lines.map((l) => (
                 <Linjekort
                   key={l.letter}
@@ -473,23 +481,17 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
                 />
               ))}
             </div>
-            {solvedGoal && (
+            {solvedGoal && (moreLeads || allLeads) && (
               <div className="with-info">
-                {(moreLeads || allLeads) && (
-                  <button type="button" className="btn small-btn" aria-pressed={allLeads} onClick={() => setAllLeads(!allLeads)}>
-                    {allLeads ? TEXT.lineChoice.showMain : TEXT.lineChoice.showAll}
-                  </button>
-                )}
-                {(moreLeads || allLeads) && <Info topic={TEXT.lineChoice.showAll}>{TEXT.help.allLeads}</Info>}
-                <span className="fb-note">{TEXT.lineChoice.compare}</span>
-                <Info topic={TEXT.lineChoice.compare}>{TEXT.help.compare}</Info>
+                <button type="button" className="btn small-btn" aria-pressed={allLeads} onClick={() => setAllLeads(!allLeads)}>
+                  {allLeads ? TEXT.lineChoice.showMain : TEXT.lineChoice.showAll}
+                </button>
               </div>
             )}
             {saved && update && solvedGoal && (
               <>
                 <div className="with-info fb-own-head">
                   <h3>{TEXT.ownLines}</h3>
-                  <Info topic={TEXT.ownLines}>{TEXT.help.ownLines}</Info>
                 </div>
                 <div className="fb-lines fb-own-lines">
                   {ownViews.map((o, i) =>
@@ -589,7 +591,9 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
           <section className={`card${shownLines.length > 4 ? ' fb-details-wide' : ''}`} aria-labelledby="fb-details">
   <div className="with-info">
             <h2 id="fb-details">{showAll ? TEXT.details : TEXT.decisive}</h2>
-            <Info topic={TEXT.details}>{TEXT.help.layouts}</Info>
+            <Info topic={TEXT.details}>
+              <InfoList topics={TEXT.help.layoutsList} />
+            </Info>
           </div>
             {unique && (
               <p>
@@ -709,7 +713,6 @@ export function LayoutList({
         <div className="with-info">
           <span className="fb-decides">{TEXT.decides}</span>
           <span className="fb-decisive-summary">{TEXT.decisiveSummary(sidings(decisive), percent(chanceOf(decisive)))}</span>
-          <Info topic={TEXT.decides}>{TEXT.help.decides}</Info>
         </div>
       )}
       <div className="fb-table-scroll">
@@ -721,7 +724,6 @@ export function LayoutList({
               <th scope="col">
                 <span className="fb-th-info">
                   {TEXT.chanceHeader}
-                  <Info topic={TEXT.chanceHeader}>{TEXT.help.chanceColumn}</Info>
                 </span>
               </th>
               {lines.map((l) => (

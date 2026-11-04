@@ -7,6 +7,27 @@ interface InfoProps {
   children: ReactNode;
 }
 
+/** Et emne i en samlet ⓘ: fed overskrift og højst to sætninger (SPEC-design-som-forsiden.md, Del 3). */
+export interface InfoTopic {
+  id: string;
+  title: string;
+  text: string;
+}
+
+/** Indholdet i en samlet ⓘ: en kort liste med ét punkt pr. emne. */
+export function InfoList({ topics }: { topics: readonly InfoTopic[] }) {
+  return (
+    <span className="info-list" role="list">
+      {topics.map((t) => (
+        <span key={t.id} className="info-item" role="listitem">
+          <strong>{t.title}</strong>
+          <span>{t.text}</span>
+        </span>
+      ))}
+    </span>
+  );
+}
+
 /**
  * Et lille ⓘ ved et element. Et tryk viser en kort forklaring lige under elementet, et nyt tryk skjuler den. Kræver
  * ikke hover. Står det i en `.with-info`-række, kommer ⓘ ved siden af elementet og forklaringen på linjen under.

@@ -1451,6 +1451,17 @@ button.cell {
   color: var(--text);
 }
 
+/* Den samlede ⓘ: en kort liste med fed overskrift pr. emne (SPEC-design-som-forsiden.md, Del 3). */
+.info-list {
+  display: grid;
+  gap: 8px;
+}
+
+.info-item,
+.info-item > strong {
+  display: block;
+}
+
 .info-text {
   display: block;
   flex-basis: 100%;
@@ -2241,7 +2252,6 @@ button.cell {
   }
 
   .fb-analysis .wide-left > [aria-labelledby='fb-situation'] {
-    order: 1;
     gap: var(--space-8);
     padding-top: var(--space-12);
     border-top: 1px solid var(--line);
@@ -2269,7 +2279,6 @@ button.cell {
   }
 
   .fb-analysis .wide-left .fb-play-start {
-    order: 2;
     width: 100%;
     min-height: 48px;
     border-color: var(--accent);
@@ -2280,7 +2289,6 @@ button.cell {
   }
 
   .fb-analysis .wide-left > .fb-play {
-    order: 3;
     padding-top: var(--space-12);
     border-top: 1px solid var(--line);
   }
@@ -2339,7 +2347,7 @@ button.cell {
     font-size: 1.25rem;
   }
 
-  /* Linjerne: op til tre kort side om side; chancen fremhævet, mærket under, og Sammenlign og gennemsnittet nederst. */
+  /* Linjerne: tre eller færre i én række, fire som 2 × 2, fem eller flere i rækker af tre; chancen fremhævet, mærket under, og Sammenlign og snittet nederst. */
   .fb-analysis [aria-labelledby='fb-lines'] {
     grid-template-columns: auto auto minmax(0, 1fr);
     align-items: center;
@@ -2388,8 +2396,17 @@ button.cell {
 
   .fb-analysis .fb-lines:not(.fb-own-lines) {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: repeat(var(--line-columns, 3), minmax(0, 1fr));
     gap: var(--space-12);
+  }
+
+  .fb-analysis .fb-lines-1 {
+    --line-columns: 1;
+  }
+
+  .fb-analysis .fb-lines-2,
+  .fb-analysis .fb-lines-4 {
+    --line-columns: 2;
   }
 
   .fb-analysis .fb-lines:not(.fb-own-lines) > .fb-line {
@@ -2560,6 +2577,24 @@ button.cell {
     font-size: 1.625rem;
     font-weight: 800;
     line-height: 1.1;
+  }
+}
+
+/* Tre kort i en række under 1200 px er smalle, så Sammenlign står på sin egen linje under snittet. */
+@media (min-width: 1000px) and (max-width: 1199.98px) {
+  .fb-analysis .fb-lines:not(.fb-own-lines) > .fb-line {
+    grid-template-rows: auto auto 1fr auto auto auto;
+  }
+
+  .fb-analysis .fb-lines:not(.fb-own-lines) .fb-line > .with-info {
+    grid-column: 1 / -1;
+  }
+
+  .fb-analysis .fb-lines:not(.fb-own-lines) .fb-compare {
+    grid-column: 1 / -1;
+    grid-row: 6;
+    justify-self: start;
+    margin-top: var(--space-4);
   }
 }
 

@@ -3,7 +3,6 @@ import type { BankItem, LineView } from '../analysis';
 import { eveningText } from '../model/frequency';
 import { TEXT } from './texts';
 import { stepText } from '../lineText';
-import { Info } from '../../ui/Info';
 
 interface ResultatkortProps {
   item: BankItem;
@@ -21,7 +20,6 @@ export function Resultatkort({ item, goal, best }: ResultatkortProps) {
     <section className="card fb-result" aria-labelledby="fb-result-title">
       <div className="with-info">
         <h2 id="fb-result-title">{TEXT.result}</h2>
-        <Info topic={TEXT.result}>{TEXT.help.result}</Info>
       </div>
       {/* Fra 1000 px i Analyse står chancen fremhævet og den korte sætning under; ellers den lange sætning. */}
       <p className="fb-result-wide fb-result-big">{TEXT.resultBig(chance, goal)}</p>
