@@ -1,13 +1,13 @@
 // @vitest-environment jsdom
 import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { formatDecimal } from '../../engine/format';
-import { setLang } from '../../i18n';
-import { bandFields, linesForGoal } from '../analysis';
-import { bankItem } from '../testBank';
-import { LayoutList } from './Analysevindue';
-import { Resultatkort } from './Resultatkort';
-import { SpilSelv } from './SpilSelv';
+import { formatDecimal } from './engine/format';
+import { setLang } from './i18n';
+import { bandFields, linesForGoal } from './farvebehandling/analysis';
+import { bankItem } from './farvebehandling/testBank';
+import { LayoutList } from './farvebehandling/ui/Analysevindue';
+import { Resultatkort } from './farvebehandling/ui/Resultatkort';
+import { SpilSelv } from './farvebehandling/ui/SpilSelv';
 
 // Accepttest for Del 2 i SPEC-design-som-forsiden.md. Overlap og Analyse efter tegningen ses i en rigtig browser i
 // scripts/tjek-bred-layout.mjs; her er reglerne i stylesheetet og det, der kan testes uden en browser.

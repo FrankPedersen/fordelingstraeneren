@@ -17,7 +17,10 @@ export function BoardColumn({ children, className = '' }: { children: ReactNode;
     const observer = new ResizeObserver(check);
     observer.observe(el);
     // Står spalten ved sin højeste højde, ændrer den sig ikke, når indholdet vokser, så indholdet følges også.
-    el.querySelectorAll(':scope > *, :scope > * > *').forEach((child) => observer.observe(child));
+    for (const child of Array.from(el.children)) {
+      observer.observe(child);
+      for (const inner of Array.from(child.children)) observer.observe(inner);
+    }
     window.addEventListener('resize', check);
     check();
     return () => {
