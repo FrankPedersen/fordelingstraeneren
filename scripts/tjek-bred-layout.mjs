@@ -707,6 +707,8 @@ try {
     for (const [bredde, højde] of [[1280, 900], [1000, 700], [390, 844]]) {
       s = await åbn('analyse', bredde, højde);
       await s.klik('Hjælp: Problemet');
+      // Under 1000 px åbner ⓘ i kortet langt nede på siden, så billedet rulles dertil.
+      if (bredde < 1000) await s.kør(`document.querySelector('[aria-label="Hjælp: Problemet"]').scrollIntoView({ block: 'start' }); window.scrollBy(0, -16); true`);
       gem(`${bredde}-problemet-info-aaben.png`, await s.vindue());
       await s.luk();
     }
