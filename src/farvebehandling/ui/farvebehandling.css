@@ -579,6 +579,12 @@
   font-size: var(--type-h3);
 }
 
+/* Den fremhævede chance og den korte sætning og den korte etiket i hp-filteret vises kun fra 1000 px i Analyse (styles.css). */
+.fb-result-wide,
+.fb-filter-short {
+  display: none;
+}
+
 /* Træning og Selvvalgt ligger i appens kolonne */
 
 .fb-narrow {

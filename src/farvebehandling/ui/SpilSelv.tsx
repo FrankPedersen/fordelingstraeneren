@@ -50,6 +50,7 @@ export function SpilSelv({ item, goal, seed, onDone, onClose, connections, split
   const rng = useMemo(() => mulberry32((seed + Math.imul(round, 0x9e3779b1)) >>> 0), [seed, round]);
   const [state, setState] = useState<PlayState>(() => startPlay(item, dealCards(item, rng), connections));
   const reported = useRef(false);
+  const root = useRef<HTMLElement>(null);
   const done = finished(state);
 
   useEffect(() => {
@@ -58,6 +59,11 @@ export function SpilSelv({ item, goal, seed, onDone, onClose, connections, split
       onDone(state);
     }
   }, [done, onDone, state]);
+
+  // Efter sidste stik rulles dommen og resultatet frem, hvis de ikke kan ses (SPEC-design-som-forsiden.md, Del 2).
+  useEffect(() => {
+    if (done && !onDone) root.current?.querySelector('.fb-play-result')?.scrollIntoView?.({ block: 'nearest' });
+  }, [done, onDone]);
 
   function lead(hand: Hand, card: Rank) {
     let next = playLead(state, hand, card, rng);
@@ -96,7 +102,7 @@ export function SpilSelv({ item, goal, seed, onDone, onClose, connections, split
       : TEXT.playLeadPrompt;
 
   return (
-    <section className={`card fb-play${split ? ' cols' : ''}`} aria-label={TEXT.playTitle}>
+    <section ref={root} className={`card fb-play${split ? ' cols' : ''}`} aria-label={TEXT.playTitle}>
       <header className="fb-room-row wide-full">
         <h2>{TEXT.playTitle}</h2>
         <Info topic={TEXT.playTitle}>{TEXT.help.play}</Info>

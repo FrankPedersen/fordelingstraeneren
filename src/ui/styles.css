@@ -42,6 +42,7 @@
   --footer-accent: #ff9f4a;
   /* Kort 24 px, felter og knapper 12 px, chips og piller 9999 px. */
   --radius: 24px;
+  --radius-16: 16px;
   --radius-12: 12px;
   --radius-pill: 9999px;
   /* Skriften er selvhostet i public/fonts som på forsiden; symbolskriften giver ♠ ♥ ♦ ♣, som Inter ikke har. */
@@ -252,6 +253,14 @@ p {
 
 .btn:disabled {
   opacity: 0.4;
+}
+
+/* Deaktiveret primærknap: neutral grå i begge tilstande, ikke dæmpet orange (SPEC-design-som-forsiden.md, Del 2). */
+.btn.primary:disabled {
+  background: var(--surface-2);
+  border-color: var(--surface-2);
+  color: var(--muted);
+  opacity: 1;
 }
 
 .btn.small-btn {
@@ -1924,10 +1933,17 @@ button.cell {
     min-width: 0;
   }
 
-  /* Venstre spalte står fast, når den kan være i vinduet (BoardColumn sætter wide-fast). */
-  .wide-left.wide-fast {
+  /*
+   * Venstre spalte står kun fast, når skærmen har to spalter, og kun når den er lavere end vinduet (BoardColumn sætter
+   * wide-fast); ellers ruller den med. Den har ingen z-index og kan ikke dække noget (SPEC-design-som-forsiden.md, Del 2).
+   */
+  .cols > .wide-left.wide-fast,
+  .fb-column > .wide-left.wide-fast,
+  .fb-guide > .wide-left.wide-fast,
+  .guide-cols > .wide-left.wide-fast {
     position: sticky;
     top: 16px;
+    max-height: calc(100vh - 32px);
   }
 
   /* Ét kort på mobil bliver to kort: bordets og opgavens (mockuppens bud A). */
@@ -2083,10 +2099,15 @@ button.cell {
     display: contents;
   }
 
+  .fb-analysis.cols {
+    --board-column: 400px;
+    column-gap: var(--space-20);
+  }
+
   .fb-analysis.cols > .fb-column > * {
     grid-column: 2;
     min-width: 0;
-    margin-bottom: var(--space-16);
+    margin-bottom: var(--space-20);
   }
 
   .fb-analysis.cols > .fb-column > [aria-labelledby='fb-choose'] {
@@ -2097,7 +2118,477 @@ button.cell {
     grid-column: 1;
     grid-row: span 40;
     margin-bottom: 0;
+    gap: var(--space-16);
+    padding: 22px 24px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
   }
+
+  /*
+   * Analyse som tegningen (SPEC-design-som-forsiden.md, Del 2, docs/specs/design/Analyse.png). Rækkefølgen i HTML er
+   * uændret, så mobilen er som før: kortene placeres her, og Problemet og Situationen bliver ét kort, fordi den venstre
+   * spalte er kortet, og de to sektioner ikke har deres egen flade.
+   */
+  .fb-analysis .card {
+    gap: 14px;
+    padding: 22px 24px;
+  }
+
+  .fb-analysis h2 {
+    font-size: 1.25rem;
+  }
+
+  /* Vælg kombination: Banken og Kortvælger i overskriften, hp-filteret på én linje, kombinationerne i tre kolonner. */
+  .fb-analysis [aria-labelledby='fb-choose'] {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+
+  .fb-analysis [aria-labelledby='fb-choose'] > * {
+    grid-column: 1 / -1;
+  }
+
+  .fb-analysis [aria-labelledby='fb-choose'] > .with-info {
+    grid-column: 1;
+  }
+
+  .fb-analysis [aria-labelledby='fb-choose'] > .fb-segment {
+    grid-column: 2;
+    flex-wrap: nowrap;
+  }
+
+  .fb-analysis .fb-segment,
+  .fb-analysis .fb-goals {
+    gap: var(--space-6);
+    font-size: 0.875rem;
+  }
+
+  .fb-analysis .fb-segment .btn,
+  .fb-analysis .fb-goals .btn {
+    min-height: 38px;
+    padding: 0 14px;
+    font-size: 0.875rem;
+  }
+
+  .fb-analysis .fb-filter {
+    align-items: center;
+    gap: var(--space-6);
+    color: var(--muted);
+    font-size: 0.8125rem;
+  }
+
+  .fb-analysis .fb-filter-long {
+    display: none;
+  }
+
+  .fb-analysis .fb-filter-short {
+    display: inline;
+    margin-right: var(--space-4);
+  }
+
+  /* Pillerne er 34 px høje, men har stadig en trykflade på 44 px. */
+  .fb-analysis .fb-filter .btn {
+    position: relative;
+    min-height: 34px;
+    padding: 0 10px;
+    border-radius: var(--radius-pill);
+    color: var(--text);
+    font-size: 0.8125rem;
+    font-weight: 400;
+  }
+
+  .fb-analysis .fb-filter .btn::after {
+    content: '';
+    position: absolute;
+    inset: -5px 0;
+  }
+
+  .fb-analysis .fb-filter .selected {
+    border-color: var(--text);
+    box-shadow: none;
+    background: var(--text);
+    color: var(--surface);
+    font-weight: 600;
+  }
+
+  .fb-analysis .fb-bank {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-8);
+    max-height: 160px;
+  }
+
+  .fb-analysis .fb-bank li {
+    display: grid;
+  }
+
+  .fb-analysis .fb-bank-item {
+    min-height: 38px;
+    padding: var(--space-8) var(--space-14);
+    font-size: 0.875rem;
+  }
+
+  /* Problemet og Situationen er ét kort: mål, situation og Spil den selv nederst. */
+  .fb-analysis .wide-left > .card {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+  }
+
+  .fb-analysis .wide-left > [aria-labelledby='fb-problem'] {
+    display: contents;
+  }
+
+  .fb-analysis .wide-left > [aria-labelledby='fb-situation'] {
+    order: 1;
+    gap: var(--space-8);
+    padding-top: var(--space-12);
+    border-top: 1px solid var(--line);
+    font-size: 0.875rem;
+  }
+
+  .fb-analysis #fb-situation {
+    font-size: 0.875rem;
+  }
+
+  .fb-analysis [aria-labelledby='fb-situation'] > .fb-room-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-8);
+  }
+
+  .fb-analysis [aria-labelledby='fb-situation'] > .fb-room-row > span {
+    color: var(--muted);
+  }
+
+  .fb-analysis [aria-labelledby='fb-situation'] > .fb-room-row > .btn {
+    width: 100%;
+    min-height: 40px;
+    font-size: 0.875rem;
+  }
+
+  .fb-analysis .wide-left .fb-play-start {
+    order: 2;
+    width: 100%;
+    min-height: 48px;
+    border-color: var(--accent);
+    border-radius: var(--radius-pill);
+    background: var(--accent);
+    color: var(--accent-text);
+    font-size: 1rem;
+  }
+
+  .fb-analysis .wide-left > .fb-play {
+    order: 3;
+    padding-top: var(--space-12);
+    border-top: 1px solid var(--line);
+  }
+
+  /* Bordet i en grå flade med billedteksten under; fladen er et gitterfelt bag de fire sider, uden z-index. */
+  .fb-analysis [aria-labelledby='fb-problem'] .fb-table {
+    padding: 0;
+    row-gap: 10px;
+  }
+
+  .fb-analysis [aria-labelledby='fb-problem'] .fb-table::before {
+    content: '';
+    grid-column: 1 / -1;
+    grid-row: 1 / span 3;
+    align-self: stretch;
+    justify-self: stretch;
+    border-radius: var(--radius-16);
+    background: var(--bg);
+  }
+
+  .fb-analysis [aria-labelledby='fb-problem'] .fb-seat-north {
+    padding-top: var(--space-16);
+  }
+
+  .fb-analysis [aria-labelledby='fb-problem'] .fb-seat-south {
+    padding-bottom: var(--space-16);
+  }
+
+  .fb-analysis [aria-labelledby='fb-problem'] .fb-seat-west {
+    padding-left: var(--space-14);
+  }
+
+  .fb-analysis [aria-labelledby='fb-problem'] .fb-seat-east {
+    padding-right: var(--space-14);
+  }
+
+  .fb-analysis [aria-labelledby='fb-problem'] .fb-compass {
+    width: 168px;
+    min-height: 128px;
+  }
+
+  .fb-analysis [aria-labelledby='fb-problem'] figcaption {
+    margin-top: var(--space-2);
+    font-size: 0.8125rem;
+    text-align: left;
+  }
+
+  /* Spil den selv i spalten på 400 px: kompasset er lidt mindre, så Vest og Øst kan stå ved siden af. */
+  .fb-analysis .fb-play .fb-compass {
+    width: 180px;
+    min-height: 180px;
+  }
+
+  .fb-analysis .fb-play .fb-hand,
+  .fb-analysis .fb-play .fb-hidden-hand {
+    font-size: 1.25rem;
+  }
+
+  /* Linjerne: op til tre kort side om side; chancen fremhævet, mærket under, og Sammenlign og gennemsnittet nederst. */
+  .fb-analysis [aria-labelledby='fb-lines'] {
+    grid-template-columns: auto auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: var(--space-12);
+  }
+
+  .fb-analysis [aria-labelledby='fb-lines'] > * {
+    grid-column: 1 / -1;
+  }
+
+  .fb-analysis [aria-labelledby='fb-lines']::before {
+    content: '';
+    order: 1;
+    grid-column: 1 / -1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .fb-analysis [aria-labelledby='fb-lines'] > .fb-own-head {
+    order: 2;
+    grid-column: 1;
+  }
+
+  .fb-analysis [aria-labelledby='fb-lines'] > .fb-own-add {
+    order: 2;
+    grid-column: 2;
+    min-height: 40px;
+    font-size: 0.875rem;
+  }
+
+  .fb-analysis [aria-labelledby='fb-lines'] > .fb-assumptions {
+    order: 2;
+    grid-column: 3;
+    font-size: 0.75rem;
+    text-align: right;
+  }
+
+  .fb-analysis [aria-labelledby='fb-lines'] > .fb-own-lines,
+  .fb-analysis [aria-labelledby='fb-lines'] > .fb-editor-card {
+    order: 3;
+  }
+
+  .fb-analysis .fb-own-lines:empty {
+    display: none;
+  }
+
+  .fb-analysis .fb-lines:not(.fb-own-lines) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: var(--space-12);
+  }
+
+  .fb-analysis .fb-lines:not(.fb-own-lines) > .fb-line {
+    grid-template-columns: max-content minmax(0, 1fr) max-content;
+    grid-template-rows: auto auto 1fr auto auto;
+    align-content: stretch;
+    gap: 0 var(--space-8);
+    padding: var(--space-14);
+    border-radius: var(--radius-16);
+  }
+
+  .fb-analysis .fb-lines:not(.fb-own-lines) .fb-line-head {
+    display: contents;
+  }
+
+  .fb-analysis .fb-lines:not(.fb-own-lines) .fb-line-head h3 {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: baseline;
+  }
+
+  .fb-analysis .fb-lines:not(.fb-own-lines) .fb-line-value {
+    grid-column: 2 / -1;
+    grid-row: 1;
+    align-self: baseline;
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .fb-analysis .fb-lines:not(.fb-own-lines) .fb-badge {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    justify-self: start;
+    margin-top: var(--space-6);
+    font-size: 0.75rem;
+  }
+
+  .fb-analysis .fb-lines:not(.fb-own-lines) .fb-steps {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    align-self: start;
+    margin-top: var(--space-10);
+    padding-left: 18px;
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+
+  .fb-analysis .fb-lines:not(.fb-own-lines) .fb-line > .fb-note {
+    grid-column: 1 / -1;
+    grid-row: 4;
+    margin-top: var(--space-6);
+    font-size: 0.75rem;
+  }
+
+  .fb-analysis .fb-lines:not(.fb-own-lines) .fb-line > .with-info {
+    grid-column: 1 / 3;
+    grid-row: 5;
+    align-self: end;
+    margin-top: var(--space-10);
+  }
+
+  .fb-analysis .fb-lines:not(.fb-own-lines) .fb-line > .with-info .fb-note {
+    font-size: 0.75rem;
+  }
+
+  .fb-analysis .fb-lines:not(.fb-own-lines) .fb-compare {
+    grid-column: 3;
+    grid-row: 5;
+    align-self: end;
+    margin: var(--space-10) 0 0;
+    min-height: 26px;
+    font-size: 0.75rem;
+  }
+
+  .fb-analysis .fb-compare input {
+    width: var(--space-16);
+    height: var(--space-16);
+  }
+
+  /* Forskellen: Grupper i overskriften til højre. */
+  .fb-analysis [aria-labelledby='fb-difference'] {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+
+  .fb-analysis [aria-labelledby='fb-difference'] > * {
+    grid-column: 1 / -1;
+  }
+
+  .fb-analysis [aria-labelledby='fb-difference'] > .with-info {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .fb-analysis [aria-labelledby='fb-difference'] > .fb-segment {
+    grid-column: 2;
+    grid-row: 1;
+    flex-wrap: nowrap;
+  }
+
+  .fb-analysis [aria-labelledby='fb-details'] > .btn {
+    width: 100%;
+    min-height: 40px;
+  }
+
+  /* Den smalle tabel: kolonnen hedder kun bogstavet, og "afgør" står over tabellen, når kun de afgørende sidninger vises. */
+  .fb-analysis .fb-layout-table {
+    font-size: 0.8125rem;
+  }
+
+  .fb-analysis .fb-layout-table .fb-th-line {
+    display: none;
+  }
+
+  .fb-analysis .fb-layout-table th[data-letter]::after {
+    content: attr(data-letter);
+  }
+
+  .fb-analysis .fb-layout-table th,
+  .fb-analysis .fb-layout-table td {
+    padding: var(--space-4) 3px;
+  }
+
+  .fb-analysis .fb-layout-table .fb-chip {
+    min-width: 0;
+    padding: 1px 3px;
+  }
+
+  .fb-analysis .fb-layout-table .fb-each {
+    font-size: 0.6875rem;
+  }
+
+  .fb-analysis .fb-only-decisive th:last-child,
+  .fb-analysis .fb-only-decisive td:last-child {
+    display: none;
+  }
+
+  /* Resultatet på mørk flade med chancen fremhævet. #c9cdd2 på footer-bg giver 11,6:1, som i topbjælken. */
+  .fb-analysis .fb-result {
+    gap: 10px;
+    border-color: var(--line);
+    background: var(--footer-bg);
+    color: var(--footer-text);
+  }
+
+  .fb-analysis .fb-result h2,
+  .fb-analysis .fb-result h3 {
+    color: #ffffff;
+  }
+
+  .fb-analysis .fb-result .fb-note {
+    color: #c9cdd2;
+  }
+
+  .fb-analysis .fb-result .fb-result-wide {
+    display: block;
+  }
+
+  .fb-analysis .fb-result .fb-result-long {
+    display: none;
+  }
+
+  .fb-analysis .fb-result .fb-result-big {
+    color: var(--footer-accent);
+    font-family: var(--font-display);
+    font-size: 1.625rem;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+}
+
+/* De afgørende sidninger og Resultatet side om side, når der er plads; under 1200 px står de under hinanden. */
+@media (min-width: 1200px) {
+  .fb-analysis.cols {
+    grid-template-columns: var(--board-column) minmax(0, 1.4fr) minmax(0, 1fr);
+  }
+
+  .fb-analysis.cols > .fb-column > * {
+    grid-column: 2 / -1;
+  }
+
+  .fb-analysis.cols > .fb-column > [aria-labelledby='fb-details'] {
+    grid-column: 2;
+  }
+
+  .fb-analysis.cols > .fb-column > .fb-result {
+    grid-column: 3;
+  }
+
+  /* Med mere end fire linjer kan tabellen ikke være i den smalle spalte, så de to kort står under hinanden. */
+  .fb-analysis.cols > .fb-column > .fb-details-wide,
+  .fb-analysis.cols > .fb-column > .fb-details-wide + .fb-result {
+    grid-column: 2 / -1;
+  }
+}
+
+@media (min-width: 1000px) {
 }
 
 /*

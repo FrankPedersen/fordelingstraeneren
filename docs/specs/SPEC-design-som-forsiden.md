@@ -23,13 +23,16 @@ Fordelingstræneren skal se ud som forsiden: samme farver, skrift, hjørner og k
 - **Topbjælken:** titel i Manrope 800, Guide som mørk pille med orange tekst som i tegningen.
 - **Design system "Fordelingstræneren"** opdateres bagefter af Claude (rådgiver); Claude Code skriver tokens i `design/tokens.json`, og `tokens.test.ts` holder filerne i takt.
 
-## Del 2 · Bredt layout (gren `bred-layout`)
+## Del 2 · Bordet og Analyse (gren `analyse-layout`)
 
-Byg `SPEC-bred-layout.md` som skrevet (bud A: bordet til venstre og står fast, opgaven til højre, fra 1000 px). Analyse følger tegningen:
+1. **Bordets spalte står kun fast, når skærmen har to spalter,** og kun når spalten er lavere end vinduet (`max-height: calc(100vh - 32px)`). Ellers ruller den med.
+2. **Spalten må aldrig dække noget:** ingen z-index over indholdet og intet overlap.
+3. **I Spil den selv kan dommen og resultatet altid ses efter sidste stik.**
+4. **`scripts/tjek-bred-layout.mjs` fanger overlap** ved 1280 × 900 og 1000 × 700 på Analyse, Spil den selv, Træning og Pointregnskab. Det første klik rettes samtidig, og nye referencebilleder laves efter Del 1, så pixelsammenligningerne er grønne igen.
+5. **Analyse som tegningen `docs/specs/design/Analyse.png`:** Situationen inde i Problemet-kortet, linjekortene side om side, De afgørende sidninger og Resultatet side om side, Resultatet på mørk flade.
+6. **To små rettelser fra Del 1:** en deaktiveret primærknap (fx Svar) er neutral grå i begge tilstande (`surface-2` med `muted` tekst), ikke dæmpet orange. Sidefoden laves ens med forsidens nye, kompakte sidefod, når `ny-forside` er udgivet. Er den ikke udgivet, når Del 2 bygges, bliver sidefoden, som den er, og det står under Åbne punkter.
 
-- Vælg kombination over hele bredden: Banken/Kortvælger i overskriften, hp-filteret på én linje, kombinationerne i tre kolonner.
-- Venstre spalte (400 px, står fast): Problemet med bordet, første udspil, Mål, **Situationen inde i samme kort** og "Spil den selv".
-- Højre spalte: Linjerne med op til tre linjekort side om side og "Dine linjer" nederst; Forskellen; De afgørende sidninger og Resultatet side om side. Resultatet på mørk flade med chancen fremhævet.
+Skærmbilleder til Frank efter Del 2: 1280 og 390 px af Analyse (også rullet til bunden i Spil den selv), Træning og Pointregnskab. Frank godkender, før der flettes.
 
 ## Del 3 · Én ⓘ pr. kort (gren `analyse-info`)
 
@@ -48,12 +51,12 @@ I alt 5 ⓘ, uanset antal linjer. Hver samlet ⓘ har en kort liste med fed over
 ## Accepttest
 
 - [x] Del 1: farverne og skriften i tabellen er brugt overalt; ingen #5b6b82 eller system-ui tilbage; mørk tilstand har kontrast 4,5:1; `tokens.test.ts` består.
-- [ ] Del 2: accepttestene i `SPEC-bred-layout.md`; Analyse ved 1280 px ligner `Analyse.png`.
+- [x] Del 2: punkt 1–6 (sidefoden under Åbne punkter); `node scripts/tjek-bred-layout.mjs` er grøn, også overlap og pixelsammenligninger; Analyse ved 1280 px ligner `Analyse.png`.
 - [ ] Del 3: Analyse med tre linjer og udfyldt situation har præcis 5 ⓘ; ingen ⓘ ved Guide eller i titellinjen; hver samlet ⓘ indeholder alle emner fra de gamle.
 - [ ] Under 1000 px er layoutet som før (Del 2 og 3 ændrer kun ⓘ og farver dér).
 - [ ] `npm test`, fagordstesten og testen for beskrivende form er grønne.
 
-Giv Frank skærmbilleder ved 1280 og 390 px af forsiden, Træning, Analyse og Pointregnskab efter hver del, og vis de samlede ⓘ-tekster for Linjerne og Problemet før og efter. Frank godkender hver del, før der flettes.
+Giv Frank skærmbilleder ved 1280 og 390 px af forsiden, Træning, Analyse og Pointregnskab efter Del 1 og Del 3 (Del 2 har sin egen liste ovenfor), og vis de samlede ⓘ-tekster for Linjerne og Problemet før og efter. Frank godkender hver del, før der flettes.
 
 ## Konventionstræneren
 
@@ -71,3 +74,14 @@ Den bruger allerede Subtle Gradient (samme værdier som forsiden). Kun `multi-sv
 8. **Layoutet er uændret i Del 1:** stylesheets ændrer kun farver, skrift, vægte, kanter og hjørner. Inter er lidt bredere end den gamle skrift, så tekst kan brydes et andet sted, også under 1000 px.
 9. **`design/tegneflade/`** er de gamle tegninger og bruges ikke af appen; de beholder deres værdier, og designsystemet opdateres af Claude (rådgiver) bagefter.
 10. **Accepttesten for Del 1** er `src/design-forsiden.test.ts` og `node scripts/tjek-design-forsiden.mjs`, der ser på alle synlige elementer på 30 skærme ved 1280 og 390 px i lys og mørk tilstand (120 visninger): skriften er hentet, ingen anden skrift eller vægt, ingen gamle farver, kontrast 4,5:1, intet stikker ud, og ingen knap klipper sin tekst.
+11. **Bordets spalte (Del 2):** den står kun fast som direkte barn af en skærm med to spalter (`.cols`, `.fb-column`, `.fb-guide` og `.guide-cols`), så bordet inde i Spil den selv i Analyse aldrig står fast. `BoardColumn` måler spaltens indhold med `scrollHeight` og følger også det, der står i den, fordi spalten ikke vokser længere, når den er ved sin højeste højde.
+12. **Efter sidste stik** rulles resultatet frem med `scrollIntoView({ block: 'nearest' })`, hvis det ikke kan ses. Står det der allerede, flytter siden sig ikke.
+13. **Analyse ændres kun med CSS fra 1000 px,** og rækkefølgen i HTML er den samme, så mobilen er pixel for pixel som før. Det betyder, at Spil den selv står nederst i Problemet-kortet, men kommer før Situationen, når der tabuleres. Knappen er orange og i fuld bredde fra 1000 px og som før på mobil.
+14. **Tegningen og virkeligheden:** Guide står stadig over Vælg kombination, fordi fanerne står mellem titlen og Analyse. Mærket "står fast" og båndet "5 ⓘ i alt" er noter på tegningen og er ikke bygget. Filteret hedder "Modpartens hp" fra 1000 px, knapperne hedder stadig "1 hp (38)", og forklaringen under Vælg kombination bliver, fordi intet indhold må gå tabt. Sammenlign og gennemsnittet står i samme række som i tegningen; ⓘ'erne fjernes i Del 3.
+15. **De afgørende sidninger og Resultatet:** de står side om side fra 1200 px, i forholdet 1,4 : 1 og ikke tegningens 1,2 : 1, fordi eksemplet på tegningen kun har tre linjer. Under 1200 px og med mere end fire linjer står de under hinanden, så alle kolonner kan ses uden at rulle. Fra 1000 px hedder kolonnerne kun A, B, C, og kolonnen "afgør" er væk, når kun de afgørende sidninger vises, for mærket står over tabellen.
+16. **Referencebillederne** ligger ikke i git: `scripts/tjek-bred-layout.mjs` starter appen fra tagget `v34-foer-analyse-layout` (appen efter Del 1) i en midlertidig worktree og sammenligner ved 999 og 390 px. Rettelsen af den deaktiverede primærknap lægges på referencen, så den ikke tæller som en forskel.
+17. **Konventionstræneren:** `multi-svar-traener.html` fik det brede layout med `SPEC-bred-layout.md` og er ikke en del af Del 2.
+
+## Åbne punkter
+
+- **Sidefoden i Fordelingstræneren** skal være ens med forsidens nye, kompakte sidefod, når `ny-forside` er udgivet (Del 2, punkt 6). 4. november 2026 var den ikke udgivet: `SPEC-ny-forside.md` ligger i `Forside/docs/specs/`, men der er hverken gren eller tag, så sidefoden er uændret. Rettelsen gælder alle bredder og er derfor undtaget reglen om, at intet ændres under 1000 px.

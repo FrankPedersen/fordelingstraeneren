@@ -16,13 +16,17 @@ export function Resultatkort({ item, goal, best }: ResultatkortProps) {
   const tricks = item.solution.tricks;
   const tricksBest = tricks ? tricks.leads[tricks.best] : null;
   const verified = item.combination.verified;
+  const chance = `${formatDecimal(100 * best.value, 1)} %`;
   return (
     <section className="card fb-result" aria-labelledby="fb-result-title">
       <div className="with-info">
         <h2 id="fb-result-title">{TEXT.result}</h2>
         <Info topic={TEXT.result}>{TEXT.help.result}</Info>
       </div>
-      <p>{TEXT.bestChance(goal, best.letter, `${formatDecimal(100 * best.value, 1)} %`)}</p>
+      {/* Fra 1000 px i Analyse står chancen fremhævet og den korte sætning under; ellers den lange sætning. */}
+      <p className="fb-result-wide fb-result-big">{TEXT.resultBig(chance, goal)}</p>
+      <p className="fb-result-wide">{TEXT.bestWith(best.letter)}</p>
+      <p className="fb-result-long">{TEXT.bestChance(goal, best.letter, chance)}</p>
       {tricksBest && (
         <p className="fb-note">{TEXT.pairs(formatDecimal(tricksBest.value, 2), stepText(tricksBest.steps[0] ?? '').replace(/\.$/, '').toLowerCase())}</p>
       )}
