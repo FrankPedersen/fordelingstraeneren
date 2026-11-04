@@ -22,7 +22,7 @@
   margin: 0;
   color: var(--muted);
   font-size: var(--type-eyebrow);
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: var(--letter-eyebrow);
   text-transform: uppercase;
 }
@@ -52,7 +52,7 @@
 
 .he-auction-line {
   margin: 0;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 /* Hænderne: dig og makker side om side, én linje pr. farve */
@@ -121,12 +121,12 @@
 }
 
 .he-table .he-sum {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .he-total {
   margin: 0;
-  font-weight: 700;
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
 
@@ -154,7 +154,7 @@
 .he-deck-card {
   margin: 0;
   font-size: var(--type-prompt);
-  font-weight: 700;
+  font-weight: 600;
   text-align: center;
 }
 
@@ -171,7 +171,7 @@
 }
 
 .he-techniques dt {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .he-techniques dd {

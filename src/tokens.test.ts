@@ -20,12 +20,13 @@ const colors = new Map(tokens.color.tokens.map((t) => [t.name, t.value]));
 const lengths = new Map(
   [...tokens.spacing.tokens, ...tokens.radius.tokens, ...tokens.size.tokens].map((t) => [t.name, t.value]),
 );
+const families = new Map(Object.entries(tokens.type.families).map(([name, value]) => [`font-${name}`, value]));
 
 describe('Designtokens', () => {
   it('har hver farve og radius fra :root med samme navn og lyse værdi', () => {
     expect(light.size).toBeGreaterThan(0);
     for (const [name, value] of light) {
-      const token = colors.get(name)?.light ?? lengths.get(name);
+      const token = colors.get(name)?.light ?? lengths.get(name) ?? families.get(name);
       expect(token, `--${name}`).toBe(value);
     }
   });
@@ -79,7 +80,9 @@ describe('Designtokens', () => {
 
   it('bruger appens skrift', () => {
     const body = css.match(/\nbody\s*\{([^}]*)\}/)![1];
-    expect(body).toContain(`font-family: ${tokens.type.families.sans};`);
+    expect(body).toContain('font-family: var(--font-sans);');
+    expect(light.get('font-sans')).toBe(tokens.type.families.sans);
+    expect(light.get('font-display')).toBe(tokens.type.families.display);
     expect(body).toContain(`font-size: ${tokens.type.groups[1].styles[0].fontSize};`);
   });
 

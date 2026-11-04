@@ -39,15 +39,15 @@
   min-height: var(--touch-min);
   padding: 0 var(--space-12);
   border: 1px solid transparent;
-  border-radius: var(--radius-10);
+  border-radius: var(--radius-12);
   background: transparent;
   color: var(--text);
   font-weight: 600;
 }
 
 .fb-tab-current {
-  border-color: var(--accent);
-  box-shadow: inset 0 0 0 1px var(--accent);
+  border-color: var(--accent-line);
+  box-shadow: inset 0 0 0 1px var(--accent-line);
   background: var(--accent-soft);
   color: var(--text);
 }
@@ -82,8 +82,8 @@
 
 .fb-segment .selected,
 .fb-goals .selected {
-  border-color: var(--accent);
-  box-shadow: inset 0 0 0 1px var(--accent);
+  border-color: var(--accent-line);
+  box-shadow: inset 0 0 0 1px var(--accent-line);
   background: var(--accent-soft);
   color: var(--text);
 }
@@ -105,15 +105,15 @@
   min-height: var(--touch-min);
   padding: var(--space-8) var(--space-12);
   border: 1px solid var(--line);
-  border-radius: var(--radius-10);
+  border-radius: var(--radius-12);
   background: var(--surface);
   text-align: left;
   font-variant-numeric: tabular-nums;
 }
 
 .fb-bank-current {
-  border-color: var(--accent);
-  box-shadow: inset 0 0 0 1px var(--accent);
+  border-color: var(--accent-line);
+  box-shadow: inset 0 0 0 1px var(--accent-line);
   background: var(--accent-soft);
   color: var(--text);
   font-weight: 600;
@@ -141,18 +141,18 @@
   border: 1px solid var(--line);
   border-radius: var(--radius-8);
   background: var(--surface);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 /* Bordets kort har fuld kant, din hånds kort stiplet kant, så de kan skelnes uden farve (det godkendte artboard). */
 .fb-pick-N {
-  border: var(--space-2) solid var(--accent);
+  border: var(--space-2) solid var(--accent-line);
   background: var(--accent-soft);
   color: var(--text);
 }
 
 .fb-pick-S {
-  border: var(--space-2) dashed var(--accent);
+  border: var(--space-2) dashed var(--accent-line);
   background: var(--surface);
   color: var(--text);
 }
@@ -210,10 +210,10 @@
   width: calc(var(--touch-min) * 3);
   min-height: calc(var(--touch-min) * 3);
   padding: var(--space-6);
-  border-radius: var(--radius-10);
+  border-radius: var(--radius-12);
   background: var(--table);
   color: var(--table-text);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .fb-compass-middle {
@@ -235,14 +235,14 @@
 .fb-seat-name {
   color: var(--muted);
   font-size: var(--type-eyebrow);
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: var(--letter-eyebrow);
   text-transform: uppercase;
 }
 
 .fb-hand {
   font-size: var(--type-prompt);
-  font-weight: 700;
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
@@ -252,13 +252,13 @@
 }
 
 .fb-honor {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .fb-hidden-hand {
   color: var(--muted);
   font-size: var(--type-prompt);
-  font-weight: 700;
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
 
@@ -320,7 +320,7 @@
 
 .fb-line-value {
   font-size: var(--type-prompt);
-  font-weight: 700;
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
 
@@ -330,7 +330,7 @@
   background: var(--ok);
   color: var(--surface);
   font-size: var(--type-eyebrow);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .fb-badge-quiet {
@@ -360,7 +360,7 @@
 
 .fb-band-letter {
   width: var(--space-20);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .fb-band-bar {
@@ -384,7 +384,7 @@
   border: 0;
   box-shadow: inset -1px 0 0 var(--surface);
   font-size: var(--type-small);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .fb-field-hit {
@@ -400,8 +400,8 @@
 }
 
 .fb-field-selected {
-  box-shadow: inset 0 0 0 1px var(--accent);
-  outline: 1px solid var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent-line);
+  outline: 1px solid var(--accent-line);
   outline-offset: -1px;
 }
 
@@ -424,14 +424,14 @@
   min-height: var(--touch-min);
   padding: var(--space-8) var(--space-12);
   border: 1px solid var(--line);
-  border-radius: var(--radius-10);
+  border-radius: var(--radius-12);
   background: var(--surface);
   text-align: left;
 }
 
 .fb-layout-selected {
-  border-color: var(--accent);
-  box-shadow: inset 0 0 0 1px var(--accent);
+  border-color: var(--accent-line);
+  box-shadow: inset 0 0 0 1px var(--accent-line);
   background: var(--accent-soft);
   color: var(--text);
 }
@@ -456,7 +456,7 @@
   padding: var(--space-2) var(--space-8);
   border-radius: var(--radius-pill);
   font-size: var(--type-small);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .fb-chip-hit {
@@ -495,7 +495,7 @@
 .fb-layout-table thead th {
   color: var(--muted);
   font-size: var(--type-eyebrow);
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: var(--letter-eyebrow);
   text-transform: uppercase;
 }
@@ -548,7 +548,7 @@
   padding-top: var(--space-12);
   color: var(--muted);
   font-size: var(--type-small);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .fb-row-select {
@@ -571,7 +571,7 @@
   background: var(--fb-miss);
   color: var(--fb-miss-text);
   font-size: var(--type-small);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .fb-result h3 {
@@ -615,7 +615,7 @@
 }
 
 .fb-label {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 /* Opgaven */
@@ -645,14 +645,14 @@
 }
 
 .fb-line-selected {
-  border-color: var(--accent);
-  box-shadow: inset 0 0 0 1px var(--accent);
+  border-color: var(--accent-line);
+  box-shadow: inset 0 0 0 1px var(--accent-line);
   background: var(--accent-soft);
   color: var(--text);
 }
 
 .fb-line-title {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .fb-step {
@@ -672,8 +672,8 @@
 
 .fb-intervals .selected,
 .fb-filter .selected {
-  border-color: var(--accent);
-  box-shadow: inset 0 0 0 1px var(--accent);
+  border-color: var(--accent-line);
+  box-shadow: inset 0 0 0 1px var(--accent-line);
   background: var(--accent-soft);
   color: var(--text);
 }
@@ -733,7 +733,7 @@
   gap: var(--space-4);
   padding: var(--space-10) var(--space-12);
   border: 1px solid var(--line);
-  border-radius: var(--radius-10);
+  border-radius: var(--radius-12);
 }
 
 .fb-station-name {
@@ -751,7 +751,7 @@
   min-height: var(--choice-height);
   padding: var(--space-8) var(--space-10);
   border: 1px solid var(--line);
-  border-radius: var(--radius-8);
+  border-radius: var(--radius-12);
   background: var(--surface);
   color: var(--text);
   font: inherit;
@@ -789,7 +789,8 @@
 }
 
 .fb-club-active > span {
-  border-color: var(--accent);
+  border-color: var(--accent-line);
+  box-shadow: inset 0 0 0 1px var(--accent-line);
   background: var(--accent-soft);
   color: var(--text);
 }
@@ -800,9 +801,9 @@
 }
 
 .fb-club-current > span {
-  outline: 1px solid var(--accent);
+  outline: 1px solid var(--accent-line);
   outline-offset: 1px;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .fb-club-caption p {
@@ -828,7 +829,7 @@
   min-height: var(--touch-min);
   padding: var(--space-8) var(--space-12);
   border: 1px solid var(--line);
-  border-radius: var(--radius-10);
+  border-radius: var(--radius-12);
   background: var(--surface);
   color: var(--text);
   font: inherit;
@@ -912,7 +913,7 @@
   gap: var(--space-6) var(--space-12);
   margin: 0;
   padding: var(--space-10) var(--space-12);
-  border-radius: var(--radius-10);
+  border-radius: var(--radius-12);
   background: var(--surface-2);
   font-variant-numeric: tabular-nums;
 }
@@ -975,7 +976,8 @@
 /* Hånden i turen: som andre valgbare elementer (SPEC-tema.md). */
 .fb-hand-card:not(:disabled) {
   background: var(--accent-soft);
-  border-color: var(--accent);
+  border-color: var(--accent-line);
+  box-shadow: inset 0 0 0 1px var(--accent-line);
 }
 
 /*
@@ -1032,7 +1034,7 @@
   gap: var(--space-8);
   padding: var(--space-10) var(--space-12);
   border: 1px solid var(--line);
-  border-radius: var(--radius-10);
+  border-radius: var(--radius-12);
 }
 
 .fb-input {
@@ -1040,7 +1042,7 @@
   min-height: var(--touch-min);
   padding: var(--space-8) var(--space-10);
   border: 1px solid var(--line);
-  border-radius: var(--radius-8);
+  border-radius: var(--radius-12);
   background: var(--surface);
   color: var(--text);
   font: inherit;
@@ -1072,7 +1074,7 @@
 
 .fb-stepper-seat {
   min-width: var(--touch-min);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 /* Kun stepperens knapper; linjekortenes trin (span.fb-step) har samme afstand i alle linjer (SPEC-bred-layout.md). */
@@ -1084,7 +1086,7 @@
 .fb-stepper-value {
   min-width: var(--touch-min);
   text-align: center;
-  font-weight: 700;
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
 
@@ -1098,7 +1100,8 @@
 }
 
 .fb-chip-situation {
-  border: 1px solid var(--accent);
+  border: 1px solid var(--accent-line);
+  box-shadow: inset 0 0 0 1px var(--accent-line);
   background: var(--accent-soft);
   color: var(--text);
 }
@@ -1121,7 +1124,7 @@
   min-height: var(--touch-min);
   padding: var(--space-8) var(--space-10);
   border: 1px solid var(--line);
-  border-radius: var(--radius-8);
+  border-radius: var(--radius-12);
   background: var(--surface);
   color: var(--text);
   font: inherit;
@@ -1156,6 +1159,14 @@
 .fb-guide-bar {
   display: flex;
   justify-content: flex-end;
+}
+
+/* Guide er en mørk pille med orange tekst, som i tegningen (SPEC-design-som-forsiden.md); ens i lys og mørk tilstand. */
+.fb-guide-bar .btn {
+  border-color: var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--footer-bg);
+  color: var(--footer-accent);
 }
 
 .fb-guide {
@@ -1202,7 +1213,7 @@
 .fb-guide thead th {
   color: var(--muted);
   font-size: var(--type-note);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 /* Lange links og kodelinjer, fx adressen til modulet, brydes, så siden ikke bliver bredere end skærmen. */

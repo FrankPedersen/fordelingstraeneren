@@ -13,11 +13,11 @@ const sheets = {
 
 const colors = new Map(tokens.color.tokens.map((t) => [t.name, t.value]));
 
-/** Specens tabel (SPEC-tema.md, Tokens): lys og mørk værdi. */
+/** Specens tabel (SPEC-tema.md, Tokens): lys og mørk værdi. Accent og ink har siden fået forsidens værdier (SPEC-design-som-forsiden.md). */
 const SPEC: Record<string, [string, string]> = {
-  accent: ['#5b6b82', '#9fb0c6'],
-  'accent-soft': ['#e3e9f1', '#2a3442'],
-  'accent-text': ['#ffffff', '#12161c'],
+  accent: ['#ff9f4a', '#ff9f4a'],
+  'accent-soft': ['#fff1e3', 'rgba(255,159,74,.16)'],
+  'accent-text': ['#1a1a1a', '#12161c'],
   table: ['#1f5c4a', '#1a4437'],
   'table-text': ['#ffffff', '#e8ecf1'],
   'fb-hit': ['#d6e4f5', '#1e3a5f'],
@@ -28,15 +28,23 @@ const SPEC: Record<string, [string, string]> = {
   'fb-miss-line': ['#e0a27a', '#b9774a'],
 };
 
+/** Farven som r, g og b fra 0 til 1; en gennemsigtig farve lægges oven på `under`. */
+function rgb(color: string, under = '#ffffff'): number[] {
+  const m = color.match(/rgba\(([^)]+)\)/);
+  if (!m) return [1, 3, 5].map((i) => parseInt(color.slice(i, i + 2), 16) / 255);
+  const [r, g, b, a] = m[1].split(',').map(Number);
+  return [r / 255, g / 255, b / 255].map((c, i) => c * a + rgb(under)[i] * (1 - a));
+}
+
 /** Relativ luminans efter WCAG 2. */
-function luminance(hex: string): number {
-  const [r, g, b] = [1, 3, 5].map((i) => parseInt(hex.slice(i, i + 2), 16) / 255);
+function luminance(color: string, under?: string): number {
+  const [r, g, b] = rgb(color, under);
   const lin = (c: number) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
   return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
 }
 
-function contrast(a: string, b: string): number {
-  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x);
+function contrast(a: string, b: string, under?: string): number {
+  const [hi, lo] = [luminance(a, under), luminance(b, under)].sort((x, y) => y - x);
   return (hi + 0.05) / (lo + 0.05);
 }
 
@@ -53,9 +61,9 @@ const rule = (sheet: keyof typeof sheets, selector: string) => {
 };
 
 describe('Temaet (SPEC-tema.md)', () => {
-  it('tokens.json har specens værdier, og ink har samme værdi som før', () => {
+  it('tokens.json har specens værdier, og ink har forsidens værdi i lys tilstand', () => {
     for (const [name, [light, dark]] of Object.entries(SPEC)) expect(colors.get(name), name).toEqual({ light, dark });
-    expect(colors.get('ink')).toEqual({ light: '#263241', dark: '#dfe5ec' });
+    expect(colors.get('ink')).toEqual({ light: '#1a1a1a', dark: '#dfe5ec' });
     expect(colors.get('ink-text')).toEqual({ light: '#ffffff', dark: '#12161c' });
   });
 
@@ -69,7 +77,7 @@ describe('Temaet (SPEC-tema.md)', () => {
     ];
     for (const [text, surface] of pairs) {
       for (const mode of ['light', 'dark'] as const) {
-        const ratio = contrast(colors.get(text)![mode], colors.get(surface)![mode]);
+        const ratio = contrast(colors.get(text)![mode], colors.get(surface)![mode], colors.get('surface')![mode]);
         expect(ratio, `${text} på ${surface} (${mode}): ${ratio.toFixed(2)}`).toBeGreaterThanOrEqual(4.5);
       }
     }

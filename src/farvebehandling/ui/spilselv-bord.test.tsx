@@ -103,7 +103,7 @@ describe('Bordet i Spil den selv (SPEC-forside-bred.md, del 3)', () => {
     expect(text).not.toMatch(/[æøåÆØÅ]|\b(kort|mangler|bordet|Nord|Syd|Vest)\b/);
   });
 
-  it('kortene har en trykflade på mindst 44 px uden synlig kant, og hånden i turen har accent-soft og kant i accent', () => {
+  it('kortene har en trykflade på mindst 44 px uden synlig kant, og hånden i turen har accent-soft og kant i accent-line', () => {
     const base = decl('.fb-hand-card');
     expect(base).toMatch(/min-width:\s*var\(--touch-min\)/);
     expect(base).toMatch(/min-height:\s*var\(--touch-min\)/);
@@ -111,12 +111,12 @@ describe('Bordet i Spil den selv (SPEC-forside-bred.md, del 3)', () => {
     expect(base).toMatch(/background:\s*transparent/);
     const turn = decl('.fb-hand-card:not(:disabled)');
     expect(turn).toMatch(/background:\s*var\(--accent-soft\)/);
-    expect(turn).toMatch(/border-color:\s*var\(--accent\)/);
-    // Ingen andre farver i bordets kort end accent og accent-soft (og arvet tekstfarve).
+    expect(turn).toMatch(/border-color:\s*var\(--accent-line\)/);
+    // Ingen andre farver i bordets kort end accent-line og accent-soft (og arvet tekstfarve).
     for (const [, sel, body] of css.matchAll(/([^{}]+)\{([^}]*)\}/g)) {
       if (!sel.includes('fb-hand-card')) continue;
       for (const [, name] of body.matchAll(/var\(--([\w-]+)\)/g)) {
-        expect(['touch-min', 'space-4', 'radius-8', 'accent', 'accent-soft'], `${sel.trim()}: ${name}`).toContain(name);
+        expect(['touch-min', 'space-4', 'radius-8', 'accent-line', 'accent-soft'], `${sel.trim()}: ${name}`).toContain(name);
       }
     }
   });
