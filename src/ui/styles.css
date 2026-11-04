@@ -1643,76 +1643,202 @@ button.cell {
   outline-offset: 2px;
 }
 
-/* Sidefoden (SPEC-forside-spor.md): nederst på forsiden og sporenes skærme. */
+/*
+ * Sidefoden (SPEC-sidefod.md): ens med forsidens kompakte sidefod, med målene fra SPEC-ny-forside.md, Afklaret. Under
+ * 1000 px står logo og knappen på én række; fra 1000 px står logo, linje og knap til venstre og kolonnerne til højre.
+ * Farverne er forsidens og ens i lys og mørk tilstand.
+ */
 .site-footer {
-  display: grid;
-  gap: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   margin-top: auto;
-  padding: 16px;
+  padding: 18px 18px 14px;
   background: var(--footer-bg);
   color: var(--footer-text);
-  border-radius: var(--radius);
+  border-radius: 20px;
+  font-size: 14px;
+  line-height: 20px;
 }
 
-.site-footer h2 {
-  margin: 0;
-  color: var(--footer-text);
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.site-footer p {
-  margin: 0;
-  font-size: 0.92rem;
-  line-height: 1.45;
-}
-
-.site-footer a {
-  color: var(--footer-text);
-  text-decoration: none;
+.site-footer-top {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .site-footer-about {
-  display: grid;
-  gap: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.site-footer-about p {
+  display: none;
+  margin: 0;
+  color: #c9cdd2;
 }
 
 .site-footer .site-footer-name {
-  justify-self: start;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  min-height: 44px;
-  color: var(--footer-accent);
+  gap: 8px;
+  color: #ffffff;
   font-family: var(--font-display);
-  font-size: 1.25rem;
+  font-size: 16px;
   font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.site-footer .site-footer-cta {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: var(--radius-pill);
+  background: var(--footer-accent);
+  color: var(--footer-bg);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.site-footer .site-footer-cta:hover {
+  background: #ffb46e;
+}
+
+.site-footer-arrow {
+  display: none;
+}
+
+.site-footer-cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .site-footer-col {
-  display: grid;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .site-footer-col h2 {
-  margin-bottom: 4px;
+  margin: 0 0 2px;
+  color: #9aa0a6;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 16px;
+  text-transform: uppercase;
+}
+
+.site-footer-col ul {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .site-footer-col a {
-  display: flex;
-  align-items: center;
-  min-height: 44px;
+  display: block;
+  padding: 3px 0;
+  color: #ffffff;
+  text-decoration: underline;
+  text-decoration-color: rgb(255 255 255 / 0.35);
+  text-underline-offset: 4px;
 }
 
-.site-footer .site-footer-mail {
-  color: var(--footer-accent);
-  font-weight: 600;
-  overflow-wrap: anywhere;
+.site-footer-col a:hover {
+  color: #ffc48f;
+  text-decoration-color: currentColor;
 }
 
 .site-footer .site-footer-legal {
-  padding-top: 12px;
-  border-top: 1px solid var(--footer-text);
-  font-size: 0.8rem;
+  margin: 0;
+  padding-top: 10px;
+  border-top: 1px solid #4a4a4a;
+  color: #9aa0a6;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+@media (min-width: 1000px) {
+  .site-footer {
+    gap: 16px;
+    padding: 24px 28px 18px;
+  }
+
+  .site-footer-top {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px 48px;
+  }
+
+  .site-footer-about {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 10px;
+    max-width: 320px;
+  }
+
+  .site-footer-about p {
+    display: block;
+  }
+
+  .site-footer .site-footer-name {
+    gap: 10px;
+    font-size: 18px;
+  }
+
+  .site-footer .kb-logo {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+
+  .site-footer .site-footer-cta {
+    min-height: 36px;
+    font-size: 14px;
+  }
+
+  .site-footer-arrow {
+    display: inline;
+  }
+
+  .site-footer-cols {
+    display: flex;
+    gap: 48px;
+  }
+
+  .site-footer-col,
+  .site-footer-col ul {
+    gap: 4px;
+  }
+
+  .site-footer-col a {
+    display: inline;
+    padding: 0;
+  }
+
+  .site-footer .site-footer-legal {
+    padding-top: 12px;
+  }
+
+  .site-footer-legal-extra {
+    display: none;
+  }
 }
 
 /* Forsiden (SPEC-forside-spor.md): I dag, sporenes kort og deres mærker. */
@@ -1854,23 +1980,6 @@ button.cell {
 
   .home > .two .info-btn::after {
     inset: -10px;
-  }
-
-  /* Sidefodens kolonner side om side som på www.kontraktbridge.dk, og ophavslinjen under dem (Afklaret 14). */
-  .home .site-footer {
-    grid-template-columns: minmax(0, 1.6fr) repeat(3, minmax(0, 1fr));
-    gap: 28px 40px;
-    padding: 32px;
-  }
-
-  .home .site-footer-legal {
-    grid-column: 1 / -1;
-  }
-
-  /* Kolonnerne er selv grids; uden start strækkes deres rækker til den højeste kolonne. */
-  .home .site-footer-about,
-  .home .site-footer-col {
-    align-content: start;
   }
 
   /* Topbjælkens indhold står inden for forsidens bredde. */

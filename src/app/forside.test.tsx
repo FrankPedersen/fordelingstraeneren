@@ -163,12 +163,13 @@ describe('Topbjælken og sidefoden', () => {
       ['Pointregnskab', '#pointregnskab'],
       ['Farvebehandling', '#farvebehandling'],
       ['Håndevaluering', '#haandevaluering'],
-      // Analyse som modul (SPEC-analyse-modul.md, trin 2).
-      ['Analyse', '#analyse'],
     ]);
+    // Analyse som modul (SPEC-analyse-modul.md, trin 2) står under Opslag (SPEC-sidefod.md).
+    const reference = within(footer() as HTMLElement).getByRole('navigation', { name: 'Opslag' });
+    expect(within(reference).getByRole('link', { name: 'Analyse' }).getAttribute('href')).toBe('#analyse');
     expect(within(footer() as HTMLElement).queryByText('Aftaler og notater')).toBeNull();
-    // SPEC-kontaktformular.md, del 3: kontaktformularen på Om mig i stedet for e-mailadressen.
-    expect(within(footer() as HTMLElement).getByRole('link', { name: 'Skriv til mig' }).getAttribute('href')).toBe('/om-mig/#kontakt');
+    // Kontaktformularen står på Om mig; sidefoden har kun knappen dertil (SPEC-sidefod.md).
+    expect(within(footer() as HTMLElement).getByRole('link', { name: 'Om mig og kontakt' }).getAttribute('href')).toBe('/om-mig/');
   });
 
   it('de nye tokens er ens i lys og mørk tilstand og består 4,5:1', () => {

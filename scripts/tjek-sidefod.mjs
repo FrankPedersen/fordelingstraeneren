@@ -138,11 +138,17 @@ try {
 
   if (BILLEDER) {
     mkdirSync(BILLEDER, { recursive: true });
-    for (const bredde of [1280, 390]) {
-      await åbn('', bredde);
-      const r = await kør(`(() => { const k = document.querySelector('footer.site-footer').getBoundingClientRect(); return { x: 0, y: k.top + scrollY - 16, width: innerWidth, height: k.height + 32, scale: 1 }; })()`);
-      const b = await send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true, clip: r });
-      writeFileSync(join(BILLEDER, `${bredde}-fordelingstraeneren-sidefod.png`), Buffer.from(b.result.data, 'base64'));
+    for (const navn of ['', '-en']) {
+      for (const bredde of [1280, 390]) {
+        await åbn('', bredde);
+        const r = await kør(`(() => { const k = document.querySelector('footer.site-footer').getBoundingClientRect(); return { x: 0, y: k.top + scrollY - 16, width: innerWidth, height: k.height + 32, scale: 1 }; })()`);
+        const b = await send('Page.captureScreenshot', { format: 'png', captureBeyondViewport: true, clip: r });
+        writeFileSync(join(BILLEDER, `${bredde}-fordelingstraeneren-sidefod${navn}.png`), Buffer.from(b.result.data, 'base64'));
+      }
+      if (!navn) {
+        await kør(`document.querySelector('.home-head button').click()`);
+        await vent(400);
+      }
     }
   }
 } catch (e) {

@@ -211,7 +211,7 @@ describe('Hjørnerne (SPEC-design-som-forsiden.md, Del 1)', () => {
     expect(lengths.get('radius-12')).toBe('12px');
     expect(lengths.get('radius-pill')).toBe('9999px');
     expect(lengths.has('radius-10')).toBe(false);
-    for (const s of ['.card', '.dialog', '.track-card', '.stat', '.site-footer']) expect(regel(s), s).toMatch(/border-radius: var\(--radius\);/);
+    for (const s of ['.card', '.dialog', '.track-card', '.stat']) expect(regel(s), s).toMatch(/border-radius: var\(--radius\);/);
     for (const s of ['.btn', '.choice', '.tool', 'input, textarea', '.key', '.cell', '.info-text', '.fb-tab', '.fb-bank-item', '.fb-input', '.fb-import-input', '.fb-editor textarea', '.fb-editor-step']) {
       expect(regel(s), s).toMatch(/border-radius: var\(--radius-12\);/);
     }
@@ -220,7 +220,9 @@ describe('Hjørnerne (SPEC-design-som-forsiden.md, Del 1)', () => {
 
   it('hjørnerne står som tokens, så ingen gamle værdier er tilbage', () => {
     for (const { sti, selector, body } of alleRegler) {
-      expect(body, `${sti}: ${selector}`).not.toMatch(/border-radius: (10|12|14|20|999)px/);
+      // Sidefodens 20 px er forsidens mål, ikke en gammel værdi (SPEC-sidefod.md; scripts/tjek-sidefod.mjs tjekker den).
+      const gamle = selector === '.site-footer' ? /border-radius: (10|12|14|999)px/ : /border-radius: (10|12|14|20|999)px/;
+      expect(body, `${sti}: ${selector}`).not.toMatch(gamle);
       expect(body, `${sti}: ${selector}`).not.toContain('--radius-10');
     }
   });
