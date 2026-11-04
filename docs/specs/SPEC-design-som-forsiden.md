@@ -97,6 +97,8 @@ Den bruger allerede Subtle Gradient (samme værdier som forsiden). Kun `multi-sv
 23. **Linjekortene efter antal** gælder fra 1000 px. Tre kort i en række er smalle under 1200 px, så Sammenlign står dér på sin egen linje under snittet. Med én eller to linjer fylder kortene hele bredden.
 24. **Pixelsammenligningen i Del 3:** referencen er `v35-foer-analyse-info`. På Analyse, Guide, Facit og Spil den selv skjules ⓘ og Spil den selv i begge apps, "Sammenlign" fjernes, og referencen får snittets nye tekst; så er skærmene pixel for pixel ens ved 999 og 390 px. Rækkefølgen af knapper og links er også den samme, bortset fra at Spil den selv nu kommer lige efter Angiv situationen.
 
+25. **Valgene fra Del 3** (Franks godkendelse 4. november 2026): Spil den selv har sin egen ⓘ, mens det er åbent, ordet Sammenlign under linjekortene er væk, Vælg kombination samler også feltet Kombination eller spil og kortvælgeren, og fanernes ⓘ bliver i Træning og Selvvalgt.
+
 ## Åbne punkter
 
 - **Sidefoden i Fordelingstræneren** skal være ens med forsidens nye, kompakte sidefod, når `ny-forside` er udgivet (Del 2, punkt 6). 4. november 2026 var den ikke udgivet: `SPEC-ny-forside.md` ligger i `Forside/docs/specs/`, men der er hverken gren eller tag, så sidefoden er uændret. Rettelsen gælder alle bredder og er derfor undtaget reglen om, at intet ændres under 1000 px.
