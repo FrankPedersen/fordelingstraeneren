@@ -88,6 +88,8 @@ const DA = {
 
   result: 'Resultatet',
   bestChance: (goal: number, letter: string, chance: string) => `Bedste chance for ${goal} stik: ${chance} med linje ${letter}.`,
+  resultBig: (chance: string, goal: number) => `${chance} for ${goal} stik`,
+  bestWith: (letter: string) => `Bedste chance med linje ${letter}.`,
   pairs: (tricks: string, text: string) => `Bedst i parturnering: ${text} (${tricks} stik i gennemsnit).`,
   frequency: 'Hvor tit?',
   combination: (text: string) => `Kombinationen: ${text}.`,
@@ -109,6 +111,7 @@ const DA = {
   bank: 'Banken',
   bankHelp: 'De klassiske farvebehandlinger, hyppigste først.',
   pageFilter: 'Modpartens honnørpoint',
+  pageFilterShort: 'Modpartens hp',
   hp: (points: number) => (points === 0 ? 'ingen' : `${points} hp`),
   picker: 'Kortvælger',
   pickerHelp: 'Ét tryk på et kort giver det til bordet, to tryk til din hånd, og tre tryk fjerner det.',
@@ -559,6 +562,8 @@ const EN: Texts = {
 
   result: 'The result',
   bestChance: (goal: number, letter: string, chance: string) => `Best chance of ${goal} ${goal === 1 ? 'trick' : 'tricks'}: ${chance} with line ${letter}.`,
+  resultBig: (chance: string, goal: number) => `${chance} for ${goal} ${goal === 1 ? 'trick' : 'tricks'}`,
+  bestWith: (letter: string) => `Best chance with line ${letter}.`,
   pairs: (tricks: string, text: string) => `Best at pairs: ${text} (${tricks} tricks on average).`,
   frequency: 'How often?',
   combination: (text: string) => `The combination: ${text}.`,
@@ -579,6 +584,7 @@ const EN: Texts = {
   bank: 'The bank',
   bankHelp: 'The classic suit combinations, most frequent first.',
   pageFilter: "Opponents' high-card points",
+  pageFilterShort: "Opponents' HCP",
   hp: (points: number) => (points === 0 ? 'none' : `${points} HCP`),
   picker: 'Card picker',
   pickerHelp: 'One tap on a card gives it to dummy, two taps to your hand, and three taps remove it.',

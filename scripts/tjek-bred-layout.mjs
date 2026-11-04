@@ -1,17 +1,22 @@
-// Accepttest (SPEC-bred-layout.md): det brede layout fra 1000 px i en rigtig browser. Appen startes med Vite fra
-// arbejdsmappen, og appen før ændringen (tagget v30-foer-bred-layout) lægges i en midlertidig git worktree og startes
-// ved siden af. Begge åbnes i Chrome eller Edge uden vindue; tilfældighederne og tiden er låst, så opgaverne er de samme
-// hver gang, og hver skærm får sin egen tomme lagring.
+// Accepttest (SPEC-bred-layout.md og Del 2 af SPEC-design-som-forsiden.md): det brede layout fra 1000 px i en rigtig
+// browser. Appen startes med Vite fra arbejdsmappen, og referencen (appen efter Del 1, tagget v34-foer-analyse-layout)
+// lægges i en midlertidig git worktree og startes ved siden af. Begge åbnes i Chrome eller Edge uden vindue;
+// tilfældighederne og tiden er låst, så opgaverne er de samme hver gang, og hver skærm får sin egen tomme lagring.
 //
-//   node scripts/tjek-bred-layout.mjs              alle skærme
-//   node scripts/tjek-bred-layout.mjs analyse      kun Analyse i pixelsammenligningen
+//   node scripts/tjek-bred-layout.mjs                     alle skærme
+//   node scripts/tjek-bred-layout.mjs analyse             kun Analyse i pixelsammenligningen
+//   node scripts/tjek-bred-layout.mjs ingen               uden pixelsammenligningen (kun layout og overlap)
+//   node scripts/tjek-bred-layout.mjs --billeder=mappe    gemmer også skærmbillederne til Frank i mappen
 //
 // Ved 1280 px står bordet til venstre og opgaven til højre med toppene ud for hinanden, og indholdet er højst 1120 px
-// bredt i midten. Bordet står fast, når der rulles. Pointregnskab, Håndevaluering, Spil den selv og en session med
-// tastatur har to spalter, og vejledningens indholdsfortegnelse står til venstre. Ved 1000 px er højre spalte mindst
-// 400 px. Linjekortenes trin har samme afstand på mobil og computer, og tab-rækkefølgen er den samme før og efter.
-// Ved 999 og 390 px er skærmene pixel for pixel som før; rettelsen af trinafstanden lægges på appen før, så den ikke
-// tæller som en forskel. Kræver Node 22+, git og Chrome eller Edge.
+// bredt i midten. Bordet står kun fast i en skærm med to spalter, og kun når det er lavere end vinduet. Ved 1280 × 900
+// og 1000 × 700 rulles Analyse, Spil den selv, Træning og Pointregnskab fra top til bund, og bordets spalte må aldrig
+// dække noget. Efter sidste stik i Spil den selv kan dommen og resultatet ses. Analyse følger tegningen. Pointregnskab,
+// Håndevaluering, Spil den selv og en session med tastatur har to spalter, og vejledningens indholdsfortegnelse står
+// til venstre. Ved 1000 px er højre spalte mindst 400 px. Linjekortenes trin har samme afstand på mobil og computer, og
+// tab-rækkefølgen er den samme før og efter. Ved 999 og 390 px er skærmene pixel for pixel som referencen; rettelsen af
+// den deaktiverede primærknap lægges på referencen, så den ikke tæller som en forskel. Kræver Node 22+, git og Chrome
+// eller Edge.
 import { spawn, spawnSync } from 'node:child_process';
 import { existsSync, lstatSync, mkdirSync, mkdtempSync, rmSync, symlinkSync, unlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -20,9 +25,10 @@ import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
 
 const ROD = fileURLToPath(new URL('..', import.meta.url));
-const TAG = 'v30-foer-bred-layout';
+const TAG = 'v34-foer-analyse-layout';
 // Skærmnavne som argumenter begrænser pixelsammenligningen til dem; en forskel gemmes som billeder her.
-const KUN = process.argv.slice(2);
+const KUN = process.argv.slice(2).filter((a) => !a.startsWith('--'));
+const BILLEDER = process.argv.find((a) => a.startsWith('--billeder='))?.slice('--billeder='.length);
 const FORSKELLE = join(tmpdir(), 'tjek-bred-layout');
 const CHROME = [
   process.env.CHROME,
@@ -57,8 +63,8 @@ const FAST = `(() => {
   globalThis.Date = FastDate;
 })();`;
 
-// Rettelsen af trinafstanden (linjekortenes trin havde stepperens trykflade på 44 px), lagt på appen før.
-const TRIN_RETTET = 'span.fb-step { min-width: 0 !important; min-height: 0 !important; }';
+// Rettelsen af den deaktiverede primærknap (Del 2, punkt 6), lagt på referencen.
+const KNAP_RETTET = '.btn.primary:disabled { background: var(--surface-2); border-color: var(--surface-2); color: var(--muted); opacity: 1; }';
 
 async function chrome() {
   const port = 9300 + Math.floor(Math.random() * 400);
@@ -112,16 +118,23 @@ async function chrome() {
         async klik(tekst) {
           const del = tekst.startsWith('~');
           const t = del ? tekst.slice(1) : tekst;
-          const ok = await kør(`(() => {
-            const el = [...document.querySelectorAll('button, a, [role=button], [role=tab]')].find((b) => {
-              const s = (b.getAttribute('aria-label') || b.textContent || '').replace(/\\s+/g, ' ').trim();
-              return b.offsetParent !== null && !b.disabled && (${del} ? s.includes(${JSON.stringify(t)}) : s === ${JSON.stringify(t)});
-            });
-            if (el) el.click();
-            return !!el;
-          })()`);
-          if (!ok) throw new Error(`Fandt ikke "${tekst}"`);
-          await vent(350);
+          // Siden kan stadig være ved at starte (Vite optimerer afhængigheder og genindlæser), så der ventes på knappen.
+          for (let forsøg = 0; forsøg < 80; forsøg++) {
+            const ok = await kør(`(() => {
+              const el = [...document.querySelectorAll('button, a, [role=button], [role=tab]')].find((b) => {
+                const s = (b.getAttribute('aria-label') || b.textContent || '').replace(/\\s+/g, ' ').trim();
+                return b.offsetParent !== null && !b.disabled && (${del} ? s.includes(${JSON.stringify(t)}) : s === ${JSON.stringify(t)});
+              });
+              if (el) el.click();
+              return !!el;
+            })()`);
+            if (ok) {
+              await vent(350);
+              return;
+            }
+            await vent(250);
+          }
+          throw new Error(`Fandt ikke "${tekst}"`);
         },
         knapper: () => kør(`[...document.querySelectorAll('button, a, [role=tab]')].filter((b) => b.offsetParent !== null).map((b) => (b.getAttribute('aria-label') || b.textContent).replace(/\\s+/g, ' ').trim()).filter(Boolean)`),
         /** Kassen for det første synlige element, der matcher selectoren. */
@@ -143,7 +156,7 @@ async function chrome() {
         },
         /** Hele siden, når den står stille: to billeder i træk skal være ens (Analyse regner færdig bagefter). */
         async billede() {
-          await kør(`window.scrollTo(0, 0); document.head.insertAdjacentHTML('beforeend', '<style>${TRIN_RETTET}</style>')`);
+          await kør(`window.scrollTo(0, 0); document.head.insertAdjacentHTML('beforeend', '<style>${KNAP_RETTET}</style>')`);
           let forrige;
           for (let i = 0; i < 8; i++) {
             await vent(400);
@@ -153,6 +166,11 @@ async function chrome() {
             forrige = r.result.data;
           }
           return forrige;
+        },
+        /** Kun vinduet, som en bruger ser det: et billede af hele siden viser ikke, hvor en fast spalte står. */
+        async vindue() {
+          await vent(400);
+          return (await send('Page.captureScreenshot', { format: 'png' })).result.data;
         },
         async luk() {
           ws.close();
@@ -203,6 +221,7 @@ const SKÆRME = {
   spilSelv: async (s, u) => { await SKÆRME.facit(s, u); await s.klik('Spil den selv ▶'); },
   selvvalgt: async (s, u) => { await s.gå(`${u}#farvebehandling`); await s.klik('Selvvalgt'); await s.klik('~Start ·'); },
   analyse: async (s, u) => { await s.gå(`${u}#farvebehandling`); await s.klik('Analyse'); await s.klik('~3. E D 6 5'); },
+  analyseSpil: async (s, u) => { await SKÆRME.analyse(s, u); await s.klik('Spil den selv ▶'); },
   guide: async (s, u) => { await s.gå(`${u}#analyse`); await s.klik('Guide'); },
   statistik: async (s, u) => { await s.gå(`${u}#farvebehandling`); await s.klik('Statistik'); },
   data: async (s, u) => { await s.gå(`${u}#farvebehandling`); await s.klik('~Dine data'); },
@@ -255,6 +274,154 @@ async function trinafstand(s, navn) {
   })()`);
   tjek(d.antal >= 2 && d.for_høje.length === 0, `${navn}: trinene er så høje som teksten`, d.antal < 2 ? `kun ${d.antal} trin` : d.for_høje.join('; '));
   tjek(d.afstande.length >= 2 && d.afstande.every((a) => ca(a, d.afstande[0])), `${navn}: samme afstand fra overskrift til trin i Linje A og B`, JSON.stringify(d.afstande));
+}
+
+/** Spiller Spil den selv færdig: det første kort, der kan spilles, indtil resultatet står der. */
+async function spilFærdig(s) {
+  for (let i = 0; i < 80; i++) {
+    if (await s.kør(`!!document.querySelector('.fb-play-result')`)) return;
+    await s.kør(`document.querySelector('.fb-hand-card:not(:disabled)')?.click(); true`);
+    await vent(60);
+  }
+  throw new Error('Spil den selv blev ikke færdigt');
+}
+
+/**
+ * Bordets spalte (.wide-left) må aldrig dække noget (Del 2, punkt 1 og 2). Siden rulles fra top til bund, og ved hvert
+ * skridt ses på alle knapper og tekster: de må ikke overlappe en spalte, de ikke selv står i, og det, der står øverst
+ * midt på dem, må ikke være en anden spalte. En fast spalte skal stå i en skærm med to spalter og være lavere end vinduet.
+ */
+async function ingenOverlap(s, navn) {
+  const r = await s.kør(`(async () => {
+    const synlig = (e) => e.getClientRects().length > 0 && getComputedStyle(e).visibility !== 'hidden';
+    const blade = () => [...document.querySelectorAll('button, a, input, h1, h2, h3, h4, p, li, td, th, label, output, figcaption, span')]
+      .filter((e) => synlig(e) && (e.matches('button, a, input, output') || [...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim())));
+    const navn = (e) => e.tagName.toLowerCase() + (typeof e.className === 'string' && e.className ? '.' + e.className.trim().split(/\\s+/).join('.') : '') + ' "' + (e.textContent || '').trim().slice(0, 24) + '"';
+    // Det, der kan ses af et element: en rullekasse klipper det, der er rullet ud af den (fx kombinationerne i banken).
+    const kasse = (e) => {
+      const f = e.getBoundingClientRect();
+      let { left, right, top, bottom } = f;
+      for (let a = e.parentElement; a && a !== document.body; a = a.parentElement) {
+        const o = getComputedStyle(a);
+        if (o.overflowX === 'visible' && o.overflowY === 'visible') continue;
+        const g = a.getBoundingClientRect();
+        left = Math.max(left, g.left); right = Math.min(right, g.right); top = Math.max(top, g.top); bottom = Math.min(bottom, g.bottom);
+      }
+      return { left, right, top, bottom };
+    };
+    const fund = new Map();
+    const fejl = new Set();
+    const max = Math.max(0, document.documentElement.scrollHeight - innerHeight);
+    const skridt = [];
+    for (let y = 0; y < max; y += 80) skridt.push(y);
+    skridt.push(max);
+    let fast = 0;
+    for (const y of skridt) {
+      scrollTo(0, y);
+      await new Promise((ok) => requestAnimationFrame(() => requestAnimationFrame(ok)));
+      const alle = blade();
+      const spalter = [...document.querySelectorAll('.wide-left')].filter((w) => getComputedStyle(w).display !== 'contents' && synlig(w));
+      for (const w of spalter) {
+        const cs = getComputedStyle(w);
+        if (cs.zIndex !== 'auto') fejl.add('spalten har z-index ' + cs.zIndex);
+        const k = w.getBoundingClientRect();
+        if (cs.position === 'sticky') {
+          fast++;
+          let far = w.parentElement;
+          while (far && getComputedStyle(far).display === 'contents') far = far.parentElement;
+          if (far.getBoundingClientRect().width > 0 && getComputedStyle(far).gridTemplateColumns.trim().split(/\\s+/).length < 2) fejl.add('fast spalte i en skærm med én spalte: ' + navn(far));
+          if (w.scrollHeight > innerHeight - 32 + 1) fejl.add('fast spalte højere end vinduet: ' + w.scrollHeight + ' px');
+        }
+        for (const e of alle) {
+          if (w.contains(e) || e.contains(w)) continue;
+          const f = kasse(e);
+          if (f.bottom <= f.top || f.right <= f.left || f.bottom <= 0 || f.top >= innerHeight) continue;
+          const lodret = Math.min(k.bottom, f.bottom) - Math.max(k.top, f.top);
+          const vandret = Math.min(k.right, f.right) - Math.max(k.left, f.left);
+          if (lodret > 1 && vandret > 1 && !fund.has(navn(e))) fund.set(navn(e), Math.round(lodret) + ' px ved y=' + y);
+        }
+      }
+      for (const e of alle) {
+        const f = kasse(e);
+        if (f.bottom <= f.top || f.right <= f.left) continue;
+        const x = (f.left + f.right) / 2, yy = (f.top + f.bottom) / 2;
+        if (yy < 0 || yy >= innerHeight || x < 0 || x >= innerWidth) continue;
+        const top = document.elementFromPoint(x, yy);
+        if (!top || e.contains(top) || top.contains(e)) continue;
+        const w = top.closest('.wide-left');
+        if (w && !w.contains(e) && !fund.has(navn(e))) fund.set(navn(e), 'dækket ved y=' + y);
+      }
+    }
+    scrollTo(0, 0);
+    return { fund: [...fund].map(([k, v]) => k + ': ' + v), fejl: [...fejl], fast, max };
+  })()`);
+  tjek(!r.fund.length, `${navn}: bordets spalte dækker ikke noget`, `${r.fund.length} elementer, fx ${r.fund.slice(0, 3).join(' ; ')}`);
+  tjek(!r.fejl.length, `${navn}: spalten står kun fast, når den må`, r.fejl.join(' ; '));
+}
+
+/** Efter sidste stik kan dommen ses med det samme, og når der rulles til bunden af resultatet, kan det ses helt (punkt 3). */
+async function dommenKanSes(s, navn) {
+  const r = await s.kør(`(async () => {
+    const fri = (e) => {
+      const f = e.getBoundingClientRect();
+      const top = document.elementFromPoint(f.left + f.width / 2, f.top + f.height / 2);
+      return f.top >= 0 && f.bottom <= innerHeight + 1 && !!top && (e.contains(top) || top.contains(e));
+    };
+    const dom = document.querySelector('.fb-play-result .feedback');
+    const straks = !!dom && fri(dom);
+    const res = document.querySelector('.fb-play-result');
+    const y = res.getBoundingClientRect().bottom + scrollY - innerHeight;
+    scrollTo(0, Math.max(0, y) + 8);
+    await new Promise((ok) => requestAnimationFrame(() => requestAnimationFrame(ok)));
+    const sidste = res.lastElementChild;
+    return { straks, bund: fri(sidste), højde: Math.round(res.getBoundingClientRect().height) };
+  })()`);
+  tjek(r.straks, `${navn}: dommen kan ses efter sidste stik`, `resultatet er ${r.højde} px højt`);
+  tjek(r.bund, `${navn}: bunden af resultatet kan ses`, `resultatet er ${r.højde} px højt`);
+}
+
+/** Analyse følger tegningen ved 1280 px (Del 2, punkt 5, og docs/specs/design/Analyse.png). */
+async function analyseSomTegningen(s) {
+  const d = await s.kør(`(() => {
+    const k = (e) => { if (!e) return null; const r = e.getBoundingClientRect(); return { top: r.top, left: r.left, right: r.right, bottom: r.bottom, width: r.width, height: r.height }; };
+    const q = (x) => document.querySelector(x);
+    const a = (x) => [...document.querySelectorAll(x)].filter((e) => e.getClientRects().length > 0);
+    const spalte = q('.fb-analysis .fb-column > .wide-left');
+    const sit = q('[aria-labelledby="fb-situation"]');
+    const res = q('.fb-analysis .fb-result');
+    const lines = a('.fb-analysis .fb-lines > .fb-line');
+    return {
+      valg: k(q('[aria-labelledby="fb-choose"]')), segment: k(q('[aria-labelledby="fb-choose"] .fb-segment')), overskrift: k(q('#fb-choose')),
+      filter: a('.fb-analysis .fb-filter .btn').map((b) => Math.round(b.getBoundingClientRect().top)),
+      bank: a('.fb-analysis .fb-bank-item').slice(0, 4).map(k),
+      spalte: k(spalte), spalteFlade: getComputedStyle(spalte).backgroundColor, spalteHjørne: getComputedStyle(spalte).borderTopLeftRadius,
+      sit: k(sit), sitFlade: getComputedStyle(sit).backgroundColor, sitVenstre: getComputedStyle(sit).borderLeftWidth, sitTop: getComputedStyle(sit).borderTopWidth,
+      knap: k(q('.fb-play-start')), knapFlade: q('.fb-play-start') ? getComputedStyle(q('.fb-play-start')).backgroundColor : null,
+      linjer: lines.map(k),
+      detaljer: k(q('[aria-labelledby="fb-details"]')), res: k(res), resFlade: getComputedStyle(res).backgroundColor,
+      stor: q('.fb-result-big') && { farve: getComputedStyle(q('.fb-result-big')).color, skrift: getComputedStyle(q('.fb-result-big')).fontFamily, vist: q('.fb-result-big').getClientRects().length > 0 },
+      lang: q('.fb-result-long')?.getClientRects().length ?? null,
+      forskel: k(q('#fb-difference')), gruppe: k(q('[aria-labelledby="fb-difference"] .fb-segment')),
+      tabel: (() => { const t = q('.fb-analysis .fb-table-scroll'); return { ud: t.scrollWidth - t.clientWidth, linjer: lines.length }; })(),
+      knapBredde: k(q('[aria-labelledby="fb-situation"] .fb-room-row .btn'))?.width, sitBredde: k(sit).width,
+      forBred: document.documentElement.scrollWidth - innerWidth,
+    };
+  })()`);
+  tjek(ca(d.segment?.top + d.segment?.height / 2, d.overskrift?.top + d.overskrift?.height / 2, 8) && d.segment.right > d.valg.left + d.valg.width * 0.7, 'Analyse som tegningen: Banken og Kortvælger står i overskriften til højre', JSON.stringify(d.segment));
+  tjek(new Set(d.filter).size === 1 && d.filter.length >= 10, 'Analyse som tegningen: hp-filteret står på én linje', [...new Set(d.filter)].join(','));
+  tjek(d.bank.length === 4 && ca(d.bank[0].top, d.bank[2].top) && d.bank[1].left > d.bank[0].right - 1 && d.bank[2].left > d.bank[1].right - 1 && d.bank[3].top > d.bank[0].top, 'Analyse som tegningen: kombinationerne står i tre kolonner', JSON.stringify(d.bank.slice(0, 4).map((b) => [b.left, b.top])));
+  tjek(ca(d.spalte.width, 400), 'Analyse som tegningen: venstre spalte er 400 px', `${d.spalte.width} px`);
+  tjek(d.spalteFlade === 'rgb(255, 255, 255)' && d.spalteHjørne === '24px', 'Analyse som tegningen: Problemet er ét kort', `${d.spalteFlade}, ${d.spalteHjørne}`);
+  tjek(d.sit.left >= d.spalte.left && d.sit.right <= d.spalte.right && d.sit.bottom <= d.spalte.bottom && d.sitFlade === 'rgba(0, 0, 0, 0)' && d.sitVenstre === '0px' && d.sitTop === '1px', 'Analyse som tegningen: Situationen står inde i Problemet-kortet med en streg over', `${JSON.stringify(d.sit)} ${d.sitFlade} ${d.sitVenstre} ${d.sitTop}`);
+  tjek(d.knap && d.knap.top >= d.sit.bottom - 1 && d.knap.bottom <= d.spalte.bottom && d.knapFlade === 'rgb(255, 159, 74)', 'Analyse som tegningen: Spil den selv står nederst i kortet og er orange', `${JSON.stringify(d.knap)} ${d.knapFlade}`);
+  tjek(d.linjer.length >= 3 && ca(d.linjer[0].top, d.linjer[2].top) && d.linjer[1].left > d.linjer[0].right - 1 && d.linjer[2].left > d.linjer[1].right - 1 && ca(d.linjer[0].width, d.linjer[2].width), 'Analyse som tegningen: tre linjekort side om side', JSON.stringify(d.linjer.slice(0, 3).map((l) => [l.left, l.top, l.width])));
+  tjek(ca(d.gruppe?.top + d.gruppe?.height / 2, d.forskel?.top + d.forskel?.height / 2, 8) && d.gruppe.left > d.forskel.right, 'Analyse som tegningen: Grupper står i overskriften til Forskellen', JSON.stringify(d.gruppe));
+  tjek(ca(d.detaljer.top, d.res.top) && d.res.left > d.detaljer.right - 1, 'Analyse som tegningen: De afgørende sidninger og Resultatet side om side', `${JSON.stringify(d.detaljer)} / ${JSON.stringify(d.res)}`);
+  tjek(d.tabel.ud <= 0, `Analyse som tegningen: alle ${d.tabel.linjer} linjer kan ses i tabellen uden at rulle`, `${d.tabel.ud} px for bredt`);
+  tjek(ca(d.knapBredde, d.sitBredde), 'Analyse som tegningen: Angiv situationen er i fuld bredde', `${d.knapBredde} af ${d.sitBredde} px`);
+  tjek(d.resFlade === 'rgb(26, 26, 26)', 'Analyse som tegningen: Resultatet på mørk flade', d.resFlade);
+  tjek(d.stor?.vist && d.stor.farve === 'rgb(255, 159, 74)' && /^Manrope/.test(d.stor.skrift) && d.lang === 0, 'Analyse som tegningen: chancen er fremhævet i Resultatet', JSON.stringify(d.stor));
+  tjek(d.forBred <= 0, 'Analyse som tegningen: intet stikker ud til siden', `${d.forBred} px`);
 }
 
 async function sammenlign(nu, før, side) {
@@ -318,6 +485,53 @@ try {
   await trinafstand(s, 'Træning ved 390 px');
   await s.luk();
 
+  // Bordets spalte dækker aldrig noget (Del 2, punkt 1–3), ved 1280 × 900 og 1000 × 700.
+  for (const [bredde, højde] of [[1280, 900], [1000, 700]]) {
+    for (const [skærm, navn, spil] of [
+      ['analyse', 'Analyse', false],
+      ['analyseSpil', 'Spil den selv i Analyse', true],
+      ['spilSelv', 'Spil den selv fra facit', true],
+      ['træning', 'Træning', false],
+      ['facit', 'Facit', false],
+      ['pointregnskab', 'Pointregnskab', false],
+    ]) {
+      const hvor = `${navn} ved ${bredde} × ${højde}`;
+      s = await åbn(skærm, bredde, højde);
+      await ingenOverlap(s, hvor);
+      if (spil) {
+        await spilFærdig(s);
+        await vent(300);
+        await dommenKanSes(s, hvor);
+        await ingenOverlap(s, `${hvor}, efter sidste stik`);
+      }
+      await s.luk();
+    }
+  }
+
+  // Analyse følger tegningen ved 1280 px.
+  s = await åbn('analyse', 1280, 900);
+  await analyseSomTegningen(s);
+  await s.luk();
+
+  // Med mere end fire linjer står De afgørende sidninger og Resultatet under hinanden, så alle kolonner kan ses.
+  for (const [bredde, højde] of [[1280, 900], [1000, 700]]) {
+    for (const [valg, mål, mindst] of [['~E D 6 5 / 4 3 2', '3 stik', 4], ['~E 10 8 3 / K B 9 2', '4 stik', 5]]) {
+      s = await b.fane(bredde, højde);
+      await s.gå(`${NU}#farvebehandling`);
+      await s.klik('Analyse');
+      await s.klik(valg);
+      await s.klik(mål);
+      await vent(500);
+      const t = await s.kør(`(() => {
+        const k = (x) => document.querySelector(x).getBoundingClientRect();
+        const t = document.querySelector('.fb-analysis .fb-table-scroll');
+        return { linjer: document.querySelectorAll('.fb-analysis .fb-lines:not(.fb-own-lines) > .fb-line').length, ud: t.scrollWidth - t.clientWidth, under: k('.fb-analysis .fb-result').top >= k('[aria-labelledby="fb-details"]').bottom };
+      })()`);
+      tjek(t.linjer >= mindst && t.ud <= 0 && (mindst === 4 || t.under), `Analyse med ${t.linjer} linjer ved ${bredde} × ${højde}: alle kolonner i tabellen kan ses`, JSON.stringify(t));
+      await s.luk();
+    }
+  }
+
   // Bordet står fast, når der rulles ned til chancen (et lavt vindue) og i facit.
   for (const [skærm, beholder, højde, navn] of [['træning', '.fb-task', 450, 'Træning'], ['facit', '.fb-facit', 700, 'Facit']]) {
     s = await åbn(skærm, 1280, højde);
@@ -371,6 +585,26 @@ try {
     tjek(i < 0, `${navn}: samme tab-rækkefølge før og efter`, `trin ${i + 1}: ${a[i]} / før ${c[i]}`);
     await nu.luk();
     await før.luk();
+  }
+
+  // Skærmbillederne til Frank: hele siden, og Spil den selv rullet til bunden, som vinduet viser det.
+  if (BILLEDER) {
+    mkdirSync(BILLEDER, { recursive: true });
+    const gem = (fil, data) => writeFileSync(join(BILLEDER, fil), Buffer.from(data, 'base64'));
+    for (const [bredde, højde] of [[1280, 900], [1000, 700], [390, 844]]) {
+      for (const [skærm, fil] of [['analyse', 'analyse'], ['træning', 'traening'], ['pointregnskab', 'pointregnskab']]) {
+        s = await åbn(skærm, bredde, højde);
+        gem(`${bredde}-${fil}.png`, await s.billede());
+        await s.luk();
+      }
+      s = await åbn('analyseSpil', bredde, højde);
+      await spilFærdig(s);
+      await vent(400);
+      gem(`${bredde}-analyse-spil-doemmen.png`, await s.vindue());
+      await s.kør(`(() => { const r = document.querySelector('.fb-play').getBoundingClientRect(); window.scrollTo(0, r.bottom + scrollY - innerHeight + 16); return true; })()`);
+      gem(`${bredde}-analyse-spil-bund.png`, await s.vindue());
+      await s.luk();
+    }
   }
 
   // Under 1000 px er intet ændret. Chrome kan en sjælden gang kantutjævne en enkelt pixel tekst anderledes, når maskinen

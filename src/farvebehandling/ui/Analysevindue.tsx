@@ -330,7 +330,8 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
               <>
                 <p className="fb-note">{TEXT.bankHelp}</p>
                 <div className="fb-filter" role="group" aria-label={TEXT.pageFilter}>
-                  <span>{TEXT.pageFilter}:</span>
+                  <span className="fb-filter-long">{TEXT.pageFilter}:</span>
+                  <span className="fb-filter-short">{TEXT.pageFilterShort}:</span>
                   <button
                     type="button"
                     className={`btn small-btn${points === null ? ' selected' : ''}`}
@@ -425,7 +426,7 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
               ))}
             </div>
             {solvedGoal && playSeed === null && (
-              <button type="button" className="btn small-btn" onClick={() => setPlaySeed(randomSeed())}>
+              <button type="button" className="btn small-btn fb-play-start" onClick={() => setPlaySeed(randomSeed())}>
                 {TEXT.playButton}
               </button>
             )}
@@ -486,11 +487,11 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
             )}
             {saved && update && solvedGoal && (
               <>
-                <div className="with-info">
+                <div className="with-info fb-own-head">
                   <h3>{TEXT.ownLines}</h3>
                   <Info topic={TEXT.ownLines}>{TEXT.help.ownLines}</Info>
                 </div>
-                <div className="fb-lines">
+                <div className="fb-lines fb-own-lines">
                   {ownViews.map((o, i) =>
                     o.view ? (
                       <Linjekort
@@ -540,14 +541,14 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
                     }}
                   />
                 ) : (
-                  <button type="button" className="btn small-btn" onClick={() => setEditing(true)}>
+                  <button type="button" className="btn small-btn fb-own-add" onClick={() => setEditing(true)}>
                     {TEXT.addOwnLine}
                   </button>
                 )}
                 {mode !== 'picker' && busyNote}
               </>
             )}
-            <p className="fb-note">{assumptionsText(situation)}</p>
+            <p className="fb-note fb-assumptions">{assumptionsText(situation)}</p>
           </section>
         </div>
 
@@ -585,7 +586,7 @@ export function Analysevindue({ bank, start, saved, update }: AnalysevindueProps
             </div>
           </section>
 
-          <section className="card" aria-labelledby="fb-details">
+          <section className={`card${shownLines.length > 4 ? ' fb-details-wide' : ''}`} aria-labelledby="fb-details">
   <div className="with-info">
             <h2 id="fb-details">{showAll ? TEXT.details : TEXT.decisive}</h2>
             <Info topic={TEXT.details}>{TEXT.help.layouts}</Info>
@@ -712,7 +713,7 @@ export function LayoutList({
         </div>
       )}
       <div className="fb-table-scroll">
-        <table className="fb-layout-table">
+        <table className={`fb-layout-table${!showAll && decisive.length ? ' fb-only-decisive' : ''}`}>
           <thead>
             <tr>
               <th scope="col">{TEXT.west}</th>
@@ -724,8 +725,8 @@ export function LayoutList({
                 </span>
               </th>
               {lines.map((l) => (
-                <th key={l.letter} scope="col">
-                  {TEXT.line(l.letter)}
+                <th key={l.letter} scope="col" data-letter={l.letter}>
+                  <span className="fb-th-line">{TEXT.line(l.letter)}</span>
                 </th>
               ))}
               <th scope="col">

@@ -178,8 +178,8 @@ describe('Farverne (SPEC-design-som-forsiden.md, Del 1)', () => {
     for (const { sti, selector, body } of alleRegler) {
       for (const d of body.split(';')) {
         if (/^\s*(border|box-shadow|outline)/.test(d) && /var\(--accent\)/.test(d)) {
-          // Primærknappens kant har samme farve som dens flade.
-          expect(selector, `${sti}: ${selector}: ${d.trim()}`).toBe('.btn.primary');
+          // Primærknappens kant har samme farve som dens flade; Spil den selv er en primærknap fra 1000 px i Analyse.
+          expect(['.btn.primary', '.fb-analysis .wide-left .fb-play-start'], `${sti}: ${selector}: ${d.trim()}`).toContain(selector);
         }
       }
     }
