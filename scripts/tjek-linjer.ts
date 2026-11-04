@@ -3,7 +3,7 @@
 //      med flest stik, hvor stik pr. sidning regnes.
 //   2. Spillet som helhed skal en linje give den gemte chance. Undtagelserne står i UNDTAGET.
 //
-//   node scripts/tjek-linjer.ts                 begge dele (ca. 9 procestimer, så kør det delt)
+//   node scripts/tjek-linjer.ts                 begge dele (ca. 8 procestimer, så kør det delt)
 //   node scripts/tjek-linjer.ts --shard 2/8     hver 8. kombination fra nr. 2 (kør flere samtidig)
 //   node scripts/tjek-linjer.ts --hurtig        kun linjeformatet (5–7 minutter)
 //   node scripts/tjek-linjer.ts 32-JT54         kun de nævnte kombinationer

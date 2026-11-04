@@ -9,7 +9,8 @@ Specen ændrer afgørelse 1 i SPEC-linjeformat-39.md (Franks valg 3. november 20
 - **Reglen som skrevet** ("et trin skal følge løserens valg på alle grene, ellers slutter linjen før det", kørt på alle gemte linjer) rammer **124 linjer i 65 kombinationer, heraf 18 bedste**, og ikke 23 linjer i 17 kombinationer med 4 bedste.
 - **De 23 er der:** præcis 23 af de 124 spilles forkert i dag, og alle 23 giver den gemte chance efter rettelsen. Tallene passer med specen for de 39: 17 kombinationer, 13 linjer for et mål og 10 for flest stik og de samme 4 bedste.
 - **De andre 101 er ikke fejl:** de giver allerede den gemte chance, når de spilles som helhed. Her har løseren et andet valg på en gren, men linjens valg er lige så godt.
-- **34 af de 101 ville blive tomme:** de har kun ét trin, så de mister alle trin, og 9 af dem er bedste linjer.
+- **34 af de 101 ender uden trin:** de havde kun ét trin, og 9 af dem er bedste linjer.
+- **Valget:** Frank valgte reglen som skrevet, så alle 124 linjer er rettet. Tekster, chancer og `pairs` er uændrede.
 
 ## Franks opgave
 
@@ -79,18 +80,43 @@ Reglen er strengere end nødvendigt, ligesom i Afklaret 4 i SPEC-linjeformat-39.
 
 Skrives først, som altid.
 
-- [ ] 3 2 / B 10 5 4 (1 stik): linjen giver 24,73 %, når den spilles som helhed.
-- [ ] Spil den selv giver "fulgt" til den, der følger løserens plan i 3 2 / B 10 5 4, og "ikke fulgt" til den, der ikke gør.
-- [ ] `node scripts/tjek-linjer.ts` finder 0 afviste linjer og 0 linjer uden for undtagelseslisten.
-- [ ] Præcis de 124 linjer i bilaget har andre trin, med det antal trin bilaget angiver, og præcis de 17 linjer har andre `tricks`.
-- [ ] **Chancerne er uændrede:** `value`, `exact`, `upper`, `certified`, `layouts` og `pairs` er ens for alle 8.500 udspil sammenlignet med tagget `v32-foer-linjeplan-23`, og det samme gælder Hvad nu?.
-- [ ] **Teksterne er uændrede:** `steps` er ens for alle 8.500 udspil, og rapporterne i afgrænsningen er byte for byte ens.
-- [ ] `npm test`, `node scripts/bog-regression.ts` og `node scripts/sprogtjek.ts` er grønne.
+- [x] 3 2 / B 10 5 4 (1 stik): linjen giver 24,73 %, når den spilles som helhed.
+- [x] Spil den selv giver "fulgt" til den, der følger løserens plan i 3 2 / B 10 5 4, og "ikke fulgt" til den, der ikke gør.
+- [x] `node scripts/tjek-linjer.ts` finder 0 afviste linjer og 0 linjer uden for undtagelseslisten.
+- [x] Præcis de 124 linjer i bilaget har andre trin, med det antal trin bilaget angiver, og præcis de 17 linjer har andre `tricks`.
+- [x] **Chancerne er uændrede:** `value`, `exact`, `upper`, `certified`, `layouts` og `pairs` er ens for alle 8.500 udspil sammenlignet med tagget `v32-foer-linjeplan-23`, og det samme gælder Hvad nu?.
+- [x] **Teksterne er uændrede:** `steps` er ens for alle 8.500 udspil, og rapporterne i afgrænsningen er byte for byte ens.
+- [x] `npm test`, `node scripts/bog-regression.ts` og `node scripts/sprogtjek.ts` er grønne.
 
 ## Afklaret
 
 1. **Målingen** blev startet i tråden fra 3. november og blev færdig, efter at tråden var stoppet. Resultatet er lagt sammen 4. november 2026.
-2. **"Spilles forkert"** betyder, at linjen spillet som helhed afviger mere end 0,000001 fra den gemte chance. Grænsen afgør ikke noget: de 101 linjer i grupperne B og C afviger 0, og de 23 i gruppe A afviger mindst 0,0048. Den ene linje inden for løserens tolerance er ikke blandt de 124.
+2. **Resultatet af accepttesten mod tagget:** af 8.500 udspil er præcis de 124 linjer og `tricks` på de 17 linjer ændret. `pairs` er ens i alle 106 mål, og rapporterne er byte for byte ens. `node scripts/tjek-linjer.ts` finder 0 afviste af 6.940 linjer og 0 uden for listen, og alle 32 undtagelser er stadig nødvendige. Regressionen mod bogen består (120 af 120 tal). De 65 cases tog 22 minutter med 10 processer, og hele kontrollen 56 minutter.
+3. **"Spilles forkert"** betyder, at linjen spillet som helhed afviger mere end 0,000001 fra den gemte chance. Grænsen afgør ikke noget: de 101 linjer i grupperne B og C afviger 0, og de 23 i gruppe A afviger mindst 0,0048. Den ene linje inden for løserens tolerance er ikke blandt de 124.
+
+## Stik pr. sidning
+
+Kun de 17 linjer har andre `tricks`, og de er målt i banken mod tagget. Tallene stiger, fordi løseren spiller frit efter sidste trin. Gruppe C ændrer ingen.
+
+| Kombination (bordet / hånden) | Mål | Gruppe | Stik i gennemsnit | Sidninger ændret |
+| --- | --- | --- | --- | --- |
+| 3 2 / B 10 5 4 | 1 stik | A | 0,04 → 0,25 | 4 af 20 |
+| 2 / E B 9 8 4 3 | 4 stik | A | 3,20 → 3,40 | 6 af 24 |
+| 4 3 2 / K 10 9 7 6 5 | 4 stik | A | 3,48 → 3,61 | 1 af 12 |
+| 3 2 / E 10 9 8 5 4 | 4 stik | A | 3,74 → 3,83 | 1 af 12 |
+| 5 4 3 2 / B 8 7 6 | 1 stik | A | 0,68 → 0,76 | 1 af 12 |
+| 5 4 3 2 / D 10 9 7 6 | 3 stik | A | 2,42 → 2,48 | 1 af 12 |
+| 4 3 2 / D 9 8 6 5 | 2 stik | A | 1,66 → 1,72 | 1 af 18 |
+| 4 3 2 / B 10 8 5 | 1 stik | A | 0,44 → 0,49 | 1 af 24 |
+| 3 2 / E 10 9 8 4 | 3 stik | B | 2,37 → 2,41 | 1 af 16 |
+| 5 4 3 2 / K 10 7 6 | 1 stik | B | 0,87 → 0,91 | 1 af 18 |
+| 4 3 2 / D 9 8 5 | 1 stik | A | 0,40 → 0,41 | 1 af 27 |
+| 3 2 / E 10 9 5 4 | 2 stik | B | 2,28 → 2,29 | 2 af 16 |
+| 3 2 / D 10 6 5 4 | 2 stik | B | 1,20 → 1,21 | 1 af 24 |
+| 3 2 / B 10 8 4 | 1 stik | A | 0,08 → 0,09 | 1 af 32 |
+| 3 2 / B 10 9 4 | 1 stik | A | 0,26 → 0,27 | 2 af 20 |
+| 3 2 / D 10 5 4 | 1 stik | A | 0,02 → 0,02 | 1 af 30 |
+| 4 3 2 / B 10 8 5 | 1 stik | B | 0,73 → 0,73 | 2 af 24 |
 
 ## Bilag: de 124 linjer
 
@@ -196,7 +222,7 @@ Stik i gennemsnit står kun for mål, hvor linjen har tal for stik.
 | K 9 2 / E 10 5 4 3 | 4 stik | ikke vist | 81,96 % | 81,96 % | 81,96 % | 2 → 1 | – |
 | K 9 3 2 / E 10 5 4 | 3 stik | vist | 83,91 % | 83,91 % | 83,91 % | 2 → 1 | 2,87 → 2,87 (0 af 12) |
 
-### Gruppe C: linjer med ét trin, der allerede giver den gemte chance og ville blive tomme
+### Gruppe C: linjer med ét trin, der allerede giver den gemte chance og ender uden trin
 
 | Kombination (bordet / hånden) | Mål | Rolle | Gemt chance | Spillet i dag | Spillet efter | Trin | Stik i gennemsnit (sidninger ændret) |
 | --- | --- | --- | --- | --- | --- | --- | --- |
