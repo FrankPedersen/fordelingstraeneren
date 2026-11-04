@@ -531,6 +531,7 @@ try {
     tjek(åben.boks && ca(åben.bord.top, før.bord.top) && ca(åben.spalte.height, før.spalte.height) && åben.fast === før.fast, `${hvor}: åbner som en boks, og bordet flytter sig ikke`, JSON.stringify({ før: før.bord, åben: åben.bord, spalte: [før.spalte.height, åben.spalte.height], boks: åben.boks }));
     tjek(åben.boks && åben.boks.top >= 15 && åben.boks.bottom <= højde - 15 && åben.boks.left >= 15 && åben.boks.right <= bredde - 15, `${hvor}: boksen er inden for vinduet`, JSON.stringify(åben.boks));
     tjek(åben.boks && Math.abs(åben.boks.left - åben.knap.left) <= 1 && (åben.boks.top >= åben.knap.bottom - 1 || åben.boks.bottom <= højde - 15), `${hvor}: boksen er forankret ved knappen`, JSON.stringify({ boks: åben.boks, knap: åben.knap }));
+    if (bredde === 1280) tjek(åben.boks && (åben.boks.bottom <= åben.knap.top || åben.boks.top >= åben.knap.bottom), `${hvor}: boksen dækker ikke knappen`, JSON.stringify({ boks: åben.boks, knap: åben.knap }));
     tjek(åben.z === 'auto', `${hvor}: spalten har stadig ingen z-index`, åben.z);
     tjek(await s.kør(`(() => { const k = document.querySelector('.info-box').getBoundingClientRect(); const t = document.elementFromPoint(k.left + k.width / 2, k.top + k.height / 2); return !!t && !!t.closest('.info-box'); })()`), `${hvor}: boksen ligger øverst`);
     tjek(åben.fokus === 'Luk', `${hvor}: fokus står på ✕`, åben.fokus);
