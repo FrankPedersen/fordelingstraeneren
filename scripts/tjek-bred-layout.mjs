@@ -1,5 +1,5 @@
 // Accepttest (SPEC-bred-layout.md og Del 2 af SPEC-design-som-forsiden.md): det brede layout fra 1000 px i en rigtig
-// browser. Appen startes med Vite fra arbejdsmappen, og referencen (appen efter Del 3, tagget v36-foer-info-boks)
+// browser. Appen startes med Vite fra arbejdsmappen, og referencen (appen før den nye sidefod, tagget v37-foer-sidefod)
 // lægges i en midlertidig git worktree og startes ved siden af. Begge åbnes i Chrome eller Edge uden vindue;
 // tilfældighederne og tiden er låst, så opgaverne er de samme hver gang, og hver skærm får sin egen tomme lagring.
 //
@@ -16,7 +16,8 @@
 // til venstre. Ved 1000 px er højre spalte mindst 400 px. Linjekortenes trin har samme afstand på mobil og computer, og
 // tab-rækkefølgen er den samme før og efter. Analyse har 5 ⓘ, og linjekortene står efter antallet af linjer (Del 3). En ⓘ i
 // bordets spalte åbner som en boks, uden at bordet flytter sig (SPEC-info-boks.md). Ved 999 og 390 px er skærmene pixel
-// for pixel som referencen. Kræver Node 22+, git og Chrome eller Edge.
+// for pixel som referencen, med sidefoden skjult i begge apps, fordi den er ændret med vilje (SPEC-sidefod.md;
+// scripts/tjek-sidefod.mjs tjekker den). Kræver Node 22+, git og Chrome eller Edge.
 import { spawn, spawnSync } from 'node:child_process';
 import { existsSync, lstatSync, mkdirSync, mkdtempSync, rmSync, symlinkSync, unlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -25,7 +26,7 @@ import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
 
 const ROD = fileURLToPath(new URL('..', import.meta.url));
-const TAG = 'v36-foer-info-boks';
+const TAG = 'v37-foer-sidefod';
 // Skærmnavne som argumenter begrænser pixelsammenligningen til dem; en forskel gemmes som billeder her.
 const KUN = process.argv.slice(2).filter((a) => !a.startsWith('--'));
 const BILLEDER = process.argv.find((a) => a.startsWith('--billeder='))?.slice('--billeder='.length);
@@ -158,7 +159,7 @@ async function chrome() {
         },
         /** Hele siden, når den står stille: to billeder i træk skal være ens (Analyse regner færdig bagefter). */
         async billede() {
-          await kør('window.scrollTo(0, 0)');
+          await kør(`window.scrollTo(0, 0); document.head.insertAdjacentHTML('beforeend', '<style>.site-footer { display: none !important; }</style>')`);
           let forrige;
           for (let i = 0; i < 8; i++) {
             await vent(400);
@@ -610,7 +611,7 @@ try {
 
   // Tab-rækkefølgen følger det, man ser: Spil den selv kommer efter Situationen, og intet har skiftet plads siden referencen.
   for (const [bredde, højde] of [[1280, 900], [390, 844]]) {
-    const liste = (fane) => fane.kør(`[...document.querySelectorAll('button, a, input')].filter((e) => e.getClientRects().length > 0 && e.tabIndex >= 0 && !e.classList.contains('fb-bank-item')).map((e) => (e.getAttribute('aria-label') || e.textContent).replace(/\\s+/g, ' ').trim())`);
+    const liste = (fane) => fane.kør(`[...document.querySelectorAll('button, a, input')].filter((e) => e.getClientRects().length > 0 && e.tabIndex >= 0 && !e.classList.contains('fb-bank-item') && !e.closest('.site-footer')).map((e) => (e.getAttribute('aria-label') || e.textContent).replace(/\\s+/g, ' ').trim())`);
     const uden = (l) => l;
     const nu = await åbn('analyse', bredde, højde, NU);
     const før = await åbn('analyse', bredde, højde, FØR);
