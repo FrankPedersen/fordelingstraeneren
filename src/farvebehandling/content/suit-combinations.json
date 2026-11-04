@@ -1307,10 +1307,6 @@
         "play": "J",
         "else": "low"
        }
-      },
-      {
-       "leadFrom": "N",
-       "card": "low"
       }
      ]
     },
@@ -2248,10 +2244,6 @@
       {
        "leadFrom": "N",
        "card": "low"
-      },
-      {
-       "leadFrom": "N",
-       "card": "low"
       }
      ]
     },
@@ -2754,15 +2746,6 @@
        "third": {
         "ifSecondPlays": "low",
         "play": "J",
-        "else": "low"
-       }
-      },
-      {
-       "leadFrom": "N",
-       "card": "low",
-       "third": {
-        "ifSecondPlays": "low",
-        "play": "T",
         "else": "low"
        }
       }
@@ -3336,10 +3319,6 @@
       {
        "leadFrom": "N",
        "card": "A"
-      },
-      {
-       "leadFrom": "S",
-       "card": "J"
       }
      ]
     },
@@ -3741,10 +3720,6 @@
       {
        "leadFrom": "S",
        "card": "A"
-      },
-      {
-       "leadFrom": "N",
-       "card": "low"
       }
      ]
     },
@@ -7964,15 +7939,6 @@
         "play": "J",
         "else": "low"
        }
-      },
-      {
-       "leadFrom": "N",
-       "card": "low",
-       "third": {
-        "ifSecondPlays": "low",
-        "play": "T",
-        "else": "low"
-       }
       }
      ]
     },
@@ -7983,15 +7949,6 @@
       {
        "leadFrom": "S",
        "card": "J"
-      },
-      {
-       "leadFrom": "N",
-       "card": "low",
-       "third": {
-        "ifSecondPlays": "low",
-        "play": "T",
-        "else": "low"
-       }
       }
      ]
     },
@@ -8511,15 +8468,6 @@
       {
        "leadFrom": "S",
        "card": "J"
-      },
-      {
-       "leadFrom": "N",
-       "card": "low",
-       "third": {
-        "ifSecondPlays": "low",
-        "play": "T",
-        "else": "low"
-       }
       }
      ]
     },
@@ -11308,15 +11256,6 @@
       {
        "leadFrom": "S",
        "card": "J"
-      },
-      {
-       "leadFrom": "N",
-       "card": "low",
-       "third": {
-        "ifSecondPlays": "low",
-        "play": "T",
-        "else": "low"
-       }
       }
      ]
     },
@@ -16487,10 +16426,6 @@
       {
        "leadFrom": "N",
        "card": "A"
-      },
-      {
-       "leadFrom": "S",
-       "card": "J"
       }
      ]
     },
@@ -21563,15 +21498,6 @@
         "play": "J",
         "else": "low"
        }
-      },
-      {
-       "leadFrom": "N",
-       "card": "low",
-       "third": {
-        "ifSecondPlays": "low",
-        "play": "T",
-        "else": "low"
-       }
       }
      ]
     },
@@ -21601,19 +21527,6 @@
      "steps": [
       {
        "leadFrom": "S",
-       "card": "low"
-      },
-      {
-       "leadFrom": "N",
-       "card": "low",
-       "third": {
-        "ifSecondPlays": "low",
-        "play": "J",
-        "else": "low"
-       }
-      },
-      {
-       "leadFrom": "N",
        "card": "low"
       }
      ]
@@ -22173,10 +22086,6 @@
       {
        "leadFrom": "S",
        "card": "Q"
-      },
-      {
-       "leadFrom": "S",
-       "card": "J"
       }
      ]
     },
@@ -22191,10 +22100,6 @@
       {
        "leadFrom": "S",
        "card": "Q"
-      },
-      {
-       "leadFrom": "S",
-       "card": "J"
       }
      ]
     },
@@ -23181,12 +23086,7 @@
     {
      "id": "A",
      "text": "Damen og esset slås.",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "Q"
-      }
-     ]
+     "steps": []
     },
     {
      "id": "B",
@@ -23225,12 +23125,7 @@
     {
      "id": "D",
      "text": "Esset og kongen slås.",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "A"
-      }
-     ]
+     "steps": []
     },
     {
      "id": "E",
@@ -23793,12 +23688,7 @@
     {
      "id": "C",
      "text": "Esset slås.",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "A"
-      }
-     ]
+     "steps": []
     },
     {
      "id": "D",
@@ -23873,14 +23763,6 @@
       {
        "leadFrom": "S",
        "card": "A"
-      },
-      {
-       "leadFrom": "N",
-       "card": "low"
-      },
-      {
-       "leadFrom": "S",
-       "card": "T"
       }
      ]
     },
@@ -23968,12 +23850,7 @@
     {
      "id": "C",
      "text": "Esset slås. Lille fra hånden til damen. Kongen slås.",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "A"
-      }
-     ]
+     "steps": []
     },
     {
      "id": "D",
@@ -25015,12 +24892,7 @@
     {
      "id": "A",
      "text": "Kongen og esset slås.",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "K"
-      }
-     ]
+     "steps": []
     },
     {
      "id": "B",
@@ -25055,12 +24927,7 @@
     {
      "id": "D",
      "text": "Esset og kongen slås.",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "A"
-      }
-     ]
+     "steps": []
     },
     {
      "id": "E",
@@ -30896,10 +30763,6 @@
       {
        "leadFrom": "S",
        "card": "A"
-      },
-      {
-       "leadFrom": "N",
-       "card": "low"
       }
      ]
     },
@@ -34206,10 +34069,6 @@
       {
        "leadFrom": "S",
        "card": "Q"
-      },
-      {
-       "leadFrom": "N",
-       "card": "low"
       }
      ]
     },
@@ -36910,12 +36769,7 @@
     {
      "id": "A",
      "text": "Kongen slås.",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "K"
-      }
-     ]
+     "steps": []
     },
     {
      "id": "B",
@@ -36950,12 +36804,7 @@
     {
      "id": "D",
      "text": "Esset slås.",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "A"
-      }
-     ]
+     "steps": []
     },
     {
      "id": "E",
@@ -37039,10 +36888,6 @@
       {
        "leadFrom": "S",
        "card": "K"
-      },
-      {
-       "leadFrom": "S",
-       "card": "T"
       }
      ]
     },
@@ -37889,12 +37734,7 @@
     {
      "id": "A",
      "text": "Kongen slås. Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset.",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "K"
-      }
-     ]
+     "steps": []
     },
     {
      "id": "B",
@@ -37929,12 +37769,7 @@
     {
      "id": "D",
      "text": "Esset slås. Lille fra hånden mod knægten (kipning); lægger Vest en honnør, tages den med kongen.",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "A"
-      }
-     ]
+     "steps": []
     },
     {
      "id": "E",
@@ -40520,10 +40355,6 @@
       {
        "leadFrom": "S",
        "card": "A"
-      },
-      {
-       "leadFrom": "N",
-       "card": "low"
       }
      ]
     },
@@ -43009,12 +42840,7 @@
     {
      "id": "A",
      "text": "Esset slås.",
-     "steps": [
-      {
-       "leadFrom": "N",
-       "card": "A"
-      }
-     ]
+     "steps": []
     },
     {
      "id": "B",
@@ -43049,12 +42875,7 @@
     {
      "id": "D",
      "text": "Kongen slås.",
-     "steps": [
-      {
-       "leadFrom": "S",
-       "card": "K"
-      }
-     ]
+     "steps": []
     },
     {
      "id": "E",
