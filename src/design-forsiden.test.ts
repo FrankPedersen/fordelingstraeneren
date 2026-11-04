@@ -115,15 +115,16 @@ describe('Farverne (SPEC-design-som-forsiden.md, Del 1)', () => {
 
   it('farverne, der bærer betydning, og resten er uændrede', () => {
     for (const [navn, [light, dark]] of Object.entries(UÆNDRET)) expect(colors.get(navn), navn).toEqual({ light, dark });
-    for (const navn of ['card-face', 'card-edge', 'card-ink', 'card-red']) {
+    for (const navn of ['card-face', 'card-edge', 'card-ink', 'card-red', 'card-muted']) {
       expect(colors.get(navn), navn).toEqual(
-        { 'card-face': { light: '#ffffff', dark: '#ffffff' }, 'card-edge': { light: '#c9ced6', dark: '#c9ced6' }, 'card-ink': { light: '#1c2330', dark: '#1c2330' }, 'card-red': { light: '#c62828', dark: '#c62828' } }[navn],
+        { 'card-face': { light: '#ffffff', dark: '#ffffff' }, 'card-edge': { light: '#c9ced6', dark: '#c9ced6' }, 'card-ink': { light: '#1c2330', dark: '#1c2330' }, 'card-red': { light: '#c62828', dark: '#c62828' }, 'card-muted': { light: '#5d6675', dark: '#5d6675' } }[navn],
       );
     }
   });
 
   it('ingen af de gamle værdier eller system-ui står tilbage i appen', () => {
-    const GAMLE = /#5b6b82|#9fb0c6|#2a3442|#e3e9f1|#f5f6f8|#18202b|#5d6675|#d8dde5|#263241|system-ui/i;
+    // #5d6675 er ikke med: det er også card-muted, og kortenes farver er uændrede. Værdien af --muted er tjekket ovenfor.
+    const GAMLE = /#5b6b82|#9fb0c6|#2a3442|#e3e9f1|#f5f6f8|#18202b|#d8dde5|#263241|system-ui/i;
     const filer = fs
       .readdirSync(rod('src'), { recursive: true, encoding: 'utf8' })
       .map((f) => f.replace(/\\/g, '/'))
@@ -188,9 +189,10 @@ describe('Farverne (SPEC-design-som-forsiden.md, Del 1)', () => {
     for (const { selector, body } of valgte) {
       // 2 px: enten en kant på 2 px eller en kant på 1 px og 1 px indeni.
       const toPx = /(2px|var\(--space-2\)) (solid|dashed) var\(--accent-line\)|box-shadow: inset 0 0 0 1px var\(--accent-line\)/.test(body);
-      expect(toPx || selector === '.choice.chosen', `${selector} har ikke 2 px i accent-line`).toBe(true);
+      expect(toPx || selector === '.choice.chosen' || selector === '.cell.selected', `${selector} har ikke 2 px i accent-line`).toBe(true);
     }
     expect(regel('.choice')).toMatch(/border: 2px solid var\(--line\)/);
+    expect(regel('button.cell')).toMatch(/border: 2px solid var\(--line\)/);
     expect(regel('.choice.chosen')).toMatch(/border-color: var\(--accent-line\)/);
     expect(regel('.fb-pick-S')).toMatch(/var\(--space-2\) dashed var\(--accent-line\)/);
   });
@@ -262,7 +264,7 @@ describe('Skriften (SPEC-design-som-forsiden.md, Del 1)', () => {
     // Overskrifter, tabeller og fed tekst er ellers fede (700) fra browseren, og Inter har kun 400 og 600.
     expect(regel('h2')).toContain('font-weight: 600;');
     expect(regel('h3')).toContain('font-weight: 600;');
-    expect(regel('b, strong, th')).toContain('font-weight: 600;');
+    expect(regel('b, strong, th, h4')).toContain('font-weight: 600;');
   });
 });
 

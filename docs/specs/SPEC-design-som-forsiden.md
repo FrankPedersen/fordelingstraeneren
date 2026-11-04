@@ -47,7 +47,7 @@ I alt 5 ⓘ, uanset antal linjer. Hver samlet ⓘ har en kort liste med fed over
 
 ## Accepttest
 
-- [ ] Del 1: farverne og skriften i tabellen er brugt overalt; ingen #5b6b82 eller system-ui tilbage; mørk tilstand har kontrast 4,5:1; `tokens.test.ts` består.
+- [x] Del 1: farverne og skriften i tabellen er brugt overalt; ingen #5b6b82 eller system-ui tilbage; mørk tilstand har kontrast 4,5:1; `tokens.test.ts` består.
 - [ ] Del 2: accepttestene i `SPEC-bred-layout.md`; Analyse ved 1280 px ligner `Analyse.png`.
 - [ ] Del 3: Analyse med tre linjer og udfyldt situation har præcis 5 ⓘ; ingen ⓘ ved Guide eller i titellinjen; hver samlet ⓘ indeholder alle emner fra de gamle.
 - [ ] Under 1000 px er layoutet som før (Del 2 og 3 ændrer kun ⓘ og farver dér).
@@ -58,3 +58,16 @@ Giv Frank skærmbilleder ved 1280 og 390 px af forsiden, Træning, Analyse og Po
 ## Konventionstræneren
 
 Den bruger allerede Subtle Gradient (samme værdier som forsiden). Kun `multi-svar-traener.html` står smalt (620 px); den får det brede layout i Del 2 som beskrevet i `SPEC-bred-layout.md`.
+
+## Afklaret
+
+1. **Grenene og Del 2** (Franks besked 4. november 2026): delene bygges på grenene `design-forsiden`, `analyse-layout` og `analyse-info`, hver med et tag før og Franks godkendelse før fletning. Del 2 retter også bordet, der dækker resultatet i Spil den selv i Analyse, med reglen for den faste spalte, og udvider `scripts/tjek-bred-layout.mjs` til at fange overlap. `SPEC-bred-layout.md` er allerede udgivet, så Del 2 er Analyse efter tegningen og rettelsen.
+2. **Kanten på valgte elementer** er den nye token `accent-line`: #1a1a1a i lys tilstand som i tabellen og #ff9f4a i mørk, hvor den er accent som i dag. Primærknappens kant har samme farve som dens flade.
+3. **Fokusringen følger forsiden, ikke ordet "fokus" i tabellen, i lys tilstand:** den nye token `focus` er #1a1a1a i lys tilstand og #ff9f4a i mørk, og ringen er orange på de mørke flader i topbjælken og sidefoden. Orange giver kun 2,0:1 mod hvid og 1,8:1 mod baggrunden, og en fokusring skal have 3:1. Værdien står ét sted, hvis Frank vil have det anderledes.
+4. **Overskrifterne:** h1 og navnet i topbjælken står i Manrope 800. h2, h3 og h4 står i Inter 600, fordi begge tegninger viser kortenes overskrifter sådan.
+5. **Skriften:** kun Latin og symbolskriften fra forsidens `fonts/` (5 filer, 158 KB) ligger i `public/fonts/`, fordi appen er på dansk og engelsk, og de gemmes offline med resten af appen. ♠ ♥ ♦ ♣ står i Noto Sans Symbols 2 som på forsiden, så de ser ens ud på alle enheder. Alle vægte er 400, 600 eller 800, også det, browseren ellers gør fedt.
+6. **Hjørnerne:** 24 px er kort, dialoger, sporkort, tal i en boks og sidefoden. 12 px er knapper, felter, faner, taster, listeposter og de bokse, der står inde i et kort (bannere, feedback, linjekort og paneler). 9999 px er chips og piller. Spillekortene beholder 8 og 4 px, og chipsene i tabellen over sidninger beholder 8 px, som i tegningen.
+7. **Uændret uden for tabellen:** `surface`, `surface-2`, `ok`, `ok-bg` og `bad-bg` og hele mørk tilstand ud over accent, den valgte flade og de to nye tokens. `card-muted` er #5d6675 som før, fordi den er en af kortenes farver. Den bedste linjes grønne farver i tegningen er ikke taget med i Del 1.
+8. **Layoutet er uændret i Del 1:** stylesheets ændrer kun farver, skrift, vægte, kanter og hjørner. Inter er lidt bredere end den gamle skrift, så tekst kan brydes et andet sted, også under 1000 px.
+9. **`design/tegneflade/`** er de gamle tegninger og bruges ikke af appen; de beholder deres værdier, og designsystemet opdateres af Claude (rådgiver) bagefter.
+10. **Accepttesten for Del 1** er `src/design-forsiden.test.ts` og `node scripts/tjek-design-forsiden.mjs`, der ser på alle synlige elementer på 30 skærme ved 1280 og 390 px i lys og mørk tilstand (120 visninger): skriften er hentet, ingen anden skrift eller vægt, ingen gamle farver, kontrast 4,5:1, intet stikker ud, og ingen knap klipper sin tekst.

@@ -11,6 +11,8 @@ export default defineConfig({
       registerType: 'prompt',
       injectRegister: false,
       includeAssets: ['favicon.svg', 'apple-touch-icon.png'],
+      // Skrifterne gemmes offline sammen med resten af appen (SPEC-design-som-forsiden.md).
+      workbox: { globPatterns: ['**/*.{js,css,html,woff2}'] },
       manifest: {
         name: 'Fordelingstræneren',
         short_name: 'Fordeling',
@@ -18,8 +20,8 @@ export default defineConfig({
         lang: 'da',
         display: 'standalone',
         orientation: 'portrait',
-        theme_color: '#f5f6f8',
-        background_color: '#f5f6f8',
+        theme_color: '#f2f3f4',
+        background_color: '#f2f3f4',
         icons: [
           { src: 'pwa-192.png', sizes: '192x192', type: 'image/png' },
           { src: 'pwa-512.png', sizes: '512x512', type: 'image/png' },

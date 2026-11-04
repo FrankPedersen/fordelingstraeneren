@@ -193,7 +193,7 @@ const BILLEDE = { forside: 'forside', træning: 'traening', analyse: 'analyse', 
 
 // Kører i siden: ser på alle synlige elementer.
 const UNDERSØG = `(() => {
-  const GAMLE = ['rgb(91, 107, 130)', 'rgb(159, 176, 198)', 'rgb(42, 52, 66)', 'rgb(227, 233, 241)', 'rgb(245, 246, 248)', 'rgb(24, 32, 43)', 'rgb(93, 102, 117)', 'rgb(216, 221, 229)', 'rgb(38, 50, 65)'];
+  const GAMLE = ['rgb(91, 107, 130)', 'rgb(159, 176, 198)', 'rgb(42, 52, 66)', 'rgb(227, 233, 241)', 'rgb(245, 246, 248)', 'rgb(24, 32, 43)', 'rgb(216, 221, 229)', 'rgb(38, 50, 65)'];
   const parse = (c) => {
     const m = c && c.match(/rgba?\\(([^)]+)\\)/);
     if (!m) return null;
@@ -208,7 +208,12 @@ const UNDERSØG = `(() => {
   const lærred = matchMedia('(prefers-color-scheme: dark)').matches ? { r: 18, g: 22, b: 28, a: 1 } : { r: 242, g: 243, b: 244, a: 1 };
   const flade = (el) => {
     const lag = [];
+    // En flade tæller kun, hvis teksten ligger på den: tallene over søjlerne står uden for søjlen.
+    const k = el.getBoundingClientRect();
+    const x = k.left + k.width / 2, y = k.top + k.height / 2;
     for (let e = el; e; e = e.parentElement) {
+      const f = e.getBoundingClientRect();
+      if (e !== document.body && e !== document.documentElement && (x < f.left || x > f.right || y < f.top || y > f.bottom)) continue;
       const c = parse(getComputedStyle(e).backgroundColor);
       if (c && c.a > 0) { lag.push(c); if (c.a === 1) break; }
     }
@@ -226,7 +231,8 @@ const UNDERSØG = `(() => {
     const tekst = [...el.childNodes].filter((n) => n.nodeType === 3 && n.textContent.trim()).map((n) => n.textContent.trim()).join(' ');
     if (!tekst) continue;
     const først = cs.fontFamily.split(',')[0].replace(/["']/g, '').trim();
-    if (/system-ui/.test(cs.fontFamily) || !['Inter', 'Manrope', 'Georgia'].includes(først)) ud.skrift.add(navn(el) + ': ' + cs.fontFamily.slice(0, 40));
+    // Kode i Guiden (linjeformatet) står i fast bredde.
+    if (!el.closest('code') && (/system-ui/.test(cs.fontFamily) || !['Inter', 'Manrope', 'Georgia'].includes(først))) ud.skrift.add(navn(el) + ': ' + cs.fontFamily.slice(0, 40));
     if (!['400', '600', '800'].includes(cs.fontWeight) || (cs.fontWeight === '800' && først !== 'Manrope')) ud.vægt.add(navn(el) + ': ' + først + ' ' + cs.fontWeight);
     if (el.tagName === 'BUTTON' && el.scrollWidth > el.clientWidth + 1) ud.klippet.add(navn(el) + ': ' + tekst.slice(0, 30));
     if (el.closest('[disabled], [aria-disabled="true"], svg')) continue;
@@ -272,9 +278,14 @@ async function kør({ bredde, tilstand, navn, gå }) {
   const linjer = [];
   try {
     await gå(s, NU);
-    await s.kør('document.fonts.ready');
-    await vent(300);
-    const r = await s.kør(UNDERSØG);
+    // Skriften hentes først, når der er tekst på skærmen, så der ventes højst 5 sekunder på den.
+    let r;
+    for (let i = 0; i < 25; i++) {
+      await s.kør('document.fonts.ready');
+      await vent(200);
+      r = await s.kør(UNDERSØG);
+      if (r.hentet.includes('Inter 400')) break;
+    }
     const meld = (ok, tekst) => { if (!ok) { fejl++; linjer.push(`FEJL ${hvor}: ${tekst}`); } };
     meld(!r.farve.length, `gamle farver: ${r.farve.slice(0, 4).join(' ; ')}`);
     meld(!r.skrift.length, `anden skrift: ${r.skrift.slice(0, 4).join(' ; ')}`);
