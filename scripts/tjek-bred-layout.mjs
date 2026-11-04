@@ -1,5 +1,5 @@
 // Accepttest (SPEC-bred-layout.md og Del 2 af SPEC-design-som-forsiden.md): det brede layout fra 1000 px i en rigtig
-// browser. Appen startes med Vite fra arbejdsmappen, og referencen (appen efter Del 1, tagget v34-foer-analyse-layout)
+// browser. Appen startes med Vite fra arbejdsmappen, og referencen (appen efter Del 2, tagget v35-foer-analyse-info)
 // lægges i en midlertidig git worktree og startes ved siden af. Begge åbnes i Chrome eller Edge uden vindue;
 // tilfældighederne og tiden er låst, så opgaverne er de samme hver gang, og hver skærm får sin egen tomme lagring.
 //
@@ -14,9 +14,10 @@
 // dække noget. Efter sidste stik i Spil den selv kan dommen og resultatet ses. Analyse følger tegningen. Pointregnskab,
 // Håndevaluering, Spil den selv og en session med tastatur har to spalter, og vejledningens indholdsfortegnelse står
 // til venstre. Ved 1000 px er højre spalte mindst 400 px. Linjekortenes trin har samme afstand på mobil og computer, og
-// tab-rækkefølgen er den samme før og efter. Ved 999 og 390 px er skærmene pixel for pixel som referencen; rettelsen af
-// den deaktiverede primærknap lægges på referencen, så den ikke tæller som en forskel. Kræver Node 22+, git og Chrome
-// eller Edge.
+// tab-rækkefølgen er den samme før og efter. Analyse har 5 ⓘ, og linjekortene står efter antallet af linjer (Del 3). Ved
+// 999 og 390 px er skærmene pixel for pixel som referencen. På de skærme, Del 3 ændrer (Analyse, Facit og Spil den selv),
+// skjules ⓘ og Spil den selv i begge apps, og snittets nye tekst lægges på referencen, så alt andet skal stå, hvor det
+// stod. Kræver Node 22+, git og Chrome eller Edge.
 import { spawn, spawnSync } from 'node:child_process';
 import { existsSync, lstatSync, mkdirSync, mkdtempSync, rmSync, symlinkSync, unlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -25,7 +26,7 @@ import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
 
 const ROD = fileURLToPath(new URL('..', import.meta.url));
-const TAG = 'v34-foer-analyse-layout';
+const TAG = 'v35-foer-analyse-info';
 // Skærmnavne som argumenter begrænser pixelsammenligningen til dem; en forskel gemmes som billeder her.
 const KUN = process.argv.slice(2).filter((a) => !a.startsWith('--'));
 const BILLEDER = process.argv.find((a) => a.startsWith('--billeder='))?.slice('--billeder='.length);
@@ -63,8 +64,18 @@ const FAST = `(() => {
   globalThis.Date = FastDate;
 })();`;
 
-// Rettelsen af den deaktiverede primærknap (Del 2, punkt 6), lagt på referencen.
-const KNAP_RETTET = '.btn.primary:disabled { background: var(--surface-2); border-color: var(--surface-2); color: var(--muted); opacity: 1; }';
+// Skærmene, Del 3 ændrer. Her skjules ⓘ og Spil den selv i begge apps, ordet Sammenlign (der kun var ⓘ's anker, for hvert
+// kort har afkrydsningen) fjernes, og referencen får snittets nye tekst. Så må intet andet have flyttet sig.
+const MED_INFO = new Set(['analyse', 'analyseSpil', 'facit', 'spilSelv']);
+const UDEN_INFO = `(() => {
+  document.head.insertAdjacentHTML('beforeend', '<style>.info, .fb-play-start { display: none !important; }</style>');
+  for (const r of document.querySelectorAll('[aria-labelledby="fb-lines"] > .with-info')) {
+    if (r.querySelector(':scope > h3')) continue;
+    r.querySelector(':scope > .fb-note')?.remove();
+    if (![...r.children].some((c) => !c.matches('.info'))) r.remove();
+  }
+  for (const n of document.querySelectorAll('.fb-line .fb-note')) n.textContent = n.textContent.replace(/^Flest stik i gennemsnit: ([\\d,]+) stik$/, 'Flest stik i snit: $1');
+})()`;
 
 async function chrome() {
   const port = 9300 + Math.floor(Math.random() * 400);
@@ -155,8 +166,9 @@ async function chrome() {
           return sti;
         },
         /** Hele siden, når den står stille: to billeder i træk skal være ens (Analyse regner færdig bagefter). */
-        async billede() {
-          await kør(`window.scrollTo(0, 0); document.head.insertAdjacentHTML('beforeend', '<style>${KNAP_RETTET}</style>')`);
+        async billede(udenInfo = false) {
+          await kør('window.scrollTo(0, 0)');
+          if (udenInfo) await kør(UDEN_INFO);
           let forrige;
           for (let i = 0; i < 8; i++) {
             await vent(400);
@@ -398,6 +410,7 @@ async function analyseSomTegningen(s) {
       sit: k(sit), sitFlade: getComputedStyle(sit).backgroundColor, sitVenstre: getComputedStyle(sit).borderLeftWidth, sitTop: getComputedStyle(sit).borderTopWidth,
       knap: k(q('.fb-play-start')), knapFlade: q('.fb-play-start') ? getComputedStyle(q('.fb-play-start')).backgroundColor : null,
       linjer: lines.map(k),
+      info: a('.info-btn').map((b) => b.getAttribute('aria-label')),
       detaljer: k(q('[aria-labelledby="fb-details"]')), res: k(res), resFlade: getComputedStyle(res).backgroundColor,
       stor: q('.fb-result-big') && { farve: getComputedStyle(q('.fb-result-big')).color, skrift: getComputedStyle(q('.fb-result-big')).fontFamily, vist: q('.fb-result-big').getClientRects().length > 0 },
       lang: q('.fb-result-long')?.getClientRects().length ?? null,
@@ -414,7 +427,7 @@ async function analyseSomTegningen(s) {
   tjek(d.spalteFlade === 'rgb(255, 255, 255)' && d.spalteHjørne === '24px', 'Analyse som tegningen: Problemet er ét kort', `${d.spalteFlade}, ${d.spalteHjørne}`);
   tjek(d.sit.left >= d.spalte.left && d.sit.right <= d.spalte.right && d.sit.bottom <= d.spalte.bottom && d.sitFlade === 'rgba(0, 0, 0, 0)' && d.sitVenstre === '0px' && d.sitTop === '1px', 'Analyse som tegningen: Situationen står inde i Problemet-kortet med en streg over', `${JSON.stringify(d.sit)} ${d.sitFlade} ${d.sitVenstre} ${d.sitTop}`);
   tjek(d.knap && d.knap.top >= d.sit.bottom - 1 && d.knap.bottom <= d.spalte.bottom && d.knapFlade === 'rgb(255, 159, 74)', 'Analyse som tegningen: Spil den selv står nederst i kortet og er orange', `${JSON.stringify(d.knap)} ${d.knapFlade}`);
-  tjek(d.linjer.length >= 3 && ca(d.linjer[0].top, d.linjer[2].top) && d.linjer[1].left > d.linjer[0].right - 1 && d.linjer[2].left > d.linjer[1].right - 1 && ca(d.linjer[0].width, d.linjer[2].width), 'Analyse som tegningen: tre linjekort side om side', JSON.stringify(d.linjer.slice(0, 3).map((l) => [l.left, l.top, l.width])));
+  tjek(d.info.length === 5, 'Analyse har præcis 5 ⓘ', d.info.join(' ; '));
   tjek(ca(d.gruppe?.top + d.gruppe?.height / 2, d.forskel?.top + d.forskel?.height / 2, 8) && d.gruppe.left > d.forskel.right, 'Analyse som tegningen: Grupper står i overskriften til Forskellen', JSON.stringify(d.gruppe));
   tjek(ca(d.detaljer.top, d.res.top) && d.res.left > d.detaljer.right - 1, 'Analyse som tegningen: De afgørende sidninger og Resultatet side om side', `${JSON.stringify(d.detaljer)} / ${JSON.stringify(d.res)}`);
   tjek(d.tabel.ud <= 0, `Analyse som tegningen: alle ${d.tabel.linjer} linjer kan ses i tabellen uden at rulle`, `${d.tabel.ud} px for bredt`);
@@ -512,6 +525,64 @@ try {
   s = await åbn('analyse', 1280, 900);
   await analyseSomTegningen(s);
   await s.luk();
+
+  // Linjekortene efter antallet af linjer (Del 3): tre eller færre i én række, fire som 2 × 2, fem eller flere i rækker af tre.
+  for (const [bredde, højde] of [[1280, 900], [1000, 700]]) {
+    for (const [valg, mål, rækker] of [['~1. K 7 6 5', '2 stik', [3]], ['~E D 6 5 / 4 3 2', '3 stik', [2, 2]], ['~E 10 8 3 / K B 9 2', '4 stik', [3, 3]]]) {
+      s = await b.fane(bredde, højde);
+      await s.gå(`${NU}#farvebehandling`);
+      await s.klik('Analyse');
+      await s.klik(valg);
+      await s.klik(mål);
+      await vent(500);
+      const r = await s.kør(`(() => {
+        const kort = [...document.querySelectorAll('.fb-analysis .fb-lines:not(.fb-own-lines) > .fb-line')];
+        const rk = new Map();
+        for (const e of kort) { const t = Math.round(e.getBoundingClientRect().top); rk.set(t, (rk.get(t) ?? 0) + 1); }
+        const inde = kort.every((e) => e.scrollWidth <= e.clientWidth + 1);
+        return { rækker: [...rk.values()], inde, info: [...document.querySelectorAll('.info-btn')].filter((b) => b.offsetParent !== null).length, ud: document.documentElement.scrollWidth - innerWidth };
+      })()`);
+      tjek(JSON.stringify(r.rækker) === JSON.stringify(rækker), `Linjekortene ved ${bredde} px, ${valg.slice(1)}: rækker af ${rækker.join(' og ')}`, JSON.stringify(r.rækker));
+      tjek(r.inde && r.ud <= 0, `Linjekortene ved ${bredde} px, ${valg.slice(1)}: intet stikker ud`, JSON.stringify(r));
+      tjek(r.info === 5, `Analyse ved ${bredde} px, ${valg.slice(1)}: præcis 5 ⓘ`, `${r.info} ⓘ`);
+      await s.luk();
+    }
+  }
+
+  // 5 ⓘ med udfyldt situation og i kortvælgeren, og ingen i titellinjen, ved Guide eller i Resultatet.
+  for (const [bredde, højde] of [[1280, 900], [390, 844]]) {
+    s = await åbn('analyse', bredde, højde);
+    await s.klik('Angiv situationen');
+    await s.klik('~Maks. hp i farven, Vest: én mindre');
+    await vent(300);
+    const antal = () => s.kør(`[...document.querySelectorAll('.info-btn')].filter((b) => b.offsetParent !== null).length`);
+    tjek((await antal()) === 5, `Analyse ved ${bredde} px med udfyldt situation: præcis 5 ⓘ`, `${await antal()} ⓘ`);
+    tjek(await s.kør(`!document.querySelector('.fb-header .info-btn, .fb-guide-bar .info-btn, .fb-result .info-btn, .fb-line .info-btn')`), `Analyse ved ${bredde} px: ingen ⓘ ved titlen, Guide, Resultatet eller i linjekortene`);
+    await s.luk();
+    s = await åbn('analyse', bredde, højde);
+    await s.klik('Kortvælger');
+    await vent(300);
+    tjek((await s.kør(`[...document.querySelectorAll('.info-btn')].filter((b) => b.offsetParent !== null).length`)) === 5, `Analyse ved ${bredde} px i kortvælgeren: præcis 5 ⓘ`);
+    await s.luk();
+  }
+
+  // Tab-rækkefølgen følger det, man ser: Spil den selv kommer efter Situationen, og intet andet har skiftet plads (Del 3).
+  for (const [bredde, højde] of [[1280, 900], [390, 844]]) {
+    const liste = (fane) => fane.kør(`[...document.querySelectorAll('button, a, input')].filter((e) => e.getClientRects().length > 0 && e.tabIndex >= 0 && !e.classList.contains('fb-bank-item')).map((e) => (e.getAttribute('aria-label') || e.textContent).replace(/\\s+/g, ' ').trim())`);
+    const uden = (l) => l.filter((x) => !/^Hjælp: /.test(x) && x !== 'Spil den selv ▶');
+    const nu = await åbn('analyse', bredde, højde, NU);
+    const før = await åbn('analyse', bredde, højde, FØR);
+    const [ln, lf] = [await liste(nu), await liste(før)];
+    tjek(ln[ln.indexOf('Spil den selv ▶') - 1] === 'Angiv situationen', `Analyse ved ${bredde} px: Spil den selv kommer lige efter Angiv situationen`, ln.slice(ln.indexOf('Spil den selv ▶') - 2, ln.indexOf('Spil den selv ▶') + 1).join(' | '));
+    const i = uden(ln).findIndex((x, k) => x !== uden(lf)[k]);
+    tjek(i < 0 && uden(ln).length === uden(lf).length, `Analyse ved ${bredde} px: alt andet har samme rækkefølge som før`, `trin ${i + 1}: ${uden(ln)[i]} / før ${uden(lf)[i]}`);
+    if (bredde === 390) {
+      const k = await nu.kør(`(() => { const r = (x) => document.querySelector(x).getBoundingClientRect(); const a = r('[aria-labelledby="fb-situation"]'), b = r('.fb-play-start'); return { under: b.top >= a.bottom, venstre: Math.abs(a.left - b.left), bredde: Math.abs(a.width - b.width) }; })()`);
+      tjek(k.under && k.venstre < 1 && k.bredde < 1, 'Analyse ved 390 px: Spil den selv står under Situationen i samme bredde', JSON.stringify(k));
+    }
+    await nu.luk();
+    await før.luk();
+  }
 
   // Med mere end fire linjer står De afgørende sidninger og Resultatet under hinanden, så alle kolonner kan ses.
   for (const [bredde, højde] of [[1280, 900], [1000, 700]]) {
@@ -615,7 +686,7 @@ try {
       for (let forsøg = 0; forsøg < 2 && forskel !== ''; forsøg++) {
         const sNu = await åbn(skærm, bredde, 900, NU);
         const sFør = await åbn(skærm, bredde, 900, FØR);
-        billeder = [await sNu.billede(), await sFør.billede()];
+        billeder = [await sNu.billede(MED_INFO.has(skærm)), await sFør.billede(MED_INFO.has(skærm))];
         forskel = await sammenlign(...billeder, sNu);
         await sNu.luk();
         await sFør.luk();
