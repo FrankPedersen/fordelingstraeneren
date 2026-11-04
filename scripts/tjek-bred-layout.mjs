@@ -15,7 +15,7 @@
 // Håndevaluering, Spil den selv og en session med tastatur har to spalter, og vejledningens indholdsfortegnelse står
 // til venstre. Ved 1000 px er højre spalte mindst 400 px. Linjekortenes trin har samme afstand på mobil og computer, og
 // tab-rækkefølgen er den samme før og efter. Analyse har 5 ⓘ, og linjekortene står efter antallet af linjer (Del 3). Ved
-// 999 og 390 px er skærmene pixel for pixel som referencen. På de skærme, Del 3 ændrer (Analyse, Facit og Spil den selv),
+// 999 og 390 px er skærmene pixel for pixel som referencen. På de skærme, Del 3 ændrer (Analyse, Guide, Facit og Spil den selv),
 // skjules ⓘ og Spil den selv i begge apps, og snittets nye tekst lægges på referencen, så alt andet skal stå, hvor det
 // stod. Kræver Node 22+, git og Chrome eller Edge.
 import { spawn, spawnSync } from 'node:child_process';
@@ -66,7 +66,7 @@ const FAST = `(() => {
 
 // Skærmene, Del 3 ændrer. Her skjules ⓘ og Spil den selv i begge apps, ordet Sammenlign (der kun var ⓘ's anker, for hvert
 // kort har afkrydsningen) fjernes, og referencen får snittets nye tekst. Så må intet andet have flyttet sig.
-const MED_INFO = new Set(['analyse', 'analyseSpil', 'facit', 'spilSelv']);
+const MED_INFO = new Set(['analyse', 'analyseSpil', 'guide', 'facit', 'spilSelv']);
 const UDEN_INFO = `(() => {
   document.head.insertAdjacentHTML('beforeend', '<style>.info, .fb-play-start { display: none !important; }</style>');
   for (const r of document.querySelectorAll('[aria-labelledby="fb-lines"] > .with-info')) {
@@ -668,6 +668,11 @@ try {
         gem(`${bredde}-${fil}.png`, await s.billede());
         await s.luk();
       }
+      s = await åbn('analyse', bredde, højde);
+      await s.klik('Hjælp: Problemet');
+      await s.klik('Hjælp: Linjerne');
+      gem(`${bredde}-analyse-info-aaben.png`, await s.billede());
+      await s.luk();
       s = await åbn('analyseSpil', bredde, højde);
       await spilFærdig(s);
       await vent(400);

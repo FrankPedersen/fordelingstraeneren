@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 import { setLang } from '../../i18n';
 import { bandFields, disagreements, linesForGoal } from '../analysis';
@@ -7,6 +7,7 @@ import { TEST_BANK } from '../testBank';
 import { LayoutList } from './Analysevindue';
 import { Bridgebord } from './Bridgebord';
 import { Sandsynlighedsbånd } from './Sandsynlighedsbånd';
+import { TEXT } from './texts';
 
 afterEach(() => {
   cleanup();
@@ -43,7 +44,7 @@ describe('Temaet i farvebehandling (SPEC-tema.md)', () => {
     expect(misses).toBeGreaterThan(20);
   }, 30_000);
 
-  it('mærket "afgør" står ved præcis de afgørende sidninger, med ⓘ på dansk og engelsk', () => {
+  it('mærket "afgør" står ved præcis de afgørende sidninger, og forklaringen står i den samlede ⓘ på dansk og engelsk', () => {
     let marked = 0;
     for (const item of TEST_BANK.slice(0, 40)) {
       const lines = linesForGoal(item, item.combination.goals[0]);
@@ -57,7 +58,6 @@ describe('Temaet i farvebehandling (SPEC-tema.md)', () => {
       expect(withMark, item.combination.id).toHaveLength(decisive.size);
       expect(rows.slice(0, withMark.length)).toEqual(withMark);
       marked += withMark.length;
-      expect(screen.queryByRole('button', { name: 'Hjælp: afgør' }) !== null).toBe(decisive.size > 0);
       cleanup();
     }
     expect(marked).toBeGreaterThan(5);
@@ -67,15 +67,12 @@ describe('Temaet i farvebehandling (SPEC-tema.md)', () => {
     })!;
     const lines = linesForGoal(item, item.combination.goals[0]);
     const fields = bandFields(item, lines);
-    render(<LayoutList fields={fields} lines={lines} selected={null} onSelect={() => {}} />);
-    fireEvent.click(screen.getByRole('button', { name: 'Hjælp: afgør' }));
-    expect(screen.getByText('Linjerne giver forskelligt resultat i denne sidning.')).toBeTruthy();
-    cleanup();
+    // Forklaringen af mærket står i den samlede ⓘ ved kortet (SPEC-design-som-forsiden.md, Del 3).
+    expect(TEXT.help.layoutsList.find((t) => t.id === 'decides')).toMatchObject({ title: 'afgør', text: 'Linjerne giver forskelligt resultat i denne sidning.' });
     setLang('en');
     render(<LayoutList fields={fields} lines={lines} selected={null} onSelect={() => {}} />);
     expect(screen.getAllByText('decides').length).toBeGreaterThan(1);
-    fireEvent.click(screen.getByRole('button', { name: 'Help: decides' }));
-    expect(screen.getByText('The lines give different results in this layout.')).toBeTruthy();
+    expect(TEXT.help.layoutsList.find((t) => t.id === 'decides')).toMatchObject({ title: 'decides', text: 'The lines give different results in this layout.' });
   }, 30_000);
 
   it('bordet er et diagram: hænderne som i systemnotatet, Vest og Øst ved siderne og et kompas med de manglende kort', () => {

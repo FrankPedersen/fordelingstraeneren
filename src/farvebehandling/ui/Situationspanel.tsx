@@ -16,7 +16,6 @@ import {
 } from '../model/situation';
 import type { GoalResult } from '../precompute';
 import type { CombinationBase } from '../solver/results';
-import { Info } from '../../ui/Info';
 import { TEXT } from './texts';
 
 /**
@@ -97,15 +96,14 @@ export function Situationspanel({ north, south, situation, onChange }: Situation
   const [open, setOpen] = useState(false);
   const standard = isStandard(situation);
   const expanded = open || !standard;
-  const fields: { field: SituationField; label: string; help: string }[] = [
-    { field: 'known', label: TEXT.situationPanel.known, help: TEXT.help.known },
-    { field: 'maxHp', label: TEXT.situationPanel.maxHp, help: TEXT.help.maxHp },
+  const fields: { field: SituationField; label: string }[] = [
+    { field: 'known', label: TEXT.situationPanel.known },
+    { field: 'maxHp', label: TEXT.situationPanel.maxHp },
   ];
   return (
     <section className="card" aria-labelledby="fb-situation">
       <div className="with-info">
         <h2 id="fb-situation">{TEXT.situationPanel.title}</h2>
-        <Info topic={TEXT.situationPanel.title}>{TEXT.help.situation}</Info>
       </div>
       {!expanded ? (
         <div className="fb-room-row">
@@ -116,11 +114,10 @@ export function Situationspanel({ north, south, situation, onChange }: Situation
         </div>
       ) : (
         <>
-          {fields.map(({ field, label, help }) => (
+          {fields.map(({ field, label }) => (
             <div key={field} className="fb-situation-field">
               <div className="with-info">
                 <h3>{label}</h3>
-                <Info topic={label}>{help}</Info>
               </div>
               <div className="fb-situation-seats">
                 {SEATS.map((seat) => {
@@ -188,7 +185,6 @@ function Forbindelser({ north, south, situation, onChange }: SituationspanelProp
     <div className="fb-situation-field">
       <div className="with-info">
         <h3>{label}</h3>
-        <Info topic={label}>{TEXT.help.connections}</Info>
       </div>
       <div className="fb-situation-seats">
         {HANDS.map((hand) => {
@@ -225,7 +221,6 @@ function Forbindelser({ north, south, situation, onChange }: SituationspanelProp
       {limitedConnections(situation) && (
         <div className="fb-segment" role="group" aria-label={TEXT.situationPanel.lead}>
           <span>{TEXT.situationPanel.lead}</span>
-          <Info topic={TEXT.situationPanel.lead}>{TEXT.help.lead}</Info>
           {(['N', 'S'] as const).map((hand) => (
             <button
               key={hand}

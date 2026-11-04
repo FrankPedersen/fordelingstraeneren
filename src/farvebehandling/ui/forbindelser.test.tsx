@@ -142,13 +142,14 @@ describe('Forbindelser i panelet Situationen (SPEC-forbindelser.md)', { timeout:
     expect(screen.getByText('South on lead · South 2 entries', { selector: '.fb-situation-chips li' })).toBeTruthy();
     expect(screen.getByText('North 0 entries', { selector: '.fb-situation-chips li' })).toBeTruthy();
     expect(screen.getByText('a priori · South on lead, North 0 entries and South 2 entries · best defence')).toBeTruthy();
-    fireEvent.click(screen.getByRole('button', { name: 'Help: Entries' }));
-    fireEvent.click(screen.getByRole('button', { name: 'Help: On lead' }));
+    // Forklaringerne af Forbindelser og Inde står i den samlede ⓘ ved Problemet (SPEC-design-som-forsiden.md, Del 3).
+    fireEvent.click(screen.getByRole('button', { name: 'Help: The problem' }));
+    const note = screen.getByRole('note').textContent ?? '';
+    expect(note).toMatch(/uses an entry/);
     const panel = screen.getByRole('region', { name: 'The situation' }).textContent ?? '';
-    expect(panel).toMatch(/uses an entry/);
     const chips = document.querySelector('.fb-situation-chips')?.textContent ?? '';
     const assumptions = screen.getByText(/· best defence$/).textContent ?? '';
-    for (const text of [panel, chips, assumptions]) {
+    for (const text of [note, panel, chips, assumptions]) {
       expect(text).not.toMatch(/[æøåÆØÅ]|\b(og|inde|indgang|indgange|ubegrænset|forbindelser|nord|syd|bordet|hånden|kort|hp|maks)\b/i);
     }
     await screen.findAllByText(/%/, { selector: '.fb-line-value' }, WAIT);

@@ -1,6 +1,5 @@
 import { useId, useState, type FormEvent } from 'react';
 import { cardsText, rankText, type Rank } from '../model/cards';
-import { Info } from '../../ui/Info';
 import { SuitText } from '../../ui/SuitText';
 import { parseImport, SUIT_SYMBOL, type DealChoice, type ImportError } from './importer';
 import { TEXT } from './texts';
@@ -68,7 +67,6 @@ export function Importfelt({ onImport }: ImportfeltProps) {
     <form className="fb-import" onSubmit={submit}>
       <div className="with-info">
         <label htmlFor={id}>{TEXT.importer.label}</label>
-        <Info topic={TEXT.importer.label}>{TEXT.help.importer}</Info>
       </div>
       <div className="fb-import-row">
         <input

@@ -73,8 +73,8 @@ describe('Analyse som selvstændigt modul (SPEC-analyse-modul.md, trin 1)', { ti
     expect(screen.getByRole('heading', { name: 'Situationen' })).toBeTruthy();
     expect(document.querySelector('header.topbar')).toBeTruthy();
     expect(document.querySelector('footer.site-footer')).toBeTruthy();
-    fireEvent.click(screen.getByRole('button', { name: 'Hjælp: Farvebehandling – Analyse' }));
-    expect(screen.getByRole('note').textContent).toMatch(/fanen Analyse i Farvebehandling/);
+    // Ingen ⓘ i titellinjen: Guide er hjælpen til skærmen (SPEC-design-som-forsiden.md, Del 3).
+    expect(document.querySelector('header.fb-header .info-btn')).toBeNull();
   });
 
   it('Tilbage fra modulet som første adresse fører til forsiden uden adresse', async () => {
@@ -201,7 +201,7 @@ describe('Analyse som selvstændigt modul (SPEC-analyse-modul.md, trin 1)', { ti
     expect(help).toMatch(/^The analysis from Suit combinations as a separate module/);
     click('Analysis');
     await screen.findByRole('heading', { name: 'Suit combinations – Analysis', level: 1 }, WAIT);
-    fireEvent.click(screen.getByRole('button', { name: 'Help: Suit combinations – Analysis' }));
+    expect(document.querySelector('header.fb-header .info-btn')).toBeNull();
     const header = document.querySelector('header.fb-header')?.textContent ?? '';
     for (const text of [help, header]) expect(text).not.toMatch(/[æøåÆØÅ]|\b(og|fanen|analysen|kombination|linjerne|chancerne|sidningerne|forbindelser|kendte|kort)\b/i);
   });

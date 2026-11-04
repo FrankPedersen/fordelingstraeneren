@@ -24,18 +24,17 @@ const hjælp = (rod: ParentNode) => [...rod.querySelectorAll('.info-btn')].map((
 const titler = (rod: ParentNode) => [...rod.querySelectorAll('.info-item strong')].map((s) => s.textContent);
 
 describe('Én ⓘ pr. kort i Analyse', () => {
-  const FEM = ['Hjælp: Vælg kombination', 'Hjælp: Problemet', 'Hjælp: Linjerne', 'Hjælp: Forskellen', `Hjælp: ${'Alle sidninger'}`];
+  const FEM = ['Hjælp: Vælg kombination', 'Hjælp: Problemet', 'Hjælp: Linjerne', 'Hjælp: Forskellen', 'Hjælp: Sidningerne'];
 
   it('har præcis 5 ⓘ, også med situationen åben og i kortvælgeren', () => {
     const { container } = render(<Analysevindue bank={TEST_BANK} />);
-    const fem = FEM.map((f) => (f === 'Hjælp: Alle sidninger' ? `Hjælp: ${TEXT.details}` : f));
-    expect(hjælp(container)).toEqual(fem);
+    expect(hjælp(container)).toEqual(FEM);
     fireEvent.click(screen.getByRole('button', { name: 'Angiv situationen' }));
     expect(container.querySelector('.fb-situation-field')).toBeTruthy();
-    expect(hjælp(container)).toEqual(fem);
+    expect(hjælp(container)).toEqual(FEM);
     fireEvent.click(screen.getByRole('button', { name: 'Kortvælger' }));
     expect(container.querySelector('.fb-import')).toBeTruthy();
-    expect(hjælp(container)).toEqual(fem);
+    expect(hjælp(container)).toEqual(FEM);
   }, 30_000);
 
   it('har ingen ⓘ ved Guide, ved Mål, i Situationen, i linjekortene, i tabellen eller i Resultatet', () => {
@@ -88,7 +87,7 @@ describe('De samlede ⓘ', () => {
 
   it('har den samme liste på engelsk, og hvert emne er højst to sætninger', () => {
     const lister = () => [TEXT.help.chooseList, TEXT.help.problemList, TEXT.help.linesList, TEXT.help.layoutsList, TEXT.help.playList];
-    const sætninger = (t: string) => t.replace('M. Shah', 'Shah').split(/[.!?](?:\s+|$)/).filter(Boolean).length;
+    const sætninger = (t: string) => t.replace('M. Shah', 'Shah').replace(/\d\. /g, '').split(/[.!?](?:\s+|$)/).filter(Boolean).length;
     const dansk = lister().map((l) => l.map((t) => t.id));
     for (const liste of lister()) for (const t of liste) expect(sætninger(t.text), t.text).toBeLessThanOrEqual(2);
     setLang('en');
