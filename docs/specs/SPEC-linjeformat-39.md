@@ -235,7 +235,7 @@ Blandt de 154 bedste linjer med en kipning i de 110 hyppigste kombinationer ænd
 
 Frank svarede ja til de tre anbefalinger 3. november 2026.
 
-1. **De 23 linjer, der viser noget andet end løserens plan,** tages sammen med "Esset slås." efter en kipning. Begge handler om, hvordan `describe.ts` læser hovedvejen, og begge kræver en løsning af hele banken, så de godt 3 timer kun skal bruges én gang.
+1. **De 23 linjer, der viser noget andet end løserens plan,** tages sammen med "Esset slås." efter en kipning (ændret af Frank samme dag: de rettes nu i SPEC-linjeplan-23.md, og kun løsningen med 3. hånds kort pr. gren venter). Begge handler om, hvordan `describe.ts` læser hovedvejen, og begge kræver en løsning af hele banken, så de godt 3 timer kun skal bruges én gang.
 2. **Teksten på grenen med honnøren** bliver, som den er, indtil de ti eksempler er vurderet. "Lægger Øst en honnør, tages den med esset. Esset og kongen slås." er kun bogstavelig på hovedvejen.
 3. **Kun de 31 cases** er løst forfra. Rettelsen kan ikke røre de andre, og accepttesten har kontrolleret det.
 

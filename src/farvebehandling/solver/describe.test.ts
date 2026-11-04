@@ -61,6 +61,14 @@ describe('Linjerne på dansk', { timeout: 120_000 }, () => {
     expect(solveLine(game, { ...text.line, id: 'A' }).value).toBeCloseTo(lead.value, 6);
   });
 
+  it('3 2 / B 10 5 4, 1 stik: linjen slutter før trinet, der ikke følger løserens plan, og giver 24,73 % (SPEC-linjeplan-23.md)', () => {
+    const { game, lead, text } = bestLine('32', 'JT54', 1);
+    expect(text.steps).toEqual(['Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille.', 'Lille fra begge hænder.']);
+    expect(text.line.steps).toEqual([{ leadFrom: 'N', card: 'low', third: { ifSecondPlays: 'low', play: 'J', else: 'low' } }]);
+    expect(solveLine(game, { ...text.line, id: 'A' }).value).toBeCloseTo(lead.value, 6);
+    expect(lead.value).toBeCloseTo(0.2473, 4);
+  });
+
   it('E D 6 5 / 4 3 2, 3 stik: mod damen (kipning), og den gemte linje giver løserens chance', () => {
     const { game, lead, text } = bestLine('432', 'AQ65', 3);
     expect(text.steps).toEqual(['Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset.']);

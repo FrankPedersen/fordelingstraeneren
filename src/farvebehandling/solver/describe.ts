@@ -165,11 +165,11 @@ function followsStrategy(game: Game, strategy: Int8Array, leadSlot: number, step
 /**
  * Trinene skrives fra hovedvejen, men gælder på alle grene. Ligeværdige kort er ét kort i løserens træ, så et konkret
  * kort kan være brugt på en anden gren: i 2 / E K B 5 4 3 tager esset en honnør fra Øst i trin 1, og trin 2 er så kongen.
- * Afviser linjeformatet linjen, bliver sådan et kort "high", og linjen slutter før et trin, der ikke følger løserens
- * valg på alle grene; derefter spiller løseren videre. Andre linjer er uændrede (SPEC-linjeformat-39.md).
+ * Sådan et kort bliver "high" (SPEC-linjeformat-39.md). Linjen slutter før et trin, der ikke følger løserens valg på
+ * alle grene, også når formatet kan spille det; derefter spiller løseren videre, og linjen kan ende uden trin. Reglen er
+ * strengere end chancen kræver, men den koster ingen ny løsning og gælder derfor også i browseren (SPEC-linjeplan-23.md).
  */
 function playableSteps(game: Game, strategy: Int8Array, leadSlot: number, steps: LineStep[]): LineStep[] {
-  if (!lineMask(game, lineOf(steps)).errors.length) return steps;
   const playable: LineStep[] = [];
   for (const step of steps) {
     const next = playableStep(game, playable, step);

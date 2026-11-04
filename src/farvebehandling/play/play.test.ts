@@ -3,7 +3,7 @@ import { mulberry32, type Rng } from '../../engine/rng';
 import { bandFields, fieldIdOf, linesForGoal } from '../analysis';
 import { missingCards, parseCards } from '../model/cards';
 import { bankItem } from '../testBank';
-import { dealCards, finished, followsBestLine, playLead, playThird, startPlay, thirdHandEmpty, type Deal } from './play';
+import { dealCards, finished, followsBestLine, playLead, playThird, startPlay, thirdHandEmpty, type Deal, type PlayedTrick, type PlayState } from './play';
 
 /** Et "tilfældigt" tal, der altid vælger det første af flere ligeværdige kort. */
 const first: Rng = { next: () => 0, uint32: () => 0, int: () => 0 };
@@ -90,6 +90,17 @@ describe('Spil den selv', () => {
     // En lille fra hånden i stedet for kongen følger ikke linjen.
     const ikke = playThird(playLead(s, 'S', 3, first), 0, first);
     expect(followsBestLine(honnør, 5, ikke)).toBe(false);
+  });
+
+  it('3 2 / B 10 5 4, 1 stik: den, der følger løserens plan på grenen med honnøren, har fulgt linjen (SPEC-linjeplan-23.md)', () => {
+    const plan = bankItem('32-JT54');
+    const t = (lead: number, second: number, third: number, fourth: number) => ({ leader: 'N', lead, second, third, fourth, winner: 'V' }) as PlayedTrick;
+    // Lille fra bordet, Øst lægger esset, og hånden lægger lille. Næste gang lille fra bordet, og knægten lægges (løserens plan).
+    const s = { tricks: [t(2, 14, 4, 6), t(3, 7, 11, 12)], deal: { west: parseCards('KQ986'), east: parseCards('A7'), layout: 0 } } as unknown as PlayState;
+    expect(followsBestLine(plan, 1, s)).toBe(true);
+    // Lægges der lille i første runde, hvor trinet siger knægten, er linjen ikke fulgt.
+    const ikke = { ...s, tricks: [t(2, 7, 4, 6)] } as PlayState;
+    expect(followsBestLine(plan, 1, ikke)).toBe(false);
   });
 
   it('lægger intet kort, når 3. hånd ikke kan bekende', () => {
