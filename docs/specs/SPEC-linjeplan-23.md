@@ -1,6 +1,6 @@
 # SPEC-linjeplan-23
 
-3. november 2026 · Franks opgave, skrevet ud af Claude Code 4. november 2026 · Bygget på grenen `linjeplan-23` (før: `v32-foer-linjeplan-23`). Der flettes først efter Franks godkendelse.
+3. november 2026 · Franks opgave, skrevet ud af Claude Code 4. november 2026 · Bygget på grenen `linjeplan-23` (før: `v32-foer-linjeplan-23`). Godkendt af Frank og udgivet 4. november 2026.
 
 Specen ændrer afgørelse 1 i SPEC-linjeformat-39.md (Franks valg 3. november 2026): de 23 linjer, der viser noget andet end løserens plan, rettes nu og venter ikke på punktet "Esset slås.".
 
