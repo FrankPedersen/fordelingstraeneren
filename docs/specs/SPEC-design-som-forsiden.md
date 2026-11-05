@@ -101,4 +101,4 @@ Den bruger allerede Subtle Gradient (samme værdier som forsiden). Kun `multi-sv
 
 ## Åbne punkter
 
-Ingen. Sidefoden er lukket (Del 2, punkt 6): den er bygget ens med forsidens nye, kompakte sidefod i `SPEC-sidefod.md` på grenen `sidefod` og flettes, når `ny-forside` er udgivet, og Frank har godkendt den.
+Ingen. Sidefoden er lukket (Del 2, punkt 6): den er ens med forsidens nye, kompakte sidefod og udgivet 5. november 2026 (`SPEC-sidefod.md`).

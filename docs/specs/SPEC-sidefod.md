@@ -1,6 +1,6 @@
 # SPEC-sidefod
 
-4. november 2026 · Franks valg. Bygget på grenen `sidefod`; `main` før er tagget `v37-foer-sidefod`. Flettes først, når `ny-forside` er udgivet, og efter Franks godkendelse.
+4. november 2026 · Franks valg. Bygget på grenen `sidefod`; `main` før er tagget `v37-foer-sidefod`. Godkendt af Frank og udgivet 5. november 2026, efter `ny-forside`.
 
 Sidefoden laves ens med forsidens nye, kompakte sidefod efter målene under Afklaret i `../Forside/docs/specs/SPEC-ny-forside.md`.
 
@@ -35,4 +35,4 @@ Giv Frank skærmbilleder ved 1280 og 390 px af sidefoden. Frank godkender, før 
 2. **Linkene** til sporene er appens egne (`#fordeling` osv.), så de også virker offline. Konventionstræner, Bridgeordbog, Scoring i bridge og Om mig og kontakt går ud af appen.
 3. **Farverne** er forsidens og ens i lys og mørk tilstand: `footer-bg`, `footer-text` og `footer-accent` og forsidens grå toner.
 4. **Forsidens særregel** med tre kolonner fra 1000 px (`.home .site-footer`) er væk, for sidefoden er nu ens på alle skærme.
-5. **Knappens tekst må brække,** som på forsiden: ved 360 px står "Om mig og kontakt" på to linjer og ved 320 px på tre, og på engelsk er den på to linjer allerede ved 390 px. Uden det stak knappen 28 px ud af skærmen ved 320 px.
+5. **Knappens tekst må brække,** som på forsiden (Franks valg 5. november 2026): ved 360 px står "Om mig og kontakt" på to linjer og ved 320 px på tre, og på engelsk er den på to linjer allerede ved 390 px. Uden det stak knappen 28 px ud af skærmen ved 320 px.
