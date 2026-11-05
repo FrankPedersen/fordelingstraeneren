@@ -1,6 +1,6 @@
 # SPEC-moensterkort-bred
 
-5. november 2026 · Franks fund. Bygget på grenen `moensterkort-bred`; appen før er tagget `v38-foer-moensterkort-bred`. Frank godkender, før der flettes.
+5. november 2026 · Franks fund. Bygget på grenen `moensterkort-bred`; appen før er tagget `v38-foer-moensterkort-bred`. Godkendt af Frank, flettet og udgivet 5. november 2026 (`2eaeb49`); den udgivne app er tjekket, og grenen er slettet.
 
 Fundet i Fordeling, niveauøvelsen ("Vest har vist 5♥ og 4♣"), i bredt layout: mønsterkortet under Næste (fx "5-4-2-2 · Station 4 · Rum 1, Lænestolen") går ud over højre spalte til vinduets kant og har ingen højre kant, mens felterne ovenover slutter ved ✕-knappen.
 
@@ -62,3 +62,4 @@ Er den faktiske hånd delt hyppigst (rang 1), står sætningen ikke. "Vests" og 
 4. **Referencen** i testen er nu `v38-foer-moensterkort-bred` (før `v37-foer-sidefod`). Sidefoden er stadig skjult i sammenligningen, hvad der ikke ændrer noget, fordi den er den samme i begge.
 5. **Billeder** ved 1000, 1280, 1920 og 390 px før og efter ligger i `../skaermbilleder/moensterkort-bred/` (`<bredde>-moensterkort-foer.png` og `-efter.png`). Ved 390 px er de ens.
 6. **Ingen tekst og ingen adfærd er ændret**, så `SPEC.md` er uændret. Svaret om XP og forslaget til facit står ovenfor.
+7. **Den udgivne app** (5. nov. 2026, efter udgivelsen af `8b04037` med begge grene): på www.kontraktbridge.dk/fordelingstraeneren/ står mønsterkortet ved 1280 px fra 524 til 1200 px, samme kanter som dommen, og siden ruller ikke til siden (`../skaermbilleder/moensterkort-bred/1280-moensterkort-sitet.png`). Forslagene om XP og facit er besvaret i SPEC-fuldfoer-dom.md.

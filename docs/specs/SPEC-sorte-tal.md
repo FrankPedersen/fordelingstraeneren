@@ -1,6 +1,6 @@
 # SPEC-sorte-tal
 
-5. november 2026 · Franks valg. Bygget på grenen `sorte-tal`; appen før er tagget `v39-foer-sorte-tal`. Frank godkender, før der flettes.
+5. november 2026 · Franks valg. Bygget på grenen `sorte-tal`; appen før er tagget `v39-foer-sorte-tal`. Godkendt af Frank, flettet og udgivet 5. november 2026 (`8b04037`); den udgivne app er tjekket, og grenen er slettet.
 
 I Fordelings sorterede hånd (facit efter Lynaflæsning, `SortedHand` i `src/modes/read/ReadView.tsx`) står hele rækken for ♥ og ♦ med rødt: symbolet, kortene og antallet. I Pointregnskab og Håndevaluering står kun farvesymbolet rødt, og kortene står sorte. Den sorterede hånd skal gøre det samme.
 
@@ -35,3 +35,4 @@ Kørt 5. nov. 2026 på grenen: `sorted-hand.test.tsx` 3 tests, `tjek-sorte-tal.m
 4. **Testsiden** `scripts/sorte-tal.html` viser Lynaflæsningens facit og samme hånd med spillekort gennem Vites dev-server. `vite build` bygger kun `index.html`, så siden kommer ikke med i appen. Testen kopierer siden ind i tagget worktree, så før og efter vises på samme måde.
 5. **Billeder** af den sorterede hånd før og efter i lys og mørk tilstand ligger i `../skaermbilleder/sorte-tal/` (`lys-foer.png`, `lys-efter.png`, `moerk-foer.png` og `moerk-efter.png`).
 6. **`SPEC.md`** (Notation) siger nu, at kun farvesymbolet er rødt i en hånd skrevet farve for farve.
+7. **Den udgivne app** (5. nov. 2026): i Lynaflæsningens facit i lynrunden på www.kontraktbridge.dk/fordelingstraeneren/ har ♥ og ♦ rgb(198, 40, 40) i lys og mørk tilstand, kortene står i rgb(28, 35, 48) i alle fire rækker, (antal) er ens, og ingen række har klassen for rød. Tjekket kørte appens egen session med faste seeds og et ur, der blev flyttet frem til lynrunden (`../skaermbilleder/sorte-tal/sitet-lys.png` og `sitet-moerk.png`).

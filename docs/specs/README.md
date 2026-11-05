@@ -23,3 +23,5 @@ Afsluttede specer til Fordelingstræneren. De levende beskrivelser bliver i rode
 - [SPEC-design-som-forsiden.md](SPEC-design-som-forsiden.md) – appen ser ud som forsiden: farver, skrift og hjørner (Del 1), bordets spalte og Analyse som tegningen (Del 2) og én ⓘ pr. kort (Del 3); udgivet 4. november 2026. Sidefoden er flyttet til `SPEC-sidefod.md`.
 - [SPEC-info-boks.md](SPEC-info-boks.md) – en ⓘ i bordets faste spalte åbner som en boks oven på indholdet, forankret ved knappen, og mobilen og de andre kort er uændrede (udgivet 5. november 2026).
 - [SPEC-sidefod.md](SPEC-sidefod.md) – sidefoden ens med forsidens nye, kompakte sidefod: logo og Om mig og kontakt, Trænere, Opslag og ©-linjen, på begge sprog (udgivet 5. november 2026).
+- [SPEC-moensterkort-bred.md](SPEC-moensterkort-bred.md) – mønsterkortet under Næste og ledetråden i Fordelings session følger højre spalte i bredt layout; svaret om XP i toppen og i dommen (udgivet 5. november 2026).
+- [SPEC-sorte-tal.md](SPEC-sorte-tal.md) – i den sorterede hånd står kun ♥ og ♦ rødt, i kortenes røde farve (card-red), i lys og mørk tilstand (udgivet 5. november 2026).
