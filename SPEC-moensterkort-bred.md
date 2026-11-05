@@ -22,10 +22,12 @@ Ledetråden (`HintBox`, `.memory.hint`, knappen "Vis ledetråd") har samme klass
 
 ## Accepttest
 
-- [ ] `node scripts/tjek-bred-layout.mjs`: ved 1000, 1280 og 1920 px står mønsterkortet under Næste og ledetråden i højre spalte, med samme venstre og højre kant som dommen og opgaven (± 1 px), og intet på siden stikker ud til siden.
-- [ ] Samme skærme: bordets spalte dækker ikke noget, og intet element i sessionen går ud over skærmens indhold.
-- [ ] Ved 999 og 390 px er alle skærme pixel for pixel som `v38-foer-moensterkort-bred`, også dommen og ledetråden i Fordeling.
-- [ ] `npm test`, kørt alene, er grøn.
+- [x] `node scripts/tjek-bred-layout.mjs`: ved 1000, 1280 og 1920 px står mønsterkortet under Næste og ledetråden i højre spalte, med samme venstre og højre kant som dommen og opgaven (± 1 px), og intet på siden stikker ud til siden.
+- [x] Samme skærme: bordets spalte dækker ikke noget, og intet element i sessionen går ud over skærmens indhold.
+- [x] Ved 999 og 390 px er alle skærme pixel for pixel som `v38-foer-moensterkort-bred`, også dommen og ledetråden i Fordeling.
+- [x] `npm test`, kørt alene, er grøn.
+
+Kørt 5. nov. 2026 på grenen: `tjek-bred-layout.mjs` 239 tjek i orden, og `npm test` (alene) 809 tests i 116 filer i orden.
 
 ## XP i toppen og i dommen
 
@@ -54,4 +56,9 @@ Er den faktiske hånd delt hyppigst (rang 1), står sætningen ikke. "Vests" og 
 
 ## Afklaret
 
-Udfyldes, når ændringen er bygget.
+1. **Rettelsen** står i blokken for Fordelings session fra 1000 px i `src/ui/styles.css`: `.screen.session > .memory { width: auto; }`. `.screen` er en flex-kolonne, så kortet strækkes til den bredde, der er tilbage efter margenen, ligesom dommen. Det gælder både mønsterkortet under Næste og ledetråden, der har samme klasse. Under 1000 px gælder reglen ikke.
+2. **Målt efter rettelsen:** mønsterkortet og ledetråden står i højre spalte med samme kanter som dommen: 476–968 px ved 1000 px, 524–1200 px ved 1280 px og 844–1520 px ved 1920 px. Ingen side ruller til siden. Før stod de til 1412, 1644 og 1964 px.
+3. **Testen:** `scripts/tjek-bred-layout.mjs` har to nye skærme. `ledetråd` er Fordelings første opgave med "Vis ledetråd". `dom` er samme opgave besvaret med 4-4-3-2: med testens faste seeds er det Fuldfør, "Øst har vist 4♦ og 4♣". `iHøjreSpalte` tjekker kanterne mod højre spalte og dommen. Den tjekker også, at intet element i sessionen går ud over opgavens kanter (uden for rullekasser og sidefoden), og at siden ikke ruller vandret. `ingenOverlap` tjekker, at bordets spalte ikke dækker noget. De to skærme kommer også med i pixelsammenligningen ved 999 og 390 px. Første kørsel før rettelsen gav 15 fejl, alle i de nye tjek, og 162 ok. Efter rettelsen er alle 239 tjek grønne, også alle skærme pixel for pixel ved 999 og 390 px.
+4. **Referencen** i testen er nu `v38-foer-moensterkort-bred` (før `v37-foer-sidefod`). Sidefoden er stadig skjult i sammenligningen, hvad der ikke ændrer noget, fordi den er den samme i begge.
+5. **Billeder** ved 1000, 1280, 1920 og 390 px før og efter ligger i `../skaermbilleder/moensterkort-bred/` (`<bredde>-moensterkort-foer.png` og `-efter.png`). Ved 390 px er de ens.
+6. **Ingen tekst og ingen adfærd er ændret**, så `SPEC.md` er uændret. Svaret om XP og forslaget til facit står ovenfor.
