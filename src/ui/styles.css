@@ -2143,6 +2143,12 @@ button.cell {
     margin-left: calc(var(--board-column) + 24px);
   }
 
+  /* .memory har width: 100% og ville med margenen gå 444 px ud over højre spalte; auto lader skærmens flex-kolonne
+     strække kortet som dommen (SPEC-moensterkort-bred.md). Det gælder mønsterkortet under Næste og ledetråden. */
+  .screen.session > .memory {
+    width: auto;
+  }
+
   .screen.session > .intro,
   .screen.session > .status {
     width: 100%;

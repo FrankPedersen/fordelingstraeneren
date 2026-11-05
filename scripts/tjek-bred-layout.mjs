@@ -1,5 +1,6 @@
 // Accepttest (SPEC-bred-layout.md og Del 2 af SPEC-design-som-forsiden.md): det brede layout fra 1000 px i en rigtig
-// browser. Appen startes med Vite fra arbejdsmappen, og referencen (appen før den nye sidefod, tagget v37-foer-sidefod)
+// browser. Appen startes med Vite fra arbejdsmappen, og referencen (appen før rettelsen af mønsterkortet, tagget
+// v38-foer-moensterkort-bred)
 // lægges i en midlertidig git worktree og startes ved siden af. Begge åbnes i Chrome eller Edge uden vindue;
 // tilfældighederne og tiden er låst, så opgaverne er de samme hver gang, og hver skærm får sin egen tomme lagring.
 //
@@ -15,7 +16,9 @@
 // Håndevaluering, Spil den selv og en session med tastatur har to spalter, og vejledningens indholdsfortegnelse står
 // til venstre. Ved 1000 px er højre spalte mindst 400 px. Linjekortenes trin har samme afstand på mobil og computer, og
 // tab-rækkefølgen er den samme før og efter. Analyse har 5 ⓘ, og linjekortene står efter antallet af linjer (Del 3). En ⓘ i
-// bordets spalte åbner som en boks, uden at bordet flytter sig (SPEC-info-boks.md). Ved 999 og 390 px er skærmene pixel
+// bordets spalte åbner som en boks, uden at bordet flytter sig (SPEC-info-boks.md). Mønsterkortet under Næste og
+// ledetråden i Fordelings session står i højre spalte ved 1000, 1280 og 1920 px (SPEC-moensterkort-bred.md). Ved 999 og
+// 390 px er skærmene pixel
 // for pixel som referencen, med sidefoden skjult i begge apps, fordi den er ændret med vilje (SPEC-sidefod.md;
 // scripts/tjek-sidefod.mjs tjekker den). Kræver Node 22+, git og Chrome eller Edge.
 import { spawn, spawnSync } from 'node:child_process';
@@ -26,7 +29,7 @@ import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
 
 const ROD = fileURLToPath(new URL('..', import.meta.url));
-const TAG = 'v37-foer-sidefod';
+const TAG = 'v38-foer-moensterkort-bred';
 // Skærmnavne som argumenter begrænser pixelsammenligningen til dem; en forskel gemmes som billeder her.
 const KUN = process.argv.slice(2).filter((a) => !a.startsWith('--'));
 const BILLEDER = process.argv.find((a) => a.startsWith('--billeder='))?.slice('--billeder='.length);
@@ -214,6 +217,14 @@ const SKÆRME = {
   håndevalueringStart: async (s, u) => { await s.gå(`${u}#haandevaluering`); },
   heIndstillinger: async (s, u) => { await s.gå(`${u}#haandevaluering`); await s.klik('Indstillinger'); },
   tastatur: async (s, u) => { await s.gå(`${u}#fordeling`); await s.klik('Start dagens session'); await s.klik('Videre'); },
+  // Fordelings første opgave er Fuldfør ("Øst har vist 4♦ og 4♣"); svaret 4-4-3-2 giver dommen med mønsterkortet.
+  ledetråd: async (s, u) => { await SKÆRME.tastatur(s, u); await s.klik('Vis ledetråd'); },
+  dom: async (s, u) => {
+    await SKÆRME.tastatur(s, u);
+    for (const t of ['4', '4', '3']) await s.klik(t);
+    await s.klik('Svar');
+    if (!(await s.kør(`!!document.querySelector('.screen.session > .memory-box')`))) throw new Error('Mønsterkortet kom ikke frem efter svaret');
+  },
   vejledning: async (s, u) => { await s.gå(u); await s.klik('Læs vejledningen'); },
   indstillinger: async (s, u) => { await s.gå(u); await s.klik('Indstillinger'); },
   album: async (s, u) => { await s.gå(`${u}#fordeling`); await s.klik('Album'); },
@@ -255,6 +266,31 @@ async function toSpalter(s, beholder, navn, { toppe = false } = {}) {
   const bredde = await s.kør('document.documentElement.scrollWidth - document.documentElement.clientWidth');
   tjek(bredde <= 0, `${navn}: intet stikker ud til siden`, `${bredde} px for bredt`);
   return { l, r };
+}
+
+/**
+ * Et kort i Fordelings session (mønsterkortet under Næste eller ledetråden) står i højre spalte: samme venstre og højre
+ * kant som højre spalte og som dommen, og intet i sessionen går ud over opgavens kanter eller giver vandret scroll
+ * (SPEC-moensterkort-bred.md).
+ */
+async function iHøjreSpalte(s, navn, vælger) {
+  const r = await s.kør(`(() => {
+    const k = (e) => { if (!e || !e.getClientRects().length) return null; const b = e.getBoundingClientRect(); return { left: Math.round(b.left * 10) / 10, right: Math.round(b.right * 10) / 10 }; };
+    const opgave = document.querySelector('.screen.session > .task');
+    const o = opgave.getBoundingClientRect();
+    const spalte = opgave.querySelector(':scope > .wide-left').getBoundingClientRect();
+    const højre = { left: spalte.right + parseFloat(getComputedStyle(opgave).columnGap), right: o.right };
+    const iRullekasse = (e) => { for (let a = e.parentElement; a && a !== document.body; a = a.parentElement) if (getComputedStyle(a).overflowX !== 'visible') return true; return false; };
+    const navn = (e) => e.tagName.toLowerCase() + (typeof e.className === 'string' && e.className ? '.' + e.className.trim().split(/\\s+/).join('.') : '');
+    const udstik = [...document.querySelectorAll('.screen.session *')]
+      .filter((e) => e.getClientRects().length && !iRullekasse(e) && !e.closest('.site-footer'))
+      .filter((e) => { const b = e.getBoundingClientRect(); return b.right > o.right + 1 || b.left < o.left - 1; })
+      .map((e) => navn(e) + ' ' + Math.round(e.getBoundingClientRect().left) + '–' + Math.round(e.getBoundingClientRect().right));
+    return { kort: k(document.querySelector(${JSON.stringify(vælger)})), dom: k(document.querySelector('.screen.session > .feedback')), højre: { left: Math.round(højre.left * 10) / 10, right: Math.round(højre.right * 10) / 10 }, opgave: k(opgave), udstik: [...new Set(udstik)].slice(0, 4), ud: document.documentElement.scrollWidth - document.documentElement.clientWidth };
+  })()`);
+  tjek(r.kort && ca(r.kort.left, r.højre.left) && ca(r.kort.right, r.højre.right), `${navn}: står i højre spalte`, `kortet ${JSON.stringify(r.kort)}, højre spalte ${JSON.stringify(r.højre)}`);
+  if (r.dom) tjek(r.kort && ca(r.kort.left, r.dom.left) && ca(r.kort.right, r.dom.right), `${navn}: samme kanter som dommen`, `kortet ${JSON.stringify(r.kort)}, dommen ${JSON.stringify(r.dom)}`);
+  tjek(!r.udstik.length && r.ud <= 0, `${navn}: intet stikker ud`, `${r.ud} px vandret scroll; ${r.udstik.join(', ')} (opgaven ${r.opgave.left}–${r.opgave.right})`);
 }
 
 /** Linjekortenes trin er så høje som deres tekst, og der er lige langt fra overskriften til første trin. */
@@ -512,6 +548,17 @@ try {
     }
   }
 
+  // Mønsterkortet under Næste og ledetråden i Fordelings session følger højre spalte (SPEC-moensterkort-bred.md).
+  for (const bredde of [1000, 1280, 1920]) {
+    for (const [skærm, vælger, navn] of [['dom', '.screen.session > .memory-box', 'Mønsterkortet under Næste'], ['ledetråd', '.screen.session > .memory.hint', 'Ledetråden']]) {
+      const hvor = `${navn} ved ${bredde} px`;
+      s = await åbn(skærm, bredde, 900);
+      await iHøjreSpalte(s, hvor, vælger);
+      await ingenOverlap(s, hvor);
+      await s.luk();
+    }
+  }
+
   // Analyse følger tegningen ved 1280 px.
   s = await åbn('analyse', 1280, 900);
   await analyseSomTegningen(s);
@@ -712,6 +759,14 @@ try {
       if (bredde < 1000) await s.kør(`document.querySelector('[aria-label="Hjælp: Problemet"]').scrollIntoView({ block: 'start' }); window.scrollBy(0, -16); true`);
       gem(`${bredde}-problemet-info-aaben.png`, await s.vindue());
       await s.luk();
+    }
+    // Mønsterkortet under Næste før og efter (SPEC-moensterkort-bred.md), hele siden i vinduets bredde.
+    for (const [bredde, højde] of [[1000, 900], [1280, 900], [1920, 1080], [390, 844]]) {
+      for (const [url, hvornår] of [[FØR, 'foer'], [NU, 'efter']]) {
+        s = await åbn('dom', bredde, højde, url);
+        gem(`${bredde}-moensterkort-${hvornår}.png`, await s.billede());
+        await s.luk();
+      }
     }
   }
 
