@@ -133,8 +133,9 @@ function SortedHand({ cards }: { cards: Card[] }) {
           .map((c) => c % 13)
           .sort((a, b) => b - a);
         return (
-          <p key={symbol} className={suit === 1 || suit === 2 ? 'red' : ''}>
-            <span className="suit">{symbol}</span> {ranks.length ? ranks.map(rankLabel).join(' ') : '–'}
+          <p key={symbol}>
+            <span className={suit === 1 || suit === 2 ? 'suit red' : 'suit'}>{symbol}</span>{' '}
+            {ranks.length ? ranks.map(rankLabel).join(' ') : '–'}
             <span className="muted"> ({ranks.length})</span>
           </p>
         );
