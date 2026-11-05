@@ -16,17 +16,17 @@ afterEach(() => {
   setLang('da');
 });
 
-describe('Sidefodens kolonne Kontakt', () => {
-  it('"Skriv til mig" / "Write to me" fører til /om-mig/#kontakt', () => {
+describe('Sidefoden og kontakt', () => {
+  it('"Om mig og kontakt" / "About me and contact" fører til /om-mig/, og kolonnen Kontakt er væk (SPEC-sidefod.md)', () => {
     for (const [lang, contact, link] of [
-      ['da', 'Kontakt', 'Skriv til mig'],
-      ['en', 'Contact', 'Write to me'],
+      ['da', 'Kontakt', 'Om mig og kontakt'],
+      ['en', 'Contact', 'About me and contact'],
     ] as const) {
       setLang(lang);
       render(createElement(Footer));
       const footer = document.querySelector('footer.site-footer') as HTMLElement;
-      expect(within(footer).getByRole('heading', { name: contact })).toBeTruthy();
-      expect(screen.getByRole('link', { name: link }).getAttribute('href')).toBe('/om-mig/#kontakt');
+      expect(within(footer).queryByRole('heading', { name: contact })).toBeNull();
+      expect(screen.getByRole('link', { name: link }).getAttribute('href')).toBe('/om-mig/');
       expect(footer.querySelector('a[href^="mailto:"]')).toBeNull();
       cleanup();
     }

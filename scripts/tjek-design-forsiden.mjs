@@ -248,7 +248,7 @@ const UNDERSØG = `(() => {
     farve: [...ud.farve], skrift: [...ud.skrift], vægt: [...ud.vægt], klippet: [...ud.klippet],
     kontrast: [...ud.kontrast].map(([k, v]) => k + ' ' + v),
     hentet: [...new Set(hentet)],
-    forBred: document.documentElement.scrollWidth - innerWidth,
+    forBred: document.documentElement.scrollWidth - document.documentElement.clientWidth,
     bg: getComputedStyle(document.body).backgroundColor,
   };
 })()`;

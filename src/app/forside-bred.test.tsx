@@ -145,11 +145,8 @@ describe('Forsiden fra 1000 px (SPEC-forside-bred.md, del 2)', () => {
     expect(wideDecl('.home > .two .info-btn::after')).toMatch(/inset:\s*-10px/);
   });
 
-  it('fra 1000 px står sidefodens kolonner side om side på forsiden med ophavslinjen under (Afklaret 14)', () => {
-    expect(wideDecl('.home .site-footer')).toMatch(/grid-template-columns:[^;]*repeat\(3,\s*minmax\(0,\s*1fr\)\)/);
-    expect(wideDecl('.home .site-footer-legal')).toMatch(/grid-column:\s*1 \/ -1/);
-    // Kun forsidens sidefod: ingen bred regel for .site-footer uden .home.
-    expect(wide.filter(([s]) => s.includes('site-footer') && !s.includes('.home'))).toEqual([]);
+  it('sidefoden er ens på alle skærme, så forsiden har ingen særregel for den (SPEC-sidefod.md)', () => {
+    expect(wide.filter(([s]) => s.includes('.home') && s.includes('site-footer'))).toEqual([]);
   });
 
   it('fra 1000 px står sporets ⓘ i kortet med en trykflade på mindst 44 px, og topbjælken har forsidens indre bredde', () => {

@@ -66,14 +66,15 @@ describe('Fagordstesten', () => {
 
 describe('Sidefoden', () => {
   it('kolonnen Opslag med Bridgeordbog og Scoring i bridge står efter Trænere, på dansk og engelsk', () => {
-    for (const [lang, title, link, scoring, trainers] of [
-      ['da', 'Opslag', 'Bridgeordbog', 'Scoring i bridge', 'Trænere'],
-      ['en', 'Reference', 'Bridge dictionary', 'Scoring in bridge', 'Trainers'],
+    for (const [lang, title, link, scoring, trainers, analysis] of [
+      ['da', 'Opslag', 'Bridgeordbog', 'Scoring i bridge', 'Trænere', 'Analyse'],
+      ['en', 'Reference', 'Bridge dictionary', 'Scoring in bridge', 'Trainers', 'Analysis'],
     ] as const) {
       setLang(lang);
       render(createElement(Footer));
       const column = screen.getByRole('navigation', { name: title });
       expect(within(column).getAllByRole('link').map((a) => [a.textContent, a.getAttribute('href')])).toEqual([
+        [analysis, '#analyse'],
         [link, '/ordbog/'],
         [scoring, '/scoring/'],
       ]);
