@@ -129,6 +129,51 @@ describe('Esset slås (SPEC-esset-slaas.md)', { timeout: 300_000 }, () => {
     expect(followsLine(steps, [første, { leader: 'S', lead: 4, second: 8, third: 11, fourth: 6, winner: 'N' }], start2)).toBe(false);
   });
 
+  it('Spil den selv: den, der følger linjen på hovedvejen og på sidegrenen, har fulgt den; den, der ikke gør, har ikke', () => {
+    // Linjen spilles som stik: spilføreren efter trinene (også thirdIf), 2. hånd lavt og 4. hånd billigst over, ellers lavt.
+    const spil = (steps: LineStep[], hands: Record<'N' | 'S' | 'V' | 'Ø', Rank[]>, afvig?: (third: Rank, hand: Rank[]) => Rank) => {
+      const h = { N: [...hands.N], S: [...hands.S], V: [...hands.V], Ø: [...hands.Ø] };
+      const played = new Set<Rank>();
+      const pick = (cards: Rank[], card: string): Rank => (card === 'low' ? Math.min(...cards) : card === 'high' ? Math.max(...cards) : parseCards(card)[0]) as Rank;
+      const tricks = [];
+      for (const s of steps) {
+        const leader = s.leadFrom, partner = leader === 'N' ? 'S' : 'N';
+        const [second, fourth] = leader === 'N' ? (['Ø', 'V'] as const) : (['V', 'Ø'] as const);
+        const lead = pick(h[leader], s.card);
+        const sc = h[second].length ? (Math.min(...h[second]) as Rank) : (0 as Rank);
+        const rule = (s.thirdIf ?? []).find((r) => (r.if.fallen ?? []).every((c) => played.has(parseCards(c)[0] as Rank)))?.third ?? s.third;
+        let third = h[partner].length ? pick(h[partner], rule ? (sc < 11 ? rule.play : rule.else) : 'low') : (0 as Rank);
+        if (afvig && tricks.length === 0) third = afvig(third, h[partner]);
+        const top = Math.max(lead, third, sc);
+        const over = h[fourth].filter((c) => c > top);
+        const fc = (over.length ? Math.min(...over) : h[fourth].length ? Math.min(...h[fourth]) : 0) as Rank;
+        tricks.push({ leader, lead, second: sc, third, fourth: fc, winner: leader });
+        for (const [seat, c] of [[leader, lead], [second, sc], [partner, third], [fourth, fc]] as const) {
+          h[seat] = h[seat].filter((x) => x !== c);
+          if (c) played.add(c);
+        }
+        if (!sc || !fc) break;
+      }
+      return tricks;
+    };
+    const start = (n: string, s: string, w: string, e: string) => ({ north: ranks(n), south: ranks(s), west: ranks(w), east: ranks(e) });
+    for (const [n, s, g, hoved, side] of [
+      // nr. 1: kipningen mod damen lykkes, når Øst har kongen, og mislykkes, når Vest har den.
+      ['432', 'AQ65', 3, ['T98', 'KJ7'], ['KJ7', 'T98']],
+      // nr. 7: kipningen mod knægten mislykkes, når Øst har damen, og lykkes, når Vest har den.
+      ['J32', 'AK54', 3, ['T987', 'Q6'], ['Q876', 'T9']],
+    ] as const) {
+      const { text } = bestLine(n, s, g);
+      for (const [w, e] of [hoved, side]) {
+        const hands = { N: ranks(n), S: ranks(s), V: ranks(w), Ø: ranks(e) };
+        expect(followsLine(text.line.steps, spil(text.line.steps, hands), start(n, s, w, e)), `${n} / ${s}: fulgt`).toBe(true);
+        // Afviger 3. hånd i første stik (det højeste kort i stedet for trinets kort), er linjen ikke fulgt.
+        const afvigende = spil(text.line.steps, hands, (third, hand) => (Math.max(...hand) !== third ? (Math.max(...hand) as Rank) : (Math.min(...hand) as Rank)));
+        expect(followsLine(text.line.steps, afvigende, start(n, s, w, e)), `${n} / ${s}: ikke fulgt`).toBe(false);
+      }
+    }
+  });
+
   it('gamle linjer uden thirdIf læses og spilles uændret', () => {
     const game = buildGame(parseCards('J432'), parseCards('AT65'), { objective: goal(3) });
     const old: Line = { id: 'A', text: '', steps: [{ leadFrom: 'N', card: 'low', third: { ifSecondPlays: 'low', play: 'T', else: 'A' } }, { leadFrom: 'S', card: 'high' }] };

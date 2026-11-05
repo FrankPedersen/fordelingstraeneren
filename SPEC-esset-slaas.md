@@ -155,8 +155,19 @@ Eksemplerne bliver faste tests (`src/farvebehandling/solver/esset-slaas.test.ts`
 
 ## Til afgørelse
 
-*Udfyldes af Claude Code:* spørgsmål til Frank, der opstod undervejs, hver med eksempel og forslag.
+1. **Reglen for "toppes" (D).** Forslaget i specen ("planen forgrener sig på, om honnøren falder") kan ikke regnes direkte: i løserens træ er modpartens kort i et hul ligeværdige, så når knægten er spillet i 4 3 2 / E K B 5, er damen og de små kort ét hul, og "damen falder" kan ikke skelnes fra "et lille kort falder". Den nærmeste regel, der kan regnes, er bygget: honnøren er et af modpartens kort fra knægten og op, der ikke er spillet og ligger mellem det laveste af de sikre stik og spilførerens næste kort, og den er faldet, når modparten efter stikkene intet har over spilførerens højeste kort. "Toppes" står, når det bedste resultat uden at den falder er dårligere end med; ellers "indkasseres". Reglen giver rådgiverens grænsetilfælde: nr. 1 "indkasseres" (planen er 3-3) og nr. 3 "toppes" (damen skal falde); E K B 3 2 / 7 6 5 4 giver "Farven toppes med esset og kongen." for 5 stik og "Esset indkasseres." for 4. Forslag: reglen bliver.
+2. **Ordstillingen efter mærket.** Teksten efter "Lykkes kipningen, " har omvendt ordstilling, også for lille: "Lykkes kipningen, spilles der lille fra begge hænder to gange." (rådgiverens nr. 4) og "Mislykkes kipningen, spilles der lille fra hånden mod knægten (kipning); …" (nr. 8). I nr. 10 skrev rådgiveren "Lykkes kipningen, lille fra bordet mod damen (kipning); …" uden "spilles der". Forslag: "spilles der" overalt, så sætningerne følger samme regel.
+3. **Ordet for et sikkert stik regnes for sikre stik i træk under ét** (fx esset og kongen), så de altid får samme ord og lægges sammen. Specen siger, at trin med forskellige ord ikke lægges sammen; med reglen sker det aldrig i en række sikre stik. Forslag: sådan.
 
 ## Afklaret
 
-*Udfyldes undervejs.*
+1. **Mærket står kun, når begge grene findes:** 4. hånd kan stikke over i nogle sidninger og ikke i andre. Kan den det i alle eller i ingen, er der intet at vælge, og teksten er som før.
+2. **Ved lige stand** (åbent på begge grene og lige sandsynlige) gælder dagens regel: 4. hånd stikker over, og teksten fortsætter med "Mislykkes kipningen, …".
+3. **Hvad nu?** bruger ikke A, E og F, så kun ordene skifter (`describeFrom` uden `branches`). Kortene fra første runde gives med (`gone`), så en honnør, der faldt under esset, ikke tæller som en, der kan toppes; det er den eneste ændring i `whatnow.ts`.
+4. **Trinets regel for 3. hånd tager også en honnør under udspillet med.** Før fangede linjeformatet kun en honnør over det udspillede kort; når bordets konge spilles ud, og Øst lægger damen, tager løseren med esset, men trinet sagde lille. Nu bygges reglen af løserens valg for alle honnører fra 2. hånd. Teksten er uændret. Det giver K B 9 2 / E 10 8 3 (4 stik) og K 3 2 / E 10 9 5 4 (3 stik) trinet igen.
+5. **Betingelserne i `thirdIf`** er enkeltkort, som modspillet har lagt. Et huls interval kan række over spilførerens spillede kort (13..12 for damen, når kongen er taget ud af gruppen esset-kongen), så kortet findes blandt de manglende kort i intervallet, der ikke er spillet. Linjen tjekkes bagefter med `lineMask` og "et trin skal følge løserens valg på alle grene"; holder den ikke, slutter linjen som før.
+6. **Tællerne til Resultat** skrives af `describe.ts`, når processen slutter, og kun med `FB_DESCRIBE_STATS` sat, så `scripts/solve.ts` kun har fået `LINES_VERSION` 6 (Afgrænsningen).
+7. **`uden-situation.json`** er skrevet igen med `FB_GOLDEN=skriv`, efter at et tjek viste, at kun tekster er ændret (19 linjer; den ene er det samme tal skrevet på to måder, `1.94e-05` og `0.0000194`). Chancerne er de samme.
+8. **`bydeform.test.ts`** læser ikke "Lykkes" og "Mislykkes" som bydeform; testen har fået tjek af de nye sætninger, men ingen rettelse.
+9. **Engelsk:** sikre stik står med "the" foran det første kort: "The ace and king are cashed." (før "The ace and the king are cashed."), som i specens tabel.
+10. **Tests med de gamle ord** (`describe.test.ts`, `solver.test.ts` for Hvad nu?, `tricks.test.ts`, `lineText.test.ts`, `forbindelser-linjer.test.ts`) har fået de nye tekster, efter at chancen for hver linje spillet som helhed er tjekket mod løserens.

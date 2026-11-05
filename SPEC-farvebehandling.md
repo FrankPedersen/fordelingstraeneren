@@ -211,6 +211,7 @@ type Step = {
   leadFrom: "N" | "S";
   card: string;                // konkret kort, "low" eller "high"
   third?: { ifSecondPlays: "low" | string; play: string; else: string };
+  thirdIf?: { if: { fallen?: string[]; showsOut?: "V" | "Ø" }; third: { ifSecondPlays: "low" | string; play: string; else: string } }[];
   branches?: { if: { fallen?: string[]; showsOut?: "V" | "Ø" }; goto: number }[];
 };
 ```
@@ -219,7 +220,8 @@ Semantik:
 
 - **`low` og `high`:** det laveste eller højeste kort i den hånd, der spiller.
 - **3. hånd uden `third`:** lægger det laveste kort.
-- **`ifSecondPlays: "low"`:** sand, når 2. hånd lægger et kort under B. Kan 2. hånd ikke bekende, er betingelsen ikke opfyldt.
+- **`ifSecondPlays: "low"`:** sand, når 2. hånd lægger et kort under B. Kan 2. hånd ikke bekende, er betingelsen ikke opfyldt. `else` gælder enhver honnør fra 2. hånd, også en under udspillet (fx damen fra Øst under bordets konge).
+- **3. hånds kort pr. gren (`thirdIf`, SPEC-esset-slaas.md):** den første regel, hvis betingelse holder for de kort, der er faldet i de tidligere stik, gælder i stedet for `third`. Løseren skriver betingelsen med de enkeltkort, modspillet har lagt (kort, der er alene i deres hul), så den læses ens i løseren og i Spil den selv. Eksempel, B 3 2 / E K 5 4: `{ leadFrom: "S", card: "low", third: { ifSecondPlays: "low", play: "J", else: "low" }, thirdIf: [{ if: { fallen: ["Q"] }, third: { ifSecondPlays: "low", play: "low", else: "low" } }] }` er lille mod knægten, men lille fra begge hænder, hvis damen er faldet. Gamle linjer uden feltet læses og spilles uændret, og Linjeeditoren viser feltet, men skriver det ikke.
 - **Grene:** `goto` peger altid på et andet trin end det næste.
 - **Umulige trin:** et trin, der kræver et kort, som allerede er spillet, er en fejl i opgaven. Valideringen afviser den.
 - **Efter sidste trin:** løseren spiller resten optimalt ud fra de kort, der er set. En linje behøver derfor kun at beskrive de første, afgørende runder.
@@ -455,8 +457,12 @@ Accepttest for kipningerne i linjeteksterne (grenen `linjetekst-kip`, se Afklare
 
 Åbne punkter:
 
-- **"Slå esset." efter en kipning** (Franks valg, 29. oktober 2026: en senere, særskilt ændring): beskrivelsen følger hovedvejen, hvor 4. hånd stikker, når den kan, så teksten stopper, når en tabt kipning afgør målet. E D 6 5 / 4 3 2 (3 stik) slutter derfor efter kipningen og nævner ikke, at esset slås bagefter. At følge vejen, hvor kipningen lykkes, ændrer omkring 409 bedste linjer og husets regel for hovedvejen, så det afgøres for sig.
-- **3. hånds kort pr. gren** (Franks valg, 3. november 2026: tages sammen med punktet ovenfor): et trin har kun én regel for 3. hånds kort, så en linje slutter før et trin, hvor løserens plan er en anden på en gren (SPEC-linjeplan-23.md). Skrives 3. hånds kort pr. gren, kan linjen beholde de trin. De ti eksempler til punktet ovenfor står i SPEC-linjeformat-39.md.
+- **Lukket: "Esset slås." efter en kipning og 3. hånds kort pr. gren** (SPEC-esset-slaas.md, bygget på grenen `esset-slaas`, appen før er tagget `v40-foer-esset-slaas`; venter på Franks godkendelse):
+  - **Hovedvejen efter en kipning:** kipningen mislykkes i de sidninger, hvor 4. hånd kan stikke over, og lykkes i resten. Hovedvejen følger den gren, hvor målet endnu ikke er afgjort (afgjort: samme værdi i alle sidninger på grenen, for flest stik samme antal stik); er begge åbne, den mest sandsynlige; ved lige stand stikker 4. hånd over som før. Er målet afgjort på begge grene, stopper teksten. Andre steder er hovedvejen uændret.
+  - **Mærket:** teksten, der fortsætter efter en kipning, begynder "Lykkes kipningen, …" eller "Mislykkes kipningen, …" (engelsk "If the finesse succeeds/fails, …") med omvendt ordstilling: "Lykkes kipningen, indkasseres esset." og "Mislykkes kipningen, spilles der lille fra hånden mod knægten (kipning); …".
+  - **Ordene:** et sikkert stik "indkasseres" ("Esset og kongen indkasseres."), og høje kort, der spilles for at fælde en honnør, "toppes" ("Farven toppes med esset og kongen."). Det afgøres i løserens træ for sikre stik i træk under ét: honnøren er et af modpartens kort fra knægten og op, der ikke er spillet og ligger mellem det laveste af kortene og spilførerens næste kort; den er faldet, når modparten efter stikkene intet har over spilførerens højeste kort, og det hedder "toppes", når det bedste resultat uden at den falder er dårligere end med. En honnør uden mere at sige om stikket "spilles" ("Damen spilles fra hånden."). Hvad nu? får kun de nye ord.
+  - **Sammenlægning:** lille fra begge hænder i træk bliver "Lille fra begge hænder to gange." (og "tre gange").
+  - **3. hånds kort pr. gren:** se `thirdIf` under Opgavebank og linjeformat. Linjer, der før sluttede før et sådant trin, beholder det, når grenene kan skelnes på faldne enkeltkort; ellers slutter de som før.
 
 Afklaret:
 
