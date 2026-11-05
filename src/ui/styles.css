@@ -1451,6 +1451,54 @@ button.cell {
   color: var(--text);
 }
 
+/*
+ * En ⓘ i bordets spalte fra 1000 px: en boks oven på indholdet (SPEC-info-boks.md). Den ligger i document.body, så
+ * spalten ikke får z-index og ikke vokser. Højden følger vinduet, og en høj boks kan rulles.
+ */
+.info-box {
+  position: fixed;
+  z-index: 20;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 8px;
+  width: min(640px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-16);
+  background: var(--surface);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.22);
+  color: var(--text);
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.info-box-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.info-box-body {
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* Trykfladen er 44 px, selv om krydset er lille. */
+.info-box-close {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: -10px -10px -10px 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-12);
+  background: none;
+  font-size: 1rem;
+}
+
 /* Den samlede ⓘ: en kort liste med fed overskrift pr. emne (SPEC-design-som-forsiden.md, Del 3). */
 .info-list {
   display: grid;

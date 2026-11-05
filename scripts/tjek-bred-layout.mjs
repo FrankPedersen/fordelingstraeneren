@@ -1,5 +1,5 @@
 // Accepttest (SPEC-bred-layout.md og Del 2 af SPEC-design-som-forsiden.md): det brede layout fra 1000 px i en rigtig
-// browser. Appen startes med Vite fra arbejdsmappen, og referencen (appen efter Del 2, tagget v35-foer-analyse-info)
+// browser. Appen startes med Vite fra arbejdsmappen, og referencen (appen efter Del 3, tagget v36-foer-info-boks)
 // lægges i en midlertidig git worktree og startes ved siden af. Begge åbnes i Chrome eller Edge uden vindue;
 // tilfældighederne og tiden er låst, så opgaverne er de samme hver gang, og hver skærm får sin egen tomme lagring.
 //
@@ -14,10 +14,9 @@
 // dække noget. Efter sidste stik i Spil den selv kan dommen og resultatet ses. Analyse følger tegningen. Pointregnskab,
 // Håndevaluering, Spil den selv og en session med tastatur har to spalter, og vejledningens indholdsfortegnelse står
 // til venstre. Ved 1000 px er højre spalte mindst 400 px. Linjekortenes trin har samme afstand på mobil og computer, og
-// tab-rækkefølgen er den samme før og efter. Analyse har 5 ⓘ, og linjekortene står efter antallet af linjer (Del 3). Ved
-// 999 og 390 px er skærmene pixel for pixel som referencen. På de skærme, Del 3 ændrer (Analyse, Guide, Facit og Spil den selv),
-// skjules ⓘ og Spil den selv i begge apps, og snittets nye tekst lægges på referencen, så alt andet skal stå, hvor det
-// stod. Kræver Node 22+, git og Chrome eller Edge.
+// tab-rækkefølgen er den samme før og efter. Analyse har 5 ⓘ, og linjekortene står efter antallet af linjer (Del 3). En ⓘ i
+// bordets spalte åbner som en boks, uden at bordet flytter sig (SPEC-info-boks.md). Ved 999 og 390 px er skærmene pixel
+// for pixel som referencen. Kræver Node 22+, git og Chrome eller Edge.
 import { spawn, spawnSync } from 'node:child_process';
 import { existsSync, lstatSync, mkdirSync, mkdtempSync, rmSync, symlinkSync, unlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -26,7 +25,7 @@ import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
 
 const ROD = fileURLToPath(new URL('..', import.meta.url));
-const TAG = 'v35-foer-analyse-info';
+const TAG = 'v36-foer-info-boks';
 // Skærmnavne som argumenter begrænser pixelsammenligningen til dem; en forskel gemmes som billeder her.
 const KUN = process.argv.slice(2).filter((a) => !a.startsWith('--'));
 const BILLEDER = process.argv.find((a) => a.startsWith('--billeder='))?.slice('--billeder='.length);
@@ -63,19 +62,6 @@ const FAST = `(() => {
   class FastDate extends Real { constructor(...a) { super(...(a.length ? a : [T])); } static now() { return T; } }
   globalThis.Date = FastDate;
 })();`;
-
-// Skærmene, Del 3 ændrer. Her skjules ⓘ og Spil den selv i begge apps, ordet Sammenlign (der kun var ⓘ's anker, for hvert
-// kort har afkrydsningen) fjernes, og referencen får snittets nye tekst. Så må intet andet have flyttet sig.
-const MED_INFO = new Set(['analyse', 'analyseSpil', 'guide', 'facit', 'spilSelv']);
-const UDEN_INFO = `(() => {
-  document.head.insertAdjacentHTML('beforeend', '<style>.info, .fb-play-start { display: none !important; }</style>');
-  for (const r of document.querySelectorAll('[aria-labelledby="fb-lines"] > .with-info')) {
-    if (r.querySelector(':scope > h3')) continue;
-    r.querySelector(':scope > .fb-note')?.remove();
-    if (![...r.children].some((c) => !c.matches('.info'))) r.remove();
-  }
-  for (const n of document.querySelectorAll('.fb-line .fb-note')) n.textContent = n.textContent.replace(/^Flest stik i gennemsnit: ([\\d,]+) stik$/, 'Flest stik i snit: $1');
-})()`;
 
 async function chrome() {
   const port = 9300 + Math.floor(Math.random() * 400);
@@ -155,6 +141,11 @@ async function chrome() {
           const r = el.getBoundingClientRect();
           return { top: r.top, left: r.left, right: r.right, bottom: r.bottom, width: r.width, height: r.height, klasse: el.className };
         })()`),
+        async tast(key) {
+          await send('Input.dispatchKeyEvent', { type: 'keyDown', key, code: key });
+          await send('Input.dispatchKeyEvent', { type: 'keyUp', key, code: key });
+          await vent(100);
+        },
         async tab(antal) {
           await kør('document.activeElement?.blur(); window.scrollTo(0, 0)');
           const sti = [];
@@ -166,9 +157,8 @@ async function chrome() {
           return sti;
         },
         /** Hele siden, når den står stille: to billeder i træk skal være ens (Analyse regner færdig bagefter). */
-        async billede(udenInfo = false) {
+        async billede() {
           await kør('window.scrollTo(0, 0)');
-          if (udenInfo) await kør(UDEN_INFO);
           let forrige;
           for (let i = 0; i < 8; i++) {
             await vent(400);
@@ -526,6 +516,58 @@ try {
   await analyseSomTegningen(s);
   await s.luk();
 
+  // En ⓘ i bordets spalte åbner som en boks, og bordet flytter sig ikke (SPEC-info-boks.md).
+  for (const [bredde, højde] of [[1280, 900], [1000, 700]]) {
+    s = await åbn('analyse', bredde, højde);
+    const mål = () => s.kør(`(() => {
+      const r = (x) => { const e = document.querySelector(x); if (!e) return null; const k = e.getBoundingClientRect(); return { top: k.top, left: k.left, right: k.right, bottom: k.bottom, height: k.height }; };
+      const a = document.activeElement;
+      return { bord: r('.fb-analysis .fb-table'), spalte: r('.fb-analysis .fb-column > .wide-left'), boks: r('.info-box'), knap: r('[aria-label="Hjælp: Problemet"]'), fokus: a?.getAttribute('aria-label') || a?.textContent?.trim() || '', fast: getComputedStyle(document.querySelector('.fb-analysis .fb-column > .wide-left')).position, z: getComputedStyle(document.querySelector('.fb-analysis .fb-column > .wide-left')).zIndex };
+    })()`);
+    const før = await mål();
+    await s.klik('Hjælp: Problemet');
+    const åben = await mål();
+    const hvor = `Problemets ⓘ ved ${bredde} × ${højde}`;
+    tjek(åben.boks && ca(åben.bord.top, før.bord.top) && ca(åben.spalte.height, før.spalte.height) && åben.fast === før.fast, `${hvor}: åbner som en boks, og bordet flytter sig ikke`, JSON.stringify({ før: før.bord, åben: åben.bord, spalte: [før.spalte.height, åben.spalte.height], boks: åben.boks }));
+    tjek(åben.boks && åben.boks.top >= 15 && åben.boks.bottom <= højde - 15 && åben.boks.left >= 15 && åben.boks.right <= bredde - 15, `${hvor}: boksen er inden for vinduet`, JSON.stringify(åben.boks));
+    tjek(åben.boks && Math.abs(åben.boks.left - åben.knap.left) <= 1 && (åben.boks.top >= åben.knap.bottom - 1 || åben.boks.bottom <= højde - 15), `${hvor}: boksen er forankret ved knappen`, JSON.stringify({ boks: åben.boks, knap: åben.knap }));
+    if (bredde === 1280) tjek(åben.boks && (åben.boks.bottom <= åben.knap.top || åben.boks.top >= åben.knap.bottom), `${hvor}: boksen dækker ikke knappen`, JSON.stringify({ boks: åben.boks, knap: åben.knap }));
+    tjek(åben.z === 'auto', `${hvor}: spalten har stadig ingen z-index`, åben.z);
+    tjek(await s.kør(`(() => { const k = document.querySelector('.info-box').getBoundingClientRect(); const t = document.elementFromPoint(k.left + k.width / 2, k.top + k.height / 2); return !!t && !!t.closest('.info-box'); })()`), `${hvor}: boksen ligger øverst`);
+    tjek(åben.fokus === 'Luk', `${hvor}: fokus står på ✕`, åben.fokus);
+    // De tre måder at lukke på, og fokus tilbage på ⓘ.
+    await s.klik('Luk');
+    let m = await mål();
+    tjek(!m.boks && m.fokus === 'Hjælp: Problemet', `${hvor}: ✕ lukker, og fokus går tilbage`, JSON.stringify(m.fokus));
+    await s.klik('Hjælp: Problemet');
+    await s.tast('Escape');
+    m = await mål();
+    tjek(!m.boks && m.fokus === 'Hjælp: Problemet', `${hvor}: Esc lukker, og fokus går tilbage`, JSON.stringify(m.fokus));
+    await s.klik('Hjælp: Problemet');
+    await s.kør(`document.body.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true })); true`);
+    await vent(100);
+    m = await mål();
+    tjek(!m.boks && m.fokus === 'Hjælp: Problemet', `${hvor}: et klik udenfor lukker, og fokus går tilbage`, JSON.stringify(m.fokus));
+    // Linjernes ⓘ står i højre spalte og åbner i kortet som før.
+    await s.klik('Hjælp: Linjerne');
+    const l = await s.kør(`({ boks: !!document.querySelector('.info-box'), tekst: !!document.querySelector('[aria-labelledby="fb-lines"] .info-text') })`);
+    tjek(!l.boks && l.tekst, `Linjernes ⓘ ved ${bredde} × ${højde}: åbner i kortet som før`, JSON.stringify(l));
+    await s.luk();
+    // Står spalten fast og er siden rullet, følger boksen knappen.
+    s = await åbn('analyse', bredde, højde);
+    await s.kør('window.scrollTo(0, 400)');
+    await vent(150);
+    await s.klik('Hjælp: Problemet');
+    const r = await mål();
+    tjek(r.boks && r.boks.top >= 15 && r.boks.bottom <= højde - 15, `${hvor}, rullet: boksen er inden for vinduet`, JSON.stringify(r.boks));
+    await s.luk();
+  }
+  s = await åbn('analyse', 390, 844);
+  await s.klik('Hjælp: Problemet');
+  const mobil = await s.kør(`({ boks: !!document.querySelector('.info-box'), tekst: !!document.querySelector('[aria-labelledby="fb-problem"] .info-text') })`);
+  tjek(!mobil.boks && mobil.tekst, 'Problemets ⓘ ved 390 px: åbner i kortet som før', JSON.stringify(mobil));
+  await s.luk();
+
   // Linjekortene efter antallet af linjer (Del 3): tre eller færre i én række, fire som 2 × 2, fem eller flere i rækker af tre.
   for (const [bredde, højde] of [[1280, 900], [1000, 700]]) {
     for (const [valg, mål, rækker] of [['~1. K 7 6 5', '2 stik', [3]], ['~E D 6 5 / 4 3 2', '3 stik', [2, 2]], ['~E 10 8 3 / K B 9 2', '4 stik', [3, 3]]]) {
@@ -566,16 +608,16 @@ try {
     await s.luk();
   }
 
-  // Tab-rækkefølgen følger det, man ser: Spil den selv kommer efter Situationen, og intet andet har skiftet plads (Del 3).
+  // Tab-rækkefølgen følger det, man ser: Spil den selv kommer efter Situationen, og intet har skiftet plads siden referencen.
   for (const [bredde, højde] of [[1280, 900], [390, 844]]) {
     const liste = (fane) => fane.kør(`[...document.querySelectorAll('button, a, input')].filter((e) => e.getClientRects().length > 0 && e.tabIndex >= 0 && !e.classList.contains('fb-bank-item')).map((e) => (e.getAttribute('aria-label') || e.textContent).replace(/\\s+/g, ' ').trim())`);
-    const uden = (l) => l.filter((x) => !/^Hjælp: /.test(x) && x !== 'Spil den selv ▶');
+    const uden = (l) => l;
     const nu = await åbn('analyse', bredde, højde, NU);
     const før = await åbn('analyse', bredde, højde, FØR);
     const [ln, lf] = [await liste(nu), await liste(før)];
     tjek(ln[ln.indexOf('Spil den selv ▶') - 1] === 'Angiv situationen', `Analyse ved ${bredde} px: Spil den selv kommer lige efter Angiv situationen`, ln.slice(ln.indexOf('Spil den selv ▶') - 2, ln.indexOf('Spil den selv ▶') + 1).join(' | '));
     const i = uden(ln).findIndex((x, k) => x !== uden(lf)[k]);
-    tjek(i < 0 && uden(ln).length === uden(lf).length, `Analyse ved ${bredde} px: alt andet har samme rækkefølge som før`, `trin ${i + 1}: ${uden(ln)[i]} / før ${uden(lf)[i]}`);
+    tjek(i < 0 && uden(ln).length === uden(lf).length, `Analyse ved ${bredde} px: samme rækkefølge som før`, `trin ${i + 1}: ${uden(ln)[i]} / før ${uden(lf)[i]}`);
     if (bredde === 390) {
       const k = await nu.kør(`(() => { const r = (x) => document.querySelector(x).getBoundingClientRect(); const a = r('[aria-labelledby="fb-situation"]'), b = r('.fb-play-start'); return { under: b.top >= a.bottom, venstre: Math.abs(a.left - b.left), bredde: Math.abs(a.width - b.width) }; })()`);
       tjek(k.under && k.venstre < 1 && k.bredde < 1, 'Analyse ved 390 px: Spil den selv står under Situationen i samme bredde', JSON.stringify(k));
@@ -663,22 +705,11 @@ try {
     mkdirSync(BILLEDER, { recursive: true });
     const gem = (fil, data) => writeFileSync(join(BILLEDER, fil), Buffer.from(data, 'base64'));
     for (const [bredde, højde] of [[1280, 900], [1000, 700], [390, 844]]) {
-      for (const [skærm, fil] of [['analyse', 'analyse'], ['træning', 'traening'], ['pointregnskab', 'pointregnskab']]) {
-        s = await åbn(skærm, bredde, højde);
-        gem(`${bredde}-${fil}.png`, await s.billede());
-        await s.luk();
-      }
       s = await åbn('analyse', bredde, højde);
       await s.klik('Hjælp: Problemet');
-      await s.klik('Hjælp: Linjerne');
-      gem(`${bredde}-analyse-info-aaben.png`, await s.billede());
-      await s.luk();
-      s = await åbn('analyseSpil', bredde, højde);
-      await spilFærdig(s);
-      await vent(400);
-      gem(`${bredde}-analyse-spil-doemmen.png`, await s.vindue());
-      await s.kør(`(() => { const r = document.querySelector('.fb-play').getBoundingClientRect(); window.scrollTo(0, r.bottom + scrollY - innerHeight + 16); return true; })()`);
-      gem(`${bredde}-analyse-spil-bund.png`, await s.vindue());
+      // Under 1000 px åbner ⓘ i kortet langt nede på siden, så billedet rulles dertil.
+      if (bredde < 1000) await s.kør(`document.querySelector('[aria-label="Hjælp: Problemet"]').scrollIntoView({ block: 'start' }); window.scrollBy(0, -16); true`);
+      gem(`${bredde}-problemet-info-aaben.png`, await s.vindue());
       await s.luk();
     }
   }
@@ -691,7 +722,7 @@ try {
       for (let forsøg = 0; forsøg < 2 && forskel !== ''; forsøg++) {
         const sNu = await åbn(skærm, bredde, 900, NU);
         const sFør = await åbn(skærm, bredde, 900, FØR);
-        billeder = [await sNu.billede(MED_INFO.has(skærm)), await sFør.billede(MED_INFO.has(skærm))];
+        billeder = [await sNu.billede(), await sFør.billede()];
         forskel = await sammenlign(...billeder, sNu);
         await sNu.luk();
         await sFør.luk();

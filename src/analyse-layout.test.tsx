@@ -38,6 +38,7 @@ describe('Bordets spalte (SPEC-design-som-forsiden.md, Del 2, punkt 1 og 2)', ()
     expect(faste[0].krop).toContain('top: 16px;');
     expect(faste[0].krop).toContain('max-height: calc(100vh - 32px);');
     for (const r of regler(styles)) {
+      // Info-boksen ligger uden for spalten og må have z-index (SPEC-info-boks.md); spalten må ikke.
       if (r.vælger.includes('wide-left') || r.vælger.includes('fb-play')) expect(r.krop, r.vælger).not.toContain('z-index');
     }
   });
