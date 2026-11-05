@@ -1,6 +1,6 @@
 # SPEC-info-boks
 
-4. november 2026 · Franks valg. Bygget på grenen `info-boks`; `main` før er tagget `v36-foer-info-boks`.
+4. november 2026 · Franks valg. Bygget på grenen `info-boks`; `main` før er tagget `v36-foer-info-boks`. Godkendt af Frank og udgivet 5. november 2026.
 
 En ⓘ i bordets faste spalte (fx Problemet) skubber i dag bordet ned, når den åbnes. Den skal i stedet åbne som en boks oven på indholdet, forankret ved knappen.
 
