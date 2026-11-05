@@ -71,7 +71,8 @@ describe('Linjerne med forbindelser (SPEC-forbindelser.md, trin 3)', { timeout: 
       'Dummy is reached with a side entry, and the queen is led; if East covers, the trick is won with the ace, otherwise it runs.',
     );
     expect(englishStep('Hånden nås med en sideindgang, og der spilles lille fra begge hænder.')).toBe('Hand is reached with a side entry, and low is played from both hands.');
-    expect(englishStep('Hånden nås med en sideindgang, og kongen slås.')).toBe('Hand is reached with a side entry, and the king is cashed.');
+    expect(englishStep('Hånden nås med en sideindgang, og kongen indkasseres.')).toBe('Hand is reached with a side entry, and the king is cashed.');
+    expect(englishStep('Bordet nås med en sideindgang, og farven toppes med esset.')).toBe('Dummy is reached with a side entry, and the ace is played for the drop.');
   });
 });
 

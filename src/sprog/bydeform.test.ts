@@ -29,6 +29,11 @@ describe('Beskrivende form', () => {
     expect(bydeform('Slå esset.')).toEqual(['Slå esset.']);
     expect(bydeform('Gå ind på hånden med en sideindgang, og spil lille.')).toHaveLength(1);
     expect(bydeform('Esset slås.')).toEqual([]);
+    // Linjeteksterne fra SPEC-esset-slaas.md: "Lykkes" og "Mislykkes" er ikke bydeform.
+    expect(bydeform('Lykkes kipningen, indkasseres esset.')).toEqual([]);
+    expect(bydeform('Mislykkes kipningen, spilles der lille fra begge hænder to gange.')).toEqual([]);
+    expect(bydeform('Farven toppes med esset og kongen.')).toEqual([]);
+    expect(bydeform('Damen spilles fra hånden.')).toEqual([]);
     expect(bydeform('Damen fra hånden; dækker Vest, lægges der lille, ellers løber den.')).toEqual([]);
   });
 

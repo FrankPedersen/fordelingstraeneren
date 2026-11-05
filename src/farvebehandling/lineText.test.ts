@@ -12,8 +12,11 @@ const DANISH = /[æøåÆØÅ]|\b(fra|lille|mod|kipning|slå|lægger|dækker|ell
 
 describe('Linjerne på engelsk', () => {
   it('oversætter skabelonerne', () => {
-    expect(englishStep('Kongen og esset slås.')).toBe('The king and the ace are cashed.');
-    expect(englishStep('Esset, kongen og damen slås.')).toBe('The ace, the king and the queen are cashed.');
+    expect(englishStep('Kongen og esset indkasseres.')).toBe('The king and ace are cashed.');
+    expect(englishStep('Esset, kongen og damen indkasseres.')).toBe('The ace, king and queen are cashed.');
+    expect(englishStep('Farven toppes med esset og kongen.')).toBe('The ace and king are played for the drop.');
+    expect(englishStep('Lykkes kipningen, indkasseres esset.')).toBe('If the finesse succeeds, the ace is cashed.');
+    expect(englishStep('Mislykkes kipningen, spilles der lille fra begge hænder to gange.')).toBe('If the finesse fails, low from both hands twice.');
     expect(englishStep('Lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset.')).toBe(
       'Low from dummy towards the jack (finesse); if East plays an honour, it is won with the ace.',
     );
@@ -44,10 +47,10 @@ describe('Linjerne på engelsk', () => {
   });
 
   it('følger det valgte sprog, også kortenes bogstaver, hyppigheden og løserens fejl', () => {
-    expect(stepText('Esset slås.')).toBe('Esset slås.');
+    expect(stepText('Esset indkasseres.')).toBe('Esset indkasseres.');
     expect(cardsText([14, 13, 12, 11, 10])).toBe('E K D B 10');
     setLang('en');
-    expect(stepText('Esset slås.')).toBe('The ace is cashed.');
+    expect(stepText('Esset indkasseres.')).toBe('The ace is cashed.');
     expect(cardsText([14, 13, 12, 11, 10])).toBe('A K Q J 10');
     expect(cardLetter('D')).toBe('Q');
     expect(eveningText({ num: 1n, den: 11n })).toBe('about 2.3 times per club evening');

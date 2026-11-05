@@ -153,7 +153,8 @@ export function whatNow(game: Game, leadSlot: number, strategy: Int8Array, optio
       const slot = childStart[node] + x;
       const child = children[slot];
       const sub = solveSubgame(game, child, { weights: scaled });
-      const described = describeFrom(game, sub.strategy, slot, cloneState(state), itemValues(game, child, sub.strategy));
+      // Kortene fra første runde er spillet, så de ikke tælles som honnører, der kan toppes (SPEC-esset-slaas.md, D).
+      const described = describeFrom(game, sub.strategy, slot, cloneState(state), itemValues(game, child, sub.strategy), { gone: shown });
       const hand: Hand = game.slotHand[slot] === 0 ? 'N' : 'S';
       continuations.push({
         hand,

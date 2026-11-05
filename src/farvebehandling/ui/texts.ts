@@ -220,8 +220,10 @@ const DA = {
   editorLow: 'lille',
   editorHigh: 'højt',
   /** Linjeeditorens navn på en linje: "Lille fra hånden; 3. hånd lægger …". */
-  editorStepText: (lead: string, hand: 'N' | 'S', third?: { play: string; else: string }) =>
-    `${lead.charAt(0).toUpperCase()}${lead.slice(1)} fra ${hand === 'N' ? 'bordet' : 'hånden'}${third ? `; 3. hånd lægger ${third.play}, men ${third.else}, hvis 2. hånd lægger en honnør` : ''}.`,
+  editorStepText: (lead: string, hand: 'N' | 'S', third?: { play: string; else: string }, branches: { fallen: string[]; play: string; else: string }[] = []) =>
+    `${lead.charAt(0).toUpperCase()}${lead.slice(1)} fra ${hand === 'N' ? 'bordet' : 'hånden'}${third ? `; 3. hånd lægger ${third.play}, men ${third.else}, hvis 2. hånd lægger en honnør` : ''}${branches
+      .map((b) => `; er ${b.fallen.join(' og ')} faldet, lægger 3. hånd ${b.play}, men ${b.else}, hvis 2. hånd lægger en honnør`)
+      .join('')}.`,
   editorCardName: (card: string) => (card === 'low' ? 'lille' : card === 'high' ? 'højt' : card),
   pickMore: 'Bordet og din hånd mangler kort.',
   bankEntry: (rank: number, holding: string, often: string) => `${rank}. ${holding} · ${often}`,
@@ -695,8 +697,10 @@ const EN: Texts = {
   editorSave: 'Save and work out',
   editorLow: 'low',
   editorHigh: 'high',
-  editorStepText: (lead: string, hand: 'N' | 'S', third?: { play: string; else: string }) =>
-    `${lead.charAt(0).toUpperCase()}${lead.slice(1)} from ${hand === 'N' ? 'dummy' : 'hand'}${third ? `; 3rd hand plays ${third.play}, but ${third.else} if 2nd hand plays an honour` : ''}.`,
+  editorStepText: (lead: string, hand: 'N' | 'S', third?: { play: string; else: string }, branches: { fallen: string[]; play: string; else: string }[] = []) =>
+    `${lead.charAt(0).toUpperCase()}${lead.slice(1)} from ${hand === 'N' ? 'dummy' : 'hand'}${third ? `; 3rd hand plays ${third.play}, but ${third.else} if 2nd hand plays an honour` : ''}${branches
+      .map((b) => `; if ${b.fallen.join(' and ')} has fallen, 3rd hand plays ${b.play}, but ${b.else} if 2nd hand plays an honour`)
+      .join('')}.`,
   editorCardName: (card: string) => (card === 'low' ? 'low' : card === 'high' ? 'high' : card),
   pickMore: 'Dummy and your hand need cards.',
   bankEntry: (rank: number, holding: string, often: string) => `${rank}. ${holding} · ${often}`,

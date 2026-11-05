@@ -22,15 +22,49 @@ export function englishCardName(rank: number): string {
   return ({ 14: 'the ace', 13: 'the king', 12: 'the queen', 11: 'the jack' } as Record<number, string>)[rank] ?? `the ${rank}`;
 }
 
+/** "the ace and king": kortene med "the" kun foran det første, som i "The ace and king are cashed." */
+const cardList = (names: string): { list: string; many: boolean } => {
+  const english = names.split(/, | og /).map(card);
+  const rest = english.slice(1).map((n) => n.replace(/^the /, ''));
+  const all = [english[0], ...rest];
+  return { list: all.length > 1 ? `${all.slice(0, -1).join(', ')} and ${all[all.length - 1]}` : all[0], many: all.length > 1 };
+};
+
+/**
+ * Teksten efter "Lykkes kipningen, " står med omvendt ordstilling ("indkasseres esset."); her står den igen som en
+ * selvstændig sætning ("Esset indkasseres."), så de faste skabeloner kan oversætte den (SPEC-esset-slaas.md, E).
+ */
+function standalone(after: string): string {
+  const cashed = /^indkasseres (.+)\.$/.exec(after);
+  if (cashed) return `${capital(cashed[1])} indkasseres.`;
+  const drop = /^toppes farven med (.+)\.$/.exec(after);
+  if (drop) return `Farven toppes med ${drop[1]}.`;
+  const played = new RegExp(`^spilles (${CARD}) fra (${HAND})\\.$`).exec(after);
+  if (played) return `${capital(played[1])} spilles fra ${played[2]}.`;
+  const entry = new RegExp(`^nås (${HAND}) med en sideindgang, og (.+)$`).exec(after);
+  if (entry) return `${capital(entry[1])} nås med en sideindgang, og ${entry[2]}`;
+  const low = /^spilles der (.+)$/.exec(after);
+  if (low) return capital(low[1]);
+  const lead = /^spilles (.+)$/.exec(after);
+  return lead ? capital(lead[1]) : capital(after);
+}
+
 /** Et trin fra løserens danske skabeloner på engelsk. */
 export function englishStep(text: string): string {
+  // Teksten efter en kipning siger, hvilken gren den fortsætter på (SPEC-esset-slaas.md, E).
+  const branch = /^(Lykkes|Mislykkes) kipningen, (.+)$/.exec(text);
+  if (branch) {
+    const rest = englishStep(standalone(branch[2]));
+    return `If the finesse ${branch[1] === 'Lykkes' ? 'succeeds' : 'fails'}, ${rest[0].toLowerCase()}${rest.slice(1)}`;
+  }
   // Et udspil, der bruger en indgang (SPEC-forbindelser.md): "Hånden nås med en sideindgang, og der spilles …".
-  const entry = /^(Bordet|Hånden) nås med en sideindgang, og (?:der spilles (.+)|(.+) slås\.)$/.exec(text);
+  const entry = /^(Bordet|Hånden) nås med en sideindgang, og (?:der spilles (.+)|(.+) indkasseres\.|farven toppes med (.+)\.)$/.exec(text);
   if (entry) {
-    const [, from, rest, cashed] = entry;
+    const [, from, rest, cashed, dropped] = entry;
     const to = hand(from);
     const reached = `${to[0].toUpperCase()}${to.slice(1)} is reached with a side entry`;
     if (cashed) return `${reached}, and ${card(cashed)} is cashed.`;
+    if (dropped) return `${reached}, and ${card(dropped)} is played for the drop.`;
     // Hånden sættes ind efter kortet igen, så de faste skabeloner oversætter trinet, og tages så ud igen.
     const base = rest.startsWith('lille fra begge hænder') ? rest : rest.replace(new RegExp(`^(lille|${CARD})`), `$1 fra ${from.toLowerCase()}`);
     const english = englishStep(base[0].toUpperCase() + base.slice(1)).replace(` from ${to}`, '');
@@ -40,15 +74,25 @@ export function englishStep(text: string): string {
       .replace(/^The (\w+)/, (_, c: string) => `the ${c} is led`);
     return `${reached}, and ${led}`;
   }
-  const cash = /^(.+) slås\.$/.exec(text);
+  // De sikre stik (SPEC-esset-slaas.md, D): "Esset og kongen indkasseres." og "Farven toppes med esset og kongen."
+  const cash = /^(.+) indkasseres\.$/.exec(text);
   if (cash) {
-    const names = cash[1].split(/, | og /).map(card);
-    const list = names.length > 1 ? `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}` : names[0];
-    return `${list[0].toUpperCase()}${list.slice(1)} ${names.length > 1 ? 'are' : 'is'} cashed.`;
+    const { list, many } = cardList(cash[1]);
+    return `${capital(list)} ${many ? 'are' : 'is'} cashed.`;
   }
+  const drop = /^Farven toppes med (.+)\.$/.exec(text);
+  if (drop) {
+    const { list, many } = cardList(drop[1]);
+    return `${capital(list)} ${many ? 'are' : 'is'} played for the drop.`;
+  }
+  const played = new RegExp(`^(${CARD}) spilles fra (${HAND})\\.$`, 'i').exec(text);
+  if (played) return `${capital(card(played[1]))} is played from ${hand(played[2])}.`;
   return text
     .replace(new RegExp(`^lille fra (${HAND}) og lille fra (${HAND})`, 'i'), (_, a: string, b: string) => `Low from ${hand(a)} and low from ${hand(b)}`)
     .replace(/^lille fra begge hænder/i, 'Low from both hands')
+    .replace(/^(Low from (?:both hands|\w+ and low from \w+)) to gange/, '$1 twice')
+    .replace(/^(Low from (?:both hands|\w+ and low from \w+)) tre gange/, '$1 three times')
+    .replace(/^(Low from (?:both hands|\w+ and low from \w+)) (\d+) gange/, '$1 $2 times')
     .replace(new RegExp(`^lille fra (${HAND}) til (${CARD})`, 'i'), (_, h: string, c: string) => `Low from ${hand(h)} to ${card(c)}`)
     .replace(new RegExp(`^lille fra (${HAND}) mod (${CARD}) \\(kipning\\)`, 'i'), (_, h: string, c: string) => `Low from ${hand(h)} towards ${card(c)} (finesse)`)
     .replace(new RegExp(`^lille fra (${HAND})`, 'i'), (_, h: string) => `Low from ${hand(h)}`)
