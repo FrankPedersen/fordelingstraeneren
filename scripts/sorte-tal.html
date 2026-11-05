@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Den sorterede hånd</title>
+</head>
+<body>
+<!-- Testside til scripts/tjek-sorte-tal.mjs (SPEC-sorte-tal.md): Lynaflæsningens facit med den sorterede hånd og samme
+     hånd med spillekort, vist af Vites dev-server. Den kommer ikke med i bygget (kun index.html bygges). -->
+<main class="screen">
+  <div id="facit"></div>
+  <div id="kort"></div>
+</main>
+<script type="module">
+  import '/src/ui/styles.css';
+  import { createElement } from 'react';
+  import { createRoot } from 'react-dom/client';
+  import { suitLengths } from '/src/domain/cards.ts';
+  import { ReadView } from '/src/modes/read/ReadView.tsx';
+  import { makeRandomReadTask } from '/src/modes/read/task.ts';
+
+  // Den første tilfældige hånd med alle fire farver, så hver række har kort.
+  let seed = 1;
+  while (suitLengths(makeRandomReadTask(seed, 3000).cards).some((l) => l === 0)) seed++;
+  const task = makeRandomReadTask(seed, 3000);
+  const svar = [...suitLengths(task.cards)].sort((a, b) => b - a);
+  const tom = () => {};
+  createRoot(document.getElementById('facit')).render(
+    createElement(ReadView, { task, answer: svar, reveal: true, skylines: false, show: 'tap', sorted: false, onAnswer: tom }),
+  );
+  createRoot(document.getElementById('kort')).render(
+    createElement(ReadView, { task, reveal: false, skylines: false, show: 'tap', sorted: true, onAnswer: tom }),
+  );
+</script>
+</body>
+</html>

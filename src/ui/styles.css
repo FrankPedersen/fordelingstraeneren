@@ -1020,8 +1020,10 @@ textarea {
   font-weight: 600;
 }
 
-.sorted-hand .red {
-  color: #c62828;
+/* Kun farvesymbolet for ♥ og ♦ er rødt, som i Pointregnskab og Håndevaluering; kortenes røde farve, fordi hånden står
+   på et hvidt kort også i mørk tilstand (SPEC-sorte-tal.md). */
+.sorted-hand .suit.red {
+  color: var(--card-red);
 }
 
 .sorted-hand .muted {
