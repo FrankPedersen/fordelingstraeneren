@@ -9,12 +9,28 @@ import { END, LEAD, THIRD, type Game, type Hand } from './game';
  * resten optimalt (spec 3.1). Uden reglen giver linje B i B432 / E 10 6 5 kun 89,6 % for 2 stik, fordi linjen lader
  * Vest stikke billigt med 9'eren, når Øst ikke kan bekende.
  */
+export interface ThirdRule {
+  ifSecondPlays: string;
+  play: string;
+  else: string;
+}
+
+export interface StepCondition {
+  fallen?: string[];
+  showsOut?: 'V' | 'Ø';
+}
+
 export interface LineStep {
   leadFrom: Hand;
   /** Konkret kort ("A", "T", "4"), "low" eller "high". */
   card: string;
-  third?: { ifSecondPlays: string; play: string; else: string };
-  branches?: { if: { fallen?: string[]; showsOut?: 'V' | 'Ø' }; goto: number }[];
+  third?: ThirdRule;
+  /**
+   * 3. hånds kort pr. gren (SPEC-esset-slaas.md, B): den første regel, hvis betingelse holder for kortene i de tidligere
+   * stik, gælder i stedet for `third`. Uden feltet er trinet som før, så gamle linjer læses uændret.
+   */
+  thirdIf?: { if: StepCondition; third: ThirdRule }[];
+  branches?: { if: StepCondition; goto: number }[];
 }
 
 export interface Line {
@@ -59,6 +75,8 @@ interface PathState {
   /** De abstrakte kort i træet (det laveste kort i en gruppe fjernes). */
   abstract: Record<Hand, Rank[]>;
   playedOwn: Set<Rank>;
+  /** Kortet, der blev spillet ud i det aktuelle stik (0 før første udspil). */
+  lastLead: Rank;
   opponents: OpponentPlay[];
   /** Kunne modspilleren ikke bekende i denne runde? */
   showedOut: Set<'V' | 'Ø'>;
@@ -131,18 +149,22 @@ export function lineMask(game: Game, line: Line): LineMask {
     }
   };
 
+  /** Holder betingelsen for de spillede kort? Modspillets kort regnes med intervallerne for de spillede huller. */
+  function holds(cond: StepCondition, playedOwn: ReadonlySet<Rank>, opponents: readonly OpponentPlay[], showedOut: ReadonlySet<'V' | 'Ø'>): boolean {
+    if (cond.showsOut && !showedOut.has(cond.showsOut)) return false;
+    if (cond.fallen) {
+      const cards = cond.fallen.map(rankFromSymbol);
+      const ownCards = cards.filter((r) => own.has(r));
+      if (!ownCards.every((r) => playedOwn.has(r))) return false;
+      if (!opponentsFallen(cards.filter((r) => !own.has(r)), opponents)) return false;
+    }
+    return true;
+  }
+
   function nextStep(state: PathState): number {
     const step = line.steps[state.step];
     for (const branch of step.branches ?? []) {
-      const cond = branch.if;
-      if (cond.showsOut && !state.showedOut.has(cond.showsOut)) continue;
-      if (cond.fallen) {
-        const cards = cond.fallen.map(rankFromSymbol);
-        const ownCards = cards.filter((r) => own.has(r));
-        if (!ownCards.every((r) => state.playedOwn.has(r))) continue;
-        if (!opponentsFallen(cards.filter((r) => !own.has(r)), state.opponents)) continue;
-      }
-      return branch.goto - 1;
+      if (holds(branch.if, state.playedOwn, state.opponents, state.showedOut)) return branch.goto - 1;
     }
     return state.step + 1;
   }
@@ -178,6 +200,7 @@ export function lineMask(game: Game, line: Line): LineMask {
       physical: { ...state.physical, [leader]: state.physical[leader].filter((r) => r !== card) },
       abstract: { ...state.abstract, [leader]: removeOne(state.abstract[leader], game.slotLow[slot]) },
       playedOwn: new Set([...state.playedOwn, card]),
+      lastLead: card,
       showedOut: new Set(),
     };
     visitSecond(game.children[slot], after, leader, step, number);
@@ -208,11 +231,16 @@ export function lineMask(game: Game, line: Line): LineMask {
       return;
     }
     let want = 'low';
-    if (step.third) {
-      const cond = step.third.ifSecondPlays;
-      const holds =
+    // 3. hånds regel pr. gren ser kun på de tidligere stik: modspillets kort uden 2. hånds kort i dette stik, og egne
+    // kort uden udspillet i dette stik.
+    const earlier = state.opponents.slice(0, -1);
+    const ownBefore = new Set([...state.playedOwn].filter((r) => r !== state.lastLead));
+    const rule = (step.thirdIf ?? []).find((r) => holds(r.if, ownBefore, earlier, new Set()))?.third ?? step.third;
+    if (rule) {
+      const cond = rule.ifSecondPlays;
+      const plays =
         second.high === 0 ? false : cond === 'low' ? second.isLow === true : second.high >= rankFromSymbol(cond) && rankFromSymbol(cond) >= second.low;
-      want = holds ? step.third.play : step.third.else;
+      want = plays ? rule.play : rule.else;
     }
     const card = choose(state.physical[hand], want);
     const slot = card === null ? -1 : slotFor(game, node, hand, state, card, false);
@@ -257,6 +285,7 @@ export function lineMask(game: Game, line: Line): LineMask {
         physical: { N: [...game.north], S: [...game.south] },
         abstract: { N: [...game.north], S: [...game.south] },
         playedOwn: new Set(),
+        lastLead: 0 as Rank,
         opponents: [],
         showedOut: new Set(),
       });

@@ -118,8 +118,8 @@ describe('Opgavebanken', () => {
 
   it('E D 6 5 / 4 3 2: (kipning) og linjerne i beskrivende form (SPEC-sprog-kipning-toppe)', () => {
     const leads = (goal: number) => solutions['432-AQ65'].goals[String(goal)].leads.map((l) => l.steps);
-    expect(leads(3)[0]).toEqual(['Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset.']);
-    expect(leads(2)).toContainEqual(['Damen fra hånden; dækker Vest, lægges der lille, ellers løber den.', 'Esset slås.', 'Lille fra begge hænder.']);
+    expect(leads(3)[0]).toEqual(['Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset.', 'Lykkes kipningen, indkasseres esset.', 'Lille fra begge hænder.']);
+    expect(leads(2)).toContainEqual(['Damen fra hånden; dækker Vest, lægges der lille, ellers løber den.', 'Esset indkasseres.', 'Lille fra begge hænder.']);
   });
 
   it('foreslår teknikker, der passer med linjerne', () => {

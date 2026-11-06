@@ -188,10 +188,12 @@ export function followsLine(steps: readonly LineStep[], tricks: readonly PlayedT
     const partner = other(trick.leader);
     if (hands[partner].length) {
       let want = 'low';
-      if (s.third) {
-        const cond = s.third.ifSecondPlays;
+      // 3. hånds regel pr. gren (SPEC-esset-slaas.md, B): betingelsen ser på kortene i de tidligere stik.
+      const rule = (s.thirdIf ?? []).find((r) => !r.if.showsOut && (r.if.fallen ?? []).every((c) => played.has(rankFromSymbol(c))))?.third ?? s.third;
+      if (rule) {
+        const cond = rule.ifSecondPlays;
         const holds = cond === 'low' ? trick.second < JACK : trick.second >= rankFromSymbol(cond);
-        want = holds ? s.third.play : s.third.else;
+        want = holds ? rule.play : rule.else;
       }
       const third = chosen(hands[partner], want);
       const now = new Set([...hands.N, ...hands.S, ...hands.V, ...hands.Ø].filter((c) => c !== trick.second));

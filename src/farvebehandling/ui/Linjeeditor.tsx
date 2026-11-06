@@ -23,7 +23,15 @@ const MAX_STEPS = 4;
 export function stepsText(steps: readonly LineStep[]): string {
   const name = (card: string) => (card === 'low' || card === 'high' ? TEXT.editorCardName(card) : cardNameText(symbolRank(card)));
   return steps
-    .map((s) => TEXT.editorStepText(name(s.card), s.leadFrom, s.third && { play: name(s.third.play), else: name(s.third.else) }))
+    .map((s) =>
+      TEXT.editorStepText(
+        name(s.card),
+        s.leadFrom,
+        s.third && { play: name(s.third.play), else: name(s.third.else) },
+        // 3. hånds regler pr. gren (SPEC-esset-slaas.md, B): editoren viser dem, men skriver dem ikke.
+        (s.thirdIf ?? []).map((r) => ({ fallen: (r.if.fallen ?? []).map(name), play: name(r.third.play), else: name(r.third.else) })),
+      ),
+    )
     .join(' ');
 }
 

@@ -60,7 +60,7 @@ describe('Gemte linjer kan spilles som helhed (SPEC-linjeformat-39.md)', { timeo
     ]);
     expect(stored('2-AKJ543', 5).best.steps).toEqual([
       'Lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset.',
-      'Esset og kongen slås.',
+      'Mislykkes kipningen, indkasseres esset og kongen.',
     ]);
   });
 
