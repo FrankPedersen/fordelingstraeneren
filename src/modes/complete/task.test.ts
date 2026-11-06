@@ -1,9 +1,13 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 import { completions } from '../../domain/complete';
 import { PATTERNS, patternById } from '../../domain/patterns';
+import { setLang } from '../../i18n';
 import {
   instructionText,
   makeCompleteTask,
+  missingCount,
+  missingVerdict,
+  orderText,
   scoreComplete,
   scoreRanking,
   shownText,
@@ -93,5 +97,61 @@ describe('Fuldfør – opgaver', () => {
     expect(instructionText(task)).toBe('Hvilke mønstre er mulige? Hyppigste først.');
     expect(instructionText({ ...task, all: false })).toBe('Hvilke tre mønstre er hyppigst? Hyppigste først.');
     expect(instructionText({ ...task, count: 1 })).toBe('Hvilket mønster er det?');
+  });
+});
+
+// Accepttest for SPEC-fuldfoer-dom.md: dommen ved for få mønstre og sætningen om rækkefølgen i facit.
+describe('Fuldfør – dommen og facit (SPEC-fuldfoer-dom.md)', () => {
+  afterEach(() => setLang('da'));
+
+  /** "Øst har vist 4♦ og 4♣": mulige er 4-4-3-2, 4-4-4-1 og 5-4-4-0. */
+  const øst44: CompleteTask = { kind: 'complete', seed: 1, patternId: '4-4-3-2', seat: 'E', lengths: [3, 2, 4, 4], known: [null, null, 4, 4], count: 3, all: true };
+  /** "Vest har vist 5♥ og 4♣" med Vests 5-4-2-2: 5-4-3-1 er hyppigst (7436 mod 6084 og 1430). */
+  const vest5h4c: CompleteTask = { kind: 'complete', seed: 1, patternId: '5-4-2-2', seat: 'W', lengths: [2, 5, 2, 4], known: [null, 5, null, 4], count: 3, all: true };
+  /** "Vest har vist 5♠": 10 mulige, de tre hyppigste skal tastes; 5-5-2-1 er nr. 4. */
+  const vest5: CompleteTask = { kind: 'complete', seed: 1, patternId: '5-5-2-1', seat: 'W', lengths: [5, 5, 2, 1], known: [5, null, null, null], count: 3, all: false };
+
+  it('all: true: antallet af mulige mønstre, der ikke er tastet; umulige tæller ikke med', () => {
+    expect(missingCount(øst44, ['4-4-3-2'])).toBe(2);
+    expect(missingCount(øst44, ['4-4-3-2', '4-4-4-1'])).toBe(1);
+    expect(missingCount(øst44, ['4-4-3-2', '4-4-4-1', '5-4-4-0'])).toBe(0);
+    expect(missingCount(øst44, ['4-4-3-2', '6-4-3-0'])).toBe(2);
+  });
+
+  it('all: false: count minus de tastede, og 0 for tre tastede, også når de er forkerte', () => {
+    expect(missingCount(vest5, ['5-3-3-2'])).toBe(2);
+    expect(missingCount(vest5, ['5-3-3-2', '5-4-3-1'])).toBe(1);
+    expect(missingCount(vest5, ['5-3-3-2', '5-4-3-1', '5-4-2-2'])).toBe(0);
+    expect(missingCount(vest5, ['8-5-0-0', '7-5-1-0', '6-5-2-0'])).toBe(0);
+    expect(missingVerdict(missingCount(vest5, ['5-3-3-2']))).toBe('✗ Forkert: der mangler 2 mønstre.');
+    setLang('en');
+    expect(missingVerdict(2)).toBe('✗ Wrong: 2 patterns are missing.');
+  });
+
+  it('dommen står i flertal og i ental ved 1, på dansk og engelsk', () => {
+    expect(missingVerdict(2)).toBe('✗ Forkert: der mangler 2 mønstre.');
+    expect(missingVerdict(1)).toBe('✗ Forkert: der mangler 1 mønster.');
+    setLang('en');
+    expect(missingVerdict(2)).toBe('✗ Wrong: 2 patterns are missing.');
+    expect(missingVerdict(1)).toBe('✗ Wrong: 1 pattern is missing.');
+  });
+
+  it('facit (all: true): den faktiske hånd tastet først, men ikke hyppigst, giver sætningen om rækkefølgen', () => {
+    expect(orderText(vest5h4c, ['5-4-2-2', '5-4-3-1', '5-4-4-0'])).toBe('Rækkefølgen er efter hyppighed. Vests hånd var den næsthyppigste.');
+    expect(orderText({ ...vest5h4c, seat: 'E' }, ['5-4-2-2'])).toBe('Rækkefølgen er efter hyppighed. Østs hånd var den næsthyppigste.');
+    setLang('en');
+    expect(orderText({ ...vest5h4c, seat: 'E' }, ['5-4-2-2'])).toBe("The order is by frequency. East's hand was the second most frequent.");
+    setLang('da');
+    // Den faktiske hånd er hyppigst, eller det første tastede mønster er et andet: ingen sætning.
+    expect(orderText({ ...vest5h4c, patternId: '5-4-3-1', lengths: [3, 5, 1, 4] }, ['5-4-3-1'])).toBeNull();
+    expect(orderText(vest5h4c, ['5-4-3-1', '5-4-2-2'])).toBeNull();
+  });
+
+  it('facit (all: false): fra rang 4 står rangen som tal', () => {
+    expect(orderText(vest5, ['5-5-2-1'])).toBe('Rækkefølgen er efter hyppighed. Vests hånd var nr. 4 i hyppighed.');
+    expect(orderText({ ...vest5, patternId: '5-5-3-0', lengths: [5, 5, 3, 0] }, ['5-5-3-0'])).toBe('Rækkefølgen er efter hyppighed. Vests hånd var nr. 5 i hyppighed.');
+    expect(orderText({ ...vest5, patternId: '5-4-2-2', lengths: [5, 4, 2, 2] }, ['5-4-2-2'])).toBe('Rækkefølgen er efter hyppighed. Vests hånd var den tredjehyppigste.');
+    setLang('en');
+    expect(orderText(vest5, ['5-5-2-1'])).toBe("The order is by frequency. West's hand was no. 4 by frequency.");
   });
 });
