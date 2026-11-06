@@ -1,6 +1,6 @@
 # SPEC-esset-slaas
 
-5. november 2026 · Franks opgave, skrevet af hans rådgiver · Bygges på grenen `esset-slaas` (før: `v40-foer-esset-slaas`). Køres i én omgang uden opsyn og stopper før fletning.
+5. november 2026 · Franks opgave, skrevet af hans rådgiver · Bygges på grenen `esset-slaas` (før: `v40-foer-esset-slaas`). Køres i én omgang uden opsyn og stopper før fletning. Godkendt af Frank, flettet og udgivet 6. november 2026 (`9358b03`); den udgivne app er tjekket, og grenen er slettet.
 
 Specen samler de tre åbne punkter i SPEC-farvebehandling.md, som kræver en løsning af hele banken, så den kun skal løses én gang:
 
@@ -283,3 +283,4 @@ Regnet med løseren (banken efter `LINES_VERSION` 7 og tagget). Trinene: N er bo
 18. **Testen for H i banken** tæller i `solutions.json`, for appens filer har kun det bedste udspil for flest stik (118 af de 130 mærker).
 19. **`describe.test.ts`:** B 3 2 / E K 9 4 (3 stik, udspil 1) hedder nu "Farven toppes med esset og kongen."; det er et af de 308 udspil (10'eren er det eneste kort over 9'eren).
 20. **Testen for H** spiller ikke linjen for B 3 2 / K 6 5 4 (2 stik) som helhed, for den har ingen trin (som nr. 8).
+21. **Den udgivne app** (6. nov. 2026): på www.kontraktbridge.dk/fordelingstraeneren/ viser linje A i Analyse de nye tekster for nr. 1, 3, 7 og E 2 / D B 9 8 7 (4 stik) på dansk og engelsk, fx "Mislykkes kipningen, toppes farven med knægten." / "If the finesse fails, the jack is played for the drop."; hvert billede er taget i en ny browserkontekst (`../skaermbilleder/esset-slaas/udgivet-1280-<sprog>-<navn>-linjekort.png`). Bankens ti udgivne filer (appens `side-N.json`) har intet "slås" og 118 mærker med kort (appen har kun det bedste udspil for flest stik). "Slås" står kun i Analyses hjælp ("enhver kombination kan slås op"), som D tillader.
