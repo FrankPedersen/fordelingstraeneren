@@ -6,7 +6,7 @@ import { PatternKeypad } from '../../ui/PatternKeypad';
 import { Skyline } from '../../ui/Skyline';
 import { SuitText } from '../../ui/SuitText';
 import { percentText } from '../../ui/text';
-import { completeFacit, instructionText, shownText, type CompleteTask } from './task';
+import { completeFacit, instructionText, orderText, shownText, type CompleteTask } from './task';
 import { tx } from '../../i18n';
 import { Info } from '../../ui/Info';
 
@@ -127,6 +127,7 @@ function Facit({ task, answer, skylines }: { task: CompleteTask; answer: string[
   const rest = list.slice(rows.length);
   const restWeight = rest.reduce((sum, c) => sum + c.weight, 0n);
   const impossible = answer.filter((id) => !list.some((c) => c.pattern.id === id));
+  const order = orderText(task, answer);
 
   return (
     <div className="facit">
@@ -159,6 +160,8 @@ function Facit({ task, answer, skylines }: { task: CompleteTask; answer: string[
       <p className="muted">
         {SEAT_NAMES[task.seat]} {tx('havde', 'had')} {distributionText(task.lengths)}.
       </p>
+      {/* Mønsterkortet under Næste viser den faktiske hånd; sætningen siger, at svaret går efter hyppighed (SPEC-fuldfoer-dom.md). */}
+      {order && <p className="muted">{order}</p>}
     </div>
   );
 }

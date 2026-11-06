@@ -90,6 +90,44 @@ export function completeFacit(task: CompleteTask): {
   return { total, list, required: list.slice(0, task.count) };
 }
 
+/**
+ * Antal mønstre, der mangler i svaret (SPEC-fuldfoer-dom.md). Skal alle mulige tastes (`all`), er det de mulige, der
+ * ikke er tastet; et umuligt mønster tæller ikke med. Ellers er det `count` minus de tastede. 0: dommen er som før.
+ */
+export function missingCount(task: CompleteTask, answer: readonly string[]): number {
+  if (task.all) return completions(task.known).list.filter((c) => !answer.includes(c.pattern.id)).length;
+  return Math.max(0, task.count - answer.length);
+}
+
+/** Dommen, når der mangler mønstre: "✗ Forkert: der mangler 2 mønstre.", ental ved 1. */
+export function missingVerdict(n: number): string {
+  return n === 1
+    ? tx('✗ Forkert: der mangler 1 mønster.', '✗ Wrong: 1 pattern is missing.')
+    : tx(`✗ Forkert: der mangler ${n} mønstre.`, `✗ Wrong: ${n} patterns are missing.`);
+}
+
+/**
+ * Facit, når det første tastede mønster er den faktiske hånds, men et andet er hyppigere (SPEC-fuldfoer-dom.md):
+ * "Rækkefølgen er efter hyppighed. Vests hånd var den næsthyppigste." Rangen er delt: 1 + antal strengt hyppigere
+ * mulige mønstre; fra 4 står den som tal ("nr. 4 i hyppighed"). null, når sætningen ikke skal stå.
+ */
+export function orderText(task: CompleteTask, answer: readonly string[]): string | null {
+  if (answer[0] !== task.patternId) return null;
+  const list = completions(task.known).list;
+  const own = list.find((c) => c.pattern.id === task.patternId);
+  if (!own) return null;
+  const rank = 1 + list.filter((c) => c.weight > own.weight).length;
+  if (rank === 1) return null;
+  const whose = task.seat === 'W' ? tx('Vests', "West's") : tx('Østs', "East's");
+  const place =
+    rank === 2
+      ? tx('den næsthyppigste', 'the second most frequent')
+      : rank === 3
+        ? tx('den tredjehyppigste', 'the third most frequent')
+        : tx(`nr. ${rank} i hyppighed`, `no. ${rank} by frequency`);
+  return tx(`Rækkefølgen er efter hyppighed. ${whose} hånd var ${place}.`, `The order is by frequency. ${whose} hand was ${place}.`);
+}
+
 /** De viste farver, fx "5♠ og 4♥". */
 export function shownText(task: CompleteTask): string {
   return task.known.flatMap((l, i) => (l === null ? [] : [`${l}${SUIT_SYMBOLS[i]}`])).join(tx(' og ', ' and '));

@@ -11,6 +11,7 @@ import { HintBox, MemoryBox, PresentationCard } from '../../memory/MemoryViews';
 import { routeOf } from '../../memory/palace';
 import { HINT_COST, supportPlan } from '../../memory/support';
 import { CompleteView } from '../../modes/complete/CompleteView';
+import { missingCount, missingVerdict } from '../../modes/complete/task';
 import { EstimateView } from '../../modes/estimate/EstimateView';
 import { HigherLowerView } from '../../modes/higherLower/HigherLowerView';
 import { PalaceView } from '../../modes/palace/PalaceView';
@@ -238,6 +239,11 @@ export function SessionScreen({ saved, onSave, onExit }: SessionScreenProps) {
           <>
             <FeedbackBar
               feedback={view.feedback}
+              missing={
+                view.feedback.score === 0 && step.task.kind === 'complete' && view.answer.kind === 'complete'
+                  ? missingCount(step.task, view.answer.patterns)
+                  : 0
+              }
               auto={step.phase === 'lightning'}
               onNext={() => isCurrent(view) && advance(runRef.current.session)}
             />
@@ -391,7 +397,8 @@ const scoreText = (score: 0 | 0.5 | 1): string =>
       ? tx('½ Halv score – rigtige mønstre, forkert rækkefølge', '½ Half score – right patterns, wrong order')
       : tx('✗ Forkert', '✗ Wrong');
 
-function FeedbackBar({ feedback, auto, onNext }: { feedback: Feedback; auto: boolean; onNext(): void }) {
+/** `missing`: mønstre, der mangler i et forkert svar i Fuldfør; så siger dommen hvor mange (SPEC-fuldfoer-dom.md). */
+function FeedbackBar({ feedback, missing = 0, auto, onNext }: { feedback: Feedback; missing?: number; auto: boolean; onNext(): void }) {
   const multiplier = comboMultiplier(feedback.combo);
   const meta = [
     xpText(feedback.xp) + (feedback.hintCost ? ` (${tx('ledetråd', 'hint')} −${feedback.hintCost})` : ''),
@@ -402,7 +409,7 @@ function FeedbackBar({ feedback, auto, onNext }: { feedback: Feedback; auto: boo
   const find = album && patternById(album.patternId);
   return (
     <section className={`feedback ${feedback.score === 1 ? 'ok' : 'bad'}`} role="status">
-      <p className="feedback-title">{scoreText(feedback.score)}</p>
+      <p className="feedback-title">{missing > 0 ? missingVerdict(missing) : scoreText(feedback.score)}</p>
       <p className="feedback-meta">{meta.join(' · ')}</p>
       {find && album.rare && (
         <p className="find">

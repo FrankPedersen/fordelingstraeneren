@@ -71,24 +71,24 @@ describe('App', () => {
     expect(screen.getByRole('status').querySelector('.feedback-title')?.textContent).toBe('✗ Forkert: der mangler 1 mønster.');
   });
 
-  it('Fuldfør på engelsk: "Wrong: N patterns are missing."', () => {
+  /** Fordelings første opgave på engelsk, besvaret med tasterne. */
+  function englishAnswer(keys: string[]) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...defaultSaved(), settings: { ...defaultSaved().settings, language: 'en' } }));
     render(<App />);
     click('Distribution');
     click("Start today's session");
     click('Continue');
-    for (const key of ['4', '4', '3']) click(key);
+    for (const key of keys) click(key);
     click('Answer');
-    expect(screen.getByRole('status').querySelector('.feedback-title')?.textContent).toBe('✗ Wrong: 2 patterns are missing.');
-    cleanup();
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...defaultSaved(), settings: { ...defaultSaved().settings, language: 'en' } }));
-    render(<App />);
-    click('Distribution');
-    click("Start today's session");
-    click('Continue');
-    for (const key of ['4', '4', '3', '4', '4', '4']) click(key);
-    click('Answer');
-    expect(screen.getByRole('status').querySelector('.feedback-title')?.textContent).toBe('✗ Wrong: 1 pattern is missing.');
+    return screen.getByRole('status').querySelector('.feedback-title')?.textContent;
+  }
+
+  it('Fuldfør på engelsk: "Wrong: 2 patterns are missing."', () => {
+    expect(englishAnswer(['4', '4', '3'])).toBe('✗ Wrong: 2 patterns are missing.');
+  });
+
+  it('Fuldfør på engelsk: "Wrong: 1 pattern is missing."', () => {
+    expect(englishAnswer(['4', '4', '3', '4', '4', '4'])).toBe('✗ Wrong: 1 pattern is missing.');
   });
 
   it('viser klubaftenens 100 hænder og fremhæver et mønster', () => {
