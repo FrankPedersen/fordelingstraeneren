@@ -46,6 +46,51 @@ describe('App', () => {
     ]);
   });
 
+  // Accepttest for SPEC-fuldfoer-dom.md: første opgave er Fuldfør for 4-4-3-2 med to viste firkortsfarver, så de
+  // mulige er 4-4-3-2, 4-4-4-1 og 5-4-4-0, uanset hvilke farver og hvilken modspiller.
+  it('Fuldfør: et svar med for få mønstre siger, hvor mange der mangler', () => {
+    render(<App />);
+    click('Fordeling');
+    click('Start dagens session');
+    click('Videre');
+    for (const key of ['4', '4', '3']) click(key);
+    click('Svar');
+    expect(screen.getByRole('status').querySelector('.feedback-title')?.textContent).toBe('✗ Forkert: der mangler 2 mønstre.');
+    // Scoren og XP er som i dag: forkert og intet XP.
+    expect(screen.getByRole('status').className).toContain('bad');
+    expect(screen.getByRole('status').querySelector('.feedback-meta')?.textContent).toMatch(/^\+0 XP/);
+  });
+
+  it('Fuldfør: to af tre mulige mønstre giver ental', () => {
+    render(<App />);
+    click('Fordeling');
+    click('Start dagens session');
+    click('Videre');
+    for (const key of ['4', '4', '3', '4', '4', '4']) click(key);
+    click('Svar');
+    expect(screen.getByRole('status').querySelector('.feedback-title')?.textContent).toBe('✗ Forkert: der mangler 1 mønster.');
+  });
+
+  /** Fordelings første opgave på engelsk, besvaret med tasterne. */
+  function englishAnswer(keys: string[]) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...defaultSaved(), settings: { ...defaultSaved().settings, language: 'en' } }));
+    render(<App />);
+    click('Distribution');
+    click("Start today's session");
+    click('Continue');
+    for (const key of keys) click(key);
+    click('Answer');
+    return screen.getByRole('status').querySelector('.feedback-title')?.textContent;
+  }
+
+  it('Fuldfør på engelsk: "Wrong: 2 patterns are missing."', () => {
+    expect(englishAnswer(['4', '4', '3'])).toBe('✗ Wrong: 2 patterns are missing.');
+  });
+
+  it('Fuldfør på engelsk: "Wrong: 1 pattern is missing."', () => {
+    expect(englishAnswer(['4', '4', '3', '4', '4', '4'])).toBe('✗ Wrong: 1 pattern is missing.');
+  });
+
   it('viser klubaftenens 100 hænder og fremhæver et mønster', () => {
     render(<App />);
     click('Fordeling');
