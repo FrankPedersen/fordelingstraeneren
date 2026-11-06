@@ -51,11 +51,13 @@ function standalone(after: string): string {
 
 /** Et trin fra løserens danske skabeloner på engelsk. */
 export function englishStep(text: string): string {
-  // Teksten efter en kipning siger, hvilken gren den fortsætter på (SPEC-esset-slaas.md, E).
-  const branch = /^(Lykkes|Mislykkes) kipningen, (.+)$/.exec(text);
+  // Teksten efter en kipning siger, hvilken gren den fortsætter på (SPEC-esset-slaas.md, E), og går to kipninger
+  // forud, mod hvilket kort (H): "If the finesse towards the jack succeeds, …".
+  const branch = new RegExp(`^(Lykkes|Mislykkes) kipningen(?: mod (${CARD}))?, (.+)$`).exec(text);
   if (branch) {
-    const rest = englishStep(standalone(branch[2]));
-    return `If the finesse ${branch[1] === 'Lykkes' ? 'succeeds' : 'fails'}, ${rest[0].toLowerCase()}${rest.slice(1)}`;
+    const rest = englishStep(standalone(branch[3]));
+    const towards = branch[2] ? ` towards ${card(branch[2])}` : '';
+    return `If the finesse${towards} ${branch[1] === 'Lykkes' ? 'succeeds' : 'fails'}, ${rest[0].toLowerCase()}${rest.slice(1)}`;
   }
   // Et udspil, der bruger en indgang (SPEC-forbindelser.md): "Hånden nås med en sideindgang, og der spilles …".
   const entry = /^(Bordet|Hånden) nås med en sideindgang, og (?:der spilles (.+)|(.+) indkasseres\.|farven toppes med (.+)\.)$/.exec(text);

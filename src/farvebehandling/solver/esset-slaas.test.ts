@@ -85,7 +85,8 @@ describe('Esset slås (SPEC-esset-slaas.md)', { timeout: 300_000 }, () => {
     expect(r.text.steps[2]).toBe('Lykkes kipningen mod knægten, spilles der lille fra begge hænder.');
     expect(englishStep(r.text.steps[2])).toBe('If the finesse towards the jack succeeds, low from both hands.');
     expect(englishStep("Mislykkes kipningen mod 10'eren, indkasseres esset.")).toBe('If the finesse towards the 10 fails, the ace is cashed.');
-    expect(r.value).toBeCloseTo(r.lead.value, 9);
+    // En linje uden trin spilles helt af løseren og kan ikke spilles som helhed.
+    if (r.text.line.steps.length) expect(r.value).toBeCloseTo(r.lead.value, 9);
   });
 
   it('teksten fortsætter efter en kipning altid med mærket, også på engelsk', () => {

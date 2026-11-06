@@ -53,7 +53,8 @@ describe('Linjerne på dansk', { timeout: 120_000 }, () => {
     const game = buildGame(parseCards('J32'), parseCards('AK94'), { objective: goal(3) });
     const lead = solveGame(game).leads[0];
     const text = describeLine(game, lead.strategy, lead.slot);
-    expect(text.steps).toEqual(['Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den.', 'Esset og kongen indkasseres.']);
+    // 10'eren er det eneste kort over 9'eren, der skal falde, så farven toppes (SPEC-esset-slaas.md, G).
+    expect(text.steps).toEqual(['Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den.', 'Farven toppes med esset og kongen.']);
     expect(text.line.steps).toEqual([
       { leadFrom: 'N', card: 'J', third: { ifSecondPlays: 'low', play: 'low', else: 'A' } },
       { leadFrom: 'S', card: 'high' },

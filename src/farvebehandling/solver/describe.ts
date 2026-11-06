@@ -14,11 +14,12 @@ import { itemValues } from './natural';
  * Efter en kipning (SPEC-esset-slaas.md, A og E) følger hovedvejen den gren, hvor målet endnu ikke er afgjort: lykkes
  * kipningen (4. hånd kan ikke stikke over), eller mislykkes den. Er målet åbent på begge grene, følger hovedvejen den mest
  * sandsynlige; ved lige stand stikker 4. hånd over som før. Teksten, der fortsætter, siger hvilken gren: "Lykkes
- * kipningen, …" eller "Mislykkes kipningen, …".
+ * kipningen, …" eller "Mislykkes kipningen, …". Går to kipninger forud, nævner mærket kortet: "Lykkes kipningen mod
+ * knægten, …" (H, Franks afgørelse 6. november 2026).
  *
  * Et sikkert stik hedder "indkasseres", og høje kort, der spilles for at fælde en honnør, "toppes" (D): hører
  * målet (eller antallet af stik) til de sidninger, hvor en af modpartens honnører falder under kortene, er det
- * "Farven toppes med esset og kongen." Trin i træk med samme ord og trin med lille fra begge hænder lægges sammen (F).
+ * "Farven toppes med esset og kongen." 10'eren er honnør, når den er det eneste kort, der skal falde (G). Trin i træk med samme ord og trin med lille fra begge hænder lægges sammen (F).
  *
  * Med begrænsede forbindelser (SPEC-forbindelser.md) begynder et udspil, der bruger en indgang, med "Hånden (bordet)
  * nås med en sideindgang, og der spilles …"; hånden står så ikke igen efter kortet. Uden begrænsning er teksterne som før.
@@ -351,6 +352,8 @@ interface Part {
   /** "lille fra begge hænder" uden mere; lægges sammen til "to gange". */
   lowBoth: boolean;
   label: 'Lykkes' | 'Mislykkes' | null;
+  /** Kipningens kort i mærket, når to kipninger går forud (H): "Lykkes kipningen mod knægten, …". */
+  labelCard: Rank | null;
 }
 
 /** Beskriver linjen fra udspillet `leadSlot` i stillingen `state`; `values` er strategiens værdi pr. item. */
@@ -360,6 +363,9 @@ export function describeFrom(game: Game, strategy: Int8Array, leadSlot: number, 
   let lineOpen = true;
   let slot = leadSlot;
   let pendingLabel: Part['label'] = null;
+  let pendingCard: Rank | null = null;
+  // Kipningerne på hovedvejen indtil nu; ved to eller flere nævner mærket kortet (H).
+  let finesses = 0;
   const gone = new Set<Rank>(options.gone ?? []);
   for (let round = 0; round < MAX_ROUNDS; round++) {
     const hand: Hand = game.slotHand[slot] === 0 ? 'N' : 'S';
@@ -395,6 +401,7 @@ export function describeFrom(game: Game, strategy: Int8Array, leadSlot: number, 
     let text = '';
     let cash: Rank | null = null;
     let kipning = false;
+    let finesseCard: Rank | null = null;
     let lowBoth = false;
     const ledLow = led.lowest && led.rank < TEN;
     // Et udspil, der bruger en indgang, nævner hånden i "Hånden nås …", ikke efter kortet.
@@ -415,6 +422,8 @@ export function describeFrom(game: Game, strategy: Int8Array, leadSlot: number, 
       } else {
         text = `lille${from} mod ${cardName(toward.rank)} (kipning)`;
         kipning = true;
+        finesseCard = toward.rank;
+        finesses++;
       }
       if (low && high && high.rank !== low.rank) {
         text += `; lægger ${seat2} en honnør, ${high.lowest ? 'lægges der lille' : `tages den med ${cardName(high.rank)}`}`;
@@ -440,8 +449,9 @@ export function describeFrom(game: Game, strategy: Int8Array, leadSlot: number, 
         text = `${HAND_NAME[hand]} nås med en sideindgang, og der spilles ${text}`;
       }
     }
-    parts.push({ text, after: after ?? (text.startsWith('lille') ? `spilles der ${text}` : `spilles ${text}`), cash, slot, state: cash !== null ? cloneState(state) : null, gone: new Set(gone), entry: entryHand, lowBoth, label: pendingLabel });
+    parts.push({ text, after: after ?? (text.startsWith('lille') ? `spilles der ${text}` : `spilles ${text}`), cash, slot, state: cash !== null ? cloneState(state) : null, gone: new Set(gone), entry: entryHand, lowBoth, label: pendingLabel, labelCard: pendingLabel ? pendingCard : null });
     pendingLabel = null;
+    pendingCard = null;
 
     // Linjeformatet: trinet skrives, så længe 3. hånd følger én regel for lave kort og én for honnører.
     if (lineOpen) {
@@ -465,6 +475,7 @@ export function describeFrom(game: Game, strategy: Int8Array, leadSlot: number, 
     let stopHere = false;
     // Efter en kipning (A): den gren, hvor målet ikke er afgjort; er begge åbne, den mest sandsynlige.
     if (kipning && options.branches && !partnerWins) {
+      pendingCard = finesses >= 2 ? finesseCard : null;
       const choiceAfter = afterFinesse(game, fourth, ours, values);
       if (choiceAfter?.one) {
         // Kun én gren: hovedvejen er dagens, men teksten siger stadig hvilken (E).
@@ -546,7 +557,8 @@ function afterFinesse(game: Game, fourth: number, ours: number, values: Int32Arr
 /**
  * Ordet for et eller flere sikre stik i træk (D), spillet fra udspillet `slot` i stillingen `start`. Honnøren er et
  * af modpartens kort, der er knægten eller højere, ikke er spillet (`gone`) og ligger mellem det laveste af kortene og
- * spilførerens næste kort.
+ * spilførerens næste kort. 10'eren tæller også, når den er det eneste af modpartens kort dér (G, Franks afgørelse
+ * 6. november 2026); skal også mindre kort falde, er det fordelingen, og ordet er "indkasseres".
  * Den er faldet, når modparten efter de `tricks` stik ikke har noget kort over spilførerens højeste kort: i løserens
  * træ er kortene i et hul ligeværdige, så "damen falder" er det samme som "hullet med damen er tømt". Det hedder
  * "toppes", når det bedste resultat i de sidninger, hvor honnøren ikke falder, er dårligere end i dem, hvor den falder;
@@ -556,7 +568,8 @@ function wordFor(game: Game, strategy: Int8Array, values: Int32Array, slot: numb
   const lowest = Math.min(...cards);
   const ours = [...start.physical.N, ...start.physical.S].filter((r) => !cards.includes(r));
   const next = Math.max(0, ...ours.filter((r) => r < lowest));
-  if (!game.missing.some((m) => !gone.has(m) && m >= JACK && m < lowest && m > next)) return 'indkasseres';
+  const between = game.missing.filter((m) => !gone.has(m) && m < lowest && m > next);
+  if (!between.some((m) => m >= JACK) && !(between.length === 1 && between[0] === TEN)) return 'indkasseres';
   const node = game.parent[game.children[slot]];
   const st = game.nodeItemStart[node], cnt = game.nodeItemCount[node];
   let maxFell = -Infinity, maxKept = -Infinity, nFell = 0, nKept = 0;
@@ -640,7 +653,8 @@ function joinParts(game: Game, strategy: Int8Array, values: Int32Array, parts: P
       text = head.text;
       after = head.after;
     }
-    return head.label ? `${head.label} kipningen, ${after}.` : `${capital(text)}.`;
+    const label = head.labelCard ? `${head.label} kipningen mod ${cardName(head.labelCard)}` : `${head.label} kipningen`;
+    return head.label ? `${label}, ${after}.` : `${capital(text)}.`;
   });
 }
 
