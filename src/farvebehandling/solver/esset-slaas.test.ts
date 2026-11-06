@@ -64,7 +64,7 @@ describe('Esset slås (SPEC-esset-slaas.md)', { timeout: 300_000 }, () => {
   });
 
   it('teksten fortsætter efter en kipning altid med mærket, også på engelsk', () => {
-    for (const [n, s, g] of [['432', 'AQ65', 3], ['432', 'AKJ5', 4], ['432', 'K765', 2], ['J32', 'AK54', 3], ['J32', 'K54', 1], ['432', 'KQ8765', 5]] as const) {
+    for (const [n, s, g] of [['432', 'AQ65', 3], ['432', 'AKJ5', 4], ['432', 'K765', 2], ['J32', 'AK54', 3], ['J32', 'K54', 1], ['432', 'KQ8765', 5], ['432', 'AT65', 2], ['432', 'JT85', 1]] as const) {
       const { steps } = bestLine(n, s, g).text;
       steps.forEach((step, i) => {
         if (i > 0 && steps[i - 1].includes('(kipning)')) {
@@ -202,5 +202,35 @@ describe('Esset slås (SPEC-esset-slaas.md)', { timeout: 300_000 }, () => {
     }
     expect(fejl.slice(0, 5)).toEqual([]);
   });
-});
 
+  it('eksemplerne i specens tabel står i banken med deres tekst og antal trin', () => {
+    // [kombination, mål, udspil, tekst, antal trin] fra banken efter LINES_VERSION 6 (SPEC-esset-slaas.md, Resultat).
+    const EKSEMPLER: [string, string, number, string[], number][] = [
+    ["432-AQ65", "3", 0, ["Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset.", "Lykkes kipningen, indkasseres esset.", "Lille fra begge hænder."], 1],
+    ["432-AQ765", "4", 0, ["Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset.", "Lykkes kipningen, indkasseres esset."], 1],
+    ["432-AKJ5", "4", 0, ["Lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset.", "Lykkes kipningen, toppes farven med esset og kongen."], 3],
+    ["432-K765", "2", 0, ["Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille.", "Lykkes kipningen, spilles der lille fra begge hænder to gange."], 1],
+    ["32-AKQ94", "4", 0, ["Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset.", "Mislykkes kipningen, indkasseres esset."], 1],
+    ["2-AKJ543", "5", 0, ["Lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset.", "Mislykkes kipningen, indkasseres esset og kongen."], 3],
+    ["J32-AK54", "3", 1, ["Lille fra bordet til esset.", "Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille.", "Mislykkes kipningen, indkasseres kongen."], 1],
+    ["J32-K54", "1", 1, ["Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille.", "Mislykkes kipningen, spilles der lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille."], 0],
+    ["432-QJ965", "3", 0, ["Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille.", "Mislykkes kipningen, spilles der lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, lægges der lille."], 1],
+    ["432-KQ8765", "5", 0, ["Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille.", "Mislykkes kipningen, toppes farven med damen."], 1],
+    ["KJ92-AT83", "4", 0, ["Kongen indkasseres.", "Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset."], 1],
+    ["QT-AK432", "4", 2, ["Esset indkasseres.", "Lille fra hånden til damen."], 1],
+    ["K32-AT954", "3", 0, ["Kongen indkasseres."], 1],
+    ["AJT2-K96543", "6", 0, ["Esset indkasseres."], 1],
+    ["A2-QJ987", "4", 0, ["Esset indkasseres.", "Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille.", "Mislykkes kipningen, indkasseres knægten."], 1],
+    ["432-Q965", "1", 0, ["Lille fra begge hænder.", "Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille.", "Mislykkes kipningen, spilles der lille fra begge hænder."], 1],
+    ["32-JT54", "1", 0, ["Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille.", "Mislykkes kipningen, spilles der lille fra begge hænder."], 1],
+    ["J32-Q654", "2", 1, ["Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille.", "Mislykkes kipningen, spilles der lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille.", "Lykkes kipningen, spilles der lille fra begge hænder."], 1],
+    ["-AKJ5432", "6", 0, ["Esset og kongen indkasseres.", "Lille fra hånden."], 2],
+    ["32-AT654", "3", 0, ["Lille fra begge hænder; lægger Øst en honnør, tages den med esset.", "Esset indkasseres.", "10'eren spilles fra hånden."], 1],
+    ];
+    for (const [id, mål, i, steps, trin] of EKSEMPLER) {
+      const lead = JSON.parse(BANK_FILES['../content/solutions.json']).combinations[id].goals[mål].leads[i];
+      expect(lead.steps, `${id} ${mål}`).toEqual(steps);
+      expect(lead.line.length, `${id} ${mål}`).toBe(trin);
+    }
+  });
+});

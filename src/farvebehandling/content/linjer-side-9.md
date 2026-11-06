@@ -6,7 +6,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **1 stik**
 
-- 24,7 % (bedst): Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.
+- 24,7 % (bedst): Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra begge hænder.
 - 6,1 %: Lille fra begge hænder.
 - 1,8 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers løber den. Lille fra begge hænder.
 
@@ -22,24 +22,24 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **1 stik**
 
-- 67,8 % (bedst): Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.
+- 67,8 % (bedst): Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra begge hænder.
 - 54,4 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers løber den. Lille fra begge hænder. Lille fra bordet mod 10'eren (kipning).
-- 48,9 %: Lille fra begge hænder. Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 10'eren (kipning).
+- 48,9 %: Lille fra begge hænder. Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning).
 
 ## 4. B 6 5 4 / 10 3 2
 
 **1 stik**
 
-- 68,5 % (bedst): Lille fra hånden mod 10'eren (kipning); lægger Vest en honnør, lægges der lille. Lille fra begge hænder. Lille fra bordet mod knægten (kipning).
-- 54,4 %: 10'eren fra bordet; dækker Øst, lægges der lille, ellers løber den. Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.
-- 49,6 %: Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Lille fra begge hænder. 10'eren fra bordet; dækker Øst, lægges der lille.
+- 68,5 % (bedst): Lille fra hånden mod 10'eren (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra begge hænder. Lille fra bordet mod knægten (kipning).
+- 54,4 %: 10'eren fra bordet; dækker Øst, lægges der lille, ellers løber den. Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra begge hænder.
+- 49,6 %: Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra begge hænder. 10'eren fra bordet; dækker Øst, lægges der lille.
 - 35,5 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers løber den. Lille fra begge hænder. 10'eren fra bordet; dækker Øst, lægges der lille.
 
 ## 5. B 10 7 6 / 5 4 3 2
 
 **1 stik**
 
-- 83,9 % (bedst): Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, lægges der lille.
+- 83,9 % (bedst): Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, lægges der lille.
 - 83,9 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers løber den. Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, lægges der lille.
 - 76,3 %: Lille fra begge hænder. Lille fra bordet mod knægten (kipning).
 
@@ -47,22 +47,22 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **1 stik**
 
-- 77,0 % (bedst): Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, lægges der lille. Lille fra hånden.
-- 26,9 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers løber den. Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, lægges der lille. Lille fra hånden.
+- 77,0 % (bedst): Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra hånden.
+- 26,9 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers løber den. Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra hånden.
 - 9,0 %: Lille fra begge hænder.
 
 ## 7. B 10 9 4 3 / 2
 
 **2 stik**
 
-- 16,0 % (bedst): Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Lille fra hånden.
+- 16,0 % (bedst): Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra hånden.
 - 6,1 %: Lille fra begge hænder.
 - 1,8 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers løber den. Lille fra hånden.
 
 **1 stik**
 
-- 86,9 % (bedst): Lille fra begge hænder. Lille fra hånden. Knægten fra hånden.
-- 86,9 %: Lille fra begge hænder. Lille fra hånden. Knægten fra hånden.
+- 86,9 % (bedst): Lille fra begge hænder. Lille fra hånden. Knægten spilles fra hånden.
+- 86,9 %: Lille fra begge hænder. Lille fra hånden. Knægten spilles fra hånden.
 - 66,5 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers løber den. Lille fra hånden. Lille fra hånden.
 
 ## 8. B 10 8 4 / 3 2
@@ -78,7 +78,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **1 stik**
 
-- 72,6 % (bedst): Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, lægges der lille. Lille fra begge hænder.
-- 59,7 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers løber den. Lille fra bordet mod 8'eren (kipning); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 10'eren (kipning).
-- 48,9 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers løber den. Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 10'eren (kipning).
-- 48,9 %: Lille fra begge hænder. Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Lille fra bordet mod 10'eren (kipning).
+- 72,6 % (bedst): Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra begge hænder.
+- 59,7 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers løber den. Lille fra bordet mod 8'eren (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning).
+- 48,9 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers løber den. Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning).
+- 48,9 %: Lille fra begge hænder. Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning).

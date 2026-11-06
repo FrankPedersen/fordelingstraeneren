@@ -8,8 +8,9 @@ import { solveLine } from './solve';
 
 /**
  * De 65 kombinationer, hvor tjekket "et trin skal følge løserens valg på alle grene" gjorde en gemt linje kortere med
- * LINES_VERSION 5 (SPEC-linjeplan-23.md). Hver linje står som mål#udspil:antal trin. Hele banken tjekkes af
- * `node scripts/tjek-linjer.ts`; her ligger de kombinationer, tjekket faktisk ramte.
+ * LINES_VERSION 5 (SPEC-linjeplan-23.md). Hver linje står som mål#udspil:antal trin med LINES_VERSION 6
+ * (SPEC-esset-slaas.md): de 34 linjer, der endte uden trin, har fået deres trin igen, og de 90 andre er uændrede.
+ * Hele banken tjekkes af `node scripts/tjek-linjer.ts`; her ligger de kombinationer, tjekket faktisk ramte.
  */
 const AFKORTET: Record<string, string> = {
   '-AKJT2': '4#1:3 flest#1:3',
@@ -52,31 +53,31 @@ const AFKORTET: Record<string, string> = {
   '5432-KT76': '1#1:1',
   '5432-QT76': '1#1:1',
   '5432-QT976': '3#1:1',
-  '92-AJ843': '4#2:0',
+  '92-AJ843': '4#2:1',
   'A2-QJ943': '4#1:2 flest#1:2',
   'A2-QJ987': '4#1:1 flest#1:1',
   'A432-QJ95': '3#1:1 flest#1:1',
-  'AJT2-K96543': '6#0:0 6#3:0 flest#0:0 flest#3:0',
+  'AJT2-K96543': '6#0:1 6#3:1 flest#0:1 flest#3:1',
   'AQ2-J543': '3#1:2 flest#1:2',
   'AQ2-J943': '3#1:2 3#2:2 flest#1:2 flest#2:2',
   'AQ2-J983': '3#1:2 3#2:2 flest#1:2 flest#2:2',
   'AQ2-J987': '3#1:2 3#2:2 flest#1:2 flest#2:2',
   'J2-AQ9543': 'flest#1:1',
   'J2-AQ9843': 'flest#1:1',
-  'K32-AT954': '3#0:0 4#1:1',
-  'K432-AT98': '3#0:0 3#2:0',
-  'K82-AT93': '3#0:0 3#1:1 3#3:0 flest#1:1',
-  'K9-AT432': '3#2:0',
-  'K9-AT5432': '4#2:0 5#2:0',
+  'K32-AT954': '3#0:1 4#1:1',
+  'K432-AT98': '3#0:1 3#2:1',
+  'K82-AT93': '3#0:1 3#1:1 3#3:1 flest#1:1',
+  'K9-AT432': '3#2:1',
+  'K9-AT5432': '4#2:1 5#2:1',
   'K92-AT543': '4#1:1',
   'K932-AT54': '3#1:1',
-  'K987-AJ432': '4#0:0 4#2:0',
-  'KJ92-AT83': '4#0:0 4#3:0 flest#0:0 flest#3:0',
-  'KT32-AJ954': '5#0:0 5#3:0 flest#0:0 flest#3:0',
-  'KT432-AJ965': '5#0:0 5#3:0 flest#0:0 flest#3:0',
-  'Q932-AKT4': '4#0:0 4#3:0 flest#0:0 flest#3:0',
+  'K987-AJ432': '4#0:1 4#2:1',
+  'KJ92-AT83': '4#0:1 4#3:1 flest#0:1 flest#3:1',
+  'KT32-AJ954': '5#0:1 5#3:1 flest#0:1 flest#3:1',
+  'KT432-AJ965': '5#0:1 5#3:1 flest#0:1 flest#3:1',
+  'Q932-AKT4': '4#0:1 4#3:1 flest#0:1 flest#3:1',
   'QJ9-A5432': 'flest#0:1',
-  'QT-AK432': '4#2:0 5#2:0 flest#2:0',
+  'QT-AK432': '4#2:1 5#2:1 flest#2:1',
 };
 
 /** De 23 linjer, der spilledes forkert som helhed før rettelsen. */
@@ -108,10 +109,10 @@ describe('Linjerne følger løserens plan (SPEC-linjeplan-23.md)', { timeout: 30
     expect(forkerte).toEqual([]);
   });
 
-  it('banken har 8.500 udspil, 6.940 gemte linjer og 1.560 uden trin', () => {
+  it('banken har 8.500 udspil, 6.974 gemte linjer og 1.526 uden trin', () => {
     const leads = Object.values(solutions).flatMap((c) => [...Object.values(c.goals), ...(c.tricks ? [c.tricks] : [])]).flatMap((g) => g.leads);
     expect(leads.length).toBe(8500);
-    expect(leads.filter((l) => l.line.length).length).toBe(6940);
+    expect(leads.filter((l) => l.line.length).length).toBe(6974);
   });
 
   it('linjeformatet afviser ingen af linjerne, og en linje for et mål kan også spilles i spillet med flest stik', () => {

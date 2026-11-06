@@ -39,7 +39,7 @@ export interface DescribeOptions {
 }
 
 /** Tællere til SPEC-esset-slaas.md, Resultat; løseren nulstiller dem ikke. */
-export const DESCRIBE_STATS = { kipninger: 0, skift: 0, sandsynlig: 0, stop: 0, toppes: 0, indkasseres: 0, spilles: 0, thirdIf: 0 };
+export const DESCRIBE_STATS = { kipninger: 0, enGren: 0, skift: 0, sandsynlig: 0, stop: 0, toppes: 0, indkasseres: 0, spilles: 0, thirdIf: 0 };
 
 // Med FB_DESCRIBE_STATS skrives tællerne, når processen slutter (bankens løsning i scripts/solve.ts); i browseren og
 // i testene sker intet.
@@ -466,7 +466,11 @@ export function describeFrom(game: Game, strategy: Int8Array, leadSlot: number, 
     // Efter en kipning (A): den gren, hvor målet ikke er afgjort; er begge åbne, den mest sandsynlige.
     if (kipning && options.branches && !partnerWins) {
       const choiceAfter = afterFinesse(game, fourth, ours, values);
-      if (choiceAfter) {
+      if (choiceAfter?.one) {
+        // Kun én gren: hovedvejen er dagens, men teksten siger stadig hvilken (E).
+        DESCRIBE_STATS.enGren++;
+        pendingLabel = choiceAfter.label;
+      } else if (choiceAfter) {
         DESCRIBE_STATS.kipninger++;
         if (choiceAfter.stop) {
           stopHere = true;
@@ -505,23 +509,26 @@ export function describeFrom(game: Game, strategy: Int8Array, leadSlot: number, 
 
 /**
  * Grenene efter en kipning ved 4. håndens knude: kipningen mislykkes i de sidninger, hvor 4. hånd kan stikke over, og
- * lykkes i resten. null, når kun den ene gren findes (så er der intet at vælge og intet at mærke).
+ * lykkes i resten. Findes kun den ene gren (`one`), er der intet at vælge: hovedvejen er dagens, og mærket er grenens.
  */
-function afterFinesse(game: Game, fourth: number, ours: number, values: Int32Array): { stop: boolean; slot: number; label: 'Lykkes' | 'Mislykkes'; byWeight: boolean } | null {
+function afterFinesse(game: Game, fourth: number, ours: number, values: Int32Array): { stop: boolean; slot: number; label: 'Lykkes' | 'Mislykkes'; byWeight: boolean; one?: boolean } | null {
   const cs = game.childStart[fourth], cc = game.childCount[fourth];
   const over: number[] = [], under: number[] = [];
   for (let x = 0; x < cc; x++) {
     if (game.slotHigh[cs + x] === 0) continue;
     (game.slotLow[cs + x] > ours ? over : under).push(x);
   }
-  if (!over.length || !under.length) return null;
+  if (!over.length && !under.length) return null;
+  if (!over.length) return { stop: false, slot: -1, label: 'Lykkes', byWeight: false, one: true };
+  if (!under.length) return { stop: false, slot: -1, label: 'Mislykkes', byWeight: false, one: true };
   const st = game.nodeItemStart[fourth], cnt = game.nodeItemCount[fourth];
   const fail: number[] = [], success: number[] = [];
   for (let i = st; i < st + cnt; i++) {
     const ics = game.itemChildStart[i];
     (over.some((x) => game.itemChildren[ics + x] >= 0) ? fail : success).push(i);
   }
-  if (!fail.length || !success.length) return null;
+  if (!fail.length) return { stop: false, slot: -1, label: 'Lykkes', byWeight: false, one: true };
+  if (!success.length) return { stop: false, slot: -1, label: 'Mislykkes', byWeight: false, one: true };
   const same = (items: number[]) => items.every((i) => values[i] === values[items[0]]);
   const weight = (items: number[]) => items.reduce((sum, i) => sum + game.layoutWeight[game.itemLayout[i]], 0);
   const cheapestOver = cs + over[over.length - 1];

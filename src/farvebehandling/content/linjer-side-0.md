@@ -6,30 +6,30 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **5 stik**
 
-- 62,2 % (bedst): Lille fra bordet til esset. Kongen og damen slås.
-- 62,2 %: Esset, kongen og damen slås.
+- 62,2 % (bedst): Lille fra bordet til esset. Kongen og damen indkasseres.
+- 62,2 %: Esset, kongen og damen indkasseres.
 - 0,0 %: Lille fra begge hænder.
 
 ## 2. E K D B 3 2 / –
 
 **6 stik**
 
-- 62,2 % (bedst): Esset, kongen og damen slås.
+- 62,2 % (bedst): Esset, kongen og damen indkasseres.
 - 0,0 %: Lille fra hånden.
 
 **5 stik**
 
-- 92,7 % (bedst): Esset og kongen slås.
-- 92,7 %: Lille fra hånden. Esset slås.
+- 92,7 % (bedst): Esset og kongen indkasseres.
+- 92,7 %: Lille fra hånden. Esset indkasseres.
 
 ## 3. E K D B 4 3 2 / –
 
 **7 stik**
 
-- 84,0 % (bedst): Esset og kongen slås.
+- 84,0 % (bedst): Esset og kongen indkasseres.
 - 0,0 %: Lille fra hånden.
 
 **6 stik**
 
-- 98,5 % (bedst): Esset slås.
+- 98,5 % (bedst): Esset indkasseres.
 - 98,5 %: Lille fra hånden.
