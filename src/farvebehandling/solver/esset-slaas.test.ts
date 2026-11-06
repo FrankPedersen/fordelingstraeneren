@@ -63,13 +63,38 @@ describe('Esset slås (SPEC-esset-slaas.md)', { timeout: 300_000 }, () => {
     if (r.text.line.steps.length) expect(r.value).toBeCloseTo(r.lead.value, 9);
   });
 
+  it("G: 10'eren er honnør, når den er det eneste kort, der skal falde: E 2 / D B 9 8 7 (4 stik) og E D 2 / B 9 8 7 (3 stik) toppes", () => {
+    const r = bestLine('A2', 'QJ987', 4);
+    expect(r.text.steps.at(-1)).toBe('Mislykkes kipningen, toppes farven med knægten.');
+    expect(englishStep(r.text.steps.at(-1)!)).toBe('If the finesse fails, the jack is played for the drop.');
+    expect(r.value).toBeCloseTo(r.lead.value, 9);
+    const s = bestLine('AQ2', 'J987', 3);
+    expect(s.text.steps.at(-1)).toBe('Mislykkes kipningen, toppes farven med esset og knægten.');
+    expect(s.value).toBeCloseTo(s.lead.value, 9);
+  });
+
+  it('G: skal også mindre kort falde, er det fordelingen: B 3 2 / E K 5 4 og E 3 2 / D B 5 4 (3 stik) indkasseres', () => {
+    expect(bestLine('J32', 'AK54', 3).text.steps.at(-1)).toBe('Mislykkes kipningen, indkasseres kongen.');
+    expect(bestLine('A32', 'QJ54', 3).text.steps.at(-1)).toBe('Mislykkes kipningen, indkasseres knægten.');
+  });
+
+  it('H: når to kipninger går forud, nævner mærket kortet: B 3 2 / K 6 5 4 (2 stik)', () => {
+    const r = bestLine('J32', 'K654', 2);
+    // Én kipning forud: mærket er uændret.
+    expect(r.text.steps[1]).toMatch(/^Mislykkes kipningen, spilles der lille fra hånden mod knægten \(kipning\)/);
+    expect(r.text.steps[2]).toBe('Lykkes kipningen mod knægten, spilles der lille fra begge hænder.');
+    expect(englishStep(r.text.steps[2])).toBe('If the finesse towards the jack succeeds, low from both hands.');
+    expect(englishStep("Mislykkes kipningen mod 10'eren, indkasseres esset.")).toBe('If the finesse towards the 10 fails, the ace is cashed.');
+    expect(r.value).toBeCloseTo(r.lead.value, 9);
+  });
+
   it('teksten fortsætter efter en kipning altid med mærket, også på engelsk', () => {
     for (const [n, s, g] of [['432', 'AQ65', 3], ['432', 'AKJ5', 4], ['432', 'K765', 2], ['J32', 'AK54', 3], ['J32', 'K54', 1], ['432', 'KQ8765', 5], ['432', 'AT65', 2], ['432', 'JT85', 1]] as const) {
       const { steps } = bestLine(n, s, g).text;
       steps.forEach((step, i) => {
         if (i > 0 && steps[i - 1].includes('(kipning)')) {
-          expect(step, `${n} / ${s}, ${g} stik`).toMatch(/^(Lykkes|Mislykkes) kipningen, /);
-          expect(englishStep(step)).toMatch(/^If the finesse (succeeds|fails), /);
+          expect(step, `${n} / ${s}, ${g} stik`).toMatch(/^(Lykkes|Mislykkes) kipningen(?: mod \S+)?, /);
+          expect(englishStep(step)).toMatch(/^If the finesse (?:towards the \S+ )?(succeeds|fails), /);
         }
       });
     }
@@ -195,7 +220,7 @@ describe('Esset slås (SPEC-esset-slaas.md)', { timeout: 300_000 }, () => {
       for (const [mål, g] of Object.entries(item.solution.goals)) {
         for (const lead of g.leads) {
           lead.steps.forEach((step, i) => {
-            if (i > 0 && lead.steps[i - 1].includes('(kipning)') && !/^(Lykkes|Mislykkes) kipningen, /.test(step)) fejl.push(`${item.combination.id} ${mål}: ${step}`);
+            if (i > 0 && lead.steps[i - 1].includes('(kipning)') && !/^(Lykkes|Mislykkes) kipningen(?: mod \S+)?, /.test(step)) fejl.push(`${item.combination.id} ${mål}: ${step}`);
           });
         }
       }
@@ -203,8 +228,31 @@ describe('Esset slås (SPEC-esset-slaas.md)', { timeout: 300_000 }, () => {
     expect(fejl.slice(0, 5)).toEqual([]);
   });
 
+  it('H i banken: mærket nævner kortet præcis, når to kipninger går forud (130 udspil)', () => {
+    const fejl: string[] = [];
+    let medKort = 0;
+    for (const item of TEST_BANK) {
+      const goals = [...Object.entries(item.solution.goals), ...(item.solution.tricks ? [['tricks', item.solution.tricks] as const] : [])];
+      for (const [mål, g] of goals) {
+        for (const lead of g.leads) {
+          lead.steps.forEach((step, i) => {
+            const m = /^(?:Lykkes|Mislykkes) kipningen(?: mod (\S+))?, /.exec(step);
+            if (!m) return;
+            const forud = lead.steps.slice(0, i).filter((s) => s.includes('(kipning)')).length;
+            // Kortet er kipningens kort i trinet lige før mærket.
+            const kort = / mod (\S+) \(kipning\)/.exec(lead.steps[i - 1])?.[1];
+            if ((forud >= 2 ? kort : undefined) !== m[1]) fejl.push(`${item.combination.id} ${mål}: ${step}`);
+            if (m[1]) medKort++;
+          });
+        }
+      }
+    }
+    expect(fejl.slice(0, 5)).toEqual([]);
+    expect(medKort).toBe(130);
+  });
+
   it('eksemplerne i specens tabel står i banken med deres tekst og antal trin', () => {
-    // [kombination, mål, udspil, tekst, antal trin] fra banken efter LINES_VERSION 6 (SPEC-esset-slaas.md, Resultat).
+    // [kombination, mål, udspil, tekst, antal trin] fra banken efter LINES_VERSION 7 (SPEC-esset-slaas.md, Resultat; G og H).
     const EKSEMPLER: [string, string, number, string[], number][] = [
     ["432-AQ65", "3", 0, ["Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset.", "Lykkes kipningen, indkasseres esset.", "Lille fra begge hænder."], 1],
     ["432-AQ765", "4", 0, ["Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset.", "Lykkes kipningen, indkasseres esset."], 1],
@@ -220,10 +268,10 @@ describe('Esset slås (SPEC-esset-slaas.md)', { timeout: 300_000 }, () => {
     ["QT-AK432", "4", 2, ["Esset indkasseres.", "Lille fra hånden til damen."], 1],
     ["K32-AT954", "3", 0, ["Kongen indkasseres."], 1],
     ["AJT2-K96543", "6", 0, ["Esset indkasseres."], 1],
-    ["A2-QJ987", "4", 0, ["Esset indkasseres.", "Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille.", "Mislykkes kipningen, indkasseres knægten."], 1],
+    ["A2-QJ987", "4", 0, ["Esset indkasseres.", "Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille.", "Mislykkes kipningen, toppes farven med knægten."], 1],
     ["432-Q965", "1", 0, ["Lille fra begge hænder.", "Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille.", "Mislykkes kipningen, spilles der lille fra begge hænder."], 1],
     ["32-JT54", "1", 0, ["Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille.", "Mislykkes kipningen, spilles der lille fra begge hænder."], 1],
-    ["J32-Q654", "2", 1, ["Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille.", "Mislykkes kipningen, spilles der lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille.", "Lykkes kipningen, spilles der lille fra begge hænder."], 1],
+    ["J32-Q654", "2", 1, ["Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille.", "Mislykkes kipningen, spilles der lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille.", "Lykkes kipningen mod knægten, spilles der lille fra begge hænder."], 1],
     ["-AKJ5432", "6", 0, ["Esset og kongen indkasseres.", "Lille fra hånden."], 2],
     ["32-AT654", "3", 0, ["Lille fra begge hænder; lægger Øst en honnør, tages den med esset.", "Esset indkasseres.", "10'eren spilles fra hånden."], 1],
     ];

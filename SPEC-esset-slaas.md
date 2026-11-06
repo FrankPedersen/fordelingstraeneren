@@ -75,6 +75,20 @@ Ingen særskilt regel: de linjer, der får trin igen gennem B, får det. Tallene
 
 Trin i træk med lille fra begge hænder lægges sammen: "Lille fra begge hænder to gange." (og "tre gange"). Engelsk: "Low from both hands twice." / "three times".
 
+### G. 10'eren som honnør i reglen for "toppes" (Franks afgørelse 6. november 2026)
+
+- 10'eren tæller som honnør, når den er det eneste af modpartens kort over spilførerens næste kort, der skal falde (mellem det laveste af de sikre stik og spilførerens næste kort). Bygger planen på, at den falder, hedder det "toppes".
+- Skal også mindre kort falde, er det fordelingen, og ordet er stadig "indkasseres" (som Til afgørelse 1).
+- E 2 / D B 9 8 7 (4 stik): "Mislykkes kipningen, toppes farven med knægten." B 3 2 / E K 5 4 (3 stik): "Mislykkes kipningen, indkasseres kongen." som før (10'eren, 9'eren, 8'eren, 7'eren og 6'eren skal falde).
+- Målt før bygningen (uden for repoet, de 1.650 udspil med "indkasseres" i kombinationer uden 10'eren løst igen): 308 udspil i 55 kombinationer skifter. Hvad nu? skifter i højst 89 fortsættelser i 43 kombinationer (målt med 10'eren altid som honnør).
+- Ordet afgøres i løserens træ, så de berørte cases løses forfra med `scripts/solve.ts`: de 93 kombinationer, hvor en tekst skiftede, da 10'eren altid talte med. Det er et overmål, for Franks regel ændrer en delmængde af dem.
+
+### H. Mærket nævner kortet, når to kipninger går forud (Franks afgørelse 6. november 2026)
+
+- Når to kipninger går forud, nævner mærket kortet for den sidste: "Lykkes kipningen mod knægten, …" / "If the finesse towards the jack succeeds, …". Med én kipning forud er mærket uændret.
+- B 3 2 / K 6 5 4 (2 stik): "Lille fra bordet mod kongen (kipning); … Mislykkes kipningen, spilles der lille fra hånden mod knægten (kipning); … Lykkes kipningen mod knægten, spilles der lille fra begge hænder."
+- Målt før bygningen: 130 udspil (ét mærke hver), og ingen i Hvad nu?, som ikke har mærker. Kortet står altid i trinet lige før mærket (alle 2.011 mærker), så teksterne skrives om i mellemlageret uden at løse igen, som 31. oktober. `describe.ts` giver det samme, når en case løses.
+
 ## Forventede tekster (regnet i hånden)
 
 Regnet af rådgiveren i hånden, ikke af løseren. Afviger løserens resultat, gælder løserens, men forskellen skrives under *Resultat* med sandsynlighederne for grenene.
@@ -115,15 +129,25 @@ Eksemplerne bliver faste tests (`src/farvebehandling/solver/esset-slaas.test.ts`
 7. **Skærmbilleder:** linjekortet og facit for nr. 1, 3 og 7 på computer og mobil (390 px) i `../skaermbilleder/esset-slaas/`.
 8. **Dokumentation:** *Resultat* i denne spec, SPEC-farvebehandling.md (de to åbne punkter lukkes, linjeformatet og reglen for hovedvejen beskrives), `CLAUDE.md` (linjerne på dansk) og `../SYSTEM.md` (beslutningsloggen: bygget og venter på Franks godkendelse; afsnit 8: forbeholdet om de 124 linjer rettes). Alt committes på grenen.
 
+### Ændringen 6. november (G og H)
+
+1. **Accepttest først:** G og H i `esset-slaas.test.ts`, og eksemplerne i banken med de nye tekster.
+2. **Koden:** `describe.ts` (G og H), `lineText.ts` (H på engelsk) og `LINES_VERSION` 7.
+3. **Mellemlageret:** det kopieres først til en mappe ved siden af. H skrives om i alle cases (`lav`, `høj` og Hvad nu?), og `lines` sættes til 7. De 93 cases fra G flyttes ud og løses forfra med `scripts/solve.ts` i 10 processer.
+4. **Samling og kontrol:** `node scripts/solve.ts --assemble`. Sammenlignet med grenen før ændringen (`7023dc7`) og med tagget er chancer, trin, `pairs` og stik pr. sidning uændrede, og kun de forventede tekster er ændret: 308 udspil (G), 130 mærker (H) og Hvad nu? for G.
+5. **10 cases løst forfra** i et særskilt mellemlager med `scripts/solve.ts` og sammenlignet med mellemlageret.
+6. **Kontrollerne:** `node scripts/tjek-linjer.ts`, `npm test` (alene), `node scripts/bog-regression.ts` og `node scripts/sprogtjek.ts`.
+7. **Specen og billedet:** *Resultat*, *Til afgørelse*, *Afklaret* og tabellen med eksemplerne; nyt billede af linjekortet for E 2 / D B 9 8 7 (4 stik) i `../skaermbilleder/esset-slaas/`. Stop før fletning.
+
 ## Afgrænsning
 
 | Sted | Må ske | Må ikke ske |
 | --- | --- | --- |
-| `solver/describe.ts` | hovedvejen efter en kipning (A), trin pr. gren (B), de nye ord (D), mærket for grenen (E), sammenlægningen (F) | ændringer i, hvad løseren vælger |
-| `lineText.ts` | den engelske oversættelse af de nye sætninger | |
+| `solver/describe.ts` | hovedvejen efter en kipning (A), trin pr. gren (B), de nye ord (D), mærket for grenen (E), sammenlægningen (F), 10'eren som honnør (G) og kortet i mærket (H) | ændringer i, hvad løseren vælger |
+| `lineText.ts` | den engelske oversættelse af de nye sætninger, også mærket med kortet (H) | |
 | `solver/lines.ts`, `play/play.ts`, Linjeeditoren | læse, spille og vise den nye form | afvise gamle linjer |
 | `solver/cfr.ts`, `game.ts`, `natural.ts` | intet | |
-| `scripts/solve.ts` | `LINES_VERSION` bliver 6 | resten |
+| `scripts/solve.ts` | `LINES_VERSION` bliver 6 og med G og H 7 | resten |
 | `content/solutions.json`, `suit-combinations.json`, `app/side-N.json` | `steps` (tekst), `line` og `tricks` | chancerne og `pairs` |
 | `content/hvad-nu.*` | kun "slås" skiftet til de nye ord | alt andet |
 | `content/linjer-side-N.md`, `validering-side-N.md` | de nye tekster | chancerne |
@@ -140,6 +164,9 @@ Eksemplerne bliver faste tests (`src/farvebehandling/solver/esset-slaas.test.ts`
 - [x] **Linjerne følger løserens plan:** `node scripts/tjek-linjer.ts` finder 0 afviste linjer og 0 linjer uden for undtagelseslisten (de 32 fra SPEC-linjeplan-23 eller færre).
 - [x] **Spil den selv:** den, der følger teksten på hovedvejen og på sidegrenen i eksemplerne, får "fulgt", og den, der ikke gør, får "ikke fulgt".
 - [x] `npm test`, `node scripts/bog-regression.ts` og `node scripts/sprogtjek.ts` er grønne, også `bydeform.test.ts` og fagordstesten.
+- [ ] **G:** E 2 / D B 9 8 7 (4 stik) giver "Mislykkes kipningen, toppes farven med knægten." og E D 2 / B 9 8 7 (3 stik) "Mislykkes kipningen, toppes farven med esset og knægten."; B 3 2 / E K 5 4 og E 3 2 / D B 5 4 (3 stik) giver stadig "indkasseres".
+- [ ] **H:** B 3 2 / K 6 5 4 (2 stik) giver "Lykkes kipningen mod knægten, spilles der lille fra begge hænder." og på engelsk "If the finesse towards the jack succeeds, low from both hands."; i banken nævner mærket kortet præcis, når to kipninger går forud (130 udspil).
+- [ ] **G og H i banken:** chancer, trin, `pairs` og stik pr. sidning er uændrede; kun 308 udspil (G), 130 mærker (H) og Hvad nu? for G har ny tekst, og 10 cases løst forfra er ens med mellemlageret.
 
 ## Resultat
 
@@ -210,13 +237,14 @@ Regnet med løseren (banken efter `LINES_VERSION` 6 og tagget). Trinene: N er bo
 
 ## Til afgørelse
 
-1. **Reglen for "toppes" (D).** Forslaget i specen ("planen forgrener sig på, om honnøren falder") kan ikke regnes direkte: i løserens træ er modpartens kort i et hul ligeværdige, så når knægten er spillet i 4 3 2 / E K B 5, er damen og de små kort ét hul, og "damen falder" kan ikke skelnes fra "et lille kort falder". Den nærmeste regel, der kan regnes, er bygget: honnøren er et af modpartens kort fra knægten og op, der ikke er spillet og ligger mellem det laveste af de sikre stik og spilførerens næste kort, og den er faldet, når modparten efter stikkene intet har over spilførerens højeste kort. "Toppes" står, når det bedste resultat uden at den falder er dårligere end med; ellers "indkasseres". Reglen giver rådgiverens grænsetilfælde: nr. 1 "indkasseres" (planen er 3-3) og nr. 3 "toppes" (damen skal falde); E K B 3 2 / 7 6 5 4 giver "Farven toppes med esset og kongen." for 5 stik og "Esset indkasseres." for 4. Forslag: reglen bliver.
-2. **Ordstillingen efter mærket.** Teksten efter "Lykkes kipningen, " har omvendt ordstilling, også for lille: "Lykkes kipningen, spilles der lille fra begge hænder to gange." (rådgiverens nr. 4) og "Mislykkes kipningen, spilles der lille fra hånden mod knægten (kipning); …" (nr. 8). I nr. 10 skrev rådgiveren "Lykkes kipningen, lille fra bordet mod damen (kipning); …" uden "spilles der". Forslag: "spilles der" overalt, så sætningerne følger samme regel.
-3. **Ordet for et sikkert stik regnes for sikre stik i træk under ét** (fx esset og kongen), så de altid får samme ord og lægges sammen. Specen siger, at trin med forskellige ord ikke lægges sammen; med reglen sker det aldrig i en række sikre stik. Forslag: sådan.
+**Afgjort af Frank 6. november 2026:** 1, 2, 3, 5 og 6 som foreslået. 4: når to kipninger går forud, nævner mærket kortet (H). Til 1 kom 10'eren (G): den tæller som honnør, når den er det eneste kort over spilførerens næste kort, der skal falde.
 
-4. **Dobbelt kipning:** står to kipninger i træk, gælder mærket den sidste (fx B 3 2 / D 6 5 4, 2 stik: "… Mislykkes kipningen, spilles der lille fra hånden mod knægten (kipning); … Lykkes kipningen, spilles der lille fra begge hænder."). Det andet mærke handler om kipningen mod knægten. Forslag: navngiv kortet, når to kipninger går forud ("Lykkes kipningen mod knægten, …").
-5. **"Spilles" også i Hvad nu?:** en honnør, der spilles ud uden mere at sige om stikket ("Damen fra hånden."), hedder nu "Damen spilles fra hånden." i banken (197 udspil) og i Hvad nu? (43 tekster). Specen siger, at Hvad nu? kun får de nye ord for "slås"; "spilles" er regnet som et af de nye ord. Forslag: sådan; ellers kan Hvad nu? beholde "Damen fra hånden." med en linje i `describe.ts`.
-6. **Gennemsnittet af stik falder i 17 udspil** (Resultat): linjerne har flere faste trin efter målets plan, og løseren spiller først for flest stik efter sidste trin. Forslag: sådan, for gennemsnittet viser, hvad linjen giver.
+1. **Reglen for "toppes" (D).** Forslaget i specen ("planen forgrener sig på, om honnøren falder") kan ikke regnes direkte: i løserens træ er modpartens kort i et hul ligeværdige, så når knægten er spillet i 4 3 2 / E K B 5, er damen og de små kort ét hul, og "damen falder" kan ikke skelnes fra "et lille kort falder". Den nærmeste regel, der kan regnes, er bygget: honnøren er et af modpartens kort fra knægten og op, der ikke er spillet og ligger mellem det laveste af de sikre stik og spilførerens næste kort, og den er faldet, når modparten efter stikkene intet har over spilførerens højeste kort. "Toppes" står, når det bedste resultat uden at den falder er dårligere end med; ellers "indkasseres". Reglen giver rådgiverens grænsetilfælde: nr. 1 "indkasseres" (planen er 3-3) og nr. 3 "toppes" (damen skal falde); E K B 3 2 / 7 6 5 4 giver "Farven toppes med esset og kongen." for 5 stik og "Esset indkasseres." for 4. Forslag: reglen bliver. **Afgjort:** reglen bliver, og 10'eren tæller med efter G.
+2. **Ordstillingen efter mærket.** Teksten efter "Lykkes kipningen, " har omvendt ordstilling, også for lille: "Lykkes kipningen, spilles der lille fra begge hænder to gange." (rådgiverens nr. 4) og "Mislykkes kipningen, spilles der lille fra hånden mod knægten (kipning); …" (nr. 8). I nr. 10 skrev rådgiveren "Lykkes kipningen, lille fra bordet mod damen (kipning); …" uden "spilles der". Forslag: "spilles der" overalt, så sætningerne følger samme regel. **Afgjort:** som foreslået.
+3. **Ordet for et sikkert stik regnes for sikre stik i træk under ét** (fx esset og kongen), så de altid får samme ord og lægges sammen. Specen siger, at trin med forskellige ord ikke lægges sammen; med reglen sker det aldrig i en række sikre stik. Forslag: sådan. **Afgjort:** som foreslået.
+4. **Dobbelt kipning:** står to kipninger i træk, gælder mærket den sidste (fx B 3 2 / D 6 5 4, 2 stik: "… Mislykkes kipningen, spilles der lille fra hånden mod knægten (kipning); … Lykkes kipningen, spilles der lille fra begge hænder."). Det andet mærke handler om kipningen mod knægten. Forslag: navngiv kortet, når to kipninger går forud ("Lykkes kipningen mod knægten, …"). **Afgjort:** som foreslået, også på engelsk ("If the finesse towards the jack succeeds, …"); bygget som H.
+5. **"Spilles" også i Hvad nu?:** en honnør, der spilles ud uden mere at sige om stikket ("Damen fra hånden."), hedder nu "Damen spilles fra hånden." i banken (197 udspil) og i Hvad nu? (43 tekster). Specen siger, at Hvad nu? kun får de nye ord for "slås"; "spilles" er regnet som et af de nye ord. Forslag: sådan; ellers kan Hvad nu? beholde "Damen fra hånden." med en linje i `describe.ts`. **Afgjort:** som foreslået.
+6. **Gennemsnittet af stik falder i 17 udspil** (Resultat): linjerne har flere faste trin efter målets plan, og løseren spiller først for flest stik efter sidste trin. Forslag: sådan, for gennemsnittet viser, hvad linjen giver. **Afgjort:** som foreslået.
 
 ## Afklaret
 
