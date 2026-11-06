@@ -60,7 +60,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **4 stik**
 
-- 17,8 % (bedst): Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.
+- 17,8 % (bedst): Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen mod knægten, toppes farven med esset.
 - 0,0 %: Esset indkasseres.
 - 0,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den.
 - 0,0 %: Lille fra begge hænder.
@@ -284,7 +284,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **4 stik**
 
-- 8,7 % (bedst): Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, spilles der lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.
+- 8,7 % (bedst): Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, spilles der lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen mod damen, toppes farven med esset.
 - 7,1 %: Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den.
 - 1,2 %: Farven toppes med esset.
 - 0,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den.
@@ -293,11 +293,11 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **3 stik**
 
-- 71,8 % (bedst): Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, indkasseres knægten og esset.
-- 70,6 %: Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Esset og damen indkasseres.
-- 68,6 %: Esset indkasseres. Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, indkasseres damen.
-- 67,4 %: Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, indkasseres esset og damen.
-- 60,9 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Knægten og esset indkasseres.
+- 71,8 % (bedst): Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, toppes farven med knægten og esset.
+- 70,6 %: Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Farven toppes med esset og damen.
+- 68,6 %: Esset indkasseres. Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, toppes farven med damen.
+- 67,4 %: Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, toppes farven med esset og damen.
+- 60,9 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med knægten og esset.
 - 44,8 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lægges knægten. Esset og damen indkasseres.
 
 ## 20. E D 4 3 / B 9 2
@@ -313,11 +313,11 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **3 stik**
 
-- 63,7 % (bedst): Lille fra bordet til esset. Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, indkasseres damen.
-- 63,7 %: Esset indkasseres. Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, indkasseres damen.
-- 61,8 %: Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, indkasseres esset og damen.
-- 60,2 %: Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Esset og damen indkasseres.
-- 54,8 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Knægten og esset indkasseres.
+- 63,7 % (bedst): Lille fra bordet til esset. Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, toppes farven med damen.
+- 63,7 %: Esset indkasseres. Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, toppes farven med damen.
+- 61,8 %: Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, toppes farven med esset og damen.
+- 60,2 %: Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Farven toppes med esset og damen.
+- 54,8 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med knægten og esset.
 - 46,0 %: 9'eren fra bordet; dækker Øst, tages stikket med esset, ellers lægges esset. Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres knægten.
 
 ## 21. E 9 4 3 / D B 2
@@ -332,11 +332,11 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **3 stik**
 
-- 82,6 % (bedst): Lille fra hånden mod damen (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, indkasseres knægten og esset.
-- 70,6 %: Damen fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Knægten og esset indkasseres.
+- 82,6 % (bedst): Lille fra hånden mod damen (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, toppes farven med knægten og esset.
+- 70,6 %: Damen fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Farven toppes med knægten og esset.
 - 67,8 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lægges damen. Esset og knægten indkasseres.
 - 61,9 %: Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, spilles damen fra bordet; dækker Øst, tages stikket med esset, ellers løber den.
-- 56,5 %: Esset indkasseres. Damen fra bordet; dækker Øst, lægges der lille, ellers løber den. Knægten indkasseres.
+- 56,5 %: Esset indkasseres. Damen fra bordet; dækker Øst, lægges der lille, ellers løber den. Farven toppes med knægten.
 
 ## 22. B 9 4 3 / E D 2
 
@@ -351,11 +351,11 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **3 stik**
 
-- 68,6 % (bedst): Esset indkasseres. Lille fra hånden mod damen (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, indkasseres knægten.
-- 68,6 %: Lille fra hånden til esset. Lille fra hånden mod damen (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, indkasseres knægten.
-- 61,8 %: Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres esset og damen.
-- 61,8 %: Knægten fra hånden; dækker Vest, tages stikket med esset, ellers løber den. Esset og damen indkasseres.
-- 60,9 %: Damen fra bordet; dækker Øst, lægges der lille, ellers løber den. Esset og knægten indkasseres.
+- 68,6 % (bedst): Esset indkasseres. Lille fra hånden mod damen (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, toppes farven med knægten.
+- 68,6 %: Lille fra hånden til esset. Lille fra hånden mod damen (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, toppes farven med knægten.
+- 61,8 %: Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, toppes farven med esset og damen.
+- 61,8 %: Knægten fra hånden; dækker Vest, tages stikket med esset, ellers løber den. Farven toppes med esset og damen.
+- 60,9 %: Damen fra bordet; dækker Øst, lægges der lille, ellers løber den. Farven toppes med esset og knægten.
 - 46,0 %: 9'eren fra hånden; dækker Vest, tages stikket med esset, ellers lægges esset. Lille fra hånden mod damen (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, indkasseres knægten.
 
 ## 23. E K 9 4 / 10 3 2
@@ -574,7 +574,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **5 stik**
 
-- 19,4 % (bedst): Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.
+- 19,4 % (bedst): Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen mod knægten, toppes farven med esset.
 - 0,0 %: Esset indkasseres.
 - 0,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den.
 - 0,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers løber den.
@@ -582,9 +582,9 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **4 stik**
 
-- 67,8 % (bedst): Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, indkasseres esset og knægten.
-- 59,3 %: Esset indkasseres. Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres knægten.
-- 51,7 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Esset og knægten indkasseres.
+- 67,8 % (bedst): Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, toppes farven med esset og knægten.
+- 59,3 %: Esset indkasseres. Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, toppes farven med knægten.
+- 51,7 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med esset og knægten.
 - 27,0 %: Lille fra begge hænder. Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.
 - 25,8 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers løber den. Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.
 
@@ -609,11 +609,11 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **4 stik**
 
-- 58,1 % (bedst): Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, indkasseres esset og damen.
-- 54,9 %: Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Esset og damen indkasseres.
+- 58,1 % (bedst): Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, toppes farven med esset og damen.
+- 54,9 %: Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Farven toppes med esset og damen.
 - 52,6 %: Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, spilles knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den.
-- 51,7 %: Esset indkasseres. Lille fra hånden mod knægten (kipning). Mislykkes kipningen, indkasseres damen.
-- 51,7 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Knægten og esset indkasseres.
+- 51,7 %: Esset indkasseres. Lille fra hånden mod knægten (kipning). Mislykkes kipningen, toppes farven med damen.
+- 51,7 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med knægten og esset.
 - 43,6 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lægges knægten. Esset og damen indkasseres.
 
 **3 stik**
@@ -629,10 +629,10 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **4 stik**
 
-- 59,3 % (bedst): Esset indkasseres. Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres knægten.
-- 59,3 %: Lille fra hånden til esset. Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres knægten.
-- 58,1 %: Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres esset og knægten.
-- 56,5 %: Damen fra hånden; dækker Vest, tages stikket med esset, ellers løber den. Esset og knægten indkasseres.
+- 59,3 % (bedst): Esset indkasseres. Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, toppes farven med knægten.
+- 59,3 %: Lille fra hånden til esset. Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, toppes farven med knægten.
+- 58,1 %: Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, toppes farven med esset og knægten.
+- 56,5 %: Damen fra hånden; dækker Vest, tages stikket med esset, ellers løber den. Farven toppes med esset og knægten.
 - 43,6 %: 9'eren fra hånden; dækker Vest, tages stikket med esset, ellers lægges esset. Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres knægten.
 
 **3 stik**
@@ -733,8 +733,8 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 - 55,7 % (bedst): Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra begge hænder; lægger Øst en honnør, tages den med esset.
 - 50,5 %: Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.
 - 50,5 %: Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset.
-- 37,3 %: Esset indkasseres. Knægten fra bordet; dækker Øst, lægges der lille, ellers løber den. Damen indkasseres.
-- 36,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Knægten og esset indkasseres.
+- 37,3 %: Esset indkasseres. Knægten fra bordet; dækker Øst, lægges der lille, ellers løber den. Farven toppes med damen.
+- 36,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med knægten og esset.
 - 18,2 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lægges knægten.
 
 ## 42. E D 9 5 / B 4 3 2
@@ -985,8 +985,8 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 **4 stik**
 
 - 31,8 % (bedst): Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset.
-- 26,6 %: Esset indkasseres. Damen spilles fra hånden. Knægten indkasseres.
-- 26,6 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Esset og knægten indkasseres.
+- 26,6 %: Esset indkasseres. Damen spilles fra hånden. Farven toppes med knægten.
+- 26,6 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med esset og knægten.
 - 1,5 %: Lille fra begge hænder.
 - 0,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers løber den.
 
@@ -1010,9 +1010,9 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **5 stik**
 
-- 58,1 % (bedst): Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, indkasseres esset og knægten.
-- 51,7 %: Esset indkasseres. Damen spilles fra hånden. Knægten indkasseres.
-- 51,7 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Esset og knægten indkasseres.
+- 58,1 % (bedst): Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, toppes farven med esset og knægten.
+- 51,7 %: Esset indkasseres. Damen spilles fra hånden. Farven toppes med knægten.
+- 51,7 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med esset og knægten.
 - 16,1 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med esset.
 - 16,1 %: Lille fra begge hænder. Farven toppes med esset.
 
@@ -1298,7 +1298,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **3 stik**
 
-- 68,2 % (bedst): Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, indkasseres esset og knægten.
+- 68,2 % (bedst): Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, toppes farven med esset og knægten.
 - 55,3 %: Esset indkasseres. Lille fra begge hænder.
 - 50,5 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Lille fra begge hænder; lægger Øst en honnør, tages den med esset.
 - 18,7 %: Lille fra begge hænder. Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.
@@ -1412,11 +1412,11 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **3 stik**
 
-- 82,6 % (bedst): 9'eren fra hånden; dækker Vest, lægges der lille, ellers lægges damen. Knægten og esset indkasseres.
-- 82,6 %: Lille fra hånden mod damen (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, indkasseres knægten og esset.
-- 79,0 %: Damen fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Knægten og esset indkasseres.
+- 82,6 % (bedst): 9'eren fra hånden; dækker Vest, lægges der lille, ellers lægges damen. Farven toppes med knægten og esset.
+- 82,6 %: Lille fra hånden mod damen (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, toppes farven med knægten og esset.
+- 79,0 %: Damen fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Farven toppes med knægten og esset.
 - 76,0 %: Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, spilles damen fra bordet; dækker Øst, tages stikket med esset, ellers løber den.
-- 56,5 %: Esset indkasseres. Damen fra bordet; dækker Øst, lægges der lille, ellers løber den. Knægten indkasseres.
+- 56,5 %: Esset indkasseres. Damen fra bordet; dækker Øst, lægges der lille, ellers løber den. Farven toppes med knægten.
 
 ## 76. B 9 8 3 / E D 2
 
@@ -1431,12 +1431,12 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **3 stik**
 
-- 77,8 % (bedst): Lille fra hånden mod damen (kipning); lægger Vest en honnør, tages den med esset. Mislykkes kipningen, indkasseres esset og knægten.
-- 77,0 %: Knægten fra hånden; dækker Vest, tages stikket med esset, ellers løber den. Esset og damen indkasseres.
-- 69,3 %: Esset indkasseres. Lille fra hånden mod damen (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, indkasseres knægten.
+- 77,8 % (bedst): Lille fra hånden mod damen (kipning); lægger Vest en honnør, tages den med esset. Mislykkes kipningen, toppes farven med esset og knægten.
+- 77,0 %: Knægten fra hånden; dækker Vest, tages stikket med esset, ellers løber den. Farven toppes med esset og damen.
+- 69,3 %: Esset indkasseres. Lille fra hånden mod damen (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, toppes farven med knægten.
 - 69,1 %: 9'eren fra hånden; dækker Vest, tages stikket med esset, ellers løber den. Lille fra hånden mod damen (kipning); lægger Vest en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.
-- 61,8 %: Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres esset og damen.
-- 61,6 %: Damen fra bordet; dækker Øst, lægges der lille, ellers løber den. Esset og knægten indkasseres.
+- 61,8 %: Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, toppes farven med esset og damen.
+- 61,6 %: Damen fra bordet; dækker Øst, lægges der lille, ellers løber den. Farven toppes med esset og knægten.
 
 ## 77. E 10 9 3 / K 8 2
 
@@ -1463,7 +1463,7 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 **4 stik**
 
 - 49,1 % (bedst): Lille fra begge hænder. Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den.
-- 35,5 %: Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Esset og damen indkasseres.
+- 35,5 %: Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Farven toppes med esset og damen.
 - 35,5 %: Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, indkasseres knægten og esset.
 - 35,5 %: Esset indkasseres. Lille fra hånden mod knægten (kipning). Mislykkes kipningen, indkasseres damen.
 - 35,5 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Knægten og esset indkasseres.
@@ -1654,12 +1654,12 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **4 stik**
 
-- 71,5 % (bedst): Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, indkasseres knægten og esset.
-- 70,2 %: Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Esset og damen indkasseres.
-- 60,6 %: Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, indkasseres esset og damen.
-- 58,1 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lægges knægten. Esset og damen indkasseres.
-- 56,5 %: Esset indkasseres. Knægten fra bordet; dækker Øst, lægges der lille, ellers løber den. Damen indkasseres.
-- 54,1 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Knægten og esset indkasseres.
+- 71,5 % (bedst): Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, toppes farven med knægten og esset.
+- 70,2 %: Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Farven toppes med esset og damen.
+- 60,6 %: Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, toppes farven med esset og damen.
+- 58,1 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers lægges knægten. Farven toppes med esset og damen.
+- 56,5 %: Esset indkasseres. Knægten fra bordet; dækker Øst, lægges der lille, ellers løber den. Farven toppes med damen.
+- 54,1 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med knægten og esset.
 
 ## 88. E 6 5 4 3 / D B 9 2
 
@@ -1707,8 +1707,8 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 **3 stik**
 
 - 52,3 % (bedst): Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Farven toppes med esset.
-- 22,7 %: Esset indkasseres. Damen spilles fra hånden. Knægten indkasseres.
-- 22,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Esset og knægten indkasseres.
+- 22,7 %: Esset indkasseres. Damen spilles fra hånden. Farven toppes med knægten.
+- 22,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med esset og knægten.
 - 4,6 %: Lille fra begge hænder. Farven toppes med esset.
 
 ## 91. E D 9 8 4 3 / B 2
@@ -1778,9 +1778,9 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **5 stik**
 
-- 61,8 % (bedst): Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, indkasseres esset og knægten.
-- 56,5 %: Esset indkasseres. Damen spilles fra hånden. Knægten indkasseres.
-- 54,1 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Esset og knægten indkasseres.
+- 61,8 % (bedst): Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, toppes farven med esset og knægten.
+- 56,5 %: Esset indkasseres. Damen spilles fra hånden. Farven toppes med knægten.
+- 54,1 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med esset og knægten.
 - 16,1 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med esset.
 - 16,1 %: Lille fra begge hænder. Farven toppes med esset.
 
@@ -1824,11 +1824,11 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **3 stik**
 
-- 79,0 % (bedst): Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, indkasseres knægten og esset.
-- 78,3 %: Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Esset og damen indkasseres.
+- 79,0 % (bedst): Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, toppes farven med knægten og esset.
+- 78,3 %: Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Farven toppes med esset og damen.
 - 75,2 %: Lille fra begge hænder. Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset.
-- 69,3 %: Esset indkasseres. Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, indkasseres damen.
-- 61,6 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Knægten og esset indkasseres.
+- 69,3 %: Esset indkasseres. Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, toppes farven med damen.
+- 61,6 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med knægten og esset.
 
 ## 98. E D 3 2 / B 9 8
 
@@ -1842,11 +1842,11 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **3 stik**
 
-- 77,0 % (bedst): Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Esset og damen indkasseres.
+- 77,0 % (bedst): Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Farven toppes med esset og damen.
 - 76,7 %: Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den.
 - 75,2 %: Lille fra begge hænder. Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den.
-- 63,7 %: Esset indkasseres. Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, indkasseres damen.
-- 54,8 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Knægten og esset indkasseres.
+- 63,7 %: Esset indkasseres. Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, toppes farven med damen.
+- 54,8 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med knægten og esset.
 
 ## 99. E 5 4 3 2 / D B 9
 
@@ -1932,16 +1932,16 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **5 stik**
 
-- 19,4 % (bedst): Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.
+- 19,4 % (bedst): Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen mod knægten, toppes farven med esset.
 - 0,0 %: Esset indkasseres.
 - 0,0 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den.
 - 0,0 %: Lille fra begge hænder.
 
 **4 stik**
 
-- 71,5 % (bedst): Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, indkasseres esset og knægten.
-- 63,0 %: Esset indkasseres. Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres knægten.
-- 54,1 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Esset og knægten indkasseres.
+- 71,5 % (bedst): Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, toppes farven med esset og knægten.
+- 63,0 %: Esset indkasseres. Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, toppes farven med knægten.
+- 54,1 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med esset og knægten.
 - 27,0 %: Lille fra begge hænder. Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.
 
 ## 104. E D 8 6 5 / B 4 3 2
@@ -1994,22 +1994,22 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **3 stik**
 
-- 68,2 % (bedst): Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Esset og damen indkasseres.
-- 68,2 %: Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, indkasseres knægten og esset.
+- 68,2 % (bedst): Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Farven toppes med esset og damen.
+- 68,2 %: Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, toppes farven med knægten og esset.
 - 55,9 %: Lille fra begge hænder. Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den.
-- 37,3 %: Esset indkasseres. Lille fra hånden mod knægten (kipning). Mislykkes kipningen, indkasseres damen.
-- 36,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Knægten og esset indkasseres.
+- 37,3 %: Esset indkasseres. Lille fra hånden mod knægten (kipning). Mislykkes kipningen, toppes farven med damen.
+- 36,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med knægten og esset.
 
 ## 107. E D 8 2 / B 9
 
 **3 stik**
 
-- 68,2 % (bedst): Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Esset og damen indkasseres.
+- 68,2 % (bedst): Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Farven toppes med esset og damen.
 - 63,0 %: Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den.
 - 55,9 %: Lille fra begge hænder. Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den.
 - 50,5 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers løber den.
-- 37,3 %: Esset indkasseres. Knægten fra bordet; dækker Øst, lægges der lille, ellers løber den. Damen indkasseres.
-- 36,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Knægten og esset indkasseres.
+- 37,3 %: Esset indkasseres. Knægten fra bordet; dækker Øst, lægges der lille, ellers løber den. Farven toppes med damen.
+- 36,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med knægten og esset.
 
 ## 108. E D 5 4 3 2 / B 9
 
@@ -2217,8 +2217,8 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 **4 stik**
 
 - 40,8 % (bedst): Lille fra begge hænder; lægger Øst en honnør, tages den med esset. Farven toppes med esset.
-- 37,3 %: Esset indkasseres. Damen spilles fra hånden. Knægten indkasseres.
-- 36,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Esset og knægten indkasseres.
+- 37,3 %: Esset indkasseres. Damen spilles fra hånden. Farven toppes med knægten.
+- 36,3 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med esset og knægten.
 - 1,5 %: Lille fra begge hænder. Farven toppes med esset.
 
 ## 120. E K 10 9 8 / 2
@@ -2302,11 +2302,11 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **3 stik**
 
-- 77,8 % (bedst): Lille fra hånden mod damen (kipning); lægger Vest en honnør, tages den med esset. Mislykkes kipningen, indkasseres esset og knægten.
-- 77,0 %: Knægten fra hånden; dækker Vest, tages stikket med esset, ellers løber den. Esset og damen indkasseres.
-- 69,3 %: Esset indkasseres. Lille fra hånden mod damen (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, indkasseres knægten.
-- 61,8 %: Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres esset og damen.
-- 61,6 %: Damen fra bordet; dækker Øst, lægges der lille, ellers løber den. Esset og knægten indkasseres.
+- 77,8 % (bedst): Lille fra hånden mod damen (kipning); lægger Vest en honnør, tages den med esset. Mislykkes kipningen, toppes farven med esset og knægten.
+- 77,0 %: Knægten fra hånden; dækker Vest, tages stikket med esset, ellers løber den. Farven toppes med esset og damen.
+- 69,3 %: Esset indkasseres. Lille fra hånden mod damen (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, toppes farven med knægten.
+- 61,8 %: Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, toppes farven med esset og damen.
+- 61,6 %: Damen fra bordet; dækker Øst, lægges der lille, ellers løber den. Farven toppes med esset og knægten.
 
 ## 125. E B 9 7 6 5 4 / D 3 2
 
@@ -2368,10 +2368,10 @@ Genereret af `scripts/solve.ts` til godkendelse. For hver kombination og hvert m
 
 **4 stik**
 
-- 63,0 % (bedst): Esset indkasseres. Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres knægten.
-- 63,0 %: Lille fra hånden til esset. Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres knægten.
-- 61,8 %: Damen fra hånden; dækker Vest, tages stikket med esset, ellers løber den. Esset og knægten indkasseres.
-- 60,6 %: Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres esset og knægten.
+- 63,0 % (bedst): Esset indkasseres. Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, toppes farven med knægten.
+- 63,0 %: Lille fra hånden til esset. Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, toppes farven med knægten.
+- 61,8 %: Damen fra hånden; dækker Vest, tages stikket med esset, ellers løber den. Farven toppes med esset og knægten.
+- 60,6 %: Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, toppes farven med esset og knægten.
 
 ## 129. E 6 5 4 3 2 / D B 9
 

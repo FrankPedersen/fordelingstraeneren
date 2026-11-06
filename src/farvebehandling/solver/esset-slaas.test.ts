@@ -232,8 +232,11 @@ describe('Esset slås (SPEC-esset-slaas.md)', { timeout: 300_000 }, () => {
   it('H i banken: mærket nævner kortet præcis, når to kipninger går forud (130 udspil)', () => {
     const fejl: string[] = [];
     let medKort = 0;
-    for (const item of TEST_BANK) {
-      const goals = [...Object.entries(item.solution.goals), ...(item.solution.tricks ? [['tricks', item.solution.tricks] as const] : [])];
+    // solutions.json har alle udspil; appens filer har kun det bedste for flest stik.
+    type Goal = { leads: { steps: string[] }[] };
+    const løsninger = Object.entries(JSON.parse(BANK_FILES['../content/solutions.json']).combinations as Record<string, { goals: Record<string, Goal>; tricks?: Goal }>);
+    for (const [id, solution] of løsninger) {
+      const goals = [...Object.entries(solution.goals), ...(solution.tricks ? [['tricks', solution.tricks] as const] : [])];
       for (const [mål, g] of goals) {
         for (const lead of g.leads) {
           lead.steps.forEach((step, i) => {
@@ -242,7 +245,7 @@ describe('Esset slås (SPEC-esset-slaas.md)', { timeout: 300_000 }, () => {
             const forud = lead.steps.slice(0, i).filter((s) => s.includes('(kipning)')).length;
             // Kortet er kipningens kort i trinet lige før mærket.
             const kort = / mod (\S+) \(kipning\)/.exec(lead.steps[i - 1])?.[1];
-            if ((forud >= 2 ? kort : undefined) !== m[1]) fejl.push(`${item.combination.id} ${mål}: ${step}`);
+            if ((forud >= 2 ? kort : undefined) !== m[1]) fejl.push(`${id} ${mål}: ${step}`);
             if (m[1]) medKort++;
           });
         }

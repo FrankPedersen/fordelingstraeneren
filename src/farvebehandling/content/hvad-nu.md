@@ -534,7 +534,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 - 100,0 % (bedst): Lille fra bordet til esset. Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille.
 - 100,0 %: Esset indkasseres. Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille.
 - 82,1 %: Lille fra hånden og lille fra bordet. Farven toppes med esset.
-- 80,4 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Esset indkasseres.
+- 80,4 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med esset.
 
 ## 142. E B 9 5 / 4 3 2
 
@@ -783,20 +783,20 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd D · Vest K (48,0 % af spillene)
 
-- 56,3 % (bedst): Knægten og esset indkasseres.
-- 56,3 %: Lille fra hånden til knægten. Esset indkasseres.
-- 53,8 %: Lille fra bordet til esset. Knægten indkasseres.
-- 53,8 %: Esset og knægten indkasseres.
+- 56,3 % (bedst): Farven toppes med knægten og esset.
+- 56,3 %: Lille fra hånden til knægten. Farven toppes med esset.
+- 53,8 %: Lille fra bordet til esset. Farven toppes med knægten.
+- 53,8 %: Farven toppes med esset og knægten.
 - 37,0 %: 9'eren fra hånden; knægten lægges. Esset indkasseres.
 
 ## 179. E 9 4 3 / D B 2
 
 **3 stik** · første runde: Syd 4 · Vest x · Nord D · Øst K (48,0 % af spillene)
 
-- 63,9 % (bedst): Knægten og esset indkasseres.
-- 63,9 %: Lille fra hånden til knægten. Esset indkasseres.
-- 53,8 %: Lille fra bordet til esset. Knægten indkasseres.
-- 53,8 %: Esset og knægten indkasseres.
+- 63,9 % (bedst): Farven toppes med knægten og esset.
+- 63,9 %: Lille fra hånden til knægten. Farven toppes med esset.
+- 53,8 %: Lille fra bordet til esset. Farven toppes med knægten.
+- 53,8 %: Farven toppes med esset og knægten.
 - 37,0 %: 9'eren fra hånden; dækker Vest, tages stikket med knægten, ellers lægges knægten. Esset indkasseres.
 
 ## 182. E 10 4 3 / K 9 2
@@ -813,19 +813,19 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **3 stik** · første runde: Nord 2 · Øst x · Syd K · Vest E (48,0 % af spillene)
 
-- 53,8 % (bedst): Knægten og damen indkasseres.
-- 53,8 %: Lille fra hånden til knægten. Damen indkasseres.
+- 53,8 % (bedst): Farven toppes med knægten og damen.
+- 53,8 %: Lille fra hånden til knægten. Farven toppes med damen.
 - 37,0 %: Lille fra bordet til damen. Knægten indkasseres.
-- 37,0 %: Damen og knægten indkasseres.
+- 37,0 %: Farven toppes med damen og knægten.
 
 ## 184. K 9 4 3 / D B 2
 
 **3 stik** · første runde: Syd 4 · Vest x · Nord D · Øst E (48,0 % af spillene)
 
-- 63,9 % (bedst): Knægten og kongen indkasseres.
-- 63,9 %: Lille fra hånden til knægten. Kongen indkasseres.
-- 53,8 %: Lille fra bordet til kongen. Knægten indkasseres.
-- 53,8 %: Kongen og knægten indkasseres.
+- 63,9 % (bedst): Farven toppes med knægten og kongen.
+- 63,9 %: Lille fra hånden til knægten. Farven toppes med kongen.
+- 53,8 %: Lille fra bordet til kongen. Farven toppes med knægten.
+- 53,8 %: Farven toppes med kongen og knægten.
 - 37,0 %: 9'eren fra hånden; dækker Vest, tages stikket med knægten, ellers lægges knægten. Kongen indkasseres.
 
 ## 185. E 10 9 4 / D 3 2
@@ -979,7 +979,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **5 stik** · første runde: Syd D · Vest K · Nord E · Øst x (45,2 % af spillene)
 
 - 45,0 % (bedst): Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med knægten.
-- 30,0 %: Knægten indkasseres.
+- 30,0 %: Farven toppes med knægten.
 - 0,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers løber den.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
@@ -1426,7 +1426,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **4 stik** · første runde: Nord D · Øst x · Syd 3 · Vest B (1,7 % af spillene)
 
 - 57,1 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med esset.
-- 42,9 %: Esset og kongen indkasseres.
+- 42,9 %: Farven toppes med esset og kongen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
 ## 255. E K 9 3 / B 2
@@ -1434,7 +1434,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **3 stik** · første runde: Syd 3 · Vest x · Nord B · Øst D (49,3 % af spillene)
 
 - 48,2 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med esset.
-- 35,9 %: Esset og kongen indkasseres.
+- 35,9 %: Farven toppes med esset og kongen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
 ## 257. E D 9 3 / B 2
@@ -1442,7 +1442,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **3 stik** · første runde: Syd 3 · Vest x · Nord B · Øst K (49,3 % af spillene)
 
 - 48,2 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med esset.
-- 35,9 %: Esset og damen indkasseres.
+- 35,9 %: Farven toppes med esset og damen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
 ## 258. K D 9 3 / B 2
@@ -1450,7 +1450,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **3 stik** · første runde: Syd 3 · Vest x · Nord B · Øst E (49,3 % af spillene)
 
 - 48,2 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med kongen.
-- 35,9 %: Kongen og damen indkasseres.
+- 35,9 %: Farven toppes med kongen og damen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
 ## 259. E 10 9 3 / D 2
@@ -1476,7 +1476,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **4 stik** · første runde: Syd D · Vest K · Nord E · Øst x (45,2 % af spillene)
 
 - 45,0 % (bedst): Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med knægten.
-- 30,0 %: Knægten indkasseres.
+- 30,0 %: Farven toppes med knægten.
 - 0,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers løber den.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
@@ -1858,7 +1858,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 - 81,7 % (bedst): Lille fra bordet mod 8'eren (kipning); lægger Øst en honnør, tages den med esset. Farven toppes med esset.
 - 69,9 %: Esset indkasseres. Lille fra hånden.
-- 58,1 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Esset indkasseres.
+- 58,1 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med esset.
 - 53,4 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med esset.
 - 53,4 %: Lille fra hånden og lille fra bordet. Farven toppes med esset.
 
@@ -1893,7 +1893,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 - 93,0 % (bedst): Lille fra bordet mod 8'eren (kipning); lægger Øst en honnør, tages den med esset. Farven toppes med esset.
 - 65,0 %: Esset indkasseres. Lille fra hånden.
-- 60,3 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers løber den. Esset indkasseres.
+- 60,3 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med esset.
 - 50,9 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med esset.
 - 50,9 %: Lille fra hånden og lille fra bordet. Farven toppes med esset.
 
@@ -1934,7 +1934,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 - 93,0 % (bedst): Lille fra bordet mod 8'eren (kipning); lægger Øst en honnør, tages den med esset. Farven toppes med esset.
 - 65,0 %: Esset indkasseres. Lille fra hånden.
-- 60,3 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers løber den. Esset indkasseres.
+- 60,3 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med esset.
 - 50,9 %: 8'eren fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med esset.
 - 50,9 %: Lille fra hånden og lille fra bordet. Farven toppes med esset.
 
@@ -2014,7 +2014,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **6 stik** · første runde: Syd D · Vest K · Nord E · Øst x (45,2 % af spillene)
 
 - 45,0 % (bedst): Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med knægten.
-- 30,0 %: Knægten indkasseres.
+- 30,0 %: Farven toppes med knægten.
 - 0,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers løber den.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
@@ -2247,7 +2247,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **3 stik** · første runde: Nord 3 · Øst x · Syd D · Vest K (49,3 % af spillene)
 
 - 51,8 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med esset.
-- 35,9 %: Esset og knægten indkasseres.
+- 35,9 %: Farven toppes med esset og knægten.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
 ## 379. E K 10 9 / 3 2
@@ -2272,7 +2272,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **3 stik** · første runde: Nord 3 · Øst x · Syd K · Vest E (49,3 % af spillene)
 
 - 51,8 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med damen.
-- 35,9 %: Damen og knægten indkasseres.
+- 35,9 %: Farven toppes med damen og knægten.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
 ## 382. E D 10 9 / 3 2
@@ -2412,26 +2412,26 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **4 stik** · første runde: Nord D · Øst K · Syd E · Vest x (48,0 % af spillene)
 
 - 22,2 % (bedst): 9'eren fra hånden; dækker Vest, tages stikket med knægten, ellers løber den.
-- 16,8 %: Knægten indkasseres.
+- 16,8 %: Farven toppes med knægten.
 - 16,8 %: Lille fra hånden til knægten.
 - 0,0 %: Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, lægges der lille.
 
 **3 stik** · første runde: Syd 9 · Vest x · Nord D · Øst K (48,0 % af spillene)
 
-- 63,9 % (bedst): Knægten og esset indkasseres.
-- 63,9 %: Lille fra hånden til knægten. Esset indkasseres.
-- 53,8 %: Lille fra bordet til esset. Knægten indkasseres.
-- 53,8 %: Esset og knægten indkasseres.
+- 63,9 % (bedst): Farven toppes med knægten og esset.
+- 63,9 %: Lille fra hånden til knægten. Farven toppes med esset.
+- 53,8 %: Lille fra bordet til esset. Farven toppes med knægten.
+- 53,8 %: Farven toppes med esset og knægten.
 - 37,0 %: 8'eren fra hånden; dækker Vest, tages stikket med knægten, ellers lægges knægten. Esset indkasseres.
 
 ## 419. B 9 8 3 / E D 2
 
 **3 stik** · første runde: Syd 3 · Vest x · Nord D · Øst K (48,0 % af spillene)
 
-- 63,9 % (bedst): Esset og knægten indkasseres.
-- 63,9 %: Lille fra hånden til esset. Knægten indkasseres.
-- 53,8 %: Lille fra bordet til knægten. Esset indkasseres.
-- 53,8 %: Knægten og esset indkasseres.
+- 63,9 % (bedst): Farven toppes med esset og knægten.
+- 63,9 %: Lille fra hånden til esset. Farven toppes med knægten.
+- 53,8 %: Lille fra bordet til knægten. Farven toppes med esset.
+- 53,8 %: Farven toppes med knægten og esset.
 
 ## 420. E 10 9 3 / K 8 2
 
@@ -2584,7 +2584,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **4 stik** · første runde: Nord D · Øst K · Syd E · Vest x (45,2 % af spillene)
 
 - 45,0 % (bedst): 9'eren fra hånden; dækker Vest, tages stikket med knægten, ellers løber den.
-- 30,0 %: Knægten indkasseres.
+- 30,0 %: Farven toppes med knægten.
 - 30,0 %: Lille fra hånden til knægten.
 - 0,0 %: Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, lægges der lille.
 
@@ -2736,7 +2736,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 - 80,6 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med esset. Farven toppes med esset.
 - 45,5 %: Esset indkasseres. Damen spilles fra hånden.
-- 39,5 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Esset indkasseres.
+- 39,5 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med esset.
 - 34,0 %: Lille fra hånden og lille fra bordet. Farven toppes med esset.
 
 ## 442. K 9 7 6 5 / D 4 3 2
@@ -2744,7 +2744,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **4 stik** · første runde: Syd 7 · Vest B · Nord D · Øst E (19,2 % af spillene)
 
 - 64,7 % (bedst): Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med kongen.
-- 35,3 %: Kongen indkasseres.
+- 35,3 %: Farven toppes med kongen.
 - 0,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers løber den.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
@@ -2768,7 +2768,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 - 100,0 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med esset. Farven toppes med esset.
 - 43,4 %: Esset indkasseres. Knægten spilles fra hånden.
-- 41,4 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers løber den. Esset indkasseres.
+- 41,4 %: Knægten fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med esset.
 - 30,7 %: Lille fra hånden og lille fra bordet. Farven toppes med esset.
 
 ## 445. E 10 9 8 / 3 2
@@ -2784,7 +2784,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **2 stik** · første runde: Nord 3 · Øst x · Syd 9 · Vest E (37,1 % af spillene)
 
 - 100,0 % (bedst): Lille fra bordet og lille fra hånden.
-- 41,4 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Knægten indkasseres.
+- 41,4 %: Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med knægten.
 - 2,0 %: Lille fra hånden og lille fra bordet.
 
 ## 453. K 8 7 6 5 4 / 10 3 2
@@ -2927,7 +2927,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **5 stik** · første runde: Nord B · Øst D · Syd E · Vest x (48,0 % af spillene)
 
 - 18,2 % (bedst): Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med kongen.
-- 16,8 %: Kongen indkasseres.
+- 16,8 %: Farven toppes med kongen.
 - 0,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers løber den.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
@@ -2950,7 +2950,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **5 stik** · første runde: Nord B · Øst K · Syd E · Vest x (48,0 % af spillene)
 
 - 18,2 % (bedst): Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med damen.
-- 16,8 %: Damen indkasseres.
+- 16,8 %: Farven toppes med damen.
 - 0,0 %: 9'eren fra hånden; dækker Vest, lægges der lille, ellers løber den.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
@@ -3227,7 +3227,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **4 stik** · første runde: Nord B · Øst D · Syd E · Vest x (48,0 % af spillene)
 
 - 48,4 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med kongen.
-- 16,8 %: Kongen indkasseres.
+- 16,8 %: Farven toppes med kongen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
 ## 533. E K 3 2 / B 9 8
@@ -3257,15 +3257,15 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **4 stik** · første runde: Nord B · Øst K · Syd E · Vest x (48,0 % af spillene)
 
 - 48,4 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med damen.
-- 16,8 %: Damen indkasseres.
+- 16,8 %: Farven toppes med damen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
 **3 stik** · første runde: Nord 3 · Øst x · Syd D · Vest K (48,0 % af spillene)
 
-- 56,3 % (bedst): Knægten og esset indkasseres.
-- 56,3 %: Lille fra hånden til knægten. Esset indkasseres.
-- 53,8 %: Lille fra bordet til esset. Knægten indkasseres.
-- 53,8 %: Esset og knægten indkasseres.
+- 56,3 % (bedst): Farven toppes med knægten og esset.
+- 56,3 %: Lille fra hånden til knægten. Farven toppes med esset.
+- 53,8 %: Lille fra bordet til esset. Farven toppes med knægten.
+- 53,8 %: Farven toppes med esset og knægten.
 
 ## 536. E D 3 2 / B 9 8
 
@@ -3457,13 +3457,13 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **4 stik** · første runde: Nord B · Øst D · Syd E · Vest x (49,3 % af spillene)
 
 - 10,5 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med kongen.
-- 8,9 %: Kongen indkasseres.
+- 8,9 %: Farven toppes med kongen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
 **3 stik** · første runde: Nord B · Øst x · Syd 9 · Vest D (49,3 % af spillene)
 
 - 51,8 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med esset.
-- 35,9 %: Esset og kongen indkasseres.
+- 35,9 %: Farven toppes med esset og kongen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
 ## 566. E D 9 8 / B 2
@@ -3471,13 +3471,13 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **4 stik** · første runde: Nord B · Øst K · Syd E · Vest x (49,3 % af spillene)
 
 - 10,5 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med damen.
-- 8,9 %: Damen indkasseres.
+- 8,9 %: Farven toppes med damen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
 **3 stik** · første runde: Nord B · Øst x · Syd 9 · Vest K (49,3 % af spillene)
 
 - 51,8 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med esset.
-- 35,9 %: Esset og damen indkasseres.
+- 35,9 %: Farven toppes med esset og damen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
 ## 567. E D 8 2 / B 9
@@ -3485,7 +3485,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **3 stik** · første runde: Nord B · Øst x · Syd 2 · Vest K (49,3 % af spillene)
 
 - 51,8 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med esset.
-- 35,9 %: Esset og damen indkasseres.
+- 35,9 %: Farven toppes med esset og damen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
 **3 stik** · første runde: Nord B · Øst K · Syd E · Vest x (49,3 % af spillene)
@@ -3676,7 +3676,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **4 stik** · første runde: Nord B · Øst K · Syd E · Vest x (45,2 % af spillene)
 
 - 48,7 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med damen.
-- 30,0 %: Damen indkasseres.
+- 30,0 %: Farven toppes med damen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
 **3 stik** · første runde: Nord 4 · Øst x · Syd D · Vest K (45,2 % af spillene)
@@ -3832,7 +3832,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **5 stik** · første runde: Nord B · Øst K · Syd E · Vest x (19,2 % af spillene)
 
 - 35,3 % (bedst): Lille fra bordet til damen.
-- 35,3 %: Damen indkasseres.
+- 35,3 %: Farven toppes med damen.
 - 17,6 %: 9'eren fra bordet; dækker Øst, tages stikket med damen, ellers løber den.
 - 0,0 %: 6'eren fra hånden; dækker Vest, lægges der lille, ellers lægges 9'eren.
 - 0,0 %: Lille fra hånden mod 9'eren (kipning); lægger Vest en honnør, lægges der lille.
@@ -3856,10 +3856,10 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 **3 stik** · første runde: Syd 9 · Vest x · Nord D · Øst K (48,0 % af spillene)
 
-- 63,9 % (bedst): Esset og knægten indkasseres.
-- 63,9 %: Lille fra hånden til esset. Knægten indkasseres.
-- 53,8 %: Lille fra bordet til knægten. Esset indkasseres.
-- 53,8 %: Knægten og esset indkasseres.
+- 63,9 % (bedst): Farven toppes med esset og knægten.
+- 63,9 %: Lille fra hånden til esset. Farven toppes med knægten.
+- 53,8 %: Lille fra bordet til knægten. Farven toppes med esset.
+- 53,8 %: Farven toppes med knægten og esset.
 
 ## 629. D 4 3 2 / E 10 8 7
 
@@ -3955,7 +3955,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 **5 stik** · første runde: Syd D · Vest K · Nord E · Øst x (48,0 % af spillene)
 
 - 35,6 % (bedst): Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med knægten.
-- 16,8 %: Knægten indkasseres.
+- 16,8 %: Farven toppes med knægten.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
 ## 638. K 9 8 7 5 / B 4 3 2
@@ -3986,7 +3986,7 @@ Genereret af `scripts/solve.ts` til godkendelse. Første runde følger løserens
 
 - 48,7 % (bedst): 8'eren fra bordet; dækker Øst, tages stikket med damen, ellers løber den.
 - 48,7 %: Lille fra bordet og lille fra hånden; lægger Øst en honnør, tages den med damen.
-- 30,0 %: Damen indkasseres.
+- 30,0 %: Farven toppes med damen.
 - 0,0 %: Lille fra hånden og lille fra bordet.
 
 ## 653. B 7 4 3 2 / E D 6

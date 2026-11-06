@@ -739,7 +739,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Lykkes kipningen, spilles der lille fra begge hænder.",
+     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Lykkes kipningen mod knægten, spilles der lille fra begge hænder.",
      "steps": []
     },
     {
@@ -754,7 +754,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen, spilles der lille fra begge hænder.",
+     "text": "Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen mod kongen, spilles der lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "S",
@@ -800,7 +800,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Lykkes kipningen, spilles der lille fra begge hænder.",
+     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Lykkes kipningen mod knægten, spilles der lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "N",
@@ -825,7 +825,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen, spilles der lille fra begge hænder.",
+     "text": "Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen mod damen, spilles der lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "S",
@@ -2526,7 +2526,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen, spilles der lille fra begge hænder.",
+     "text": "Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen mod kongen, spilles der lille fra begge hænder.",
      "steps": []
     },
     {
@@ -2697,7 +2697,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen, spilles der lille fra hånden mod 10'eren (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra begge hænder.",
+     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen, spilles der lille fra hånden mod 10'eren (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen mod 10'eren, spilles der lille fra begge hænder.",
      "steps": []
     },
     {
@@ -2742,7 +2742,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra begge hænder.",
+     "text": "Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen mod 10'eren, spilles der lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "N",
@@ -3251,7 +3251,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.",
+     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen mod knægten, toppes farven med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -4040,7 +4040,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden mod damen (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.",
+     "text": "Lille fra hånden mod damen (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen mod 10'eren, toppes farven med esset.",
      "steps": []
     }
    ],
@@ -4116,7 +4116,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden mod 10'eren (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.",
+     "text": "Lille fra hånden mod 10'eren (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen mod knægten, toppes farven med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -4157,7 +4157,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen, spilles der lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen, spilles knægten fra bordet; dækker Øst, lægges der lille.",
+     "text": "Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen, spilles der lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen mod kongen, spilles knægten fra bordet; dækker Øst, lægges der lille.",
      "steps": []
     },
     {
@@ -4629,7 +4629,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen, spilles der lille fra hånden.",
+     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen mod knægten, spilles der lille fra hånden.",
      "steps": [
       {
        "leadFrom": "N",
@@ -5118,7 +5118,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden mod 10'eren (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen, spilles der lille fra hånden.",
+     "text": "Lille fra hånden mod 10'eren (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen mod kongen, spilles der lille fra hånden.",
      "steps": [
       {
        "leadFrom": "S",
@@ -5374,7 +5374,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, spilles der lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.",
+     "text": "Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, spilles der lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen mod damen, toppes farven med esset.",
      "steps": []
     },
     {
@@ -5456,7 +5456,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra hånden mod 10'eren (kipning); lægger Vest en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.",
+     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra hånden mod 10'eren (kipning); lægger Vest en honnør, tages den med esset. Lykkes kipningen mod 10'eren, toppes farven med esset.",
      "steps": []
     },
     {
@@ -5517,7 +5517,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra hånden mod 10'eren (kipning); lægger Vest en honnør, tages den med damen. Lykkes kipningen, toppes farven med damen.",
+     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra hånden mod 10'eren (kipning); lægger Vest en honnør, tages den med damen. Lykkes kipningen mod 10'eren, toppes farven med damen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -5568,7 +5568,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.",
+     "text": "Lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen mod 10'eren, toppes farven med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -5654,7 +5654,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra hånden mod 10'eren (kipning); lægger Vest en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.",
+     "text": "Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra hånden mod 10'eren (kipning); lægger Vest en honnør, tages den med esset. Lykkes kipningen mod 10'eren, toppes farven med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -5729,7 +5729,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra hånden mod knægten (kipning). Mislykkes kipningen, indkasseres 10'eren.",
+     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra hånden mod knægten (kipning). Mislykkes kipningen mod knægten, indkasseres 10'eren.",
      "steps": []
     },
     {
@@ -5744,7 +5744,7 @@
     },
     {
      "id": "D",
-     "text": "Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra hånden mod 10'eren (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, indkasseres kongen.",
+     "text": "Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra hånden mod 10'eren (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen mod 10'eren, indkasseres kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -5778,7 +5778,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres 10'eren.",
+     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen mod knægten, indkasseres 10'eren.",
      "steps": [
       {
        "leadFrom": "N",
@@ -7457,7 +7457,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden mod 10'eren (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.",
+     "text": "Lille fra hånden mod 10'eren (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen mod damen, toppes farven med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -8499,7 +8499,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra hånden.",
+     "text": "Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen mod 10'eren, spilles der lille fra hånden.",
      "steps": [
       {
        "leadFrom": "N",
@@ -8890,7 +8890,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen, spilles der lille fra hånden.",
+     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen mod knægten, spilles der lille fra hånden.",
      "steps": [
       {
        "leadFrom": "N",
@@ -9219,7 +9219,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen, spilles der lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen, spilles der lille fra begge hænder.",
+     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen, spilles der lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen mod damen, spilles der lille fra begge hænder.",
      "steps": []
     },
     {
@@ -9275,7 +9275,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, spilles der lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.",
+     "text": "Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, spilles der lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen mod damen, toppes farven med esset.",
      "steps": []
     },
     {
@@ -9432,7 +9432,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden mod 9'eren (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen, spilles knægten fra bordet; dækker Øst, lægges der lille.",
+     "text": "Lille fra hånden mod 9'eren (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen mod kongen, spilles knægten fra bordet; dækker Øst, lægges der lille.",
      "steps": []
     }
    ],
@@ -9535,7 +9535,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen, spilles der lille fra begge hænder.",
+     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen mod knægten, spilles der lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "N",
@@ -10716,7 +10716,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen, spilles der lille fra hånden.",
+     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen mod knægten, spilles der lille fra hånden.",
      "steps": [
       {
        "leadFrom": "N",
@@ -11767,7 +11767,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, spilles der lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.",
+     "text": "Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, spilles der lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen mod damen, toppes farven med esset.",
      "steps": []
     },
     {
@@ -12265,7 +12265,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers løber den. Kongen og damen indkasseres.",
+     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers løber den. Farven toppes med kongen og damen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -12290,7 +12290,7 @@
     },
     {
      "id": "C",
-     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres knægten og damen.",
+     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, toppes farven med knægten og damen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -12305,7 +12305,7 @@
     },
     {
      "id": "D",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Knægten og damen indkasseres.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med knægten og damen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -12315,7 +12315,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, indkasseres kongen og damen.",
+     "text": "Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, toppes farven med kongen og damen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -12349,7 +12349,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Damen fra bordet; dækker Øst, lægges der lille, ellers løber den. Knægten og kongen indkasseres.",
+     "text": "Damen fra bordet; dækker Øst, lægges der lille, ellers løber den. Farven toppes med knægten og kongen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -12359,7 +12359,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres damen og knægten.",
+     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, toppes farven med damen og knægten.",
      "steps": [
       {
        "leadFrom": "N",
@@ -12374,7 +12374,7 @@
     },
     {
      "id": "C",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Damen og knægten indkasseres.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med damen og knægten.",
      "steps": [
       {
        "leadFrom": "S",
@@ -12399,7 +12399,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden mod damen (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, indkasseres knægten og kongen.",
+     "text": "Lille fra hånden mod damen (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, toppes farven med knægten og kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -12438,7 +12438,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, spilles der lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.",
+     "text": "Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, spilles der lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen mod 9'eren, toppes farven med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -12542,7 +12542,7 @@
     },
     {
      "id": "F",
-     "text": "Lille fra hånden mod 9'eren (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.",
+     "text": "Lille fra hånden mod 9'eren (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen mod 10'eren, toppes farven med esset.",
      "steps": []
     }
    ],
@@ -12716,7 +12716,7 @@
     },
     {
      "id": "F",
-     "text": "Lille fra hånden mod damen (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med kongen. Lykkes kipningen, toppes farven med kongen.",
+     "text": "Lille fra hånden mod damen (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med kongen. Lykkes kipningen mod 10'eren, toppes farven med kongen.",
      "steps": []
     }
    ],
@@ -16386,7 +16386,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.",
+     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen mod knægten, toppes farven med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -16541,7 +16541,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Esset indkasseres. Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres knægten.",
+     "text": "Esset indkasseres. Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, toppes farven med knægten.",
      "steps": [
       {
        "leadFrom": "N",
@@ -16551,7 +16551,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres esset og knægten.",
+     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, toppes farven med esset og knægten.",
      "steps": [
       {
        "leadFrom": "N",
@@ -16570,7 +16570,7 @@
     },
     {
      "id": "C",
-     "text": "Damen fra hånden; dækker Vest, tages stikket med esset, ellers løber den. Esset og knægten indkasseres.",
+     "text": "Damen fra hånden; dækker Vest, tages stikket med esset, ellers løber den. Farven toppes med esset og knægten.",
      "steps": [
       {
        "leadFrom": "S",
@@ -16600,7 +16600,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden til esset. Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres knægten.",
+     "text": "Lille fra hånden til esset. Lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, toppes farven med knægten.",
      "steps": [
       {
        "leadFrom": "S",
@@ -16791,7 +16791,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres damen og knægten.",
+     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, toppes farven med damen og knægten.",
      "steps": [
       {
        "leadFrom": "N",
@@ -16806,7 +16806,7 @@
     },
     {
      "id": "B",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Damen og knægten indkasseres.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med damen og knægten.",
      "steps": [
       {
        "leadFrom": "S",
@@ -16871,7 +16871,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres damen og knægten.",
+     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, toppes farven med damen og knægten.",
      "steps": [
       {
        "leadFrom": "N",
@@ -16886,7 +16886,7 @@
     },
     {
      "id": "C",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Damen og knægten indkasseres.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med damen og knægten.",
      "steps": [
       {
        "leadFrom": "S",
@@ -16922,7 +16922,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers løber den. Kongen og damen indkasseres.",
+     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers løber den. Farven toppes med kongen og damen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -16932,7 +16932,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres knægten og damen.",
+     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, toppes farven med knægten og damen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -16947,7 +16947,7 @@
     },
     {
      "id": "C",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Knægten og damen indkasseres.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med knægten og damen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -16972,7 +16972,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, indkasseres kongen og damen.",
+     "text": "Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, toppes farven med kongen og damen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -17111,7 +17111,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden mod damen (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.",
+     "text": "Lille fra hånden mod damen (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen mod 10'eren, toppes farven med esset.",
      "steps": []
     }
    ],
@@ -17193,7 +17193,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.",
+     "text": "Lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen mod 10'eren, toppes farven med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -17743,7 +17743,7 @@
     },
     {
      "id": "C",
-     "text": "Esset indkasseres. Knægten fra bordet; dækker Øst, tages stikket med kongen, ellers løber den. Kongen indkasseres.",
+     "text": "Esset indkasseres. Knægten fra bordet; dækker Øst, tages stikket med kongen, ellers løber den. Farven toppes med kongen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -17913,7 +17913,7 @@
     },
     {
      "id": "C",
-     "text": "Esset indkasseres. Knægten fra bordet; dækker Øst, lægges der lille, ellers løber den. Damen indkasseres.",
+     "text": "Esset indkasseres. Knægten fra bordet; dækker Øst, lægges der lille, ellers løber den. Farven toppes med damen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -17923,7 +17923,7 @@
     },
     {
      "id": "D",
-     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Knægten og esset indkasseres.",
+     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med knægten og esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -17997,7 +17997,7 @@
     },
     {
      "id": "C",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Knægten og damen indkasseres.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med knægten og damen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -18091,7 +18091,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden mod damen (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.",
+     "text": "Lille fra hånden mod damen (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen mod 10'eren, toppes farven med esset.",
      "steps": []
     }
    ],
@@ -21664,7 +21664,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra begge hænder.",
+     "text": "Lille fra bordet mod knægten (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen mod 10'eren, spilles der lille fra begge hænder.",
      "steps": [
       {
        "leadFrom": "N",
@@ -22044,7 +22044,7 @@
     },
     {
      "id": "B",
-     "text": "Esset indkasseres. Damen spilles fra hånden. Knægten indkasseres.",
+     "text": "Esset indkasseres. Damen spilles fra hånden. Farven toppes med knægten.",
      "steps": [
       {
        "leadFrom": "S",
@@ -22062,7 +22062,7 @@
     },
     {
      "id": "C",
-     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Esset og knægten indkasseres.",
+     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med esset og knægten.",
      "steps": [
       {
        "leadFrom": "S",
@@ -22196,7 +22196,7 @@
     },
     {
      "id": "B",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Damen og knægten indkasseres.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med damen og knægten.",
      "steps": [
       {
        "leadFrom": "S",
@@ -22256,7 +22256,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres damen og knægten.",
+     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, toppes farven med damen og knægten.",
      "steps": [
       {
        "leadFrom": "N",
@@ -22275,7 +22275,7 @@
     },
     {
      "id": "B",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Damen og knægten indkasseres.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med damen og knægten.",
      "steps": [
       {
        "leadFrom": "S",
@@ -23535,7 +23535,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, spilles der lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.",
+     "text": "Lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, spilles der lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen mod damen, toppes farven med esset.",
      "steps": []
     },
     {
@@ -23603,7 +23603,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen, spilles der lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen, spilles der lille fra hånden.",
+     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen, spilles der lille fra bordet mod damen (kipning); lægger Øst en honnør, lægges der lille. Lykkes kipningen mod damen, spilles der lille fra hånden.",
      "steps": []
     },
     {
@@ -23661,7 +23661,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.",
+     "text": "Lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen mod 10'eren, toppes farven med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -23852,7 +23852,7 @@
     },
     {
      "id": "F",
-     "text": "Lille fra hånden mod 10'eren (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.",
+     "text": "Lille fra hånden mod 10'eren (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen mod knægten, toppes farven med esset.",
      "steps": [
       {
        "leadFrom": "S",
@@ -23966,7 +23966,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, spilles der lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, toppes farven med esset.",
+     "text": "Lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, spilles der lille fra bordet mod 9'eren (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen mod 9'eren, toppes farven med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -27240,7 +27240,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.",
+     "text": "Lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Mislykkes kipningen, spilles der lille fra bordet mod 10'eren (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen mod 10'eren, toppes farven med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -27635,7 +27635,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres damen og knægten.",
+     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, toppes farven med damen og knægten.",
      "steps": [
       {
        "leadFrom": "N",
@@ -27650,7 +27650,7 @@
     },
     {
      "id": "B",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Damen og knægten indkasseres.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med damen og knægten.",
      "steps": [
       {
        "leadFrom": "S",
@@ -29917,7 +29917,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Esset og damen indkasseres.",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Farven toppes med esset og damen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -30149,7 +30149,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers løber den. Kongen og damen indkasseres.",
+     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers løber den. Farven toppes med kongen og damen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -34665,7 +34665,7 @@
     },
     {
      "id": "B",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Damen og knægten indkasseres.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med damen og knægten.",
      "steps": [
       {
        "leadFrom": "S",
@@ -39143,7 +39143,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, toppes farven med esset.",
+     "text": "Lille fra bordet mod damen (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen, spilles der lille fra bordet mod knægten (kipning); lægger Øst en honnør, tages den med esset. Lykkes kipningen mod knægten, toppes farven med esset.",
      "steps": [
       {
        "leadFrom": "N",
@@ -39208,7 +39208,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres damen og knægten.",
+     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, toppes farven med damen og knægten.",
      "steps": [
       {
        "leadFrom": "N",
@@ -39223,7 +39223,7 @@
     },
     {
      "id": "B",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Damen og knægten indkasseres.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med damen og knægten.",
      "steps": [
       {
        "leadFrom": "S",
@@ -39263,7 +39263,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers løber den. Kongen og damen indkasseres.",
+     "text": "Knægten fra bordet; dækker Øst, lægges der lille, ellers løber den. Farven toppes med kongen og damen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -39273,7 +39273,7 @@
     },
     {
      "id": "B",
-     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, indkasseres knægten og damen.",
+     "text": "Lille fra bordet mod kongen (kipning); lægger Øst en honnør, lægges der lille. Mislykkes kipningen, toppes farven med knægten og damen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -39288,7 +39288,7 @@
     },
     {
      "id": "C",
-     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Knægten og damen indkasseres.",
+     "text": "Kongen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med knægten og damen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -39303,7 +39303,7 @@
     },
     {
      "id": "E",
-     "text": "Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, indkasseres kongen og damen.",
+     "text": "Lille fra hånden mod knægten (kipning); lægger Vest en honnør, lægges der lille. Mislykkes kipningen, toppes farven med kongen og damen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -39931,7 +39931,7 @@
    "lines": [
     {
      "id": "A",
-     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Esset og damen indkasseres.",
+     "text": "Knægten fra bordet; dækker Øst, tages stikket med esset, ellers løber den. Farven toppes med esset og damen.",
      "steps": [
       {
        "leadFrom": "N",
@@ -39951,7 +39951,7 @@
     },
     {
      "id": "C",
-     "text": "Esset indkasseres. Knægten fra bordet; dækker Øst, lægges der lille, ellers løber den. Damen indkasseres.",
+     "text": "Esset indkasseres. Knægten fra bordet; dækker Øst, lægges der lille, ellers løber den. Farven toppes med damen.",
      "steps": [
       {
        "leadFrom": "S",
@@ -39961,7 +39961,7 @@
     },
     {
      "id": "D",
-     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Knægten og esset indkasseres.",
+     "text": "Damen fra hånden; dækker Vest, lægges der lille, ellers løber den. Farven toppes med knægten og esset.",
      "steps": [
       {
        "leadFrom": "S",
