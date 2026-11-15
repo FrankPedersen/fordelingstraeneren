@@ -173,7 +173,34 @@ Sværheden tilpasses som i Pointregnskab ud fra de seneste 20 svar.
 
 ## Afklaret
 
-(udfyldes af Claude Code under trin 1)
+**Status (skrives løbende, så intet går tabt ved en lukning):**
+
+- **Fase 1, accepttest (færdig 15. nov. 2026, 18:23 UTC):** `main` er tagget `v42-foer-modspil-model` (`6c8cdf8`), og grenen `modspil-model` har accepttestene og specen i `bf8a473`. Testene er røde: 11 af 12 testfiler fejler med "Cannot find module", fordi modellen ikke findes, og kun testen af punkt 10 består. Når modellen findes, er der 104 tests. `tsc` fejler kun på de manglende moduler. Agenten tjekkede testene selv med midlertidige stubbe, der kaldte brute force: tsc blev grøn, og alle 57 faste eksempler bestod. Stubbene er slettet og ikke committet.
+- **Testfilerne** i `src/modspil/`: `metoder.test.ts` (punkt 1), `udspil.test.ts` (2), `loeser.test.ts` (3), `markering.test.ts` (4–5), `point.test.ts` (6, mod Pointregnskabs `solve`), `kontrol.ts` og `kontrol-{standard,omvendt,kompendiet}.test.ts` (7, 10.000 seeds pr. øvelse og profil), `kontrol-egen.test.ts` (7, to egne profiler, så alle metoder i filen kontrolleres), `metode-skifter.test.ts` (7a), `opgaver.test.ts` (opgavens form, niveauer, forklaring, genskabelse og andelen i punkt 9), `intet-andet.test.ts` (10) og `bruteforce.ts` (den uafhængige brute force, der kun importerer typer). Grænsefladen til byggeriet står øverst i hver testfil.
+- **Rettet efter gennemgangen (før fase 2):** testen af punkt 10 tillod `CLAUDE.md` uden for `src/modspil/`. Specen tillader det ikke, så nu er kun specen selv tilladt, til Frank har svaret (spørgsmålet nedenfor).
+- **Køretid:** de tunge kontroltests har en tidsgrænse på 300 s og ventes at tage 20–60 s samlet; det forlænger `npm test` ud over husets norm på 30 s for en tung test.
+- **Valg, specen ikke afgør, som testene bygger på:**
+  1. "Ingen regel i koden uden for filen": `REGLER` har præcis filens metoder, og metode-id'er står kun som tekst i `model/metoder.ts`.
+  2. Én metode pr. kategori: romersk kald har lavt = kald mod sans, og ALA har top af sekvens mod farve, begge i filen.
+  3. Udspillet: en sekvens er to honnørkort i træk fra B, tre kort i træk fra 10 eller en brudt sekvens; "table feeling" er, når både honnøren og det lave kort er mulige; ALA-tabellen er udvidet til længere farver (fx K D x x x x → D). De tre forslag nedenfor er brugt.
+  4. Øvelse 2 og 3: kun et lavt udspil; Vest har mindst 4 kort (4.-højeste) eller 3 (de andre metoder), så singleton og doubleton er ikke med, og regel 11 er altid entydig med 4.-højeste. hp-intervallerne bruges fra niveau 4, og "Hvilke?" stilles fra niveau 4. Flere end to mulige længder giver "kan ikke afgøres".
+  5. Øvelse 1: Øst og Vest passer, Syd åbner efter systemfilen, og kontrakten er i Syds farve; pas i åbningsposition viser 0–11 hp.
+  6. Øvelse 4: et kort er lavt, når det er et af de to laveste, Vest ikke kan se. Romersk kald følger Kompendiets aflæsning, og en høj ulige kan være "skift" uden retning. Et lige kort er tvetydigt ved singleton på bordet, eller når intet ulige kort er blandt dem, Vest ikke kan se. Efter ALA-kongen mod sans er facit spilførers mulige længder. Generatoren må ikke se på kaldmetoden, når den vælger fordeling og kort (ellers kan 7a ikke bestå).
+  7. Øvelse 5: højt kort er det højeste under B; nødløsningen er en høj ulige fra 9 og op; kald uden ulige kort og vælg kortet efter ALA-kongen bruges ikke.
+  8. Øvelse 6: lavt er 6 eller lavere, højt 7 eller højere; mod farve er spilførers farve trumf.
+  9. Øvelse 7: vælges rækkefølgen, er facit det første kort (laveste for passiv, højeste under B for aktiv).
+  10. Punkt 9: 2.000 opgaver pr. profil på niveau 3–5 skiftevis, og "tvetydig" tæller med; generatoren skal styre blandingen af øvelser, fordi kun øvelse 3 kan give "kan ikke afgøres" med Standard.
+  11. Punkt 10: findes `v43-foer-modspil-skaerme`, sammenlignes kun de to tags; mangler tagget (GitHub Actions henter ingen tags), springes testen over med en besked.
+  12. "Senere skift til en ny farve" (lavt kort = invitation) har ingen kategori og bruges ikke i trin 1.
+- **Spørgsmål til Frank** (ud over de tre forslag nedenfor, som testene bruger):
+  - Er aflæsningsreglerne i punkt 6 og 8 rigtige: romersk kald tvetydigt ved singleton på bordet og en høj ulige som "skift" uden retning; kald og afvisning med "de to laveste usete = lavt"; første afkast med grænsen mellem 6 og 7?
+  - Må singleton og doubleton udelades i regel 11 og udspillets længde (mindste længde 4 eller 3)?
+  - Må `CLAUDE.md` ændres i trin 1 (et afsnit om sporet, som de andre spor har)?
+- **Tokenforbrug, fase 1** (nye input, skrevet til cachen, læst fra cachen og output; fra logfilerne):
+  - Agenten (frisk session med specen som kontekst): 49 svar (15. nov., 17:35–18:23 UTC); nye input 98, skrevet til cachen 829.640, læst fra cachen 12.934.304, output 279.074; i alt 14.043.116
+  - Koordineringen (hovedsessionen: opstart, gennemgang, rettelse af testen og denne status, til og med 15. nov. kl. 18.30 UTC): 12 svar; nye input 30, skrevet til cachen 42.919, læst fra cachen 10.464.437, output 18.246; i alt 10.525.632
+- **Fase 2, byggeri:** startes efter denne status; Afklaret får fase 2's status og tokenforbrug, når den er færdig.
+
 
 **Til Franks bekræftelse ved gennemgangen** (gælder profilen Kompendiet):
 - **Udspil mod sans fra Hxx** (honnør tredje), fx K 7 2: Kompendiet siger det ikke. Forslag: laveste. Bekræft.
