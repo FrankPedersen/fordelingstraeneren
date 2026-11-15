@@ -1,0 +1,262 @@
+# SPEC – Modspil v1
+
+15. november 2026 · Fordelingstræneren · opgave C i `PLAN-aabne-opgaver.md`.
+
+Modspil er et nyt, selvstændigt spor efter samme mønster som Pointregnskab. Det er en **generel træner, uafhængig af makker**. Brugeren lærer at tælle og aflæse som modspiller:
+- makkers point;
+- regel 11 og 12;
+- længden ud fra udspillet;
+- markeringerne.
+
+Det sker efter **de metoder, brugeren selv vælger** i Indstillinger. Tre færdige profiler er med, og hver metode kan ændres enkeltvis:
+- **Standard;**
+- **Omvendt;**
+- **Kompendiet** (*Kompendium over modspilsaftaler*, som Frank spiller efter).
+
+Sporet bygges i to leverancetrin, hver på sin egen gren og med sin egen godkendelse:
+
+| Trin | Indhold | Gren | Tag før |
+| --- | --- | --- | --- |
+| **1** | metoder og profiler, model, løser, generator og facit, uden brugerflade | `modspil-model` | `v42-foer-modspil-model` |
+| **2** | sporet i appen: skærme, session, vejledning og sprog | `modspil-skaerme` | `v43-foer-modspil-skaerme` |
+
+**Mock-up'en er godkendt af Frank 15. november 2026** (designlærredet "Modspil – mockup"; kopier i `docs/specs/design/modspil/`). Trin 2 står sidst i denne spec og startes først, når trin 1 er flettet.
+
+**Arbejdsgang for tokens:** én session pr. fase (accepttest, byggeri, efter godkendelse), med specen som kontekst. Forbruget skrives under Afklaret i fire tal: nye input, skrevet til cachen, læst fra cachen og output.
+
+## Afgrænsning (gælder begge trin)
+
+| Sted | Må ske | Må ikke ske |
+| --- | --- | --- |
+| `src/modspil/` | al ny kode, indhold og tests | – |
+| Motor (`src/engine/`) | bruges som bibliotek: PRNG, Leitner, streak, XP, session | ændres |
+| Pointregnskab (`src/pointregnskab/`) | `points.ts` og løserens idé må genbruges som bibliotek | ændres |
+| Systemfilen og meldegiveren | læses og kaldes for spilførerens hp-interval | ændres |
+| `src/app/tracks.ts` | **først i trin 2:** en ny gruppe "Modspil" / "Defence" og ét menupunkt | ændre eksisterende grupper eller punkter |
+| Lagring | ny nøgle `modspil:v1` (trin 2) | læse eller skrive andre nøgler |
+| Designtokens | ingen nye i trin 1 | – |
+
+Kræver noget alligevel en ændring i eksisterende kode, skal Claude Code stoppe og spørge. Alle eksisterende tests skal bestå uændret før og efter.
+
+## Pladserne
+
+Nord er bordet, og Syd er spilfører. Brugeren sidder som **Vest (udspiller)** eller **Øst (tilspiller)**, afhængigt af øvelsen. Brugeren ser altid:
+- sin egen hånd;
+- bordet;
+- meldeforløbet;
+- de kort, der er spillet.
+
+## Metoderne og profilerne (`src/modspil/content/metoder.json`)
+
+Alle metoder står i én fil. Hver metode har id, tekst på dansk og engelsk og en kilde, hvor der er én (fx side i Kompendiet). Koden læser reglerne derfra. Ingen regel må stå i hånden i flere filer. Metoderne er ordnet i syv kategorier, og en **profil** vælger én metode pr. kategori.
+
+| Kategori | Metoder | Standard | Omvendt | Kompendiet |
+| --- | --- | --- | --- | --- |
+| Udspil mod sans, lavt kort | 4.-højeste · 3. og 5. højeste · Kompendiets (4.-højeste fra honnør, tredje laveste fra småkort, næsthøjeste fra en tier) | 4.-højeste | 4.-højeste | Kompendiets |
+| Udspil mod farve, lavt kort | 4.-højeste · 3. og 5. højeste | 4.-højeste | 3. og 5. | 3. og 5. |
+| Honnørudspil | top af sekvens (E fra E K) · ALA mod sans | top af sekvens | top af sekvens | ALA mod sans; top af sekvens mod farve |
+| Kald eller afvisning på makkers udspil | højt = kald · lavt = kald · romersk kald (ulige = kald, lige = skift lav eller høj) | højt = kald | lavt = kald | lavt = kald mod sans; romersk kald mod farve |
+| Længdemarkering | højt-lavt = lige · lavt-højt = lige | højt-lavt = lige | lavt-højt = lige | lavt-højt = lige |
+| Første afkast | som kald eller afvisning · O/E · Lavinthal | som kald eller afvisning | som kald eller afvisning | O/E |
+| Forsinket kald i spilførers første farve | intet · omvendt forsinket kald | intet | intet | omvendt forsinket kald |
+
+- **Standardprofilen er valgt for nye brugere.** Profilen og eventuelle ændringer gemmes i `modspil:v1`. En ændret profil vises som "Egen".
+- **Øvelserne følger metoden.** Med 4.-højeste træner øvelse 2 regel 11, med 3. og 5. højeste regel 12 (12 − kortet, når det er 3.-højeste; ellers "kan ikke afgøres" eller aflæsning). Øvelser, der ikke findes i den valgte metode (fx forsinket kald med "intet"), springes over.
+- **Facit og forklaring** nævner altid metoden, fx: "Med lavt = kald betyder makkers ♥2 kald."
+
+Nedenfor står Kompendiets metoder i detaljer, fordi de er de mest omfattende. Standard og Omvendt følger de almindelige definitioner.
+
+**Udspil mod sans**
+- **Fra en farve med honnør og mindst fire kort:** 4.-højeste. K 10 7 4 2 → 4. (Frank, 15. nov.: Kompendiets linje "fra honnører" mangler sin start.)
+- **Fra en honnørsekvens:** ALA-tabellen (besluttet 15. nov., se `PLAN-aabne-opgaver.md`). Ved tre kort i sekvens spilles højeste. Ved to honnørkort i sekvens afgør "table feeling" det, så generatoren undgår de tilfælde.
+- **Fra doubleton:** højeste.
+- **Fra småkort (højst en 9'er):** tredje laveste. Fra tre små er det højeste, og fra fire små det næsthøjeste.
+- **Fra en tier:** næsthøjeste.
+- **ALA-honnørernes betydning:** es og dame beder om kald eller afvisning. Kongen beder om markering af længde.
+
+**Udspil mod farve**
+- 1.-3.-5. højeste. ALA bruges ikke.
+- Fra en honnørsekvens spilles toppen.
+
+**Markering af kald eller afvisning og af længde mod sans** (besluttet 15. nov.)
+- Lavt = kald.
+- Lavt = lige (antal kort).
+
+**Romersk kald** gælder ved tilspil mod farve, når hverken udspillets kort eller bordets kort stikkes:
+- **Ulige kort** kalder til udspilsfarven. Tilspiller lægger det mindste ulige kort.
+- **Lille lige kort** foreslår skift til den laveste af de to andre farver.
+- **Højt lige kort** foreslår skift til den højeste af de to andre farver. Trumf tæller ikke med.
+- **Aflæsningen:** En lav lige er en af de to laveste lige kort, som udspiller ikke kan se. En høj lige er den 3. eller 4. laveste. En høj ulige (9 og op) kan være ønske om skift, når tilspiller ikke har et lige kort.
+
+**O/E** gælder første gang, en modspiller ikke kan bekende:
+- Et ulige kort kalder til farven.
+- En lille lige viser styrke i den lavest gældende farve (klør er lavest).
+- En stor lige kalder til den højest gældende farve.
+
+**Omvendt forsinket kald** gælder for både udspiller og tilspiller i den første farve, spilfører spiller:
+- Lav-høj betyder "fortsæt i farven, intet vigtigere at fortælle" (passivt).
+- Høj-lav betyder "skift farve, spil aktivt".
+
+**Senere skift til en ny farve:**
+- Lavt kort = invitation.
+- Højt kort = afvisning.
+
+## Øvelserne
+
+Alle øvelser har svaret **"kan ikke afgøres"**, når løseren ikke kan afgøre det. At vide, hvornår man ikke ved det, er en del af færdigheden.
+
+| # | Øvelse (da / en) | Plads | Spørgsmål | Facit |
+| --- | --- | --- | --- | --- |
+| 1 | **Makkers point** / Partner's points | Øst | "Hvor mange hp kan makker have?" Brugeren svarer med et interval. | 40 − egne − bordets − spilførers interval fra meldingerne (som Pointregnskab) |
+| 2 | **Regel 11 og 12** / Rule of 11 and 12 | Øst | Makkers udspil efter den valgte metode: "Hvor mange kort over udspillet har spilfører?" På højere niveau også "Hvilke?" | 11 (4.-højeste) eller 12 (3.-højeste) − udspillets værdi − højere kort på bordet − højere kort hos Øst |
+| 3 | **Udspillets længde** / Length from the lead | Øst | "Hvor mange kort har makker i farven?" Mod farve er svaret fx 3 eller 5, mod sans fx 4 eller 5. | Løseren gennemgår de skjulte kort, der passer med udspilsreglen og de synlige kort |
+| 4 | **Aflæs markeringen** / Read the signal | Vest | Makkers tilspil til udspillet: mod sans kald eller afvisning eller længde, mod farve romersk kald. Brugeren svarer med kald, skift lav, skift høj eller tvetydig, eller med spilførers længde. | Aftalerne plus løseren |
+| 5 | **Vælg kortet** / Choose the card | Øst | Opgaven siger, hvad Øst vil vise, fx "du vil have skift til ♦". Brugeren vælger et kort fra hånden. | Aftalerne. Har hånden ikke et passende kort, er facit den nødløsning, Kompendiet beskriver |
+| 6 | **Første afkast** / First discard | Vest eller Øst | O/E: Brugeren vælger afkastet eller aflæser makkers afkast. | Aftalerne |
+| 7 | **Forsinket kald** / Delayed signal | Vest eller Øst | Rækkefølgen i spilførers første farve: brugeren vælger passivt eller aktivt, eller vælger rækkefølgen selv. | Aftalerne |
+
+**Niveauer**
+
+| Niveau | Indhold |
+| --- | --- |
+| 1 | øvelse 1–3 med fuld information; kun klare tilfælde |
+| 2 | øvelse 4–5 med klare kort |
+| 3 | øvelse 6–7, og "kan ikke afgøres" i øvelse 1–5 |
+| 4 | blandede øvelser, hvor meldingerne indskrænker svaret |
+| 5 | tvetydige markeringer (ingen ulige kort, kun lige kort, singleton på bordet), hvor svaret skal vejes med meldingerne |
+
+Sværheden tilpasses som i Pointregnskab ud fra de seneste 20 svar.
+
+**Regel 11 og småkort:** Regel 11 gælder kun, når makker har spillet 4.-højeste fra en farve med honnør. Fra fire små spilles det næsthøjeste, og så giver regnestykket et forkert tal. Niveauerne følger det:
+- På niveau 1–3 er udspillet i øvelse 2 altid fra en farve med honnør.
+- Fra niveau 4 kan det også være fra småkort. Så skal brugeren bruge de synlige kort til at se, at regnestykket ikke går op ("kan ikke være 4.-højeste"), eller svare "kan ikke afgøres".
+
+## Løser, generator og facit (trin 1)
+
+1. **Fordeling:** motorens kortgiver med seedbar PRNG. Hver opgave kan genskabes fra sit seed.
+2. **Meldinger:** spilførers hp-interval kommer fra systemfilen via meldegiveren, som i Pointregnskab. I trin 1 er kontrakten 3NT eller 4♥/4♠, og meldeforløbet er kort og naturligt.
+3. **Udspillet:** udspilsreglen vælger Vests kort ud fra aftalerne. Generatoren bruger kun udspil, som reglen giver entydigt (ikke "table feeling").
+4. **Løseren:** Løseren gennemgår de skjulte kort (spilførers og den skjulte modspillers) i den aktuelle farve og beholder kun de fordelinger, der passer med:
+   - udspilsreglen;
+   - de spillede kort;
+   - markeringsreglerne;
+   - hp-intervallerne, hvor øvelsen bruger dem.
+
+   Ud fra de fordelinger, der er tilbage, giver den facit: et tal, et interval, et kort eller "kan ikke afgøres".
+5. **Forklaring:** Hvert facit har en kort forklaring på dansk og engelsk i beskrivende form og husets ord. Eksempel: "Makker spillede 4.-højeste ud. 11 − 7 = 4 kort over syveren hos de andre tre hænder; bordet har to og du ét, så spilfører har ét."
+6. **Andel:** Ca. hver femte opgave fra niveau 3 har facit "kan ikke afgøres" eller "tvetydig".
+7. **Uafhængig kontrol:** En separat test genberegner facit for 10.000 seeds med en simpel brute force, der ikke deler kode med løseren. Den tæller hele fordelinger af de to skjulte hænder i den aktuelle farve. Facit skal være ens i alle tilfælde. Det er erstatningen for Fable: facit kontrolleres maskinelt.
+
+## Accepttest for trin 1 (skrives først, røde)
+
+1. **Metodefilen:**
+   - Hver metode har id og dansk og engelsk tekst, og kilde, hvor der er én.
+   - De tre profiler vælger én gyldig metode pr. kategori.
+   - Der er ingen regel i koden, som ikke findes i filen.
+   - Teksterne består `sprog`-tjekket for husets ord og beskrivende form.
+2. **Udspilsreglen**, faste eksempler:
+   - **Standard:** K 10 7 4 2 → 4 mod sans og farve; 8 6 4 2 → 2; D B 10 → D.
+   - **Profilen Kompendiet:**
+     - Mod sans: K 10 7 4 2 → 4; 8 6 2 → 8; 8 6 4 2 → 6; 9 5 → 9; 10 8 6 → 8; D B 10 → D.
+     - Mod farve: K 9 6 4 2 → 2 (5.-højeste, rådgiverens forslag under Afklaret; ændres, hvis Frank vælger anderledes); 8 6 2 → 2 (3.-højeste); E K x → E.
+3. **Regel 11 og 12:** mindst fem faste eksempler for hver, heraf ét hvor bordet og Øst holder alle højere kort, så svaret er 0.
+4. **Romersk kald**, Kompendiets egne eksempler:
+   - Udspil ♠E fra ♠E K 9 3 2, bordet ♠B 4: ♠6 aflæses som kald til laveste farve.
+   - Udspil ♠E fra ♠E K 7 3 2, bordet ♠5 4: ♠9 aflæses som kald til at fortsætte, og ♠B som ønske om skift.
+5. **O/E og omvendt forsinket kald:** mindst tre faste eksempler hver.
+6. **Makkers point:** facit stemmer med Pointregnskabets løser på de samme hænder.
+7. **Uafhængig kontrol:** 10.000 seeds pr. øvelse **og pr. profil**, facit ens med brute force.
+7a. **Metoden skifter facit:** samme seed med Standard og Omvendt giver modsat facit for et kald eller en afvisning. Med 4.-højeste og 3. og 5. højeste giver samme udspil forskellig længde.
+8. **Genskabelse:** samme seed giver samme opgave og facit.
+9. **Andelen af "kan ikke afgøres"** fra niveau 3 ligger mellem 15 og 25 % over 2.000 opgaver.
+10. **Intet andet er ændret:** alle eksisterende tests består, og ingen fil uden for `src/modspil/` er ændret.
+
+## Afklaret
+
+(udfyldes af Claude Code under trin 1)
+
+**Til Franks bekræftelse ved gennemgangen** (gælder profilen Kompendiet):
+- **Udspil mod sans fra Hxx** (honnør tredje), fx K 7 2: Kompendiet siger det ikke. Forslag: laveste. Bekræft.
+- **Udspil mod farve fra fem kort med honnør,** fx K 9 6 4 2: Med 1.-3.-5. højeste er både 9 (3.) og 2 (5.) mulige. Forslag: 5.-højeste (lavest), så 3.-højeste viser en trefarve. Bekræft.
+- **"Næsthøjeste fra en tier":** gælder det fra 10 x x og fra 10 x x x? Forslag: ja til begge.
+
+## Arbejdsgang (trin 1)
+
+1. Tag `v42-foer-modspil-model`, og opret grenen `modspil-model`.
+2. Skriv accepttestene, som skal være røde, og commit dem.
+3. Byg modellen.
+4. Stop før merge. Afklaret og tokenforbruget skal være udfyldt.
+5. Franks "godkendt".
+6. Flet, og push. Der er intet live-tjek, fordi intet er synligt i appen. Specen bliver i roden, til trin 2 er udgivet.
+
+
+---
+
+# Trin 2: sporet i appen (startes, når trin 1 er flettet)
+
+Gren `modspil-skaerme`, tag før `v43-foer-modspil-skaerme`.
+
+## Layoutet
+
+Mock-up'en i `docs/specs/design/modspil/` er facit for layoutet. Filerne er statiske HTML-skitser: de viser opbygning, rækkefølge og ordlyd, ikke kode, der skal kopieres. Farver, skrift og hjørner kommer fra appens eksisterende tokens. Der må ikke tilføjes nye tokens.
+
+| Fil | Skærm |
+| --- | --- |
+| `1-opgave-390.html` | opgaven på mobil |
+| `2-facit-390.html` | facit på mobil |
+| `3-vaelg-kortet-390.html` | øvelsen Vælg kortet |
+| `4-indstillinger-390.html` | Indstillinger med profil og metoder |
+| `5-bred-1280.html` | bredt layout fra 1000 px |
+
+**Opgaveskærmen** har disse dele, i denne rækkefølge:
+1. Øverst står niveau og opgavenummer og et mærke med profilen og metoden, fx "Standard · 4.-højeste". Mærket fører til Indstillinger.
+2. En statuslinje viser, hvor langt sessionen er.
+3. Meldeforløbet står som et skema med fire kolonner og en linje om meldingernes intervaller.
+4. Bordet står øverst, stikket på et grønt felt, og brugerens hånd står nederst.
+5. Makkers udspil har en orange ring. Brugerens plads i stikket er tom med stiplet kant.
+6. Hænderne står som tekstlinjer. Kun de kort, brugeren kan spille, er knapper (mindst 44 px høje).
+7. Svarknapperne: "Kan ikke afgøres" er altid sin egen knap.
+
+**Facit** har:
+- et mærke (grønt for rigtigt, rødt for forkert);
+- regnestykket som en lille tabel;
+- forklaringen i beskrivende form;
+- en boks "Ved bordet" med, hvad brugeren gør med svaret;
+- et link til ordbogen, når opslaget findes, og ellers intet link;
+- knappen "Næste opgave".
+
+**Vælg kortet** har de spillelige kort som store knapper og resten af hånden gråtonet. Aftalen kan foldes ud under spørgsmålet (`<details>`).
+
+**Indstillinger** viser de tre profiler som radioknapper og de syv metoder som rullelister. Ændres en metode, vises profilen som "Egen".
+
+**Fra 1000 px** står bordet til venstre og spørgsmålet og facit til højre, som i Analyse. Kun CSS skifter. HTML'en og mobilen er uændrede.
+
+## Farver for farverne (gælder hele sporet)
+
+Kun symbolerne ♥ og ♦ er røde (`#c62828`, appens eksisterende røde). Tal og bogstaver er altid sorte, også i røde farver. Eksempler: "♥ K84" med rødt ♥ og sort K84, og "Syd spiller 4♥" med rødt ♥. En test skal tjekke, at ingen rang står i et rødt element.
+
+## Afgrænsning (trin 2)
+
+- **`src/app/tracks.ts`:** en ny gruppe, `defense` ("Modspil" / "Defence"), med ⓘ-tekst på begge sprog, og ét menupunkt. Gruppen står efter Spilføring.
+- **`src/app/App.tsx`:** skærmen indlæses dovent, som Pointregnskab.
+- **Vejledningen:** et nyt afsnit om Modspil på begge sprog. De eksisterende afsnit ændres ikke.
+- **Lagring:** nøglen `modspil:v1` med profil, metoder, niveau, Leitner-bunke, streak og XP, eksport og import som Pointregnskab.
+- **Ingen andre filer uden for `src/modspil/`** må ændres. Kræver noget det alligevel, så stop og spørg.
+
+## Accepttest (trin 2, skrives først, røde)
+
+1. Forsiden viser gruppen Modspil med ét menupunkt og ⓘ på begge sprog. De andre grupper er uændrede.
+2. En session kører fra start til status med øvelser fra trin 1. Profilen skifter facit (Standard mod Omvendt på samme seed).
+3. Indstillinger: profilvalget gemmes og overlever genindlæsning. En ændret metode viser "Egen".
+4. Skærmene svarer til mock-up'en ved 390, 1000 og 1280 px. `scripts/tjek-bred-layout.mjs` udvides med Modspil og fejler, hvis spalten dækker noget.
+5. Rødt kun på ♥ og ♦: ingen rang i et rødt element på nogen Modspil-skærm.
+6. Tilgængelighed:
+   - Alle knapper er `<button>`, og kortknapperne har `aria-label`, fx "Spar 8".
+   - Stikket har en tekst til skærmlæser.
+   - Tastatur virker hele vejen.
+7. Sprog: dansk og engelsk, husets ord og beskrivende form (eksisterende sprogtjek).
+8. Alle eksisterende tests består uændret, også pixelsammenligningerne mod tagget.
+
+## Arbejdsgang (trin 2)
+
+Som trin 1. Efter "godkendt": flet, push og live-tjek af Modspil på www.kontraktbridge.dk. Arkivér specen i `docs/specs/`, og slet grenen.
