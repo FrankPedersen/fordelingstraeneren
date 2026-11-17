@@ -230,6 +230,7 @@ Sværheden tilpasses som i Pointregnskab ud fra de seneste 20 svar.
     2. Lavinthal og "som kald eller afvisning" (valg 3): skal de også følge den relative regel (lavt = et af de to laveste usete kort), som de gør nu? Profilerne Standard og Omvendt bruger "som kald eller afvisning" til første afkast, så fx et ♦8 er lavt (afvisning med højt = kald), når læseren kan se alle kort fra 2 til 6.
 - **Tokenforbrug, fase 3** (nye input, skrevet til cachen, læst fra cachen og output; fra logfilen):
   - Agenten (frisk session med specen som kontekst; 17. nov. 06:53 UTC til opgørelsen kl. 07:15): 62 svar; nye input 126, skrevet til cachen 259.001, læst fra cachen 13.202.735, output 95.104; i alt 13.556.966. De sidste par svar (dette commit og rapporten) er ikke talt med.
+  - Koordineringen (hovedsessionen, fælles for denne fase og udgivelsen af pixeltolerancen i Konventionstræneren: rådgiverens besked, start af de to agenter efter hinanden uden at vente og kigge, og denne linje; 17. nov. 06:46–07:16 UTC): 10 svar; nye input 28, skrevet til cachen 65.501, læst fra cachen 3.367.674, output 16.490; i alt 3.449.693. Opsummeringen af den lange samtale før starten er ikke talt med. Pixeltolerance-agenten brugte 2.346.526 (står i pixeltolerancens spec).
 - **Status:** trin 1 er bygget, Franks svar fra 17. nov. er bygget ind, og arbejdet er stoppet før merge. Venter på Franks godkendelse og svar på de to nye spørgsmål.
 
 
