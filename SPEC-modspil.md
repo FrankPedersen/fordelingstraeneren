@@ -228,6 +228,8 @@ Sværheden tilpasses som i Pointregnskab ud fra de seneste 20 svar.
   - **Nye spørgsmål til Frank:**
     1. Vælg afkastet (valg 4): er facit rigtigt som de kort, makker læser ens, uanset hvor de kort, brugeren ikke kan se, sidder? Alternativet er at regne ud fra makkers faktiske kort, men dem kan brugeren ikke se.
     2. Lavinthal og "som kald eller afvisning" (valg 3): skal de også følge den relative regel (lavt = et af de to laveste usete kort), som de gør nu? Profilerne Standard og Omvendt bruger "som kald eller afvisning" til første afkast, så fx et ♦8 er lavt (afvisning med højt = kald), når læseren kan se alle kort fra 2 til 6.
+- **Tokenforbrug, fase 3** (nye input, skrevet til cachen, læst fra cachen og output; fra logfilen):
+  - Agenten (frisk session med specen som kontekst; 17. nov. 06:53 UTC til opgørelsen kl. 07:15): 62 svar; nye input 126, skrevet til cachen 259.001, læst fra cachen 13.202.735, output 95.104; i alt 13.556.966. De sidste par svar (dette commit og rapporten) er ikke talt med.
 - **Status:** trin 1 er bygget, Franks svar fra 17. nov. er bygget ind, og arbejdet er stoppet før merge. Venter på Franks godkendelse og svar på de to nye spørgsmål.
 
 
