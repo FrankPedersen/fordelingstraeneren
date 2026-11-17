@@ -199,7 +199,7 @@ Sværheden tilpasses som i Pointregnskab ud fra de seneste 20 svar.
 - **Tokenforbrug, fase 1** (nye input, skrevet til cachen, læst fra cachen og output; fra logfilerne):
   - Agenten (frisk session med specen som kontekst): 49 svar (15. nov., 17:35–18:23 UTC); nye input 98, skrevet til cachen 829.640, læst fra cachen 12.934.304, output 279.074; i alt 14.043.116
   - Koordineringen (hovedsessionen: opstart, gennemgang, rettelse af testen og denne status, til og med 15. nov. kl. 18.30 UTC): 12 svar; nye input 30, skrevet til cachen 42.919, læst fra cachen 10.464.437, output 18.246; i alt 10.525.632
-- **Fase 2, byggeri:** startes efter denne status; Afklaret får fase 2's status og tokenforbrug, når den er færdig.
+- **Fase 2, byggeri (færdig 17. nov. 2026):** modellen står i `src/modspil/content/metoder.json` og `src/modspil/model/` (commits `348b42a`–`4364a59` på `modspil-model`). `tsc` er grøn, og `npx vitest run src/modspil` giver 12 testfiler med 102 beståede og 2 sprunget over (forsinket kald med Standard og Omvendt, som testen selv springer over), 41 s samlet. Den længste kontroltest er Kompendiets regel 11 og 12 (10.000 seeds, ca. 15 s); de andre tager højst 12 s. Andelen af "kan ikke afgøres" og "tvetydig" fra niveau 3 er 20,4 % for hver profil. Ingen test er rettet. Stavekontrollen finder kun tre ord i fase 1's `kontrol.ts` (accepttest, brute, seeds), som ikke er tilføjet `scripts/ordliste.txt`. Tokenforbruget for fase 2 skrives af koordinatoren.
 
 
 **Til Franks bekræftelse ved gennemgangen** (gælder profilen Kompendiet):
