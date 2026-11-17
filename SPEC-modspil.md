@@ -198,8 +198,27 @@ Sværheden tilpasses som i Pointregnskab ud fra de seneste 20 svar.
   - Må `CLAUDE.md` ændres i trin 1 (et afsnit om sporet, som de andre spor har)?
 - **Tokenforbrug, fase 1** (nye input, skrevet til cachen, læst fra cachen og output; fra logfilerne):
   - Agenten (frisk session med specen som kontekst): 49 svar (15. nov., 17:35–18:23 UTC); nye input 98, skrevet til cachen 829.640, læst fra cachen 12.934.304, output 279.074; i alt 14.043.116
-  - Koordineringen (hovedsessionen: opstart, gennemgang, rettelse af testen og denne status, til og med 15. nov. kl. 18.30 UTC): 12 svar; nye input 30, skrevet til cachen 42.919, læst fra cachen 10.464.437, output 18.246; i alt 10.525.632
+  - Koordineringen (hovedsessionen: opstart, gennemgang, rettelse af testen og denne status, 15. nov. 17:33–17:45 og 18:23–18:26 UTC): 15 svar; nye input 36, skrevet til cachen 51.459, læst fra cachen 13.160.562, output 22.178; i alt 13.234.235. (Først opgjort til 12 svar og 10.525.632; de sidste 3 svar kom efter opgørelsen.)
 - **Fase 2, byggeri (færdig 17. nov. 2026):** modellen står i `src/modspil/content/metoder.json` og `src/modspil/model/` (commits `348b42a`–`4364a59` på `modspil-model`). `tsc` er grøn, og `npx vitest run src/modspil` giver 12 testfiler med 102 beståede og 2 sprunget over (forsinket kald med Standard og Omvendt, som testen selv springer over), 41 s samlet. Den længste kontroltest er Kompendiets regel 11 og 12 (10.000 seeds, ca. 15 s); de andre tager højst 12 s. Andelen af "kan ikke afgøres" og "tvetydig" fra niveau 3 er 20,4 % for hver profil. Ingen test er rettet. Stavekontrollen finder kun tre ord i fase 1's `kontrol.ts` (accepttest, brute, seeds), som ikke er tilføjet `scripts/ordliste.txt`. Tokenforbruget for fase 2 skrives af koordinatoren.
+- **Den fulde suite (17. nov. 2026, kørt alene af koordinatoren efter pixeltestene i Konventionstræneren):** `npm test` (tsc og Vitest) gav 131 testfiler, 945 tests bestået og 2 sprunget over (de to ovenfor), på 261 s. Alle eksisterende tests består uændret. `git diff v42-foer-modspil-model` har kun filer i `src/modspil/` og specen.
+- **Fase 2 blev stoppet to gange af grænserne** (5-timersgrænsen 15. nov. om aftenen og ugegrænsen, der blev nulstillet 17. nov. kl. 6) og blev genoptaget i samme agent. Mens pixeltestene i Konventionstræneren kørte, skrev agenten kun kode og kørte ingen tests; testene blev kørt bagefter.
+- **Valg i byggeriet, som specen og testene ikke afgør:**
+  1. Et kort og naturligt meldeforløb kræver, at Nord–Syd har mindst 23 hp og mod farve mindst otte trumf. Nord melder kontrakten direkte efter Syds åbning, og giveren vælges, så Syd er den første, der åbner.
+  2. Udspilsfarven er en farve, der ikke er trumf, valgt tilfældigt blandt dem, der giver et gyldigt udspil.
+  3. I øvelse 4 og 5 bruges kun honnørudspil fra en honnørsekvens (B eller højere), og bordets laveste kort er under udspillet. Fordelingen afhænger kun af honnørmetoden, så 7a holder.
+  4. I øvelse 4 lægger Øst et tilfældigt kort under udspillet, og på niveau 2 sit laveste eller højeste kort under udspillet.
+  5. I øvelse 6 og 7 er spilførers farve trumf mod farve, og mod sans en farve, hvor Nord–Syd har mindst syv kort. Syd spiller sit højeste kort, og de andre lægger deres laveste.
+  6. I øvelse 6 er afkastet et tilfældigt kort under B, og makker har flere kort i farven end den, der ikke kan bekende, så det er første gang, en modspiller ikke kan bekende.
+  7. I øvelse 7 vælger makker passivt (laveste og næstlaveste) eller aktivt (højeste under B og så laveste).
+  8. Fra niveau 3 trækkes først, om svaret skal være uklart (20 %), og så vælges en øvelse, der kan give et uklart svar med profilen. Fordelingen af de uklare svar: Standard 409 i udspillets længde; Omvendt 201 i regel 11 og 12 og 208 i længden; Kompendiet 123 i regel 11 og 12, 156 i længden, 60 "kan ikke afgøres" og 70 "tvetydig" i markeringen (2.000 opgaver pr. profil).
+- **Spørgsmål til Frank fra fase 2:**
+  - Er kravene til et naturligt meldeforløb (valg 1) og til spilførers farve (valg 5) rigtige?
+  - Stavekontrollen finder "accepttest", "brute" og "seeds" i titlerne i `src/modspil/kontrol.ts` fra fase 1. De kan skrives om i `kontrol.ts` (en ændring i en test, kun ordlyd) eller komme i `scripts/ordliste.txt` (uden for `src/modspil/`, så ikke i trin 1). Metodefilens 209 ord og 3.825 forklaringer fra generatoren har ingen ukendte danske ord.
+- **Tokenforbrug, fase 2** (nye input, skrevet til cachen, læst fra cachen og output; fra logfilerne):
+  - Agenten (frisk session med specen som kontekst, genoptaget to gange efter grænserne; 15. nov. 18:26 til 17. nov. 06:37 UTC): 60 svar; nye input 116, skrevet til cachen 1.235.014, læst fra cachen 14.661.206, output 195.498; i alt 16.091.834.
+  - Koordineringen (hovedsessionen: opstart, genoptagelserne, den fulde suite og denne status; 15. nov. 18:26–22:03 og 17. nov. 06:37 UTC til opgørelsen): 11 svar; nye input 22, skrevet til cachen 891.575, læst fra cachen 7.371.398, output 9.299; i alt 8.272.294. Skrevet til cachen er højt, fordi cachen udløb under ventetiderne og samtalen blev skrevet igen.
+  - Fælles koordinering for Modspil og pixeltolerancen i Konventionstræneren (status i `SYSTEM.md` og gentagelserne af pixeltestene, 15. nov. 17:45 til 17. nov. 06:31 UTC) står i pixeltolerancens spec og er ikke talt med her.
+- **Status:** trin 1 er bygget og stoppet før merge. Venter på Franks godkendelse og svar på spørgsmålene ovenfor.
 
 
 **Til Franks bekræftelse ved gennemgangen** (gælder profilen Kompendiet):
