@@ -14,13 +14,13 @@ import { ROOT } from '../sprog/danskTekst';
  * - GitHub Actions (`.github/workflows/pages.yml`) henter kun den seneste commit og ingen tags. Mangler tagget, springes
  *   testen over med en besked i stedet for at fejle; den kører lokalt, hvor tagget findes, og før hver fletning.
  *
- * Tilladt uden for src/modspil/: kun specen selv (committes i roden og bliver der til trin 2 er udgivet). Repoets
- * CLAUDE.md er ikke tilladt i trin 1, før Frank har svaret (spørgsmålet står under Afklaret i specen).
+ * Tilladt uden for src/modspil/: specen selv (committes i roden og bliver der til trin 2 er udgivet) og repoets
+ * CLAUDE.md, der må have ét afsnit om Modspil-modellen (Franks svar 4, 17. nov. 2026, under Afklaret i specen).
  */
 
 const TAG = 'v42-foer-modspil-model';
 const NAESTE = 'v43-foer-modspil-skaerme';
-const TILLADT = ['SPEC-modspil.md'];
+const TILLADT = ['SPEC-modspil.md', 'CLAUDE.md'];
 
 const git = (...args: string[]): string => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
 
@@ -46,6 +46,6 @@ describe('Intet andet er ændret (accepttest 10)', () => {
     const udenfor = ['src/app/tracks.ts', 'src/modspil/model/udspil.ts', 'SPEC-modspil.md', 'CLAUDE.md', 'src/sprog/fagord.ts'].filter(
       (f) => !f.startsWith('src/modspil/') && !TILLADT.includes(f),
     );
-    expect(udenfor).toEqual(['src/app/tracks.ts', 'CLAUDE.md', 'src/sprog/fagord.ts']);
+    expect(udenfor).toEqual(['src/app/tracks.ts', 'src/sprog/fagord.ts']);
   });
 });
