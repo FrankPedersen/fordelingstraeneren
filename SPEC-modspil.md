@@ -253,6 +253,11 @@ Sværheden tilpasses som i Pointregnskab ud fra de seneste 20 svar.
 3. **Lavinthal og "som kald eller afvisning"** har heller ingen grænse mellem 6 og 7: et afkast er lavt, når det er et af de to laveste usete kort i farven, som kald eller afvisning på makkers udspil (Franks svar 2). Romersk kald med "som kald eller afvisning" læses mod farve som O/E og mod sans med lavt = kald.
 4. **Vælg afkastet:** her læser makker afkastet, og brugeren kan ikke se makkers kort. Facit er de kort under B, som makker læser som et kald til den ønskede farve, uanset hvordan de kort i farven, brugeren ikke kan se, er fordelt mellem makker og spilfører. Et lige kort (O/E) er altid lille, når brugerens egne lavere lige kort og de lavere lige kort, brugeren ikke kan se, højst er ét; det er altid stort, når brugeren selv har mindst to lavere lige kort. Lavinthal og "som kald eller afvisning" tæller alle kort på samme måde. Kort, hvor det afhænger af fordelingen, er ikke med i facit. Eksempel mod 4♥ med ♦10 8 6 3 på hånden og ♦K 9 5 4 på bordet: ♦6 er altid lille (kun ♦2 kan ligge under den hos spilfører), ♦10 er altid stor, og ♦8 er lille, når makker har ♦2, og stor, når spilfører har den, så ♦8 er ikke med. Gennemregningen tæller alle fordelinger; modellen bruger de to grænser.
 
+**Franks svar på fase 3's spørgsmål og godkendelse, 17. nov. 2026** (Frank godkendte rådgiverens to svar):
+1. **Vælg afkastet (spørgsmål 1, valg 4 i fase 3):** facit er de kort, makker læser ens i alle mulige fordelinger. Er intet kort entydigt, er facit det kort, der læses rigtigt i flest fordelinger, og opgaven er tvetydig. Tilfældet skal have en test.
+2. **Lavinthal og "som kald eller afvisning" (spørgsmål 2, valg 3 i fase 3):** den relative regel er godkendt. Et afkast er lavt, når det er et af de to laveste usete kort i farven, også når profilen Standard eller Omvendt bruger "som kald eller afvisning" til første afkast.
+3. **Godkendelse:** "Modspil trin 1 er godkendt med rådgiverens to svar […]. Flet og push, når alt er grønt." Der er intet live-tjek, fordi intet er synligt i appen. Specen bliver i roden til trin 2, grenen `modspil-model` slettes efter fletningen, og `SYSTEM.md` opdateres.
+
 ## Arbejdsgang (trin 1)
 
 1. Tag `v42-foer-modspil-model`, og opret grenen `modspil-model`.
