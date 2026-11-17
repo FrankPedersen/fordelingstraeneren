@@ -1,6 +1,6 @@
 import type { Allowed } from '../../pointregnskab/model/points';
 import type { Facit, Regel11Analyse, Signal } from './loeser';
-import type { TilspilsAflaesning } from './markering';
+import type { AfkastAflaesning, TilspilsAflaesning } from './markering';
 import type { Metode } from './metoder';
 import { eller, kortNavn, og, SYMBOLER, type Sprog } from './tekst';
 
@@ -227,30 +227,41 @@ function afkastIndledning(g: AfkastGrundlag): Tekst {
     : { da: `Første afkast læses ${g.m.tekst}, og med ${k.tekst}`, en: `The first discard is read ${g.m.tekstEn}, and with ${k.tekstEn}` };
 }
 
-export function forklarAflaesAfkast(g: AfkastGrundlag, farve: number, vaerdi: number, signal: Signal, oenskeFarve: number | null): Tekst {
+/** Afkastets plads blandt de to laveste usete kort, fx "et af de to laveste lige kort, du ikke kan se (♦8 og ♦10)". */
+function afkastetsPlads(farve: number, d: AfkastAflaesning): Tekst {
+  const to = (sprog: Sprog) => og(d.usete.slice(0, 2).map((v) => kortNavn(farve, v, sprog)), sprog);
+  const lige = d.laesning === 'paritet' ? { da: 'lige kort', en: 'even cards' } : { da: 'kort', en: 'cards' };
+  return d.lavt
+    ? { da: `et af de to laveste ${lige.da}, du ikke kan se (${to('da')})`, en: `one of the two lowest ${lige.en} you cannot see (${to('en')})` }
+    : { da: `ikke et af de to laveste ${lige.da}, du ikke kan se (${to('da')})`, en: `not one of the two lowest ${lige.en} you cannot see (${to('en')})` };
+}
+
+export function forklarAflaesAfkast(g: AfkastGrundlag, farve: number, vaerdi: number, d: AfkastAflaesning, oenskeFarve: number | null): Tekst {
   const k = kort(farve, vaerdi);
   const i = afkastIndledning(g);
   const til = oenskeFarve === null ? '' : SYMBOLER[oenskeFarve];
-  const lavt = vaerdi <= 6;
+  const lavt = d.lavt;
   if (g.laesning === 'paritet') {
+    const p = afkastetsPlads(farve, d);
     const hvad =
       vaerdi % 2 === 1
         ? { da: `et ulige kort: kald til ${til}`, en: `an odd card: it encourages ${til}` }
         : lavt
-          ? { da: `en lille lige (6 eller lavere): styrke i den laveste af de to andre farver, ${til}`, en: `a low even card (six or lower): strength in the lower of the two other suits, ${til}` }
-          : { da: `en stor lige (8 eller højere): kald til den højeste af de to andre farver, ${til}`, en: `a high even card (eight or higher): it asks for the higher of the two other suits, ${til}` };
+          ? { da: `en lille lige, ${p.da}: styrke i den laveste af de to andre farver, ${til}`, en: `a low even card, ${p.en}: strength in the lower of the two other suits, ${til}` }
+          : { da: `en stor lige, ${p.da}: kald til den højeste af de to andre farver, ${til}`, en: `a high even card, ${p.en}: it asks for the higher of the two other suits, ${til}` };
     return { da: `${i.da} er makkers ${k.da} ${hvad.da}.`, en: `${i.en} partner's ${k.en} is ${hvad.en}.` };
   }
+  const p = afkastetsPlads(farve, d);
   if (g.laesning === 'retning') {
     return {
-      da: `${i.da} er makkers ${k.da} ${lavt ? 'lavt (6 eller lavere)' : 'højt (7 eller højere)'}: kald til den ${lavt ? 'laveste' : 'højeste'} af de to andre farver, ${til}.`,
-      en: `${i.en} partner's ${k.en} is ${lavt ? 'low (six or lower)' : 'high (seven or higher)'}: it asks for the ${lavt ? 'lower' : 'higher'} of the two other suits, ${til}.`,
+      da: `${i.da} er makkers ${k.da} ${lavt ? 'lavt' : 'højt'}, ${p.da}: kald til den ${lavt ? 'laveste' : 'højeste'} af de to andre farver, ${til}.`,
+      en: `${i.en} partner's ${k.en} is ${lavt ? 'low' : 'high'}, ${p.en}: it asks for the ${lavt ? 'lower' : 'higher'} of the two other suits, ${til}.`,
     };
   }
-  const kald = signal === 'kald';
+  const kald = d.signal === 'kald';
   return {
-    da: `${i.da} er makkers ${k.da} ${lavt ? 'lavt (6 eller lavere)' : 'højt (7 eller højere)'}, altså ${kald ? 'kald' : 'afvisning'} i ${SYMBOLER[farve]}.`,
-    en: `${i.en} partner's ${k.en} is ${lavt ? 'low (six or lower)' : 'high (seven or higher)'}, so it ${kald ? 'encourages' : 'discourages'} ${SYMBOLER[farve]}.`,
+    da: `${i.da} er makkers ${k.da} ${lavt ? 'lavt' : 'højt'}, ${p.da}, altså ${kald ? 'kald' : 'afvisning'} i ${SYMBOLER[farve]}.`,
+    en: `${i.en} partner's ${k.en} is ${lavt ? 'low' : 'high'}, ${p.en}, so it ${kald ? 'encourages' : 'discourages'} ${SYMBOLER[farve]}.`,
   };
 }
 
@@ -258,17 +269,23 @@ export function forklarVaelgAfkast(g: AfkastGrundlag, onske: number, kortene: re
   const i = afkastIndledning(g);
   const regel =
     g.laesning === 'paritet'
-      ? { da: 'kalder et ulige kort til farven selv, en lille lige til den laveste og en stor lige til den højeste af de to andre farver', en: 'an odd card encourages its own suit, a low even card asks for the lower and a high even card for the higher of the two other suits' }
+      ? {
+          da: 'kalder et ulige kort til farven selv, en lille lige (et af de to laveste lige kort, makker ikke kan se) til den laveste og en stor lige til den højeste af de to andre farver',
+          en: 'an odd card encourages its own suit, a low even card (one of the two lowest even cards partner cannot see) asks for the lower and a high even card for the higher of the two other suits',
+        }
       : g.laesning === 'retning'
-        ? { da: 'beder et lavt kort (6 eller lavere) om den laveste og et højt kort (7 eller højere) om den højeste af de to andre farver', en: 'a low card (six or lower) asks for the lower and a high card (seven or higher) for the higher of the two other suits' }
+        ? {
+            da: 'beder et lavt kort (et af de to laveste kort, makker ikke kan se) om den laveste og et højt kort om den højeste af de to andre farver',
+            en: 'a low card (one of the two lowest cards partner cannot see) asks for the lower and a high card for the higher of the two other suits',
+          }
         : g.hoejtErKald
-          ? { da: 'kalder et højt kort (7 eller højere) til farven selv', en: 'a high card (seven or higher) encourages its own suit' }
-          : { da: 'kalder et lavt kort (6 eller lavere) til farven selv', en: 'a low card (six or lower) encourages its own suit' };
+          ? { da: 'kalder et højt kort (ikke et af de to laveste kort, makker ikke kan se) til farven selv', en: 'a high card (not one of the two lowest cards partner cannot see) encourages its own suit' }
+          : { da: 'kalder et lavt kort (et af de to laveste kort, makker ikke kan se) til farven selv', en: 'a low card (one of the two lowest cards partner cannot see) encourages its own suit' };
   const liste = (sprog: Sprog) => og(kortene.map((c) => kortNavn(Math.floor(c / 13), (c % 13) + 2, sprog)), sprog);
   const flere = kortene.length > 1;
   return {
-    da: `${i.da} ${regel.da}. ${flere ? 'Afkastene' : 'Afkastet'}, der beder om ${SYMBOLER[onske]}, er ${liste('da')}.`,
-    en: `${i.en} ${regel.en}. The ${flere ? 'discards' : 'discard'} that ${flere ? 'ask' : 'asks'} for ${SYMBOLER[onske]}: ${liste('en')}.`,
+    da: `${i.da} ${regel.da}. Uanset hvor de kort, du ikke kan se, sidder, beder ${liste('da')} om ${SYMBOLER[onske]}.`,
+    en: `${i.en} ${regel.en}. Wherever the cards you cannot see lie, ${liste('en')} ${flere ? 'ask' : 'asks'} for ${SYMBOLER[onske]}.`,
   };
 }
 

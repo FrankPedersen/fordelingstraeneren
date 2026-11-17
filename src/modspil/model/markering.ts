@@ -7,7 +7,7 @@ import { kontraktart, trumf, type Kontrakt } from './udspil';
 /**
  * Markeringerne i Modspil (SPEC-modspil.md, øvelse 4–7, og accepttest 4–5): tilspillet til makkers udspil (kald eller
  * afvisning, romersk kald og længde efter ALA-kongen), første afkast og omvendt forsinket kald. Aflæsningen bruger de
- * kort, brugeren kan se; et kort er lavt, når det er et af de to laveste, Vest ikke kan se.
+ * kort, læseren kan se; et kort er lavt, når det er et af de to laveste, læseren ikke kan se (også i første afkast).
  */
 
 export interface Tilspil {
@@ -147,11 +147,17 @@ export function vaelgTilspil(v: { kontrakt: Kontrakt; udspil: number; oest: read
 
 // ---------------------------------------------------------------- første afkast
 
-/** Et afkast er lavt med 6 eller lavere og højt med 7 eller højere. */
-export const LAVT_AFKAST = 6;
+/*
+ * Første afkast følger samme relative regel som romersk kald (Franks svar 17. nov. 2026; ingen fast grænse mellem 6 og
+ * 7): et afkast er lavt, når det er et af de to laveste kort, læseren ikke kan se i afkastfarven. Ved ulige og lige
+ * tæller kun de lige kort (en lille lige er et af de to laveste usete lige kort, ellers er den stor); ved Lavinthal og
+ * kald eller afvisning tæller alle kort. Afkastet selv er blandt de usete kort.
+ */
+
+export type AfkastLaesning = 'paritet' | 'retning' | 'kald';
 
 /** Hvordan afkastet læses i kontrakten: ulige og lige, retning eller kald og afvisning med høj = kald eller ej. */
-export function afkastlaesning(kontrakt: Kontrakt, profil: Profil): { laesning: 'paritet' | 'retning' | 'kald'; viaKald: boolean; hoejtErKald: boolean } {
+export function afkastlaesning(kontrakt: Kontrakt, profil: Profil): { laesning: AfkastLaesning; viaKald: boolean; hoejtErKald: boolean } {
   const art = kontraktart(kontrakt);
   const a = regel(profil, 'afkast', art).laesning;
   const k = regel(profil, 'kald', art);
@@ -160,17 +166,50 @@ export function afkastlaesning(kontrakt: Kontrakt, profil: Profil): { laesning: 
   return { laesning: k.romersk ? 'paritet' : 'kald', viaKald: true, hoejtErKald: k.hoejtErKald };
 }
 
-function laesAfkast(vaerdi: number, kontrakt: Kontrakt, profil: Profil): Signal {
-  const { laesning, hoejtErKald } = afkastlaesning(kontrakt, profil);
-  const lavt = vaerdi <= LAVT_AFKAST;
+/** Kortene, der tæller, når afkastets plads findes: kun de lige ved ulige og lige, ellers alle. */
+const taellerMed = (laesning: AfkastLaesning) => (v: number): boolean => laesning !== 'paritet' || erLige(v);
+
+function afkastSignal(vaerdi: number, lavt: boolean, laesning: AfkastLaesning, hoejtErKald: boolean): Signal {
   if (laesning === 'paritet') return !erLige(vaerdi) ? 'kald' : lavt ? 'skift-lav' : 'skift-hoej';
   if (laesning === 'retning') return lavt ? 'skift-lav' : 'skift-hoej';
   return hoejtErKald !== lavt ? 'kald' : 'afvisning';
 }
 
-/** Makkers aflæsning af et afkast med valøren `kort`. */
-export function aflaesAfkast(kort: number, kontrakt: Kontrakt, profil: Profil): Facit {
-  return { type: 'signal', signal: laesAfkast(kort, kontrakt, profil) };
+/** Et afkast, som læseren aflæser. */
+export interface Afkast {
+  kontrakt: Kontrakt;
+  /** Afkastets valør. */
+  kort: number;
+  /** Valørerne i afkastfarven, som læseren kan se: egne kort, bordets og kort, der er spillet i farven før afkastet. */
+  synlige: readonly number[];
+}
+
+/** Aflæsningen af et afkast i detaljer (til forklaringen). */
+export interface AfkastAflaesning {
+  facit: Facit;
+  signal: Signal;
+  laesning: AfkastLaesning;
+  /** De usete kort i afkastfarven, der tæller (de lige ved ulige og lige, ellers alle), stigende; afkastet er med. */
+  usete: number[];
+  /** Afkastet er et af de to laveste i `usete` (ved ulige og lige kun for et lige kort). */
+  lavt: boolean;
+}
+
+export function aflaesAfkastDetaljer(a: Afkast, profil: Profil): AfkastAflaesning {
+  const { laesning, hoejtErKald } = afkastlaesning(a.kontrakt, profil);
+  const synlige = new Set(a.synlige);
+  if (synlige.has(a.kort)) throw new Error('Afkastet er blandt de kort, læseren kan se');
+  const usete: number[] = [];
+  for (let v = 2; v <= 14; v++) if (!synlige.has(v) && taellerMed(laesning)(v)) usete.push(v);
+  const plads = usete.indexOf(a.kort);
+  const lavt = plads >= 0 && plads < 2;
+  const signal = afkastSignal(a.kort, lavt, laesning, hoejtErKald);
+  return { facit: { type: 'signal', signal }, signal, laesning, usete, lavt };
+}
+
+/** Læserens aflæsning af et afkast (signal). */
+export function aflaesAfkast(a: Afkast, profil: Profil): Facit {
+  return aflaesAfkastDetaljer(a, profil).facit;
 }
 
 /** De to farver, der hverken er spilførers farve eller `farve`: den højeste og den laveste (klør er lavest). */
@@ -187,14 +226,39 @@ export function afkastetsFarve(signal: Signal, farve: number, spilfoerersFarve: 
   return null;
 }
 
-/** Alle afkast (kort under B uden for spilførers farve), makker læser som et kald til farven `onske`, stigende. */
-export function vaelgAfkast(v: { kontrakt: Kontrakt; spilfoerersFarve: number; haand: readonly Card[]; onske: number }, profil: Profil): Card[] {
+/**
+ * Er afkastet lavt for makker, uanset hvor de kort, brugeren ikke kan se, sidder? Makker kan ikke se brugerens kort og
+ * ser kun dem af de skjulte kort, han selv har. Afkastet er altid lavt, når brugerens egne lavere kort og de lavere
+ * skjulte kort, der tæller, højst er ét, og altid højt, når brugeren selv har mindst to lavere; ellers afhænger det af
+ * fordelingen (null).
+ */
+function lavtForMakker(vaerdi: number, egne: readonly number[], skjulte: readonly number[], taeller: (v: number) => boolean): boolean | null {
+  const egneUnder = egne.filter((v) => v < vaerdi && taeller(v)).length;
+  const skjulteUnder = skjulte.filter((v) => v < vaerdi && taeller(v)).length;
+  if (egneUnder + skjulteUnder <= 1) return true;
+  if (egneUnder >= 2) return false;
+  return null;
+}
+
+/**
+ * Alle afkast (kort under B uden for spilførers farve), makker læser som et kald til farven `onske`, uanset hvor de kort,
+ * brugeren ikke kan se, sidder; stigende. `synlige` er de kort, brugeren ser ud over sin hånd (bordet og de spillede).
+ */
+export function vaelgAfkast(v: { kontrakt: Kontrakt; spilfoerersFarve: number; haand: readonly Card[]; synlige: readonly Card[]; onske: number }, profil: Profil): Card[] {
+  const { laesning, hoejtErKald } = afkastlaesning(v.kontrakt, profil);
+  const taeller = taellerMed(laesning);
+  const set = new Set([...v.haand, ...v.synlige]);
   return v.haand
     .filter((kort) => {
       const farve = Math.floor(kort / 13);
       const vaerdi = (kort % 13) + 2;
       if (farve === v.spilfoerersFarve || vaerdi > 10) return false;
-      return afkastetsFarve(laesAfkast(vaerdi, v.kontrakt, profil), farve, v.spilfoerersFarve) === v.onske;
+      const egne = v.haand.filter((c) => Math.floor(c / 13) === farve).map((c) => (c % 13) + 2);
+      const skjulte: number[] = [];
+      for (let w = 2; w <= 14; w++) if (!set.has(farve * 13 + w - 2)) skjulte.push(w);
+      const lavt = taeller(vaerdi) ? lavtForMakker(vaerdi, egne, skjulte, taeller) : false;
+      if (lavt === null) return false;
+      return afkastetsFarve(afkastSignal(vaerdi, lavt, laesning, hoejtErKald), farve, v.spilfoerersFarve) === v.onske;
     })
     .sort((a, b) => a - b);
 }

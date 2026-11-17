@@ -17,7 +17,7 @@ import {
 } from './forklaring';
 import { analyserRegel11, erUklar, kanIkkeAfgoeres, muligeLaengder, type Facit, type Signal, type Udspilssituation } from './loeser';
 import {
-  aflaesAfkast,
+  aflaesAfkastDetaljer,
   aflaesForsinket,
   aflaesTilspilDetaljer,
   afkastetsFarve,
@@ -427,18 +427,22 @@ function afkast(g: Grundlag): ModspilOpgave | null {
     const muligt = g.haender[viser].filter((c) => farveAf(c) !== sf && vaerdiAf(c) <= 10);
     if (!muligt.length) return null;
     const afkastet = valg(g.rng, muligt);
-    const facit = aflaesAfkast(vaerdiAf(afkastet), g.kontrakt, g.profil);
-    const signal: Signal = facit.type === 'signal' ? facit.signal : 'afvisning';
+    const f = farveAf(afkastet);
+    // Brugeren læser afkastet og kan se sin egen hånd, bordet og de kort, der er spillet før afkastet.
+    const synlige = [...iFarven(g.haender[plads], f), ...iFarven(g.haender.N, f), ...iFarven(spillet.map((k) => k.kort), f)];
+    const d = aflaesAfkastDetaljer({ kontrakt: g.kontrakt, kort: vaerdiAf(afkastet), synlige }, g.profil);
     return opgave(g, {
       ...faelles,
       spillet: [...spillet, { plads: viser, kort: afkastet }],
       sporgsmaal: { variant },
-      facit,
-      forklaring: forklarAflaesAfkast(grundlag, farveAf(afkastet), vaerdiAf(afkastet), signal, afkastetsFarve(signal, farveAf(afkastet), sf)),
+      facit: d.facit,
+      forklaring: forklarAflaesAfkast(grundlag, f, vaerdiAf(afkastet), d, afkastetsFarve(d.signal, f, sf)),
     });
   }
   const haand = g.haender[plads].filter((c) => farveAf(c) !== sf);
-  const kortTil = (f: number) => vaelgAfkast({ kontrakt: g.kontrakt, spilfoerersFarve: sf, haand, onske: f }, g.profil);
+  // Brugeren ser bordet og de spillede kort ud over sin hånd; makker læser afkastet.
+  const synlige = [...g.haender.N, ...spillet.map((k) => k.kort)];
+  const kortTil = (f: number) => vaelgAfkast({ kontrakt: g.kontrakt, spilfoerersFarve: sf, haand, synlige, onske: f }, g.profil);
   const oensker = FARVER.filter((f) => f !== sf && kortTil(f).length > 0);
   if (!oensker.length) return null;
   const onske = valg(g.rng, oensker);
