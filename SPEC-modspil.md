@@ -274,6 +274,14 @@ Sværheden tilpasses som i Pointregnskab ud fra de seneste 20 svar.
 - **Sprogtjek:** stavekontrollen (`node scripts/sprogtjek.ts`) finder kun "accepttest" i `src/modspil/kontrol.ts` som før (svar 6). Fagords- og bydeformstestene (`src/sprog/` og forklaringstesten i `opgaver.test.ts`) er grønne, også for forklaringen til det tvetydige tilfælde.
 - **Intet andet er ændret:** `git diff v42-foer-modspil-model --stat` har 25 filer: 23 i `src/modspil/`, specen og `CLAUDE.md`.
 - **Trin 1 er godkendt af Frank og flettes ind på `main`.** Der er intet live-tjek, fordi intet er synligt i appen. Specen bliver i roden til trin 2.
+- **Flettet og pushet 17. nov. 2026:**
+  - `main` var lig med `origin/main` (`6c8cdf8`). Flettecommitten er `b072e37` (`--no-ff`), og på `main` gav `npx vitest run src/modspil` det samme resultat på 57 s.
+  - `main` og tagget `v42-foer-modspil-model` (`6c8cdf8`) er pushet.
+  - GitHub Actions ("Udgiv på GitHub Pages", kørsel 44121691377) var grøn for `b072e37` kl. 16:11 UTC.
+  - Grenen `modspil-model` er slettet lokalt; den var aldrig på GitHub.
+- **Tokenforbrug, efter godkendelsen** (nye input, skrevet til cachen, læst fra cachen og output; fra logfilerne):
+  - Agenten (frisk session: svar 1, testene, fletning og push; 17. nov. 15:40–16:05 UTC): 62 svar; nye input 130, skrevet til cachen 228.907, læst fra cachen 10.811.547, output 77.260; i alt 11.117.844. Agenten afleverede, før Actions var færdig. Actions-resultatet, `SYSTEM.md` og dette punkt er skrevet af hovedsessionen.
+  - Koordineringen (hovedsessionen, fælles med starten af Post Mortem 1d: start af agenterne, Actions, `SYSTEM.md` og dette punkt; 17. nov. 15:39–16:12 UTC): 16 svar; nye input 44, skrevet til cachen 32.901, læst fra cachen 1.918.392, output 17.151; i alt 1.968.488.
 
 ## Arbejdsgang (trin 1)
 
