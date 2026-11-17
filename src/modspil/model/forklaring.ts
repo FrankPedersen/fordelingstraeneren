@@ -72,7 +72,8 @@ export function forklarRegel11(m: Metode, farve: number, udspil: number, a: Rege
   let hvilkeDa = '';
   let hvilkeEn = '';
   if (hvilke?.type === 'kort' && hvilke.kort.length) {
-    const liste = (sprog: Sprog) => og(hvilke.kort.map((c) => kortNavn(Math.floor(c / 13), (c % 13) + 2, sprog)), sprog);
+    const kortene = hvilke.kort;
+    const liste = (sprog: Sprog) => og(kortene.map((c) => kortNavn(Math.floor(c / 13), (c % 13) + 2, sprog)), sprog);
     hvilkeDa = ` Spilfører har ${liste('da')} over ${k.da}.`;
     hvilkeEn = ` Declarer has ${liste('en')} above ${k.en}.`;
   } else if (hvilke?.type === 'kan-ikke-afgoeres') {

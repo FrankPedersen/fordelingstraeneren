@@ -122,7 +122,7 @@ export function muligeOensker(kontrakt: Kontrakt, udspil: number, oest: readonly
 export function vaelgTilspil(v: { kontrakt: Kontrakt; udspil: number; oest: readonly number[]; onske: Signal }, profil: Profil): number {
   const x = [...v.oest].sort((a, b) => a - b);
   const art = tilspilsart(v.kontrakt, v.udspil, profil);
-  if (art === 'laengde') throw new Error('Vælg kortet bruger ikke længdemarkeringen i trin 1');
+  if (art === 'laengde') throw new Error('Øvelsen Vælg kortet bruger ikke længdemarkeringen i trin 1');
   if (art === 'romersk') {
     const ulige = x.filter((k) => !erLige(k));
     const lige = x.filter((k) => erLige(k) && k <= 10);

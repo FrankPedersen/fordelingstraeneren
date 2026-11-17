@@ -18,7 +18,7 @@ export const kontraktart = (k: Kontrakt): Kontraktart => (k === '3NT' ? 'sans' :
 export const trumf = (k: Kontrakt): number | null => (k === '4S' ? 0 : k === '4H' ? 1 : null);
 
 /** Kategorien for et lavt udspil i kontrakten. */
-export const udspilKategori = (art: Kontraktart): KategoriId => (art === 'sans' ? 'udspil-sans' : 'udspil-farve');
+export const udspilKategori = (art: Kontraktart): Extract<KategoriId, 'udspil-sans' | 'udspil-farve'> => (art === 'sans' ? 'udspil-sans' : 'udspil-farve');
 
 export const faldende = (xs: readonly number[]): number[] => [...xs].sort((a, b) => b - a);
 
