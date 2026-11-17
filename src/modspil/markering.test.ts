@@ -1,11 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import type { Card } from '../domain/cards';
 import { medMetode, profil } from './model/metoder';
-import { aflaesAfkast, aflaesForsinket, aflaesTilspil, vaelgAfkast, vaelgForsinket, vaelgTilspil, type Tilspil } from './model/markering';
+import { aflaesAfkast, aflaesForsinket, aflaesTilspil, vaelgAfkast, vaelgForsinket, vaelgTilspil, type Afkast, type Tilspil } from './model/markering';
+import type { Kontrakt } from './model/udspil';
 
 /*
  * Accepttest 4 (romersk kald, Kompendiets egne eksempler) og 5 (O/E og omvendt forsinket kald) i SPEC-modspil.md, og
- * aftalerne bag øvelse 4–7. Rød, indtil byggeriet har leveret:
+ * aftalerne bag øvelse 4–7. Første afkast følger Franks svar 17. nov. 2026 (samme relative regel som romersk kald).
+ * Rød, indtil byggeriet har leveret:
  *
  * src/modspil/model/markering.ts
  *   export interface Tilspil {
@@ -17,8 +19,15 @@ import { aflaesAfkast, aflaesForsinket, aflaesTilspil, vaelgAfkast, vaelgForsink
  *   }
  *   export function aflaesTilspil(t: Tilspil, profil: Profil): Facit;   // signal, laengder (spilførers), kan ikke afgøres eller tvetydig
  *   export function vaelgTilspil(v: { kontrakt: Kontrakt; udspil: number; oest: readonly number[]; onske: Signal }, profil: Profil): number;
- *   export function aflaesAfkast(kort: number, kontrakt: Kontrakt, profil: Profil): Facit;            // { type: 'signal' }
- *   export function vaelgAfkast(v: { kontrakt: Kontrakt; spilfoerersFarve: number; haand: readonly Card[]; onske: number }, profil: Profil): Card[];
+ *   export interface Afkast {
+ *     kontrakt: Kontrakt;
+ *     kort: number;                    // afkastets valør
+ *     synlige: readonly number[];      // valørerne i afkastfarven, som den, der læser afkastet, kan se: egne kort,
+ *                                      // bordets og kort, der er spillet i farven før afkastet (afkastet er ikke med)
+ *   }
+ *   export function aflaesAfkast(a: Afkast, profil: Profil): Facit;                                    // { type: 'signal' }
+ *   export function vaelgAfkast(v: { kontrakt: Kontrakt; spilfoerersFarve: number; haand: readonly Card[]; synlige: readonly Card[]; onske: number }, profil: Profil): Card[];
+ *     // synlige: de kort, brugeren ser ud over sin hånd (bordets kort og de spillede kort)
  *   export function aflaesForsinket(foerste: number, anden: number, profil: Profil): Facit;          // { type: 'forsinket' }
  *   export function vaelgForsinket(holding: readonly number[], onske: 'passiv' | 'aktiv', profil: Profil): number;
  *   // aflaesForsinket og vaelgForsinket kaster, når profilen ikke har omvendt forsinket kald.
@@ -111,42 +120,106 @@ describe('Kald eller afvisning: metoden afgør facit', () => {
 
 describe('O/E (accepttest 5): første gang der ikke kan bekendes', () => {
   // Kompendiet s. 24: et ulige kort kalder til farven; et lille lige kort viser styrke i den laveste af de to andre
-  // farver; et stort lige kalder til den højeste. Lille er 6 og lavere, stort 8 og højere.
+  // farver; et stort lige kalder til den højeste. Lille og stor følger samme relative regel som romersk kald (Franks
+  // svar 17. nov. 2026; ingen fast grænse mellem 6 og 7): en lille lige er et af de to laveste lige kort i afkastfarven,
+  // som den, der læser afkastet, ikke kan se (afkastet er med); ellers er den stor, også når den er 5. laveste. Med færre
+  // end tre usete lige kort er et lige kort altid lille. `synlige` er læserens og bordets kort i afkastfarven.
+  const afkast = (vaerdi: number, synlige: number[], kontrakt: Kontrakt = '4H'): Afkast => ({ kontrakt, kort: vaerdi, synlige });
+  /** Læseren har ♦K 9 5 3 og bordet ♦D 7 4: de usete lige kort er 2, 6, 8 og 10. */
+  const fire = [K, 9, 5, 3, D, 7, 4];
+  /** Læseren har ♦6 5 2 og bordet ♦4 3: de usete lige kort er 8, 10 og D, og de usete kort begynder 7, 8, 9. */
+  const hoeje = [6, 5, 2, 4, 3];
+  /** Læseren har ♦E K 9 og bordet ♦B 7 5: alle seks lige kort er usete, og de usete kort begynder 2, 3, 4, 6. */
+  const lave = [E, K, 9, B, 7, 5];
+  /** Læseren har ♦6 4 og bordet ♦D 3: de usete lige kort er 2, 8 og 10. */
+  const tre = [6, 4, D, 3];
+
   it('et ulige kort kalder til farven', () => {
-    expect(aflaesAfkast(7, '4H', kompendiet)).toEqual(signal('kald'));
-    expect(aflaesAfkast(9, '4H', kompendiet)).toEqual(signal('kald'));
+    expect(aflaesAfkast(afkast(7, hoeje), kompendiet)).toEqual(signal('kald'));
+    expect(aflaesAfkast(afkast(9, hoeje), kompendiet)).toEqual(signal('kald'));
+    expect(aflaesAfkast(afkast(3, lave, '3NT'), kompendiet)).toEqual(signal('kald'));
   });
 
-  it('en lille lige viser den laveste af de to andre farver', () => {
-    expect(aflaesAfkast(4, '4H', kompendiet)).toEqual(signal('skift-lav'));
-    expect(aflaesAfkast(2, '3NT', kompendiet)).toEqual(signal('skift-lav'));
+  it('med fire usete lige kort er de to laveste små (laveste af de to andre farver) og det 3. og 4. store (højeste)', () => {
+    expect(aflaesAfkast(afkast(2, fire), kompendiet)).toEqual(signal('skift-lav'));
+    expect(aflaesAfkast(afkast(6, fire), kompendiet)).toEqual(signal('skift-lav'));
+    expect(aflaesAfkast(afkast(8, fire), kompendiet)).toEqual(signal('skift-hoej'));
+    expect(aflaesAfkast(afkast(10, fire, '3NT'), kompendiet)).toEqual(signal('skift-hoej'));
   });
 
-  it('en stor lige kalder til den højeste af de to andre farver', () => {
-    expect(aflaesAfkast(10, '4H', kompendiet)).toEqual(signal('skift-hoej'));
-    expect(aflaesAfkast(8, '3NT', kompendiet)).toEqual(signal('skift-hoej'));
+  it('grænsen følger de usete kort: ♦8 og ♦10 kan være små, og ♦6 kan være stor', () => {
+    // De usete lige kort er 8, 10 og D: 8 og 10 er de to laveste.
+    expect(aflaesAfkast(afkast(8, hoeje), kompendiet)).toEqual(signal('skift-lav'));
+    expect(aflaesAfkast(afkast(10, hoeje, '3NT'), kompendiet)).toEqual(signal('skift-lav'));
+    // De usete lige kort er 2, 4, 6, 8, 10 og D: 6 er det 3. laveste, og 10 er det 5. laveste (stor som i romersk kald).
+    expect(aflaesAfkast(afkast(4, lave), kompendiet)).toEqual(signal('skift-lav'));
+    expect(aflaesAfkast(afkast(6, lave), kompendiet)).toEqual(signal('skift-hoej'));
+    expect(aflaesAfkast(afkast(10, lave), kompendiet)).toEqual(signal('skift-hoej'));
   });
 
-  it('vælg afkastet: alle kort under B, makker læser som et kald til den ønskede farve', () => {
-    // Mod 4♥ trækker spilfører trumf, og hånden har ♠D 7 4, ♦10 8 3, ♣6 5 2 (ingen ♥).
-    const haand = [kort(0, D), kort(0, 7), kort(0, 4), kort(2, 10), kort(2, 8), kort(2, 3), kort(3, 6), kort(3, 5), kort(3, 2)];
-    const v = (onske: number) => vaelgAfkast({ kontrakt: '4H', spilfoerersFarve: 1, haand, onske }, kompendiet);
-    // ♦: ♦3 (ulige i ♦), og fra ♣ en lille lige (de andre farver er ♠ og ♦, og ♦ er den laveste): ♣2 og ♣6.
-    expect(v(2)).toEqual([kort(2, 3), kort(3, 2), kort(3, 6)].sort((a, b) => a - b));
-    // ♠: ♠7 (ulige i ♠), og fra ♦ en stor lige (de andre farver er ♠ og ♣, og ♠ er den højeste): ♦8 og ♦10.
-    expect(v(0)).toEqual([kort(0, 7), kort(2, 8), kort(2, 10)].sort((a, b) => a - b));
-    // ♣: ♣5, og fra ♠ en lille lige (de andre er ♦ og ♣, og ♣ er den laveste): ♠4.
-    expect(v(3)).toEqual([kort(0, 4), kort(3, 5)].sort((a, b) => a - b));
+  it('med tre usete lige kort er det højeste stort; med to er begge små', () => {
+    expect(aflaesAfkast(afkast(8, tre), kompendiet)).toEqual(signal('skift-lav'));
+    expect(aflaesAfkast(afkast(10, tre), kompendiet)).toEqual(signal('skift-hoej'));
+    // Læseren har ♦8 6 4 og bordet ♦D 3: de usete lige kort er kun 2 og 10.
+    expect(aflaesAfkast(afkast(10, [8, 6, 4, D, 3]), kompendiet)).toEqual(signal('skift-lav'));
   });
 
-  it('de andre metoder til første afkast: Lavinthal og som kald eller afvisning', () => {
+  it('samme aflæsning af et lige kort som romersk kald med de samme usete kort', () => {
+    // Eksempel 1 og 2 fra romersk kald: Vests kort og bordets kort er det, læseren af afkastet kan se.
+    for (const [t, lige] of [
+      [eksempel1, [6, 8, 10]],
+      [eksempel2, [6, 8, 10]],
+    ] as const) {
+      for (const v of lige) {
+        const s = t(v);
+        expect(aflaesAfkast(afkast(v, [...s.udspiller, ...s.bord]), kompendiet), `${v}`).toEqual(aflaesTilspil(s, kompendiet));
+      }
+    }
+  });
+
+  it('vælg afkastet: kortene under B, makker læser som et kald til den ønskede farve, uanset hvor de usete kort sidder', () => {
+    // Mod 4♥ trækker spilfører trumf. Hånden har ♠D 7 4, ♦10 8 6 3 og ♣6 5 2 (ingen ♥), og bordet har ♠E 6 2, ♦K 9 5 4
+    // og ♣8 3 (og ♥E K 7 3). Makker kan se sine egne kort og bordets; brugerens kort og spilførers kan han ikke se.
+    const haand = [kort(0, D), kort(0, 7), kort(0, 4), kort(2, 10), kort(2, 8), kort(2, 6), kort(2, 3), kort(3, 6), kort(3, 5), kort(3, 2)];
+    const bord = [kort(0, E), kort(0, 6), kort(0, 2), kort(1, E), kort(1, K), kort(1, 7), kort(1, 3), kort(2, K), kort(2, 9), kort(2, 5), kort(2, 4), kort(3, 8), kort(3, 3)];
+    const v = (onske: number, p = kompendiet) => vaelgAfkast({ kontrakt: '4H', spilfoerersFarve: 1, haand, synlige: bord, onske }, p);
+    const sorteret = (xs: number[]) => [...xs].sort((a, b) => a - b);
+    // ♦6 er altid lille: kun ♦2 kan ligge under den hos spilfører. ♦10 er altid stor: brugeren har selv ♦8 og ♦6 under
+    // den. ♦8 og ♣6 kommer ikke med: de er små, når makker har ♦2 eller ♣4, og ellers store.
+    // ♠: ♠7 (ulige i ♠), og fra ♦ en stor lige (de andre farver er ♠ og ♣, og ♠ er den højeste): ♦10.
+    expect(v(0)).toEqual(sorteret([kort(0, 7), kort(2, 10)]));
+    // ♦: ♦3, og fra ♣ en lille lige (de andre farver er ♠ og ♦, og ♦ er den laveste): ♣2.
+    expect(v(2)).toEqual(sorteret([kort(2, 3), kort(3, 2)]));
+    // ♣: ♣5, fra ♠ en lille lige (de andre er ♦ og ♣, og ♣ er den laveste): ♠4, og fra ♦ en lille lige: ♦6.
+    expect(v(3)).toEqual(sorteret([kort(0, 4), kort(2, 6), kort(3, 5)]));
+    // Som kald eller afvisning: med højt = kald er et kort altid højt, når brugeren selv har to lavere kort i farven, og
+    // med lavt = kald altid lavt, når højst ét lavere kort kan være uset for makker.
+    expect(v(0, standard)).toEqual([]);
+    expect(v(2, standard)).toEqual(sorteret([kort(2, 8), kort(2, 10)]));
+    expect(v(3, standard)).toEqual([kort(3, 6)]);
+    expect(v(0, omvendt)).toEqual([kort(0, 4)]);
+    expect(v(2, omvendt)).toEqual([kort(2, 3)]);
+    expect(v(3, omvendt)).toEqual([kort(3, 2)]);
+  });
+
+  it('de andre metoder til første afkast: Lavinthal og som kald eller afvisning, med lavt = et af de to laveste usete kort', () => {
     const lavinthal = medMetode(kompendiet, 'afkast', 'lavinthal');
-    expect(aflaesAfkast(3, '4H', lavinthal)).toEqual(signal('skift-lav'));
-    expect(aflaesAfkast(9, '4H', lavinthal)).toEqual(signal('skift-hoej'));
-    expect(aflaesAfkast(8, '3NT', standard)).toEqual(signal('kald'));
-    expect(aflaesAfkast(3, '3NT', standard)).toEqual(signal('afvisning'));
-    expect(aflaesAfkast(3, '3NT', omvendt)).toEqual(signal('kald'));
-    expect(aflaesAfkast(8, '3NT', omvendt)).toEqual(signal('afvisning'));
+    // Usete kort 7, 8, 9 …: 8 er lavt og 9 højt. Usete kort 2, 3, 4, 6 …: 3 er lavt og 4 højt.
+    expect(aflaesAfkast(afkast(8, hoeje), lavinthal)).toEqual(signal('skift-lav'));
+    expect(aflaesAfkast(afkast(9, hoeje), lavinthal)).toEqual(signal('skift-hoej'));
+    expect(aflaesAfkast(afkast(3, lave), lavinthal)).toEqual(signal('skift-lav'));
+    expect(aflaesAfkast(afkast(4, lave), lavinthal)).toEqual(signal('skift-hoej'));
+    expect(aflaesAfkast(afkast(4, lave, '3NT'), standard)).toEqual(signal('kald'));
+    expect(aflaesAfkast(afkast(3, lave, '3NT'), standard)).toEqual(signal('afvisning'));
+    expect(aflaesAfkast(afkast(7, hoeje, '3NT'), standard)).toEqual(signal('afvisning'));
+    expect(aflaesAfkast(afkast(9, hoeje, '3NT'), standard)).toEqual(signal('kald'));
+    expect(aflaesAfkast(afkast(3, lave, '3NT'), omvendt)).toEqual(signal('kald'));
+    expect(aflaesAfkast(afkast(4, lave, '3NT'), omvendt)).toEqual(signal('afvisning'));
+    // Romersk kald med første afkast som kald eller afvisning: mod farve O/E, mod sans lavt = kald.
+    const egen = medMetode(kompendiet, 'afkast', 'som-kald-afvisning');
+    expect(aflaesAfkast(afkast(8, hoeje), egen)).toEqual(signal('skift-lav'));
+    expect(aflaesAfkast(afkast(8, hoeje, '3NT'), egen)).toEqual(signal('kald'));
+    expect(aflaesAfkast(afkast(9, hoeje, '3NT'), egen)).toEqual(signal('afvisning'));
   });
 });
 

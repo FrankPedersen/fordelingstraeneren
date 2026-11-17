@@ -56,11 +56,17 @@ import type { ModspilOpgave } from './model/generator';
  *   ALA-kongen mod sans bruges vælg kortet ikke i trin 1.
  * - Udspillet i øvelse 4 og 5 er et entydigt honnørudspil (B eller højere), og Øst lægger under udspillet.
  *
- * Første afkast (øvelse 6): et kort på 6 eller lavere er lavt, 7 eller højere er højt. O/E: ulige = kald i farven,
- * lille lige = laveste af de to andre farver, stor lige = højeste. Lavinthal: lavt = laveste af de to andre farver, højt
- * = højeste. Som kald eller afvisning: kaldmetoden i afkastfarven (romersk kald mod farve læses som O/E). "De to andre
- * farver" er dem, der hverken er spilførerens farve eller afkastfarven; mod farve er spilførerens farve trumf. Vælges
- * afkastet, er facit alle kort under B, som makker læser som et kald til den ønskede farve.
+ * Første afkast (øvelse 6; Franks svar 17. nov. 2026: ingen fast grænse mellem 6 og 7, men samme relative regel som
+ * romersk kald): A er afkastfarvens kort, som den, der læser afkastet, ikke kan se på egen hånd, på bordet og blandt de
+ * kort, der er spillet før afkastet (afkastet er med). O/E: ulige = kald i farven; et lige kort er en lille lige
+ * (laveste af de to andre farver), når det er et af de to laveste lige kort i A, ellers en stor lige (højeste), også med
+ * færre end fire lige kort i A, og når det ikke er blandt de fire laveste. Lavinthal: lavt, når kortet er et af de to
+ * laveste i A (laveste af de to andre farver), ellers højt (højeste). Som kald eller afvisning: kaldmetoden i
+ * afkastfarven med samme lavt (romersk kald mod farve læses som O/E). "De to andre farver" er dem, der hverken er
+ * spilførerens farve eller afkastfarven; mod farve er spilførerens farve trumf.
+ * Vælges afkastet, er makker læseren, og brugeren kan ikke se hans kort: facit er alle brugerens kort under B, som
+ * makker læser som et kald til den ønskede farve i alle fordelinger af farvens kort, brugeren ikke kan se, mellem makker
+ * og spilfører (hver fordeling tælles for sig).
  *
  * Omvendt forsinket kald (øvelse 7): lav-høj = passiv, høj-lav = aktiv. Vælges rækkefølgen, er facit det første kort:
  * det laveste for passiv og det højeste kort under B for aktiv.
@@ -342,15 +348,21 @@ export function vaelgTilspilBF(kontrakt: string, udspil: number, oest: readonly 
 
 // ---------------------------------------------------------------- første afkast
 
-/** Makkers aflæsning af et afkast med valøren `vaerdi`. */
-export function laesAfkastBF(vaerdi: number, kontrakt: string, profil: ProfilData): Signal {
+/**
+ * Læserens aflæsning af et afkast med valøren `vaerdi`. `a` er afkastfarvens kort, læseren ikke kan se (afkastet er
+ * med), som valører.
+ */
+export function laesAfkastBF(vaerdi: number, a: readonly number[], kontrakt: string, profil: ProfilData): Signal {
   const art = artAf(kontrakt);
   const afkast = profil.valg.afkast;
   const kald = effektivMetode(profil, 'kald', art);
-  const lavt = vaerdi <= 6;
+  const usete = stigende(a);
+  if (!usete.includes(vaerdi)) return fejl('afkastet er ikke blandt de kort, læseren ikke kan se');
   if (afkast === 'ulige-lige' || (afkast === 'som-kald-afvisning' && kald === 'romersk-kald')) {
-    return vaerdi % 2 === 1 ? 'kald' : lavt ? 'skift-lav' : 'skift-hoej';
+    if (vaerdi % 2 === 1) return 'kald';
+    return usete.filter((v) => v % 2 === 0).indexOf(vaerdi) <= 1 ? 'skift-lav' : 'skift-hoej';
   }
+  const lavt = usete.indexOf(vaerdi) <= 1;
   if (afkast === 'lavinthal') return lavt ? 'skift-lav' : 'skift-hoej';
   return (kald === 'hoejt-kald') === !lavt ? 'kald' : 'afvisning';
 }
@@ -361,20 +373,35 @@ function andreFarver(spilfoerersFarve: number, afkastfarve: number): [number, nu
   return [andre[0], andre[1]];
 }
 
-/** Alle afkast (kort under B), som makker læser som et kald til farven `onske`. */
-export function vaelgAfkastBF(kontrakt: string, spilfoerersFarve: number, haand: readonly Card[], onske: number, profil: ProfilData): Card[] {
+/** Farven, signalet i afkastfarven `d` beder om, eller -1 (en afvisning beder ikke om en farve). */
+function bederOm(s: Signal, d: number, spilfoerersFarve: number): number {
+  const [hoej, lav] = andreFarver(spilfoerersFarve, d);
+  return s === 'kald' ? d : s === 'skift-lav' ? lav : s === 'skift-hoej' ? hoej : -1;
+}
+
+/**
+ * Alle afkast (brugerens kort under B uden for spilførerens farve), som makker læser som et kald til farven `onske`,
+ * uanset hvor farvens kort, brugeren ikke kan se, sidder. `synlige` er det, brugeren ser ud over sin hånd: bordets kort
+ * og de spillede kort. Hver fordeling af de skjulte kort i afkastfarven mellem makker og spilfører tælles for sig; makker
+ * kan se sine egne kort, bordets og de spillede, men ikke brugerens og spilførerens.
+ */
+export function vaelgAfkastBF(kontrakt: string, spilfoerersFarve: number, haand: readonly Card[], synlige: readonly Card[], onske: number, profil: ProfilData): Card[] {
+  const set = new Set([...haand, ...synlige]);
   const ud: Card[] = [];
   for (const kort of haand) {
     const d = farveAf(kort);
     const v = vaerdiAf(kort);
     if (d === spilfoerersFarve || v > 10) continue;
-    const s = laesAfkastBF(v, kontrakt, profil);
-    if (d === onske) {
-      if (s === 'kald') ud.push(kort);
-      continue;
+    const egne = iFarven(haand, d);
+    const skjulte: number[] = [];
+    for (let w = 2; w <= 14; w++) if (!set.has(kortAf(d, w))) skjulte.push(w);
+    let altid = true;
+    for (let maske = 0; maske < 1 << skjulte.length && altid; maske++) {
+      // Makker har de skjulte kort, hvis bit er 1; spilfører har resten.
+      const spilfoerers = skjulte.filter((_, i) => ((maske >> i) & 1) === 0);
+      altid = bederOm(laesAfkastBF(v, [...egne, ...spilfoerers], kontrakt, profil), d, spilfoerersFarve) === onske;
     }
-    const [hoej, lav] = andreFarver(spilfoerersFarve, d);
-    if ((s === 'skift-lav' && onske === lav) || (s === 'skift-hoej' && onske === hoej)) ud.push(kort);
+    if (altid) ud.push(kort);
   }
   return stigende(ud);
 }
@@ -516,12 +543,18 @@ export function bruteFacit(o: ModspilOpgave): BruteSvar {
         if (sidste.plads !== makker(o.plads) || farveAf(sidste.kort) === spilfoerersFarve) fejl('det sidste kort er ikke makkers afkast');
         const foer = new Set(o.spillet.slice(0, -1).map((k) => k.kort));
         if (o.haender[sidste.plads].some((c) => farveAf(c) === spilfoerersFarve && !foer.has(c))) fejl('makker kan stadig bekende');
-        return { facit: signal(laesAfkastBF(vaerdiAf(sidste.kort), o.kontrakt, o.profil)), metode };
+        // Brugeren læser afkastet og kan se sin egen hånd, bordet og de kort, der er spillet før afkastet.
+        const d = farveAf(sidste.kort);
+        const ser = new Set([...o.haender[o.plads], ...o.haender.N, ...foer]);
+        const a: number[] = [];
+        for (let v = 2; v <= 14; v++) if (!ser.has(kortAf(d, v))) a.push(v);
+        return { facit: signal(laesAfkastBF(vaerdiAf(sidste.kort), a, o.kontrakt, o.profil)), metode };
       }
       const spillede = new Set(o.spillet.filter((k) => k.plads === o.plads).map((k) => k.kort));
       const haand = o.haender[o.plads].filter((c) => !spillede.has(c));
       if (haand.some((c) => farveAf(c) === spilfoerersFarve)) fejl('brugeren kan stadig bekende');
-      const kort = vaelgAfkastBF(o.kontrakt, spilfoerersFarve, haand, q.onske as number, o.profil);
+      const synlige = [...o.haender.N, ...o.spillet.map((k) => k.kort)];
+      const kort = vaelgAfkastBF(o.kontrakt, spilfoerersFarve, haand, synlige, q.onske as number, o.profil);
       if (!kort.length) fejl('intet afkast viser den ønskede farve');
       return { facit: { type: 'kort', kort }, metode };
     }
