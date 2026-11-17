@@ -95,13 +95,13 @@ export function forklarLaengde(m: Metode, farve: number, udspil: number, laengde
   const hp = hpAfgjorde ? { da: ' Hp fra meldingerne udelukker de andre længder.', en: ' The HCP from the bidding rule out the other lengths.' } : { da: '', en: '' };
   if (laengder.length > 2) {
     return {
-      da: `Med ${m.tekst} og de kort, du kan se, kan makker have ${tal(laengder, 'da')} kort i farven efter ${k.da}. Flere end to længder kan ikke afgøres.${hp.da}`,
-      en: `With ${m.tekstEn} and the cards you can see, partner can have ${tal(laengder, 'en')} cards in the suit after leading ${k.en}. More than two lengths cannot be determined.${hp.en}`,
+      da: `Med ${m.tekst} og de kort, du kan se, kan makker have ${tal(laengder, 'da')} kort i farven, når udspillet er ${k.da}. Flere end to længder kan ikke afgøres.${hp.da}`,
+      en: `With ${m.tekstEn} and the cards you can see, partner can have ${tal(laengder, 'en')} cards in the suit when the lead is ${k.en}. More than two lengths cannot be determined.${hp.en}`,
     };
   }
   return {
-    da: `Med ${m.tekst} og de kort, du kan se, har makker ${tal(laengder, 'da')} kort i farven efter ${k.da}.${hp.da}`,
-    en: `With ${m.tekstEn} and the cards you can see, partner has ${tal(laengder, 'en')} cards in the suit after leading ${k.en}.${hp.en}`,
+    da: `Med ${m.tekst} og de kort, du kan se, har makker ${tal(laengder, 'da')} kort i farven, når udspillet er ${k.da}.${hp.da}`,
+    en: `With ${m.tekstEn} and the cards you can see, partner has ${tal(laengder, 'en')} cards in the suit when the lead is ${k.en}.${hp.en}`,
   };
 }
 
