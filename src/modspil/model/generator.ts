@@ -26,7 +26,7 @@ import {
   harForsinketKald,
   muligeOensker,
   tilspilsart,
-  vaelgAfkast,
+  vaelgAfkastDetaljer,
   vaelgForsinket,
   vaelgTilspil,
 } from './markering';
@@ -147,10 +147,14 @@ export function harOvelse(ovelse: Ovelse, profil: Profil): boolean {
   return ovelse !== 'forsinket' || harForsinketKald(profil);
 }
 
-/** Kan øvelsen have facit "kan ikke afgøres" eller "tvetydig" med profilens metoder? */
+/**
+ * Kan øvelsen have facit "kan ikke afgøres" eller "tvetydig" med profilens metoder? Første afkast kan altid: i Vælg
+ * afkastet er opgaven tvetydig, når intet kort er entydigt (Franks svar 1, 17. nov. 2026).
+ */
 export function kanVaereUklar(ovelse: Ovelse, profil: Profil): boolean {
   switch (ovelse) {
     case 'laengde':
+    case 'afkast':
       return true;
     case 'regel11':
       return (['sans', 'farve'] as const).some((art) => regel(profil, udspilKategori(art), art).kortOver === null);
@@ -396,7 +400,8 @@ const RUNDE: readonly Seat[] = ['S', 'W', 'N', 'E'];
 
 function afkast(g: Grundlag): ModspilOpgave | null {
   const plads: 'W' | 'E' = g.rng.int(2) ? 'E' : 'W';
-  const variant: 'aflaes' | 'vaelg' = g.rng.int(2) ? 'vaelg' : 'aflaes';
+  // Kun Vælg afkastet kan være tvetydig; aflæsningen af makkers afkast er altid klar.
+  const variant: 'aflaes' | 'vaelg' = g.maal === 'uklar' || g.rng.int(2) ? 'vaelg' : 'aflaes';
   // Den, der ikke kan bekende: makker, når brugeren aflæser, og brugeren selv, når han vælger.
   const viser = variant === 'aflaes' ? makker(plads) : plads;
   const anden = makker(viser);
@@ -442,17 +447,22 @@ function afkast(g: Grundlag): ModspilOpgave | null {
   const haand = g.haender[plads].filter((c) => farveAf(c) !== sf);
   // Brugeren ser bordet og de spillede kort ud over sin hånd; makker læser afkastet.
   const synlige = [...g.haender.N, ...spillet.map((k) => k.kort)];
-  const kortTil = (f: number) => vaelgAfkast({ kontrakt: g.kontrakt, spilfoerersFarve: sf, haand, synlige, onske: f }, g.profil);
-  const oensker = FARVER.filter((f) => f !== sf && kortTil(f).length > 0);
+  // Klare opgaver har et entydigt kort; tvetydige har intet, men mindst ét kort, der kan læses rigtigt.
+  const detaljerTil = (f: number) => vaelgAfkastDetaljer({ kontrakt: g.kontrakt, spilfoerersFarve: sf, haand, synlige, onske: f }, g.profil);
+  const oensker = FARVER.filter((f) => {
+    if (f === sf) return false;
+    const { facit } = detaljerTil(f);
+    return facit.kort.length > 0 && passerMaal(facit, g.maal);
+  });
   if (!oensker.length) return null;
   const onske = valg(g.rng, oensker);
-  const kortene = kortTil(onske);
+  const { facit, andel } = detaljerTil(onske);
   return opgave(g, {
     ...faelles,
     spillet,
     sporgsmaal: { variant, onske },
-    facit: { type: 'kort', kort: kortene },
-    forklaring: forklarVaelgAfkast(grundlag, onske, kortene),
+    facit,
+    forklaring: forklarVaelgAfkast(grundlag, onske, facit.kort, facit.tvetydig ? andel : undefined),
   });
 }
 

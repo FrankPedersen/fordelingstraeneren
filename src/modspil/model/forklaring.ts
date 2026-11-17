@@ -265,7 +265,11 @@ export function forklarAflaesAfkast(g: AfkastGrundlag, farve: number, vaerdi: nu
   };
 }
 
-export function forklarVaelgAfkast(g: AfkastGrundlag, onske: number, kortene: readonly number[]): Tekst {
+/**
+ * Forklaringen til Vælg afkastet. `andel` er givet, når intet kort er entydigt (Franks svar 1, 17. nov. 2026): så er
+ * kortene dem, der læses rigtigt i flest fordelinger, og opgaven er tvetydig.
+ */
+export function forklarVaelgAfkast(g: AfkastGrundlag, onske: number, kortene: readonly number[], andel?: number): Tekst {
   const i = afkastIndledning(g);
   const regel =
     g.laesning === 'paritet'
@@ -283,6 +287,19 @@ export function forklarVaelgAfkast(g: AfkastGrundlag, onske: number, kortene: re
           : { da: 'kalder et lavt kort (et af de to laveste kort, makker ikke kan se) til farven selv', en: 'a low card (one of the two lowest cards partner cannot see) encourages its own suit' };
   const liste = (sprog: Sprog) => og(kortene.map((c) => kortNavn(Math.floor(c / 13), (c % 13) + 2, sprog)), sprog);
   const flere = kortene.length > 1;
+  const til = SYMBOLER[onske];
+  if (andel !== undefined) {
+    // Andelen er over 0 og under 1, så procenten vises mellem 1 og 99 (aldrig 0 % eller 100 %).
+    const pct = Math.min(99, Math.max(1, Math.round(andel * 100)));
+    return {
+      da:
+        `${i.da} ${regel.da}. Intet kort beder om ${til}, uanset hvor de kort, du ikke kan se, sidder, så opgaven er tvetydig. ` +
+        `Bedst er ${liste('da')}, som ${flere ? 'hver ' : ''}beder om ${til} i ${pct} % af de mulige fordelinger.`,
+      en:
+        `${i.en} ${regel.en}. No card asks for ${til} wherever the cards you cannot see lie, so the task is ambiguous. ` +
+        `The best ${flere ? 'are' : 'is'} ${liste('en')}, which ${flere ? 'each ask' : 'asks'} for ${til} in ${pct}% of the possible layouts.`,
+    };
+  }
   return {
     da: `${i.da} ${regel.da}. Uanset hvor de kort, du ikke kan se, sidder, beder ${liste('da')} om ${SYMBOLER[onske]}.`,
     en: `${i.en} ${regel.en}. Wherever the cards you cannot see lie, ${liste('en')} ${flere ? 'ask' : 'asks'} for ${SYMBOLER[onske]}.`,

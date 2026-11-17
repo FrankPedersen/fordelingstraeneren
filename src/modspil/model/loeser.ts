@@ -16,7 +16,8 @@ export type Facit =
   | { type: 'tal'; tal: number }
   | { type: 'laengder'; laengder: number[] }
   | { type: 'signal'; signal: Signal }
-  | { type: 'kort'; kort: Card[] }
+  /** `tvetydig` kun i Vælg afkastet, når intet kort er entydigt (Franks svar 1, 17. nov. 2026). */
+  | { type: 'kort'; kort: Card[]; tvetydig?: true }
   | { type: 'forsinket'; vaerdi: 'passiv' | 'aktiv' }
   | { type: 'kan-ikke-afgoeres' }
   | { type: 'tvetydig' };
@@ -24,8 +25,8 @@ export type Facit =
 export const kanIkkeAfgoeres = (): Facit => ({ type: 'kan-ikke-afgoeres' });
 export const tvetydig = (): Facit => ({ type: 'tvetydig' });
 
-/** "Kan ikke afgøres" og "tvetydig" er de uklare svar (specens punkt 6). */
-export const erUklar = (f: Facit): boolean => f.type === 'kan-ikke-afgoeres' || f.type === 'tvetydig';
+/** "Kan ikke afgøres" og "tvetydig" er de uklare svar (specens punkt 6), også Vælg afkastet uden et entydigt kort. */
+export const erUklar = (f: Facit): boolean => f.type === 'kan-ikke-afgoeres' || f.type === 'tvetydig' || (f.type === 'kort' && f.tvetydig === true);
 
 /** Det, Øst ser i udspilsfarven: valørerne 2–14. */
 export interface Udspilssituation {

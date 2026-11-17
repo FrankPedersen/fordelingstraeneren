@@ -227,40 +227,82 @@ export function afkastetsFarve(signal: Signal, farve: number, spilfoerersFarve: 
 }
 
 /**
- * Er afkastet lavt for makker, uanset hvor de kort, brugeren ikke kan se, sidder? Makker kan ikke se brugerens kort og
- * ser kun dem af de skjulte kort, han selv har. Afkastet er altid lavt, når brugerens egne lavere kort og de lavere
- * skjulte kort, der tæller, højst er ét, og altid højt, når brugeren selv har mindst to lavere; ellers afhænger det af
- * fordelingen (null).
+ * Andelen af fordelingerne af de skjulte kort mellem makker og spilfører, hvor makker læser afkastet som lavt. Makker kan
+ * ikke se brugerens kort og ser kun dem af de skjulte kort, han selv har, så afkastet er lavt, når brugerens egne lavere
+ * kort og spilførers lavere skjulte kort, der tæller, højst er ét. Kun de k lavere skjulte kort betyder noget: uden egne
+ * lavere kort er andelen (1 + k) / 2^k (spilfører har højst ét af dem), med ét er den 1 / 2^k (spilfører har ingen af
+ * dem), og med to eller flere er den 0.
  */
-function lavtForMakker(vaerdi: number, egne: readonly number[], skjulte: readonly number[], taeller: (v: number) => boolean): boolean | null {
+function andelLavt(vaerdi: number, egne: readonly number[], skjulte: readonly number[], taeller: (v: number) => boolean): number {
   const egneUnder = egne.filter((v) => v < vaerdi && taeller(v)).length;
-  const skjulteUnder = skjulte.filter((v) => v < vaerdi && taeller(v)).length;
-  if (egneUnder + skjulteUnder <= 1) return true;
-  if (egneUnder >= 2) return false;
-  return null;
+  const k = skjulte.filter((v) => v < vaerdi && taeller(v)).length;
+  if (egneUnder >= 2) return 0;
+  return (egneUnder === 0 ? 1 + k : 1) / 2 ** k;
+}
+
+/** Valget af afkast: kortet, brugeren vil have spillet, og det, brugeren ser ud over sin hånd (bordet og de spillede kort). */
+export interface AfkastValg {
+  kontrakt: Kontrakt;
+  spilfoerersFarve: number;
+  haand: readonly Card[];
+  synlige: readonly Card[];
+  onske: number;
 }
 
 /**
- * Alle afkast (kort under B uden for spilførers farve), makker læser som et kald til farven `onske`, uanset hvor de kort,
- * brugeren ikke kan se, sidder; stigende. `synlige` er de kort, brugeren ser ud over sin hånd (bordet og de spillede).
+ * Hvert muligt afkast (kort under B uden for spilførers farve) med andelen af fordelingerne af afkastfarvens skjulte kort,
+ * hvor makker læser det som et kald til farven `onske`.
  */
-export function vaelgAfkast(v: { kontrakt: Kontrakt; spilfoerersFarve: number; haand: readonly Card[]; synlige: readonly Card[]; onske: number }, profil: Profil): Card[] {
+function afkastAndele(v: AfkastValg, profil: Profil): { kort: Card; andel: number }[] {
   const { laesning, hoejtErKald } = afkastlaesning(v.kontrakt, profil);
   const taeller = taellerMed(laesning);
   const set = new Set([...v.haand, ...v.synlige]);
-  return v.haand
-    .filter((kort) => {
-      const farve = Math.floor(kort / 13);
-      const vaerdi = (kort % 13) + 2;
-      if (farve === v.spilfoerersFarve || vaerdi > 10) return false;
-      const egne = v.haand.filter((c) => Math.floor(c / 13) === farve).map((c) => (c % 13) + 2);
-      const skjulte: number[] = [];
-      for (let w = 2; w <= 14; w++) if (!set.has(farve * 13 + w - 2)) skjulte.push(w);
-      const lavt = taeller(vaerdi) ? lavtForMakker(vaerdi, egne, skjulte, taeller) : false;
-      if (lavt === null) return false;
-      return afkastetsFarve(afkastSignal(vaerdi, lavt, laesning, hoejtErKald), farve, v.spilfoerersFarve) === v.onske;
-    })
-    .sort((a, b) => a - b);
+  const ud: { kort: Card; andel: number }[] = [];
+  for (const kort of v.haand) {
+    const farve = Math.floor(kort / 13);
+    const vaerdi = (kort % 13) + 2;
+    if (farve === v.spilfoerersFarve || vaerdi > 10) continue;
+    const egne = v.haand.filter((c) => Math.floor(c / 13) === farve).map((c) => (c % 13) + 2);
+    const skjulte: number[] = [];
+    for (let w = 2; w <= 14; w++) if (!set.has(farve * 13 + w - 2)) skjulte.push(w);
+    // Et kort, der ikke tæller (et ulige kort ved ulige og lige), læses ens, uanset om det er lavt.
+    const lavt = taeller(vaerdi) ? andelLavt(vaerdi, egne, skjulte, taeller) : 0;
+    const rigtig = (erLavt: boolean) => afkastetsFarve(afkastSignal(vaerdi, erLavt, laesning, hoejtErKald), farve, v.spilfoerersFarve) === v.onske;
+    ud.push({ kort, andel: (rigtig(true) ? lavt : 0) + (rigtig(false) ? 1 - lavt : 0) });
+  }
+  return ud;
+}
+
+const stigende = (xs: readonly Card[]): Card[] => [...xs].sort((a, b) => a - b);
+
+/** Alle afkast, makker læser som et kald til farven `onske`, uanset hvor de kort, brugeren ikke kan se, sidder; stigende. */
+export function vaelgAfkast(v: AfkastValg, profil: Profil): Card[] {
+  return stigende(afkastAndele(v, profil).filter((a) => a.andel === 1).map((a) => a.kort));
+}
+
+/** Facit i Vælg afkastet og andelen af fordelingerne, hvor facit læses rigtigt (1 for entydige kort). */
+export interface VaelgAfkastDetaljer {
+  facit: Extract<Facit, { type: 'kort' }>;
+  andel: number;
+}
+
+/**
+ * Facit i Vælg afkastet (Franks svar 1, 17. nov. 2026): de kort, makker læser som et kald til farven `onske` i alle
+ * fordelinger. Er intet kort entydigt, er facit de kort, der læses rigtigt i den største andel af fordelingerne (alle,
+ * der står lige), og opgaven er tvetydig. Andelen gør kort fra farver med forskelligt antal skjulte kort sammenlignelige.
+ * Kan intet kort læses rigtigt, er listen tom.
+ */
+export function vaelgAfkastDetaljer(v: AfkastValg, profil: Profil): VaelgAfkastDetaljer {
+  const andele = afkastAndele(v, profil);
+  const sikre = andele.filter((a) => a.andel === 1).map((a) => a.kort);
+  if (sikre.length) return { facit: { type: 'kort', kort: stigende(sikre) }, andel: 1 };
+  const bedst = Math.max(0, ...andele.map((a) => a.andel));
+  if (bedst === 0) return { facit: { type: 'kort', kort: [] }, andel: 0 };
+  return { facit: { type: 'kort', kort: stigende(andele.filter((a) => a.andel === bedst).map((a) => a.kort)), tvetydig: true }, andel: bedst };
+}
+
+export function vaelgAfkastFacit(v: AfkastValg, profil: Profil): Facit {
+  return vaelgAfkastDetaljer(v, profil).facit;
 }
 
 // ---------------------------------------------------------------- omvendt forsinket kald
