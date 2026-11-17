@@ -69,24 +69,20 @@ export function forklarRegel11(m: Metode, farve: number, udspil: number, a: Rege
   const r = 14 - over;
   const navn = r === 11 || r === 12 ? { da: ` (regel ${r})`, en: ` (rule of ${r})` } : { da: '', en: '' };
   const n = a.facit.tal;
-  let hvilkeDa = '';
-  let hvilkeEn = '';
-  if (hvilke?.type === 'kort' && hvilke.kort.length) {
-    const kortene = hvilke.kort;
-    const liste = (sprog: Sprog) => og(kortene.map((c) => kortNavn(Math.floor(c / 13), (c % 13) + 2, sprog)), sprog);
-    hvilkeDa = ` Spilfører har ${liste('da')} over ${k.da}.`;
-    hvilkeEn = ` Declarer has ${liste('en')} above ${k.en}.`;
-  } else if (hvilke?.type === 'kan-ikke-afgoeres') {
-    hvilkeDa = ' Hvilke kort det er, kan ikke afgøres.';
-    hvilkeEn = ' Which cards they are cannot be determined.';
-  }
+  const liste = (kortene: readonly number[], sprog: Sprog) => og(kortene.map((c) => kortNavn(Math.floor(c / 13), (c % 13) + 2, sprog)), sprog);
+  const hvilkeTekst: Tekst =
+    hvilke?.type === 'kort' && hvilke.kort.length
+      ? { da: ` Spilfører har ${liste(hvilke.kort, 'da')} over ${k.da}.`, en: ` Declarer has ${liste(hvilke.kort, 'en')} above ${k.en}.` }
+      : hvilke?.type === 'kan-ikke-afgoeres'
+        ? { da: ' Hvilke kort det er, kan ikke afgøres.', en: ' Which cards they are cannot be determined.' }
+        : { da: '', en: '' };
   return {
     da:
       `Med ${m.tekst} har makker ${over} kort over ${k.da}, så der er ${r} − ${udspil} = ${r - udspil} kort over ${k.da} hos de andre tre hænder${navn.da}. ` +
-      `Bordet har ${a.bordOver} og du ${a.oestOver}, så spilfører har ${n}.${hp.da}${hvilkeDa}`,
+      `Bordet har ${a.bordOver} og du ${a.oestOver}, så spilfører har ${n}.${hp.da}${hvilkeTekst.da}`,
     en:
       `With ${m.tekstEn} partner has ${over} cards above ${k.en}, so there are ${r} − ${udspil} = ${r - udspil} cards above ${k.en} in the other three hands${navn.en}. ` +
-      `Dummy has ${a.bordOver} and you ${a.oestOver}, so declarer has ${n}.${hp.en}${hvilkeEn}`,
+      `Dummy has ${a.bordOver} and you ${a.oestOver}, so declarer has ${n}.${hp.en}${hvilkeTekst.en}`,
   };
 }
 
