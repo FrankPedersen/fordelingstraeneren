@@ -92,6 +92,7 @@ Nedenfor står Kompendiets metoder i detaljer, fordi de er de mest omfattende. S
 - Et ulige kort kalder til farven.
 - En lille lige viser styrke i den lavest gældende farve (klør er lavest).
 - En stor lige kalder til den højest gældende farve.
+- **Aflæsningen** følger samme relative regel som romersk kald (Franks svar 17. nov.): en lille lige er et af de to laveste lige kort i afkastfarven, som den, der læser afkastet, ikke kan se. En stor lige er det 3. eller 4. laveste. Der er ingen fast grænse mellem 6 og 7.
 
 **Omvendt forsinket kald** gælder for både udspiller og tilspiller i den første farve, spilfører spiller:
 - Lav-høj betyder "fortsæt i farven, intet vigtigere at fortælle" (passivt).
@@ -158,7 +159,7 @@ Sværheden tilpasses som i Pointregnskab ud fra de seneste 20 svar.
    - **Standard:** K 10 7 4 2 → 4 mod sans og farve; 8 6 4 2 → 2; D B 10 → D.
    - **Profilen Kompendiet:**
      - Mod sans: K 10 7 4 2 → 4; 8 6 2 → 8; 8 6 4 2 → 6; 9 5 → 9; 10 8 6 → 8; D B 10 → D.
-     - Mod farve: K 9 6 4 2 → 2 (5.-højeste, rådgiverens forslag under Afklaret; ændres, hvis Frank vælger anderledes); 8 6 2 → 2 (3.-højeste); E K x → E.
+     - Mod farve: K 9 6 4 2 → 2 (5.-højeste, rådgiverens forslag under Afklaret, godkendt af Frank 17. nov.); 8 6 2 → 2 (3.-højeste); E K x → E.
 3. **Regel 11 og 12:** mindst fem faste eksempler for hver, heraf ét hvor bordet og Øst holder alle højere kort, så svaret er 0.
 4. **Romersk kald**, Kompendiets egne eksempler:
    - Udspil ♠E fra ♠E K 9 3 2, bordet ♠B 4: ♠6 aflæses som kald til laveste farve.
@@ -169,7 +170,7 @@ Sværheden tilpasses som i Pointregnskab ud fra de seneste 20 svar.
 7a. **Metoden skifter facit:** samme seed med Standard og Omvendt giver modsat facit for et kald eller en afvisning. Med 4.-højeste og 3. og 5. højeste giver samme udspil forskellig længde.
 8. **Genskabelse:** samme seed giver samme opgave og facit.
 9. **Andelen af "kan ikke afgøres"** fra niveau 3 ligger mellem 15 og 25 % over 2.000 opgaver.
-10. **Intet andet er ændret:** alle eksisterende tests består, og ingen fil uden for `src/modspil/` er ændret.
+10. **Intet andet er ændret:** alle eksisterende tests består, og ingen fil uden for `src/modspil/` er ændret, bortset fra specen og ét afsnit om Modspil-modellen i `CLAUDE.md` (Franks svar 4, 17. nov.).
 
 ## Afklaret
 
@@ -187,12 +188,12 @@ Sværheden tilpasses som i Pointregnskab ud fra de seneste 20 svar.
   5. Øvelse 1: Øst og Vest passer, Syd åbner efter systemfilen, og kontrakten er i Syds farve; pas i åbningsposition viser 0–11 hp.
   6. Øvelse 4: et kort er lavt, når det er et af de to laveste, Vest ikke kan se. Romersk kald følger Kompendiets aflæsning, og en høj ulige kan være "skift" uden retning. Et lige kort er tvetydigt ved singleton på bordet, eller når intet ulige kort er blandt dem, Vest ikke kan se. Efter ALA-kongen mod sans er facit spilførers mulige længder. Generatoren må ikke se på kaldmetoden, når den vælger fordeling og kort (ellers kan 7a ikke bestå).
   7. Øvelse 5: højt kort er det højeste under B; nødløsningen er en høj ulige fra 9 og op; kald uden ulige kort og vælg kortet efter ALA-kongen bruges ikke.
-  8. Øvelse 6: lavt er 6 eller lavere, højt 7 eller højere; mod farve er spilførers farve trumf.
+  8. Øvelse 6: lavt er 6 eller lavere, højt 7 eller højere; mod farve er spilførers farve trumf. (Grænsen mellem 6 og 7 er erstattet af den relative regel i Franks svar 2, 17. nov.; se nedenfor.)
   9. Øvelse 7: vælges rækkefølgen, er facit det første kort (laveste for passiv, højeste under B for aktiv).
   10. Punkt 9: 2.000 opgaver pr. profil på niveau 3–5 skiftevis, og "tvetydig" tæller med; generatoren skal styre blandingen af øvelser, fordi kun øvelse 3 kan give "kan ikke afgøres" med Standard.
   11. Punkt 10: findes `v43-foer-modspil-skaerme`, sammenlignes kun de to tags; mangler tagget (GitHub Actions henter ingen tags), springes testen over med en besked.
   12. "Senere skift til en ny farve" (lavt kort = invitation) har ingen kategori og bruges ikke i trin 1.
-- **Spørgsmål til Frank** (ud over de tre forslag nedenfor, som testene bruger):
+- **Spørgsmål til Frank** (ud over de tre forslag nedenfor, som testene bruger; besvaret 17. nov., se Franks svar nedenfor):
   - Er aflæsningsreglerne i punkt 6 og 8 rigtige: romersk kald tvetydigt ved singleton på bordet og en høj ulige som "skift" uden retning; kald og afvisning med "de to laveste usete = lavt"; første afkast med grænsen mellem 6 og 7?
   - Må singleton og doubleton udelades i regel 11 og udspillets længde (mindste længde 4 eller 3)?
   - Må `CLAUDE.md` ændres i trin 1 (et afsnit om sporet, som de andre spor har)?
@@ -211,7 +212,7 @@ Sværheden tilpasses som i Pointregnskab ud fra de seneste 20 svar.
   6. I øvelse 6 er afkastet et tilfældigt kort under B, og makker har flere kort i farven end den, der ikke kan bekende, så det er første gang, en modspiller ikke kan bekende.
   7. I øvelse 7 vælger makker passivt (laveste og næstlaveste) eller aktivt (højeste under B og så laveste).
   8. Fra niveau 3 trækkes først, om svaret skal være uklart (20 %), og så vælges en øvelse, der kan give et uklart svar med profilen. Fordelingen af de uklare svar: Standard 409 i udspillets længde; Omvendt 201 i regel 11 og 12 og 208 i længden; Kompendiet 123 i regel 11 og 12, 156 i længden, 60 "kan ikke afgøres" og 70 "tvetydig" i markeringen (2.000 opgaver pr. profil).
-- **Spørgsmål til Frank fra fase 2:**
+- **Spørgsmål til Frank fra fase 2** (besvaret 17. nov., se Franks svar nedenfor):
   - Er kravene til et naturligt meldeforløb (valg 1) og til spilførers farve (valg 5) rigtige?
   - Stavekontrollen finder "accepttest", "brute" og "seeds" i titlerne i `src/modspil/kontrol.ts` fra fase 1. De kan skrives om i `kontrol.ts` (en ændring i en test, kun ordlyd) eller komme i `scripts/ordliste.txt` (uden for `src/modspil/`, så ikke i trin 1). Metodefilens 209 ord og 3.825 forklaringer fra generatoren har ingen ukendte danske ord.
 - **Tokenforbrug, fase 2** (nye input, skrevet til cachen, læst fra cachen og output; fra logfilerne):
@@ -221,10 +222,18 @@ Sværheden tilpasses som i Pointregnskab ud fra de seneste 20 svar.
 - **Status:** trin 1 er bygget og stoppet før merge. Venter på Franks godkendelse og svar på spørgsmålene ovenfor.
 
 
-**Til Franks bekræftelse ved gennemgangen** (gælder profilen Kompendiet):
+**Til Franks bekræftelse ved gennemgangen** (gælder profilen Kompendiet; alle tre er godkendt 17. nov., Franks svar 1):
 - **Udspil mod sans fra Hxx** (honnør tredje), fx K 7 2: Kompendiet siger det ikke. Forslag: laveste. Bekræft.
 - **Udspil mod farve fra fem kort med honnør,** fx K 9 6 4 2: Med 1.-3.-5. højeste er både 9 (3.) og 2 (5.) mulige. Forslag: 5.-højeste (lavest), så 3.-højeste viser en trefarve. Bekræft.
 - **"Næsthøjeste fra en tier":** gælder det fra 10 x x og fra 10 x x x? Forslag: ja til begge.
+
+**Franks svar, 17. nov. 2026** (på spørgsmålene fra fase 1 og 2 og de tre forslag ovenfor; bygget ind i fase 3, "Franks svar"):
+1. **Kompendiets tre forslag er godkendt:** laveste fra Hxx mod sans, 5.-højeste fra K 9 6 4 2 mod farve og næsthøjeste fra både 10 x x og 10 x x x.
+2. **Aflæsningen:** romersk kald er tvetydigt ved singleton på bordet: ja. "De to laveste usete kort er lave": ja. Første afkast har **ikke** en fast grænse mellem 6 og 7. Det følger samme relative regel som romersk kald: en lille lige er et af de to laveste usete lige kort, og en stor lige er det 3. eller 4. laveste. Testene rettes, så de følger reglen (fase 1's valg 8 er erstattet).
+3. **Singleton og doubleton** må udelades i v1 (fase 1's valg 4).
+4. **`CLAUDE.md`** må have ét afsnit om Modspil-modellen.
+5. **Kravene til meldeforløbet er godkendt** (fase 2's valg 1 og 5): mindst 23 hp hos Nord–Syd, mindst otte trumf mod farve, og mod sans har spilførers farve mindst syv kort hos Nord–Syd.
+6. **Titlerne i `src/modspil/kontrol.ts`** skrives på dansk: "brute force" bliver "uafhængig gennemregning", og "10.000 seeds" bliver "10.000 tilfældige spil". "Accepttest" bliver stående; ordlisten kommer i trin 2.
 
 ## Arbejdsgang (trin 1)
 
