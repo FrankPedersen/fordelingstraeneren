@@ -13,7 +13,8 @@ import { profil } from './model/metoder';
  *     | { type: 'tal'; tal: number }                         // øvelse 2: Syds kort over udspillet
  *     | { type: 'laengder'; laengder: number[] }             // øvelse 3 og 4: mulige længder, stigende
  *     | { type: 'signal'; signal: Signal }                   // øvelse 4 og 6: aflæsningen
- *     | { type: 'kort'; kort: Card[] }                       // øvelse 2 (hvilke), 5, 6 og 7: kortene, stigende
+ *     | { type: 'kort'; kort: Card[]; tvetydig?: true }      // øvelse 2 (hvilke), 5, 6 og 7: kortene, stigende; tvetydig
+ *                                                            // kun i Vælg afkastet uden entydigt kort (Franks svar 1, 17. nov.)
  *     | { type: 'forsinket'; vaerdi: 'passiv' | 'aktiv' }    // øvelse 7: aflæsningen
  *     | { type: 'kan-ikke-afgoeres' }
  *     | { type: 'tvetydig' };

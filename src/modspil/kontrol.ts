@@ -8,7 +8,9 @@ import type { Profil } from './model/metoder';
  * `antal` (niveauet går på omgang mellem øvelsens niveauer), og facit, metoden og (i regel 11 og 12) hvilke skal være
  * de samme som den uafhængige gennemregning (brute force) i `bruteforce.ts`, der ikke deler kode med løseren. Kun til
  * testene; appen henter ikke filen. Titlerne er på dansk (Franks svar 6, 17. nov. 2026): "uafhængig gennemregning" og
- * "tilfældige spil" i stedet for "brute force" og "seeds".
+ * "tilfældige spil" i stedet for "brute force" og "seeds". I første afkast skal der også være opgaver i Vælg afkastet
+ * uden et entydigt kort (Franks svar 1, 17. nov. 2026), så reglen for det tvetydige tilfælde kontrolleres mod
+ * gennemregningen.
  */
 
 /** Data uden felter, der er undefined, og med nøglerne i fast orden. */
@@ -35,12 +37,14 @@ export function kontrolSuite(navn: string, profil: Profil, antal: number): void 
         if (!harOvelse(ovelse, profil)) ctx.skip(`profilen har ikke øvelsen ${ovelse}`);
         const niveauer = ([1, 2, 3, 4, 5] as Niveau[]).filter((n) => n >= FOERSTE_NIVEAU[ovelse]);
         const fejl: string[] = [];
+        let tvetydige = 0;
         for (let seed = 1; seed <= antal && fejl.length < 10; seed++) {
           const niveau = niveauer[seed % niveauer.length];
           const hvor = `seed ${seed}, niveau ${niveau}`;
           try {
             const o = lavOpgave(ovelse, niveau, seed, profil);
             const b = bruteFacit(o);
+            if (o.facit.type === 'kort' && (o.facit as { tvetydig?: boolean }).tvetydig === true) tvetydige++;
             if (!ens(o.facit, b.facit)) fejl.push(`${hvor}: facit ${vis(o.facit)}, gennemregningen ${vis(b.facit)}`);
             if (!ens(o.metode, b.metode)) fejl.push(`${hvor}: metoden ${vis(o.metode)}, gennemregningen ${vis(b.metode)}`);
             if (o.hvilke !== undefined && !ens(o.hvilke, b.hvilke)) fejl.push(`${hvor}: hvilke ${vis(o.hvilke)}, gennemregningen ${vis(b.hvilke)}`);
@@ -49,6 +53,7 @@ export function kontrolSuite(navn: string, profil: Profil, antal: number): void 
           }
         }
         expect(fejl).toEqual([]);
+        if (ovelse === 'afkast') expect(tvetydige, 'opgaver i Vælg afkastet uden et entydigt kort').toBeGreaterThan(0);
       });
     }
   });

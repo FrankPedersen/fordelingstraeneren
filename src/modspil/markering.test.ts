@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import type { Card } from '../domain/cards';
 import { medMetode, profil } from './model/metoder';
-import { aflaesAfkast, aflaesForsinket, aflaesTilspil, vaelgAfkast, vaelgForsinket, vaelgTilspil, type Afkast, type Tilspil } from './model/markering';
+import { vaelgAfkastBF } from './bruteforce';
+import { aflaesAfkast, aflaesForsinket, aflaesTilspil, vaelgAfkast, vaelgAfkastFacit, vaelgForsinket, vaelgTilspil, type Afkast, type Tilspil } from './model/markering';
 import type { Kontrakt } from './model/udspil';
 
 /*
@@ -27,7 +28,11 @@ import type { Kontrakt } from './model/udspil';
  *   }
  *   export function aflaesAfkast(a: Afkast, profil: Profil): Facit;                                    // { type: 'signal' }
  *   export function vaelgAfkast(v: { kontrakt: Kontrakt; spilfoerersFarve: number; haand: readonly Card[]; synlige: readonly Card[]; onske: number }, profil: Profil): Card[];
- *     // synlige: de kort, brugeren ser ud over sin hånd (bordets kort og de spillede kort)
+ *     // synlige: de kort, brugeren ser ud over sin hånd (bordets kort og de spillede kort); de kort, makker læser ens
+ *     // i alle fordelinger
+ *   export function vaelgAfkastFacit(v: <som vaelgAfkast>, profil: Profil): Facit;
+ *     // { type: 'kort', kort } med de entydige kort; er intet kort entydigt, { type: 'kort', kort, tvetydig: true } med
+ *     // de kort, der læses rigtigt i flest fordelinger (Franks svar 1, 17. nov. 2026)
  *   export function aflaesForsinket(foerste: number, anden: number, profil: Profil): Facit;          // { type: 'forsinket' }
  *   export function vaelgForsinket(holding: readonly number[], onske: 'passiv' | 'aktiv', profil: Profil): number;
  *   // aflaesForsinket og vaelgForsinket kaster, når profilen ikke har omvendt forsinket kald.
@@ -220,6 +225,69 @@ describe('O/E (accepttest 5): første gang der ikke kan bekendes', () => {
     expect(aflaesAfkast(afkast(8, hoeje), egen)).toEqual(signal('skift-lav'));
     expect(aflaesAfkast(afkast(8, hoeje, '3NT'), egen)).toEqual(signal('kald'));
     expect(aflaesAfkast(afkast(9, hoeje, '3NT'), egen)).toEqual(signal('afvisning'));
+  });
+});
+
+describe('Vælg afkastet uden et entydigt kort (Franks svar 1, 17. nov. 2026)', () => {
+  // Facit er de kort, makker læser som et kald til den ønskede farve i alle fordelinger af de kort, brugeren ikke kan se.
+  // Er intet kort entydigt, er facit det kort, der læses rigtigt i flest fordelinger, og opgaven er tvetydig. "Flest"
+  // måles som andelen af afkastfarvens fordelinger, og kort, der står lige, er alle facit. Gennemregningen i
+  // bruteforce.ts tæller fordelingerne én for én og skal give det samme som modellen.
+  const facit = (kortene: Card[], tvetydig: boolean) => (tvetydig ? { type: 'kort', kort: kortene, tvetydig: true } : { type: 'kort', kort: kortene });
+  const sorteret = (xs: number[]) => [...xs].sort((a, b) => a - b);
+  /** Modellens og gennemregningens facit mod 4♥ (spilførers farve ♥). */
+  function begge(haand: Card[], bord: Card[], onske: number, p: typeof standard) {
+    const bf = vaelgAfkastBF('4H', 1, haand, bord, onske, p);
+    return {
+      model: vaelgAfkastFacit({ kontrakt: '4H', spilfoerersFarve: 1, haand, synlige: bord, onske }, p),
+      gennemregning: facit(bf.kort, bf.tvetydig),
+    };
+  }
+  /** Eksemplet fra "vælg afkastet" ovenfor: ♠D 7 4, ♦10 8 6 3 og ♣6 5 2 på hånden; bordet ♠E 6 2, ♥E K 7 3, ♦K 9 5 4 og ♣8 3. */
+  const haand1 = [kort(0, D), kort(0, 7), kort(0, 4), kort(2, 10), kort(2, 8), kort(2, 6), kort(2, 3), kort(3, 6), kort(3, 5), kort(3, 2)];
+  const bord1 = [kort(0, E), kort(0, 6), kort(0, 2), kort(1, E), kort(1, K), kort(1, 7), kort(1, 3), kort(2, K), kort(2, 9), kort(2, 5), kort(2, 4), kort(3, 8), kort(3, 3)];
+  /** ♠K 9 6 3, ♦E 8 5 og ♣E D 4 på hånden; bordet ♠E 10 7, ♥K D 7 3, ♦D 9 og `lav`, og ♣K 8 6. */
+  const haand2 = [kort(0, K), kort(0, 9), kort(0, 6), kort(0, 3), kort(2, E), kort(2, 8), kort(2, 5), kort(3, E), kort(3, D), kort(3, 4)];
+  const bord2 = (lav: number) => [kort(0, E), kort(0, 10), kort(0, 7), kort(1, K), kort(1, D), kort(1, 7), kort(1, 3), kort(2, D), kort(2, 9), kort(2, lav), kort(3, K), kort(3, 8), kort(3, 6)];
+
+  it('Standard, ønsket ♠: intet ♠-kort er altid højt, så facit er ♠7, der er højt i 3 af 4 fordelinger, og opgaven er tvetydig', () => {
+    // De skjulte ♠ er 3, 5, 8, 9, 10, B og K. Med højt = kald er ♠7 et af de to laveste kort, makker ikke kan se, kun når
+    // makker selv har både ♠3 og ♠5 (brugerens ♠4 er under den); i de andre 3 af 4 fordelinger af ♠3 og ♠5 er den høj,
+    // altså kald. ♠4 er altid lav (kun ♠3 kan ligge under den), altså afvisning i alle fordelinger.
+    expect(vaelgAfkast({ kontrakt: '4H', spilfoerersFarve: 1, haand: haand1, synlige: bord1, onske: 0 }, standard)).toEqual([]);
+    const { model, gennemregning } = begge(haand1, bord1, 0, standard);
+    expect(gennemregning).toEqual(facit([kort(0, 7)], true));
+    expect(model).toEqual(facit([kort(0, 7)], true));
+  });
+
+  it('Kompendiet (O/E), ønsket ♣: ♠6 og ♦8 er små lige i lige mange fordelinger, så begge er facit, og opgaven er tvetydig', () => {
+    // Intet ulige ♣ under B på hånden. En lille lige i ♠ eller ♦ beder om ♣ (den laveste af de to andre farver). ♠6 har ♠2
+    // og ♠4 skjult under sig og ♦8 har ♦4 og ♦6 (bordet har ♦2): hver er lille, medmindre spilfører har begge de lavere
+    // lige kort, altså i 3 af 4 fordelinger. ♣4 beder om ♦, og de ulige kort kalder til deres egen farve.
+    const { model, gennemregning } = begge(haand2, bord2(2), 3, kompendiet);
+    expect(gennemregning).toEqual(facit(sorteret([kort(0, 6), kort(2, 8)]), true));
+    expect(model).toEqual(facit(sorteret([kort(0, 6), kort(2, 8)]), true));
+  });
+
+  it('Kompendiet, ønsket ♣ med ♦3 på bordet i stedet for ♦2: ♦8 har tre skjulte lige kort under sig og læses sjældnere rigtigt end ♠6', () => {
+    // ♦8 er lille i (1 + 3) af 8 fordelinger af ♦2, ♦4 og ♦6 (halvdelen), ♠6 stadig i 3 af 4: facit er kun ♠6.
+    const { model, gennemregning } = begge(haand2, bord2(3), 3, kompendiet);
+    expect(gennemregning).toEqual(facit([kort(0, 6)], true));
+    expect(model).toEqual(facit([kort(0, 6)], true));
+  });
+
+  it('med et entydigt kort er opgaven ikke tvetydig, og facit er de entydige kort', () => {
+    for (const [haand, bord, onske, p, forventet] of [
+      [haand1, bord1, 2, standard, sorteret([kort(2, 8), kort(2, 10)])],
+      [haand1, bord1, 0, omvendt, [kort(0, 4)]],
+      [haand1, bord1, 3, kompendiet, sorteret([kort(0, 4), kort(2, 6), kort(3, 5)])],
+      [haand2, bord2(2), 0, kompendiet, sorteret([kort(0, 3), kort(0, 9)])],
+      [haand2, bord2(2), 2, kompendiet, sorteret([kort(2, 5), kort(3, 4)])],
+    ] as [Card[], Card[], number, typeof standard, Card[]][]) {
+      const { model, gennemregning } = begge(haand, bord, onske, p);
+      expect(gennemregning, `ønske ${onske}`).toEqual(facit(forventet, false));
+      expect(model, `ønske ${onske}`).toEqual(facit(forventet, false));
+    }
   });
 });
 

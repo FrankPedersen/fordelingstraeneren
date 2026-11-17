@@ -48,6 +48,9 @@ const PROFILER: [string, Profil][] = [
 const NIVEAUER: Niveau[] = [1, 2, 3, 4, 5];
 const niveauerFor = (ovelse: Ovelse) => NIVEAUER.filter((n) => n >= FOERSTE_NIVEAU[ovelse]);
 const UKLAR = new Set(['kan-ikke-afgoeres', 'tvetydig']);
+/** Vælg afkastet uden et entydigt kort er tvetydig (Franks svar 1, 17. nov. 2026): facit er kort med `tvetydig: true`. */
+const tvetydigtAfkast = (f: ModspilOpgave['facit']): boolean => f.type === 'kort' && (f as { tvetydig?: boolean }).tvetydig === true;
+const erUklar = (f: ModspilOpgave['facit']): boolean => UKLAR.has(f.type) || tvetydigtAfkast(f);
 const vaerdi = (kort: number) => (kort % 13) + 2;
 const farveAf = (kort: number) => Math.floor(kort / 13);
 
@@ -125,7 +128,8 @@ describe('Opgaverne (Løser, generator og facit punkt 1–5)', () => {
     for (const o of alle) {
       const n = navn(o);
       expect(FACITTYPER[o.ovelse], n).toContain(o.facit.type);
-      if (o.niveau <= 2) expect(UKLAR.has(o.facit.type), n).toBe(false);
+      if (o.niveau <= 2) expect(erUklar(o.facit), n).toBe(false);
+      if (tvetydigtAfkast(o.facit)) expect([o.ovelse, sp(o).variant], n).toEqual(['afkast', 'vaelg']);
       if (o.ovelse === 'afkast') expect(o.facit.type, n).toBe(sp(o).variant === 'aflaes' ? 'signal' : 'kort');
       if (o.ovelse === 'forsinket') expect(o.facit.type, n).toBe(sp(o).variant === 'aflaes' ? 'forsinket' : 'kort');
       if (o.ovelse === 'vaelg-kort') expect(['kald', 'afvisning', 'skift-lav', 'skift-hoej'], n).toContain(sp(o).onske);
@@ -187,6 +191,7 @@ describe('Opgaverne (Løser, generator og facit punkt 1–5)', () => {
         fejl.push(`${navn(o)}: metoden mangler`);
         continue;
       }
+      if (tvetydigtAfkast(o.facit) && (!da.includes('tvetydig') || !en.includes('ambiguous'))) fejl.push(`${navn(o)}: "${da}" siger ikke, at opgaven er tvetydig`);
       const m = metode(o.metode.kategori, o.metode.id);
       if (!da.toLowerCase().includes(m.tekst.toLowerCase())) fejl.push(`${navn(o)}: "${da}" nævner ikke "${m.tekst}"`);
       if (!en.toLowerCase().includes(m.tekstEn.toLowerCase())) fejl.push(`${navn(o)}: "${en}" nævner ikke "${m.tekstEn}"`);
@@ -215,17 +220,22 @@ describe('Genskabelse (accepttest 8)', () => {
 });
 
 describe('Andelen af "kan ikke afgøres" (accepttest 9)', () => {
+  // "Tvetydig" i Vælg afkastet tæller med i andelen, og generatoren styrer den som de andre uklare svar (valg efter
+  // Franks svar 1, 17. nov. 2026): alle tre profiler har opgaver i Vælg afkastet uden et entydigt kort.
   it('fra niveau 3 ligger andelen mellem 15 og 25 % over 2.000 opgaver for hver profil', { timeout: 180_000 }, () => {
     for (const [id, p] of PROFILER) {
       let uklare = 0;
+      let afkast = 0;
       for (let seed = 1; seed <= 2000; seed++) {
         const niveau = (3 + (seed % 3)) as Niveau;
         const o = lavNiveauOpgave(niveau, seed, p);
         expect(o.niveau).toBe(niveau);
         expect(harOvelse(o.ovelse, p), `${id}: ${o.ovelse}`).toBe(true);
         expect(o.niveau).toBeGreaterThanOrEqual(FOERSTE_NIVEAU[o.ovelse]);
-        if (UKLAR.has(o.facit.type)) uklare++;
+        if (erUklar(o.facit)) uklare++;
+        if (tvetydigtAfkast(o.facit)) afkast++;
       }
+      expect(afkast, `${id}: tvetydige opgaver i Vælg afkastet`).toBeGreaterThan(0);
       const andel = uklare / 2000;
       expect(andel, `${id}: ${(andel * 100).toFixed(1)} %`).toBeGreaterThanOrEqual(0.15);
       expect(andel, `${id}: ${(andel * 100).toFixed(1)} %`).toBeLessThanOrEqual(0.25);

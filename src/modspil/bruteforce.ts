@@ -64,9 +64,11 @@ import type { ModspilOpgave } from './model/generator';
  * laveste i A (laveste af de to andre farver), ellers højt (højeste). Som kald eller afvisning: kaldmetoden i
  * afkastfarven med samme lavt (romersk kald mod farve læses som O/E). "De to andre farver" er dem, der hverken er
  * spilførerens farve eller afkastfarven; mod farve er spilførerens farve trumf.
- * Vælges afkastet, er makker læseren, og brugeren kan ikke se hans kort: facit er alle brugerens kort under B, som
- * makker læser som et kald til den ønskede farve i alle fordelinger af farvens kort, brugeren ikke kan se, mellem makker
- * og spilfører (hver fordeling tælles for sig).
+ * Vælges afkastet, er makker læseren, og brugeren kan ikke se hans kort (Franks svar 1, 17. nov. 2026): facit er alle
+ * brugerens kort under B, som makker læser som et kald til den ønskede farve i alle fordelinger af farvens kort, brugeren
+ * ikke kan se, mellem makker og spilfører (hver fordeling tælles for sig). Er intet kort entydigt, er facit det kort, der
+ * læses rigtigt i flest fordelinger, og opgaven er tvetydig. "Flest" måles som andelen af afkastfarvens fordelinger, så
+ * kort fra farver med forskelligt antal skjulte kort kan sammenlignes; står flere kort lige, er de alle facit.
  *
  * Omvendt forsinket kald (øvelse 7): lav-høj = passiv, høj-lav = aktiv. Vælges rækkefølgen, er facit det første kort:
  * det laveste for passiv og det højeste kort under B for aktiv.
@@ -81,7 +83,7 @@ export type BruteFacit =
   | { type: 'tal'; tal: number }
   | { type: 'laengder'; laengder: number[] }
   | { type: 'signal'; signal: Signal }
-  | { type: 'kort'; kort: Card[] }
+  | { type: 'kort'; kort: Card[]; tvetydig?: true }
   | { type: 'forsinket'; vaerdi: 'passiv' | 'aktiv' }
   | { type: 'kan-ikke-afgoeres' }
   | { type: 'tvetydig' };
@@ -380,14 +382,18 @@ function bederOm(s: Signal, d: number, spilfoerersFarve: number): number {
 }
 
 /**
- * Alle afkast (brugerens kort under B uden for spilførerens farve), som makker læser som et kald til farven `onske`,
- * uanset hvor farvens kort, brugeren ikke kan se, sidder. `synlige` er det, brugeren ser ud over sin hånd: bordets kort
- * og de spillede kort. Hver fordeling af de skjulte kort i afkastfarven mellem makker og spilfører tælles for sig; makker
- * kan se sine egne kort, bordets og de spillede, men ikke brugerens og spilførerens.
+ * Facit i Vælg afkastet (Franks svar 1, 17. nov. 2026). For hvert af brugerens kort under B uden for spilførerens farve
+ * tælles de fordelinger af afkastfarvens skjulte kort mellem makker og spilfører, hvor makker læser kortet som et kald til
+ * farven `onske`. `synlige` er det, brugeren ser ud over sin hånd: bordets kort og de spillede kort. Makker kan se sine
+ * egne kort, bordets og de spillede, men ikke brugerens og spilførerens.
+ * - Kort, der læses rigtigt i alle fordelinger, er facit.
+ * - Findes intet sådant kort, er facit de kort, der læses rigtigt i den største andel af fordelingerne (alle, der står
+ *   lige), og opgaven er tvetydig.
+ * - Kan intet kort læses rigtigt, er listen tom.
  */
-export function vaelgAfkastBF(kontrakt: string, spilfoerersFarve: number, haand: readonly Card[], synlige: readonly Card[], onske: number, profil: ProfilData): Card[] {
+export function vaelgAfkastBF(kontrakt: string, spilfoerersFarve: number, haand: readonly Card[], synlige: readonly Card[], onske: number, profil: ProfilData): { kort: Card[]; tvetydig: boolean } {
   const set = new Set([...haand, ...synlige]);
-  const ud: Card[] = [];
+  const andele: [Card, number][] = [];
   for (const kort of haand) {
     const d = farveAf(kort);
     const v = vaerdiAf(kort);
@@ -395,15 +401,20 @@ export function vaelgAfkastBF(kontrakt: string, spilfoerersFarve: number, haand:
     const egne = iFarven(haand, d);
     const skjulte: number[] = [];
     for (let w = 2; w <= 14; w++) if (!set.has(kortAf(d, w))) skjulte.push(w);
-    let altid = true;
-    for (let maske = 0; maske < 1 << skjulte.length && altid; maske++) {
+    const alle = 1 << skjulte.length;
+    let rigtige = 0;
+    for (let maske = 0; maske < alle; maske++) {
       // Makker har de skjulte kort, hvis bit er 1; spilfører har resten.
       const spilfoerers = skjulte.filter((_, i) => ((maske >> i) & 1) === 0);
-      altid = bederOm(laesAfkastBF(v, [...egne, ...spilfoerers], kontrakt, profil), d, spilfoerersFarve) === onske;
+      if (bederOm(laesAfkastBF(v, [...egne, ...spilfoerers], kontrakt, profil), d, spilfoerersFarve) === onske) rigtige++;
     }
-    if (altid) ud.push(kort);
+    andele.push([kort, rigtige / alle]);
   }
-  return stigende(ud);
+  const sikre = andele.filter(([, a]) => a === 1).map(([k]) => k);
+  if (sikre.length) return { kort: stigende(sikre), tvetydig: false };
+  const bedst = Math.max(0, ...andele.map(([, a]) => a));
+  if (bedst === 0) return { kort: [], tvetydig: false };
+  return { kort: stigende(andele.filter(([, a]) => a === bedst).map(([k]) => k)), tvetydig: true };
 }
 
 // ---------------------------------------------------------------- omvendt forsinket kald
@@ -554,9 +565,9 @@ export function bruteFacit(o: ModspilOpgave): BruteSvar {
       const haand = o.haender[o.plads].filter((c) => !spillede.has(c));
       if (haand.some((c) => farveAf(c) === spilfoerersFarve)) fejl('brugeren kan stadig bekende');
       const synlige = [...o.haender.N, ...o.spillet.map((k) => k.kort)];
-      const kort = vaelgAfkastBF(o.kontrakt, spilfoerersFarve, haand, synlige, q.onske as number, o.profil);
-      if (!kort.length) fejl('intet afkast viser den ønskede farve');
-      return { facit: { type: 'kort', kort }, metode };
+      const { kort, tvetydig } = vaelgAfkastBF(o.kontrakt, spilfoerersFarve, haand, synlige, q.onske as number, o.profil);
+      if (!kort.length) fejl('intet afkast kan vise den ønskede farve');
+      return { facit: tvetydig ? { type: 'kort', kort, tvetydig: true } : { type: 'kort', kort }, metode };
     }
     case 'forsinket': {
       if (o.profil.valg.forsinket !== 'omvendt-forsinket') fejl('profilen har ikke omvendt forsinket kald');
