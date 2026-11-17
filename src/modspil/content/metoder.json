@@ -1,0 +1,223 @@
+{
+  "kategorier": [
+    {
+      "id": "udspil-sans",
+      "tekst": "Udspil mod sans, lavt kort",
+      "tekstEn": "Lead against notrump, low card",
+      "metoder": [
+        {
+          "id": "fjerde-hoejeste",
+          "tekst": "4.-højeste",
+          "tekstEn": "fourth highest",
+          "aftale": "Fra fire kort eller flere spilles det fjerdehøjeste kort ud. Fra tre kort spilles det laveste med en honnør og ellers det højeste.",
+          "aftaleEn": "From four or more cards the fourth highest is led. From three cards the lowest is led with an honour, otherwise the highest."
+        },
+        {
+          "id": "tredje-femte",
+          "tekst": "3. og 5. højeste",
+          "tekstEn": "third and fifth highest",
+          "aftale": "Fra tre og fire kort spilles det tredjehøjeste kort ud, fra fem kort eller flere det femtehøjeste.",
+          "aftaleEn": "From three and four cards the third highest is led, from five or more cards the fifth highest."
+        },
+        {
+          "id": "kompendiets",
+          "tekst": "Kompendiets udspil",
+          "tekstEn": "the Compendium's leads",
+          "kilde": "Kompendium over modspilsaftaler",
+          "aftale": "Fra en farve med honnør og mindst fire kort spilles 4.-højeste ud, fra honnør tredje det laveste. Fra småkort (højst en 9'er) spilles det tredje laveste: fra tre små det højeste og fra fire små det næsthøjeste. Fra en tier spilles det næsthøjeste.",
+          "aftaleEn": "From a suit with an honour and at least four cards the fourth highest is led, from honour third the lowest. From small cards (nine or lower) the third lowest is led: the highest from three small and the second highest from four small. From a ten the second highest is led."
+        }
+      ]
+    },
+    {
+      "id": "udspil-farve",
+      "tekst": "Udspil mod farve, lavt kort",
+      "tekstEn": "Lead against a suit contract, low card",
+      "metoder": [
+        {
+          "id": "fjerde-hoejeste",
+          "tekst": "4.-højeste",
+          "tekstEn": "fourth highest",
+          "aftale": "Fra fire kort eller flere spilles det fjerdehøjeste kort ud. Fra tre kort spilles det laveste med en honnør og ellers det højeste.",
+          "aftaleEn": "From four or more cards the fourth highest is led. From three cards the lowest is led with an honour, otherwise the highest."
+        },
+        {
+          "id": "tredje-femte",
+          "tekst": "3. og 5. højeste",
+          "tekstEn": "third and fifth highest",
+          "aftale": "Fra tre og fire kort spilles det tredjehøjeste kort ud, fra fem kort eller flere det femtehøjeste.",
+          "aftaleEn": "From three and four cards the third highest is led, from five or more cards the fifth highest."
+        }
+      ]
+    },
+    {
+      "id": "honnoerudspil",
+      "tekst": "Honnørudspil",
+      "tekstEn": "Honour leads",
+      "metoder": [
+        {
+          "id": "top-af-sekvens",
+          "tekst": "top af sekvens",
+          "tekstEn": "top of sequence",
+          "aftale": "Fra en honnørsekvens spilles toppen ud, fx esset fra E K. Mod sans kræver det tre kort i træk eller en brudt sekvens (K D 10); to honnørkort i træk med små kort afgøres af \"table feeling\".",
+          "aftaleEn": "From an honour sequence the top card is led, e.g. the ace from A K. Against notrump it takes three cards in a row or a broken sequence (K Q 10); two touching honours with small cards are left to table feeling."
+        },
+        {
+          "id": "ala-mod-sans",
+          "tekst": "ALA mod sans",
+          "tekstEn": "ALA against notrump",
+          "kilde": "Kompendium over modspilsaftaler; ALA-tabellen besluttet 15. november 2026",
+          "farve": "top-af-sekvens",
+          "aftale": "Mod sans følger honnørudspillet ALA-tabellen: E K x x x(+) → K, E K x x → E, E K D x(x) → E, E K B 10(x) → K, K D B og K D 10 9(x) → K, K D x x(x) → D, D B 10 og D B 9 → D, B 10 9 og 10 9 8 → toppen. Es og dame beder om kald eller afvisning, kongen om længdemarkering. Mod farve spilles toppen af sekvensen.",
+          "aftaleEn": "Against notrump honour leads follow the ALA table: A K x x x(+) → K, A K x x → A, A K Q x(x) → A, A K J 10(x) → K, K Q J and K Q 10 9(x) → K, K Q x x(x) → Q, Q J 10 and Q J 9 → Q, J 10 9 and 10 9 8 → the top. Ace and queen ask for attitude, the king for count. Against a suit contract the top of the sequence is led."
+        }
+      ]
+    },
+    {
+      "id": "kald",
+      "tekst": "Kald eller afvisning på makkers udspil",
+      "tekstEn": "Attitude on partner's lead",
+      "metoder": [
+        {
+          "id": "hoejt-kald",
+          "tekst": "højt = kald",
+          "tekstEn": "high encourages",
+          "aftale": "Et højt kort kalder til udspilsfarven, et lavt kort afviser.",
+          "aftaleEn": "A high card encourages the suit led, a low card discourages."
+        },
+        {
+          "id": "lavt-kald",
+          "tekst": "lavt = kald",
+          "tekstEn": "low encourages",
+          "aftale": "Et lavt kort kalder til udspilsfarven, et højt kort afviser.",
+          "aftaleEn": "A low card encourages the suit led, a high card discourages."
+        },
+        {
+          "id": "romersk-kald",
+          "tekst": "romersk kald",
+          "tekstEn": "Roman signals",
+          "kilde": "Kompendium over modspilsaftaler, s. 25–26",
+          "sans": "lavt-kald",
+          "aftale": "Mod farve, når hverken udspillets kort eller bordets kort stikkes: et ulige kort kalder til udspilsfarven (det mindste ulige kort), en lille lige foreslår skift til den laveste og en høj lige til den højeste af de to andre farver; trumf tæller ikke med. Uden lige kort kan en høj ulige (9 og op) vise ønske om skift. Mod sans gælder lavt = kald.",
+          "aftaleEn": "Against a suit contract, when neither the card led nor dummy's card is beaten: an odd card encourages the suit led (the lowest odd card), a low even card suggests a switch to the lower and a high even card to the higher of the two other suits; trumps do not count. Without an even card a high odd card (nine or higher) can ask for a switch. Against notrump low encourages."
+        }
+      ]
+    },
+    {
+      "id": "laengde",
+      "tekst": "Længdemarkering",
+      "tekstEn": "Count signal",
+      "metoder": [
+        {
+          "id": "hoejt-lavt-lige",
+          "tekst": "højt-lavt = lige",
+          "tekstEn": "high-low = even",
+          "aftale": "Et højt kort efterfulgt af et lavt viser et lige antal kort, lavt-højt et ulige antal.",
+          "aftaleEn": "A high card followed by a low one shows an even number of cards, low-high an odd number."
+        },
+        {
+          "id": "lavt-hoejt-lige",
+          "tekst": "lavt-højt = lige",
+          "tekstEn": "low-high = even",
+          "aftale": "Et lavt kort efterfulgt af et højt viser et lige antal kort, højt-lavt et ulige antal.",
+          "aftaleEn": "A low card followed by a high one shows an even number of cards, high-low an odd number."
+        }
+      ]
+    },
+    {
+      "id": "afkast",
+      "tekst": "Første afkast",
+      "tekstEn": "First discard",
+      "metoder": [
+        {
+          "id": "som-kald-afvisning",
+          "tekst": "som kald eller afvisning",
+          "tekstEn": "as attitude",
+          "aftale": "Første afkast følger aftalen om kald eller afvisning i afkastfarven: et kald viser farven, en afvisning siger intet om de andre. Med romersk kald mod farve læses afkastet som O/E.",
+          "aftaleEn": "The first discard follows the attitude agreement in the suit discarded: an encouraging card shows the suit, a discouraging card says nothing about the others. With Roman signals against a suit contract the discard is read as odd/even."
+        },
+        {
+          "id": "ulige-lige",
+          "tekst": "O/E",
+          "tekstEn": "odd/even",
+          "kilde": "Kompendium over modspilsaftaler, s. 24",
+          "aftale": "Første gang en modspiller ikke kan bekende: et ulige kort kalder til afkastfarven, en lille lige viser styrke i den laveste og en stor lige i den højeste af de to andre farver (klør er lavest).",
+          "aftaleEn": "The first time a defender cannot follow suit: an odd card encourages the suit discarded, a low even card shows strength in the lower and a high even card in the higher of the two other suits (clubs are lowest)."
+        },
+        {
+          "id": "lavinthal",
+          "tekst": "Lavinthal",
+          "tekstEn": "Lavinthal",
+          "aftale": "Afkastet beder om en af de to andre farver: et lavt kort om den laveste, et højt kort om den højeste.",
+          "aftaleEn": "The discard asks for one of the two other suits: a low card for the lower, a high card for the higher."
+        }
+      ]
+    },
+    {
+      "id": "forsinket",
+      "tekst": "Forsinket kald i spilførers første farve",
+      "tekstEn": "Delayed signal in declarer's first suit",
+      "metoder": [
+        {
+          "id": "intet-forsinket",
+          "tekst": "intet forsinket kald",
+          "tekstEn": "no delayed signal",
+          "aftale": "Rækkefølgen i spilførers første farve betyder intet særligt.",
+          "aftaleEn": "The order of cards in declarer's first suit has no special meaning."
+        },
+        {
+          "id": "omvendt-forsinket",
+          "tekst": "omvendt forsinket kald",
+          "tekstEn": "reverse delayed signal",
+          "kilde": "Kompendium over modspilsaftaler, s. 26",
+          "aftale": "I den første farve, spilfører spiller, gælder for både udspiller og tilspiller: lav-høj betyder \"fortsæt i farven, intet vigtigere at fortælle\" (passivt), og høj-lav betyder \"skift farve, spil aktivt\".",
+          "aftaleEn": "In the first suit declarer plays, for both the opening leader and his partner: low-high means \"continue, nothing more important to tell\" (passive), and high-low means \"switch, play actively\"."
+        }
+      ]
+    }
+  ],
+  "profiler": [
+    {
+      "id": "standard",
+      "tekst": "Standard",
+      "tekstEn": "Standard",
+      "valg": {
+        "udspil-sans": "fjerde-hoejeste",
+        "udspil-farve": "fjerde-hoejeste",
+        "honnoerudspil": "top-af-sekvens",
+        "kald": "hoejt-kald",
+        "laengde": "hoejt-lavt-lige",
+        "afkast": "som-kald-afvisning",
+        "forsinket": "intet-forsinket"
+      }
+    },
+    {
+      "id": "omvendt",
+      "tekst": "Omvendt",
+      "tekstEn": "Upside-down",
+      "valg": {
+        "udspil-sans": "fjerde-hoejeste",
+        "udspil-farve": "tredje-femte",
+        "honnoerudspil": "top-af-sekvens",
+        "kald": "lavt-kald",
+        "laengde": "lavt-hoejt-lige",
+        "afkast": "som-kald-afvisning",
+        "forsinket": "intet-forsinket"
+      }
+    },
+    {
+      "id": "kompendiet",
+      "tekst": "Kompendiet",
+      "tekstEn": "The Compendium",
+      "valg": {
+        "udspil-sans": "kompendiets",
+        "udspil-farve": "tredje-femte",
+        "honnoerudspil": "ala-mod-sans",
+        "kald": "romersk-kald",
+        "laengde": "lavt-hoejt-lige",
+        "afkast": "ulige-lige",
+        "forsinket": "omvendt-forsinket"
+      }
+    }
+  ]
+}
