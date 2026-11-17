@@ -270,7 +270,7 @@ export function forklarVaelgAfkast(g: AfkastGrundlag, onske: number, kortene: re
   const liste = (sprog: Sprog) => og(kortene.map((c) => kortNavn(Math.floor(c / 13), (c % 13) + 2, sprog)), sprog);
   const flere = kortene.length > 1;
   return {
-    da: `${i.da} ${regel.da}. ${flere ? 'Afkastene' : 'Afkastet'}, der beder om ${SYMBOLER[onske]}, ${flere ? 'er' : 'er'} ${liste('da')}.`,
+    da: `${i.da} ${regel.da}. ${flere ? 'Afkastene' : 'Afkastet'}, der beder om ${SYMBOLER[onske]}, er ${liste('da')}.`,
     en: `${i.en} ${regel.en}. The ${flere ? 'discards' : 'discard'} that ${flere ? 'ask' : 'asks'} for ${SYMBOLER[onske]}: ${liste('en')}.`,
   };
 }

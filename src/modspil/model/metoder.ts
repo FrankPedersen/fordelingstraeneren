@@ -65,6 +65,8 @@ export interface LavtUdspilRegel {
   lavtKort(h: readonly number[]): number;
   /** Den mindste længde, øvelse 2 og 3 regner med for et lavt udspil. */
   mindsteLaengde: number;
+  /** Vests antal kort over et lavt udspil, når det altid er det samme (4.-højeste: 3); ellers null. */
+  kortOver: number | null;
 }
 
 /** Svaret fra en honnørsekvens: ét kort, "table feeling" (toppen eller det lave kort) eller ingen sekvens. */
@@ -157,17 +159,20 @@ const FJERDE: LavtUdspilRegel = {
   // Fra tre kort indgår reglen ikke i øvelserne (mindste længde 4): med honnør det laveste, ellers det højeste.
   lavtKort: (h) => (h.length >= 4 ? h[3] : h[0] >= 11 ? h[h.length - 1] : h[0]),
   mindsteLaengde: 4,
+  kortOver: 3,
 };
 
 const TREDJE_FEMTE: LavtUdspilRegel = {
   lavtKort: (h) => (h.length >= 5 ? h[4] : h[2]),
   mindsteLaengde: 3,
+  kortOver: null,
 };
 
 const KOMPENDIETS: LavtUdspilRegel = {
   // Småkort (højst en 9'er): tredje laveste. En tier: næsthøjeste. Honnør: 4.-højeste, fra Hxx det laveste.
   lavtKort: (h) => (h[0] <= 9 ? h[h.length - 3] : h[0] === 10 ? h[1] : h.length >= 4 ? h[3] : h[2]),
   mindsteLaengde: 3,
+  kortOver: null,
 };
 
 /** Koden pr. metode: præcis filens kategorier og metoder (kontrolleres, når modulet indlæses). */
