@@ -484,3 +484,12 @@ Som trin 1. Efter "godkendt": flet, push og live-tjek af Modspil på www.kontrak
   - `C:\Users\frank\Kontraktbridge\skaermbilleder\modspil-skaerme\5-bred-session-1280.png`
 - **`SYSTEM.md`:** rækken for Modspil trin 2 (18. nov. 2026) har session 2's status og "Venter på Franks godkendelse; ikke flettet", og `modspil:v1` står under data med en note om, at nøglen kommer med trin 2.
 - **Tokenforbrug, session 2** (nye input, skrevet til cachen, læst fra cachen og output; fra logfilen): agenten (frisk session med specen som kontekst; 18. nov. 13:02–14:08 UTC): 175 svar; nye input 354, skrevet til cachen 1.182.864, læst fra cachen 67.195.262, output 243.686; i alt 68.622.166. Dette commit og rapporten er ikke talt med.
+
+**Franks svar 2, 18. nov. 2026** (ordret):
+
+> Modspil trin 2, svar fra Frank:
+> Streak og niveau: (a). Modspils kort viser streak og niveau og tæller med i 'I dag'; ret status.test.ts, src/app/forside.test.tsx, analyse-modul.test.tsx, velkomsten og vejledningen til fem spor.
+> Forsiden ved 1280 px: de fire grupper står 2 × 2 (styles.css).
+> 'Ved bordet' med generelle tekster er godkendt til v1.
+> Kortere tekster i rullelisterne i Indstillinger, så intet skæres af ved 390 px (fx 'ALA mod sans' og 'Lavt = kald; romersk mod farve').
+> Byg rettelserne i en frisk session uden at køre hele suiten. Kør derefter i en ny frisk session hele suiten og tjek-bred-layout.mjs én gang hver. …
