@@ -1,5 +1,5 @@
 import { dayOf } from '../../engine/dates';
-import { review, type Outcome } from '../../engine/leitner';
+import { newItem, review, type Outcome } from '../../engine/leitner';
 import { mulberry32, type Rng } from '../../engine/rng';
 import { allowsKind } from '../../engine/session';
 import { completeDay } from '../../engine/streak';
@@ -7,7 +7,7 @@ import { addXp, answerXp } from '../../engine/xp';
 import type { BankItem } from '../analysis';
 import type { FbSaved, TaskType } from '../storage';
 import { dueItems, freshToday, inBank, introduce, parseItemKey } from './progression';
-import { grade, itemKey, makeTask, outcomeOf, possibleTypes, type FbAnswer, type FbTask, type Graded } from './tasks';
+import { grade, itemKey, makeSplitCardTask, makeTask, nextSplitCard, outcomeOf, possibleTypes, splitTask, type FbAnswer, type FbTask, type Graded } from './tasks';
 
 /**
  * Farvebehandlingens daglige session på 5 minutter (SPEC-farvebehandling.md, Session, scoring og progression):
@@ -47,6 +47,11 @@ export interface FbSession {
   history: TaskType[];
   /** Det seneste emne i lynrunden. */
   lastLightning?: string;
+  /**
+   * Splitprocenter (SPEC-splitprocenter.md): kortet fra bunken, sessionen stiller én gang som niveauets første opgave.
+   * Sat ved start, når der var introduceret mindst LEVEL_COMBINATIONS kombinationer; fjernes, når det er stillet.
+   */
+  split?: string;
   /** Antal trin indtil nu; giver hvert trin sit eget seed. */
   count: number;
   /** Rigtige svar i træk. */
@@ -80,7 +85,9 @@ export const TRAINING_LOG_SIZE = 2000;
 
 
 export function startFbSession(saved: FbSaved, bank: readonly BankItem[], now: number, seed: number): FbSession {
+  const split = Object.keys(saved.introduced).length >= LEVEL_COMBINATIONS ? nextSplitCard(saved.splitCards, todayOf(saved, now)) : undefined;
   return {
+    ...(split ? { split } : {}),
     seed,
     started: now,
     phase: 'repetition',
@@ -163,6 +170,14 @@ function levelStep(s: FbSession, saved: FbSaved, bank: readonly BankItem[], now:
   return { kind: 'task', phase: 'niveau', task: taskFor(s, bank, choices[rngFor(s).int(choices.length)]) };
 }
 
+/** Splitprocenter: kortet stilles på niveau 1 ved den senest introducerede kombination (ingen vises i opgaven). */
+function splitStep(s: FbSession, saved: FbSaved, bank: readonly BankItem[], card: string): FbStep {
+  const [key] = levelPool(saved, bank);
+  const item = key ? find(bank, parseItemKey(key).id)! : bank[0];
+  const goal = key ? parseItemKey(key).goal : item.combination.goals[0];
+  return { kind: 'task', phase: 'niveau', task: splitTask(makeSplitCardTask(card, rngFor(s)), item, goal) };
+}
+
 /** Lynrunde: linje mod linje blandt alle introducerede emner, hvor det kan stilles. */
 function lightningStep(s: FbSession, saved: FbSaved, bank: readonly BankItem[]): FbStep | null {
   const pool = Object.keys(saved.items).filter((key) => {
@@ -189,7 +204,12 @@ export function nextFbStep(session: FbSession, saved: FbSaved, bank: readonly Ba
     } else s.phase = 'niveau';
   }
   if (!step && s.phase === 'niveau') {
-    step = elapsed < NIVEAU_END ? levelStep(s, saved, bank, now) : null;
+    if (elapsed < NIVEAU_END && s.split) {
+      // Efter repetitionen: Splitprocenter som niveauets første opgave, én gang pr. session.
+      step = splitStep(s, saved, bank, s.split);
+      const { split: _, ...rest } = s;
+      s = rest;
+    } else step = elapsed < NIVEAU_END ? levelStep(s, saved, bank, now) : null;
     if (!step) s = { ...s, phase: 'lynrunde', lynrundeStarted: now };
   }
   if (!step && s.phase === 'lynrunde') {
@@ -241,6 +261,13 @@ export function answerFb(session: FbSession, saved: FbSaved, answer: Omit<FbAnsw
     const entry = lightning ? undefined : { t: now, ok, ms };
     items = { ...items, [step.task.item]: review(item, outcome, todayOf(saved, now), entry) };
   }
+  // Splitprocenter: kortet flyttes i sin egen bunke; et nyt kort lægges i kasse 1 først.
+  let splitCards = saved.splitCards;
+  if (step.task.type === 'splitprocenter' && !lightning) {
+    const today = todayOf(saved, now);
+    const card = splitCards?.[step.task.item] ?? newItem(today);
+    splitCards = { ...splitCards, [step.task.item]: review(card, outcome, today, { t: now, ok, ms }) };
+  }
   const xp = answerXp({ score: graded.score, fast: false, levelAccuracy: null, comboBefore: session.combo });
   const combo = ok ? session.combo + 1 : 0;
   // Statistikken: repetition og niveau logges, lynrunden ikke (som i fordelingssporet).
@@ -249,7 +276,7 @@ export function answerFb(session: FbSession, saved: FbSaved, answer: Omit<FbAnsw
     : [...(saved.training ?? []), { day: todayOf(saved, now), item: step.task.item, task: step.task.type, score: graded.score, ms }].slice(-TRAINING_LOG_SIZE);
   return {
     session: { ...session, combo, xp: session.xp + xp, correct: session.correct + graded.score, total: session.total + 1 },
-    saved: { ...saved, items, xp: addXp(saved.xp, xp), ...(training ? { training } : {}) },
+    saved: { ...saved, items, xp: addXp(saved.xp, xp), ...(training ? { training } : {}), ...(splitCards ? { splitCards } : {}) },
     feedback: { graded, xp, ms, combo },
   };
 }

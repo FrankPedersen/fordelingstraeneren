@@ -8,6 +8,20 @@ import type { Vacant } from '../model/layouts';
 import { plausible, type WhatNowSituation } from '../model/whatnow';
 import { followsBestLine, type PlayState } from '../play/play';
 import type { TaskType } from '../storage';
+import { makeSplitTask, SPLIT_COUNTS, type SplitLevel, type SplitQuestion } from './split';
+
+export {
+  makeSplitCardTask,
+  makeSplitTask,
+  nextSplitCard,
+  SPLIT_CARDS,
+  SPLIT_COUNTS,
+  splitRows,
+  type SplitLevel,
+  type SplitOption,
+  type SplitQuestion,
+  type SplitRow,
+} from './split';
 
 /**
  * Opgavetyperne i Træning og Selvvalgt (SPEC-farvebehandling.md). Et emne er en kombination × et mål.
@@ -38,7 +52,15 @@ export type FbTask =
   | (TaskBase & { type: 'find-hullet'; line: LineOption; fields: BandField[] })
   | (TaskBase & { type: 'optælling'; vacant: Vacant; shown: Counting; options: LineOption[] })
   /** Hold eller par: målets bedste linje og linjen med flest stik i gennemsnit; hvilken spilles hvor? */
-  | (TaskBase & { type: 'hold-eller-par'; options: [PairsOption, PairsOption] });
+  | (TaskBase & { type: 'hold-eller-par'; options: [PairsOption, PairsOption] })
+  /**
+   * Splitprocenter (SPEC-splitprocenter.md): `item` er kortet i bunken (`split.card`), og `bank` og `goal` er
+   * kombinationen, opgaven stilles ved.
+   */
+  | (TaskBase & { type: 'splitprocenter'; split: SplitQuestion });
+
+/** En opgavetype med linjer (alle undtagen Splitprocenter). */
+export type LineTask = Exclude<FbTask, { type: 'splitprocenter' }>;
 
 /** En linje i Hold eller par: `value` er chancen for målet; `correct` = den bedste i holdkamp. */
 export interface PairsOption extends LineOption {
@@ -65,6 +87,8 @@ export interface FbAnswer {
   play?: PlayState;
   /** Hold eller par: den valgte linje (indeks) i holdkamp og i parturnering. */
   forms?: { hold: number; par: number };
+  /** Splitprocenter: indekset i `split.options`. */
+  choice?: number;
   ms: number;
 }
 
@@ -107,7 +131,14 @@ export function possibleTypes(bank: BankItem, goal: number): TaskType[] {
   const fields = bandFields(bank, lines);
   if (fields.some((f) => f.outcomes[0] === 0) && fields.filter((f) => f.outcomes[0] > 0).length >= 2) types.push('find-hullet');
   if (pairsLines(bank, goal)) types.push('hold-eller-par');
+  // Splitprocenter kan stilles ved alle emner; motoren vælger den aldrig (ingen vægt i session.ts).
+  types.push('splitprocenter');
   return types;
+}
+
+/** En Splitprocenter-opgave ved kombinationen og målet. */
+export function splitTask(split: SplitQuestion, bank: BankItem, goal: number): FbTask {
+  return { type: 'splitprocenter', item: split.card, bank, goal, split };
 }
 
 const sameLine = (a: LineView | undefined, b: LineView | undefined) =>
@@ -155,6 +186,13 @@ export function makeTask(type: TaskType, bank: BankItem, goal: number, rng: Rng)
       const situations = bank.whatNow[String(goal)] ?? [];
       const situation = situations[rng.int(situations.length)];
       return { ...base, type, situation, options: shuffle(whatNowOptions(situation), rng) };
+    }
+    case 'splitprocenter': {
+      // Et tilfældigt niveau, med kombinationens antal kort ude, når niveauet kan stille det.
+      const level = (1 + rng.int(4)) as SplitLevel;
+      const out = 13 - bank.north.length - bank.south.length;
+      const n = SPLIT_COUNTS.includes(out) && (level !== 3 || out >= 4) ? out : undefined;
+      return splitTask(makeSplitTask(level, rng, n), bank, goal);
     }
     default:
       throw new Error(`Opgavetypen ${type} er ikke bygget endnu`);
@@ -262,6 +300,10 @@ export function grade(task: FbTask, answer: FbAnswer, fastMs: number, { optional
       const lineCorrect = !!answer.play && followsBestLine(task.bank, task.goal, answer.play);
       return { score: lineCorrect ? 1 : 0, lineCorrect, guessCorrect: null, fast };
     }
+    case 'splitprocenter': {
+      const lineCorrect = !!task.split.options[answer.choice ?? -1]?.correct;
+      return { score: lineCorrect ? 1 : 0, lineCorrect, guessCorrect: null, fast };
+    }
   }
 }
 
@@ -272,7 +314,7 @@ export function outcomeOf(g: Graded): Outcome {
 }
 
 /** Den linje i opgaven, der er bedst (til facit). */
-export function bestOption(task: FbTask): LineOption {
+export function bestOption(task: LineTask): LineOption {
   switch (task.type) {
     case 'chancen':
     case 'find-hullet':

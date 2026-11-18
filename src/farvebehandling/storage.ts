@@ -14,7 +14,7 @@ export const FB_BACKUP_KEY = `${FB_STORAGE_KEY}:kopi`;
 
 export const FB_SCHEMA_VERSION = 1;
 
-/** Opgavetyperne 1–9 fra specen. */
+/** Opgavetyperne 1–9 fra specen og Splitprocenter (SPEC-splitprocenter.md). */
 export type TaskType =
   | 'vælg-linjen'
   | 'chancen'
@@ -24,7 +24,8 @@ export type TaskType =
   | 'find-hullet'
   | 'spil-selv'
   | 'optælling'
-  | 'hold-eller-par';
+  | 'hold-eller-par'
+  | 'splitprocenter';
 
 export interface FbSessionRecord {
   day: string;
@@ -80,6 +81,11 @@ export interface FbSaved {
   training?: PracticeEntry[];
   /** Dagen for den seneste eksport; til påmindelsen om at gemme en kopi. Valgfrit felt. */
   lastExport?: string;
+  /**
+   * Splitprocenters Leitner-bunke (SPEC-splitprocenter.md): kortene, der er besvaret i Træning, med nøglen
+   * `split:<antal>:<sidning>`, fx "split:5:3-2". Valgfrit felt; Selvvalgt flytter ingen kort.
+   */
+  splitCards?: Record<string, Item>;
   streak: Streak;
   xp: number;
   sessions: FbSessionRecord[];
@@ -110,6 +116,7 @@ export const TASK_TYPES: readonly TaskType[] = [
   'spil-selv',
   'optælling',
   'hold-eller-par',
+  'splitprocenter',
 ];
 
 type Raw = Record<string, unknown>;
@@ -200,9 +207,10 @@ export function readFbSaved(input: unknown): { saved: FbSaved; problems: string[
   const settingsIn = check<Raw>('settings', raw.settings, isObject, {});
   const palaceIn = check<Raw>('palace', raw.palace, isObject, {});
   // Valgfrie felter: de kontrolleres kun, når de findes.
-  const { training: trainingIn, lastExport: lastExportIn, ...rest } = raw;
+  const { training: trainingIn, lastExport: lastExportIn, splitCards: splitCardsIn, ...rest } = raw;
   const training = trainingIn === undefined ? undefined : list<PracticeEntry>('training', trainingIn, isPractice);
   const lastExport = lastExportIn === undefined ? undefined : check<string | undefined>('lastExport', lastExportIn, isDay, undefined);
+  const splitCards = splitCardsIn === undefined ? undefined : record<Item>('splitCards', splitCardsIn, isItem);
   const saved: FbSaved = {
     ...rest,
     version: 1,
@@ -224,6 +232,7 @@ export function readFbSaved(input: unknown): { saved: FbSaved; problems: string[
     practice: list('practice', raw.practice, isPractice),
     ...(training ? { training } : {}),
     ...(lastExport ? { lastExport } : {}),
+    ...(splitCards ? { splitCards } : {}),
     streak: check('streak', raw.streak, isStreak, fallback.streak),
     xp: check('xp', raw.xp, (v) => isNumber(v) && v >= 0, 0),
     sessions: list('sessions', raw.sessions, isSession),
