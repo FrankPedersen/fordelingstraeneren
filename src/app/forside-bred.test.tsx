@@ -9,7 +9,7 @@ import App from './App';
 // SPEC-forside-bred.md, del 2: forsiden fra 1000 px. Selve layoutet ses i en rigtig browser (skærmbillederne ved 390,
 // 900, 1024 og 1440 px); her låses markuppen, som CSS'en bygger på, og at det brede layout kun gælder fra 1000 px.
 // Modspil (SPEC-modspil.md, trin 2) er den fjerde gruppe med det sjette kort; rettet fra tre grupper og fem kort med
-// Franks godkendelse 18. nov. 2026.
+// Franks godkendelse 18. nov. 2026, og fra tre til to kolonner, så de fire grupper står 2 × 2 (Franks svar 2, 18. nov.).
 
 // Vitest tømmer .css-filer ved import, så styles.css læses fra disken (som i tokens.test.ts). I jsdom er import.meta.url
 // ikke en fil, så stien regnes fra repoets rod, hvor testene køres.
@@ -116,22 +116,24 @@ describe('Forsiden fra 1000 px (SPEC-forside-bred.md, del 2)', () => {
     }
   });
 
-  it('fra 1000 px: højst home-width med 32 px sidemargen, tre lige brede kolonner med 24 px imellem, og knappen i I dag mindst 280 px', () => {
+  it('fra 1000 px: højst home-width med 32 px sidemargen, to lige brede kolonner med 24 px imellem (de fire grupper 2 × 2), og knappen i I dag mindst 280 px', () => {
     expect(wideDecl('.screen.home')).toMatch(/max-width:\s*var\(--home-width\)/);
     expect(wideDecl('.screen.home')).toMatch(/padding-left:\s*32px/);
     expect(wideDecl('.screen.home')).toMatch(/padding-right:\s*32px/);
     expect(wideDecl('.home-groups')).toMatch(/display:\s*flex/);
     expect(wideDecl('.home-groups')).toMatch(/flex-wrap:\s*wrap/);
     expect(wideDecl('.home-groups')).toMatch(/gap:\s*24px/);
-    // 280 px og ikke specens 300 px: med Windows' rullebjælke (15 px) er der 945 px ved 1024 px, og 3 × 300 + 2 × 24 = 948.
-    expect(wideDecl('.home .home-group')).toMatch(/flex:\s*1 1 280px/);
+    // To kolonner (Franks svar 2, 18. nov. 2026; før tre med 1 1 280px): halvdelen minus halvdelen af mellemrummet, så
+    // præcis to grupper står pr. række fra 1000 px, og ikke 3 + 1.
+    expect(wideDecl('.home .home-group')).toMatch(/flex:\s*1 1 calc\(50% - 12px\)/);
+    expect(wideDecl('.home .home-group')).not.toMatch(/280px/);
     expect(wideDecl('.home .home-group')).toMatch(/min-width:\s*0/);
     expect(wide.some(([s, d]) => /\[aria-labelledby='today'\]\s*>\s*\.btn/.test(s) && /min-width:\s*280px/.test(d))).toBe(true);
   });
 
-  it('fra 1000 px følger Vejledning og Indstillinger gruppernes tre kolonner, og Velkomsts og Vejlednings knapper har naturlig bredde, mindst 280 px (Afklaret 13 og 21)', () => {
+  it('fra 1000 px står Vejledning og Indstillinger i tre kolonner, og Velkomsts og Vejlednings knapper har naturlig bredde, mindst 280 px (Afklaret 13 og 21)', () => {
     expect(wideDecl('.screen.home')).toMatch(/display:\s*grid/);
-    // Tre lige brede kolonner med 24 px imellem, som grupperne.
+    // Tre lige brede kolonner med 24 px imellem, som grupperne havde før 2 × 2; Vejledning og Indstillinger beholder dem.
     expect(wideDecl('.screen.home')).toMatch(/grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)/);
     expect(wideDecl('.screen.home')).toMatch(/column-gap:\s*24px/);
     expect(wideDecl('.screen.home > *')).toMatch(/grid-column:\s*1 \/ -1/);

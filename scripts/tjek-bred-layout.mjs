@@ -842,6 +842,20 @@ async function tjekModspil() {
       await s.luk();
     });
   }
+  // Forsiden fra 1000 px: de fire grupper står 2 × 2, to pr. række og lige brede (Franks svar 2, 18. nov. 2026).
+  for (const [bredde, højde] of [[1000, 700], [1280, 900]]) {
+    await del(`Forsiden ved ${bredde} px: de fire grupper står 2 × 2`, async () => {
+      s = await b.fane(bredde, højde);
+      await s.gå(NU);
+      await venteTil(s, '.home-groups > section.home-group', 'Forsidens grupper');
+      const g = await s.kør(`[...document.querySelectorAll('.home-groups > section.home-group')].map((e) => { const r = e.getBoundingClientRect(); return { top: Math.round(r.top), left: Math.round(r.left), width: Math.round(r.width) }; })`);
+      const [a, c, d, e] = g;
+      const toPrRække = g.length === 4 && ca(a.top, c.top) && ca(d.top, e.top) && d.top > a.top && ca(a.left, d.left) && ca(c.left, e.left) && c.left > a.left;
+      tjek(toPrRække, `Forsiden ved ${bredde} px: de fire grupper står to pr. række`, JSON.stringify(g));
+      tjek(g.length === 4 && g.every((x) => ca(x.width, a.width)), `Forsiden ved ${bredde} px: de fire grupper er lige brede`, JSON.stringify(g.map((x) => x.width)));
+      await s.luk();
+    });
+  }
   // Kun CSS skifter: HTML'en i opgaven og facit er den samme ved 390 og 1280 px.
   await del('Modspil: samme HTML ved 390 og 1280 px', async () => {
     const html = async (bredde) => {
