@@ -154,8 +154,9 @@ describe('Forsiden viser gruppen Modspil (accepttest 1, trin 2)', () => {
     const afsnit = [...document.querySelectorAll('details')].find((d) => d.querySelector('summary')?.textContent?.trim() === 'Modspil')!;
     expect((afsnit.textContent ?? '').length).toBeGreaterThan(200);
     cleanup();
-    setLang('en');
+    // App sætter sproget fra lagringen, når den tegnes, så det engelske skiftes med knappen på forsiden.
     render(<App />);
+    click('Skift sprog til engelsk');
     click('Read the guide');
     expect(titler()).toContain('Defence');
   });
@@ -170,8 +171,9 @@ describe('Forsiden viser gruppen Modspil (accepttest 1, trin 2)', () => {
     expect(linjer).toHaveLength(4);
     expect(linjer.filter((li) => /Modspil/.test(li.textContent ?? ''))).toHaveLength(1);
     cleanup();
-    setLang('en');
+    // App sætter sproget fra lagringen, når den tegnes, så det engelske skiftes med knappen på forsiden.
     render(<App />);
+    click('Skift sprog til engelsk');
     click('Read the guide');
     const groups = afsnit('The groups on the front page');
     expect([...groups.querySelectorAll('li')].filter((li) => /Defence/.test(li.textContent ?? ''))).toHaveLength(1);

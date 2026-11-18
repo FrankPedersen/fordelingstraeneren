@@ -49,6 +49,10 @@ function sections(): Section[] {
               'The front page is divided into groups by what the tracks train: Counting (Distribution and Point count), Declarer play (Suit combinations) and Hand evaluation (the track of the same name). Each track has its own card. Groups without a track are not shown.',
             ),
             tx(
+              'Modspil er gruppen mellem Spilføring og Vurdering med sporet af samme navn, der træner at tælle og aflæse som modspiller.',
+              'Defence is the group between Declarer play and Hand evaluation, with the track of the same name, which trains counting and reading the cards as a defender.',
+            ),
+            tx(
               'Fordeling-skærmen har fordelingssporets streak, XP, niveau, dagens plan og startknap og menupunkterne Huskepalads, Album, Klubaften og Kurver. Streak og XP hører til fordelingssporet; de andre spor har deres egne inde i sporet.',
               "The Distribution screen has the distribution track's streak, XP, level, today's plan and start button and the menu items Memory palace, Album, Club evening and Charts. The streak and XP belong to the distribution track; the other tracks have their own inside the track.",
             ),
@@ -214,6 +218,28 @@ function sections(): Section[] {
               tx('Sessionen: opvarmning med nøgletal og kortfarvepoint pr. mønster, en lynrunde med honnørpoint, opgaver på dit niveau og status.', 'The session: a warm-up with key numbers and shortness points per pattern, a lightning round with honour points, tasks at your level and status.'),
               tx('Niveau 4 og 5: Sammenlign metoder, hvor hp og Zar er uenige, og P afgør, hvem der har ret; og Turneringsform, hvor udgang er rigtig fra P ≈ 27½ ved holdturnering i zonen, 28 uden for zonen og 28½ ved parturnering.', 'Levels 4 and 5: Compare methods, where HCP and Zar disagree and P decides which is right; and Form of scoring, where game is right from P ≈ 27½ at teams vulnerable, 28 not vulnerable and 28½ at pairs.'),
               tx('Niveauet stiger, når over 90 % af de seneste 20 svar er rigtige, og falder under 80 %. Data og eksport ligger under Håndevaluering → Indstillinger.', 'Your level rises when more than 90% of your last 20 answers are right, and falls below 80%. Data and export are under Hand evaluation → Settings.'),
+            ]}
+          />
+        </>
+      ),
+    },
+    {
+      title: tx('Modspil', 'Defence'),
+      body: (
+        <>
+          <p>
+            {tx(
+              'Modspil er et selvstændigt spor i gruppen af samme navn. Det træner at tælle og aflæse som modspiller efter de metoder, du vælger: Standard, Omvendt eller Kompendiet, og hver metode kan rettes enkeltvis. Det har sin egen daglige session, streak og XP.',
+              'Defence is a separate track in the group of the same name. It trains counting and reading the cards as a defender by the methods you choose: Standard, Upside-down or The Compendium, and each method can be changed on its own. It has its own daily session, streak and XP.',
+            )}
+          </p>
+          <List
+            items={[
+              tx('Øvelserne: Makkers point, Regel 11 og 12, Udspillets længde, Aflæs markeringen, Vælg kortet, Første afkast og Forsinket kald. Øvelser, som metoderne ikke har, springes over.', 'The exercises: Partner’s points, Rule of 11 and 12, Length from the lead, Read the signal, Choose the card, First discard and Delayed signal. Exercises the methods do not have are skipped.'),
+              tx('Opgaven viser meldeforløbet, bordet, stikket og din hånd. "Kan ikke afgøres" er altid et svar, og at vide, hvornår kortene ikke afgør det, er en del af færdigheden.', `The task shows the bidding, dummy, the trick and your hand. "Can't tell" is always an answer, and knowing when the cards do not settle it is part of the skill.`),
+              tx('Facit nævner metoden og har regnestykket, forklaringen, hvad du gør ved bordet, og et link til ordbogen.', 'The solution names the method and has the sum, the explanation, what you do at the table and a link to the dictionary.'),
+              tx('Sessionen: fire opgaver, først højst to øvelser til repetition og så opgaver på dit niveau. Niveauet stiger, når over 90 % af de seneste 20 svar er rigtige, og falder under 80 %.', 'The session: four tasks, first at most two exercises for review and then tasks at your level. Your level rises when more than 90% of your last 20 answers are right, and falls below 80%.'),
+              tx('Profil, metoder og eksport ligger under Modspil → Indstillinger.', 'Profile, methods and export are under Defence → Settings.'),
             ]}
           />
         </>
