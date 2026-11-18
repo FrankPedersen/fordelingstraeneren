@@ -130,6 +130,10 @@ Tabellen ovenfor er kun til læseren. Testen sammenligner med `splitChance`.
   1. Niveau 1 spørger kun om den hyppigste eller næsthyppigste sidning. Seks af bunkens 23 kort (4-0, 5-0, 6-0, 7-0, 6-2 og 8-0) passer ikke til noget niveau, så de stilles aldrig og kommer aldrig igen. Forslag: et forfaldent kort stilles på niveau 1, også når sidningen er sjælden ("Hvor ofte sidder de 5-0?"), mens niveau 1 i Selvvalgt holder sig til de to hyppigste. Forslaget ændrer ikke testene.
 - **Tokenforbrug** (session 1, talt før den sidste commit): nye input 112, skrevet til cachen 291.892, læst fra cachen 9.809.368 og output 129.698, i alt 10.231.070.
 
+### Franks svar, 18. nov. 2026
+
+"Splitprocenter, session 2 af 3: Frank godkender forslaget: et forfaldent kort stilles på niveau 1, også når sidningen er sjælden. De 12 valg under Afklaret er godkendt. Fortsæt på grenen splitprocenter, og byg efter specen. Kør kun testene i src/farvebehandling/ og fagords- og bydeformstjekket. Skriv tokenforbruget under Afklaret, og stop."
+
 ## Arbejdsgang (tre korte sessioner, styringens punkt 7 og 8)
 
 1. **Session 1:**
