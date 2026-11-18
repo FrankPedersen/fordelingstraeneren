@@ -558,3 +558,5 @@ Som trin 1. Efter "godkendt": flet, push og live-tjek af Modspil på www.kontrak
   - `C:\Users\frank\Kontraktbridge\skaermbilleder\modspil-skaerme\forside-2x2-1280.png`: forsiden ved 1280 px, grupperne 2 × 2 (Optælling og Spilføring, Modspil og Vurdering).
   - `C:\Users\frank\Kontraktbridge\skaermbilleder\modspil-skaerme\forside-2x2-1000.png`: samme ved 1000 px.
   - `C:\Users\frank\Kontraktbridge\skaermbilleder\modspil-skaerme\4-indstillinger-390-en.png`: Indstillinger på engelsk ved 390 px med The Compendium og "Low = encourage; Roman v. suit".
+- **`SYSTEM.md`:** rækken for Modspil trin 2 (18. nov. 2026) har én sætning om session 4 og siger stadig "Venter på Franks godkendelse; ikke flettet".
+- **Tokenforbrug, session 4** (nye input, skrevet til cachen, læst fra cachen og output; fra logfilen): agenten (frisk session med specen som kontekst; 18. nov. 18:33–18:43 UTC): 55 svar; nye input 112, skrevet til cachen 145.205, læst fra cachen 5.564.115, output 34.762; i alt 5.744.194. Dette commit og rapporten er ikke talt med.
