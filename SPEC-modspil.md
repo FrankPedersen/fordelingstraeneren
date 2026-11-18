@@ -363,3 +363,59 @@ Kun symbolerne ♥ og ♦ er røde (`#c62828`, appens eksisterende røde). Tal o
 ## Arbejdsgang (trin 2)
 
 Som trin 1. Efter "godkendt": flet, push og live-tjek af Modspil på www.kontraktbridge.dk. Arkivér specen i `docs/specs/`, og slet grenen.
+
+## Afklaret (trin 2)
+
+**Trin 2, session 1: accepttest (18. nov. 2026)**
+
+- **Status:** accepttestene er skrevet, committet og røde, og intet er bygget. Arbejdet er stoppet før byggeriet, som er session 2. Hverken grenen eller tagget er pushet, og intet er flettet.
+- **Tag og commits:** `main` var lig med `origin/main` (`289d119`) og er tagget `v43-foer-modspil-skaerme`. Grenen `modspil-skaerme` har testene i `54824de` og denne status i det næste commit.
+- **Testfilerne** (grænsefladen til byggeriet står øverst i hver; den samlede står i `skaerme.test.tsx`):
+  - `src/modspil/ui/forside.test.tsx` (punkt 1, 7 tests): gruppen `defense` står efter Spilføring med ⓘ på begge sprog, ét menupunkt og ét kort. De andre grupper, menupunkter og kort er som i tagget; testen kører tagget `tracks.ts` med Vites `transformWithOxc`. Desuden forsiden på dansk og engelsk, ruten `#modspil` (dovent) og Tilbage, adressen direkte, vejledningens afsnit, og at `GuideScreen.tsx` kun har nye linjer siden tagget.
+  - `src/modspil/ui/session.test.tsx` (punkt 2, 2 tests): en hel session fra "Start dagens session" til "Sessionen er gennemført". Hver opgave genskabes fra `data-ovelse`, `data-niveau` og `data-seed` med trin 1's generator, og facit viser trin 1's forklaring; kun `modspil:v1` skrives. Profilen skifter facit: Aflæs markeringen med Standard og Omvendt på samme seed har samme stik og svarknapper, og det rigtige svar for den ene er forkert for den anden (tre seeds).
+  - `src/modspil/ui/indstillinger.test.tsx` (punkt 3, 4 tests): tre radioknapper og syv rullelister (mock-up 4), profilvalget overlever genindlæsning, en ændret metode giver "Metoderne i Egen", og eksport og import som Pointregnskab (Afgrænsning, trin 2).
+  - `src/modspil/ui/skaerme.test.tsx` (punkt 4 i jsdom, 7 tests): opgaveskærmens syv dele i specens rækkefølge for alle øvelser i alle tre profiler; facit med mærke, regnestykke, forklaring, Ved bordet, ordbogslink og Næste opgave; "Rigtigt" for det rigtige svar og "Forkert" for et andet.
+  - `src/modspil/ui/roedt.test.tsx` (punkt 5 i jsdom, 2 tests): hvert ♥ og ♦ står alene i et rødt element, og et rødt element har ingen rang.
+  - `src/modspil/ui/tilgaengelighed.test.tsx` (punkt 6 i jsdom, 4 tests): kun rigtige knapper og links, ingen `tabindex="-1"`, kortknapperne med aria-label som "Spar 8", og stikket med tekst til skærmlæser.
+  - `src/modspil/ui/sprog.test.tsx` (punkt 7, 4 tests): de eksisterende sprogtjek læser Modspils skærme; husets ord og beskrivende form i den tekst, skærmene viser; ingen dansk på de engelske skærme, heller ikke i ⓘ og aria-label.
+  - `src/modspil/intet-andet-trin2.test.ts` (punkt 8, 3 tests): ingen eksisterende testfil er ændret siden tagget, og ingen fil uden for `src/modspil/` er ændret, bortset fra de tilladte.
+  - `src/modspil/ui/testhjaelp.tsx`: fælles hjælp. Eksempelopgaverne er alle øvelser i alle tre profiler med seed 1 og 3 på øvelsens første niveau og seed 2 på niveau 4 og en opgave i udspillets længde med et uklart facit, i alt 60 opgaver og 122 skærme pr. gennemgang.
+  - `scripts/tjek-bred-layout.mjs` (punkt 4–6 i Chrome og pixelsammenligningen i punkt 8) med testsiden `scripts/modspil.html`, der viser én opgave fra trin 1, valgt med adressen. `--modspil` kører kun Modspil og pixelsammenligningen af forsiden og vejledningen. Modspil-delen tjekker mock-up 1–4 ved 390 px, bredt layout ved 1280 × 900 og 1000 × 700 (to spalter, toppene ud for hinanden, spalten dækker intet, facit til højre under spørgsmålet), samme HTML ved 390 og 1280 px, rødt i alle øvelser med alle profiler og tastaturet fra forsiden gennem en session til status og en profil i Indstillinger.
+- **Antal tests og det røde resultat:**
+  - Vitest: 9 testfiler med 33 tests (30 i `src/modspil/ui/` og 3 i punkt 8). `npx vitest run src/modspil/ui src/modspil/intet-andet-trin2.test.ts src/modspil/intet-andet.test.ts` (20 s) gav 7 fejlende testfiler. 6 fejler ved indlæsningen, fordi `src/modspil/ui/ModspilScreen.tsx`, `src/modspil/ui/Opgave.tsx` og `src/modspil/storage.ts` ikke findes. I `forside.test.tsx` fejler 6 af 7 (gruppen, forsiden, ruten, adressen, vejledningen og `GuideScreen.tsx`), og "de andre grupper er som i tagget" består. Punkt 8 (3 tests) og trin 1's punkt 10 (2 tests) består.
+  - `tsc` fejler kun på de tre manglende moduler (6 fejl i `indstillinger.test.tsx`, `session.test.tsx` og `testhjaelp.tsx`).
+  - Testenes egne kontroller ("testen kan se forskel" i punkt 5, 6 og 7) er tjekket med midlertidige stubbe til de tre moduler: alle 3 bestod. Stubbene er slettet og ikke committet.
+  - `node scripts/tjek-bred-layout.mjs --modspil` (2 min): 8 fejl, alle i Modspil, fordi sporets skærm og testsiden ikke findes. Pixelsammenligningen af forsiden og vejledningen ved 999 og 390 px mod `v43-foer-modspil-skaerme` er grøn (4 ok).
+  - Trin 1's `intet-andet.test.ts` består med det nye tag: den sammenligner nu kun `v42-foer-modspil-model` og `v43-foer-modspil-skaerme`, og forskellen er kun `src/modspil/`, specen og `CLAUDE.md`.
+- **Grænsefladen til session 2** (i korte træk; detaljerne står øverst i testfilerne):
+  - `src/app/tracks.ts`: gruppen `defense` ("Modspil" / "Defence") efter `play` og ét menupunkt og ét kort med `track` og `screen` `modspil` og titlen "Modspil" / "Defence".
+  - `src/app/App.tsx`: skærmen `modspil` (`#modspil`) indlæser `src/modspil/ui/ModspilScreen.tsx` dovent (standardeksport, `{ onBack, start? }`) med h1 "Modspil" og knapperne "Start dagens session", "Indstillinger" og "Tilbage til forsiden". Status hedder "Sessionen er gennemført".
+  - `src/modspil/ui/Opgave.tsx`: `Opgave` med `{ opgave, nummer, antal, svar?, onSvar, onNaeste, onIndstillinger }`; med `svar` står facit på samme skærm. Roden har `data-ovelse`, `data-niveau` og `data-seed` og børnene `.wide-left` (meldeforløbet og bordet) og `.wide-right` (spørgsmålet, svarene og facit). Desuden `data-haand="nord"` og `"dig"`, stikket med `role="img"` og aria-label "Stik 1: …", `data-udspil`, `data-tom`, gruppen "Svar", tabellerne "Meldeforløbet" og "Regnestykket", mærket `data-dom`, "Ved bordet" og "Næste opgave".
+  - `src/modspil/storage.ts`: `MS_STORAGE_KEY`, `readMsSaved` og `parseMsImport` som i Pointregnskab; `saved.sessions` og `saved.streak.current` som de andre spor.
+  - Kortknapperne har aria-label som "Spar 8" og "Hjerter konge", og ♥ og ♦ står i et element for sig med en rød klasse (fx `suit-red` fra `SuitText`).
+  - Testsiden viser `Opgave` i `main.screen.ms-screen`, så `ModspilScreen` bruger samme ramme, og `Opgave` henter selv sporets stylesheet.
+  - Filerne uden for `src/modspil/`, som punkt 8 tillader: `tracks.ts`, `App.tsx`, `GuideScreen.tsx`, `scripts/tjek-bred-layout.mjs`, `scripts/modspil.html`, `scripts/ordliste.txt` (svar 6), specen, `CLAUDE.md` og mock-up'en.
+- **Valg, specen og mock-up'en ikke afgør** (testene bygger på dem):
+  1. **Navnene:** sporet, skærmen og adressen hedder `modspil`, og kortets titel er "Modspil" / "Defence" som gruppen. Status og knapperne hedder som i Pointregnskab.
+  2. **Sessionen** består kun af opgaver fra trin 1's generator i opgaveskærmens form, har mindst to opgaver, og hver opgave kan besvares med "Kan ikke afgøres" eller et kort.
+  3. **"Kan ikke afgøres"** er en knap i alle øvelser, undtagen hvor brugeren svarer med et kort (Vælg kortet og vælg-varianten af øvelse 6 og 7), som i mock-up 3. Et klik på en svarknap svarer straks. Svaret med "Hvilke?" i Regel 11 og 12 fra niveau 4, intervallet i Makkers point og længderne i Udspillets længde er ikke testet og afgøres af byggeriet.
+  4. **Facit** står på opgaveskærmen (`svar`), fordi HTML'en er den samme ved alle bredder, og mock-up 5 viser spørgsmålet og facit sammen. Om bordet skjules i facit på mobil (mock-up 2), afgør CSS, og det er ikke testet.
+  5. **Regnestykket** som `<table>` kræves kun i Makkers point og Regel 11 og 12 med et klart facit; de andre øvelser har intet regnestykke i specens facitkolonne.
+  6. **Hænderne:** et kort, der er spillet til stikket, må stå i hånden (mock-up 1 viser ♠K103 med ♠3 i stikket) eller være fjernet.
+  7. **Kortknapperne** for honnører hedder "Spar es", "Hjerter konge", "Ruder dame" og "Klør knægt"; specen giver kun "Spar 8".
+  8. **Stikket** har `role="img"`, så aria-label læses op.
+  9. **Farverne** er mock-up'ens tokens: rigtigt `--ok` og forkert `--fb-miss-text` (rødt mærke, men ikke `#c62828`, der kun er til ♥ og ♦), stikkets felt `--table` og ringen `--accent`. "Gråtonet" er en grå farve, der ikke er `--text`.
+  10. **Mock-up 5** viser meldeforløbet på én linje og niveauet i topbjælken. Det kræver anden HTML end på mobil, så det er ikke testet ("Kun CSS skifter"). Toppene af de to spalter står ud for hinanden, som i mock-up 5.
+  11. **Rullelisterne:** testen kræver metodernes id som `value` og kategoriens tekst som label; ordlyden i mock-up'en ("Kompendiets (4.-højeste fra honnør, …)") afgør byggeriet.
+  12. **Pixelsammenligningen** i `tjek-bred-layout.mjs` er nu mod `v43-foer-modspil-skaerme` (før `v38-foer-moensterkort-bred`) med Modspils gruppe og afsnit i vejledningen skjult i begge apps.
+  13. **Ordbogen:** links tjekkes mod `../Forside/ordbog/index.html`, når repoet findes (ellers springes det over). "Regel 11 i ordbogen" (`#regel-11`) kræves med 4.-højeste, som i mock-up'en.
+  14. **Rødt** tjekkes i jsdom på klassen (et ord med "red") og i Chrome på den beregnede farve af `--suit-red` og `--card-red`, kun i lys tilstand.
+  15. **Tastaturet:** i Chrome går tiden 20 gange hurtigere under turen, så en session, der slutter efter tid, også når til status.
+  16. **Vejledningen:** "De eksisterende afsnit ændres ikke" er, at `GuideScreen.tsx` kun har nye linjer. Afsnittet om forsiden nævner derfor ikke Modspil blandt grupperne og adresserne.
+  17. **Sidefoden** ændres ikke (`src/ui/Footer.tsx` er uden for Afgrænsning, og `src/sidefod.test.tsx` forventer de fem trænere), så Modspil står ikke i kolonnen Trænere.
+- **Spørgsmål til Frank:**
+  1. **Eksisterende tests mod punkt 1:** `src/app/navigation.test.tsx` (tre tests: grupperne Optælling, Spilføring og Vurdering på dansk og engelsk, og "et nyt spor kræver kun én ny linje") og `src/app/forside-bred.test.tsx` (tre grupper og fem kort) fejler, når gruppen Modspil står på forsiden. Punkt 1 og punkt 8 ("alle eksisterende tests består uændret") kan derfor ikke begge holde. Må testene rettes til fire grupper og seks kort, som med Vurdering 8. oktober 2026? Punkt 8's test tillader det ikke nu.
+  2. **Status på forsiden:** skal Modspils kort have streak, niveau og mærke og tælle med i I dag? Det kræver `src/app/status.ts`, som er uden for Afgrænsning, og `src/app/status.test.ts` forventer fire spor. Ellers får kortet `status: false` som Analyse.
+  3. **Bydeform:** øvelsesnavnene "Vælg kortet" og "Vælg afkastet" skal på undtagelseslisten i `src/sprog/bydeform.ts`, ellers fejler den eksisterende `bydeform.test.ts`. Filen er uden for Afgrænsning; må listen udvides?
+  4. **Mock-up'en i git:** specen siger ikke, om `docs/specs/design/modspil/` skal i git, så den ligger usporet. De andre tegninger (`Analyse.png`, `Analyse.dc.html` og `Forside.png`) er i git. Skal den committes? Punkt 8's test tillader det.
+  5. **Mock-up'ens tekst i Indstillinger**, "Vælg en profil, og ret enkelte metoder herunder.", står i bydeform; punkt 7's test fanger den, så byggeriet skriver den i beskrivende form.
