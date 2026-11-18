@@ -22,15 +22,18 @@ export function downloadMsExport(saved: MsSaved, now = Date.now()): string {
 }
 
 const stort = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+/** Navnets første ord, fx "romersk" af "romersk kald" og "Roman" af "Roman signals". */
+const foersteOrd = (s: string) => s.split(' ')[0];
 
 /**
- * Metodens navn i rullelisten. En metode, der mod sans eller mod farve gælder som en anden (romersk kald og ALA),
- * siger begge dele, fx "Lavt = kald mod sans, romersk kald mod farve" (mock-up 4).
+ * Metodens navn i rullelisten, kort nok til at kunne ses helt ved 390 px (Franks svar 2, 18. nov. 2026). En metode, der
+ * mod sans spilles som en anden (romersk kald), siger den anden metode og sit eget første ord mod farve, fx
+ * "Lavt = kald; romersk mod farve". En metode, der mod farve spilles som en anden (ALA), har kun sit navn, der selv
+ * siger sans, fx "ALA mod sans". Teksterne bygges af metodernes navne i metoder.json, aldrig af deres id.
  */
 function metodeNavn(kategori: KategoriId, m: Metode): string {
   const tekst = (x: Metode) => (getLang() === 'en' ? x.tekstEn : x.tekst);
-  if (m.sans) return stort(`${T.modSans(tekst(metode(kategori, m.sans)))}, ${T.modFarve(tekst(m))}`);
-  if (m.farve) return stort(`${tekst(m)}, ${T.modFarve(tekst(metode(kategori, m.farve)))}`);
+  if (m.sans) return stort(`${tekst(metode(kategori, m.sans))}; ${T.modFarve(foersteOrd(tekst(m)))}`);
   return stort(tekst(m));
 }
 

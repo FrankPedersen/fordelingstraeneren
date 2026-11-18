@@ -704,6 +704,7 @@ async function rullelisterneKanSes(s, navn) {
   const d = await s.kør(`(() => {
     const skåret = [];
     let antal = 0;
+    let luft = Infinity;
     for (const liste of document.querySelectorAll('select')) {
       const bredde = liste.getBoundingClientRect().width;
       for (const mulighed of liste.options) {
@@ -715,12 +716,13 @@ async function rullelisterneKanSes(s, navn) {
         const naturlig = kopi.getBoundingClientRect().width;
         kopi.remove();
         antal++;
+        luft = Math.min(luft, bredde - naturlig);
         if (naturlig > bredde + 0.5) skåret.push(mulighed.textContent.trim() + ' (' + Math.ceil(naturlig - bredde) + ' px for bred)');
       }
     }
-    return { antal, skåret };
+    return { antal, skåret, luft: Math.floor(luft) };
   })()`);
-  tjek(d.antal >= 16 && d.skåret.length === 0, `${navn}: teksterne i rullelisterne kan ses helt (${d.antal} muligheder)`, d.skåret.join('; '));
+  tjek(d.antal >= 16 && d.skåret.length === 0, `${navn}: teksterne i rullelisterne kan ses helt (${d.antal} muligheder, mindst ${d.luft} px til overs)`, d.skåret.join('; '));
 }
 
 /** HTML'en i opgaven (uden statuslinjen, der kan følge tiden), så 390 og 1280 px kan sammenlignes. */
