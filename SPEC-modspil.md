@@ -527,3 +527,34 @@ Som trin 1. Efter "godkendt": flet, push og live-tjek af Modspil på www.kontrak
   - `C:\Users\frank\Kontraktbridge\skaermbilleder\modspil-skaerme\forside-1280.png`: forsiden ved 1280 px, som den er bygget: I dag "1 af 5 spor er trænet" og Modspils kort med "3 dage i træk", "Niveau 2" og "✓ Trænet i dag"; grupperne står 3 + 1.
   - `C:\Users\frank\Kontraktbridge\skaermbilleder\modspil-skaerme\forside-2x2-1280-forslag.png`: samme forside med forslaget til 2 × 2 (spørgsmål 1); `forside-2x2-1280.png` findes ikke, da 2 × 2 ikke er bygget.
 - **Tokenforbrug, session 3** (nye input, skrevet til cachen, læst fra cachen og output; fra logfilen): agenten (frisk session med specen som kontekst; 18. nov. 14:18–14:38 UTC): 86 svar; nye input 172, skrevet til cachen 249.782, læst fra cachen 14.185.979, output 88.386; i alt 14.524.319. Dette commit og rapporten er ikke talt med.
+
+**Session 4: 2 × 2 på forsiden (18. nov. 2026)**
+
+- **Status:** de fire grupper på forsiden står 2 × 2 fra 1000 px, og romersk kald hedder "Low = encourage; Roman v. suit" i Indstillingers rulleliste på engelsk. Under 1000 px, Vejledning og Indstillinger på forsiden og de danske tekster er uændrede. Modellen fra trin 1 er uændret. Intet er flettet eller pushet.
+- **Franks rettelse i session 4** (ordret, givet videre af hovedsessionen undervejs):
+
+  > Den engelske tekst for romersk kald i Indstillinger forkortes til 'Low = encourage; Roman v. suit', så der er god luft ved 390 px. Tag den med i 2 × 2-sessionen, og tjek med --modspil.
+
+- **Hovedsessionens valg** (Frank bad om, at arbejdet fortsætter efter spørgsmål 1 i session 3):
+  1. Testen rettes til to lige brede kolonner; det svarer til Franks tidligere tilladelse til at rette samme testfil fra tre til fire grupper.
+  2. 2 × 2 gælder fra 1000 px, hvor det brede layout begynder, så grupperne ikke står 3 + 1 ved 1000 px. Under 1000 px er layoutet uændret.
+  3. Vejledning og Indstillinger bevarer deres tre kolonner (to tredjedele og en tredjedel). Det er den mindste ændring, og Frank ser resultatet bagefter.
+- **Rettelsen af testen** (før byggeriet; rød af den rigtige grund):
+  - `src/app/forside-bred.test.tsx` (eksisterende), testen "fra 1000 px: … to lige brede kolonner med 24 px imellem (de fire grupper 2 × 2) …": før "tre lige brede kolonner" med `flex: 1 1 280px` på `.home .home-group`; nu `flex: 1 1 calc(50% - 12px)` og ingen 280 px i reglen. `min-width: 0`, 24 px imellem, `flex-wrap: wrap`, sidemargenen og knappen i I dag er uændrede. Testen "fra 1000 px følger Vejledning og Indstillinger gruppernes tre kolonner …" hedder nu "fra 1000 px står Vejledning og Indstillinger i tre kolonner …", da grupperne ikke længere har tre; dens krav er uændrede. Hvorfor: Franks svar 2 ("de fire grupper står 2 × 2") og valg 1–3. Rød før: `expected 'flex: 1 1 280px; …' to match /flex:\s*1 1 calc\(50% - 12px\)/` (1 fejlet, 7 beståede).
+  - `scripts/tjek-bred-layout.mjs --modspil`, nyt tjek: på forsiden ved 1000 × 700 og 1280 × 900 px står de fire grupper to pr. række (samme top i hver række, samme venstre kant i hver kolonne) og er lige brede (±1 px). Hvorfor: samme. Rødt før: 4 fejl (230 ok); grupperne stod 3 + 1, ved 1000 px 296, 296, 296 og 936 px brede, ved 1280 px 363, 363, 363 og 1136 px.
+  - `src/modspil/ui/indstillinger.test.tsx` (ny i session 1), ny test: romersk kald hedder "Lavt = kald; romersk mod farve" i rullelisten og på engelsk "Low = encourage; Roman v. suit". Før var der ingen test af ordlyden (testens beskrivelse siger "ordlyden afgør byggeriet"), så ingen test forventede den gamle engelske tekst. Hvorfor: Franks rettelse i session 4. Rød før: `Expected: "Low = encourage; Roman v. suit"`, `Received: "Low encourages; Roman against a suit"` (1 fejlet, 5 beståede); den danske del bestod.
+- **Byggeriet:**
+  - `src/ui/styles.css`: `.home .home-group` har `flex: 1 1 calc(50% - 12px)` i stedet for `1 1 280px` i `@media (min-width: 1000px)`, og to kommentarer er rettet. Intet andet er ændret; Vejledning står stadig i to af tre kolonner og Indstillinger i den tredje, så de flugter ikke med gruppernes to kolonner (se billederne).
+  - Rullelisten: teksten bygges stadig af metodernes navne i `metoder.json`, der hvor session 3 byggede den. `T.modFarve` er erstattet af `T.sansOgFarve(sans, farve)` i `src/modspil/ui/tekster.ts`: på dansk som før ("lavt = kald; romersk mod farve"), på engelsk skrives "low encourages" som "low = encourage" (som det danske "lavt = kald") og "against a suit" som "v. suit". `metoder.json` og facit er uændrede, så "low encourages" står stadig i forklaringerne og i profilernes resumé.
+- **Commits:** `264037e` testen af 2 × 2 og tjekket i `--modspil` (røde), `56b8a6b` testen af romersk kald (rød), `4419cff` teksten til romersk kald, `438e177` 2 × 2 i `styles.css`, og denne status i det næste commit.
+- **Hvad er kørt, og resultaterne** (ikke hele suiten og ikke hele `tjek-bred-layout.mjs`):
+  - `npx tsc`: grøn.
+  - `npx vitest run src/app/forside-bred.test.tsx src/app/navigation.test.tsx src/app/forside.test.tsx src/modspil/ui src/modspil/intet-andet-trin2.test.ts`: 11 testfiler, 67 beståede, ingen sprunget over.
+  - `node scripts/tjek-bred-layout.mjs --modspil`: 234 ok og "Alt er grønt", heraf de fire nye tjek af 2 × 2 ved 1000 og 1280 px og pixelsammenligningen af forsiden og vejledningen ved 999 og 390 px mod `v43-foer-modspil-skaerme` (4 ok). Rullelisterne ved 390 px: mindst 57 px luft på dansk (uændret) og mindst **51 px på engelsk** (før 5 px).
+  - `node scripts/tjek-design-forsiden.mjs forside`: 4 visninger, "Alt i orden"; de 16 gamle billeder i `skaermbilleder/design-forsiden/` er lagt tilbage bagefter og er uændrede (md5).
+  - Ikke kørt: `npm test`, hele `tjek-bred-layout.mjs`, `tjek-sidefod.mjs` og stavekontrollen.
+- **Næste session:** hele suiten (`npm test`) og hele `node scripts/tjek-bred-layout.mjs` køres én gang hver i en ny frisk session (Franks svar 2).
+- **Skærmbillederne** (med Fordeling trænet i går og Modspil trænet i dag på niveau 2, som i session 3):
+  - `C:\Users\frank\Kontraktbridge\skaermbilleder\modspil-skaerme\forside-2x2-1280.png`: forsiden ved 1280 px, grupperne 2 × 2 (Optælling og Spilføring, Modspil og Vurdering).
+  - `C:\Users\frank\Kontraktbridge\skaermbilleder\modspil-skaerme\forside-2x2-1000.png`: samme ved 1000 px.
+  - `C:\Users\frank\Kontraktbridge\skaermbilleder\modspil-skaerme\4-indstillinger-390-en.png`: Indstillinger på engelsk ved 390 px med The Compendium og "Low = encourage; Roman v. suit".
