@@ -189,6 +189,7 @@ Tabellen ovenfor er kun til læseren. Testen sammenligner med `splitChance`.
   9. **Vejledningen:** det nye punkt står lige efter listen over opgavetyper. Afsnittet Farvebehandling er lukket, når vejledningen åbnes (kun det første afsnit er åbent), så vejledningens billede i `tjek-bred-layout.mjs` bør være uændret. Selvvalgts filterside har det nye kort; tjekket sammenligner opgaven efter Start.
 - **Spørgsmål til Frank:**
   1. Godkender du rettelserne af de tre eksisterende tests i `07c7dda`? De ændrer ingen påstand ud over antallet af opgavetyper (9 → 10).
+- **Tokenforbrug** (session 2, talt før den sidste commit): nye input 142, skrevet til cachen 273.169, læst fra cachen 13.811.524 og output 116.477, i alt 14.201.312.
 
 ## Arbejdsgang (tre korte sessioner, styringens punkt 7 og 8)
 
