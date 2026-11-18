@@ -9,6 +9,8 @@ import { GROUPS, TRACK_CARDS, TRACK_ITEMS, type TrackCard } from './tracks';
 
 // Opdateret til SPEC-forside-spor.md: sporene står som kort på forsiden, og fordelingssporets elementer og menupunkter
 // står på Fordeling-skærmen. Testenes hensigt fra SPEC-navigation.md er den samme.
+// Modspil (SPEC-modspil.md, trin 2) er den fjerde gruppe mellem Spilføring og Vurdering; rettet fra tre til fire grupper
+// med Franks godkendelse 18. nov. 2026.
 
 const click = (name: string | RegExp) => fireEvent.click(screen.getByRole('button', { name }));
 const before = (a: Node, b: Node) => Boolean(a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING);
@@ -78,9 +80,9 @@ describe('Forsidens grupper (SPEC-navigation.md og SPEC-forside-spor.md)', () =>
     expect(now).toEqual({ ...old, settings: { ...old.settings, language: 'en' } });
   });
 
-  it('grupperne står i rækkefølgen Optælling, Spilføring, Vurdering; intet menupunkt for 13-sudoku', () => {
+  it('grupperne står i rækkefølgen Optælling, Spilføring, Modspil, Vurdering; intet menupunkt for 13-sudoku', () => {
     render(<App />);
-    expect(groupTitles()).toEqual(['Optælling', 'Spilføring', 'Vurdering']);
+    expect(groupTitles()).toEqual(['Optælling', 'Spilføring', 'Modspil', 'Vurdering']);
     expect(screen.queryAllByRole('button', { name: /sudoku/i })).toEqual([]);
   });
 
@@ -140,7 +142,7 @@ describe('Forsidens grupper (SPEC-navigation.md og SPEC-forside-spor.md)', () =>
     expect(screen.getByText(GROUPS[0].help.da)).toBeTruthy();
     expect(GROUPS[0].help.da).toMatch(/13-sudoku/);
     click('Skift sprog til engelsk');
-    expect(groupTitles()).toEqual(['Counting', 'Declarer play', 'Hand evaluation']);
+    expect(groupTitles()).toEqual(['Counting', 'Declarer play', 'Defence', 'Hand evaluation']);
     fireEvent.click(screen.getByRole('button', { name: 'Help: Declarer play' }));
     expect(screen.getByText(GROUPS[1].help.en)).toBeTruthy();
   });
@@ -157,7 +159,7 @@ describe('Forsidens grupper (SPEC-navigation.md og SPEC-forside-spor.md)', () =>
     };
     const noop = () => {};
     render(<HomeScreen saved={defaultSaved()} updateReady={false} onStart={noop} onClub={noop} onSettings={noop} onOpen={onOpen} cards={[...TRACK_CARDS, card]} />);
-    expect(groupTitles()).toEqual(['Optælling', 'Spilføring', 'Vurdering']);
+    expect(groupTitles()).toEqual(['Optælling', 'Spilføring', 'Modspil', 'Vurdering']);
     const evaluation = document.querySelector('section[aria-labelledby="group-evaluation"]')!;
     expect(within(evaluation as HTMLElement).getByRole('button', { name: 'Nyt spor' })).toBeTruthy();
     expect(screen.getByRole('button', { name: 'Hjælp: Nyt spor' })).toBeTruthy();

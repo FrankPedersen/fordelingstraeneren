@@ -8,6 +8,8 @@ import App from './App';
 
 // SPEC-forside-bred.md, del 2: forsiden fra 1000 px. Selve layoutet ses i en rigtig browser (skærmbillederne ved 390,
 // 900, 1024 og 1440 px); her låses markuppen, som CSS'en bygger på, og at det brede layout kun gælder fra 1000 px.
+// Modspil (SPEC-modspil.md, trin 2) er den fjerde gruppe med det sjette kort; rettet fra tre grupper og fem kort med
+// Franks godkendelse 18. nov. 2026.
 
 // Vitest tømmer .css-filer ved import, så styles.css læses fra disken (som i tokens.test.ts). I jsdom er import.meta.url
 // ikke en fil, så stien regnes fra repoets rod, hvor testene køres.
@@ -74,8 +76,8 @@ describe('Forsiden fra 1000 px (SPEC-forside-bred.md, del 2)', () => {
     expect([...main.classList]).toEqual(['screen', 'home']);
     const groups = main.querySelector(':scope > .home-groups')!;
     expect(groups).toBeTruthy();
-    expect([...groups.children].map((c) => `${c.tagName}.${c.className}`)).toEqual(['SECTION.home-group', 'SECTION.home-group', 'SECTION.home-group']);
-    expect([...groups.querySelectorAll(':scope > section > .with-info > h2')].map((h) => h.textContent)).toEqual(['Optælling', 'Spilføring', 'Vurdering']);
+    expect([...groups.children].map((c) => `${c.tagName}.${c.className}`)).toEqual(['SECTION.home-group', 'SECTION.home-group', 'SECTION.home-group', 'SECTION.home-group']);
+    expect([...groups.querySelectorAll(':scope > section > .with-info > h2')].map((h) => h.textContent)).toEqual(['Optælling', 'Spilføring', 'Modspil', 'Vurdering']);
     // I dag står før grupperne, Vejledning og Indstillinger efter.
     const today = main.querySelector('[aria-labelledby="today"]')!;
     expect(today.compareDocumentPosition(groups) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
@@ -85,7 +87,7 @@ describe('Forsiden fra 1000 px (SPEC-forside-bred.md, del 2)', () => {
   it('sporets kort, dets ⓘ og forklaringen står i samme rækkefølge som før: kortet, ⓘ og forklaringen under kortet', () => {
     render(<App />);
     const rows = [...document.querySelectorAll('.home-groups section.home-group > .with-info:not(:first-child)')];
-    expect(rows.length).toBe(5);
+    expect(rows.length).toBe(6);
     for (const row of rows) {
       const [card, info] = [...row.children];
       expect(card.matches('button.track-card')).toBe(true);

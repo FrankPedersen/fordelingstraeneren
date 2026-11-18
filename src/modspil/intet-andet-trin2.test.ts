@@ -9,17 +9,20 @@ import { ROOT } from '../sprog/danskTekst';
  * sikrer "uændret" og Afgrænsning (trin 2):
  *
  * - Ingen testfil, der fandtes i tagget, er ændret, slettet eller flyttet (`git diff` fra tagget til arbejdsmappen; nye
- *   testfiler er tilladt). Det gælder også trin 1's tests i src/modspil/.
+ *   testfiler er tilladt). Det gælder også trin 1's tests i src/modspil/. Undtaget er `src/app/navigation.test.tsx` og
+ *   `src/app/forside-bred.test.tsx`, der er rettet fra tre til fire grupper (Franks svar 18. nov. 2026).
  * - Ingen fil uden for src/modspil/ er ændret, bortset fra dem, Afgrænsning (trin 2) og accepttestene nævner:
  *   `src/app/tracks.ts` (gruppen og menupunktet), `src/app/App.tsx` (den dovne skærm), vejledningen
  *   (`src/app/screens/GuideScreen.tsx`), `scripts/tjek-bred-layout.mjs` og testsiden `scripts/modspil.html`
  *   (accepttest 4), `scripts/ordliste.txt` (Franks svar 6, 17. nov.: ordlisten kommer i trin 2), specen, repoets
- *   CLAUDE.md og mock-up'en i `docs/specs/design/modspil/`, hvis den lægges i git.
+ *   CLAUDE.md og mock-up'en i `docs/specs/design/modspil/` (i git, Franks svar 18. nov. 2026). Franks svar 18. nov. 2026
+ *   tillader også `src/app/status.ts` (Modspils kort viser streak og niveau som Pointregnskab) og undtagelseslisten i
+ *   `src/sprog/bydeform.ts` (øvelsesnavnene "Vælg kortet" og "Vælg afkastet").
  * - Ikke-committede ændringer i sporede filer tæller med; nye filer, der ikke er lagt i git, tæller ikke.
  * - Mangler tagget (GitHub Actions henter ingen tags), springes testen over med en besked, som trin 1's punkt 10.
  *
- * Kræver byggeriet en anden fil (fx `src/app/status.ts` til sporets status på forsiden eller `src/sprog/bydeform.ts`
- * til en ny knap i bydeform), skal Claude Code stoppe og spørge Frank, før listen udvides (specen, Afgrænsning).
+ * Kræver byggeriet en anden fil (fx `src/ui/styles.css`), skal Claude Code stoppe og spørge Frank, før listen udvides
+ * (specen, Afgrænsning).
  */
 
 const TAG = 'v43-foer-modspil-skaerme';
@@ -27,6 +30,8 @@ const TILLADT = [
   'src/app/tracks.ts',
   'src/app/App.tsx',
   'src/app/screens/GuideScreen.tsx',
+  'src/app/status.ts',
+  'src/sprog/bydeform.ts',
   'scripts/tjek-bred-layout.mjs',
   'scripts/modspil.html',
   'scripts/ordliste.txt',
@@ -34,6 +39,8 @@ const TILLADT = [
   'CLAUDE.md',
 ];
 const TILLADTE_MAPPER = ['src/modspil/', 'docs/specs/design/modspil/'];
+/** Eksisterende testfiler, Frank har tilladt at rette (svar 18. nov. 2026): fra tre til fire grupper på forsiden. */
+const RETTEDE_TESTE = ['src/app/navigation.test.tsx', 'src/app/forside-bred.test.tsx'];
 
 const git = (...args: string[]): string => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
 
@@ -46,15 +53,18 @@ function harTag(): boolean {
   }
 }
 
-const udenfor = (filer: string[]) => filer.filter((f) => !TILLADTE_MAPPER.some((m) => f.startsWith(m)) && !TILLADT.includes(f));
+const udenfor = (filer: string[]) =>
+  filer.filter((f) => !TILLADTE_MAPPER.some((m) => f.startsWith(m)) && !TILLADT.includes(f) && !RETTEDE_TESTE.includes(f));
 const erTest = (f: string) => /\.test\.tsx?$/.test(f);
+/** En ændret eksisterende testfil, der ikke er tilladt: alt andet end en ny fil og de to rettede (kun ændret, ikke slettet). */
+const ulovligTestRettelse = (status: string, f: string) => status !== 'A' && erTest(f) && !(status === 'M' && RETTEDE_TESTE.includes(f));
 
 describe('Intet andet er ændret (accepttest 8, trin 2)', () => {
-  it('ingen eksisterende testfil er ændret, slettet eller flyttet siden tagget', (ctx) => {
+  it('ingen eksisterende testfil er ændret, slettet eller flyttet siden tagget, bortset fra de to tilladte', (ctx) => {
     if (!harTag()) ctx.skip(`Tagget ${TAG} findes ikke her (fx i GitHub Actions, der henter uden tags), så testen kører kun lokalt.`);
     const linjer = git('diff', '--name-status', '-z', '--no-renames', TAG, '--').split('\0').filter(Boolean);
     const aendrede: string[] = [];
-    for (let i = 0; i < linjer.length; i += 2) if (linjer[i] !== 'A' && erTest(linjer[i + 1])) aendrede.push(`${linjer[i]} ${linjer[i + 1]}`);
+    for (let i = 0; i < linjer.length; i += 2) if (ulovligTestRettelse(linjer[i], linjer[i + 1])) aendrede.push(`${linjer[i]} ${linjer[i + 1]}`);
     expect(aendrede).toEqual([]);
   });
 
@@ -65,10 +75,25 @@ describe('Intet andet er ændret (accepttest 8, trin 2)', () => {
   });
 
   it('testen kan se forskel', () => {
-    expect(udenfor(['src/app/tracks.ts', 'src/modspil/ui/Opgave.tsx', 'docs/specs/design/modspil/1-opgave-390.html', 'src/app/status.ts', 'src/sprog/bydeform.ts', 'src/ui/styles.css'])).toEqual([
-      'src/app/status.ts',
-      'src/sprog/bydeform.ts',
+    expect(udenfor(['src/app/tracks.ts', 'src/modspil/ui/Opgave.tsx', 'docs/specs/design/modspil/1-opgave-390.html', 'src/app/status.ts', 'src/sprog/bydeform.ts', 'src/app/navigation.test.tsx', 'src/app/status.test.ts', 'src/ui/styles.css', 'src/ui/Footer.tsx'])).toEqual([
+      'src/app/status.test.ts',
       'src/ui/styles.css',
+      'src/ui/Footer.tsx',
+    ]);
+    expect(
+      [
+        ['M', 'src/app/navigation.test.tsx'],
+        ['M', 'src/app/forside-bred.test.tsx'],
+        ['D', 'src/app/navigation.test.tsx'],
+        ['M', 'src/app/status.test.ts'],
+        ['M', 'src/app/forside.test.tsx'],
+        ['A', 'src/modspil/ui/ny.test.tsx'],
+        ['M', 'src/modspil/model/udspil.ts'],
+      ].filter(([status, f]) => ulovligTestRettelse(status, f)),
+    ).toEqual([
+      ['D', 'src/app/navigation.test.tsx'],
+      ['M', 'src/app/status.test.ts'],
+      ['M', 'src/app/forside.test.tsx'],
     ]);
     expect(['src/app/navigation.test.tsx', 'src/modspil/udspil.test.ts', 'src/modspil/model/udspil.ts'].filter(erTest)).toEqual([
       'src/app/navigation.test.tsx',

@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { bydeform } from '../../sprog/bydeform';
 import { KATEGORI_DATA, profil } from '../model/metoder';
 import { MS_STORAGE_KEY, parseMsImport, readMsSaved } from '../storage';
 import ModspilScreen from './ModspilScreen';
@@ -24,6 +25,8 @@ import { foer } from './testhjaelp';
  * - `src/modspil/storage.ts`: `MS_STORAGE_KEY`, `readMsSaved(input)` → `{ saved, problems }` og `parseMsImport(tekst)`
  *   → `{ ok: true, saved } | { ok: false, error }`, som Pointregnskabs `readPrSaved` og `parsePrImport`. En eksport er
  *   `saved` som JSON.
+ * - Teksten i Indstillinger står i beskrivende form (Franks svar 18. nov. 2026): mock-up'ens "Vælg en profil, og ret
+ *   enkelte metoder herunder." skrives om, og forklaringen under profilerne begynder som i mock-up'en.
  */
 
 const click = (name: string | RegExp) => fireEvent.click(screen.getByRole('button', { name }));
@@ -110,6 +113,15 @@ describe('Indstillinger (accepttest 3, trin 2)', () => {
     fireEvent.click(screen.getByRole('radio', { name: /^Standard\b/ }));
     expect(vaerdier()).toEqual(KATEGORI_DATA.map((k) => profil('standard').valg[k.id]));
     expect(overskrift()).toBe('Metoderne i Standard');
+  });
+
+  it('teksten i Indstillinger står i beskrivende form (Franks svar 18. nov. 2026)', () => {
+    aabn();
+    const tekster = [...document.querySelectorAll('main p')].map((p) => (p.textContent ?? '').trim()).filter(Boolean);
+    expect(tekster.some((t) => t.startsWith('Facit og forklaringer følger de metoder, du vælger.'))).toBe(true);
+    for (const t of tekster) expect(bydeform(t), t).toEqual([]);
+    expect(document.body.textContent).not.toContain('Vælg en profil');
+    expect(document.body.textContent).not.toContain('ret enkelte metoder');
   });
 
   it('kun modspil:v1 skrives, og en eksport kan importeres med profilen og metoderne (som Pointregnskab)', () => {

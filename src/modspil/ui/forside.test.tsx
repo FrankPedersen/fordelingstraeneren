@@ -4,9 +4,13 @@ import { execFileSync } from 'node:child_process';
 import { transformWithOxc } from 'vite';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import App from '../../app/App';
+import { trackStatuses } from '../../app/status';
 import { GROUPS, TRACK_CARDS, TRACK_ITEMS } from '../../app/tracks';
+import { newItem } from '../../engine/leitner';
+import { defaultSaved, STORAGE_KEY } from '../../engine/storage';
 import { setLang } from '../../i18n';
 import { ROOT } from '../../sprog/danskTekst';
+import { defaultMsSaved, MS_STORAGE_KEY } from '../storage';
 
 /*
  * Accepttest 1 i SPEC-modspil.md, trin 2: forsiden viser gruppen Modspil med ét menupunkt og ⓘ på begge sprog, og de
@@ -22,7 +26,11 @@ import { ROOT } from '../../sprog/danskTekst';
  * - `ModspilScreen` (standardeksport, `{ onBack(): void; start?: boolean }`): overskriften "Modspil" (h1), knapperne
  *   "Start dagens session", "Indstillinger" og "Tilbage til forsiden". Et kig skriver intet i lagringen.
  * - Vejledningen har et afsnit (`<details>`) med titlen "Modspil" / "Defence". De eksisterende afsnit ændres ikke:
- *   `git diff` fra tagget har kun nye linjer i `src/app/screens/GuideScreen.tsx`.
+ *   `git diff` fra tagget har kun nye linjer i `src/app/screens/GuideScreen.tsx`. Afsnittet om forsidens grupper får én
+ *   ny linje om Modspil blandt grupperne (Franks svar 18. nov. 2026 til valg 16).
+ * - Modspils kort på forsiden viser streak og niveau som Pointregnskab (Franks svar 18. nov. 2026): kortet har status,
+ *   og `src/app/status.ts` læser `modspil:v1` med `readMsSaved` uden at skrive. `src/modspil/storage.ts` har også
+ *   `defaultMsSaved()` med `level`, `streak`, `sessions` og `items` (Leitner-bunken) som Pointregnskab.
  */
 
 const TAG = 'v43-foer-modspil-skaerme';
@@ -47,6 +55,11 @@ async function tracksFoer() {
 }
 
 const click = (name: string | RegExp) => fireEvent.click(screen.getByRole('button', { name }));
+/** Kortets tekst under titlen (aria-describedby): beskrivelsen, streak, niveau og mærket. */
+const beskrivelse = (navn: string) => {
+  const knap = screen.getByRole('button', { name: navn });
+  return document.getElementById(knap.getAttribute('aria-describedby') ?? '')?.textContent ?? '';
+};
 const gruppeTitler = () => [...document.querySelectorAll('section.home-group > .with-info > h2')].map((h) => h.textContent);
 const modspilGruppe = () => document.querySelector<HTMLElement>('section.home-group[aria-labelledby="group-defense"]');
 
@@ -145,6 +158,52 @@ describe('Forsiden viser gruppen Modspil (accepttest 1, trin 2)', () => {
     render(<App />);
     click('Read the guide');
     expect(titler()).toContain('Defence');
+  });
+
+  it('vejledningens afsnit om forsidens grupper har én ny linje om Modspil blandt grupperne (Franks svar 18. nov. 2026)', () => {
+    render(<App />);
+    click('Læs vejledningen');
+    const afsnit = (titel: string) => [...document.querySelectorAll('details')].find((d) => d.querySelector('summary')?.textContent?.trim() === titel)!;
+    const grupper = afsnit('Forsidens grupper');
+    const linjer = [...grupper.querySelectorAll('li')];
+    // Tre linjer i tagget og én ny.
+    expect(linjer).toHaveLength(4);
+    expect(linjer.filter((li) => /Modspil/.test(li.textContent ?? ''))).toHaveLength(1);
+    cleanup();
+    setLang('en');
+    render(<App />);
+    click('Read the guide');
+    const groups = afsnit('The groups on the front page');
+    expect([...groups.querySelectorAll('li')].filter((li) => /Defence/.test(li.textContent ?? ''))).toHaveLength(1);
+  });
+
+  it('Modspils kort viser streak, niveau og ét mærke som Pointregnskab (Franks svar 18. nov. 2026); forsiden skriver intet', () => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date(2026, 10, 18, 12));
+    try {
+      // Uden data: "Ikke startet endnu" og ingen tal, som de andre spor.
+      render(<App />);
+      expect(beskrivelse('Modspil')).toMatch(/Ikke startet endnu$/);
+      expect(beskrivelse('Modspil')).not.toMatch(/i træk|Niveau/);
+      cleanup();
+      // Fordeling har en session, så forsiden viser I dag; Modspil er på niveau 2 og trænet i dag med én øvelse forfalden.
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...defaultSaved(), streak: { current: 1, best: 1, lastDay: '2026-11-17' }, items: { '4-4-3-2:rank': newItem('2026-11-30') } }));
+      const ms = { ...defaultMsSaved(), level: 2, streak: { current: 3, best: 3, lastDay: '2026-11-18' }, items: { 'ovelse:regel11': newItem('2026-11-18') } };
+      localStorage.setItem(MS_STORAGE_KEY, JSON.stringify(ms));
+      const foer = JSON.stringify(Object.entries(localStorage).sort());
+      const s = trackStatuses(defaultSaved(), localStorage, Date.now()).modspil;
+      expect(s).toMatchObject({ track: 'modspil', started: true, streak: 3, level: 2, doneToday: true, due: 1 });
+      render(<App />);
+      expect(beskrivelse('Modspil')).toMatch(/3 dage i træk ?Niveau 2 ?✓ Trænet i dag$/);
+      expect(JSON.stringify(Object.entries(localStorage).sort())).toBe(foer);
+      cleanup();
+      // Næste dag: emner til repetition som Pointregnskabs mærke.
+      vi.setSystemTime(new Date(2026, 10, 19, 12));
+      render(<App />);
+      expect(beskrivelse('Modspil')).toMatch(/3 dage i træk ?Niveau 2 ?1 emne til repetition$/);
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it('vejledningens eksisterende afsnit er uændrede: GuideScreen.tsx har kun nye linjer siden tagget', (ctx) => {
