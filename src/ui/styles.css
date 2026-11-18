@@ -1935,7 +1935,7 @@ button.cell {
  * bred; under 1000 px er intet ændret.
  */
 @media (min-width: 1000px) {
-  /* Et grid med tre kolonner som gruppernes, så Vejledning og Indstillinger følger dem; alt andet spænder over alle tre. */
+  /* Et grid med tre kolonner til Vejledning og Indstillinger (grupperne står 2 × 2 for sig); alt andet spænder over alle tre. */
   .screen.home {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2006,7 +2006,10 @@ button.cell {
     min-width: 280px;
   }
 
-  /* Tre lige brede kolonner, der falder ned under hinanden, hvis der ikke er plads (se Afklaret 8 om 280 px). */
+  /*
+   * To lige brede kolonner, så de fire grupper står 2 × 2 (SPEC-modspil.md, Franks svar 2, 18. nov. 2026; før tre
+   * kolonner med 280 px). Halvdelen minus halvdelen af mellemrummet giver præcis to pr. række fra 1000 px.
+   */
   .home-groups {
     display: flex;
     flex-wrap: wrap;
@@ -2015,7 +2018,7 @@ button.cell {
   }
 
   .home .home-group {
-    flex: 1 1 280px;
+    flex: 1 1 calc(50% - 12px);
     min-width: 0;
     padding-top: 0;
     border-top: 0;
