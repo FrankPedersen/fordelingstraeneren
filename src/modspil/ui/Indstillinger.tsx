@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { dayOf } from '../../engine/dates';
 import { getLang } from '../../i18n';
 import { Info } from '../../ui/Info';
-import { KATEGORI_DATA, medMetode, PROFILER, profil, profilNavn, type KategoriId, type Metode, type ProfilId } from '../model/metoder';
+import { KATEGORI_DATA, medMetode, metode, PROFILER, profil, profilNavn, type KategoriId, type Metode, type ProfilId } from '../model/metoder';
 import { msExportFileName, parseMsImport, type MsSaved } from '../storage';
 import { T } from './tekster';
 
@@ -23,11 +23,15 @@ export function downloadMsExport(saved: MsSaved, now = Date.now()): string {
 
 const stort = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
-/** Metodens navn i rullelisten; de sammensatte metoder siger, hvad de gør mod sans og mod farve (mock-up 4). */
-function metodeNavn(m: Metode): string {
-  const saerlig = T.metodeNavne[m.id];
-  if (saerlig) return saerlig;
-  return stort(getLang() === 'en' ? m.tekstEn : m.tekst);
+/**
+ * Metodens navn i rullelisten. En metode, der mod sans eller mod farve gælder som en anden (romersk kald og ALA),
+ * siger begge dele, fx "Lavt = kald mod sans, romersk kald mod farve" (mock-up 4).
+ */
+function metodeNavn(kategori: KategoriId, m: Metode): string {
+  const tekst = (x: Metode) => (getLang() === 'en' ? x.tekstEn : x.tekst);
+  if (m.sans) return stort(`${T.modSans(tekst(metode(kategori, m.sans)))}, ${T.modFarve(tekst(m))}`);
+  if (m.farve) return stort(`${tekst(m)}, ${T.modFarve(tekst(metode(kategori, m.farve)))}`);
+  return stort(tekst(m));
 }
 
 interface IndstillingerProps {
@@ -105,7 +109,7 @@ export function Indstillinger({ saved, update }: IndstillingerProps) {
             <select id={`ms-metode-${k.id}`} value={saved.metoder[k.id]} onChange={(e) => vaelgMetode(k.id, e.target.value)}>
               {k.metoder.map((m) => (
                 <option key={m.id} value={m.id}>
-                  {metodeNavn(m)}
+                  {metodeNavn(k.id, m)}
                 </option>
               ))}
             </select>

@@ -58,7 +58,8 @@ const metodeTekst = (o: ModspilOpgave): string | undefined => {
   const m = lavtMetode(o);
   return m ? (sprog() === 'en' ? m.tekstEn : m.tekst) : undefined;
 };
-const erFjerde = (o: ModspilOpgave) => o.metode?.id === 'fjerde-hoejeste';
+/** Udspillet er 4.-højeste (Vest har altid tre kort over et lavt udspil, regel 11), efter reglen i metoder.ts. */
+const erFjerde = (o: ModspilOpgave) => regel(o.profil, udspilKategori(kontraktart(o.kontrakt)), kontraktart(o.kontrakt)).kortOver === 3;
 
 /** Mærket: profilens navn og metoden, fx "Standard · 4.-højeste". */
 export function maerke(o: ModspilOpgave): string {
@@ -363,9 +364,9 @@ export function opslag(o: ModspilOpgave): { id: string; tekst: string } {
       case 'markering':
       case 'vaelg-kort':
         if (o.metode?.kategori === 'laengde') return 'fordelingssignal';
-        return o.metode?.id === 'romersk-kald' ? 'modspilssignal' : 'kald-afvisning';
+        return tilspilsart(o.kontrakt, vaerdiAf(udspillet(o)), o.profil) === 'romersk' ? 'modspilssignal' : 'kald-afvisning';
       case 'afkast':
-        return o.metode?.id === 'lavinthal' ? 'lavinthal-signal' : 'afkast';
+        return afkastlaesning(o.kontrakt, o.profil).laesning === 'retning' ? 'lavinthal-signal' : 'afkast';
       case 'forsinket':
         return 'modspilssignal';
     }
@@ -431,5 +432,5 @@ export function meldeLinje(o: ModspilOpgave): string {
 
 /** Regel 11 med 4.-højeste: tippet under svarene som i mock-up'en; ellers intet. */
 export function tip(o: ModspilOpgave): boolean {
-  return o.ovelse === 'regel11' && erFjerde(o) && regel(o.profil, udspilKategori(kontraktart(o.kontrakt)), kontraktart(o.kontrakt)).kortOver === 3;
+  return o.ovelse === 'regel11' && erFjerde(o);
 }
