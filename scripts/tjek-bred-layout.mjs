@@ -1,6 +1,6 @@
 // Accepttest (SPEC-bred-layout.md og Del 2 af SPEC-design-som-forsiden.md): det brede layout fra 1000 px i en rigtig
-// browser. Appen startes med Vite fra arbejdsmappen, og referencen (appen før rettelsen af mønsterkortet, tagget
-// v38-foer-moensterkort-bred)
+// browser. Appen startes med Vite fra arbejdsmappen, og referencen (appen før Modspils skærme, tagget
+// v43-foer-modspil-skaerme; før det v38-foer-moensterkort-bred)
 // lægges i en midlertidig git worktree og startes ved siden af. Begge åbnes i Chrome eller Edge uden vindue;
 // tilfældighederne og tiden er låst, så opgaverne er de samme hver gang, og hver skærm får sin egen tomme lagring.
 //
@@ -8,6 +8,7 @@
 //   node scripts/tjek-bred-layout.mjs analyse             kun Analyse i pixelsammenligningen
 //   node scripts/tjek-bred-layout.mjs ingen               uden pixelsammenligningen (kun layout og overlap)
 //   node scripts/tjek-bred-layout.mjs --billeder=mappe    gemmer også skærmbillederne til Frank i mappen
+//   node scripts/tjek-bred-layout.mjs --modspil           kun Modspil og pixelsammenligningen af forsiden og vejledningen
 //
 // Ved 1280 px står bordet til venstre og opgaven til højre med toppene ud for hinanden, og indholdet er højst 1120 px
 // bredt i midten. Bordet står kun fast i en skærm med to spalter, og kun når det er lavere end vinduet. Ved 1280 × 900
@@ -21,6 +22,17 @@
 // 390 px er skærmene pixel
 // for pixel som referencen, med sidefoden skjult i begge apps, fordi den er ændret med vilje (SPEC-sidefod.md;
 // scripts/tjek-sidefod.mjs tjekker den). Kræver Node 22+, git og Chrome eller Edge.
+//
+// Modspil (SPEC-modspil.md, trin 2, accepttest 4–6): sporets skærme i appen og på testsiden scripts/modspil.html (én
+// opgave fra trin 1, valgt med adressen) svarer til mock-up'en i docs/specs/design/modspil/ ved 390, 1000 og 1280 px:
+// delene i specens rækkefølge, stikket på grønt felt med makkers udspil i en orange ring og din plads stiplet,
+// kortknapper og svarknapper på mindst 44 px, Vælg kortet med resten af hånden gråtonet og aftalen under spørgsmålet,
+// facit med mærket, regnestykket, forklaringen, Ved bordet og Næste opgave, og Indstillinger med tre profiler og syv
+// metoder. Fra 1000 px står bordet til venstre og spørgsmålet og facit til højre, bordets spalte dækker intet, og
+// HTML'en er den samme som ved 390 px. Rødt (--suit-red og --card-red) står kun på ♥ og ♦ og aldrig på en rang, og
+// tastaturet fører fra forsiden gennem en session til status. Modspils skærme er nye og derfor ikke med i
+// pixelsammenligningen; i forsiden og vejledningen skjules Modspils gruppe og afsnit i begge apps, så resten
+// sammenlignes med tagget.
 import { spawn, spawnSync } from 'node:child_process';
 import { existsSync, lstatSync, mkdirSync, mkdtempSync, rmSync, symlinkSync, unlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -29,9 +41,11 @@ import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
 
 const ROD = fileURLToPath(new URL('..', import.meta.url));
-const TAG = 'v38-foer-moensterkort-bred';
+const TAG = 'v43-foer-modspil-skaerme';
 // Skærmnavne som argumenter begrænser pixelsammenligningen til dem; en forskel gemmes som billeder her.
 const KUN = process.argv.slice(2).filter((a) => !a.startsWith('--'));
+// --modspil: kun Modspils tjek og pixelsammenligningen af de to skærme, Modspil ændrer (forsiden og vejledningen).
+const KUN_MODSPIL = process.argv.includes('--modspil');
 const BILLEDER = process.argv.find((a) => a.startsWith('--billeder='))?.slice('--billeder='.length);
 const FORSKELLE = join(tmpdir(), 'tjek-bred-layout');
 const CHROME = [
@@ -150,6 +164,14 @@ async function chrome() {
           await send('Input.dispatchKeyEvent', { type: 'keyUp', key, code: key });
           await vent(100);
         },
+        /** Én tast som fra tastaturet (Enter og mellemrum trykker på en knap; Tab flytter fokus uden at nulstille). */
+        async tryk(key) {
+          const koder = { Enter: [13, String.fromCharCode(13), 'Enter'], ' ': [32, ' ', 'Space'], Tab: [9, '', 'Tab'], ArrowDown: [40, '', 'ArrowDown'], Escape: [27, '', 'Escape'] };
+          const [vk, text, code] = koder[key];
+          await send('Input.dispatchKeyEvent', { type: 'keyDown', key, code, windowsVirtualKeyCode: vk, ...(text ? { text } : {}) });
+          await send('Input.dispatchKeyEvent', { type: 'keyUp', key, code, windowsVirtualKeyCode: vk });
+          await vent(120);
+        },
         async tab(antal) {
           await kør('document.activeElement?.blur(); window.scrollTo(0, 0)');
           const sti = [];
@@ -162,7 +184,10 @@ async function chrome() {
         },
         /** Hele siden, når den står stille: to billeder i træk skal være ens (Analyse regner færdig bagefter). */
         async billede() {
-          await kør(`window.scrollTo(0, 0); document.head.insertAdjacentHTML('beforeend', '<style>.site-footer { display: none !important; }</style>')`);
+          // Modspils gruppe på forsiden og afsnit i vejledningen er nye (SPEC-modspil.md, trin 2) og skjules i begge apps.
+          await kør(`window.scrollTo(0, 0); document.head.insertAdjacentHTML('beforeend', '<style>.site-footer, section.home-group[aria-labelledby="group-defense"] { display: none !important; }</style>');
+            for (const d of document.querySelectorAll('details')) if (['Modspil', 'Defence'].includes(d.querySelector('summary')?.textContent.trim())) d.style.setProperty('display', 'none', 'important');
+            true`);
           let forrige;
           for (let i = 0; i < 8; i++) {
             await vent(400);
@@ -477,6 +502,334 @@ async function sammenlign(nu, før, side) {
   })()`);
 }
 
+// ---------------------------------------------------------------------------------------------------------------------
+// Modspil (SPEC-modspil.md, trin 2, accepttest 4–6). Grænsefladen står øverst i src/modspil/ui/skaerme.test.tsx:
+// opgavens rod har data-ovelse og børnene .wide-left (meldeforløbet og bordet) og .wide-right (spørgsmålet, svarene og
+// facit); hænderne har data-haand="nord" og "dig", stikket role="img" og aria-label "Stik …", makkers udspil
+// data-udspil og din tomme plads data-tom; svarknapperne står i gruppen "Svar", og facit har mærket data-dom.
+const KORT_LABEL = /^(Spar|Hjerter|Ruder|Klør) (2|3|4|5|6|7|8|9|10|knægt|dame|konge|es)$/;
+const KORT_I_SIDEN = KORT_LABEL.toString();
+/** Tokens' beregnede farver i siden, fx rgb(31, 92, 74) for --table. */
+const FARVE = `const farve = (v) => { const d = document.createElement('div'); d.style.color = 'var(' + v + ')'; document.body.appendChild(d); const c = getComputedStyle(d).color; d.remove(); return c; };`;
+/** Kassen for et element målt fra sidens top, så rækkefølgen kan ses, uanset hvor langt der er rullet. */
+const KASSE = `const kasse = (e) => { if (!e || !e.getClientRects().length) return null; const r = e.getBoundingClientRect(); return { top: Math.round(r.top + scrollY), bottom: Math.round(r.bottom + scrollY), height: Math.round(r.height) }; };
+    const tabel = (n) => [...document.querySelectorAll('table')].find((t) => (t.getAttribute('aria-label') || t.caption?.textContent || '').trim() === n);`;
+
+const MODSPIL = {
+  forside: async (s, u) => { await s.gå(`${u}#modspil`); await erModspil(s); },
+  indstillinger: async (s, u) => { await MODSPIL.forside(s, u); await s.klik('Indstillinger'); await venteTil(s, 'input[type="radio"]', 'Indstillinger'); },
+  opgave: async (s, u) => { await MODSPIL.forside(s, u); await s.klik('Start dagens session'); await venteTil(s, '[data-ovelse]', 'Opgaven'); },
+  facit: async (s, u) => { await MODSPIL.opgave(s, u); await svarModspil(s); },
+};
+async function erModspil(s) {
+  for (let i = 0; i < 40; i++) {
+    if (await s.kør(`[...document.querySelectorAll('h1')].some((h) => h.textContent.trim() === 'Modspil')`)) return;
+    await vent(250);
+  }
+  throw new Error('Modspils skærm (#modspil med overskriften "Modspil") findes ikke');
+}
+async function venteTil(s, vælger, hvad) {
+  for (let i = 0; i < 40; i++) {
+    if (await s.kør(`!!document.querySelector(${JSON.stringify(vælger)})`)) return;
+    await vent(250);
+  }
+  throw new Error(`${hvad} kom ikke frem (${vælger})`);
+}
+/** Svarer "Kan ikke afgøres", eller vælger det første kort, hvor brugeren svarer med et kort, og venter på facit. */
+async function svarModspil(s) {
+  const ok = await s.kør(`(() => {
+    const knapper = [...document.querySelectorAll('button')].filter((b) => b.offsetParent !== null && !b.disabled);
+    const k = knapper.find((b) => b.textContent.trim() === 'Kan ikke afgøres') ?? knapper.find((b) => ${KORT_I_SIDEN}.test(b.getAttribute('aria-label') || ''));
+    k?.click();
+    return !!k;
+  })()`);
+  if (!ok) throw new Error('Fandt hverken "Kan ikke afgøres" eller et kort at vælge');
+  await venteTil(s, '[data-dom]', 'Facit');
+}
+const åbnModspil = async (skærm, bredde, højde) => {
+  const s = await b.fane(bredde, højde);
+  await MODSPIL[skærm](s, NU);
+  return s;
+};
+/** Testsiden med én opgave fra trin 1: øvelse, niveau, seed og profil. */
+const åbnTestside = async (bredde, højde, ovelse, niveau, seed, profil) => {
+  const s = await b.fane(bredde, højde);
+  await s.gå(`${NU}scripts/modspil.html?ovelse=${ovelse}&niveau=${niveau}&seed=${seed}&profil=${profil}`);
+  await venteTil(s, '[data-ovelse]', `Testsiden med ${ovelse}, niveau ${niveau}, seed ${seed}, ${profil}`);
+  return s;
+};
+/** Et tjek, der kan fejle undervejs: fejlen tælles, og de næste tjek kører alligevel. */
+async function del(navn, fn) {
+  try {
+    await fn();
+  } catch (e) {
+    tjek(false, navn, e.message);
+  }
+}
+
+/** Rødt (--suit-red og --card-red) kun på ♥ og ♦: ingen rang i et rødt element, og hvert ♥ og ♦ er rødt (punkt 5). */
+async function rødtKunPåSymbolerne(s, navn) {
+  const r = await s.kør(`(() => {
+    ${FARVE}
+    const røde = new Set([farve('--suit-red'), farve('--card-red')]);
+    const rang = [], sorte = [];
+    const gå = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    for (let n = gå.nextNode(); n; n = gå.nextNode()) {
+      const el = n.parentElement, t = n.textContent;
+      if (!el || !t.trim() || !el.getClientRects().length || el.closest('option, script, style, .site-footer')) continue;
+      const rød = røde.has(getComputedStyle(el).color);
+      if (rød && /10|[2-9]|[EKDBAQJ]/.test(t)) rang.push(t.trim().slice(0, 30));
+      if (!rød && /[♥♦]/.test(t)) sorte.push(t.trim().slice(0, 30));
+    }
+    return { rang: [...new Set(rang)], sorte: [...new Set(sorte)] };
+  })()`);
+  tjek(!r.rang.length, `${navn}: ingen rang i et rødt element`, r.rang.slice(0, 4).join(' ; '));
+  tjek(!r.sorte.length, `${navn}: ♥ og ♦ er røde`, r.sorte.slice(0, 4).join(' ; '));
+}
+
+/** Delene står oven over hinanden i den givne rækkefølge (ved 390 px). */
+function rækkefølge(navn, dele) {
+  const mangler = dele.filter(([, k]) => !k).map(([n]) => n);
+  tjek(!mangler.length, `${navn}: alle dele findes`, `mangler ${mangler.join(', ')}`);
+  const fundne = dele.filter(([, k]) => k);
+  const forkert = fundne.slice(1).filter(([, k], i) => k.top < fundne[i][1].top).map(([n], i) => `${fundne[i][0]} / ${n}`);
+  tjek(!forkert.length, `${navn}: delene i specens rækkefølge`, forkert.join(', '));
+}
+
+/** Opgaveskærmen som 1-opgave-390.html: rækkefølgen, stikket, ringen, den stiplede plads og knappernes højde. */
+async function opgaveSomMockup(s, navn) {
+  const d = await s.kør(`(() => {
+    ${FARVE}
+    ${KASSE}
+    const q = (x) => document.querySelector(x);
+    const hoved = [...document.querySelectorAll('[data-ovelse] *')].find((e) => /^Niveau \\d · opgave \\d+ af \\d+$/.test(e.textContent.trim()) && ![...e.children].some((c) => /^Niveau/.test(c.textContent.trim())));
+    const stik = q('[role="img"][aria-label^="Stik "]');
+    const gruppe = q('[role="group"][aria-label="Svar"]');
+    const udspil = q('[data-udspil]'), tom = q('[data-tom]');
+    const u = udspil && getComputedStyle(udspil);
+    return {
+      dele: [['niveau og opgave', kasse(hoved)], ['statuslinjen', kasse(q('[role="progressbar"]'))], ['meldeforløbet', kasse(tabel('Meldeforløbet'))], ['bordet', kasse(q('[data-haand="nord"]'))], ['stikket', kasse(stik)], ['din hånd', kasse(q('[data-haand="dig"]'))], ['spørgsmålet', kasse(q('h1'))], ['svarknapperne', kasse(gruppe)]],
+      stikFlade: stik && getComputedStyle(stik).backgroundColor, grøn: farve('--table'),
+      ring: !!u && (u.boxShadow.includes(farve('--accent')) || (u.outlineStyle !== 'none' && u.outlineColor === farve('--accent'))),
+      stiplet: !!tom && [getComputedStyle(tom).borderTopStyle, getComputedStyle(tom).outlineStyle].includes('dashed'),
+      knapper: gruppe ? [...gruppe.querySelectorAll('button')].map((b) => [b.textContent.trim(), Math.round(b.getBoundingClientRect().height)]) : [],
+      ud: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    };
+  })()`);
+  rækkefølge(navn, d.dele);
+  tjek(d.stikFlade === d.grøn, `${navn}: stikket står på et grønt felt (--table)`, `${d.stikFlade}, ventet ${d.grøn}`);
+  tjek(d.ring === true, `${navn}: makkers udspil har en orange ring (--accent)`);
+  tjek(d.stiplet === true, `${navn}: din plads i stikket er tom med stiplet kant`);
+  tjek(d.knapper.length >= 2 && d.knapper.every(([, h]) => h >= 44), `${navn}: svarknapperne er mindst 44 px høje`, JSON.stringify(d.knapper));
+  tjek(d.knapper.some(([t]) => t === 'Kan ikke afgøres'), `${navn}: "Kan ikke afgøres" er sin egen knap`, JSON.stringify(d.knapper));
+  tjek(d.ud <= 0, `${navn}: intet stikker ud til siden`, `${d.ud} px`);
+}
+
+/** Facit som 2-facit-390.html: mærket i den rigtige farve og delene i rækkefølge. */
+async function facitSomMockup(s, navn, ventet) {
+  const d = await s.kør(`(() => {
+    ${FARVE}
+    ${KASSE}
+    const mærke = document.querySelector('[data-dom]');
+    const farver = mærke ? [mærke, ...mærke.querySelectorAll('*')].flatMap((e) => [getComputedStyle(e).color, getComputedStyle(e).backgroundColor]) : [];
+    const forklaring = [...document.querySelectorAll('p')].find((p) => p.textContent.includes(window.modspilOpgave.forklaring.da));
+    const ved = [...document.querySelectorAll('[data-ovelse] *')].find((e) => e.textContent.trim() === 'Ved bordet' && !e.children.length);
+    const næste = [...document.querySelectorAll('button')].find((b) => b.textContent.trim() === 'Næste opgave');
+    return {
+      dom: mærke?.dataset.dom, farver, grøn: farve('--ok'), rød: farve('--fb-miss-text'),
+      dele: [['mærket', kasse(mærke)], ['regnestykket', kasse(tabel('Regnestykket'))], ['forklaringen', kasse(forklaring)], ['Ved bordet', kasse(ved)], ['Næste opgave', kasse(næste)]],
+      næste: næste ? Math.round(næste.getBoundingClientRect().height) : 0,
+      ud: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    };
+  })()`);
+  tjek(d.dom === ventet, `${navn}: dommen er ${ventet}`, `${d.dom}`);
+  if (ventet === 'rigtigt') tjek(d.farver.includes(d.grøn), `${navn}: mærket er grønt (--ok)`, [...new Set(d.farver)].join(' '));
+  else tjek(d.farver.includes(d.rød) && !d.farver.includes(d.grøn), `${navn}: mærket er rødt (--fb-miss-text)`, [...new Set(d.farver)].join(' '));
+  rækkefølge(navn, d.dele);
+  tjek(d.næste >= 44, `${navn}: Næste opgave er mindst 44 px høj`, `${d.næste} px`);
+  tjek(d.ud <= 0, `${navn}: intet stikker ud til siden`, `${d.ud} px`);
+}
+
+/** Vælg kortet som 3-vaelg-kortet-390.html: store kortknapper, resten af hånden gråtonet og aftalen under spørgsmålet. */
+async function vælgKortetSomMockup(s, navn) {
+  const d = await s.kør(`(() => {
+    ${FARVE}
+    const røde = [farve('--suit-red'), farve('--card-red')];
+    const kort = [...document.querySelectorAll('button')].filter((b) => ${KORT_I_SIDEN}.test(b.getAttribute('aria-label') || ''));
+    const dig = document.querySelector('[data-haand="dig"]');
+    const resten = [];
+    const gå = document.createTreeWalker(dig, NodeFilter.SHOW_TEXT);
+    for (let n = gå.nextNode(); n; n = gå.nextNode()) if (n.textContent.trim() && !n.parentElement.closest('button')) resten.push(getComputedStyle(n.parentElement).color);
+    const grå = (c) => { const [r, g, b] = c.match(/\\d+/g).map(Number); return Math.max(r, g, b) - Math.min(r, g, b) <= 16; };
+    const h1 = document.querySelector('h1'), aftale = document.querySelector('details');
+    return {
+      kort: kort.map((b) => Math.round(b.getBoundingClientRect().height)), iHånden: kort.length > 0 && kort.every((b) => dig.contains(b)),
+      resten: [...new Set(resten)], tekst: farve('--text'),
+      gråtonet: resten.length > 0 && resten.every((c) => røde.includes(c) || (grå(c) && c !== farve('--text'))),
+      aftale: !!aftale && !!h1 && aftale.getBoundingClientRect().top >= h1.getBoundingClientRect().bottom - 1 && !aftale.open,
+      ud: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    };
+  })()`);
+  tjek(d.kort.length > 0 && d.kort.every((h) => h >= 44), `${navn}: kortknapperne er mindst 44 px høje`, JSON.stringify(d.kort));
+  tjek(d.iHånden, `${navn}: kortknapperne står i din hånd`);
+  tjek(d.gråtonet, `${navn}: resten af hånden er gråtonet`, `${d.resten.join(' ')} (teksten er ${d.tekst})`);
+  tjek(d.aftale, `${navn}: aftalen står foldet sammen under spørgsmålet`);
+  tjek(d.ud <= 0, `${navn}: intet stikker ud til siden`, `${d.ud} px`);
+}
+
+/** Indstillinger som 4-indstillinger-390.html: tre profiler som radioknapper og syv metoder som rullelister på 44 px. */
+async function indstillingerSomMockup(s, navn) {
+  const d = await s.kør(`(() => ({
+    radioer: [...document.querySelectorAll('input[type="radio"]')].map((r) => (r.labels?.[0]?.textContent || '').trim().split(/\\s/)[0]),
+    lister: [...document.querySelectorAll('select')].map((e) => Math.round(e.getBoundingClientRect().height)),
+    ud: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+  }))()`);
+  tjek(JSON.stringify(d.radioer) === JSON.stringify(['Standard', 'Omvendt', 'Kompendiet']), `${navn}: de tre profiler som radioknapper`, JSON.stringify(d.radioer));
+  tjek(d.lister.length === 7 && d.lister.every((h) => h >= 44), `${navn}: syv rullelister på mindst 44 px`, JSON.stringify(d.lister));
+  tjek(d.ud <= 0, `${navn}: intet stikker ud til siden`, `${d.ud} px`);
+}
+
+/** HTML'en i opgaven (uden statuslinjen, der kan følge tiden), så 390 og 1280 px kan sammenlignes. */
+const OPGAVENS_HTML = `(() => { const r = document.querySelector('[data-ovelse]').cloneNode(true); r.querySelectorAll('[role="progressbar"]').forEach((e) => e.remove()); return r.outerHTML; })()`;
+const FOKUS = `(() => { const e = document.activeElement; return e ? (e.getAttribute('aria-label') || e.textContent || '').replace(/\\s+/g, ' ').trim() : ''; })()`;
+
+/** Tastaturet hele vejen: fra forsiden med Tab og Enter til Modspil, gennem en session til status, og en profil i Indstillinger. */
+async function tastaturHeleVejen() {
+  const s = await b.fane(1280, 900);
+  await s.gå(NU);
+  const tabTil = async (passer, hvad) => {
+    for (let i = 0; i < 150; i++) {
+      await s.tryk('Tab');
+      if (passer(await s.kør(FOKUS))) return;
+    }
+    throw new Error(`Tab nåede ikke ${hvad}`);
+  };
+  await tabTil((t) => t === 'Modspil', 'Modspils kort på forsiden');
+  await s.tryk('Enter');
+  await erModspil(s);
+  // Tiden går 20 gange hurtigere fra nu, så en session, der slutter efter tid, også når til status (FAST står stille).
+  await s.kør(`(() => { const T = Date.now(), t0 = performance.now(), D = Date; const nu = () => T + (performance.now() - t0) * 20;
+    globalThis.Date = class extends D { constructor(...a) { super(...(a.length ? a : [nu()])); } static now() { return nu(); } }; return true; })()`);
+  await tabTil((t) => t === 'Start dagens session', '"Start dagens session"');
+  await s.tryk('Enter');
+  const færdig = () => s.kør(`[...document.querySelectorAll('h1, h2')].some((h) => h.textContent.trim() === 'Sessionen er gennemført')`);
+  let opgaver = 0;
+  for (let i = 0; i < 60 && !(await færdig()); i++) {
+    await venteTil(s, '[data-ovelse]', 'Opgaven');
+    await tabTil((t) => t === 'Kan ikke afgøres' || KORT_LABEL.test(t), 'et svar');
+    await s.tryk('Enter');
+    await venteTil(s, '[data-dom]', 'Facit');
+    opgaver++;
+    await tabTil((t) => t === 'Næste opgave', '"Næste opgave"');
+    await s.tryk('Enter');
+    await vent(300);
+  }
+  tjek((await færdig()) && opgaver >= 2, 'Modspil med tastatur: fra forsiden gennem en session til status', `${opgaver} opgaver`);
+  await s.luk();
+  // Indstillinger: en profil vælges med piletasten.
+  const t = await åbnModspil('forside', 1280, 900);
+  await t.kør('document.activeElement?.blur(); window.scrollTo(0, 0); true');
+  for (let i = 0; i < 80 && (await t.kør(FOKUS)) !== 'Indstillinger'; i++) await t.tryk('Tab');
+  await t.tryk('Enter');
+  await venteTil(t, 'input[type="radio"]', 'Indstillinger');
+  for (let i = 0; i < 80 && !(await t.kør(`document.activeElement?.type === 'radio'`)); i++) await t.tryk('Tab');
+  await t.tryk('ArrowDown');
+  const valgt = await t.kør(`(document.querySelector('input[type="radio"]:checked')?.labels?.[0]?.textContent || '').trim()`);
+  tjek(/^Omvendt/.test(valgt), 'Modspils Indstillinger med tastatur: piletasten vælger den næste profil', valgt);
+  await t.luk();
+}
+
+/** Alle Modspils tjek i Chrome. */
+async function tjekModspil() {
+  let s;
+  // Mock-up 1 og 2: Regel 11 med Standard mod 3NT ved 390 px, svaret "Kan ikke afgøres" (forkert) og tallet (rigtigt).
+  await del('Modspil: opgaven og facit som mock-up\'en ved 390 px', async () => {
+    s = await åbnTestside(390, 844, 'regel11', 1, 1, 'standard');
+    await opgaveSomMockup(s, 'Modspil-opgaven ved 390 px');
+    await rødtKunPåSymbolerne(s, 'Modspil-opgaven ved 390 px');
+    await svarModspil(s);
+    await facitSomMockup(s, 'Modspils facit ved 390 px (forkert)', 'forkert');
+    await s.luk();
+    s = await åbnTestside(390, 844, 'regel11', 1, 1, 'standard');
+    await s.kør(`[...document.querySelectorAll('[role="group"][aria-label="Svar"] button')].find((b) => b.textContent.trim() === String(window.modspilOpgave.facit.tal))?.click(); true`);
+    await venteTil(s, '[data-dom]', 'Facit');
+    await facitSomMockup(s, 'Modspils facit ved 390 px (rigtigt)', 'rigtigt');
+    await s.luk();
+  });
+  // Mock-up 3: Vælg kortet med romersk kald (Kompendiet mod 4♠).
+  await del('Modspil: Vælg kortet som mock-up\'en ved 390 px', async () => {
+    s = await åbnTestside(390, 844, 'vaelg-kort', 2, 3, 'kompendiet');
+    await vælgKortetSomMockup(s, 'Vælg kortet ved 390 px');
+    await rødtKunPåSymbolerne(s, 'Vælg kortet ved 390 px');
+    await s.luk();
+  });
+  // Mock-up 4: Indstillinger i appen, og sporets forside.
+  await del('Modspil: Indstillinger som mock-up\'en ved 390 px', async () => {
+    s = await åbnModspil('indstillinger', 390, 844);
+    await indstillingerSomMockup(s, 'Modspils Indstillinger ved 390 px');
+    await rødtKunPåSymbolerne(s, 'Modspils Indstillinger ved 390 px');
+    await s.luk();
+    s = await åbnModspil('forside', 390, 844);
+    await rødtKunPåSymbolerne(s, 'Modspils forside ved 390 px');
+    await s.luk();
+  });
+  // Mock-up 5 og specens "Fra 1000 px": bordet til venstre, spørgsmålet og facit til højre, og spalten dækker intet.
+  for (const [bredde, højde] of [[1280, 900], [1000, 700]]) {
+    await del(`Modspil: bredt layout ved ${bredde} × ${højde}`, async () => {
+      s = await åbnModspil('opgave', bredde, højde);
+      await toSpalter(s, '[data-ovelse]', `Modspil-opgaven ved ${bredde} px`, { toppe: true });
+      await ingenOverlap(s, `Modspil-opgaven ved ${bredde} × ${højde}`);
+      await rødtKunPåSymbolerne(s, `Modspil-opgaven ved ${bredde} px`);
+      await svarModspil(s);
+      await toSpalter(s, '[data-ovelse]', `Modspils facit ved ${bredde} px`, { toppe: true });
+      await ingenOverlap(s, `Modspils facit ved ${bredde} × ${højde}`);
+      const f = await s.kør(`(() => {
+        const rod = document.querySelector('[data-ovelse]');
+        const v = rod.querySelector(':scope > .wide-left'), h = rod.querySelector(':scope > .wide-right');
+        const q = document.querySelector('h1'), dom = document.querySelector('[data-dom]');
+        return { højre: !!h && h.contains(q) && h.contains(dom), under: !!q && !!dom && dom.getBoundingClientRect().top >= q.getBoundingClientRect().bottom - 1,
+          venstre: !!v && !!v.querySelector('[data-haand="nord"]') && !!v.querySelector('[data-haand="dig"]') };
+      })()`);
+      tjek(f.venstre, `Modspils facit ved ${bredde} px: bordet og hænderne står i venstre spalte`);
+      tjek(f.højre && f.under, `Modspils facit ved ${bredde} px: spørgsmålet og facit står til højre, facit under spørgsmålet`, JSON.stringify(f));
+      await rødtKunPåSymbolerne(s, `Modspils facit ved ${bredde} px`);
+      await s.luk();
+    });
+  }
+  // Kun CSS skifter: HTML'en i opgaven og facit er den samme ved 390 og 1280 px.
+  await del('Modspil: samme HTML ved 390 og 1280 px', async () => {
+    const html = async (bredde) => {
+      const t = await åbnModspil('opgave', bredde, 900);
+      const før = await t.kør(OPGAVENS_HTML);
+      await svarModspil(t);
+      const efter = await t.kør(OPGAVENS_HTML);
+      await t.luk();
+      return [før, efter];
+    };
+    const [smal, bred] = [await html(390), await html(1280)];
+    tjek(smal[0] === bred[0], 'Modspil-opgaven: samme HTML ved 390 og 1280 px');
+    tjek(smal[1] === bred[1], 'Modspils facit: samme HTML ved 390 og 1280 px');
+  });
+  // Rødt kun på ♥ og ♦ i alle øvelser med alle profiler, før og efter svaret.
+  await del('Modspil: rødt kun på ♥ og ♦ i alle øvelser', async () => {
+    for (const profil of ['standard', 'omvendt', 'kompendiet']) {
+      for (const [ovelse, niveau] of [['point', 1], ['regel11', 1], ['laengde', 1], ['markering', 2], ['vaelg-kort', 2], ['afkast', 3], ['forsinket', 3]]) {
+        // Standard og Omvendt har ikke forsinket kald (metoden "intet"), så øvelsen springes over (SPEC-modspil.md).
+        if (ovelse === 'forsinket' && profil !== 'kompendiet') continue;
+        for (const seed of [1, 3]) {
+          const hvor = `Modspil ${ovelse}, ${profil}, seed ${seed}`;
+          s = await åbnTestside(390, 844, ovelse, niveau, seed, profil);
+          await rødtKunPåSymbolerne(s, `${hvor}: opgaven`);
+          await svarModspil(s);
+          await rødtKunPåSymbolerne(s, `${hvor}: facit`);
+          await s.luk();
+        }
+      }
+    }
+  });
+  await del('Modspil: tastaturet hele vejen', tastaturHeleVejen);
+}
+
 // Appen før: en worktree af tagget med node_modules lånt fra arbejdsmappen (en junction på Windows).
 function lavFør() {
   const mappe = mkdtempSync(join(tmpdir(), 'bred-foer-'));
@@ -511,8 +864,10 @@ const åbn = async (skærm, bredde, højde, url = NU) => {
 };
 
 try {
+  let s;
+  if (!KUN_MODSPIL) {
   // Træning ved 1280 px: bordet til venstre, opgaven til højre, højst 1120 px i midten; overskrift og faner i fuld bredde.
-  let s = await åbn('træning', 1280, 900);
+  s = await åbn('træning', 1280, 900);
   await toSpalter(s, '.fb-task', 'Træning', { toppe: true });
   const opgave = await s.kasse('.fb-task');
   tjek(opgave.width <= 1120.5 && ca(opgave.left, 1280 - opgave.right), 'Træning: højst 1120 px i midten', `${opgave.left}–${opgave.right}`);
@@ -770,9 +1125,16 @@ try {
     }
   }
 
+  }
+
+  // Modspil (SPEC-modspil.md, trin 2): skærmene som mock-up'en, bredt layout, rødt og tastaturet.
+  await tjekModspil();
+
   // Under 1000 px er intet ændret. Chrome kan en sjælden gang kantutjævne en enkelt pixel tekst anderledes, når maskinen
-  // har travlt, så en forskel prøves én gang til med nye faner; en rigtig forskel kommer igen.
-  for (const skærm of Object.keys(SKÆRME).filter((k) => !KUN.length || KUN.includes(k))) {
+  // har travlt, så en forskel prøves én gang til med nye faner; en rigtig forskel kommer igen. Med --modspil kun de to
+  // skærme, Modspil ændrer: forsiden (gruppen) og vejledningen (afsnittet), begge med Modspil skjult.
+  const sammenlignes = KUN_MODSPIL ? ['forside', 'vejledning'] : Object.keys(SKÆRME);
+  for (const skærm of sammenlignes.filter((k) => !KUN.length || KUN.includes(k))) {
     for (const bredde of [999, 390]) {
       let forskel, billeder;
       for (let forsøg = 0; forsøg < 2 && forskel !== ''; forsøg++) {
