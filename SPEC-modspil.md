@@ -483,3 +483,4 @@ Som trin 1. Efter "godkendt": flet, push og live-tjek af Modspil på www.kontrak
   - `C:\Users\frank\Kontraktbridge\skaermbilleder\modspil-skaerme\5-bred-session-390.png`
   - `C:\Users\frank\Kontraktbridge\skaermbilleder\modspil-skaerme\5-bred-session-1280.png`
 - **`SYSTEM.md`:** rækken for Modspil trin 2 (18. nov. 2026) har session 2's status og "Venter på Franks godkendelse; ikke flettet", og `modspil:v1` står under data med en note om, at nøglen kommer med trin 2.
+- **Tokenforbrug, session 2** (nye input, skrevet til cachen, læst fra cachen og output; fra logfilen): agenten (frisk session med specen som kontekst; 18. nov. 13:02–14:08 UTC): 175 svar; nye input 354, skrevet til cachen 1.182.864, læst fra cachen 67.195.262, output 243.686; i alt 68.622.166. Dette commit og rapporten er ikke talt med.
