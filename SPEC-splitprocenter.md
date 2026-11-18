@@ -134,6 +134,62 @@ Tabellen ovenfor er kun til læseren. Testen sammenligner med `splitChance`.
 
 "Splitprocenter, session 2 af 3: Frank godkender forslaget: et forfaldent kort stilles på niveau 1, også når sidningen er sjælden. De 12 valg under Afklaret er godkendt. Fortsæt på grenen splitprocenter, og byg efter specen. Kør kun testene i src/farvebehandling/ og fagords- og bydeformstjekket. Skriv tokenforbruget under Afklaret, og stop."
 
+### Session 2: byggeri (18. november 2026)
+
+- **Status:** bygget. `tsc`, alle test i `src/farvebehandling/`, `src/fam4-usage.test.ts` og fagords- og bydeformstjekket er grønne, og stavekontrollen finder ingen ukendte ord. Accepttestene er uændrede. Hele suiten og `tjek-bred-layout.mjs` køres i session 3 sammen med skærmbillederne. **Venter på session 3; ikke flettet.**
+- **Commits** på `splitprocenter`:
+  - `8e30e20`: Franks svar;
+  - `1a7da26`: tallene, opgaverne, typen, bunken og sessionen;
+  - `f22dd62`: opgaven, facit, Selvvalgt og teksterne;
+  - `07c7dda`: de tre rettede eksisterende tests (se nedenfor);
+  - `2943db7`: vejledningen, `CLAUDE.md` og fam-4;
+  - committen med dette afsnit.
+- **Bygget:**
+  - `training/split.ts` (genudsendt fra `tasks.ts`): `SPLIT_COUNTS`, `splitRows`, `SPLIT_CARDS`, `makeSplitTask` (niveau 1–4), `makeSplitCardTask` (et kort fra bunken på niveau 1) og `nextSplitCard`. Alle tal regnes af `splitChance` og `layoutChance`.
+  - `tasks.ts`: varianten `splitprocenter` i `FbTask` med `split`, `FbAnswer.choice`, `grade` (1 eller 0), `makeTask` og `possibleTypes` (alle emner; motoren vælger den aldrig, fordi den ingen vægt har). `LineTask` er de andre typer, og `bestOption` tager kun dem.
+  - `storage.ts`: `splitprocenter` i `TaskType` og `TASK_TYPES` og det valgfrie felt `splitCards` (bunken). Gamle data uden feltet indlæses uændret.
+  - `session.ts`: én Splitprocenter-opgave pr. session som niveauets første opgave; svaret logges i `training` og flytter kortet i bunken.
+  - `ui/Splitprocenter.tsx`: opgaven og facit. `Opgave.tsx` og `Facit.tsx` sender typen videre (de andre typers facit hedder nu `LineFacit` internt, uændret).
+  - `Selvvalgt.tsx`: kortet Opgavetyper med knappen og ⓘ.
+  - `texts.ts`: teksterne på dansk og engelsk.
+  - `GuideScreen.tsx`: Splitprocenter på listen over opgavetyper og et punkt om opgaven.
+  - `CLAUDE.md`: forsidens grupper står 2 × 2 fra 1000 px, og et afsnit om Splitprocenter under Beslutninger.
+  - `design/tokens.json`: `fam-4.usage` uden "Også fokusringen (3px)."
+- **Rettelser af tests** (eksisterende tests, ikke accepttestene; alle i `07c7dda`, så de kan vurderes for sig). Fejlen ligger i testene: de forudsætter de ni gamle typer, mens specen tilføjer en tiende og siger, at statistikken tæller den som de andre.
+  - `src/farvebehandling/training/training.test.ts`, `rightAnswer` og `wrongAnswer`:
+    - før: ingen gren for den nye type, så `default` læser `task.options`;
+    - nu: `case 'splitprocenter'` svarer med `choice` (den rigtige eller en forkert knap);
+    - hvorfor: varianten fra session 1's grænseflade har ingen `options`, så `tsc` fejlede, og sessionerne i testene med 4 introducerede kombinationer stiller nu Splitprocenter. Ingen påstand er ændret.
+  - `src/farvebehandling/training/stats.test.ts`:
+    - før: `expect(tasks).toHaveLength(9)`;
+    - nu: `toHaveLength(10)`;
+    - hvorfor: `taskStats` har en række pr. type i `TASK_TYPES`, og accepttest 4 kræver typen dér.
+  - `src/farvebehandling/ui/FarvebehandlingScreen.test.tsx`, Statistik:
+    - før: listen Opgavetype har 9 punkter;
+    - nu: 10;
+    - hvorfor: samme grund.
+- **Kørt:**
+  - `npx tsc`: grøn (2 s);
+  - de nye accepttest (3 filer) undervejs: 18 tests, 17 grønne og fam-4 rød, før `tokens.json` var rettet (6 s);
+  - `npx vitest run src/farvebehandling src/fam4-usage.test.ts src/sprog` (55 filer med de nye accepttest og `src/sprog/sprog.test.ts` og `bydeform.test.ts`): 372 tests, 370 grønne og 2 røde, de to med 9 opgavetyper (408 s);
+  - efter rettelsen `stats.test.ts` og `FarvebehandlingScreen.test.tsx` igen: 19 tests, alle grønne (27 s);
+  - `node scripts/sprogtjek.ts`: ingen ukendte ord (19 s).
+- **Valg i byggeriet**, som specen og session 1 ikke afgør:
+  1. **Sessionen:** opgaven er niveauets første opgave (fasen Niveau), lige efter repetitionen. Kombinationen, den stilles ved, er den senest introducerede; den vises ikke. Opgaven udelades, hvis niveauets tid er gået, før repetitionen slutter, eller hvis alle 23 kort ligger i bunken og intet er forfaldent.
+  2. **Forfaldne og nye kort:** et nyt kort regnes som forfaldent fra start, som et nyt emne i kasse 1. Derfor stilles også det næste nye kort i tabellens rækkefølge på niveau 1, når sidningen er sjælden (fx 4-0 som tredje kort med 4 kort ude). Kortet gemmes først, når det er besvaret, og flyttes efter samme Leitner-regel som emnerne: hurtigt rigtigt én kasse op, langsomt bliver det, forkert kasse 1 og igen i morgen. Ugyldige kort i `splitCards` noteres som ugyldige `items`.
+  3. **Niveau 3:** to sidninger ved siden af hinanden, fx 3-3 og 4-2 eller 5-1 og 6-0 (14 spørgsmål i alt), tilfældigt valgt; den jævneste står først. De forkerte er hver sidning for sig, antallets andre par og resten (100 % minus summen), derefter nabo-antallenes par.
+  4. **Niveau 4's forkerte tal:** først de typiske fejl, nemlig det dobbelte (glemt hånden), sidningen selv, n gange (glemt de n kort) og det halve, derefter sidningernes tal. Med 6–8 kort ude er det rigtige 0–1 % (fx 0,2 % med 8 kort ude), så nogle forkerte kommer fra sidningerne.
+  5. **Facit:**
+     - Huskereglen står på niveau 1–3. Niveau 4 viser i stedet regnestykket, fx "Sidningen 3-1 er 49,7 %. Det single kort kan være hvert af de 4 kort, og det kan sidde hos Vest eller Øst: 49,7 % / 8 = 6,2 %."
+     - Tabellen har en række pr. sidning; de spurgte står med fed.
+     - "I praksis" står på alle niveauer, fx "Med 5 kort ude og E K D: toppes farven, går den i 67,8 %.". Topkortene svarer til den jævneste sidning (E; E K; E K D; E K D B), og tallet har én decimal som resten af facit (specens eksempel siger 68 %). På engelsk står "playing for the drop", husets engelske ord.
+  6. **Opgaven:** Farvebehandlings opgavelayout uden bord, uden ny CSS. Fra 1000 px står navnet med ⓘ og spørgsmålet i venstre spalte (hvor bordet står) og knapperne i højre; under 1000 px er det ét kort. Knapperne er som gætteintervallerne (`fb-intervals`), og et tryk svarer direkte, som i Find hullet.
+  7. **Selvvalgt:** kortet "Opgavetyper" står efter Start-knappen med knappen "Splitprocenter · 23 sidninger" og ⓘ, som Trænings menu. "Skift filter" fører tilbage. Opgaven stilles ved en kombination med samme antal kort ude; den vises ikke.
+  8. **Engelsk:** spørgsmålet på niveau 4 lyder "How often does West hold the singleton king?", og ⓘ og vejledningen kalder typen "Split percentages".
+  9. **Vejledningen:** det nye punkt står lige efter listen over opgavetyper. Afsnittet Farvebehandling er lukket, når vejledningen åbnes (kun det første afsnit er åbent), så vejledningens billede i `tjek-bred-layout.mjs` bør være uændret. Selvvalgts filterside har det nye kort; tjekket sammenligner opgaven efter Start.
+- **Spørgsmål til Frank:**
+  1. Godkender du rettelserne af de tre eksisterende tests i `07c7dda`? De ændrer ingen påstand ud over antallet af opgavetyper (9 → 10).
+
 ## Arbejdsgang (tre korte sessioner, styringens punkt 7 og 8)
 
 1. **Session 1:**
