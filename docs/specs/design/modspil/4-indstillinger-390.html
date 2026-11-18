@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<title>Modspil – indstillinger</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Manrope:wght@800&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:Inter,'Segoe UI',Roboto,sans-serif;color:#1a1a1a}
+a{color:#1a1a1a}a:hover{color:#4a4a4a}
+</style>
+</helmet>
+<div style="width: 390px; height: 1180px; box-sizing: border-box; background: #f2f3f4; display: flex; flex-direction: column; font-size: 17px; line-height: 1.45">
+
+  <div style="background: #1a1a1a; color: #f2f3f4; padding: 14px 16px; display: flex; align-items: center; gap: 12px">
+    <a href="Main.dc.html" aria-label="Tilbage" style="flex: none; width: 44px; height: 44px; margin: -8px 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #f2f3f4; text-decoration: none"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg></a>
+    <span style="font-weight: 600; font-size: 15px; flex: 1"><span style="color: #ff9f4a">Fordelingstræneren</span> · Modspil</span>
+  </div>
+
+  <div style="padding: 16px; display: flex; flex-direction: column; gap: 14px">
+
+    <h1 style="margin: 0; font-family: Manrope, Inter, sans-serif; font-weight: 800; font-size: 1.6rem; line-height: 1.2">Indstillinger</h1>
+
+    <fieldset style="margin: 0; border: 0; padding: 16px; background: #ffffff; border-radius: 24px; display: flex; flex-direction: column; gap: 10px">
+      <legend style="float: left; padding: 0; font-size: 1.1rem; font-weight: 600; margin-bottom: 2px">Metoder · profil</legend>
+      <p style="margin: 0; font-size: 0.88rem; color: #4a4a4a; clear: both">Facit og forklaringer følger de metoder, du vælger. Vælg en profil, og ret enkelte metoder herunder.</p>
+      <label style="display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 10px; align-items: start; padding: 12px; border-radius: 12px; border: 1px solid rgba(26,26,26,0.12); cursor: pointer">
+        <input type="radio" name="profil" style="width: 20px; height: 20px; margin: 2px 0 0">
+        <span style="display: flex; flex-direction: column"><span style="font-weight: 600">Standard</span><span style="font-size: 0.85rem; color: #4a4a4a">4.-højeste · højt = kald · højt-lavt = lige</span></span>
+      </label>
+      <label style="display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 10px; align-items: start; padding: 12px; border-radius: 12px; border: 1px solid rgba(26,26,26,0.12); cursor: pointer">
+        <input type="radio" name="profil" style="width: 20px; height: 20px; margin: 2px 0 0">
+        <span style="display: flex; flex-direction: column"><span style="font-weight: 600">Omvendt</span><span style="font-size: 0.85rem; color: #4a4a4a">3. og 5. mod farve · lavt = kald · lavt-højt = lige</span></span>
+      </label>
+      <label style="display: grid; grid-template-columns: 24px minmax(0, 1fr); gap: 10px; align-items: start; padding: 12px; border-radius: 12px; border: 2px solid #1a1a1a; background: #fff1e3; cursor: pointer">
+        <input type="radio" name="profil" checked style="width: 20px; height: 20px; margin: 2px 0 0">
+        <span style="display: flex; flex-direction: column"><span style="font-weight: 600">Kompendiet</span><span style="font-size: 0.85rem; color: #4a4a4a">ALA mod sans · romersk kald mod farve · O/E · omvendt forsinket kald</span></span>
+      </label>
+    </fieldset>
+
+    <div style="background: #ffffff; border-radius: 24px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+      <h2 style="margin: 0; font-size: 1.1rem; font-weight: 600">Metoderne i Kompendiet</h2>
+
+      <label style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 0.85rem; font-weight: 600">Udspil mod sans, lavt kort</span>
+        <select style="height: 44px; border-radius: 12px; border: 1px solid rgba(26,26,26,0.2); padding: 0 10px; font: inherit; font-size: 0.95rem; background: #ffffff"><option>Kompendiets (4.-højeste fra honnør, tredje laveste fra småkort)</option></select></label>
+
+      <label style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 0.85rem; font-weight: 600">Udspil mod farve, lavt kort</span>
+        <select style="height: 44px; border-radius: 12px; border: 1px solid rgba(26,26,26,0.2); padding: 0 10px; font: inherit; font-size: 0.95rem; background: #ffffff"><option>3. og 5. højeste</option></select></label>
+
+      <label style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 0.85rem; font-weight: 600">Honnørudspil</span>
+        <select style="height: 44px; border-radius: 12px; border: 1px solid rgba(26,26,26,0.2); padding: 0 10px; font: inherit; font-size: 0.95rem; background: #ffffff"><option>ALA mod sans, top af sekvens mod farve</option></select></label>
+
+      <label style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 0.85rem; font-weight: 600">Kald eller afvisning på makkers udspil</span>
+        <select style="height: 44px; border-radius: 12px; border: 1px solid rgba(26,26,26,0.2); padding: 0 10px; font: inherit; font-size: 0.95rem; background: #ffffff"><option>Lavt = kald mod sans, romersk kald mod farve</option></select></label>
+
+      <label style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 0.85rem; font-weight: 600">Længdemarkering</span>
+        <select style="height: 44px; border-radius: 12px; border: 1px solid rgba(26,26,26,0.2); padding: 0 10px; font: inherit; font-size: 0.95rem; background: #ffffff"><option>Lavt-højt = lige</option></select></label>
+
+      <label style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 0.85rem; font-weight: 600">Første afkast</span>
+        <select style="height: 44px; border-radius: 12px; border: 1px solid rgba(26,26,26,0.2); padding: 0 10px; font: inherit; font-size: 0.95rem; background: #ffffff"><option>O/E</option></select></label>
+
+      <label style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 0.85rem; font-weight: 600">Forsinket kald i spilførers første farve</span>
+        <select style="height: 44px; border-radius: 12px; border: 1px solid rgba(26,26,26,0.2); padding: 0 10px; font: inherit; font-size: 0.95rem; background: #ffffff"><option>Omvendt forsinket kald</option></select></label>
+
+      <p style="margin: 0; font-size: 0.85rem; color: #4a4a4a">Ændrer du en metode, hedder profilen "Egen". Øvelser, som metoderne ikke har, springes over.</p>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1180}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

@@ -421,3 +421,14 @@ Som trin 1. Efter "godkendt": flet, push og live-tjek af Modspil på www.kontrak
   5. **Mock-up'ens tekst i Indstillinger**, "Vælg en profil, og ret enkelte metoder herunder.", står i bydeform; punkt 7's test fanger den, så byggeriet skriver den i beskrivende form.
 - **`SYSTEM.md`:** beslutningsloggen har en række for 18. nov. 2026 med grenen, tagget, de røde tests og "Venter på session 2 (byggeri); ikke flettet".
 - **Tokenforbrug, session 1** (nye input, skrevet til cachen, læst fra cachen og output; fra logfilen): agenten (frisk session med specen som kontekst; 18. nov. 06:54–07:25 UTC): 78 svar; nye input 156, skrevet til cachen 404.672, læst fra cachen 18.692.591, output 190.177; i alt 19.287.596. Dette commit og rapporten er ikke talt med.
+
+**Franks svar, 18. nov. 2026** (ordret):
+
+> Modspil trin 2, session 2 af 2 (byggeriet), med Franks svar:
+> navigation.test.tsx og forside-bred.test.tsx må rettes fra tre til fire grupper.
+> Modspils kort på forsiden viser streak og niveau som Pointregnskab; status.ts må udvides til det.
+> 'Vælg kortet' og 'Vælg afkastet' må på undtagelseslisten i src/sprog/bydeform.ts.
+> Mock-up'en i docs/specs/design/modspil/ committes.
+> Teksten i Indstillinger skrives i beskrivende form.
+> De 17 valg under Afklaret er godkendt, undtagen nr. 16: vejledningens afsnit om forsiden får én linje om Modspil blandt grupperne.
+> Fortsæt på grenen modspil-skaerme i en frisk session. Byg efter 'Trin 2' i SPEC-modspil.md og mock-up'en, og skriv rettelserne af testene under Afklaret. Kør hele suiten og browsertjekkene i forgrunden. Stop før merge med skærmbilleder af de fem skærme ved 390 og 1280 px i C:\Users\frank\Kontraktbridge\skaermbilleder\modspil-skaerme\. Skriv tokenforbruget (fire tal) under Afklaret.

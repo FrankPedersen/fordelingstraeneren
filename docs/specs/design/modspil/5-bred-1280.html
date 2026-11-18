@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<title>Modspil – opgave og facit, bredt layout</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Manrope:wght@800&display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:Inter,'Segoe UI',Roboto,sans-serif;color:#1a1a1a}
+a{color:#1a1a1a}a:hover{color:#4a4a4a}
+</style>
+</helmet>
+<div style="min-height: 860px; box-sizing: border-box; background: #f2f3f4; display: flex; flex-direction: column; font-size: 17px; line-height: 1.45">
+
+  <div style="background: #1a1a1a; color: #f2f3f4; padding: 14px 24px; display: flex; align-items: center; gap: 12px">
+    <a href="Main.dc.html" aria-label="Tilbage" style="flex: none; width: 44px; height: 44px; margin: -8px 0; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #f2f3f4; text-decoration: none"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"></path></svg></a>
+    <span style="font-weight: 600; font-size: 15px; flex: 1"><span style="color: #ff9f4a">Fordelingstræneren</span> · Modspil</span>
+    <span style="font-size: 0.88rem">Niveau 2 · opgave 2 af 4 · 2:02</span>
+  </div>
+
+  <div style="width: 100%; max-width: 1200px; margin: 0 auto; box-sizing: border-box; padding: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; align-items: start">
+
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <div style="background: #ffffff; border-radius: 24px; padding: 14px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap">
+        <span style="font-size: 0.95rem"><strong>Syd 1NT – Nord 3NT</strong> · alle passer · 1NT: 15–17 hp</span>
+        <a href="Indstillinger.dc.html" style="font-size: 0.8rem; font-weight: 600; padding: 4px 10px; border-radius: 9999px; background: #d6e4f5; color: #163e73; text-decoration: none">Standard · 4.-højeste</a>
+      </div>
+
+      <div style="background: #ffffff; border-radius: 24px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 2px">
+          <span style="font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #4a4a4a">Nord · bordet · 9 hp</span>
+          <div style="display: flex; gap: 18px; font-size: 1.25rem; font-weight: 600; font-variant-numeric: tabular-nums"><span>♠ K103</span><span><span style="color: #c62828">♥</span> K84</span><span><span style="color: #c62828">♦</span> DB1092</span><span>♣ 75</span></div>
+        </div>
+        <div aria-label="Stik 1: Vest ♠7, Nord ♠3, Øst ♠9" style="position: relative; height: 220px; border-radius: 12px; background: #1f5c4a; color: #ffffff">
+          <span style="position: absolute; left: 50%; top: 14px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 2px"><span style="width: 52px; height: 72px; border-radius: 8px; background: #ffffff; color: #1a1a1a; display: flex; align-items: center; justify-content: center; font-weight: 600">♠3</span><span style="font-size: 0.75rem">N</span></span>
+          <span style="position: absolute; left: 24px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 6px"><span style="font-size: 0.75rem">V</span><span style="width: 52px; height: 72px; border-radius: 8px; background: #ffffff; color: #1a1a1a; display: flex; align-items: center; justify-content: center; font-weight: 600; box-shadow: 0 0 0 3px #ff9f4a">♠7</span></span>
+          <span style="position: absolute; right: 24px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 6px"><span style="width: 52px; height: 72px; border-radius: 8px; background: #ffffff; color: #1a1a1a; display: flex; align-items: center; justify-content: center; font-weight: 600">♠9</span><span style="font-size: 0.75rem">Ø</span></span>
+          <span style="position: absolute; left: 50%; bottom: 12px; transform: translateX(-50%); font-size: 0.75rem">S · spilfører</span>
+          <span style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); font-size: 0.85rem; font-weight: 600; text-align: center; line-height: 1.25">Stik 1<br>udspil ♠7</span>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 2px">
+          <span style="font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #4a4a4a">Øst · dig · 7 hp</span>
+          <div style="display: flex; gap: 18px; font-size: 1.25rem; font-weight: 600; font-variant-numeric: tabular-nums"><span>♠ D94</span><span><span style="color: #c62828">♥</span> 10753</span><span><span style="color: #c62828">♦</span> E6</span><span>♣ B982</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 16px">
+      <div style="background: #ffffff; border-radius: 24px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
+        <span style="font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #4a4a4a">Regel 11</span>
+        <h1 style="margin: 0; font-family: Manrope, Inter, sans-serif; font-weight: 800; font-size: 1.5rem; line-height: 1.25">Makker spiller 4.-højeste ud. Hvor mange spar over syveren har spilfører?</h1>
+        <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px">
+          <button type="button" aria-pressed="true" style="height: 52px; border-radius: 12px; border: 2px solid #0d6e63; background: #d8efe9; font: inherit; font-weight: 600; font-size: 1.1rem; color: #0d6e63">0</button>
+          <button type="button" style="height: 52px; border-radius: 12px; border: 1px solid rgba(26,26,26,0.12); background: #ffffff; font: inherit; font-weight: 600; font-size: 1.1rem; color: #1a1a1a">1</button>
+          <button type="button" style="height: 52px; border-radius: 12px; border: 1px solid rgba(26,26,26,0.12); background: #ffffff; font: inherit; font-weight: 600; font-size: 1.1rem; color: #1a1a1a">2</button>
+          <button type="button" style="height: 52px; border-radius: 12px; border: 1px solid rgba(26,26,26,0.12); background: #ffffff; font: inherit; font-weight: 600; font-size: 1.1rem; color: #1a1a1a">3</button>
+          <button type="button" style="height: 52px; border-radius: 12px; border: 1px solid rgba(26,26,26,0.12); background: #eceff3; font: inherit; font-weight: 600; font-size: 0.85rem; color: #1a1a1a; line-height: 1.15">Kan ikke afgøres</button>
+        </div>
+      </div>
+
+      <div style="background: #ffffff; border-radius: 24px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
+        <div style="display: flex; align-items: center; gap: 10px">
+          <span style="flex: none; width: 36px; height: 36px; border-radius: 50%; background: #d8efe9; color: #0d6e63; display: flex; align-items: center; justify-content: center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"></path></svg></span>
+          <h2 style="margin: 0; font-size: 1.2rem; font-weight: 600">Rigtigt: spilfører har 0</h2>
+        </div>
+        <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px">
+          <div style="background: #eceff3; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 6px; font-variant-numeric: tabular-nums; font-size: 0.95rem">
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px"><span>Over syveren i alt</span><span style="font-weight: 600">11 − 7 = 4</span></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px"><span>Bordet: ♠K 10</span><span style="font-weight: 600">− 2</span></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px"><span>Dig: ♠D 9</span><span style="font-weight: 600">− 2</span></div>
+            <div style="height: 1px; background: rgba(26,26,26,0.15)"></div>
+            <div style="display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px"><span style="font-weight: 600">Spilfører</span><span style="font-weight: 600">0</span></div>
+          </div>
+          <div style="background: #fff1e3; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 2px">
+            <span style="font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #7a3410">Ved bordet</span>
+            <p style="margin: 0; font-size: 0.92rem">♠9 vinder stikket. Damen gemmes til bordets konge.</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px; justify-content: flex-end">
+          <a href="https://www.kontraktbridge.dk/ordbog/#regel-11" style="height: 48px; padding: 0 18px; border-radius: 12px; border: 1px solid rgba(26,26,26,0.12); background: #ffffff; display: flex; align-items: center; text-decoration: none; font-weight: 600; font-size: 0.92rem; color: #1a1a1a">Regel 11 i ordbogen</a>
+          <a href="Kortet.dc.html" style="height: 48px; padding: 0 18px; border-radius: 12px; background: #1a1a1a; display: flex; align-items: center; text-decoration: none; font-weight: 600; font-size: 0.92rem; color: #ffffff">Næste opgave</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1280,"height":860}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
