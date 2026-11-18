@@ -560,3 +560,14 @@ Som trin 1. Efter "godkendt": flet, push og live-tjek af Modspil på www.kontrak
   - `C:\Users\frank\Kontraktbridge\skaermbilleder\modspil-skaerme\4-indstillinger-390-en.png`: Indstillinger på engelsk ved 390 px med The Compendium og "Low = encourage; Roman v. suit".
 - **`SYSTEM.md`:** rækken for Modspil trin 2 (18. nov. 2026) har én sætning om session 4 og siger stadig "Venter på Franks godkendelse; ikke flettet".
 - **Tokenforbrug, session 4** (nye input, skrevet til cachen, læst fra cachen og output; fra logfilen): agenten (frisk session med specen som kontekst; 18. nov. 18:33–18:43 UTC): 55 svar; nye input 112, skrevet til cachen 145.205, læst fra cachen 5.564.115, output 34.762; i alt 5.744.194. Dette commit og rapporten er ikke talt med.
+
+**Session 5: hele suiten, udgivelse og arkivering (18. nov. 2026)**
+
+- **Franks godkendelse** (18. nov. 2026, ordret): "Byg rettelserne i en frisk session uden at køre hele suiten. Kør derefter i en ny frisk session hele suiten og tjek-bred-layout.mjs én gang hver. Når alt er grønt, er trin 2 godkendt: flet, push, live-tjek af Modspil på www.kontraktbridge.dk, arkivér specen, og slet grenen. Send mig et skærmbillede af forsiden ved 1280 px fra live-sitet."
+- **Status:** hele suiten og hele `tjek-bred-layout.mjs` er kørt én gang hver i en frisk session på grenen `modspil-skaerme` (`7fd771a`), hver for sig og uden andet tungt ved siden af. Alt er grønt, så trin 2 er godkendt efter Franks ord. Ingen kode er ændret i denne session.
+- **Hele suiten** (`npm test`, tsc og Vitest): 139 testfiler, 990 beståede og 2 sprunget over, 0 fejlede; Vitest 404 s, 405 s med tsc. Ingen test fejlede på tid, så ingen fil er kørt igen.
+- **`node scripts/tjek-bred-layout.mjs`** (det hele, 659 s): 469 ok, 0 fejl og "Alt er grønt". Heraf 66 pixelsammenligninger ved 999 og 390 px mod `v43-foer-modspil-skaerme` ("som før") og 230 tjek af Modspil og forsidens 2 × 2: de fire grupper står to pr. række og er lige brede ved 1000 og 1280 px, og teksterne i Indstillingers rullelister kan ses helt ved 390 px (17 muligheder, mindst 57 px til overs på dansk og 51 px på engelsk).
+- **De andre tjek** (efter hinanden, efter browsertjekket):
+  - stavekontrollen `node scripts/sprogtjek.ts` (21 s): "ingen ukendte ord";
+  - `node scripts/tjek-sidefod.mjs` (21 s): 97 ok, "Alt i orden";
+  - `node scripts/tjek-design-forsiden.mjs forside vejledning` (7 s): 8 visninger af 2 skærme, "Alt i orden"; de 16 gamle billeder i `skaermbilleder/design-forsiden/` er lagt tilbage bagefter og er uændrede (md5).
