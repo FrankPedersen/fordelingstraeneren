@@ -54,9 +54,9 @@ function dayText(day: string): string {
 }
 
 /**
- * Forsiden (SPEC-forside-spor.md): topbjælken, hovedet, I dag (eller Velkomst ved første besøg), de fire spor som kort i
- * grupperne Optælling, Spilføring og Vurdering, Vejledning, Indstillinger og sidefoden. Et kort uden status (modulet
- * Analyse, SPEC-analyse-modul.md) står i sin gruppe, men tælles ikke med i I dag og Velkomst. Fordelingssporets
+ * Forsiden (SPEC-forside-spor.md): topbjælken, hovedet, I dag (eller Velkomst ved første besøg), de fem spor som kort i
+ * grupperne Optælling, Spilføring, Modspil og Vurdering, Vejledning, Indstillinger og sidefoden. Et kort uden status
+ * (modulet Analyse, SPEC-analyse-modul.md) står i sin gruppe, men tælles ikke med i I dag og Velkomst. Fordelingssporets
  * elementer står på Fordeling-skærmen (`DistributionScreen.tsx`). Forsiden læser sporenes data, men skriver intet.
  */
 export function HomeScreen(props: HomeScreenProps) {
@@ -166,8 +166,8 @@ export function HomeScreen(props: HomeScreenProps) {
             <h2 id="welcome">{tx('Velkommen', 'Welcome')}</h2>
             <p>
               {tx(
-                'Bridgetræning fem minutter om dagen. Appen har fire spor, og hvert spor har sin egen daglige session, streak og XP.',
-                'Bridge practice five minutes a day. The app has four tracks, and each track has its own daily session, streak and XP.',
+                'Bridgetræning fem minutter om dagen. Appen har fem spor, og hvert spor har sin egen daglige session, streak og XP.',
+                'Bridge practice five minutes a day. The app has five tracks, and each track has its own daily session, streak and XP.',
               )}
             </p>
             <p className="muted small">
@@ -217,7 +217,7 @@ export function HomeScreen(props: HomeScreenProps) {
             ) : (
               <>
                 <p className="muted small">
-                  {tx(`Alle ${overview.total === 4 ? 'fire' : overview.total} spor er trænet i dag.`, `All ${overview.total === 4 ? 'four' : overview.total} tracks are trained today.`)}
+                  {tx(`Alle ${overview.total === 5 ? 'fem' : overview.total} spor er trænet i dag.`, `All ${overview.total === 5 ? 'five' : overview.total} tracks are trained today.`)}
                 </p>
                 <button type="button" className="btn primary" onClick={() => startTrack(firstCard)}>
                   {tx(`Tag en ekstra session i ${firstCard.title.da}`, `Take an extra session in ${firstCard.title.en}`)}

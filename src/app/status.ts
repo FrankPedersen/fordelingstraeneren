@@ -11,6 +11,8 @@ import type { Grade } from '../domain/patterns';
 import { FB_STORAGE_KEY, readFbSaved } from '../farvebehandling/storage';
 import { HE_STORAGE_KEY, readHeSaved } from '../haandevaluering/storage';
 import { warmupQueue as heWarmup } from '../haandevaluering/training/deck';
+import { MS_STORAGE_KEY, readMsSaved } from '../modspil/storage';
+import { warmupQueue as msWarmup } from '../modspil/training/deck';
 import { PR_STORAGE_KEY, readPrSaved } from '../pointregnskab/storage';
 import { warmupQueue as prWarmup } from '../pointregnskab/training/deck';
 import { dueItemKeys, gradeProgress, newPatternsToday } from './progression';
@@ -71,7 +73,10 @@ function common(track: string, data: TrackData, now: number): TrackStatus {
   };
 }
 
-/** Pointregnskab og Håndevaluering: niveauet og de forfaldne kort i sporets bunke (opvarmningens kø uden de nye kort). */
+/**
+ * Pointregnskab, Håndevaluering og Modspil: niveauet og de forfaldne kort i sporets bunke (opvarmningens kø uden de nye
+ * kort; i Modspil de forfaldne øvelser).
+ */
 function withDeck(
   status: TrackStatus,
   data: TrackData & { level: number },
@@ -83,7 +88,7 @@ function withDeck(
   return { ...status, level: data.level, due: warmup(data.items, today).filter((key) => key in data.items).length };
 }
 
-/** Status for de fire spor. Fordelingssporets data er dem, appen allerede har indlæst. */
+/** Status for de fem spor i forsidens rækkefølge. Fordelingssporets data er dem, appen allerede har indlæst. */
 export function trackStatuses(saved: Saved, storage: ReadOnlyStorage, now: number): Record<string, TrackStatus> {
   const today = dayOf(now, saved.settings.dayStartsAtHour);
   const progress = gradeProgress(saved);
@@ -105,10 +110,13 @@ export function trackStatuses(saved: Saved, storage: ReadOnlyStorage, now: numbe
   // Farvebehandling: forfaldne emner som i sporets `dueItems`, uden at hente opgavebanken.
   const fb = readTrack(storage, FB_STORAGE_KEY, readFbSaved);
   const he = readTrack(storage, HE_STORAGE_KEY, readHeSaved);
+  // Modspil (SPEC-modspil.md, trin 2, Franks svar 18. nov. 2026 og svar 2): streak og niveau som Pointregnskab.
+  const ms = readTrack(storage, MS_STORAGE_KEY, readMsSaved);
   return {
     fordeling,
     pointregnskab: pr ? withDeck(common('pointregnskab', pr, now), pr, prWarmup, now) : notStarted('pointregnskab'),
     farvebehandling: fb ? common('farvebehandling', fb, now) : notStarted('farvebehandling'),
+    modspil: ms ? withDeck(common('modspil', ms, now), ms, msWarmup, now) : notStarted('modspil'),
     haandevaluering: he ? withDeck(common('haandevaluering', he, now), he, heWarmup, now) : notStarted('haandevaluering'),
   };
 }

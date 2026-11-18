@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modspil</title>
+</head>
+<body>
+<!-- Testside til scripts/tjek-bred-layout.mjs (SPEC-modspil.md, trin 2, accepttest 4–6): én opgave fra trin 1's
+     generator på Modspils opgaveskærm, valgt med adressen, fx ?ovelse=regel11&niveau=1&seed=1&profil=standard.
+     Et svar viser facit, som i sessionen. Siden vises kun af Vites dev-server og kommer ikke med i bygget (kun
+     index.html bygges). Rammen er den samme som sporets skærm: main.screen.ms-screen. -->
+<div id="rod"></div>
+<script type="module">
+  import '/src/ui/styles.css';
+  import { createElement } from 'react';
+  import { createRoot } from 'react-dom/client';
+  import { lavOpgave } from '/src/modspil/model/generator.ts';
+  import { profil } from '/src/modspil/model/metoder.ts';
+  import { Opgave } from '/src/modspil/ui/Opgave.tsx';
+
+  const q = new URLSearchParams(location.search);
+  const opgave = lavOpgave(q.get('ovelse'), Number(q.get('niveau')), Number(q.get('seed')), profil(q.get('profil')));
+  window.modspilOpgave = opgave;
+  const rod = createRoot(document.getElementById('rod'));
+  const tom = () => {};
+  const vis = (svar) =>
+    rod.render(
+      createElement('main', { className: 'screen ms-screen' },
+        createElement(Opgave, { opgave, nummer: 2, antal: 4, svar, onSvar: vis, onNaeste: tom, onIndstillinger: tom })),
+    );
+  vis(undefined);
+</script>
+</body>
+</html>

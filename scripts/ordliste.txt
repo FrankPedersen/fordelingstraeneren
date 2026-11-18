@@ -36,6 +36,7 @@ Trinene
 ustoppede
 
 # Almindelige ord og forkortelser, som ordbogen ikke har
+accepttest
 accepttests
 dvs
 eren

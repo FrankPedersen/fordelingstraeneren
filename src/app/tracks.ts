@@ -4,7 +4,7 @@
  * ændres. Listen har ingen logik fra sporene.
  */
 
-export type GroupId = 'counting' | 'play' | 'evaluation';
+export type GroupId = 'counting' | 'play' | 'defense' | 'evaluation';
 
 /** Tekst på begge sprog. */
 export interface Both {
@@ -48,6 +48,14 @@ export const GROUPS: readonly Group[] = [
     },
   },
   {
+    id: 'defense',
+    title: { da: 'Modspil', en: 'Defence' },
+    help: {
+      da: 'Træner modspil: makkers point, regel 11 og 12, udspillets længde og markeringerne efter de metoder, du vælger i Modspil.',
+      en: "Trains defence: partner's points, the rule of 11 and 12, the length from the lead and signals by the methods you choose in Defence.",
+    },
+  },
+  {
     id: 'evaluation',
     title: { da: 'Vurdering', en: 'Hand evaluation' },
     help: {
@@ -68,6 +76,7 @@ export const TRACK_ITEMS: readonly TrackItem[] = [
   { id: 'curves', track: 'fordeling', group: 'counting', screen: 'curves', title: { da: 'Kurver', en: 'Charts' }, help: { da: 'Kurverne viser din udvikling uge for uge: rigtige svar pr. minut i lynrunden og træfsikkerheden pr. grad.', en: 'The charts show your progress week by week: correct answers per minute in the lightning round and accuracy per grade.' } },
   { id: 'pointregnskab', track: 'pointregnskab', group: 'counting', screen: 'pointregnskab', title: { da: 'Pointregnskab', en: 'Point count' }, help: { da: 'Et selvstændigt spor om at tælle honnørpoint under spillet: hvor mange point har modparten, hvem har vist hvad, og hvor sidder de manglende honnører? Med egen daglig session, streak og XP.', en: 'A separate track about counting high-card points during play: how many points do the opponents have, who has shown what, and where are the missing honours? With its own daily session, streak and XP.' } },
   { id: 'farvebehandling', track: 'farvebehandling', group: 'play', screen: 'farvebehandling', title: { da: 'Farvebehandling', en: 'Suit combinations' }, help: { da: 'Et selvstændigt spor om at spille én farve: hvilken linje giver størst chance for de stik, du skal bruge? Med egen daglig session, streak og XP, selvvalgt træning, analyse af 657 kombinationer og en løser.', en: 'A separate track about playing one suit: which line gives the best chance of the tricks you need? With its own daily session, streak and XP, free practice, analysis of 657 combinations and a solver.' } },
+  { id: 'modspil', track: 'modspil', group: 'defense', screen: 'modspil', title: { da: 'Modspil', en: 'Defence' }, help: { da: 'Et selvstændigt spor om at tælle og aflæse som modspiller: makkers point, regel 11 og 12, udspillets længde og markeringerne efter de metoder, du vælger. Med egen daglig session, streak og XP.', en: "A separate track about counting and reading the cards as a defender: partner's points, the rule of 11 and 12, the length from the lead and signals by the methods you choose. With its own daily session, streak and XP." } },
   { id: 'haandevaluering', track: 'haandevaluering', group: 'evaluation', screen: 'haandevaluering', title: { da: 'Håndevaluering', en: 'Hand evaluation' }, help: { da: 'Et selvstændigt spor om at vurdere hånden med Franks P-model: honnørpoint, hvornår fordelingen må lægges til, og niveaubeslutningen ud fra parrets samlede P. Med egen daglig session, streak og XP.', en: "A separate track about valuing your hand with Frank's P-model: honour points, when distribution may be added, and the level decision from the pair's total P. With its own daily session, streak and XP." } },
 ];
 
@@ -110,5 +119,6 @@ export const TRACK_CARDS: readonly TrackCard[] = [
     },
     status: false,
   },
+  { track: 'modspil', group: 'defense', screen: 'modspil', title: { da: 'Modspil', en: 'Defence' }, description: { da: 'Aflæsning og markeringer som modspiller', en: 'Reading the cards and signalling as a defender' }, help: helpOf('modspil') },
   { track: 'haandevaluering', group: 'evaluation', screen: 'haandevaluering', title: { da: 'Håndevaluering', en: 'Hand evaluation' }, description: { da: 'Håndvurdering med P-modellen', en: 'Hand evaluation with the P-model' }, help: helpOf('haandevaluering') },
 ];

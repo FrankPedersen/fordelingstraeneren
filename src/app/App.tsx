@@ -20,6 +20,8 @@ const FarvebehandlingScreen = lazy(() => import('../farvebehandling/ui/Farvebeha
 const PointregnskabScreen = lazy(() => import('../pointregnskab/ui/PointregnskabScreen'));
 // Håndevaluering er et selvstændigt spor i gruppen Vurdering (SPEC-haandevaluering.md); forsiden åbner det med onOpen.
 const HaandevalueringScreen = lazy(() => import('../haandevaluering/ui/HaandevalueringScreen'));
+// Modspil er et selvstændigt spor i gruppen Modspil (SPEC-modspil.md, trin 2); det hentes dovent som Pointregnskab.
+const ModspilScreen = lazy(() => import('../modspil/ui/ModspilScreen'));
 
 type Screen =
   | 'home'
@@ -34,13 +36,14 @@ type Screen =
   | 'farvebehandling'
   | 'pointregnskab'
   | 'haandevaluering'
+  | 'modspil'
   | 'analyse';
 
 /**
  * Sporenes skærme og modulet Analyse (SPEC-analyse-modul.md); de åbnes fra forsiden med `onOpen`, og navnet er også
  * skærmens adresse (#fordeling, #analyse osv.).
  */
-const TRACKS: readonly Screen[] = ['fordeling', 'pointregnskab', 'farvebehandling', 'haandevaluering', 'analyse'];
+const TRACKS: readonly Screen[] = ['fordeling', 'pointregnskab', 'farvebehandling', 'haandevaluering', 'modspil', 'analyse'];
 
 /** Skærmen for en adresse: et spor, eller forsiden uden (eller med en ukendt) hash. */
 function screenOf(hash: string): Screen {
@@ -173,6 +176,12 @@ export default function App({ updateReady = false, onUpdate }: AppProps) {
       return (
         <Suspense fallback={<main className="screen" aria-busy="true" />}>
           <HaandevalueringScreen onBack={home} start={autoStart === 'haandevaluering'} />
+        </Suspense>
+      );
+    case 'modspil':
+      return (
+        <Suspense fallback={<main className="screen" aria-busy="true" />}>
+          <ModspilScreen onBack={home} start={autoStart === 'modspil'} />
         </Suspense>
       );
     default:
