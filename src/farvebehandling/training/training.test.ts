@@ -78,6 +78,8 @@ function rightAnswer(task: FbTask): Omit<FbAnswer, 'ms'> {
       return { field: task.fields.find((f) => f.outcomes[0] === 0)!.id };
     case 'linje-mod-linje':
       return { line: task.options.findIndex((o) => o.correct) };
+    case 'splitprocenter':
+      return { choice: task.split.options.findIndex((o) => o.correct) };
     default: {
       const line = task.options.findIndex((o) => o.correct);
       return { line, guess: intervalOf(task.options[line]) };
@@ -97,6 +99,8 @@ function wrongAnswer(task: FbTask): Omit<FbAnswer, 'ms'> {
       return { guess: (intervalOf(task.line) + 2) % 4 };
     case 'find-hullet':
       return { field: task.fields.find((f) => f.outcomes[0] > 0)!.id };
+    case 'splitprocenter':
+      return { choice: task.split.options.findIndex((o) => !o.correct) };
     default:
       return { line: task.options.findIndex((o) => !o.correct), guess: 0 };
   }

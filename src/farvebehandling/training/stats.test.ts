@@ -25,7 +25,7 @@ describe('Statistikken', () => {
       { key: 'fald-eller-kip', all: { answers: 0, score: 0 }, recent: { answers: 0, score: 0 } },
     ]);
     const tasks = taskStats(saved, '2026-10-04');
-    expect(tasks).toHaveLength(9);
+    expect(tasks).toHaveLength(10);
     expect(tasks.find((r) => r.key === 'vælg-linjen')!.all).toEqual({ answers: 2, score: 1 });
     expect(tasks.find((r) => r.key === 'chancen')!.recent).toEqual({ answers: 0, score: 0 });
   });

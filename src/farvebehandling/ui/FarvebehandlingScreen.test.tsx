@@ -470,7 +470,7 @@ describe('Farvebehandling', { timeout: 30_000 }, () => {
       expect(techniques[0].textContent).toContain('Sikkerhedsspil');
       expect(techniques[0].textContent).toContain('20 % af 5 svar');
       expect(techniques[1].textContent).toContain('100 % af 5 svar');
-      expect(within(screen.getByRole('list', { name: 'Opgavetype' })).getAllByRole('listitem')).toHaveLength(9);
+      expect(within(screen.getByRole('list', { name: 'Opgavetype' })).getAllByRole('listitem')).toHaveLength(10);
       click('Øv sikkerhedsspil i Selvvalgt');
       expect(screen.getByRole('button', { name: 'Selvvalgt' }).getAttribute('aria-current')).toBe('page');
       expect(pressed(/^Sikkerhedsspil \(\d+\)$/)).toBe('true');
