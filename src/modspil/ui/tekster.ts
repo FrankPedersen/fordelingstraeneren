@@ -232,7 +232,8 @@ const DA = {
     kompendiet: 'ALA mod sans · romersk kald mod farve · O/E · omvendt forsinket kald',
   } as Record<string, string>,
   metoderneI: (profil: string) => `Metoderne i ${profil}`,
-  modFarve: (metode: string) => `${metode} mod farve`,
+  /** Rullelistens navn på en metode, der mod sans spilles som en anden: den anden metode og så metoden mod farve. */
+  sansOgFarve: (sans: string, farve: string) => `${sans}; ${farve} mod farve`,
   egenNote: 'Ændrer du en metode, hedder profilen "Egen". Øvelser, som metoderne ikke har, springes over.',
   data: 'Dine data',
   dataHjaelp: 'Modspils data ligger kun i denne browser. En eksport gemmer dem som en fil, og en import erstatter dem.',
@@ -472,7 +473,9 @@ const EN: Tekster = {
     kompendiet: 'ALA against notrump · Roman signals against a suit · odd/even · reverse delayed signal',
   } as Record<string, string>,
   metoderneI: (profil: string) => `Methods in ${profil}`,
-  modFarve: (metode: string) => `${metode} against a suit`,
+  // Kort nok til god luft ved 390 px (Franks rettelse i session 4): "low encourages" skrives "low = encourage" som det
+  // danske "lavt = kald", og "against a suit" forkortes "v. suit".
+  sansOgFarve: (sans: string, farve: string) => `${sans.replace(/ encourages$/, ' = encourage')}; ${farve} v. suit`,
   egenNote: 'If you change a method, the profile is called "Custom". Exercises the methods do not have are skipped.',
   data: 'Your data',
   dataHjaelp: 'The Defence data are stored only in this browser. An export saves them as a file, and an import replaces them.',

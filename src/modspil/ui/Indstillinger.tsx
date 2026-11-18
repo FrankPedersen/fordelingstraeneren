@@ -28,12 +28,13 @@ const foersteOrd = (s: string) => s.split(' ')[0];
 /**
  * Metodens navn i rullelisten, kort nok til at kunne ses helt ved 390 px (Franks svar 2, 18. nov. 2026). En metode, der
  * mod sans spilles som en anden (romersk kald), siger den anden metode og sit eget første ord mod farve, fx
- * "Lavt = kald; romersk mod farve". En metode, der mod farve spilles som en anden (ALA), har kun sit navn, der selv
- * siger sans, fx "ALA mod sans". Teksterne bygges af metodernes navne i metoder.json, aldrig af deres id.
+ * "Lavt = kald; romersk mod farve" og på engelsk "Low = encourage; Roman v. suit" (Franks rettelse i session 4). En
+ * metode, der mod farve spilles som en anden (ALA), har kun sit navn, der selv siger sans, fx "ALA mod sans". Teksterne
+ * bygges af metodernes navne i metoder.json, aldrig af deres id.
  */
 function metodeNavn(kategori: KategoriId, m: Metode): string {
   const tekst = (x: Metode) => (getLang() === 'en' ? x.tekstEn : x.tekst);
-  if (m.sans) return stort(`${tekst(metode(kategori, m.sans))}; ${T.modFarve(foersteOrd(tekst(m)))}`);
+  if (m.sans) return stort(T.sansOgFarve(tekst(metode(kategori, m.sans)), foersteOrd(tekst(m))));
   return stort(tekst(m));
 }
 
