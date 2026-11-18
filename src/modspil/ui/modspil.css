@@ -126,7 +126,7 @@
 
 .ms-stik {
   position: relative;
-  height: 176px;
+  height: 210px;
   border-radius: var(--radius-12);
   background: var(--table);
   color: var(--table-text);
@@ -134,7 +134,7 @@
 
 /* Med spilførers kort i stikket er der fire kort på feltet. */
 .ms-stik.ms-stik-syd {
-  height: 236px;
+  height: 240px;
 }
 
 .ms-plads {
@@ -471,8 +471,15 @@
 .ms-facit-knapper > * {
   flex: 1;
   min-height: 48px;
+  padding: 0 var(--space-12);
+  color: var(--text);
+  font-size: var(--type-note);
   text-align: center;
   text-decoration: none;
+}
+
+.ms-facit-knapper > .btn.primary {
+  color: var(--accent-text);
 }
 
 /* Indstillinger */
@@ -528,6 +535,7 @@
 .ms-metode {
   display: grid;
   gap: var(--space-4);
+  min-width: 0;
 }
 
 .ms-metode label {
@@ -536,6 +544,8 @@
 }
 
 .ms-metode select {
+  width: 100%;
+  min-width: 0;
   min-height: var(--touch-min);
   padding: 0 var(--space-10);
   border: 1px solid var(--line);
@@ -587,12 +597,9 @@
     font-size: 1.25rem;
   }
 
-  .ms-stik {
-    height: 220px;
-  }
-
+  .ms-stik,
   .ms-stik.ms-stik-syd {
-    height: 260px;
+    height: 250px;
   }
 
   .ms-spillekort {

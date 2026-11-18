@@ -66,7 +66,7 @@ const DA = {
   eksportNu: 'Eksportér nu',
 
   // Sessionen
-  faser: { repetition: 'Repetition', niveau: 'Niveau' },
+  faser: { repetition: 'Repetition', niveau: 'På dit niveau' },
   sessionMeta: (xp: number) => `${xp} XP`,
   afbryd: 'Afbryd sessionen',
   sessionGennemfoert: 'Sessionen er gennemført',
@@ -316,7 +316,7 @@ const EN: Tekster = {
   eksportPaamindelse: 'It is more than a month since you last saved a copy of the Defence data.',
   eksportNu: 'Export now',
 
-  faser: { repetition: 'Review', niveau: 'Level' },
+  faser: { repetition: 'Review', niveau: 'At your level' },
   sessionMeta: (xp: number) => `${xp} XP`,
   afbryd: 'Stop the session',
   sessionGennemfoert: 'The session is complete',
