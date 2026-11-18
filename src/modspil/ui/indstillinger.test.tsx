@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { setLang } from '../../i18n';
 import { bydeform } from '../../sprog/bydeform';
 import { KATEGORI_DATA, profil } from '../model/metoder';
 import { MS_STORAGE_KEY, parseMsImport, readMsSaved } from '../storage';
@@ -122,6 +123,21 @@ describe('Indstillinger (accepttest 3, trin 2)', () => {
     for (const t of tekster) expect(bydeform(t), t).toEqual([]);
     expect(document.body.textContent).not.toContain('Vælg en profil');
     expect(document.body.textContent).not.toContain('ret enkelte metoder');
+  });
+
+  it('romersk kald hedder "Lavt = kald; romersk mod farve" i rullelisten og på engelsk "Low = encourage; Roman v. suit" (Franks rettelse i session 4, 18. nov. 2026)', () => {
+    const romersk = () => document.querySelector('option[value="romersk-kald"]')?.textContent?.trim();
+    aabn();
+    expect(romersk()).toBe('Lavt = kald; romersk mod farve');
+    cleanup();
+    setLang('en');
+    try {
+      render(<ModspilScreen onBack={() => {}} />);
+      click('Settings');
+      expect(romersk()).toBe('Low = encourage; Roman v. suit');
+    } finally {
+      setLang('da');
+    }
   });
 
   it('kun modspil:v1 skrives, og en eksport kan importeres med profilen og metoderne (som Pointregnskab)', () => {
