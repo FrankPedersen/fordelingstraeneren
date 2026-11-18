@@ -70,8 +70,8 @@ function sections(): Section[] {
         <List
           items={[
             tx(
-              'I dag øverst viser, hvor mange af de fire spor du har trænet i dag, og hvilket spor der er det næste: det første spor på forsiden, der ikke er trænet. Knappen starter dets session. Første gang står Velkommen i stedet.',
-              'Today at the top shows how many of the four tracks you have trained today and which track is next: the first track on the front page that is not yet trained. The button starts its session. On your first visit, Welcome is shown instead.',
+              'I dag øverst viser, hvor mange af de fem spor du har trænet i dag, og hvilket spor der er det næste: det første spor på forsiden, der ikke er trænet. Knappen starter dets session. Første gang står Velkommen i stedet.',
+              'Today at the top shows how many of the five tracks you have trained today and which track is next: the first track on the front page that is not yet trained. The button starts its session. On your first visit, Welcome is shown instead.',
             ),
             tx(
               'Hvert spor har sit eget kort med streak, niveau og ét mærke: trænet i dag, emner til repetition eller ikke startet endnu. Et tryk på kortet åbner sporet.',

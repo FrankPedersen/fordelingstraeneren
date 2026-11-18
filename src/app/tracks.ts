@@ -119,6 +119,6 @@ export const TRACK_CARDS: readonly TrackCard[] = [
     },
     status: false,
   },
-  { track: 'modspil', group: 'defense', screen: 'modspil', title: { da: 'Modspil', en: 'Defence' }, description: { da: 'Aflæsning og markeringer som modspiller', en: 'Reading the cards and signalling as a defender' }, help: helpOf('modspil'), status: false },
+  { track: 'modspil', group: 'defense', screen: 'modspil', title: { da: 'Modspil', en: 'Defence' }, description: { da: 'Aflæsning og markeringer som modspiller', en: 'Reading the cards and signalling as a defender' }, help: helpOf('modspil') },
   { track: 'haandevaluering', group: 'evaluation', screen: 'haandevaluering', title: { da: 'Håndevaluering', en: 'Hand evaluation' }, description: { da: 'Håndvurdering med P-modellen', en: 'Hand evaluation with the P-model' }, help: helpOf('haandevaluering') },
 ];
