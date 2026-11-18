@@ -6,6 +6,7 @@ import { newItem } from '../engine/leitner';
 import { defaultSaved, STORAGE_KEY } from '../engine/storage';
 import { defaultPrSaved, PR_STORAGE_KEY } from '../pointregnskab/storage';
 import { DECK_ORDER as PR_DECK } from '../pointregnskab/training/deck';
+import { defaultMsSaved, MS_STORAGE_KEY } from '../modspil/storage';
 import { setLang } from '../i18n';
 import App from './App';
 
@@ -43,7 +44,7 @@ describe('Forsiden (SPEC-forside-spor.md)', () => {
     expect(screen.getByRole('heading', { name: 'Velkommen' })).toBeTruthy();
     expect(screen.queryByRole('meter', { name: 'Spor trænet i dag' })).toBeNull();
     expect(screen.getByRole('button', { name: 'Se en klubaften: 100 hænder' })).toBeTruthy();
-    for (const track of ['Fordeling', 'Pointregnskab', 'Farvebehandling', 'Håndevaluering']) expect(describedBy(track), track).toMatch(/Ikke startet endnu$/);
+    for (const track of ['Fordeling', 'Pointregnskab', 'Farvebehandling', 'Modspil', 'Håndevaluering']) expect(describedBy(track), track).toMatch(/Ikke startet endnu$/);
   });
 
   it('I dag tæller de trænede spor, viser det næste og starter dets session; kortene har streak, niveau og ét mærke', async () => {
@@ -51,7 +52,7 @@ describe('Forsiden (SPEC-forside-spor.md)', () => {
     const stored = snapshot();
     render(<App />);
     expect(screen.getByText('I dag · lørdag 17. oktober')).toBeTruthy();
-    expect(screen.getByRole('heading', { name: '1 af 4 spor er trænet' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: '1 af 5 spor er trænet' })).toBeTruthy();
     expect(screen.getByRole('meter', { name: 'Spor trænet i dag' }).getAttribute('aria-valuenow')).toBe('1');
     expect(screen.getByText('Næste: Pointregnskab, med 2 emner til repetition. Ca. 5 minutter.')).toBeTruthy();
     expect(describedBy('Fordeling')).toBe('De 39 mønstre og deres hyppighed4 dage i trækNiveau 1 · almindelig✓ Trænet i dag');
@@ -85,13 +86,14 @@ describe('Forsiden (SPEC-forside-spor.md)', () => {
     expect(screen.queryByRole('button', { name: 'Afbryd sessionen' })).toBeNull();
   }, 30_000);
 
-  it('når alle fire spor er trænet, tilbydes en ekstra session i Fordeling', () => {
+  it('når alle fem spor er trænet, tilbydes en ekstra session i Fordeling', () => {
     const done = { streak: { current: 1, best: 1, lastDay: TODAY }, items: { [PR_DECK[0]]: newItem('2026-10-20') } };
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...defaultSaved(), streak: done.streak, items: { '4-4-3-2:rank': newItem('2026-10-20') } }));
     for (const key of [PR_STORAGE_KEY, 'farvebehandling:v1', 'haandevaluering:v1']) localStorage.setItem(key, JSON.stringify({ ...defaultPrSaved(), ...done }));
+    localStorage.setItem(MS_STORAGE_KEY, JSON.stringify({ ...defaultMsSaved(), streak: done.streak, items: { 'ovelse:point': newItem('2026-10-20') } }));
     render(<App />);
-    expect(screen.getByRole('heading', { name: '4 af 4 spor er trænet' })).toBeTruthy();
-    expect(screen.getByText('Alle fire spor er trænet i dag.')).toBeTruthy();
+    expect(screen.getByRole('heading', { name: '5 af 5 spor er trænet' })).toBeTruthy();
+    expect(screen.getByText('Alle fem spor er trænet i dag.')).toBeTruthy();
     click('Tag en ekstra session i Fordeling');
     expect(screen.getByRole('button', { name: 'Afbryd sessionen' })).toBeTruthy();
   });

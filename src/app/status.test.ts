@@ -4,6 +4,7 @@ import { defaultSaved, type Saved } from '../engine/storage';
 import { defaultFbSaved, FB_STORAGE_KEY } from '../farvebehandling/storage';
 import { defaultHeSaved, HE_STORAGE_KEY } from '../haandevaluering/storage';
 import { DECK_ORDER as HE_DECK } from '../haandevaluering/training/deck';
+import { defaultMsSaved, MS_STORAGE_KEY } from '../modspil/storage';
 import { defaultPrSaved, PR_STORAGE_KEY } from '../pointregnskab/storage';
 import { DECK_ORDER as PR_DECK } from '../pointregnskab/training/deck';
 import { itemKey } from './progression';
@@ -21,7 +22,8 @@ const NOON = new Date(2026, 9, 17, 12).getTime(); // lørdag 17. oktober 2026 kl
 const ORDER = TRACK_CARDS.filter((c) => c.status !== false).map((c) => c.track);
 
 describe('Status fra sporene (SPEC-forside-spor.md)', () => {
-  it('uden data er alle fire spor "ikke startet" uden tal', () => {
+  it('uden data er alle fem spor "ikke startet" uden tal', () => {
+    expect(ORDER).toEqual(['fordeling', 'pointregnskab', 'farvebehandling', 'modspil', 'haandevaluering']);
     const statuses = trackStatuses(defaultSaved(), storageOf({}), NOON);
     expect(Object.keys(statuses)).toEqual(ORDER);
     for (const track of ORDER) expect(statuses[track], track).toMatchObject({ started: false, streak: 0, level: null, doneToday: false, due: 0 });
@@ -36,14 +38,16 @@ describe('Status fra sporene (SPEC-forside-spor.md)', () => {
     const pr = { ...defaultPrSaved(), level: 3, streak: { current: 5, best: 5, lastDay: '2026-10-17' }, items: { [PR_DECK[0]]: newItem('2026-10-17'), [PR_DECK[1]]: newItem('2026-10-16') } };
     const fb = { ...defaultFbSaved(), streak: { current: 2, best: 2, lastDay: '2026-10-16' }, items: { 'a:1': newItem('2026-10-10'), 'b:2': newItem('2026-10-18') } };
     const he = { ...defaultHeSaved(), level: 1, streak: { current: 1, best: 1, lastDay: '2026-10-17' }, items: { [HE_DECK[0]]: newItem('2026-10-30') } };
-    const storage = storageOf({ [PR_STORAGE_KEY]: JSON.stringify(pr), [FB_STORAGE_KEY]: JSON.stringify(fb), [HE_STORAGE_KEY]: JSON.stringify(he) });
+    const ms = { ...defaultMsSaved(), level: 2, streak: { current: 4, best: 6, lastDay: '2026-10-16' }, items: { 'ovelse:regel11': newItem('2026-10-17'), 'ovelse:point': newItem('2026-10-19') } };
+    const storage = storageOf({ [PR_STORAGE_KEY]: JSON.stringify(pr), [FB_STORAGE_KEY]: JSON.stringify(fb), [HE_STORAGE_KEY]: JSON.stringify(he), [MS_STORAGE_KEY]: JSON.stringify(ms) });
     const s = trackStatuses(fordeling, storage, NOON);
     expect(s.fordeling).toMatchObject({ started: true, streak: 3, level: 1, grade: 'common', doneToday: false, due: 1 });
     expect(s.pointregnskab).toMatchObject({ started: true, streak: 5, level: 3, doneToday: true, due: 2 });
     expect(s.farvebehandling).toMatchObject({ started: true, streak: 2, level: null, doneToday: false, due: 1 });
     expect(s.haandevaluering).toMatchObject({ started: true, streak: 1, level: 1, doneToday: true, due: 0 });
+    expect(s.modspil).toMatchObject({ started: true, streak: 4, level: 2, doneToday: false, due: 1 });
     expect(storage.setItem).not.toHaveBeenCalled();
-    expect(todayOverview(ORDER, s)).toEqual({ done: 2, total: 4, next: 'fordeling' });
+    expect(todayOverview(ORDER, s)).toEqual({ done: 2, total: 5, next: 'fordeling' });
   });
 
   it('dagen skifter kl. 04: kl. 03.30 er det stadig gårsdagens session', () => {
@@ -54,15 +58,16 @@ describe('Status fra sporene (SPEC-forside-spor.md)', () => {
   });
 
   it('data, der ikke kan læses, giver "ikke startet" uden at fejle og uden at skrive', () => {
-    const storage = storageOf({ [PR_STORAGE_KEY]: '{ikke json', [FB_STORAGE_KEY]: '"en tekst"', [HE_STORAGE_KEY]: 'null' });
+    const storage = storageOf({ [PR_STORAGE_KEY]: '{ikke json', [FB_STORAGE_KEY]: '"en tekst"', [HE_STORAGE_KEY]: 'null', [MS_STORAGE_KEY]: '[1, 2]' });
     const s = trackStatuses(defaultSaved(), storage, NOON);
-    for (const track of ['pointregnskab', 'farvebehandling', 'haandevaluering']) expect(s[track].started, track).toBe(false);
+    for (const track of ['pointregnskab', 'farvebehandling', 'modspil', 'haandevaluering']) expect(s[track].started, track).toBe(false);
     expect(storage.setItem).not.toHaveBeenCalled();
   });
 
   it('det næste spor er det første i forsidens rækkefølge, der ikke er trænet i dag', () => {
     const status = (doneToday: boolean) => ({ track: '', started: true, streak: 1, level: null, grade: null, doneToday, due: 0, fresh: 0 });
-    expect(todayOverview(ORDER, { fordeling: status(true), pointregnskab: status(true), farvebehandling: status(false), haandevaluering: status(false) }).next).toBe('farvebehandling');
-    expect(todayOverview(ORDER, { fordeling: status(true), pointregnskab: status(true), farvebehandling: status(true), haandevaluering: status(true) })).toEqual({ done: 4, total: 4, next: null });
+    expect(todayOverview(ORDER, { fordeling: status(true), pointregnskab: status(true), farvebehandling: status(false), modspil: status(false), haandevaluering: status(false) }).next).toBe('farvebehandling');
+    expect(todayOverview(ORDER, { fordeling: status(true), pointregnskab: status(true), farvebehandling: status(true), modspil: status(false), haandevaluering: status(false) }).next).toBe('modspil');
+    expect(todayOverview(ORDER, { fordeling: status(true), pointregnskab: status(true), farvebehandling: status(true), modspil: status(true), haandevaluering: status(true) })).toEqual({ done: 5, total: 5, next: null });
   });
 });

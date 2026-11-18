@@ -8,6 +8,7 @@ import { TEST_BANK } from '../farvebehandling/testBank';
 import { setLang } from '../i18n';
 import { defaultPrSaved, PR_STORAGE_KEY } from '../pointregnskab/storage';
 import { DECK_ORDER as PR_DECK } from '../pointregnskab/training/deck';
+import { defaultMsSaved, MS_STORAGE_KEY } from '../modspil/storage';
 import App from './App';
 
 // Accepttesten for leverancetrin 1 i SPEC-analyse-modul.md: Analyse som selvstændigt modul med adressen #analyse og sit
@@ -97,7 +98,7 @@ describe('Analyse som selvstændigt modul (SPEC-analyse-modul.md, trin 1)', { ti
     await waitFor(() => expect(window.location.hash).toBe(''));
   });
 
-  it('forsidekortet "Analyse" står i Spilføring efter Farvebehandling, har ⓘ og ingen streak, og I dag tæller stadig fire spor', () => {
+  it('forsidekortet "Analyse" står i Spilføring efter Farvebehandling, har ⓘ og ingen streak, og I dag tæller stadig kun sporene (fem)', () => {
     someTracks();
     render(<App />);
     const play = screen.getByRole('region', { name: 'Spilføring' });
@@ -107,7 +108,7 @@ describe('Analyse som selvstændigt modul (SPEC-analyse-modul.md, trin 1)', { ti
     expect(within(play).getByRole('note').textContent).toBe(
       'Analysen fra Farvebehandling som selvstændigt modul: enhver kombination kan slås op med linjerne, chancerne og sidningerne, også med kendte kort, hp-grænser og forbindelser. Den findes også som fanen Analyse i Farvebehandling.',
     );
-    expect(screen.getByRole('heading', { name: '1 af 4 spor er trænet' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: '1 af 5 spor er trænet' })).toBeTruthy();
     expect(screen.getByText(/^Næste: Pointregnskab/)).toBeTruthy();
   });
 
@@ -118,13 +119,14 @@ describe('Analyse som selvstændigt modul (SPEC-analyse-modul.md, trin 1)', { ti
     expect(describedBy('Analyse')).toBe('Opslag af kombinationer · linjer, chancer og sidninger');
   });
 
-  it('når alle fire spor er trænet, foreslår I dag ikke Analyse', () => {
-    // Som i forside.test.tsx: alle fire spor har en session i dag.
+  it('når alle fem spor er trænet, foreslår I dag ikke Analyse', () => {
+    // Som i forside.test.tsx: alle fem spor har en session i dag.
     const done = { streak: { current: 1, best: 1, lastDay: TODAY }, items: { [PR_DECK[0]]: newItem('2026-10-20') } };
     localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...defaultSaved(), streak: done.streak, items: { '4-4-3-2:rank': newItem('2026-10-20') } }));
     for (const key of [PR_STORAGE_KEY, FB_STORAGE_KEY, 'haandevaluering:v1']) localStorage.setItem(key, JSON.stringify({ ...defaultPrSaved(), ...done }));
+    localStorage.setItem(MS_STORAGE_KEY, JSON.stringify({ ...defaultMsSaved(), streak: done.streak, items: { 'ovelse:point': newItem('2026-10-20') } }));
     render(<App />);
-    expect(screen.getByRole('heading', { name: '4 af 4 spor er trænet' })).toBeTruthy();
+    expect(screen.getByRole('heading', { name: '5 af 5 spor er trænet' })).toBeTruthy();
     expect(screen.getByRole('button', { name: 'Tag en ekstra session i Fordeling' })).toBeTruthy();
   });
 

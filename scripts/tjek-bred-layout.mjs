@@ -28,11 +28,12 @@
 // delene i specens rækkefølge, stikket på grønt felt med makkers udspil i en orange ring og din plads stiplet,
 // kortknapper og svarknapper på mindst 44 px, Vælg kortet med resten af hånden gråtonet og aftalen under spørgsmålet,
 // facit med mærket, regnestykket, forklaringen, Ved bordet og Næste opgave, og Indstillinger med tre profiler og syv
-// metoder. Fra 1000 px står bordet til venstre og spørgsmålet og facit til højre, bordets spalte dækker intet, og
+// metoder, hvor teksterne i rullelisterne kan ses helt ved 390 px på dansk og engelsk (Franks svar 2). Fra 1000 px står bordet til venstre og spørgsmålet og facit til højre, bordets spalte dækker intet, og
 // HTML'en er den samme som ved 390 px. Rødt (--suit-red og --card-red) står kun på ♥ og ♦ og aldrig på en rang, og
 // tastaturet fører fra forsiden gennem en session til status. Modspils skærme er nye og derfor ikke med i
 // pixelsammenligningen; i forsiden og vejledningen skjules Modspils gruppe og afsnit i begge apps, så resten
-// sammenlignes med tagget.
+// sammenlignes med tagget. Velkomsten og vejledningens linje om I dag siger fem spor i stedet for fire (Franks svar 2);
+// i begge apps skrives de fem spor om til fire før billedet, så alt andet stadig sammenlignes pixel for pixel.
 import { spawn, spawnSync } from 'node:child_process';
 import { existsSync, lstatSync, mkdirSync, mkdtempSync, rmSync, symlinkSync, unlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -185,8 +186,13 @@ async function chrome() {
         /** Hele siden, når den står stille: to billeder i træk skal være ens (Analyse regner færdig bagefter). */
         async billede() {
           // Modspils gruppe på forsiden og afsnit i vejledningen er nye (SPEC-modspil.md, trin 2) og skjules i begge apps.
+          // Velkomsten og vejledningen siger fem spor (Franks svar 2); i begge apps står der fire i billedet. I tagget
+          // findes de fem spor ikke, så dér ændres intet.
           await kør(`window.scrollTo(0, 0); document.head.insertAdjacentHTML('beforeend', '<style>.site-footer, section.home-group[aria-labelledby="group-defense"] { display: none !important; }</style>');
             for (const d of document.querySelectorAll('details')) if (['Modspil', 'Defence'].includes(d.querySelector('summary')?.textContent.trim())) d.style.setProperty('display', 'none', 'important');
+            const fem = [['Appen har fem spor', 'Appen har fire spor'], ['The app has five tracks', 'The app has four tracks'], ['af de fem spor', 'af de fire spor'], ['of the five tracks', 'of the four tracks']];
+            const tekster = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+            for (let t = tekster.nextNode(); t; t = tekster.nextNode()) for (const [nu, før] of fem) if (t.data.includes(nu)) t.data = t.data.replace(nu, før);
             true`);
           let forrige;
           for (let i = 0; i < 8; i++) {
@@ -689,6 +695,34 @@ async function indstillingerSomMockup(s, navn) {
   tjek(d.ud <= 0, `${navn}: intet stikker ud til siden`, `${d.ud} px`);
 }
 
+/**
+ * Teksterne i Indstillingers rullelister kan ses helt (Franks svar 2, 18. nov. 2026): enhver mulighed kan være den
+ * valgte, så hver mulighed måles. En kopi af listen med kun den ene mulighed får sin naturlige bredde (teksten, pilen og
+ * polstringen, som Chrome tegner dem) og må højst være så bred som listen selv.
+ */
+async function rullelisterneKanSes(s, navn) {
+  const d = await s.kør(`(() => {
+    const skåret = [];
+    let antal = 0;
+    for (const liste of document.querySelectorAll('select')) {
+      const bredde = liste.getBoundingClientRect().width;
+      for (const mulighed of liste.options) {
+        const kopi = liste.cloneNode(false);
+        kopi.removeAttribute('id');
+        kopi.append(mulighed.cloneNode(true));
+        kopi.style.cssText = 'position: absolute; left: 0; top: 0; visibility: hidden; width: auto; min-width: 0; max-width: none';
+        liste.parentElement.append(kopi);
+        const naturlig = kopi.getBoundingClientRect().width;
+        kopi.remove();
+        antal++;
+        if (naturlig > bredde + 0.5) skåret.push(mulighed.textContent.trim() + ' (' + Math.ceil(naturlig - bredde) + ' px for bred)');
+      }
+    }
+    return { antal, skåret };
+  })()`);
+  tjek(d.antal >= 16 && d.skåret.length === 0, `${navn}: teksterne i rullelisterne kan ses helt (${d.antal} muligheder)`, d.skåret.join('; '));
+}
+
 /** HTML'en i opgaven (uden statuslinjen, der kan følge tiden), så 390 og 1280 px kan sammenlignes. */
 const OPGAVENS_HTML = `(() => { const r = document.querySelector('[data-ovelse]').cloneNode(true); r.querySelectorAll('[role="progressbar"]').forEach((e) => e.remove()); return r.outerHTML; })()`;
 const FOKUS = `(() => { const e = document.activeElement; return e ? (e.getAttribute('aria-label') || e.textContent || '').replace(/\\s+/g, ' ').trim() : ''; })()`;
@@ -767,7 +801,17 @@ async function tjekModspil() {
   await del('Modspil: Indstillinger som mock-up\'en ved 390 px', async () => {
     s = await åbnModspil('indstillinger', 390, 844);
     await indstillingerSomMockup(s, 'Modspils Indstillinger ved 390 px');
+    await rullelisterneKanSes(s, 'Modspils Indstillinger ved 390 px');
     await rødtKunPåSymbolerne(s, 'Modspils Indstillinger ved 390 px');
+    await s.luk();
+    // På engelsk: sproget skiftes med knappen på forsiden, og Modspil åbnes med kortet "Defence".
+    s = await b.fane(390, 844);
+    await s.gå(NU);
+    await s.klik('Skift sprog til engelsk');
+    await s.klik('Defence');
+    await s.klik('Settings');
+    await venteTil(s, 'input[type="radio"]', 'Settings');
+    await rullelisterneKanSes(s, 'Modspils Indstillinger på engelsk ved 390 px');
     await s.luk();
     s = await åbnModspil('forside', 390, 844);
     await rødtKunPåSymbolerne(s, 'Modspils forside ved 390 px');

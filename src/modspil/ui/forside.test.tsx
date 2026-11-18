@@ -26,11 +26,13 @@ import { defaultMsSaved, MS_STORAGE_KEY } from '../storage';
  * - `ModspilScreen` (standardeksport, `{ onBack(): void; start?: boolean }`): overskriften "Modspil" (h1), knapperne
  *   "Start dagens session", "Indstillinger" og "Tilbage til forsiden". Et kig skriver intet i lagringen.
  * - Vejledningen har et afsnit (`<details>`) med titlen "Modspil" / "Defence". De eksisterende afsnit ændres ikke:
- *   `git diff` fra tagget har kun nye linjer i `src/app/screens/GuideScreen.tsx`. Afsnittet om forsidens grupper får én
- *   ny linje om Modspil blandt grupperne (Franks svar 18. nov. 2026 til valg 16).
- * - Modspils kort på forsiden viser streak og niveau som Pointregnskab (Franks svar 18. nov. 2026): kortet har status,
- *   og `src/app/status.ts` læser `modspil:v1` med `readMsSaved` uden at skrive. `src/modspil/storage.ts` har også
- *   `defaultMsSaved()` med `level`, `streak`, `sessions` og `items` (Leitner-bunken) som Pointregnskab.
+ *   `git diff` fra tagget har kun nye linjer i `src/app/screens/GuideScreen.tsx`, bortset fra linjen om I dag, der
+ *   siger "de fem spor" / "the five tracks" i stedet for fire (Franks svar 2, 18. nov. 2026). Afsnittet om forsidens
+ *   grupper får én ny linje om Modspil blandt grupperne (Franks svar 18. nov. 2026 til valg 16).
+ * - Modspils kort på forsiden viser streak og niveau som Pointregnskab og tæller med i I dag (Franks svar 18. nov. 2026
+ *   og svar 2): kortet har status, og `src/app/status.ts` læser `modspil:v1` med `readMsSaved` uden at skrive.
+ *   `src/modspil/storage.ts` har også `defaultMsSaved()` med `level`, `streak`, `sessions` og `items` (Leitner-bunken)
+ *   som Pointregnskab. Velkomsten (`HomeScreen.tsx`) og vejledningen siger fem spor på dansk og engelsk.
  */
 
 const TAG = 'v43-foer-modspil-skaerme';
@@ -179,10 +181,8 @@ describe('Forsiden viser gruppen Modspil (accepttest 1, trin 2)', () => {
     expect([...groups.querySelectorAll('li')].filter((li) => /Defence/.test(li.textContent ?? ''))).toHaveLength(1);
   });
 
-  // Venter på Frank (session 2, spørgsmål 1): et kort med status tæller med i I dag, og så fejler de eksisterende
-  // src/app/status.test.ts, src/app/forside.test.tsx og src/app/analyse-modul.test.tsx, der forventer fire spor. Indtil
-  // de må rettes, har kortet `status: false` som Analyse, og testen springes over.
-  it.skip('Modspils kort viser streak, niveau og ét mærke som Pointregnskab (Franks svar 18. nov. 2026); forsiden skriver intet', () => {
+  // Franks svar 2 (18. nov. 2026): kortet har status og tæller med i I dag; de tre testfiler med fire spor er rettet.
+  it('Modspils kort viser streak, niveau og ét mærke som Pointregnskab og tæller med i I dag (Franks svar 18. nov. 2026 og svar 2); forsiden skriver intet', () => {
     vi.useFakeTimers({ toFake: ['Date'] });
     vi.setSystemTime(new Date(2026, 10, 18, 12));
     try {
@@ -200,6 +200,8 @@ describe('Forsiden viser gruppen Modspil (accepttest 1, trin 2)', () => {
       expect(s).toMatchObject({ track: 'modspil', started: true, streak: 3, level: 2, doneToday: true, due: 1 });
       render(<App />);
       expect(beskrivelse('Modspil')).toMatch(/3 dage i træk ?Niveau 2 ?✓ Trænet i dag$/);
+      // I dag tæller fem spor, og Modspil er det ene, der er trænet.
+      expect(screen.getByRole('heading', { name: '1 af 5 spor er trænet' })).toBeTruthy();
       expect(JSON.stringify(Object.entries(localStorage).sort())).toBe(foer);
       cleanup();
       // Næste dag: emner til repetition som Pointregnskabs mærke.
@@ -211,11 +213,42 @@ describe('Forsiden viser gruppen Modspil (accepttest 1, trin 2)', () => {
     }
   });
 
-  it('vejledningens eksisterende afsnit er uændrede: GuideScreen.tsx har kun nye linjer siden tagget', (ctx) => {
+  it('velkomsten siger fem spor på dansk og engelsk (Franks svar 2, 18. nov. 2026)', () => {
+    render(<App />);
+    expect(screen.getByRole('heading', { name: 'Velkommen' })).toBeTruthy();
+    expect(screen.getByText(/Appen har fem spor, og hvert spor har sin egen daglige session/)).toBeTruthy();
+    expect(screen.queryByText(/fire spor/)).toBeNull();
+    click('Skift sprog til engelsk');
+    expect(screen.getByText(/The app has five tracks, and each track has its own daily session/)).toBeTruthy();
+    expect(screen.queryByText(/four tracks/)).toBeNull();
+  });
+
+  it('vejledningen siger fem spor i I dag på dansk og engelsk (Franks svar 2, 18. nov. 2026)', () => {
+    const forsiden = () => [...document.querySelectorAll('details')].find((d) => /^(Forsiden, sporenes kort og sidefoden|The front page, the track cards and the footer)$/.test(d.querySelector('summary')?.textContent?.trim() ?? ''))!;
+    render(<App />);
+    click('Læs vejledningen');
+    expect(forsiden().textContent).toMatch(/I dag øverst viser, hvor mange af de fem spor du har trænet i dag/);
+    expect(document.body.textContent).not.toMatch(/fire spor/);
+    cleanup();
+    render(<App />);
+    click('Skift sprog til engelsk');
+    click('Read the guide');
+    expect(forsiden().textContent).toMatch(/Today at the top shows how many of the five tracks you have trained today/);
+    expect(document.body.textContent).not.toMatch(/four tracks/);
+  });
+
+  it('vejledningens eksisterende afsnit er uændrede: GuideScreen.tsx har kun nye linjer siden tagget, bortset fra fem spor i I dag', (ctx) => {
     if (!harTag()) ctx.skip(`Tagget ${TAG} findes ikke her (fx i GitHub Actions), så sammenligningen kører kun lokalt.`);
     const diff = git('diff', '--unified=0', TAG, '--', 'src/app/screens/GuideScreen.tsx');
     expect(diff, 'GuideScreen.tsx er ikke ændret endnu').not.toBe('');
-    const fjernet = diff.split('\n').filter((l) => l.startsWith('-') && !l.startsWith('---'));
-    expect(fjernet).toEqual([]);
+    const linjer = diff.split(/\r?\n/);
+    const fjernet = linjer.filter((l) => l.startsWith('-') && !l.startsWith('---'));
+    const tilfoejet = linjer.filter((l) => l.startsWith('+') && !l.startsWith('+++'));
+    // Kun linjen om I dag på dansk og engelsk er ændret (Franks svar 2), og kun fire → fem og four → five.
+    expect(fjernet.map((l) => l.slice(1).trim())).toEqual([
+      "'I dag øverst viser, hvor mange af de fire spor du har trænet i dag, og hvilket spor der er det næste: det første spor på forsiden, der ikke er trænet. Knappen starter dets session. Første gang står Velkommen i stedet.',",
+      "'Today at the top shows how many of the four tracks you have trained today and which track is next: the first track on the front page that is not yet trained. The button starts its session. On your first visit, Welcome is shown instead.',",
+    ]);
+    for (const l of fjernet) expect(tilfoejet, l).toContain('+' + l.slice(1).replace('de fire spor', 'de fem spor').replace('the four tracks', 'the five tracks'));
   });
 });
