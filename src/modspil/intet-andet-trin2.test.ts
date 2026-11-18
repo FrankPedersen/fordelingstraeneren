@@ -42,6 +42,9 @@ const TILLADT = [
   'scripts/modspil.html',
   'scripts/ordliste.txt',
   'SPEC-modspil.md',
+  // Specen er arkiveret i docs/specs/ med en linje i oversigten, da trin 2 blev udgivet (18. nov. 2026, session 5).
+  'docs/specs/SPEC-modspil.md',
+  'docs/specs/README.md',
   'CLAUDE.md',
 ];
 const TILLADTE_MAPPER = ['src/modspil/', 'docs/specs/design/modspil/'];

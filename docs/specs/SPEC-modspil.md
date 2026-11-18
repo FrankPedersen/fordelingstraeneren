@@ -1,6 +1,6 @@
 # SPEC – Modspil v1
 
-15. november 2026 · Fordelingstræneren · opgave C i `PLAN-aabne-opgaver.md`.
+15. november 2026 · Fordelingstræneren · opgave C i `PLAN-aabne-opgaver.md`. Godkendt af Frank og udgivet 18. november 2026 (`d461826`); grenen er slettet.
 
 Modspil er et nyt, selvstændigt spor efter samme mønster som Pointregnskab. Det er en **generel træner, uafhængig af makker**. Brugeren lærer at tælle og aflæse som modspiller:
 - makkers point;
@@ -571,3 +571,24 @@ Som trin 1. Efter "godkendt": flet, push og live-tjek af Modspil på www.kontrak
   - stavekontrollen `node scripts/sprogtjek.ts` (21 s): "ingen ukendte ord";
   - `node scripts/tjek-sidefod.mjs` (21 s): 97 ok, "Alt i orden";
   - `node scripts/tjek-design-forsiden.mjs forside vejledning` (7 s): 8 visninger af 2 skærme, "Alt i orden"; de 16 gamle billeder i `skaermbilleder/design-forsiden/` er lagt tilbage bagefter og er uændrede (md5).
+- **Status på grenen:** denne status står i `ad53114` på grenen `modspil-skaerme`.
+- **Udgivelsen:**
+  - **Fletningen:** `main` var lig med `origin/main` (`289d119`, tagget `v43-foer-modspil-skaerme`). Grenen er flettet ind med `git merge --no-ff` i `d461826` ("Flet modspil-skaerme ind: … (godkendt af Frank)"), og `main` og tagget `v43-foer-modspil-skaerme` er pushet.
+  - **GitHub Actions:** kørslen "Udgiv på GitHub Pages" for `d461826` (run 44376842219, build og deploy) er grøn, 18. nov. 19:05–19:14 UTC.
+  - **Live-tjekket** på www.kontraktbridge.dk/fordelingstraeneren/ i Chrome uden vindue med en tom lagring (Fordelingstrænerens scripts har intet `--live`, så tjekket er kørt med et lille script uden for repoet efter mønsteret i `tjek-sidefod.mjs`): 20 ok, 0 fejl.
+    - Forsiden ved 1280 px har grupperne Optælling, Spilføring, Modspil og Vurdering 2 × 2, lige brede (556 px) og intet ud til siden. Modspils kort har mærket "Ikke startet endnu" for en ny bruger, og velkomsten siger fem spor.
+    - `#modspil` åbner med overskriften "Modspil". "Start dagens session" giver en opgave, og et svar giver facit med mærket, "Ved bordet" og "Næste opgave". Sessionen med fire opgaver når til "Sessionen er gennemført".
+    - Bagefter viser Modspils kort "1 dag i træk", "Niveau 1" og "✓ Trænet i dag", I dag siger "1 af 5 spor er trænet", og grupperne står stadig 2 × 2.
+    - Indstillinger ved 390 px: de 7 rullelister og deres 17 muligheder kan ses helt på dansk (mindst 57 px til overs, fx "Lavt = kald; romersk mod farve" og "ALA mod sans") og på engelsk (mindst 51 px, fx "Low = encourage; Roman v. suit" og "ALA against notrump"). Der er ingen engelske ord i de danske lister, og der er ingen danske ord og intet æ, ø eller å på den engelske skærm.
+    - Første kørsel gav én fejl i scriptet selv: overskriften "Ved bordet" står med `text-transform: uppercase`, så `innerText` gav "VED BORDET". Tjekket blev rettet til at finde elementet på teksten, og anden kørsel var grøn. Sitet var det samme i begge kørsler.
+  - **Skærmbillederne fra live-sitet:**
+    - `C:\Users\frank\Kontraktbridge\skaermbilleder\modspil-skaerme\live-forside-1280.png`: forsiden ved 1280 px efter en session i Modspil (til Frank);
+    - `C:\Users\frank\Kontraktbridge\skaermbilleder\modspil-skaerme\live-forside-1280-ny-bruger.png`: samme for en ny bruger;
+    - `C:\Users\frank\Kontraktbridge\skaermbilleder\modspil-skaerme\live-indstillinger-390.png`: Indstillinger ved 390 px på dansk;
+    - `C:\Users\frank\Kontraktbridge\skaermbilleder\modspil-skaerme\live-indstillinger-390-en.png`: samme på engelsk.
+- **Arkiveringen:**
+  - Grenen `modspil-skaerme` er slettet lokalt før arkiv-committen og findes ikke på GitHub (`git ls-remote --heads origin modspil-skaerme` er tom).
+  - Specen er flyttet fra roden til `docs/specs/SPEC-modspil.md` med `git mv`, og første linje siger, at den er godkendt og udgivet.
+  - Afsnittet "## Modspil" i `CLAUDE.md` peger på `docs/specs/SPEC-modspil.md` og siger, at trin 2 er udgivet.
+  - `docs/specs/README.md` har fået en linje for specen, som de tidligere arkiverede specer.
+  - **Testene af punkt 10 og 8 efter flytningen:** `src/modspil/intet-andet.test.ts` (punkt 10) bestod uændret, fordi den kun sammenligner de to tags. `src/modspil/intet-andet-trin2.test.ts` (punkt 8) fejlede i "ingen fil uden for src/modspil/ er ændret, bortset fra de tilladte" med `docs/specs/SPEC-modspil.md` og `docs/specs/README.md`, alene fordi specen er arkiveret. Begge er derfor tilføjet testens tilladte liste (`TILLADT`) med en kommentar. README-linjen er med, fordi husets arkivering har en linje pr. spec i oversigten. Opgaven nævnte kun specens nye sti, så det er det eneste sted, hvor rettelsen går ud over den. Bagefter bestod begge (2 testfiler, 5 tests), og `tsc` er grøn. Ingen anden kode er ændret.
