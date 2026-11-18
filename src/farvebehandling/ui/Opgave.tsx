@@ -8,6 +8,7 @@ import type { FbAnswer, FbTask, LineOption } from '../training/tasks';
 import { Bridgebord } from './Bridgebord';
 import { Linjekort } from './Linjekort';
 import { SpilSelv } from './SpilSelv';
+import { SplitOpgave } from './Splitprocenter';
 import { TEXT } from './texts';
 import { cardLetter } from '../lineText';
 import { Info } from '../../ui/Info';
@@ -60,6 +61,7 @@ export function Opgave({ task, optionalGuess = false, onAnswer }: OpgaveProps) {
   if (task.type === 'spil-selv') {
     return <SpilSelv item={task.bank} goal={goal} seed={task.seed} onDone={(play) => onAnswer({ play })} />;
   }
+  if (task.type === 'splitprocenter') return <SplitOpgave question={task.split} onAnswer={onAnswer} />;
 
   const guessGroup = (label: string) => (
     <>

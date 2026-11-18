@@ -4,7 +4,7 @@ import { bandFields, disagreements, linesForGoal, sortFields, type Grouping, typ
 import { randomSeed } from '../../engine/rng';
 import { guessInterval } from '../model/guess';
 import type { Room, Station } from '../training/palace';
-import { bestOption, vacantWeights, type FbAnswer, type FbTask, type Graded, type PairsOption } from '../training/tasks';
+import { bestOption, vacantWeights, type FbAnswer, type FbTask, type Graded, type LineTask, type PairsOption } from '../training/tasks';
 import { disagreeText, LayoutList } from './Analysevindue';
 import { Bridgebord } from './Bridgebord';
 import { Linjekort } from './Linjekort';
@@ -13,6 +13,7 @@ import { Resultatkort } from './Resultatkort';
 import { Rumkort } from './Rumkort';
 import { Sandsynlighedsbånd } from './Sandsynlighedsbånd';
 import { PlayResult, SpilSelv } from './SpilSelv';
+import { SplitFacit } from './Splitprocenter';
 import { TEXT } from './texts';
 import { BoardColumn } from '../../ui/BoardColumn';
 import { Info, InfoList } from '../../ui/Info';
@@ -33,18 +34,25 @@ const percent = (p: number) => `${formatDecimal(100 * p, 1)} %`;
 const FACIT_TOPICS = ['lines', 'average', 'result'];
 
 /** Opgavens linjer med bogstaverne fra opgaven; den bedste markeres. */
-function facitLines(task: FbTask): LineView[] {
+function facitLines(task: LineTask): LineView[] {
   if (task.type === 'spil-selv') return linesForGoal(task.bank, task.goal);
   const best = bestOption(task);
   const options = task.type === 'chancen' || task.type === 'find-hullet' ? [task.line] : task.options;
   return letteredLines(options).map((l, i) => ({ ...l, best: options[i] === best, nearBest: false }));
 }
 
+/** Facit: Splitprocenter har sit eget (ingen linjer); de andre opgavetyper har analysevinduet nedenfor. */
+export function Facit(props: FacitProps) {
+  const { task } = props;
+  if (task.type === 'splitprocenter') return <SplitFacit {...props} task={task} />;
+  return <LineFacit {...props} task={task} />;
+}
+
 /**
  * Facitskærmen er analysevinduet for opgaven: først svaret, så linjerne og forskellen i sandsynlighedsbåndet;
  * "Hvorfor" viser huskeregel, billede og alle sidninger. Tonen skiller beslutning fra resultat.
  */
-export function Facit({ task, answer, graded, reward, place, onNext }: FacitProps) {
+function LineFacit({ task, answer, graded, reward, place, onNext }: FacitProps & { task: LineTask }) {
   const [page, setPage] = useState<'facit' | 'why' | 'play'>('facit');
   const [grouping, setGrouping] = useState<Grouping>('fordeling');
   const lines = useMemo(() => facitLines(task), [task]);

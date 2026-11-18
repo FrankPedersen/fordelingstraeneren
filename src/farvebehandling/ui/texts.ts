@@ -1,7 +1,14 @@
 import { getLang } from '../../i18n';
 import type { TaskType } from '../storage';
+import type { SplitHonor, SplitQuestion, SplitSeat } from '../training/split';
 
 const MONTHS_DA = ['januar', 'februar', 'marts', 'april', 'maj', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'december'];
+/** Splitprocenter: honnøren og modspilleren i niveau 4's spørgsmål. */
+const DA_HONOR: Record<SplitHonor, string> = { E: 'esset', K: 'kongen', D: 'damen', B: 'knægten' };
+const DA_SEAT: Record<SplitSeat, string> = { W: 'Vest', E: 'Øst' };
+const EN_HONOR: Record<SplitHonor, string> = { E: 'ace', K: 'king', D: 'queen', B: 'jack' };
+const EN_SEAT: Record<SplitSeat, string> = { W: 'West', E: 'East' };
+const EN_HONOR_LETTER: Record<SplitHonor, string> = { E: 'A', K: 'K', D: 'Q', B: 'J' };
 const MONTHS_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 /** Al ordlyd i farvebehandlingens brugerflade på dansk. Ret her uden at røre layoutet; EN nedenfor har samme form. */
@@ -291,6 +298,49 @@ const DA = {
   scene: 'Din scene',
   allLayouts: 'Alle sidninger',
 
+  // Splitprocenter (SPEC-splitprocenter.md)
+  splitQuestion: (q: SplitQuestion) => {
+    switch (q.level) {
+      case 1:
+        return `Modparten har ${q.n} kort i farven. Hvor ofte sidder de ${q.splits[0]}?`;
+      case 2:
+        return `Hvilken sidning er den hyppigste med ${q.n} kort ude?`;
+      case 3:
+        return `Hvor ofte sidder ${q.n} kort ${q.splits[0]} eller ${q.splits[1]}?`;
+      case 4:
+        return `Modparten har ${q.n} kort i farven. Hvor ofte sidder ${DA_HONOR[q.honor!]} alene hos ${DA_SEAT[q.seat!]}?`;
+    }
+  },
+  /** Det rigtige svar i facit; `top` er den hyppigste sidning (niveau 2). */
+  splitAnswer: (q: SplitQuestion, top: string, chance: string) => {
+    switch (q.level) {
+      case 1:
+        return `${q.splits[0]} med ${q.n} kort ude: ${chance}.`;
+      case 2:
+        return `Den hyppigste med ${q.n} kort ude er ${top}: ${chance}.`;
+      case 3:
+        return `${q.splits[0]} eller ${q.splits[1]} med ${q.n} kort ude: ${chance}.`;
+      case 4: {
+        const honor = DA_HONOR[q.honor!];
+        return `${honor[0].toUpperCase()}${honor.slice(1)} alene hos ${DA_SEAT[q.seat!]} med ${q.n} kort ude: ${chance}.`;
+      }
+    }
+  },
+  splitChoice: (choice: string, ok: boolean) => `Dit valg: ${choice} ${ok ? '✓' : '✕'}`,
+  splitRowsTitle: (n: number) => `Sidningerne med ${n} kort ude`,
+  splitColumn: 'Sidning',
+  splitChanceColumn: 'Chance',
+  splitWhy: 'Forklaring',
+  splitRule: 'Et ulige antal deler sig oftest så jævnt som muligt (3-2, 4-3). Et lige antal deler sig oftest ujævnt (4-2, 5-3), undtagen 2 kort.',
+  /** Niveau 4: sidningen (n−1)-1 delt på de n kort, der kan sidde alene, og på begge hænder; med 2 kort ude 1-1 delt på 2. */
+  splitSingleton: (q: SplitQuestion, split: string, chance: string) =>
+    q.n === 2
+      ? `Sidningen 1-1 er ${split}, og ${DA_HONOR[q.honor!]} sidder hos ${DA_SEAT[q.seat!]} i halvdelen: ${split} / 2 = ${chance}.`
+      : `Sidningen ${q.splits[0]} er ${split}. Det single kort kan være hvert af de ${q.n} kort, og det kan sidde hos Vest eller Øst: ${split} / ${2 * q.n} = ${chance}.`,
+  splitInPractice: 'I praksis',
+  /** Hvad tallet betyder: med topkortene falder alle modpartens kort, når farven sidder så jævnt som muligt. */
+  splitMeaning: (n: number, honors: readonly SplitHonor[], chance: string) => `Med ${n} kort ude og ${honors.join(' ')}: toppes farven, går den i ${chance}.`,
+
   // Spil den selv
   playTitle: 'Spil den selv',
   playTrick: 'Stikket',
@@ -339,6 +389,8 @@ const DA = {
   noHonors: 'ingen',
   startPractice: (n: number) => `Start · ${n === 1 ? '1 kombination' : `${n} kombinationer`}`,
   changeFilter: 'Skift filter',
+  practiceTypes: 'Opgavetyper',
+  splitStart: (n: number) => `Splitprocenter · ${n} sidninger`,
 
   // Paladset
   palaceHelp: 'Hvert rum er en teknik, og stationerne er kombinationerne i den rækkefølge, du har mødt dem.',
@@ -404,6 +456,7 @@ const DA = {
     'spil-selv': 'Spil den selv',
     optælling: 'Med optælling',
     'hold-eller-par': 'Hold eller par',
+    splitprocenter: 'Splitprocenter',
   } as Record<TaskType, string>,
   practiceSuggestion: (name: string, pct: string, n: number) => `Forslag: ${name} er dit svageste punkt med ${pct} rigtige af ${n} svar.`,
   practiceSuggestionPick: (name: string) => `Vælg ${name.toLowerCase()}`,
@@ -493,7 +546,9 @@ const DA = {
       'spil-selv': 'Farven spilles kort for kort mod normalt modspil. Du bedømmes på beslutningen, ikke på resultatet: fulgte du en af de bedste linjer?',
       optælling: 'Modspillernes længder i de tre andre farver er kendt. Den med flest ledige pladser har oftest et bestemt kort, så chancerne ændrer sig.',
       'hold-eller-par': 'Opgaven er at finde linjen til holdkamp (målet nås) og linjen til parturnering (flest stik i gennemsnit). Begge skal være rigtige.',
+      splitprocenter: 'Hvor ofte sidder modpartens kort i farven på en bestemt måde? Chancerne er a priori med 13 ledige pladser hos hver modspiller, og de hyppigste er grundlaget for at vælge mellem at toppe farven og en kipning.',
     } as Record<TaskType, string>,
+    splitPractice: 'Spørgsmål om sidningerne med 2–8 kort ude på fire niveauer: chancen for én sidning, den hyppigste sidning, to sidninger lagt sammen og en bestemt honnør alene. Filtrene gælder ikke her, og svarene logges til statistikken, men ændrer ikke dagsplanen.',
   },
 };
 
@@ -765,6 +820,45 @@ const EN: Texts = {
   scene: 'Your scene',
   allLayouts: 'All layouts',
 
+  // Splitprocenter (SPEC-splitprocenter.md)
+  splitQuestion: (q: SplitQuestion) => {
+    switch (q.level) {
+      case 1:
+        return `The opponents hold ${q.n} cards in the suit. How often do they split ${q.splits[0]}?`;
+      case 2:
+        return `Which split is the most frequent with ${q.n} cards out?`;
+      case 3:
+        return `How often do ${q.n} cards split ${q.splits[0]} or ${q.splits[1]}?`;
+      case 4:
+        return `The opponents hold ${q.n} cards in the suit. How often does ${EN_SEAT[q.seat!]} hold the singleton ${EN_HONOR[q.honor!]}?`;
+    }
+  },
+  splitAnswer: (q: SplitQuestion, top: string, chance: string) => {
+    switch (q.level) {
+      case 1:
+        return `${q.splits[0]} with ${q.n} cards out: ${chance}.`;
+      case 2:
+        return `The most frequent with ${q.n} cards out is ${top}: ${chance}.`;
+      case 3:
+        return `${q.splits[0]} or ${q.splits[1]} with ${q.n} cards out: ${chance}.`;
+      case 4:
+        return `Singleton ${EN_HONOR[q.honor!]} with ${EN_SEAT[q.seat!]}, ${q.n} cards out: ${chance}.`;
+    }
+  },
+  splitChoice: (choice: string, ok: boolean) => `Your choice: ${choice} ${ok ? '✓' : '✕'}`,
+  splitRowsTitle: (n: number) => `The splits with ${n} cards out`,
+  splitColumn: 'Split',
+  splitChanceColumn: 'Chance',
+  splitWhy: 'Explanation',
+  splitRule: 'An odd number of cards most often splits as evenly as possible (3-2, 4-3). An even number most often splits unevenly (4-2, 5-3), except 2 cards.',
+  splitSingleton: (q: SplitQuestion, split: string, chance: string) =>
+    q.n === 2
+      ? `The 1-1 split is ${split}, and the ${EN_HONOR[q.honor!]} is with ${EN_SEAT[q.seat!]} half the time: ${split} / 2 = ${chance}.`
+      : `The ${q.splits[0]} split is ${split}. The singleton can be any of the ${q.n} cards, and it can be with West or East: ${split} / ${2 * q.n} = ${chance}.`,
+  splitInPractice: 'In practice',
+  splitMeaning: (n: number, honors: readonly SplitHonor[], chance: string) =>
+    `With ${n} cards out and ${honors.map((h) => EN_HONOR_LETTER[h]).join(' ')}: playing for the drop, the suit runs ${chance} of the time.`,
+
   playTitle: 'Play it yourself',
   playTrick: 'The trick',
   playButton: 'Play it yourself ▶',
@@ -808,6 +902,8 @@ const EN: Texts = {
   noHonors: 'none',
   startPractice: (n: number) => `Start · ${n === 1 ? '1 combination' : `${n} combinations`}`,
   changeFilter: 'Change filter',
+  practiceTypes: 'Task types',
+  splitStart: (n: number) => `Split percentages · ${n} splits`,
 
   palaceHelp: 'Each room is a technique, and the stations are the combinations in the order you met them.',
   closedRooms: 'Closed rooms',
@@ -869,6 +965,7 @@ const EN: Texts = {
     'spil-selv': 'Play it yourself',
     optælling: 'With counting',
     'hold-eller-par': 'Teams or pairs',
+    splitprocenter: 'Split percentages',
   } as Record<TaskType, string>,
   practiceSuggestion: (name: string, pct: string, n: number) => `Suggestion: ${name} is your weakest spot with ${pct} right of ${n} answers.`,
   practiceSuggestionPick: (name: string) => `Choose ${name.toLowerCase()}`,
@@ -959,7 +1056,9 @@ const EN: Texts = {
       'spil-selv': 'The suit is played card by card against normal defence. You are judged on the decision, not the result: did you follow one of the best lines?',
       optælling: "The defenders' lengths in the other three suits are known. The one with more vacant places is more likely to hold a given card, so the chances change.",
       'hold-eller-par': 'The task is to find the line for teams (making the goal) and the line for pairs (most tricks on average). Both must be right.',
+      splitprocenter: "How often do the opponents' cards in the suit split in a given way? The chances are a priori, with 13 vacant places for each defender, and the most frequent splits are the basis for choosing between playing for the drop and a finesse.",
     } as Record<TaskType, string>,
+    splitPractice: 'Questions on the splits with 2–8 cards out at four levels: the chance of one split, the most frequent split, two splits added together and a particular honour alone. The filters do not apply here, and answers are logged for the statistics but do not change the daily plan.',
   },
 };
 
