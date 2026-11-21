@@ -277,6 +277,9 @@ Godkendelsen dækker også session 2's tre rettede eksisterende tests i `07c7dda
   - Punktet om Splitprocenter i `CLAUDE.md` peger på `docs/specs/SPEC-splitprocenter.md`, siger, at den er udgivet, og nævner "I praksis".
   - `docs/specs/README.md` har fået en linje for specen.
   - Modspils vagttests sammenligner nu med `691d715`, så flytningen af specen rører dem ikke.
+  - **Arkiv-committen** er `fb36085` på `main`. Den er pushet, og GitHub Actions var grøn (kørsel 44895604702, 21. nov. 10:42–10:49 UTC).
+- **`SYSTEM.md`:** rækken for Splitprocenter (18. nov. 2026) siger "Godkendt af Frank og udgivet 21. nov. 2026" med de to rettelser, flettecommitten, tagget, Actions, live-tjekket og arkiveringen i stedet for "venter på Franks afgørelse", og `splitCards` står under data ved `farvebehandling:v1`.
+- **Tokenforbrug, sidste session** (frisk session med opgaven som kontekst; talt før denne commit, 88 svar, 21. nov. 10:08–10:50 UTC): nye input 178, skrevet til cachen 267.711, læst fra cachen 17.013.068 og output 86.791, i alt 17.367.748.
 
 ## Arbejdsgang (tre korte sessioner, styringens punkt 7 og 8)
 
