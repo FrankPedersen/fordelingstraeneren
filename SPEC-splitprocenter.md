@@ -191,6 +191,12 @@ Tabellen ovenfor er kun til læseren. Testen sammenligner med `splitChance`.
   1. Godkender du rettelserne af de tre eksisterende tests i `07c7dda`? De ændrer ingen påstand ud over antallet af opgavetyper (9 → 10).
 - **Tokenforbrug** (session 2, talt før den sidste commit): nye input 142, skrevet til cachen 273.169, læst fra cachen 13.811.524 og output 116.477, i alt 14.201.312.
 
+### Franks rettelse og godkendelse, 18. nov. 2026
+
+"Splitprocenter: niveau 4 bruger kun 3–5 kort ude (honnøren alene er 0–1 % med 6–8 kort, og det lærer intet). Ret generatoren og testen, kør testene i src/farvebehandling/, og kør derefter hele suiten én gang. Er alt grønt, er Splitprocenter godkendt: flet, push, live-tjek, arkivér specen, og slet grenen."
+
+Godkendelsen dækker også session 2's tre rettede eksisterende tests i `07c7dda` (spørgsmålet til Frank under session 2). Frank godkender hele grenen, når alt er grønt. Session 3 blev stoppet, før den nåede noget, fordi rettelsen kom; den afsluttende session laver rettelsen, kører testene og fletter.
+
 ## Arbejdsgang (tre korte sessioner, styringens punkt 7 og 8)
 
 1. **Session 1:**
