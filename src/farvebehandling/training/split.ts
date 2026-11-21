@@ -170,9 +170,10 @@ function level3(n: number, rng: Rng): SplitQuestion {
 }
 
 /**
- * Niveau 4: en bestemt honnør alene hos en bestemt modspiller, `layoutChance(n, 1)`: sidningen (n−1)-1 delt på de n
- * kort, der kan sidde alene, og på begge hænder (med 2 kort ude: 1-1 delt på 2). De forkerte er de typiske fejl
- * (glemt én af delingerne eller delt én gang for meget), derefter sidningernes tal for antallet og nabo-antallene.
+ * Niveau 4: en bestemt honnør alene hos en bestemt modspiller med 3–5 kort ude, `layoutChance(n, 1)`: sidningen
+ * (n−1)-1 delt på de n kort, der kan sidde alene, og på begge hænder. De forkerte er de typiske fejl (glemt én af
+ * delingerne eller delt én gang for meget), derefter sidningernes tal for antallet (kun med 5 kort ude, hvor to af de
+ * typiske fejl ligger under 5 procentpoint fra det rigtige).
  */
 function level4(n: number, rng: Rng): SplitQuestion {
   const honor = HONORS[rng.int(HONORS.length)];
@@ -182,13 +183,16 @@ function level4(n: number, rng: Rng): SplitQuestion {
   const wrong: Candidate[] = [];
   const typical = [2 * value, rowOf(n, label).chance, n * value, value / 2].map((v) => ({ value: v }));
   pick(wrong, value, typical, WRONG, rng);
-  pick(wrong, value, [n, ...neighbours(n)].flatMap(rowsAsCandidates).map((c) => ({ value: c.value })), WRONG, rng);
-  pick(wrong, value, SPLIT_COUNTS.flatMap(rowsAsCandidates).map((c) => ({ value: c.value })), WRONG, rng);
+  pick(wrong, value, rowsAsCandidates(n).map((c) => ({ value: c.value })), WRONG, rng);
   return { level: 4, n, splits: [label], honor, seat, value, card: splitCard(n, label), options: percentOptions({ value }, wrong, rng) };
 }
 
-/** Antallene, et niveau kan stille: niveau 3 kræver 4–8 kort ude, fordi to sidninger med 2 eller 3 kort er 100 %. */
-export const splitCounts = (level: SplitLevel): readonly number[] => (level === 3 ? SPLIT_COUNTS.filter((n) => n >= 4) : SPLIT_COUNTS);
+/**
+ * Antallene, et niveau kan stille: niveau 3 kræver 4–8 kort ude, fordi to sidninger med 2 eller 3 kort er 100 %, og
+ * niveau 4 bruger kun 3–5, fordi honnøren alene med 6–8 kort ude er 0–1 % (Franks rettelse 18. nov. 2026).
+ */
+export const splitCounts = (level: SplitLevel): readonly number[] =>
+  level === 3 ? SPLIT_COUNTS.filter((n) => n >= 4) : level === 4 ? SPLIT_COUNTS.filter((n) => n >= 3 && n <= 5) : SPLIT_COUNTS;
 
 /**
  * En opgave på niveau 1–4 fra `rng`; samme seed giver samme opgave. Med `n` stilles den med netop så mange kort ude.

@@ -8,7 +8,7 @@ import type { Vacant } from '../model/layouts';
 import { plausible, type WhatNowSituation } from '../model/whatnow';
 import { followsBestLine, type PlayState } from '../play/play';
 import type { TaskType } from '../storage';
-import { makeSplitTask, SPLIT_COUNTS, type SplitLevel, type SplitQuestion } from './split';
+import { makeSplitTask, splitCounts, type SplitLevel, type SplitQuestion } from './split';
 
 export {
   makeSplitCardTask,
@@ -191,7 +191,7 @@ export function makeTask(type: TaskType, bank: BankItem, goal: number, rng: Rng)
       // Et tilfældigt niveau, med kombinationens antal kort ude, når niveauet kan stille det.
       const level = (1 + rng.int(4)) as SplitLevel;
       const out = 13 - bank.north.length - bank.south.length;
-      const n = SPLIT_COUNTS.includes(out) && (level !== 3 || out >= 4) ? out : undefined;
+      const n = splitCounts(level).includes(out) ? out : undefined;
       return splitTask(makeSplitTask(level, rng, n), bank, goal);
     }
     default:
