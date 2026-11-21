@@ -7,7 +7,7 @@ import { TEST_BANK as bank } from '../testBank';
 import { introduce } from './progression';
 import { answerFb, finishFbSession, introduceFb, nextFbStep, startFbSession, type FbPhase } from './session';
 import { taskStats } from './stats';
-import { makeSplitTask, SPLIT_CARDS, SPLIT_COUNTS, splitRows, type FbAnswer, type FbTask, type SplitLevel, type SplitQuestion } from './tasks';
+import { makeSplitTask, makeTask, SPLIT_CARDS, SPLIT_COUNTS, splitRows, type FbAnswer, type FbTask, type SplitLevel, type SplitQuestion } from './tasks';
 
 /**
  * Accepttest for Splitprocenter (SPEC-splitprocenter.md, Accepttest 1–4), skrevet før byggeriet.
@@ -21,7 +21,8 @@ import { makeSplitTask, SPLIT_CARDS, SPLIT_COUNTS, splitRows, type FbAnswer, typ
  * - `SPLIT_CARDS: readonly string[]`: Leitner-bunkens 23 kort, ét pr. sidning med nøglen `split:<n>:<label>`, fx
  *   "split:5:3-2", i rækkefølgen antal og så hyppighed.
  * - `type SplitLevel = 1 | 2 | 3 | 4` og `makeSplitTask(level, rng, n?): SplitQuestion`. Samme seed giver samme
- *   opgave. Med `n` stilles opgaven med netop så mange kort ude (niveau 3 kræver 4–8).
+ *   opgave. Med `n` stilles opgaven med netop så mange kort ude (niveau 3 kræver 4–8 og niveau 4 3–5, Franks rettelse
+ *   18. nov. 2026).
  * - `SplitQuestion = { level; n; splits: string[]; honor?: 'E' | 'K' | 'D' | 'B'; seat?: 'W' | 'E'; value: number;
  *   card: string; options: SplitOption[] }`:
  *   - `splits`: niveau 1 den ene sidning, niveau 3 de to, der lægges sammen;
@@ -225,7 +226,7 @@ describe('2. Opgaverne', () => {
 
   it('stiller en opgave med et bestemt antal kort ude', () => {
     for (const level of LEVELS) {
-      for (const n of level === 3 ? [4, 5, 6, 7, 8] : SPLIT_COUNTS) {
+      for (const n of level === 3 ? [4, 5, 6, 7, 8] : level === 4 ? [3, 4, 5] : SPLIT_COUNTS) {
         const q = makeSplitTask(level, mulberry32(n), n);
         expect(q.n, `niveau ${level}, ${n} kort`).toBe(n);
         expect(q.level).toBe(level);
@@ -252,7 +253,26 @@ describe('3. Niveau 4: en bestemt honnør alene', () => {
     expect(q.options.find((o) => o.correct)!.value).toBeCloseTo(expected, 12);
   });
 
-  it('for alle antal er chancen layoutChance(n, 1), og honnøren og modspilleren skifter med seedet', () => {
+  it('bruger kun 3–5 kort ude (Franks rettelse 18. nov. 2026: med 6–8 kort er honnøren alene 0–1 %)', () => {
+    // Fra et seed: kun 3, 4 og 5 kort ude, og alle tre kommer.
+    const counts = new Set(tasks(4).map((q) => q.n));
+    expect([...counts].sort()).toEqual([3, 4, 5]);
+    // Med et bestemt antal: 2 og 6–8 kort ude kan ikke stilles på niveau 4.
+    for (const n of [2, 6, 7, 8]) expect(() => makeSplitTask(4, mulberry32(n), n), `${n} kort`).toThrow();
+    // Ved en kombination med 6 eller flere kort ude giver makeTask stadig en opgave, og niveau 4 har 3–5 kort ude.
+    const item = bank.find((b) => 13 - b.north.length - b.south.length >= 6);
+    expect(item, 'ingen kombination med 6 eller flere kort ude').toBeDefined();
+    const levels = new Set<number>();
+    for (const seed of SEEDS) {
+      const task = makeTask('splitprocenter', item!, item!.combination.goals[0], mulberry32(seed));
+      if (task.type !== 'splitprocenter') throw new Error(`forventede Splitprocenter, fik ${task.type}`);
+      levels.add(task.split.level);
+      if (task.split.level === 4) expect([3, 4, 5], JSON.stringify(task.split)).toContain(task.split.n);
+    }
+    expect(levels.has(4), 'ingen opgave på niveau 4').toBe(true);
+  });
+
+  it('for 3–5 kort ude er chancen layoutChance(n, 1), og honnøren og modspilleren skifter med seedet', () => {
     const honors = new Set<string>();
     const seats = new Set<string>();
     for (const q of tasks(4)) {
