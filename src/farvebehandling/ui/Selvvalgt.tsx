@@ -9,7 +9,7 @@ import { filterOptions, logPractice, matchCount, NO_FILTER, practiceItems, type 
 import { parseItemKey } from '../training/progression';
 import { chooseType } from '../training/session';
 import { accuracy, techniqueStats, weakest } from '../training/stats';
-import { grade, makeTask, type FbAnswer, type FbTask, type Graded } from '../training/tasks';
+import { grade, makeSplitTask, makeTask, SPLIT_CARDS, splitTask, type FbAnswer, type FbTask, type Graded, type SplitLevel } from '../training/tasks';
 import { Facit } from './Facit';
 import { Opgave } from './Opgave';
 import { TEXT } from './texts';
@@ -29,6 +29,8 @@ interface Run {
   shownAt: number;
   count: number;
   history: TaskType[];
+  /** Splitprocenter: opgaverne kommer fra listen over opgavetyper, ikke fra filtrene. */
+  split?: boolean;
 }
 
 const KEYS: readonly FilterKey[] = ['technique', 'cards', 'missing', 'goal'];
@@ -49,6 +51,7 @@ export function Selvvalgt({ bank, saved, update, techniques, startTechnique }: S
   const nameOf = (id: string) => techniques.find((t) => t.id === id)?.name ?? id;
 
   function nextTask(previous: Run | null) {
+    if (previous?.split) return nextSplit(previous);
     const items = practiceItems(bank, filter);
     if (!items.length) return;
     const rng = mulberry32(randomSeed());
@@ -58,6 +61,20 @@ export function Selvvalgt({ bank, saved, update, techniques, startTechnique }: S
     const history = previous?.history ?? [];
     const task = makeTask(chooseType(item, goal, history, rng), item, goal, rng);
     setRun({ task, shownAt: Date.now(), count: (previous?.count ?? 0) + 1, history: [...history, task.type] });
+    setResult(null);
+  }
+
+  /**
+   * Splitprocenter (SPEC-splitprocenter.md): niveau 1–4 blandes tilfældigt. Opgaven stilles ved en kombination med
+   * samme antal kort ude (vises ikke); svaret logges som de andre, og ingen kort i bunken flyttes.
+   */
+  function nextSplit(previous: Run | null) {
+    const rng = mulberry32(randomSeed());
+    const question = makeSplitTask((1 + rng.int(4)) as SplitLevel, rng);
+    const item = bank.find((b) => 13 - b.north.length - b.south.length === question.n) ?? bank[0];
+    const task = splitTask(question, item, item.combination.goals[0]);
+    const history = previous?.history ?? [];
+    setRun({ task, shownAt: Date.now(), count: (previous?.count ?? 0) + 1, history: [...history, task.type], split: true });
     setResult(null);
   }
 
@@ -152,6 +169,17 @@ export function Selvvalgt({ bank, saved, update, techniques, startTechnique }: S
       <button type="button" className="btn primary wide" disabled={count === 0} onClick={() => nextTask(null)}>
         {TEXT.startPractice(count)}
       </button>
+      <section className="card" aria-labelledby="fb-practice-types">
+        <h2 id="fb-practice-types">{TEXT.practiceTypes}</h2>
+        <div className="fb-menu">
+          <div className="with-info">
+            <button type="button" className="btn" onClick={() => nextSplit(null)}>
+              {TEXT.splitStart(SPLIT_CARDS.length)}
+            </button>
+            <Info topic={TEXT.taskNames.splitprocenter}>{TEXT.help.splitPractice}</Info>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

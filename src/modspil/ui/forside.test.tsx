@@ -26,9 +26,11 @@ import { defaultMsSaved, MS_STORAGE_KEY } from '../storage';
  * - `ModspilScreen` (standardeksport, `{ onBack(): void; start?: boolean }`): overskriften "Modspil" (h1), knapperne
  *   "Start dagens session", "Indstillinger" og "Tilbage til forsiden". Et kig skriver intet i lagringen.
  * - Vejledningen har et afsnit (`<details>`) med titlen "Modspil" / "Defence". De eksisterende afsnit ændres ikke:
- *   `git diff` fra tagget har kun nye linjer i `src/app/screens/GuideScreen.tsx`, bortset fra linjen om I dag, der
- *   siger "de fem spor" / "the five tracks" i stedet for fire (Franks svar 2, 18. nov. 2026). Afsnittet om forsidens
- *   grupper får én ny linje om Modspil blandt grupperne (Franks svar 18. nov. 2026 til valg 16).
+ *   `git diff` fra tagget til `691d715` (Modspils fletning og arkivering på `main`) har kun nye linjer i
+ *   `src/app/screens/GuideScreen.tsx`, bortset fra linjen om I dag, der siger "de fem spor" / "the five tracks" i
+ *   stedet for fire (Franks svar 2, 18. nov. 2026). Afsnittet om forsidens grupper får én ny linje om Modspil blandt
+ *   grupperne (Franks svar 18. nov. 2026 til valg 16). Sammenligningen er fastfrosset ved trin 2 og ikke ved
+ *   arbejdsmappen, så senere spor kan tilføje til vejledningen (Franks rettelse 21. nov. 2026, SPEC-splitprocenter.md).
  * - Modspils kort på forsiden viser streak og niveau som Pointregnskab og tæller med i I dag (Franks svar 18. nov. 2026
  *   og svar 2): kortet har status, og `src/app/status.ts` læser `modspil:v1` med `readMsSaved` uden at skrive.
  *   `src/modspil/storage.ts` har også `defaultMsSaved()` med `level`, `streak`, `sessions` og `items` (Leitner-bunken)
@@ -36,10 +38,21 @@ import { defaultMsSaved, MS_STORAGE_KEY } from '../storage';
  */
 
 const TAG = 'v43-foer-modspil-skaerme';
+/** Modspils fletning og arkivering på `main` (691d715): trin 2, som det blev udgivet. */
+const EFTER = '691d715abc06837821688f4db3e4c4d669354f26';
 const git = (...args: string[]): string => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
 function harTag(): boolean {
   try {
     git('rev-parse', '--verify', '--quiet', `refs/tags/${TAG}^{commit}`);
+    return true;
+  } catch {
+    return false;
+  }
+}
+/** Findes Modspils fletning (691d715) her? Uden den springes vejledningens sammenligning over som uden tagget. */
+function harEfter(): boolean {
+  try {
+    git('rev-parse', '--verify', '--quiet', `${EFTER}^{commit}`);
     return true;
   } catch {
     return false;
@@ -238,8 +251,8 @@ describe('Forsiden viser gruppen Modspil (accepttest 1, trin 2)', () => {
   });
 
   it('vejledningens eksisterende afsnit er uændrede: GuideScreen.tsx har kun nye linjer siden tagget, bortset fra fem spor i I dag', (ctx) => {
-    if (!harTag()) ctx.skip(`Tagget ${TAG} findes ikke her (fx i GitHub Actions), så sammenligningen kører kun lokalt.`);
-    const diff = git('diff', '--unified=0', TAG, '--', 'src/app/screens/GuideScreen.tsx');
+    if (!harTag() || !harEfter()) ctx.skip(`Tagget ${TAG} findes ikke her (fx i GitHub Actions), så sammenligningen kører kun lokalt.`);
+    const diff = git('diff', '--unified=0', TAG, EFTER, '--', 'src/app/screens/GuideScreen.tsx');
     expect(diff, 'GuideScreen.tsx er ikke ændret endnu').not.toBe('');
     const linjer = diff.split(/\r?\n/);
     const fjernet = linjer.filter((l) => l.startsWith('-') && !l.startsWith('---'));
