@@ -197,6 +197,35 @@ Tabellen ovenfor er kun til læseren. Testen sammenligner med `splitChance`.
 
 Godkendelsen dækker også session 2's tre rettede eksisterende tests i `07c7dda` (spørgsmålet til Frank under session 2). Frank godkender hele grenen, når alt er grønt. Session 3 blev stoppet, før den nåede noget, fordi rettelsen kom; den afsluttende session laver rettelsen, kører testene og fletter.
 
+### Afsluttende session (18. og 21. november 2026)
+
+- **Status:** rettelsen af niveau 4 er bygget. `tsc`, testene i `src/farvebehandling/`, `tjek-bred-layout.mjs` og stavekontrollen er grønne, men **hele suiten er rød på tre af Modspils vagttests** (se nedenfor). **Ikke flettet;** grenen venter på Franks afgørelse om vagttestene. Sessionen blev afbrudt af 5-timersgrænsen 18. nov., før noget var committet, og genoptaget 21. nov.; `origin/main` var da stadig `a0f2128`.
+- **Commits** på `splitprocenter`: `573a845` (Franks rettelse), `8416d3d` (testen, rød), `0b99de3` (generatoren og Afklaret) og committen med dette afsnit.
+- **Rettelsen af niveau 4:**
+  - **Testen** (`training/splitprocenter.test.ts`) har punktet "bruger kun 3–5 kort ude": fra et seed kommer kun 3, 4 og 5 kort ude (alle tre), `makeSplitTask(4, rng, n)` kaster med 2 og 6–8, og `makeTask('splitprocenter', …)` ved en kombination med 6 eller flere kort ude giver stadig en opgave, hvor niveau 4 har 3–5 kort ude. Testen med et bestemt antal kort ude bruger 3–5 på niveau 4. Før rettelsen: 14 tests, 13 grønne og 1 rød (niveau 4 gav 2–8 kort ude).
+  - **Generatoren** (`training/split.ts`): `splitCounts(4)` er 3–5, og `makeTask` i `tasks.ts` stiller niveau 4 med kombinationens antal kort ude kun, når `splitCounts(level)` har det. De forkerte tal er de typiske fejl og derefter sidningernes tal for antallet; nabo-antallene og alle antal er fjernet. Efter rettelsen: `tsc` og de to Splitprocenter-filer, 18 af 18 grønne.
+  - **Uændret:** teksterne. `splitSingleton` i `ui/texts.ts` har stadig en gren for 2 kort ude, som niveau 4 ikke længere bruger; den er ikke fjernet, fordi kun generatoren og testen af niveau 4 måtte ændres. "2–8 kort ude" i Selvvalgts ⓘ gælder typen som helhed og passer stadig.
+- **Kørt** (hver for sig, én gang):
+  - `npx tsc`: grøn (2 s);
+  - `npx vitest run src/farvebehandling src/fam4-usage.test.ts`: 53 filer og 359 tests, alle grønne (368 s);
+  - `npm test`: 142 filer og 1011 tests, 1006 grønne, 2 sprunget over og **3 røde** i 2 filer (480 s);
+  - `node scripts/tjek-bred-layout.mjs`: 469 ok og 0 fejl, "Alt er grønt" (601 s). Pixelsammenligningen mod `v43-foer-modspil-skaerme` ved 999 og 390 px er "som før" på alle skærme, også Selvvalgt (opgaven efter Start);
+  - `node scripts/sprogtjek.ts`: ingen ukendte ord (10 s).
+- **De tre røde** fejler ikke på tid; de er deterministiske. Modspils vagttests fra trin 2 sammenligner arbejdsmappen med tagget `v43-foer-modspil-skaerme` og tillader kun Modspils egne ændringer:
+  1. `src/modspil/intet-andet-trin2.test.ts`, "ingen eksisterende testfil er ændret …": `training/stats.test.ts`, `training/training.test.ts` og `ui/FarvebehandlingScreen.test.tsx`, dvs. de tre rettede tests i `07c7dda`, som Frank har godkendt;
+  2. samme fil, "ingen fil uden for src/modspil/ er ændret …": de 17 filer, Splitprocenter ændrer (specen, `design/tokens.json`, `src/fam4-usage.test.ts` og filerne i `src/farvebehandling/`);
+  3. `src/modspil/ui/forside.test.tsx`, "vejledningens eksisterende afsnit er uændrede …": linjen med opgavetyperne i `GuideScreen.tsx` har fået "og Splitprocenter".
+
+  Testene springes over, hvor tagget mangler, så GitHub Actions ville blive grøn, men lokalt fejler de ved enhver ændring uden for `src/modspil/` efter Modspil. Fejlen ligger i vagternes udstrækning og ikke i Splitprocenter. At rette dem ligger uden for denne sessions afgrænsning (kun generatoren og testen af niveau 4), og Franks godkendelse kræver, at alt er grønt, så der er ikke flettet, pushet eller arkiveret, og grenen findes stadig.
+- **Forslag til Frank:** vagterne fastfryses ved Modspils egen ændring, så de tre tests sammenligner tagget med `691d715` (Modspils fletning og arkivering på `main`) i stedet for med arbejdsmappen (`git diff v43-foer-modspil-skaerme 691d715`). De tjekker så stadig, at trin 2 kun ændrede det tilladte, men stopper ikke senere spor. Rettelsen ligger i `src/modspil/intet-andet-trin2.test.ts` og `src/modspil/ui/forside.test.tsx` og kan laves på grenen `splitprocenter` som en commit for sig. Derefter køres hele suiten igen, og der flettes.
+- **Skærmbilleder** fra den lokale bygning (`vite build` og `vite preview`, Chrome uden vindue). Opgaven er på niveau 4: damen alene hos Øst med 4 kort ude, med knapperne 6, 12, 25 og 50 %. Facit viser Rigtigt med 6,2 %, tabellen med 3-1, 2-2 og 4-0 og regnestykket 49,7 % / 8 = 6,2 %:
+  - `C:\Users\frank\Kontraktbridge\skaermbilleder\splitprocenter\opgave-390.png`
+  - `C:\Users\frank\Kontraktbridge\skaermbilleder\splitprocenter\opgave-1280.png`
+  - `C:\Users\frank\Kontraktbridge\skaermbilleder\splitprocenter\facit-390.png`
+  - `C:\Users\frank\Kontraktbridge\skaermbilleder\splitprocenter\facit-1280.png`
+
+  Scriptet tjekkede samtidig følgende (29 ok og 0 fejl): ⓘ "Hjælp: Splitprocenter" står i Selvvalgt, facit har tallet med én decimal og hele tabellen, niveau 4 har 3–5 kort ude, og der er ingen vandret scroll ved 390 px.
+
 ## Arbejdsgang (tre korte sessioner, styringens punkt 7 og 8)
 
 1. **Session 1:**
