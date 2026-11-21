@@ -1,6 +1,6 @@
 import { getLang } from '../../i18n';
 import type { TaskType } from '../storage';
-import type { SplitHonor, SplitQuestion, SplitSeat } from '../training/split';
+import type { DropCard, SplitHonor, SplitQuestion, SplitSeat } from '../training/split';
 
 const MONTHS_DA = ['januar', 'februar', 'marts', 'april', 'maj', 'juni', 'juli', 'august', 'september', 'oktober', 'november', 'december'];
 /** Splitprocenter: honnøren og modspilleren i niveau 4's spørgsmål. */
@@ -9,6 +9,9 @@ const DA_SEAT: Record<SplitSeat, string> = { W: 'Vest', E: 'Øst' };
 const EN_HONOR: Record<SplitHonor, string> = { E: 'ace', K: 'king', D: 'queen', B: 'jack' };
 const EN_SEAT: Record<SplitSeat, string> = { W: 'West', E: 'East' };
 const EN_HONOR_LETTER: Record<SplitHonor, string> = { E: 'A', K: 'K', D: 'Q', B: 'J' };
+/** Splitprocenter, "I praksis": kortet under topkortene, der falder, når farven toppes. */
+const DA_DROP: Record<DropCard, string> = { K: 'kongen', D: 'damen', B: 'knægten', '10': "10'eren" };
+const EN_DROP: Record<DropCard, string> = { K: 'king', D: 'queen', B: 'jack', '10': 'ten' };
 const MONTHS_EN = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 /** Al ordlyd i farvebehandlingens brugerflade på dansk. Ret her uden at røre layoutet; EN nedenfor har samme form. */
@@ -338,8 +341,13 @@ const DA = {
       ? `Sidningen 1-1 er ${split}, og ${DA_HONOR[q.honor!]} sidder hos ${DA_SEAT[q.seat!]} i halvdelen: ${split} / 2 = ${chance}.`
       : `Sidningen ${q.splits[0]} er ${split}. Det single kort kan være hvert af de ${q.n} kort, og det kan sidde hos Vest eller Øst: ${split} / ${2 * q.n} = ${chance}.`,
   splitInPractice: 'I praksis',
-  /** Hvad tallet betyder: med topkortene falder alle modpartens kort, når farven sidder så jævnt som muligt. */
-  splitMeaning: (n: number, honors: readonly SplitHonor[], chance: string) => `Med ${n} kort ude og ${honors.join(' ')}: toppes farven, går den i ${chance}.`,
+  /**
+   * Hvad tallet betyder: med topkortene falder kortet lige under dem, når den, der har det, har højst så mange kort,
+   * som der er topkort, fx damen ved 2-2 eller single dame (Franks rettelse 21. nov. 2026; før "går den" med den
+   * jævneste sidning).
+   */
+  splitMeaning: (n: number, honors: readonly SplitHonor[], card: DropCard, chance: string) =>
+    `Med ${n} kort ude og ${honors.join(' ')}: toppes farven, falder ${DA_DROP[card]} i ${chance}.`,
 
   // Spil den selv
   playTitle: 'Spil den selv',
@@ -856,8 +864,8 @@ const EN: Texts = {
       ? `The 1-1 split is ${split}, and the ${EN_HONOR[q.honor!]} is with ${EN_SEAT[q.seat!]} half the time: ${split} / 2 = ${chance}.`
       : `The ${q.splits[0]} split is ${split}. The singleton can be any of the ${q.n} cards, and it can be with West or East: ${split} / ${2 * q.n} = ${chance}.`,
   splitInPractice: 'In practice',
-  splitMeaning: (n: number, honors: readonly SplitHonor[], chance: string) =>
-    `With ${n} cards out and ${honors.map((h) => EN_HONOR_LETTER[h]).join(' ')}: playing for the drop, the suit runs ${chance} of the time.`,
+  splitMeaning: (n: number, honors: readonly SplitHonor[], card: DropCard, chance: string) =>
+    `With ${n} cards out and ${honors.map((h) => EN_HONOR_LETTER[h]).join(' ')}: playing for the drop, the ${EN_DROP[card]} falls ${chance} of the time.`,
 
   playTitle: 'Play it yourself',
   playTrick: 'The trick',

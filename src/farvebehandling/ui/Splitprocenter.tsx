@@ -1,7 +1,7 @@
 import { formatDecimal } from '../../engine/format';
 import { BoardColumn } from '../../ui/BoardColumn';
 import { Info } from '../../ui/Info';
-import { evenSplit, splitRows, toppingHonors, wholePercent, type SplitOption, type SplitQuestion } from '../training/split';
+import { dropCard, dropChance, splitRows, toppingHonors, wholePercent, type SplitOption, type SplitQuestion } from '../training/split';
 import type { FbAnswer, FbTask, Graded } from '../training/tasks';
 import { TEXT } from './texts';
 
@@ -51,14 +51,14 @@ interface SplitFacitProps {
 
 /**
  * Facit: svaret med én decimal, alle sidninger for antallet som en lille tabel (de spurgte med fed), huskereglen
- * (niveau 1–3) eller regnestykket bag honnøren alene (niveau 4) og hvad tallet betyder, når farven toppes.
+ * (niveau 1–3) eller regnestykket bag honnøren alene (niveau 4) og hvad det betyder, når farven toppes: chancen for, at
+ * kortet under topkortene falder (`dropChance`).
  */
 export function SplitFacit({ task, answer, graded, reward, onNext }: SplitFacitProps) {
   const q = task.split;
   const rows = splitRows(q.n);
   const asked = new Set(q.level === 2 ? [rows[0].label] : q.splits);
   const chosen = q.options[answer.choice ?? -1];
-  const even = evenSplit(q.n);
   return (
     <div className="fb-facit cols">
       <section className={`feedback ${graded.score > 0 ? 'ok' : 'bad'}`} role="status">
@@ -100,7 +100,7 @@ export function SplitFacit({ task, answer, graded, reward, onNext }: SplitFacitP
           </p>
         )}
         <p>
-          <span className="fb-label">{TEXT.splitInPractice}:</span> {TEXT.splitMeaning(q.n, toppingHonors(q.n), percent(even.chance))}
+          <span className="fb-label">{TEXT.splitInPractice}:</span> {TEXT.splitMeaning(q.n, toppingHonors(q.n), dropCard(q.n), percent(dropChance(q.n)))}
         </p>
       </section>
 

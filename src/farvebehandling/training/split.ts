@@ -1,3 +1,4 @@
+import { binomial } from '../../domain/combinatorics';
 import { isDue, type Item } from '../../engine/leitner';
 import { shuffle, type Rng } from '../../engine/rng';
 import type { Fraction } from '../model/fraction';
@@ -235,5 +236,24 @@ export function nextSplitCard(deck: Record<string, Item> | undefined, today: str
 /** Topkortene, der toppes med for n kort ude: så mange som den jævneste sidnings længste side. */
 export const toppingHonors = (n: number): SplitHonor[] => HONORS.slice(0, Math.ceil(n / 2));
 
-/** Chancen for den jævneste sidning (fx 3-2 med 5 kort ude): dér falder alle modpartens kort, når farven toppes. */
-export const evenSplit = (n: number): SplitRow => splitRows(n).find((r) => r.longer === Math.ceil(n / 2))!;
+/** Kortet lige under topkortene, som modparten har: kongen (under E), damen (E K), knægten (E K D) eller 10'eren. */
+export type DropCard = 'K' | 'D' | 'B' | '10';
+const DROP_CARDS: readonly DropCard[] = ['K', 'D', 'B', '10'];
+export const dropCard = (n: number): DropCard => DROP_CARDS[toppingHonors(n).length - 1];
+
+/**
+ * "I praksis" (Franks rettelse 21. nov. 2026): spilleren har topkortene, modparten har kortet lige under dem og n − 1
+ * små, og farven toppes. Kortet falder, når den, der har det, har højst så mange kort, som der er topkort (med 4 kort
+ * ude og E K: 2-2 eller single dame). Summen over Vests antal w af de konkrete sidninger, hvor kortet sidder hos Vest
+ * (C(n − 1, w − 1) af dem) eller Øst (C(n − 1, w)), hver med `layoutChance(n, w)`.
+ */
+export function dropChance(n: number): number {
+  const k = toppingHonors(n).length;
+  let num = 0n;
+  for (let w = 0; w <= n; w++) {
+    const one = layoutChance(n, w).num;
+    if (w >= 1 && w <= k) num += binomial(n - 1, w - 1) * one;
+    if (n - w >= 1 && n - w <= k) num += binomial(n - 1, w) * one;
+  }
+  return share({ num, den: layoutChance(n, 0).den });
+}
