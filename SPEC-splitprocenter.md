@@ -182,7 +182,7 @@ Tabellen ovenfor er kun til læseren. Testen sammenligner med `splitChance`.
   5. **Facit:**
      - Huskereglen står på niveau 1–3. Niveau 4 viser i stedet regnestykket, fx "Sidningen 3-1 er 49,7 %. Det single kort kan være hvert af de 4 kort, og det kan sidde hos Vest eller Øst: 49,7 % / 8 = 6,2 %."
      - Tabellen har en række pr. sidning; de spurgte står med fed.
-     - "I praksis" står på alle niveauer, fx "Med 5 kort ude og E K D: toppes farven, går den i 67,8 %.". Topkortene svarer til den jævneste sidning (E; E K; E K D; E K D B), og tallet har én decimal som resten af facit (specens eksempel siger 68 %). På engelsk står "playing for the drop", husets engelske ord.
+     - "I praksis" står på alle niveauer, fx ~~"Med 5 kort ude og E K D: toppes farven, går den i 67,8 %."~~ "Med 5 kort ude og E K D: toppes farven, falder knægten i 73,5 %." (rettet efter Franks rettelse 21. nov. 2026, se "Sidste session" nedenfor: tallet var den jævneste sidning alene). Topkortene svarer til den jævneste sidning (E; E K; E K D; E K D B), og tallet har én decimal som resten af facit (specens eksempel siger 68 %). På engelsk står "playing for the drop", husets engelske ord.
   6. **Opgaven:** Farvebehandlings opgavelayout uden bord, uden ny CSS. Fra 1000 px står navnet med ⓘ og spørgsmålet i venstre spalte (hvor bordet står) og knapperne i højre; under 1000 px er det ét kort. Knapperne er som gætteintervallerne (`fb-intervals`), og et tryk svarer direkte, som i Find hullet.
   7. **Selvvalgt:** kortet "Opgavetyper" står efter Start-knappen med knappen "Splitprocenter · 23 sidninger" og ⓘ, som Trænings menu. "Skift filter" fører tilbage. Opgaven stilles ved en kombination med samme antal kort ude; den vises ikke.
   8. **Engelsk:** spørgsmålet på niveau 4 lyder "How often does West hold the singleton king?", og ⓘ og vejledningen kalder typen "Split percentages".
@@ -232,6 +232,35 @@ Godkendelsen dækker også session 2's tre rettede eksisterende tests i `07c7dda
 ### Franks rettelser og godkendelse, 21. nov. 2026
 
 "Splitprocenter: (1) Ret de tre vagttests i src/modspil/ til at sammenligne v43-foer-modspil-skaerme med 691d715 i en commit for sig. (2) Linjen 'I praksis' er forkert: med 4 kort ude og E K falder damen ved 2-2 eller single dame, 40,7 % + 2 × 6,2 % = 53,1 %, ikke 40,7 %. Regn alle 'I praksis'-linjer (2–8 kort ude) efter ved at tælle alle sidninger. Skriv en test, der er rød først, ret teksten, og vis mig de nye linjer i rapporten. Kør derefter hele suiten én gang. Er alt grønt, er Splitprocenter godkendt: flet, push, live-tjek, arkivér specen, og slet grenen."
+
+### Sidste session, 21. nov. 2026
+
+- **Status:** begge rettelser er lavet, og `tsc`, testene i `src/farvebehandling/`, `src/fam4-usage.test.ts` og `src/modspil/`, hele suiten og stavekontrollen er grønne. Splitprocenter er dermed godkendt (Franks godkendelse ovenfor), og grenen flettes.
+- **Commits** på `splitprocenter`: `3481192` (Franks rettelser), `bf04ae4` (vagttestene, en commit for sig), `eb67286` (testen af "I praksis", rød), `d8ba674` (rettelsen af beregningen og teksten) og committen med dette afsnit.
+- **Vagttestene** (rettelse 1, `bf04ae4`; kun `src/modspil/intet-andet-trin2.test.ts` og `src/modspil/ui/forside.test.tsx`):
+  - **før:** de tre tests ("ingen eksisterende testfil er ændret …", "ingen fil uden for src/modspil/ er ændret …" og "vejledningens eksisterende afsnit er uændrede …") lavede `git diff` fra `v43-foer-modspil-skaerme` til arbejdsmappen;
+  - **nu:** `git diff v43-foer-modspil-skaerme 691d715` (konstanten `EFTER` med den fulde hash), dvs. Modspil trin 2, som det blev flettet og arkiveret på `main`. Listerne over tilladte filer og rettede tests og alle påstande er uændrede; kommentarerne siger, at sammenligningen er fastfrosset. Mangler tagget (GitHub Actions), springes de over med samme besked som før; de springes også over, hvis `691d715` mangler;
+  - **hvorfor:** de skal tjekke, at trin 2 kun ændrede det tilladte, men de fangede enhver senere ændring uden for `src/modspil/`, her Splitprocenters 17 filer, de tre rettede tests i `07c7dda` og linjen i `GuideScreen.tsx`;
+  - **kørt:** `npx vitest run src/modspil/intet-andet-trin2.test.ts src/modspil/ui/forside.test.tsx`: 2 filer, 14 tests, alle grønne og ingen sprunget over (6 s).
+- **"I praksis"** (rettelse 2):
+  - **Påstanden** i linjen "Med n kort ude og …: toppes farven, …": spilleren har topkortene, så mange som den jævneste sidnings længste side (E med 2 kort ude, E K med 3–4, E K D med 5–6 og E K D B med 7–8); modparten har kortet lige under dem (kongen, damen, knægten eller 10'eren) og n − 1 små kort; farven toppes, én runde pr. topkort, og modspillerne lægger små kort, så længe de har dem. Teknikken lykkes, når kortet under topkortene falder, dvs. når den, der har det, har højst så mange kort, som der er topkort. Den gamle linje viste kun den jævneste sidning og glemte de sidninger, hvor kortet sidder kortere, fx single dame med 4 kort ude.
+  - **Testen** `src/farvebehandling/ui/splitprocenter-praksis.test.tsx` (5 tests, `eb67286`): hvert af de n kort ude gives til Vest eller Øst (2^n sidninger), hver sidning vejes med de ukendte pladser C(26 − n, 13 − w) / C(26, 13) (testen tjekker, at vægtene er lig med `layoutChance(n, w)`), og runderne spilles igennem. Franks kontrol: 4 kort ude og E K = 2-2 + 2 × single dame = 40,7 % + 2 × 6,2 % = 53,1 %, også i facit. Tallet i linjen skal være chancen med én decimal på dansk og engelsk, og linjen skal sige, hvilket kort der falder. **Rød før rettelsen:** 4 af 5 røde (kun vægttjekket var grønt); linjerne viste 40,7, 67,8, 35,5, 62,2 og 32,7 % for 4–8 kort ude. **Grøn efter** `d8ba674`: 5 af 5, og de to andre Splitprocenter-filer er uændrede og grønne (23 tests i alt, 9 s).
+  - **Rettelsen** (`d8ba674`): `dropChance(n)` og `dropCard(n)` i `training/split.ts` (summen over Vests antal af de sidninger, hvor kortet falder, med `layoutChance` og BigInt-tællere); `evenSplit` er fjernet. `splitMeaning` i `ui/texts.ts` får kortet, og `ui/Splitprocenter.tsx` bruger `dropChance`.
+  - **Omskrevet:** "går den" er erstattet af "falder <kortet>" ved alle syv antal (engelsk "the queen falls … of the time" i stedet for "the suit runs"). Med det rigtige tal kan "går den" læses som "sidder jævnt", som den gamle linje betød, og det tal står i tabellen lige over linjen. Ved 7 og 8 kort ude giver E K D B desuden alle stik uanset sidningen, når spillerens 6 eller 5 kort sidder 4-2 eller 3-2 mellem hånden og bordet, så "går den" siger ikke, hvad der tælles. Linjen siger nu, hvilket kort der falder, som Franks eksempel.
+  - **De nye linjer** (dansk; det gamle tal i parentes):
+    - "Med 2 kort ude og E: toppes farven, falder kongen i 52,0 %." (52,0 %, uændret: 1-1)
+    - "Med 3 kort ude og E K: toppes farven, falder damen i 78,0 %." (78,0 %, uændret: 2-1)
+    - "Med 4 kort ude og E K: toppes farven, falder damen i 53,1 %." (40,7 %: 2-2 og single dame)
+    - "Med 5 kort ude og E K D: toppes farven, falder knægten i 73,5 %." (67,8 %: 3-2 og single knægt)
+    - "Med 6 kort ude og E K D: toppes farven, falder knægten i 54,1 %." (35,5 %: 3-3, knægten i 4-2's doubleton og single knægt)
+    - "Med 7 kort ude og E K D B: toppes farven, falder 10'eren i 71,9 %." (62,2 %: 4-3, 10'eren i 5-2's doubleton og single 10'er)
+    - "Med 8 kort ude og E K D B: toppes farven, falder 10'eren i 55,0 %." (32,7 %: 4-4, 10'eren i 5-3's tre, i 6-2's doubleton og single 10'er)
+- **Kørt** (hver for sig, én gang):
+  - `npx tsc`: grøn (2 s);
+  - `npx vitest run src/farvebehandling src/fam4-usage.test.ts src/modspil`: 74 filer, 511 tests grønne og 2 sprunget over (476 s);
+  - `npm test`: 143 filer, 1014 tests grønne og 2 sprunget over, 0 røde (436 s);
+  - `node scripts/sprogtjek.ts`: "ingen ukendte ord" (23 s).
+  - `tjek-bred-layout.mjs` er ikke kørt igen: rettelserne ændrer kun teksten i én linje i facit (ingen CSS eller ny opbygning), og den afsluttende session var grøn (469 ok, 0 fejl).
 
 ## Arbejdsgang (tre korte sessioner, styringens punkt 7 og 8)
 
