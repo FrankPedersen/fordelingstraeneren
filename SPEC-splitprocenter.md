@@ -229,6 +229,10 @@ Godkendelsen dækker også session 2's tre rettede eksisterende tests i `07c7dda
 - **Tokenforbrug, session 3** (stoppet af Franks rettelse 18. nov. 2026, før den nåede noget; 16 svar): nye input 34, skrevet til cachen 85.206, læst fra cachen 1.304.633 og output 9.248, i alt 1.399.121.
 - **Tokenforbrug, afsluttende session** (hele logfilen, også før afbrydelsen ved 5-timersgrænsen 18. nov. og efter genoptagelsen 21. nov.; talt før den sidste commit, 60 svar): nye input 126, skrevet til cachen 688.892, læst fra cachen 8.776.919 og output 48.944, i alt 9.514.881.
 
+### Franks rettelser og godkendelse, 21. nov. 2026
+
+"Splitprocenter: (1) Ret de tre vagttests i src/modspil/ til at sammenligne v43-foer-modspil-skaerme med 691d715 i en commit for sig. (2) Linjen 'I praksis' er forkert: med 4 kort ude og E K falder damen ved 2-2 eller single dame, 40,7 % + 2 × 6,2 % = 53,1 %, ikke 40,7 %. Regn alle 'I praksis'-linjer (2–8 kort ude) efter ved at tælle alle sidninger. Skriv en test, der er rød først, ret teksten, og vis mig de nye linjer i rapporten. Kør derefter hele suiten én gang. Er alt grønt, er Splitprocenter godkendt: flet, push, live-tjek, arkivér specen, og slet grenen."
+
 ## Arbejdsgang (tre korte sessioner, styringens punkt 7 og 8)
 
 1. **Session 1:**
