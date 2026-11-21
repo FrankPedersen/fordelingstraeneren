@@ -8,7 +8,7 @@ import { ROOT } from '../sprog/danskTekst';
  * tagget `v43-foer-modspil-skaerme`, med Modspils gruppe på forsiden og afsnittet i vejledningen skjult). Denne test
  * sikrer "uændret" og Afgrænsning (trin 2):
  *
- * - Ingen testfil, der fandtes i tagget, er ændret, slettet eller flyttet (`git diff` fra tagget til arbejdsmappen; nye
+ * - Ingen testfil, der fandtes i tagget, er ændret, slettet eller flyttet (`git diff` fra tagget til `691d715`; nye
  *   testfiler er tilladt). Det gælder også trin 1's tests i src/modspil/. Undtaget er `src/app/navigation.test.tsx` og
  *   `src/app/forside-bred.test.tsx`, der er rettet fra tre til fire grupper (Franks svar 18. nov. 2026), og
  *   `src/app/status.test.ts`, `src/app/forside.test.tsx` og `src/app/analyse-modul.test.tsx`, der er rettet fra fire
@@ -22,7 +22,9 @@ import { ROOT } from '../sprog/danskTekst';
  *   `src/sprog/bydeform.ts` (øvelsesnavnene "Vælg kortet" og "Vælg afkastet"). Franks svar 2, 18. nov. 2026, tillader
  *   `src/app/screens/HomeScreen.tsx` (velkomsten og I dag siger fem spor) og `src/ui/styles.css` (de fire grupper står
  *   2 × 2 fra 1000 px); vejledningen er allerede tilladt.
- * - Ikke-committede ændringer i sporede filer tæller med; nye filer, der ikke er lagt i git, tæller ikke.
+ * - Sammenligningen er fastfrosset ved Modspils egen ændring: fra tagget til `691d715` (Modspils fletning og arkivering
+ *   på `main`, 18. nov. 2026) og ikke til arbejdsmappen, så testen stadig tjekker, at trin 2 kun ændrede det tilladte,
+ *   men ikke stopper senere spor (Franks rettelse 21. nov. 2026, SPEC-splitprocenter.md).
  * - Mangler tagget (GitHub Actions henter ingen tags), springes testen over med en besked, som trin 1's punkt 10.
  *
  * Kræver byggeriet en anden fil (fx `src/ui/Footer.tsx`), skal Claude Code stoppe og spørge Frank, før listen udvides
@@ -30,6 +32,8 @@ import { ROOT } from '../sprog/danskTekst';
  */
 
 const TAG = 'v43-foer-modspil-skaerme';
+/** Modspils fletning og arkivering på `main` (691d715): trin 2, som det blev udgivet. */
+const EFTER = '691d715abc06837821688f4db3e4c4d669354f26';
 const TILLADT = [
   'src/app/tracks.ts',
   'src/app/App.tsx',
@@ -59,6 +63,7 @@ const git = (...args: string[]): string => execFileSync('git', args, { cwd: ROOT
 function harTag(): boolean {
   try {
     git('rev-parse', '--verify', '--quiet', `refs/tags/${TAG}^{commit}`);
+    git('rev-parse', '--verify', '--quiet', `${EFTER}^{commit}`);
     return true;
   } catch {
     return false;
@@ -74,7 +79,7 @@ const ulovligTestRettelse = (status: string, f: string) => status !== 'A' && erT
 describe('Intet andet er ændret (accepttest 8, trin 2)', () => {
   it('ingen eksisterende testfil er ændret, slettet eller flyttet siden tagget, bortset fra de fem tilladte', (ctx) => {
     if (!harTag()) ctx.skip(`Tagget ${TAG} findes ikke her (fx i GitHub Actions, der henter uden tags), så testen kører kun lokalt.`);
-    const linjer = git('diff', '--name-status', '-z', '--no-renames', TAG, '--').split('\0').filter(Boolean);
+    const linjer = git('diff', '--name-status', '-z', '--no-renames', TAG, EFTER, '--').split('\0').filter(Boolean);
     const aendrede: string[] = [];
     for (let i = 0; i < linjer.length; i += 2) if (ulovligTestRettelse(linjer[i], linjer[i + 1])) aendrede.push(`${linjer[i]} ${linjer[i + 1]}`);
     expect(aendrede).toEqual([]);
@@ -82,7 +87,7 @@ describe('Intet andet er ændret (accepttest 8, trin 2)', () => {
 
   it('ingen fil uden for src/modspil/ er ændret, bortset fra de tilladte', (ctx) => {
     if (!harTag()) ctx.skip(`Tagget ${TAG} findes ikke her (fx i GitHub Actions, der henter uden tags), så testen kører kun lokalt.`);
-    const aendrede = git('diff', '--name-only', '-z', TAG, '--').split('\0').filter(Boolean);
+    const aendrede = git('diff', '--name-only', '-z', TAG, EFTER, '--').split('\0').filter(Boolean);
     expect(udenfor(aendrede)).toEqual([]);
   });
 
