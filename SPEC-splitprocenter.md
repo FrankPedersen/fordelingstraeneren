@@ -225,6 +225,9 @@ Godkendelsen dækker også session 2's tre rettede eksisterende tests i `07c7dda
   - `C:\Users\frank\Kontraktbridge\skaermbilleder\splitprocenter\facit-1280.png`
 
   Scriptet tjekkede samtidig følgende (29 ok og 0 fejl): ⓘ "Hjælp: Splitprocenter" står i Selvvalgt, facit har tallet med én decimal og hele tabellen, niveau 4 har 3–5 kort ude, og der er ingen vandret scroll ved 390 px.
+- **Ikke gjort, venter på Franks afgørelse:** fletningen, push af `main` og tagget, Actions, live-tjekket, arkiveringen af specen, sletningen af grenen og rækkens "Godkendt af Frank og udgivet" i `SYSTEM.md` (rækken har fået status 21. nov.).
+- **Tokenforbrug, session 3** (stoppet af Franks rettelse 18. nov. 2026, før den nåede noget; 16 svar): nye input 34, skrevet til cachen 85.206, læst fra cachen 1.304.633 og output 9.248, i alt 1.399.121.
+- **Tokenforbrug, afsluttende session** (hele logfilen, også før afbrydelsen ved 5-timersgrænsen 18. nov. og efter genoptagelsen 21. nov.; talt før den sidste commit, 60 svar): nye input 126, skrevet til cachen 688.892, læst fra cachen 8.776.919 og output 48.944, i alt 9.514.881.
 
 ## Arbejdsgang (tre korte sessioner, styringens punkt 7 og 8)
 
