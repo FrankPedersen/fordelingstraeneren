@@ -1,6 +1,6 @@
 # SPEC – Splitprocenter (ny opgavetype i Farvebehandling) og fam-4
 
-18. november 2026 · Fordelingstræneren · opgave J i `PLAN-aabne-opgaver.md` · gren `splitprocenter`, tag før: `v44-foer-splitprocenter`.
+18. november 2026 · Fordelingstræneren · opgave J i `PLAN-aabne-opgaver.md` · gren `splitprocenter`, tag før: `v44-foer-splitprocenter`. Godkendt af Frank og udgivet 21. november 2026 (`dacc127`); grenen er slettet.
 
 ## Formål
 
@@ -261,6 +261,22 @@ Godkendelsen dækker også session 2's tre rettede eksisterende tests i `07c7dda
   - `npm test`: 143 filer, 1014 tests grønne og 2 sprunget over, 0 røde (436 s);
   - `node scripts/sprogtjek.ts`: "ingen ukendte ord" (23 s).
   - `tjek-bred-layout.mjs` er ikke kørt igen: rettelserne ændrer kun teksten i én linje i facit (ingen CSS eller ny opbygning), og den afsluttende session var grøn (469 ok, 0 fejl).
+- **Status på grenen:** denne status står i `f91a2be` på grenen `splitprocenter`.
+- **Udgivelsen:**
+  - **Fletningen:** `git fetch` viste, at `main` var lig med `origin/main` (`a0f2128`, tagget `v44-foer-splitprocenter`). Grenen er flettet ind med `git merge --no-ff` i `dacc127` ("Flet splitprocenter ind: … (godkendt af Frank)"); træet er det samme som grenens, som testene kørte på. `main` og tagget `v44-foer-splitprocenter` er pushet.
+  - **GitHub Actions:** kørslen "Udgiv på GitHub Pages" for `dacc127` (run 44894927944, build med `npm test` og deploy) er grøn, 21. nov. 10:33–10:40 UTC.
+  - **Live-tjekket** på www.kontraktbridge.dk/fordelingstraeneren/ i Chrome uden vindue med en tom lagring og uden cache (et lille script uden for repoet efter mønsteret i `tjek-sidefod.mjs`). Scriptet læser hvert spørgsmål, trykker på den rigtige knap og tjekker facit:
+    - Selvvalgt har knappen "Splitprocenter · 23 sidninger" og ⓘ "Hjælp: Splitprocenter"; på engelsk "Split percentages · 23 splits" og "Help: Split percentages".
+    - Ved 1280 px er opgaver med alle 2–8 kort ude løst til facit på dansk og på engelsk: "Rigtigt"/"Right", tabellen med alle sidninger for antallet og den rettede "I praksis"-linje, ordret som listen ovenfor (fx "In practice: With 4 cards out and A K: playing for the drop, the queen falls 53.1 % of the time."). Facit (`.fb-facit`) har intet dansk på engelsk; det eneste "æ" på den engelske side er appens navn "Fordelingstræneren" i topbjælken.
+    - Ved 390 px er der ingen vandret scroll i opgaven og facit (0 px i 8 opgaver).
+    - Første kørsel gav 7 fejl i scriptet selv: tjekket for dansk på engelsk læste hele siden og fandt "æ" i appens navn i topbjælken. Tjekket blev rettet til facit, og anden kørsel var grøn ("Alt i orden"). Sitet var det samme i begge kørsler, og alle linjer og tal var rigtige i begge.
+  - **Skærmbilledet fra live-sitet:** `C:\Users\frank\Kontraktbridge\skaermbilleder\splitprocenter\live-facit-1280.png` (1280 × 930): facit på niveau 2 med 4 kort ude, "Rigtigt", tabellen med 3-1 49,7 %, 2-2 40,7 % og 4-0 9,6 %, huskereglen og "I praksis: Med 4 kort ude og E K: toppes farven, falder damen i 53,1 %."
+- **Arkiveringen:**
+  - Grenen `splitprocenter` er slettet lokalt før arkiv-committen og findes ikke på GitHub (`git ls-remote --heads origin splitprocenter` er tom; den blev aldrig pushet).
+  - Specen er flyttet fra roden til `docs/specs/SPEC-splitprocenter.md` med `git mv`, og første linje siger, at den er godkendt og udgivet.
+  - Punktet om Splitprocenter i `CLAUDE.md` peger på `docs/specs/SPEC-splitprocenter.md`, siger, at den er udgivet, og nævner "I praksis".
+  - `docs/specs/README.md` har fået en linje for specen.
+  - Modspils vagttests sammenligner nu med `691d715`, så flytningen af specen rører dem ikke.
 
 ## Arbejdsgang (tre korte sessioner, styringens punkt 7 og 8)
 
