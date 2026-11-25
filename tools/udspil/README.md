@@ -35,10 +35,25 @@ tools\udspil\.venv\Scripts\python tools\udspil\generer.py --situation S8-delkont
 tools\udspil\.venv\Scripts\python tools\udspil\kontrol.py --alt
 ```
 
+## Varianterne (SPEC-udspilsraad.md)
+
+Kompendiets udspilsråd testes også på ekstra hænder, hvor Vests hånd har en bestemt form: en singleton (S4, S5 og S8), en doubleton uden honnør (S4 og S8) eller "table feeling" mod sans (S1 og S2). Varianterne står i `varianter.json`: situationen, det ekstra krav til Vest (`farveMed` eller `tableFeeling`, se `krav.py`) og variantens eget seed. Opgaverne og fordelingerne laves som situationernes; alle situationens krav gælder stadig. Kørslen skriver kun rådata i `raa/varianter/<variant>.json` og ingen appdata, og den kan afbrydes og startes igen som `--situation`.
+
+Én variant ad gangen eller alle syv efter hinanden, og bagefter DDS-tjekket:
+
+```powershell
+tools\udspil\.venv\Scripts\python tools\udspil\generer.py --variant S4-singleton
+tools\udspil\.venv\Scripts\python tools\udspil\generer.py --varianter
+tools\udspil\.venv\Scripts\python tools\udspil\kontrol.py --varianter
+```
+
+En prøvekørsel med 2 hænder i en anden mappe: `generer.py --variant S4-singleton --antal 2 --ud C:\temp\proeve`.
+
 ## Filerne
 
 - `rng.py`, `dealer.py`: porte af appens `src/engine/rng.ts` og `deal` i `src/domain/dealer.ts`. `rng-fast.json` er de faste tal til TS-testen (`python tools/udspil/rng.py --fast`).
 - `system.py`, `krav.py`: kravene til hænderne fra `src/modspil/content/udspil/situationer.json`.
 - `dds.py`: DDS via `endplay`.
-- `generer.py`: opgaverne, fordelingerne og stikkene. Skriver `raa/<id>.json` og appens data `src/modspil/content/udspil/<id>.json`.
-- `kontrol.py`: DDS-tjekket og stabiliteten (`raa/stabilitet/<id>.json`).
+- `generer.py`: opgaverne, fordelingerne og stikkene. Skriver `raa/<id>.json` og appens data `src/modspil/content/udspil/<id>.json`; med `--variant` og `--varianter` kun `raa/varianter/<variant>.json`.
+- `kontrol.py`: DDS-tjekket og stabiliteten (`raa/stabilitet/<id>.json`); `--varianter` tjekker varianternes rådata.
+- `varianter.json`: varianterne til SPEC-udspilsraad.md.

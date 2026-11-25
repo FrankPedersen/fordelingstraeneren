@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "kilde": "SPEC-udspilsraad.md",
+  "opgaver": 150,
+  "varianter": [
+    {
+      "id": "S4-singleton",
+      "situation": "S4-kun-en-farve",
+      "seed": 2611251,
+      "ekstra": {
+        "farveMed": [
+          { "blandt": ["S", "D", "C"], "laengde": [1, 1], "honnoerer": [0, 1] },
+          { "blandt": ["S", "D", "C"], "laengde": [3, 13], "honnoerer": [0, 0] }
+        ]
+      }
+    },
+    {
+      "id": "S5-singleton",
+      "situation": "S5-sidefarve",
+      "seed": 2611252,
+      "ekstra": {
+        "farveMed": [
+          { "blandt": ["H", "D", "C"], "laengde": [1, 1], "honnoerer": [0, 1] },
+          { "blandt": ["H", "D", "C"], "laengde": [3, 13], "honnoerer": [0, 0] }
+        ]
+      }
+    },
+    {
+      "id": "S8-singleton",
+      "situation": "S8-delkontrakt",
+      "seed": 2611253,
+      "ekstra": {
+        "farveMed": [
+          { "blandt": ["H", "D", "C"], "laengde": [1, 1], "honnoerer": [0, 1] },
+          { "blandt": ["H", "D", "C"], "laengde": [3, 13], "honnoerer": [0, 0] }
+        ]
+      }
+    },
+    {
+      "id": "S4-doubleton",
+      "situation": "S4-kun-en-farve",
+      "seed": 2611254,
+      "ekstra": {
+        "farveMed": [
+          { "blandt": ["S", "D", "C"], "laengde": [2, 2], "honnoerer": [0, 0] },
+          { "blandt": ["S", "D", "C"], "laengde": [3, 13], "honnoerer": [0, 0] }
+        ]
+      }
+    },
+    {
+      "id": "S8-doubleton",
+      "situation": "S8-delkontrakt",
+      "seed": 2611255,
+      "ekstra": {
+        "farveMed": [
+          { "blandt": ["H", "D", "C"], "laengde": [2, 2], "honnoerer": [0, 0] },
+          { "blandt": ["H", "D", "C"], "laengde": [3, 13], "honnoerer": [0, 0] }
+        ]
+      }
+    },
+    {
+      "id": "S1-tablefeeling",
+      "situation": "S1-1nt-3nt",
+      "seed": 2611256,
+      "ekstra": { "tableFeeling": { "blandt": ["S", "H", "D", "C"], "min": 3 } }
+    },
+    {
+      "id": "S2-tablefeeling",
+      "situation": "S2-stayman",
+      "seed": 2611257,
+      "ekstra": { "tableFeeling": { "blandt": ["S", "H", "D", "C"], "min": 3 } }
+    }
+  ]
+}
