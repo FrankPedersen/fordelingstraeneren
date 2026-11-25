@@ -23,11 +23,11 @@ Opgaverne i Farvebehandling starter med en uåbnet farve. Opgavetypen Hvad nu? (
 
 ## Accepttest
 
-- [ ] **Træning og Selvvalgt:** for alle bankens kombinationer og mål, hvor `possibleTypes` giver `hvad-nu`, og 50 seeds giver `chooseType` aldrig `hvad-nu`, med og uden historik.
-- [ ] **Begge veje går gennem `chooseType`:** Træningens repetition og niveau (`taskFor` uden `only`) og Selvvalgt kalder `chooseType`; lynrunden har kun Linje mod linje.
-- [ ] **Gamle svar:** et gemt Selvvalgt-svar med `task: 'hvad-nu'` læses og tæller i statistikken pr. opgavetype som før.
-- [ ] **Vejledningerne:** listen over opgavetyper i `GuideScreen.tsx` nævner hverken "Hvad nu?" eller "What now?", og `guide-analyse.md` / `.en.md` har ingen overskrift "Hvad nu?" / "What now?".
-- [ ] `npm test` er grøn.
+- [x] **Træning og Selvvalgt:** for alle bankens kombinationer og mål, hvor `possibleTypes` giver `hvad-nu`, og 50 seeds giver `chooseType` aldrig `hvad-nu`, med og uden historik.
+- [x] **Begge veje går gennem `chooseType`:** Træningens repetition og niveau (`taskFor` uden `only`) og Selvvalgt kalder `chooseType`; lynrunden har kun Linje mod linje.
+- [x] **Gamle svar:** et gemt Selvvalgt-svar med `task: 'hvad-nu'` læses og tæller i statistikken pr. opgavetype som før.
+- [x] **Vejledningerne:** listen over opgavetyper i `GuideScreen.tsx` nævner hverken "Hvad nu?" eller "What now?", og `guide-analyse.md` / `.en.md` har ingen overskrift "Hvad nu?" / "What now?".
+- [ ] `npm test` er grøn. (Session 1, 25. nov.: `tsc` og 1.000+ tests i `src/farvebehandling/training`, `ui`, `model`, `play`, rodens tests, `src/app`, `src/sprog`, `src/modes`, `src/haandevaluering`, `src/pointregnskab`, `src/domain`, `src/engine`, `src/memory`, `src/system` og det meste af `src/modspil` er grønne. `src/farvebehandling/solver` og `src/modspil/*.test.ts` løb over 3 minutters grænsen i Cowork og køres af Frank med `npm test`; de bruger ikke de ændrede filer.)
 
 ## Afklaret
 

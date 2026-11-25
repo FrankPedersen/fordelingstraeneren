@@ -24,7 +24,8 @@ describe('Hvad nu? er taget ud (SPEC-hvad-nu-ud.md)', () => {
       }
     }
     expect(cases).toBeGreaterThan(0);
-  });
+    // Løkken over hele banken er tung; tidsgrænsen er 30 s som husets andre tunge tests.
+  }, 30_000);
 
   it('Træning og Selvvalgt vælger typen med chooseType uden en liste, der kan give Hvad nu?', () => {
     const session = readFileSync(new URL('./session.ts', import.meta.url), 'utf8');

@@ -141,15 +141,11 @@ Med E D B 10 over 6 5 4 3 2, 5 stik, Syd inde og Nord ubegrænset afhænger chan
 
 Med to indgange taber linjen kun sidningen Kxxx–renonce (4,78 %), fordi kipningerne og den sidste lille i hånden kræver tre indgange til hånden. Med én indgang vinder den kun, når Vest har kongen single eller K x.
 
-### 2.6 Hvad nu?
-
-Efter første runde er et kort faldet, og du skal vælge fortsættelsen. Opgavetypen bruger løserens chancer efter det, der er set, og det er her, begrænset valg trænes. Lægger Øst damen under esset med bordet E K 10 3 2 og hånden 7 6 5 4, vinder kipningen mod knægten 64,7 %.
-
-### 2.7 Spil den selv
+### 2.6 Spil den selv
 
 Du spiller kombinationen stik for stik mod et regelstyret modspil. Anden hånd lægger lavt og dækker 10 eller højere med det billigste kort, der slår. Fjerde hånd vinder så billigt som muligt. Den aktuelle sidning lyser op i båndet. Åbnet fra Analyse med begrænsede forbindelser står det under bordet, hvem der er inde, og hvor mange indgange der er tilbage, fx "Nord inde · Syd 0 indgange".
 
-### 2.8 Hold eller par
+### 2.7 Hold eller par
 
 Nogle kombinationer har én bedste linje til holdkamp (chancen for målet) og en anden til parturnering (flest stik i gennemsnit). Opgavetypen "Hold eller par" viser begge linjer og hvad sikkerhedsspillet koster i stik.
 
@@ -177,7 +173,7 @@ Tre af eksemplerne viser, hvad analysen kan bruges til:
 - **Mellemkortene afgør.** Med D 10 4 over E 9 8 6 3 2 giver lille mod 10'eren 81,35 % mod esset først 78,00 %. Byttes 9'eren med 7'eren, er esset først bedst.
 - **Små forbedringer findes også.** Med E B 8 over 10 3 2 giver Encyclopedia 39 % for lille mod 8'eren. 10'eren fra hånden giver 39,66 % mod 38,70 %.
 
-De fire eksempler om begrænset valg (Kelsey, Villy Dam og Root) handler om, hvad der sker efter første eller anden runde. I Farvebehandling er det opgavetypen "Hvad nu?".
+De fire eksempler om begrænset valg (Kelsey, Villy Dam og Root) handler om, hvad der sker efter første eller anden runde. Farvebehandlings opgaver starter med en uåbnet farve, så de træner ikke situationen efter første runde.
 
 ## 4 Beregningsmodellen
 
