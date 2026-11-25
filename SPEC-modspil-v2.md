@@ -119,7 +119,7 @@ Første bølge er de otte situationer nedenfor (Franks svar 5). Slem, splinter, 
 - **TS genskaber alt:** TS-testene genskaber hver opgaves hånd med appens `deal(seed)` og hver fordeling med appens `shuffle` ud fra de gemte seeds og tjekker kravene med **egen TS-kode og `interpreter.ts`**, ikke Pythons. For én opgave pr. situation tjekkes også, at hvert seed, generatoren sprang over, virkelig ikke opfylder kravene, så der ikke er skævhed i udvalget.
 - **TS genberegner opsummeringen:** middelstik og antal sætninger pr. kort i appens data regnes igen fra de rå data og skal være ens.
 - **DDS mod DDS-tabellen** (`tools/udspil/kontrol.py`): i 10 % af fordelingerne skal stikket for Vests bedste kort være lig 13 minus Syds stik i kontraktens benævnelse fra `calc_dd_table`, som er en anden indgang i DDS.
-- **Stabilitet:** 5 opgaver pr. situation regnes igen med 100 nye fordelinger (et andet seed). For opgaverne med en klar bedste farve (forspring på mindst 0,3 stik i profilen Standard) skal mindst 90 % have samme bedste farve, og middelstikkene må højst afvige 0,25.
+- **Stabilitet:** 5 opgaver pr. situation regnes igen med 100 nye fordelinger (et andet seed). For opgaverne med en klar bedste farve (forspring på mindst 0,3 stik i profilen Standard) skal mindst 90 % have samme bedste farve, og den bedste farves middelstik må højst afvige 3 standardfejl mellem de to regninger (Franks valg 25. nov. 2026; før 0,25 stik).
 - **Rapporttal** (skrives under Afklaret, ikke testkrav): pr. situation andelen af opgaver, hvor dobbeltdummys bedste farve er blandt dem, Kompendiets råd peger på; andelen af klare opgaver; den mediane usikkerhed (standardfejl) på forskellen mellem bedste og næstbedste farve.
 
 ## Accepttest for trin 1 (skrives først, røde)
@@ -248,6 +248,8 @@ Accepttest (3a), byggeri (3b), hele suiten, browsertjek og skærmbilleder i en s
 **Status (skrives løbende af Claude Code):**
 
 - **Session 1a (25. nov. 2026):** `main` er tagget `v45-foer-udspil-data`, og grenen `udspil-data` er oprettet. Situationsfilen, porten af `rng.ts` og `dealer.ts`, generatoren, kontrollen og accepttestene er skrevet og committet. Generatoren er prøvekørt på én opgave og eksemplet pr. situation uden for repoet (intet datasæt er committet). På prøvedataene er accepttest 3, 4 og 6 grønne, og accepttest 5 fejler kun på antallet (1 opgave i stedet for 50): TS og Python er enige om hver hånd, hver fordeling og hvert sprunget seed. Accepttest 1, 2 og 7 er grønne nu; 3–6 og stabiliteten er røde, indtil Frank har kørt generatoren og kontrollen (`tools/udspil/README.md`). Stop: Frank godkender "Krav til gennemgang" nedenfor.
+- **Kørslen (25. nov. 2026):** Frank kørte `generer.py --alle` og `kontrol.py --alt` i PowerShell (Python 3.13, endplay 0.5.12): 50 opgaver og ét eksempel pr. situation, 100 fordelinger.
+- **Session 1b, første forsøg (25. nov. 2026):** 82 af 83 tests bestod. Stabilitetstesten fejlede på S1-1nt-3nt, seed 2085890785 (♠ D 10 9 5 4 ♥ 9 7 ♦ E 10 9 8 ♣ 9 4): ♠ var bedst i begge regninger, men middelstikket for ♠5 afveg 0,26 stik (3,07 mod 2,81). Med 100 fordelinger er standardfejlen på forskellen ca. 0,2 stik, så grænsen på 0,25 stik var strammere, end data kan holde. **Franks valg:** grænsen er højst 3 standardfejl på forskellen pr. opgave, √(s₁²/n₁ + s₂²/n₂) for farvens kort; kravet om samme bedste farve i mindst 90 % er uændret. `stabilitet.test.ts` er rettet, data er uændret, og session 1b køres igen.
 
 **Krav til gennemgang (session 1a):** **Godkendt af Frank 25. nov. 2026** (kravene, Kompendiets regler med svarene a–d og de otte eksempler). Frank godkender punkt 1–4, før generatoren køres. Ændres et krav, en regel eller et eksempel, rettes kun `situationer.json`.
 
@@ -298,7 +300,7 @@ Accepttest (3a), byggeri (3b), hele suiten, browsertjek og skærmbilleder i en s
    - Seeds: situationerne 2611241–2611248, eksemplerne 3611241–3611248 og stabiliteten opgavens seed XOR `0x9E3779B9`.
    - En fordeling er de 39 kort, Vest ikke har, i stigende orden, blandet med `shuffle` og givet til N, Ø og S (0–12, 13–25, 26–38). Generatoren stopper blandingen, så snart en færdigblandet hånd ikke passer (Fisher–Yates blander bagfra, så Syd er færdig efter 13 trin); resultatet er bit for bit det samme som en hel blanding, og TS-testene blander helt.
    - Middelstikket gemmes med to decimaler, regnet med heltal: round(100 × sum / n), halvt op.
-   - Stabiliteten: grænsen 0,25 stik gælder den bedste farves værdi (profilen Standard) i de klare opgaver. `kontrol.py --stabilitet` skriver `tools/udspil/raa/stabilitet/<id>.json`, og `src/modspil/udspil/stabilitet.test.ts` sammenligner.
+   - Stabiliteten: grænsen gælder den bedste farves værdi (profilen Standard) i de klare opgaver. Den var 0,25 stik, men er 3 standardfejl efter session 1b (se Status). `kontrol.py --stabilitet` skriver `tools/udspil/raa/stabilitet/<id>.json`, og `src/modspil/udspil/stabilitet.test.ts` sammenligner.
    - Accepttest 6 regner "bedste farve" som de farver, der er under 0,1 stik fra den bedste (Franks svar 4), og kræver, at én af dem er blandt rådets.
    - Testenes fælles kode står i `src/modspil/udspil/hjaelp.ts` (kun til tests).
 

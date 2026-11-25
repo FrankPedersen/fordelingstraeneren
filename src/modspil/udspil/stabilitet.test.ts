@@ -1,12 +1,32 @@
 import { describe, expect, it } from 'vitest';
-import { FARVER, farvevaerdier, laes, maal, middelHundrededele, raaSti, situationsfil, type Farve, type Raa } from './hjaelp';
+import { profil } from '../model/metoder';
+import { muligeUdspil } from '../model/udspil';
+import { art, FARVER, farvevaerdier, laes, maal, middelHundrededele, raaSti, situationsfil, type Farve, type Raa } from './hjaelp';
 
 /*
  * Stabiliteten i SPEC-modspil-v2.md, trin 1, Kontrollen: 5 opgaver pr. situation er regnet igen med 100 nye fordelinger
  * (`python tools/udspil/kontrol.py --stabilitet`, seed = opgavens seed XOR 0x9E3779B9). For opgaverne med en klar bedste
  * farve (forspring på mindst 0,3 stik i profilen Standard) skal mindst 90 % have samme bedste farve, og den bedste farves
- * middelstik må højst afvige 0,25 mellem de to regninger. Rød, indtil kontrollen har kørt.
+ * middelstik må højst afvige 3 standardfejl mellem de to regninger (Franks valg 25. nov. 2026, session 1b; før 0,25 stik,
+ * som 100 fordelinger ikke kan holde). Standardfejlen på forskellen er √(s₁²/n₁ + s₂²/n₂), hvor s er spredningen af
+ * stikkene for farvens kort (profilen Standards kort; ved "table feeling" det bedste af de to) i hver regning.
  */
+
+/** Middelstik og standardfejl for farvens kort i én regning (kortet med det højeste middel blandt Standards udspil). */
+function kortStatistik(o: { vest: number[]; stik: number[][] }, f: Farve, kontrakt: string): { middel: number; se2: number } {
+  const sorteret = [...o.vest].sort((a, b) => a - b);
+  const nr = FARVER.indexOf(f);
+  const valoerer = sorteret.filter((c) => Math.floor(c / 13) === nr).map((c) => (c % 13) + 2);
+  let bedst = { middel: -Infinity, se2: 0 };
+  for (const v of muligeUdspil(valoerer, art(kontrakt), profil('standard'))) {
+    const kolonne = o.stik.map((r) => r[sorteret.indexOf(nr * 13 + v - 2)]);
+    const n = kolonne.length;
+    const middel = kolonne.reduce((a, x) => a + x, 0) / n;
+    const s2 = kolonne.reduce((a, x) => a + (x - middel) ** 2, 0) / (n - 1);
+    if (middel > bedst.middel) bedst = { middel, se2: s2 / n };
+  }
+  return bedst;
+}
 
 const fil = situationsfil();
 const stabilSti = (id: string) => `tools/udspil/raa/stabilitet/${id}.json`;
@@ -33,7 +53,7 @@ describe('Stabiliteten (Kontrollen, trin 1)', () => {
     }
   });
 
-  it('de klare opgaver har samme bedste farve i mindst 90 % og højst 0,25 stiks afvigelse', () => {
+  it('de klare opgaver har samme bedste farve i mindst 90 % og højst 3 standardfejls afvigelse', () => {
     let klare = 0;
     let samme = 0;
     const afvigelser: string[] = [];
@@ -49,8 +69,11 @@ describe('Stabiliteten (Kontrollen, trin 1)', () => {
         if (b1.forspring < 0.3) continue;
         klare++;
         if (bedste(v2).farve === b1.farve) samme++;
-        const forskel = Math.abs((v1[b1.farve] as number) - (v2[b1.farve] as number));
-        if (forskel > 0.25 + 1e-9) afvigelser.push(`${s.id} ${ny.seed}: ${b1.farve} ${forskel.toFixed(2)}`);
+        const k1 = kortStatistik(gammel, b1.farve, s.kontrakt);
+        const k2 = kortStatistik(ny, b1.farve, s.kontrakt);
+        const forskel = Math.abs(k1.middel - k2.middel);
+        const se = Math.sqrt(k1.se2 + k2.se2);
+        if (forskel > 3 * se + 1e-9) afvigelser.push(`${s.id} ${ny.seed}: ${b1.farve} ${forskel.toFixed(2)} stik > 3 × ${se.toFixed(2)}`);
       }
     }
     expect(klare).toBeGreaterThan(0);
