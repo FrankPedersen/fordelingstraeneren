@@ -74,9 +74,18 @@ export interface FarveRaekke {
   saet: number;
 }
 
+/** Ét af Vests kort med middelstik og antal fordelinger, hvor kontrakten sættes (trin 3 viser prisen ud fra dem). */
+export interface KortRaekke {
+  kort: Card;
+  middel: number;
+  saet: number;
+}
+
 export interface UdspilFacit {
   /** Én række pr. farve, Vest har kort i, i orden ♠ ♥ ♦ ♣. */
   tabel: FarveRaekke[];
+  /** Alle Vests 13 kort, stigende, med middelstik og sætninger (Franks valg 25. nov. 2026). */
+  kortTabel: KortRaekke[];
   /** De rigtige farver: under 0,1 stik fra den bedste (lige gode), stigende. */
   farver: number[];
   /** De rigtige kort: profilens kort i de rigtige farver, stigende (ved "table feeling" begge). */

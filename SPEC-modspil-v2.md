@@ -146,7 +146,7 @@ Første bølge er de otte situationer nedenfor (Franks svar 5). Slem, splinter, 
 
 ## Opgaven
 
-- **Udvalget:** en opgave er en hånd fra datasættet, valgt med opgavens seed, niveauet og profilen. Modellen ligger i nye filer i `src/modspil/model/` (fx `findUdspil.ts`), og v1's generator (`generator.ts`) ændres ikke.
+- **Udvalget:** en opgave er en hånd fra datasættet, valgt med opgavens seed, niveauet og profilen. Situationen trækkes først, med lige stor chance for hver af niveauets situationer, og derefter hånden blandt situationens opgaver på niveauet (Franks valg 25. nov.), så S7 ikke fylder det meste af niveau 1–2. Modellen ligger i nye filer i `src/modspil/model/` (fx `findUdspil.ts`), og v1's generator (`generator.ts`) ændres ikke.
 - **Farvens værdi:** for hver farve, Vest har kort i, er farvens værdi middelstikkene for det kort, profilens udspilsregel giver (`udspil.ts`). Giver reglen "table feeling", tæller det bedste af de to kort, og begge er rigtige.
 - **Lige gode:** farver eller kort under 0,1 stik fra det bedste er lige gode, og alle er rigtige (Franks svar 4).
 - **Klar:** en opgave er klar, når den bedste farve fører med mindst 0,2 stik over den næstbedste (Franks valg 25. nov. 2026; før 0,3, som gav for få klare opgaver i 1b's rapporttal). 0,2 stik er over 3 gange den mediane standardfejl (0,06), så forspringet er reelt.
@@ -158,7 +158,7 @@ Følger sporets niveau (v1, "Niveauer"):
 
 | Sporets niveau | Svaret | Opgaverne |
 | --- | --- | --- |
-| 1 | farven | klare; S1, S4 og S7 |
+| 1 | farven | klare; S1, S5 og S7 (Franks valg 25. nov.: S4 har kun 5 klare opgaver, der følger Kompendiet, og rykkes til niveau 2) |
 | 2 | farven | klare; alle otte situationer |
 | 3 | kortet | klare |
 | 4–5 | kortet | også de tætte (forspring under 0,2) og dem, der afviger fra Kompendiet (Franks svar 9, bekræftet 24. nov.) |
@@ -167,7 +167,7 @@ Svarer brugeren med et kort i den rigtige farve, men ikke profilens kort, er sva
 
 ## Facit og forklaringen
 
-- **Facit:** de rigtige farver (niveau 1–2) eller kort (3–5), og en tabel med middelstik (én decimal) og chancen for at sætte kontrakten (hele procent) pr. farve.
+- **Facit:** de rigtige farver (niveau 1–2) eller kort (3–5), og en tabel med middelstik (én decimal) og chancen for at sætte kontrakten (hele procent) pr. farve. Facit har desuden middelstik og chancen for at sætte for hvert af Vests 13 kort, så trin 3 kan vise prisen for et hvilket som helst svar (Franks valg 25. nov.).
 - **Forklaringen** står på dansk og engelsk i beskrivende form og husets ord og nævner situationen, tallene og Kompendiets råd med siden, fx: "Efter 1NT – 2♣ – 2♦ – 3NT har spilfører ofte minorfarverne. ♥ giver i gennemsnit 4,1 stik til modspillet og sætter 3NT i 38 % af fordelingerne; ♣ giver 3,4 stik og 22 %. Kompendiet (s. 14) anbefaler udspil i major efter dette forløb."
 - **Afviger opgaven fra Kompendiet,** siger forklaringen det: "Kompendiet anbefaler ♥ efter dette forløb, men med denne hånd giver ♠ flest stik."
 - **"Ved bordet":** én tekst pr. situation (en omskrivning af Kompendiets råd). Står i "Tekster til gennemgang", som Frank godkender før fletning; agentens egne begrundelser markeres "(tilføjelse)".
@@ -175,10 +175,10 @@ Svarer brugeren med et kort i den rigtige farve, men ikke profilens kort, er sva
 
 ## Accepttest for trin 2 (skrives først, røde)
 
-1. **Farvens værdi og kortet:** faste eksempler for hver profil, også "table feeling" og en farve, hvor Standard og Kompendiet spiller forskellige kort (fx K D 5 3 mod sans: Standard K, Kompendiet D efter ALA).
+1. **Farvens værdi og kortet:** faste eksempler for hver profil, også "table feeling" og en farve, hvor Standard og Kompendiet spiller forskellige kort (fx ♥K D 10 5 mod sans: Standard K, Kompendiet D efter ALA; K D 5 3 giver "table feeling" med Standard).
 2. **Lige gode og klare:** faste eksempler på 0,09, 0,1, 0,19 og 0,2 stik.
-3. **Facit mod de rå data:** for alle 1200 opgaver og alle tre profiler regner en uafhængig test (der kun importerer typer) facit direkte fra `tools/udspil/raa/` og sammenligner.
-4. **Niveauerne:** niveau 1–2 giver kun klare opgaver og svar i farver, niveau 1 kun S1, S4 og S7, og niveau 3 og op svar i kort.
+3. **Facit mod de rå data:** for alle 1200 opgaver og alle tre profiler regner en uafhængig test (der kun importerer typer) facit direkte fra `tools/udspil/raa/` og sammenligner, også middelstik og chancen for at sætte pr. kort.
+4. **Niveauerne:** niveau 1–2 giver kun klare opgaver og svar i farver, niveau 1 kun S1, S5 og S7, og niveau 3 og op svar i kort. Over mange seeds trækkes hver af niveauets situationer lige ofte (inden for en fast tolerance, som testen skriver).
 5. **Afviger fra Kompendiet:** findes kun på niveau 4–5, og forklaringen nævner både rådet og den bedste farve.
 6. **Genskabelse:** samme seed, niveau og profil giver samme opgave og facit.
 7. **Sproget:** alle forklaringer for alle opgaver og profiler består fagords- og bydeformstestene, og engelsk har ingen danske ord.
@@ -198,7 +198,7 @@ Som trin 1: tag og gren (2a), accepttest (røde), byggeri og "Tekster til gennem
 
 - **Opgaven:** meldeforløbet som skema (som v1) med kontrakten fremhævet, Vests hånd og spørgsmålet "Hvilken farve spilles ud?" (niveau 1–2) eller "Hvilket kort spilles ud?" (3–5). Bordet vises ikke, fordi det er udspillet.
 - **Svarknapperne:** på niveau 1–2 fire farveknapper (en farve, Vest ikke har, er deaktiveret); fra niveau 3 hånden som kortknapper (mindst 44 px, aria-label som "Spar dame"). Der er ingen "Kan ikke afgøres" i øvelse 8.
-- **Facit:** mærket, tabellen med middelstik og chancen for at sætte pr. farve (rigtige farver markeret), forklaringen, "Ved bordet", et link til ordbogen, når opslaget findes, og "Næste opgave".
+- **Facit:** mærket, tabellen med middelstik og chancen for at sætte pr. farve (rigtige farver markeret), forklaringen, "Ved bordet", et link til ordbogen, når opslaget findes, og "Næste opgave". **Prisen** (hvor mange stik det valgte svar koster i snit mod det bedste; under 0,1 stik "lige godt") afgøres sammen med mock-up'en og får sin accepttest i 3a; scoringen forbliver rigtigt eller forkert.
 - **Sessionen:** øvelse 8 indgår i dagens session med sin egen Leitner-post og samme regler som v1's øvelser. Datasættet indlæses dovent første gang, øvelse 8 bruges.
 - **Fra 1000 px:** meldeforløbet og hånden til venstre, spørgsmålet og facit til højre. Kun CSS skifter.
 - **Rødt kun på ♥ og ♦,** som v1.
@@ -240,6 +240,12 @@ Accepttest (3a), byggeri (3b), hele suiten, browsertjek og skærmbilleder i en s
 10. Øvelse 8 i det eksisterende spor, `modspil:v1` med et valgfrit felt, tabel med middelstik og chancen for at sætte. Mock-up før trin 3.
 11. Sidefoden med Modspil tages med i trin 3.
 12. Beslutning 2 gælder via profilen; beslutning 1 indgår ikke.
+
+**Franks valg efter session 2a, 25. nov. 2026:**
+- Niveau 1 er S1, S5 og S7; S4 rykkes til niveau 2.
+- Udvalget trækker situationen først med lige stor chance og derefter hånden.
+- Prisen udskydes til trin 3 (mock-up'en og 3a); facit fra trin 2 har derfor middelstik og chancen for at sætte pr. kort.
+- Eksemplet til accepttest 1 er ♥K D 10 5 (Standard K, Kompendiet D); K D 5 3 er "table feeling" med Standard.
 
 **Franks bekræftelser, 24. nov. 2026:**
 - Opgaver, hvor Kompendiet og dobbeltdummy er uenige, vises fra niveau 4 (svar 9).

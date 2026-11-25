@@ -11,7 +11,8 @@ import type { AppData, Raa, RaaOpgave, Situation, Situationsfil, Udvalg } from '
 /*
  * Accepttest 3 i SPEC-modspil-v2.md, trin 2: facit mod de rå data. For alle 1200 opgaver og alle tre profiler regner
  * testen facit direkte fra tools/udspil/raa/<id>.json (stikkene pr. kort og fordeling) og sammenligner med modellens
- * `udspilFacit`, der regner fra appens datasæt.
+ * `udspilFacit`, der regner fra appens datasæt, også middelstik og chancen for at sætte for hvert af Vests 13 kort
+ * (`kortTabel`, Franks valg efter session 2a).
  *
  * Uafhængig: testen importerer kun typer fra projektet og den ene funktion, den sammenligner med (det tjekkes i den
  * første test). Udspilsreglen, ALA-tabellen og Kompendiets råd står her for sig selv, og profilerne, situationerne og
@@ -155,6 +156,7 @@ function raad(vest: readonly Card[], regler: readonly Udvalg[]): number[] {
 /** Facit med middelstik og forspring i hundrededele. */
 interface Forventet {
   tabel: { farve: number; kort: Card[]; middel: number; saet: number }[];
+  kortTabel: { kort: Card; middel: number; saet: number }[];
   farver: number[];
   kort: Card[];
   forspring: number;
@@ -189,6 +191,7 @@ function forventet(s: Situation, o: RaaOpgave, p: Profil): Forventet {
   const bedste = tabel.find((x) => x.middel === top)!.farve;
   return {
     tabel,
+    kortTabel: vest.map((kort, j) => ({ kort, middel: middel[j], saet: saet[j] })),
     farver,
     kort: stigende(tabel.filter((x) => farver.includes(x.farve)).flatMap((x) => x.kort)),
     forspring,
@@ -202,6 +205,7 @@ function forventet(s: Situation, o: RaaOpgave, p: Profil): Forventet {
 /** Modellens facit i samme form (middelstik og forspring i hundrededele; andre felter tæller ikke). */
 const somForventet = (f: UdspilFacit): Forventet => ({
   tabel: f.tabel.map((r) => ({ farve: r.farve, kort: [...r.kort], middel: Math.round(r.middel * 100), saet: r.saet })),
+  kortTabel: f.kortTabel.map((r) => ({ kort: r.kort, middel: Math.round(r.middel * 100), saet: r.saet })),
   farver: [...f.farver],
   kort: [...f.kort],
   forspring: Math.round(f.forspring * 100),

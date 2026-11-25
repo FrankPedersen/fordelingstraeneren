@@ -9,12 +9,12 @@ import { fastOpgave, k } from './hjaelp';
  * bedste af de to kort, og begge er rigtige. Faste eksempler for hver profil, også "table feeling" og farver, hvor
  * Standard og Kompendiet spiller forskellige kort.
  *
- * Specens eksempel "K D 5 3 mod sans: Standard K, Kompendiet D efter ALA" er efter udspilsreglen "table feeling" med
- * Standard (to honnørkort i træk med små kort: K eller 3) og D med Kompendiet (ALA: K D x x). Eksemplet med
- * Standard K og Kompendiet D er derfor ♥K D 10 5 (brudt sekvens mod ALA's K D x x); K D 5 3 bruges til "table feeling".
+ * Eksemplet med Standard K og Kompendiet D er ♥K D 10 5 (brudt sekvens mod ALA's K D x x), og K D 5 3 giver "table
+ * feeling" med Standard (K eller 3) og D med Kompendiet (Franks valg efter session 2a).
  *
  * Kortet, der giver værdien, giver også chancen for at sætte (`saet`); står to kort lige, gælder det højeste antal
- * (Claude Codes valg, Afklaret).
+ * (Claude Codes valg, Afklaret). Facit har desuden middelstik og sætninger for hvert af Vests 13 kort (`kortTabel`,
+ * Franks valg efter session 2a), så trin 3 kan vise prisen for et hvilket som helst svar.
  */
 
 const STANDARD = profil('standard');
@@ -111,6 +111,11 @@ describe('Farvens værdi og kortet (accepttest 1)', () => {
     expect(standard.raad).toEqual([0, 1]);
     expect(standard.afviger).toBe(false);
     expect(standard.fordelinger).toBe(100);
+    // Middelstik og sætninger for alle 13 kort, også dem, profilen ikke spiller ud.
+    expect(standard.kortTabel).toEqual(HAAND_A.vest.map((kort, i) => ({ kort, middel: HAAND_A.middel[i], saet: HAAND_A.saet[i] })));
+    expect(standard.kortTabel.map((r) => r.kort)).toEqual([...HAAND_A.vest].sort((a, b) => a - b));
+    expect(standard.kortTabel.find((r) => r.kort === k('H5'))).toEqual({ kort: k('H5'), middel: 2.0, saet: 0 });
+    expect(udspilFacit('S1-1nt-3nt', HAAND_A, KOMPENDIET).kortTabel).toEqual(standard.kortTabel);
 
     const kompendiet = udspilFacit('S1-1nt-3nt', HAAND_A, KOMPENDIET);
     expect(kompendiet.farver).toEqual([1]);

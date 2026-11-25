@@ -17,14 +17,21 @@ import { alleOpgaver, datasaet, NIVEAU1, NIVEAUER, PROFILER, SITUATIONER, situat
 
 /*
  * Accepttest 4 i SPEC-modspil-v2.md, trin 2: niveauerne. Niveau 1–2 giver kun klare opgaver og svar i farver, niveau 1
- * kun S1, S4 og S7, og niveau 3 og op svar i kort (specens niveautabel):
+ * kun S1, S5 og S7, og niveau 3 og op svar i kort (specens niveautabel; Franks valg efter session 2a: S5 i stedet for
+ * S4, der kun har 5 klare opgaver, der følger Kompendiet):
  *
- *   niveau 1: farven, de klare i S1, S4 og S7;  niveau 2: farven, de klare i alle otte;  niveau 3: kortet, de klare;
+ *   niveau 1: farven, de klare i S1, S5 og S7;  niveau 2: farven, de klare i alle otte;  niveau 3: kortet, de klare;
  *   niveau 4–5: kortet, også de tætte (forspring under 0,2) og dem, der afviger fra Kompendiet, altså alle opgaver.
  *
  * Accepttest 5 siger, at opgaver, der afviger fra Kompendiet, kun findes på niveau 4–5, så niveau 1–3 er de klare, der
  * ikke afviger. Puljen står i situationernes og datafilernes orden. Eksemplerne i datafilerne (trin 1's accepttest 6)
  * er ikke opgaver.
+ *
+ * Udvalget (Franks valg efter session 2a): situationen trækkes først med lige stor chance for hver af niveauets
+ * situationer og derefter hånden blandt situationens opgaver på niveauet. Over 300 seeds pr. situation skal hver
+ * situation trækkes 300 ± 25 % gange (225–375). Tolerancen er over 4,5 standardafvigelser, så en rigtig model ikke
+ * fejler af uheld, og en lodtrækning over hele puljen fanges: på niveau 2 ville S7 få ca. 45 % (over 1000 af 2400) og
+ * S3 ca. 7 % (under 225).
  *
  * Svarene (specens Niveauerne): svarer brugeren med et kort i den rigtige farve, men ikke profilens kort, er svaret
  * forkert, og dommen siger, at farven var rigtig, og hvilket kort profilen spiller ud.
@@ -47,7 +54,7 @@ const forventetPulje = (p: Profil, tag: (s: SituationId, f: UdspilFacit) => bool
   ALLE.filter((t, i) => tag(t.situation, alleFacit(p)[i])).map(noegle);
 
 describe.each(PROFILER)('Niveauerne (accepttest 4): %s', (_, p) => {
-  it('niveau 1: de klare opgaver i S1, S4 og S7, der ikke afviger fra Kompendiet', TUNG, () => {
+  it('niveau 1: de klare opgaver i S1, S5 og S7, der ikke afviger fra Kompendiet', TUNG, () => {
     const forventet = forventetPulje(p, (s, f) => NIVEAU1.includes(s) && f.klar && !f.afviger);
     const p1 = pulje(1, p, data);
     expect(p1.map(noegle)).toEqual(forventet);
@@ -96,10 +103,23 @@ describe.each(PROFILER)('Niveauerne (accepttest 4): %s', (_, p) => {
     }
   });
 
-  it('niveau 1 giver kun S1, S4 og S7, og niveau 2 giver alle otte situationer', TUNG, () => {
+  it('niveau 1 giver kun S1, S5 og S7, og niveau 2 giver alle otte situationer', TUNG, () => {
     const situationer = (niveau: 1 | 2) => new Set(Array.from({ length: 300 }, (_x, i) => lavFindUdspil(niveau, i + 1, p, data).situation));
     expect([...situationer(1)].sort()).toEqual([...NIVEAU1].sort());
     expect([...situationer(2)].sort()).toEqual([...SITUATIONER].sort());
+  });
+
+  it('hver af niveauets situationer trækkes lige ofte: 300 ± 25 % gange over 300 seeds pr. situation', TUNG, () => {
+    for (const niveau of NIVEAUER) {
+      const niveauets = niveau === 1 ? NIVEAU1 : SITUATIONER;
+      const antal = new Map<SituationId, number>(niveauets.map((s) => [s, 0]));
+      for (let seed = 1; seed <= 300 * niveauets.length; seed++) {
+        const s = lavFindUdspil(niveau, seed, p, data).situation;
+        antal.set(s, (antal.get(s) ?? 0) + 1);
+      }
+      expect([...antal.keys()], `niveau ${niveau}`).toEqual([...niveauets]);
+      for (const [s, n] of antal) expect(n >= 225 && n <= 375, `niveau ${niveau}, ${s}: ${n} af ${300 * niveauets.length}`).toBe(true);
+    }
   });
 
   it('niveau 1–2: svaret er en farve, og de rigtige farver er facit', TUNG, () => {

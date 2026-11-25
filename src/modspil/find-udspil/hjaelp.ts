@@ -21,8 +21,8 @@ export const SITUATIONER: readonly SituationId[] = [
   'S8-delkontrakt',
 ];
 
-/** Niveau 1 har kun de tre situationer (specens niveautabel). */
-export const NIVEAU1: readonly SituationId[] = ['S1-1nt-3nt', 'S4-kun-en-farve', 'S7-makker-aabnet'];
+/** Niveau 1 har kun de tre situationer (specens niveautabel; Franks valg efter session 2a: S5 i stedet for S4). */
+export const NIVEAU1: readonly SituationId[] = ['S1-1nt-3nt', 'S5-sidefarve', 'S7-makker-aabnet'];
 
 export const NIVEAUER: readonly Niveau[] = [1, 2, 3, 4, 5];
 
