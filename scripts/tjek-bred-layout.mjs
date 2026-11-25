@@ -944,7 +944,8 @@ async function tjekFindUdspil() {
       const rækker = t ? [...t.querySelectorAll('tbody tr')].map((tr) => tr.firstElementChild.textContent.replace(/\\s+/g, '')) : [];
       return { rækker, domOver: !!dom && !!t && dom.getBoundingClientRect().bottom <= t.getBoundingClientRect().top + 1 };
     })()`);
-    tjek(r.rækker.length === 5 && r.rækker[0].includes('♥E') && r.rækker[1].includes('♥4') && /ditsvar/.test(r.rækker[1]), 'Find udspillets facit ved 390 px (♥4): ♥4 har sin egen række lige under ♥E', JSON.stringify(r.rækker));
+    // SPEC-modspil-kompas.md: ♥3 ("table feeling") står mellem ♥E og ♥4.
+    tjek(r.rækker.length === 6 && r.rækker[0].includes('♥E') && r.rækker[1].includes('♥3') && /tablefeeling/.test(r.rækker[1]) && r.rækker[2].includes('♥4') && /ditsvar/.test(r.rækker[2]), 'Find udspillets facit ved 390 px (♥4): ♥3 (table feeling) og ♥4 har hver sin række under ♥E', JSON.stringify(r.rækker));
     tjek(r.domOver, 'Find udspillets facit ved 390 px (♥4): domsteksten står over tabellen');
     await s.luk();
   });
@@ -1045,7 +1046,8 @@ async function tjekFindUdspil() {
  */
 async function kompas(s, navn) {
   const d = await s.kør(`(() => {
-    const r = (x) => document.querySelector(x)?.getBoundingClientRect();
+    // Kasserne som almindelige objekter: et DOMRect kommer tomt tilbage fra Runtime.evaluate.
+    const r = (x) => { const b = document.querySelector(x)?.getBoundingClientRect(); return b && { top: b.top, bottom: b.bottom, left: b.left, right: b.right, width: b.width }; };
     const n = r('[data-haand="nord"]'), h = r('[data-haand="dig"]'), f = r('.ms-bord > .ms-stik');
     const m = document.querySelector('.ms-stik-midte')?.getBoundingClientRect();
     const dækker = !!m && [...document.querySelectorAll('.ms-bord .ms-spillekort')].some((k) => { const b = k.getBoundingClientRect(); return m.left < b.right - 1 && m.right > b.left + 1 && m.top < b.bottom - 1 && m.bottom > b.top + 1; });
