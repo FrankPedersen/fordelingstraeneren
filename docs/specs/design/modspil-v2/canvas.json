@@ -1,0 +1,128 @@
+{
+ "v": 3,
+ "createdOnFiles": {
+  "v": 1,
+  "at": "2026-11-25T13:30:00Z"
+ },
+ "title": "Modspil v2 – mockup",
+ "launch": {
+  "view": "canvas"
+ },
+ "pages": [],
+ "boards": {
+  "Main.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 390,
+   "h": 1000,
+   "title": "1 · Opgave, niveau 1–2: farven"
+  },
+  "FacitFarve.dc.html": {
+   "x": 470,
+   "y": 0,
+   "w": 390,
+   "h": 1180,
+   "title": "2A · Facit uden pris (svar ♦)"
+  },
+  "FacitFarvePris.dc.html": {
+   "x": 940,
+   "y": 0,
+   "w": 390,
+   "h": 1180,
+   "title": "2B · Facit med pris (svar ♦)"
+  },
+  "Kort.dc.html": {
+   "x": 0,
+   "y": 1420,
+   "w": 390,
+   "h": 1000,
+   "title": "3 · Opgave, niveau 3–5: kortet"
+  },
+  "FacitKort.dc.html": {
+   "x": 470,
+   "y": 1420,
+   "w": 390,
+   "h": 1220,
+   "title": "4A · Facit uden pris (svar ♥4)"
+  },
+  "FacitKortPris.dc.html": {
+   "x": 940,
+   "y": 1420,
+   "w": 390,
+   "h": 1300,
+   "title": "4B · Facit med pris (svar ♥4)"
+  },
+  "Bred.dc.html": {
+   "x": 0,
+   "y": 2900,
+   "w": 1280,
+   "h": 1300,
+   "title": "5A · 1280 px uden pris",
+   "expand": "fill"
+  },
+  "BredPris.dc.html": {
+   "x": 1360,
+   "y": 2900,
+   "w": 1280,
+   "h": 1380,
+   "title": "5B · 1280 px med pris",
+   "expand": "fill"
+  }
+ },
+ "order": [
+  "Main.dc.html",
+  "FacitFarve.dc.html",
+  "FacitFarvePris.dc.html",
+  "Kort.dc.html",
+  "FacitKort.dc.html",
+  "FacitKortPris.dc.html",
+  "Bred.dc.html",
+  "BredPris.dc.html"
+ ],
+ "notes": {
+  "titel": {
+   "x": 0,
+   "y": -300,
+   "text": "Modspil v2 · Find udspillet · mockup til trin 3",
+   "kind": "title1",
+   "maxW": 2640
+  },
+  "data": {
+   "x": 1410,
+   "y": 0,
+   "w": 340,
+   "fill": "orange",
+   "text": "Eksempel fra datasættet: S1 (1NT – 3NT), opgave 55, profilen Standard. Vest: ♠K B 7 6 ♥E K 4 3 ♦10 8 6 3 ♣B. Middelstik over 100 fordelinger: ♥E 3,35 (sætter 14), ♦3 2,87 (8), ♣B 2,86 (7), ♠6 2,49 (4), ♥4 2,52 (4). Forspring 0,48, så opgaven er klar og følger Kompendiet. Forklaringen er sat sammen af modellens sætninger (INDLEDNING, talSaetning, raadSaetning, domTekst)."
+  },
+  "valg": {
+   "x": 1410,
+   "y": 620,
+   "w": 340,
+   "fill": "blue",
+   "text": "Frank vælger: A (uden pris) eller B (med pris). B tilføjer en linje under mærket (\"koster 0,5 stik i snit\") og kolonnen Koster i tabellen; på niveau 3–5 også en række for dit kort, når det ikke står i tabellen. Prisen = bedste middelstik − dit svars middelstik, rundet til én decimal; under 0,1 \"lige godt\" (og rigtigt). Scoringen ændres ikke."
+  },
+  "bred": {
+   "x": 2720,
+   "y": 2900,
+   "w": 320,
+   "fill": "blue",
+   "text": "Fra 1000 px: meldeforløbet og hånden til venstre, spørgsmålet og facit til højre. Samme indhold og rækkefølge som på mobil; kun CSS skifter."
+  },
+  "aaben": {
+   "x": 1410,
+   "y": 1420,
+   "w": 340,
+   "fill": "gray",
+   "text": "Åbne småting: ordbogslinket er et eksempel (\"Udspil\"); linket vises kun, når opslaget findes. Rødt kun på ♥ og ♦. Det forkerte svar står med stiplet kant og grå flade som i v1; det bedste med grøn kant og ✓."
+  }
+ },
+ "designSystems": [
+  {
+   "title": "Fordelingstræneren",
+   "namespace": "fordelingstraeneren",
+   "artifact": "b04aa107-9ceb-4eab-b388-d482ea19de3a",
+   "version": null,
+   "copiedAt": "2026-11-25T13:19:25Z"
+  }
+ ]
+}

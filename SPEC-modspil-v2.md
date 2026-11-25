@@ -32,7 +32,7 @@ Opgaven er størrelse S og deles i tre leverancetrin med hver sin gren og godken
 | 2b | modellen, forklaringerne og "Tekster til gennemgang", stop før fletning | Opus, high effort |
 | 2c | efter "godkendt": hele suiten, flet og push | Sonnet, medium effort |
 | (mock-up) | rådgiveren laver mock-up'en "Modspil v2 – mockup" til Franks godkendelse (Franks svar 10) | rådgiverchatten |
-| 3a | tag, gren, accepttest for skærmene (røde) | Opus, high effort |
+| 3a | tag, gren, mock-up'ens kopi, tidsgrænsen på 30 s i `data.test.ts`, accepttest for skærmene og prisen (røde) | Opus, high effort |
 | 3b | skærmene, vejledningen og sidefoden | Opus, high effort |
 | 3c | hele suiten, `tjek-bred-layout.mjs`, `tjek-sidefod.mjs`, skærmbilleder, stop før fletning | Sonnet, medium effort |
 | 3d | efter "godkendt": flet, push, live-tjek, arkivering og sletning af grenen | Sonnet, medium effort |
@@ -53,7 +53,7 @@ Trin 2 startes først, når trin 1 er flettet, og trin 3, når trin 2 er flettet
 | Lagring | `modspil:v1` får ét valgfrit felt til øvelse 8 (trin 3) | ny nøgle, ændring af eksisterende felter |
 | Designtokens | ingen nye | – |
 
-Trin 3 må desuden ændre `src/ui/Footer.tsx` og `src/sidefod.test.tsx` (sidefoden med Modspil), `src/app/GuideScreen.tsx` (kun nye linjer), `src/sprog/bydeform.ts` ("Find udspillet" på undtagelseslisten), `scripts/ordliste.txt`, `scripts/tjek-bred-layout.mjs` og `scripts/modspil.html`.
+Trin 3 må desuden ændre `src/ui/Footer.tsx` og `src/sidefod.test.tsx` (sidefoden med Modspil), `src/app/GuideScreen.tsx` (kun nye linjer), `src/sprog/bydeform.ts` ("Find udspillet" på undtagelseslisten), `scripts/ordliste.txt`, `scripts/tjek-bred-layout.mjs`, `scripts/modspil.html`, `docs/specs/design/modspil-v2/` (mock-up'ens kopi) og `src/modspil/udspil/data.test.ts` (kun tidsgrænsen på 30 s for testen "antallet", som kan løbe over 5 s i den fulde suite; Franks valg 25. nov.).
 
 Kræver noget andet en ændring uden for afgrænsningen, stopper Claude Code og spørger. Alle eksisterende tests skal bestå uændret, bortset fra dem, trin 3 nævner.
 
@@ -192,13 +192,29 @@ Som trin 1: tag og gren (2a), accepttest (røde), byggeri og "Tekster til gennem
 
 # Trin 3: øvelse 8 på skærmen
 
-**Mock-up'en "Modspil v2 – mockup"** laves af rådgiveren efter trin 2 og godkendes af Frank, før 3a starter (Franks svar 10). Kopien lægges i `docs/specs/design/modspil-v2/`. Den bygger på v1's skærm "Vælg kortet" (`docs/specs/design/modspil/3-vaelg-kortet-390.html`).
+**Mock-up'en "Modspil v2 – mockup"** laves af rådgiveren efter trin 2 og godkendes af Frank, før 3a starter (Franks svar 10). Den bygger på v1's skærm "Vælg kortet" (`docs/specs/design/modspil/3-vaelg-kortet-390.html`). Mock-up'en er lavet 25. nov. 2026 (Claude-artefakt: https://claude.ai/artifact/DY8wZhfPYH8fhDqi5mWCPo) med to varianter af facit, uden og med prisen, og **Frank valgte samme dag varianten med prisen**. Kopien af de gældende skærme ligger i `docs/specs/design/modspil-v2/` (lagt dér af rådgiveren, ikke committet; 3a committer den på grenen):
+
+| Fil | Skærm |
+| --- | --- |
+| `1-opgave-farve-390.html` | opgaven på niveau 1–2 med farveknapperne |
+| `2-facit-farve-390.html` | facit med prisen, svaret ♦ |
+| `3-opgave-kort-390.html` | opgaven på niveau 3–5 med kortknapperne |
+| `4-facit-kort-390.html` | facit med prisen, svaret ♥4 (farven rigtig, kortet ikke profilens) |
+| `5-bred-1280.html` | kortet og facit med prisen ved 1280 px |
+| `canvas.json` | lærredets oversigt (alle otte skærme, også varianten uden pris) |
+
+Eksemplet er S1-1nt-3nt, opgave 55 (seed 2556829236), profilen Standard: Vest ♠K B 7 6 ♥E K 4 3 ♦10 8 6 3 ♣B; ♥E 3,35 stik og 14 %, ♦3 2,87 og 8 %, ♣B 2,86 og 7 %, ♠6 2,49 og 4 %, ♥4 2,52 og 4 %. Ordbogslinket "Udspil" i mock-up'en er et eksempel.
 
 ## Skærmen
 
 - **Opgaven:** meldeforløbet som skema (som v1) med kontrakten fremhævet, Vests hånd og spørgsmålet "Hvilken farve spilles ud?" (niveau 1–2) eller "Hvilket kort spilles ud?" (3–5). Bordet vises ikke, fordi det er udspillet.
 - **Svarknapperne:** på niveau 1–2 fire farveknapper (en farve, Vest ikke har, er deaktiveret); fra niveau 3 hånden som kortknapper (mindst 44 px, aria-label som "Spar dame"). Der er ingen "Kan ikke afgøres" i øvelse 8.
-- **Facit:** mærket, tabellen med middelstik og chancen for at sætte pr. farve (rigtige farver markeret), forklaringen, "Ved bordet", et link til ordbogen, når opslaget findes, og "Næste opgave". **Prisen** (hvor mange stik det valgte svar koster i snit mod det bedste; under 0,1 stik "lige godt") afgøres sammen med mock-up'en og får sin accepttest i 3a; scoringen forbliver rigtigt eller forkert.
+- **Facit:** mærket, tabellen med middelstik og chancen for at sætte pr. farve (rigtige farver markeret), forklaringen, "Ved bordet", et link til ordbogen, når opslaget findes, og "Næste opgave". Tabellen har kolonnerne "Udspil", "Stik", "Sætter" og "Koster" ("Lead", "Tricks", "Defeats", "Cost"), rækkerne står med flest stik først, de rigtige rækker har grøn kant og ✓, og det forkerte svar har stiplet kant og grå flade som i v1.
+- **Prisen** (Franks valg 25. nov. 2026, mock-up'ens variant med prisen): prisen er det bedste svars middelstik minus det valgte svars, regnet i hundrededele og vist med én decimal rundet halvt op (som `tiendedele`). Er svaret forkert, står under mærket "Dit svar: ♦ · koster 0,5 stik i snit" ("Your answer: ♦ · costs 0.5 tricks on average"), og kolonnen "Koster" viser prisen for hver række (de rigtige "–").
+  - Niveau 1–2: farvens værdi fra facit (`tabel`).
+  - Niveau 3–5: tabellen viser profilens kort pr. farve; prisen for det valgte kort regnes fra `kortTabel`. Er det valgte kort ikke profilens, får det sin egen række ("dit svar") lige under farvens række, og domsteksten fra `bedoemUdspil` står over tabellen.
+  - Er prisen for et forkert svar under 0,1 stik (kun muligt med et kort, der ikke er profilens), står der "koster under 0,1 stik i snit".
+  - Et rigtigt svar har ingen pris. Scoringen forbliver rigtigt eller forkert, og modellen fra trin 2 ændres ikke (prisen regnes i skærmens kode eller en ny hjælper i `src/modspil/`).
 - **Sessionen:** øvelse 8 indgår i dagens session med sin egen Leitner-post og samme regler som v1's øvelser. Datasættet indlæses dovent første gang, øvelse 8 bruges.
 - **Fra 1000 px:** meldeforløbet og hånden til venstre, spørgsmålet og facit til højre. Kun CSS skifter.
 - **Rødt kun på ♥ og ♦,** som v1.
@@ -217,7 +233,8 @@ Modspil kommer med under "Trænere" efter Håndevaluering: `#modspil` i appen, "
 6. Sprog: dansk og engelsk, husets ord og beskrivende form; "Find udspillet" står på undtagelseslisten.
 7. Sidefoden har seks trænere med Modspil efter Håndevaluering, og `tjek-sidefod.mjs` er grøn ved 1280, 390 og 320 px.
 8. Lagring: `modspil:v1` med det nye felt overlever genindlæsning, eksport og import, og data uden feltet læses som før.
-9. Alle eksisterende tests består uændret, bortset fra `src/sidefod.test.tsx`; pixelsammenligningerne er mod `v47-foer-udspil-skaerme`.
+9. Alle eksisterende tests består uændret, bortset fra `src/sidefod.test.tsx` og tidsgrænsen på 30 s for testen "antallet" i `src/modspil/udspil/data.test.ts` (intet andet i filen ændres); pixelsammenligningerne er mod `v47-foer-udspil-skaerme`.
+10. **Prisen**, med faste eksempler fra datasættet: S1 opgave 55 (seed 2556829236), Standard, niveau 1 med svaret ♦ koster 0,5 og ♠ 0,9; niveau 3 med svaret ♥4 koster 0,8 og har sin egen række; et forkert kort under 0,1 stik fra det bedste giver "koster under 0,1 stik i snit" (testen finder et i datasættet); et rigtigt svar har ingen pris og ingen kolonneværdi ud over "–". Rundingen testes på begge sider af 0,05 (fx 0,45 → 0,5 og 0,44 → 0,4). Dansk og engelsk.
 
 ## Arbejdsgang (trin 3)
 
@@ -246,6 +263,10 @@ Accepttest (3a), byggeri (3b), hele suiten, browsertjek og skærmbilleder i en s
 - Udvalget trækker situationen først med lige stor chance og derefter hånden.
 - Prisen udskydes til trin 3 (mock-up'en og 3a); facit fra trin 2 har derfor middelstik og chancen for at sætte pr. kort.
 - Eksemplet til accepttest 1 er ♥K D 10 5 (Standard K, Kompendiet D); K D 5 3 er "table feeling" med Standard.
+
+**Franks valg efter mock-up'en, 25. nov. 2026:**
+- Facit viser prisen (mock-up'ens variant med prisen; se "Skærmen").
+- Testen "antallet" i `src/modspil/udspil/data.test.ts` får en tidsgrænse på 30 s på trin 3's gren.
 
 **Franks bekræftelser, 24. nov. 2026:**
 - Opgaver, hvor Kompendiet og dobbeltdummy er uenige, vises fra niveau 4 (svar 9).
