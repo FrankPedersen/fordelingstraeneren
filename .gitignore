@@ -5,3 +5,7 @@ coverage
 *.local
 *.log
 .DS_Store
+
+# Modspil v2: Pythons venv og cache i tools/udspil/
+tools/udspil/.venv/
+__pycache__/

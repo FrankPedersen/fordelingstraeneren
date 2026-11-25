@@ -1,0 +1,211 @@
+{
+  "version": 1,
+  "kilde": "Kompendium over modspilsaftaler",
+  "opgaver": 150,
+  "fordelinger": 100,
+  "situationer": [
+    {
+      "id": "S1-1nt-3nt",
+      "navn": "1NT – 3NT",
+      "navnEn": "1NT – 3NT",
+      "seed": 2611241,
+      "giver": "S",
+      "meldinger": ["S:1NT", "W:P", "N:3NT", "E:P", "S:P", "W:P"],
+      "kontrakt": "3NT",
+      "spilfoerer": "S",
+      "sider": [11, 12],
+      "krav": {
+        "S": { "hp": [15, 17], "jaevn": true, "system": "1NT" },
+        "N": { "hp": [10, 15], "max": { "S": 3, "H": 3 } },
+        "E": { "pas": "over-1NT" },
+        "W": { "pas": "over-1NT" }
+      },
+      "kompendieraad": {
+        "tekst": "Mod 1NT – 3NT spilles der normalt en major ud, helst den korteste. En kort major er bedre end en firefarve med en eller to honnører i en minor.",
+        "tekstEn": "Against 1NT – 3NT a major is normally led, preferably the shorter one. A short major is better than a four-card minor with one or two honours.",
+        "regler": [{ "udvalg": "farver", "blandt": ["S", "H"] }]
+      },
+      "eksempler": [{ "haand": "842.T9753.K6.QJ6", "seed": 3611241 }]
+    },
+    {
+      "id": "S2-stayman",
+      "navn": "1NT – 2♣ – 2♦ – 3NT",
+      "navnEn": "1NT – 2♣ – 2♦ – 3NT",
+      "seed": 2611242,
+      "giver": "S",
+      "meldinger": ["S:1NT", "W:P", "N:2C", "E:P", "S:2D", "W:P", "N:3NT", "E:P", "S:P", "W:P"],
+      "kontrakt": "3NT",
+      "spilfoerer": "S",
+      "sider": [14],
+      "krav": {
+        "S": { "hp": [15, 17], "jaevn": true, "system": "1NT", "max": { "S": 3, "H": 3 } },
+        "N": { "hp": [10, 15], "max": { "S": 4, "H": 4 }, "enAf": [{ "praecis": { "S": 4 } }, { "praecis": { "H": 4 } }] },
+        "E": { "pas": "over-1NT" },
+        "W": { "pas": "over-1NT" }
+      },
+      "kompendieraad": {
+        "tekst": "Efter Stayman og 2♦ har spilføreren ofte minorfarverne, så udspillet er normalt i en major, ofte den korteste og gerne en singleton.",
+        "tekstEn": "After Stayman and 2♦ declarer often holds the minors, so the lead is normally a major, often the shorter one, even a singleton.",
+        "regler": [{ "udvalg": "farver", "blandt": ["S", "H"] }]
+      },
+      "eksempler": [{ "haand": "95.T864.KJ73.Q85", "seed": 3611242 }]
+    },
+    {
+      "id": "S3-transfer",
+      "navn": "1NT – 2♦ – 2♥ – 3NT",
+      "navnEn": "1NT – 2♦ – 2♥ – 3NT",
+      "seed": 2611243,
+      "giver": "S",
+      "meldinger": ["S:1NT", "W:P", "N:2D", "E:P", "S:2H", "W:P", "N:3NT", "E:P", "S:P", "W:P"],
+      "kontrakt": "3NT",
+      "spilfoerer": "S",
+      "sider": [14],
+      "krav": {
+        "S": { "hp": [15, 17], "jaevn": true, "system": "1NT", "praecis": { "H": 2 } },
+        "N": { "hp": [10, 15], "praecis": { "H": 5 }, "max": { "S": 3 }, "min": { "S": 2, "H": 2, "D": 2, "C": 2 } },
+        "E": { "pas": "over-1NT" },
+        "W": { "pas": "over-1NT" }
+      },
+      "kompendieraad": {
+        "tekst": "Bordets viste femfarve i ♥ er sjældent det rigtige udspil, medmindre udspilleren har en dyb sekvens som D B 10 9 3. Blandt de andre farver har ♠ en lille fordel, fordi modspillet ofte har syv kort i den anden major.",
+        "tekstEn": "Dummy's five-card heart suit is rarely the right lead unless the leader has a deep sequence such as Q J 10 9 3. Among the other suits spades have a small edge, because the defence often holds seven cards in the other major.",
+        "regler": [
+          { "hvis": { "dybSekvens": "H" }, "udvalg": "farver", "blandt": ["H"] },
+          { "udvalg": "farver", "blandt": ["S", "D", "C"] }
+        ]
+      },
+      "eksempler": [{ "haand": "KQJ5.63.9742.853", "seed": 3611243 }]
+    },
+    {
+      "id": "S4-kun-en-farve",
+      "navn": "1♥ – 2♥ – 4♥",
+      "navnEn": "1♥ – 2♥ – 4♥",
+      "seed": 2611244,
+      "giver": "S",
+      "meldinger": ["S:1H", "W:P", "N:2H", "E:P", "S:4H", "W:P", "N:P", "E:P"],
+      "kontrakt": "4H",
+      "spilfoerer": "S",
+      "sider": [19],
+      "krav": {
+        "S": { "hp": [17, 21], "min": { "H": 5 }, "system": "1H" },
+        "N": { "hp": [6, 9], "min": { "H": 3 }, "max": { "H": 4 } },
+        "E": { "pas": "over-1H" },
+        "W": { "pas": "over-1H" }
+      },
+      "kompendieraad": {
+        "tekst": "Når kun trumffarven er meldt, er en singleton i en sidefarve et glimrende udspil, og en doubleton er bedre end sit rygte. Med et svagt bord er småkort bedre end en farve med en eller to honnører, og trumf ud er kun attraktivt, når ingen sidefarve er det.",
+        "tekstEn": "When only the trump suit has been bid, a singleton in a side suit is an excellent lead, and a doubleton is better than its reputation. With a weak dummy small cards are better than a suit with one or two honours, and a trump lead is only attractive when no side suit is.",
+        "regler": [
+          { "udvalg": "laengde", "laengde": 1, "blandt": ["S", "D", "C"] },
+          { "udvalg": "laengde", "laengde": 2, "blandt": ["S", "D", "C"] },
+          { "udvalg": "udenHonnoer", "blandt": ["S", "D", "C"] },
+          { "udvalg": "farver", "blandt": ["S", "D", "C"] }
+        ]
+      },
+      "eksempler": [{ "haand": "7.864.KT753.Q962", "seed": 3611244 }]
+    },
+    {
+      "id": "S5-sidefarve",
+      "navn": "1♠ – 2♥ – 2♠ – 4♠",
+      "navnEn": "1♠ – 2♥ – 2♠ – 4♠",
+      "seed": 2611245,
+      "giver": "S",
+      "meldinger": ["S:1S", "W:P", "N:2H", "E:P", "S:2S", "W:P", "N:4S", "E:P", "S:P", "W:P"],
+      "kontrakt": "4S",
+      "spilfoerer": "S",
+      "sider": [20],
+      "krav": {
+        "S": { "hp": [12, 15], "min": { "S": 5 }, "max": { "H": 2 }, "system": "1S" },
+        "N": { "hp": [12, 15], "min": { "H": 5 }, "praecis": { "S": 3 } },
+        "E": { "pas": "over-1S" },
+        "W": { "pas": "over-1S" }
+      },
+      "kompendieraad": {
+        "tekst": "En singleton i en sidefarve er førstevalget, også i bordets ♥. Ellers foretrækkes de umeldte farver ♦ og ♣, helst fra småkort frem for fra honnører, undtagen en trekorts honnørsekvens som K D B.",
+        "tekstEn": "A singleton in a side suit is the first choice, even in dummy's hearts. Otherwise the unbid suits, diamonds and clubs, are preferred, preferably from small cards rather than from honours, except a three-card honour sequence such as K Q J.",
+        "regler": [
+          { "udvalg": "laengde", "laengde": 1, "blandt": ["H", "D", "C"] },
+          { "udvalg": "farver", "blandt": ["D", "C"] }
+        ]
+      },
+      "eksempler": [{ "haand": "852.K973.4.QT863", "seed": 3611245 }]
+    },
+    {
+      "id": "S6-trumf",
+      "navn": "1♥ – 1♠ – 2♣ – pas",
+      "navnEn": "1♥ – 1♠ – 2♣ – pass",
+      "seed": 2611246,
+      "giver": "S",
+      "meldinger": ["S:1H", "W:P", "N:1S", "E:P", "S:2C", "W:P", "N:P", "E:P"],
+      "kontrakt": "2C",
+      "spilfoerer": "S",
+      "sider": [4],
+      "krav": {
+        "S": { "hp": [12, 16], "min": { "H": 5, "C": 4 }, "max": { "S": 3 }, "system": "1H" },
+        "N": { "hp": [6, 9], "min": { "S": 4, "C": 3 }, "max": { "H": 1 } },
+        "E": { "pas": "over-1H" },
+        "W": { "pas": "over-1H" }
+      },
+      "kompendieraad": {
+        "tekst": "Syd har vist ♥ og ♣, og Nord er kort i ♥, så bordet kan trumfe hjerterne. Trumf ud er derfor et stærkt udspil.",
+        "tekstEn": "South has shown hearts and clubs, and North is short in hearts, so dummy can ruff hearts. A trump lead is therefore a strong lead.",
+        "regler": [{ "udvalg": "farver", "blandt": ["C"] }]
+      },
+      "eksempler": [{ "haand": "KQT9.QT98.973.75", "seed": 3611246 }]
+    },
+    {
+      "id": "S7-makker-aabnet",
+      "navn": "1♥ – 1NT – pas – 3NT",
+      "navnEn": "1♥ – 1NT – pass – 3NT",
+      "seed": 2611247,
+      "giver": "E",
+      "meldinger": ["E:1H", "S:1NT", "W:P", "N:3NT", "E:P", "S:P", "W:P"],
+      "kontrakt": "3NT",
+      "spilfoerer": "S",
+      "sider": [16],
+      "krav": {
+        "E": { "system": "1H" },
+        "S": { "hp": [15, 18], "jaevn": true, "stop": "H" },
+        "N": { "hp": [10, 15], "max": { "S": 4, "H": 4 } },
+        "W": { "enAf": [{ "hp": [0, 5] }, { "hp": [6, 9], "max": { "S": 4, "H": 2, "D": 4, "C": 4 } }] }
+      },
+      "kompendieraad": {
+        "tekst": "Med to eller flere kort i makkers ♥ er makkers farve næsten altid det rigtige udspil. Med singleton ♥ kræver et andet udspil en stærk sekvens i en anden farve.",
+        "tekstEn": "With two or more cards in partner's hearts, partner's suit is almost always the right lead. With a singleton heart another lead needs a strong sequence in another suit.",
+        "regler": [
+          { "hvis": { "min": { "H": 2 } }, "udvalg": "farver", "blandt": ["H"] },
+          { "udvalg": "staerkSekvens", "blandt": ["S", "D", "C"] },
+          { "udvalg": "farver", "blandt": ["H"] }
+        ]
+      },
+      "eksempler": [{ "haand": "8642.95.T763.J82", "seed": 3611247 }]
+    },
+    {
+      "id": "S8-delkontrakt",
+      "navn": "1♠ – 3♠",
+      "navnEn": "1♠ – 3♠",
+      "seed": 2611248,
+      "giver": "S",
+      "meldinger": ["S:1S", "W:P", "N:3S", "E:P", "S:P", "W:P"],
+      "kontrakt": "3S",
+      "spilfoerer": "S",
+      "sider": [19],
+      "krav": {
+        "S": { "hp": [12, 14], "min": { "S": 5 }, "system": "1S" },
+        "N": { "hp": [10, 12], "min": { "S": 4 } },
+        "E": { "pas": "over-1S" },
+        "W": { "pas": "over-1S" }
+      },
+      "kompendieraad": {
+        "tekst": "Mod en delkontrakt, hvor Nord har vist firekortsstøtte, er en singleton næsten altid løsningen, og en doubleton uden honnører virker bedre end sit rygte. E x og D x er værd at overveje, mens trumf ud ofte er det dårligste valg.",
+        "tekstEn": "Against a part score where North has shown four-card support, a singleton is almost always the answer, and a doubleton without honours works better than its reputation. A x and Q x are worth considering, while a trump lead is often the worst choice.",
+        "regler": [
+          { "udvalg": "laengde", "laengde": 1, "blandt": ["H", "D", "C"] },
+          { "udvalg": "laengde", "laengde": 2, "blandt": ["H", "D", "C"] },
+          { "udvalg": "farver", "blandt": ["H", "D", "C"] }
+        ]
+      },
+      "eksempler": [{ "haand": "763.K8542.6.Q974", "seed": 3611248 }]
+    }
+  ]
+}
