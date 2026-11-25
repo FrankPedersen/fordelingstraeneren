@@ -53,7 +53,7 @@ Trin 2 startes først, når trin 1 er flettet, og trin 3, når trin 2 er flettet
 | Lagring | `modspil:v1` får ét valgfrit felt til øvelse 8 (trin 3) | ny nøgle, ændring af eksisterende felter |
 | Designtokens | ingen nye | – |
 
-Trin 3 må desuden ændre `src/ui/Footer.tsx` og `src/sidefod.test.tsx` (sidefoden med Modspil), `src/app/GuideScreen.tsx` (kun nye linjer), `src/sprog/bydeform.ts` ("Find udspillet" på undtagelseslisten), `scripts/ordliste.txt`, `scripts/tjek-bred-layout.mjs`, `scripts/modspil.html`, `docs/specs/design/modspil-v2/` (mock-up'ens kopi) og `src/modspil/udspil/data.test.ts` (kun tidsgrænsen på 30 s for testen "antallet", som kan løbe over 5 s i den fulde suite; Franks valg 25. nov.). Efter Franks valg i session 3a (25. nov. 2026) også `src/app/forside.test.tsx` og `scripts/tjek-sidefod.mjs` (sidefoden med seks trænere) og v1's `src/modspil/ui/session.test.tsx` (kun så løkken også besvarer øvelse 8).
+Trin 3 må desuden ændre `src/ui/Footer.tsx` og `src/sidefod.test.tsx` (sidefoden med Modspil), `src/app/GuideScreen.tsx` (kun nye linjer), `src/sprog/bydeform.ts` ("Find udspillet" på undtagelseslisten), `scripts/ordliste.txt`, `scripts/tjek-bred-layout.mjs`, `scripts/modspil.html`, `docs/specs/design/modspil-v2/` (mock-up'ens kopi) og `src/modspil/udspil/data.test.ts` (kun tidsgrænsen på 30 s for testen "antallet", som kan løbe over 5 s i den fulde suite; Franks valg 25. nov.). Efter Franks valg i session 3a (25. nov. 2026) også `src/app/forside.test.tsx` og `scripts/tjek-sidefod.mjs` (sidefoden med seks trænere) og v1's `src/modspil/ui/session.test.tsx` (kun så løkken også besvarer øvelse 8). Efter Franks svar efter session 3b (25. nov. 2026) desuden `src/app/status.ts` med en ny test (forsidens kort tæller øvelse 8's post med i "emner til repetition") og den eksisterende linje "Øvelserne: …" i `src/app/screens/GuideScreen.tsx` (otte øvelser i stedet for syv).
 
 Kræver noget andet en ændring uden for afgrænsningen, stopper Claude Code og spørger. Alle eksisterende tests skal bestå uændret, bortset fra dem, trin 3 nævner.
 
@@ -533,6 +533,16 @@ Accepttest (3a), byggeri (3b), hele suiten, browsertjek og skærmbilleder i en s
 - **Lige gode, og profilen skifter kortet** (Kompendiet, nr. 1, ♠D 5 4 ♥10 8 7 4 ♦B 10 ♣E 6 3 2): … ♥8, ♣2 og ♠4 er lige gode (under 0,1 stik fra den bedste): ♥8 giver i gennemsnit 2,7 stik til modspillet og sætter 3NT i 5 % af fordelingerne, ♣2 2,6 stik og 8 %, ♠4 2,6 stik og 9 %. Med profilen Kompendiet spilles ♥8 ud fra ♥10 8 7 4 (Kompendiets udspil). Kompendiet (s. 11–12) anbefaler udspil i ♠ eller ♥ efter dette forløb. / *… ♥8, ♣2 and ♠4 are equally good (within 0.1 tricks of the best): ♥8 gives the defence 2.7 tricks on average and defeats 3NT in 5% of the deals, ♣2 2.6 tricks and 8%, ♠4 2.6 tricks and 9%. With the Compendium profile ♥8 is led from ♥10 8 7 4 (the Compendium's leads). The Compendium (pp. 11–12) recommends a lead in ♠ or ♥ after this auction.*
 - **"Table feeling"** (Standard, nr. 3, ♠D 10 7 ♥D 8 7 2 ♦6 4 ♣B 10 3 2): … Fra ♣B 10 3 2 mod sans afgøres udspillet af "table feeling": ♣B og ♣2 er begge rigtige. … / *… From ♣J 10 3 2 against notrump the lead is a matter of table feeling: ♣J and ♣2 are both right. …*
 - **Dommen** (Standard, niveau 3, seed 1, S4; svaret er et andet kort i ♣): Farven er rigtig, men med profilen Standard spilles ♣K ud fra ♣K D. / *The suit is right, but with the Standard profile ♣K is led from ♣K Q.*
+
+**Franks svar efter session 3b, 25. nov. 2026** (rettes i 3c):
+1. Sporets ⓘ (Franks tekst) godkendes, som Claude Code har rettet den.
+2. Fire tekstrettelser godkendt:
+   - Kan datasættet ikke hentes: "Opgaven kunne ikke hentes og springes over." / "The task could not be loaded and is skipped."
+   - Vejledningen 2: sætningen om lige gode bliver "Farver under 0,1 stik fra den bedste er lige gode og alle rigtige; fra niveau 3 er det profilens kort i de farver." / "Suits within 0.1 tricks of the best are equally good and all right; from level 3 it is the profile's card in those suits."
+   - Vejledningen 3, engelsk: "so the Compendium profile leads ALA" (lille "the").
+   - Vejledningen 6 (ny linje): "Dobbeltdummy kender alle fire hænder. Et udspil, der sætter spilføreren på et gæt, kan derfor være bedre ved bordet, end tallene viser." / "Double dummy sees all four hands, so a lead that leaves declarer a guess can be better at the table than the figures show."
+3. `src/app/status.ts` tæller øvelse 8 med, og vejledningens linje "Øvelserne: …" nævner otte øvelser (afgrænsningen er udvidet).
+4. Repetitionen: øvelse 8 står sidst i køen som i 3b; det vurderes igen efter brug.
 
 **Tekster til gennemgang (trin 3)** (session 3b): de nye tekster på skærmen, i sporets ⓘ, i vejledningen og i sidefoden. Teksterne står i `src/modspil/ui/tekster.ts` (gruppen `udspil` og `hjaelp.skaerm`), `src/app/screens/GuideScreen.tsx` og `src/ui/Footer.tsx`. "(tilføjelse)" markerer Claude Codes egne formuleringer; resten er specens eller mock-up'ens ordlyd eller v1's tekster. Frank godkender dem før fletning.
 
