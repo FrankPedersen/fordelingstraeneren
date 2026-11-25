@@ -105,7 +105,7 @@ Første bølge er de otte situationer nedenfor (Franks svar 5). Slem, splinter, 
 
 1. **Python og `endplay`:** et `venv` i `tools/udspil/.venv/` med `endplay`, fastlåst i `tools/udspil/requirements.txt`. Installeres `endplay` ikke på Python 3.14 på Franks pc, stopper session 1a og beder Frank installere Python 3.12 eller 3.13.
 2. **`rng.py`** er en port af `src/engine/rng.ts`: `mulberry32`, `int` med afvisning og `shuffle` (Fisher–Yates). `dealer.py` er en port af `deal(seed)` i `src/domain/dealer.ts` (rækkefølgen N, Ø, S, V).
-3. **Opgaverne:** for hver situation giver `mulberry32(situationsseed)` en række seeds. En opgave er det første `deal(seed)`, hvor alle fire hænder opfylder kravene. Vests hånd er opgaven. **50 opgaver pr. situation**, 400 i alt.
+3. **Opgaverne:** for hver situation giver `mulberry32(situationsseed)` en række seeds. En opgave er det første `deal(seed)`, hvor alle fire hænder opfylder kravene. Vests hånd er opgaven. **150 opgaver pr. situation**, 1200 i alt (Franks valg 25. nov. 2026, efter rapporttallene i 1b; før 50).
 4. **Fordelingerne:** for hver opgave giver `mulberry32(opgavens seed)` en række seeds. For hvert seed blandes de 39 kort, Vest ikke har, med `shuffle`, og de gives til N, Ø og S. Fordelingen bruges, når de tre hænder opfylder kravene. **100 fordelinger pr. opgave.** De brugte seeds gemmes, så TS kan genskabe dem.
 5. **DDS:** `solve_board` med Vest i udspil og kontraktens trumf giver modspillets stik for hvert af Vests 13 kort i hver fordeling.
 6. **Kan genoptages:** `python tools/udspil/generer.py --situation S2-stayman` skriver én opgave ad gangen og fortsætter, hvor den slap. `--alle` kører alle otte efter hinanden. Kørslen skriver fremdriften og den forventede tid tilbage.
@@ -126,9 +126,9 @@ Første bølge er de otte situationer nedenfor (Franks svar 5). Slem, splinter, 
 
 1. **Situationsfilen:** otte situationer med alle felter, gyldige meldeforløb, kontrakt og en side i Kompendiet. Teksterne består fagords- og bydeformstestene.
 2. **Porten af `rng.ts`:** Python og TS giver de samme tal for seed 0, 1, 42 og 2³²−1 (de første 20 `uint32`, `int(13)`, `int(52)` og en blandet kortstok). Testen kører Python fra Vitest, hvis Python findes, og springer ellers over med en besked; de faste tal står i en fil, så TS-siden altid testes.
-3. **Hænderne og fordelingerne:** som under Kontrollen, for alle 400 opgaver og 40.000 fordelinger. Tidsgrænse 300 s.
+3. **Hænderne og fordelingerne:** som under Kontrollen, for alle 1200 opgaver og 120.000 fordelinger. Tidsgrænse 300 s pr. situation.
 4. **Opsummeringen:** appens data er lig de rå data.
-5. **Antallet:** 50 opgaver pr. situation, 100 fordelinger pr. opgave (eller tallet, Frank har valgt efter punkt 8 under Generatoren), 13 kort pr. fordeling, og stikkene ligger mellem 0 og 13.
+5. **Antallet:** 150 opgaver pr. situation, 100 fordelinger pr. opgave (eller tallet, Frank har valgt efter punkt 8 under Generatoren), 13 kort pr. fordeling, og stikkene ligger mellem 0 og 13.
 6. **Faste eksempler fra Kompendiet** (agenten vælger dem i 1a, Frank godkender): mindst én hånd pr. situation, hvor Kompendiets råd er tydeligt (fx S2 med en kort major og lange minorer), og opgavens bedste farve er en af dem, rådet peger på. Hånden genereres som en ekstra opgave med fast hånd (ikke med i de 50).
 7. **Intet andet er ændret:** kun `tools/udspil/`, `src/modspil/content/udspil/`, de nye tests i `src/modspil/udspil/`, `.gitignore`, `CLAUDE.md` og specen er ændret siden `v45-foer-udspil-data`.
 
@@ -149,7 +149,7 @@ Første bølge er de otte situationer nedenfor (Franks svar 5). Slem, splinter, 
 - **Udvalget:** en opgave er en hånd fra datasættet, valgt med opgavens seed, niveauet og profilen. Modellen ligger i nye filer i `src/modspil/model/` (fx `findUdspil.ts`), og v1's generator (`generator.ts`) ændres ikke.
 - **Farvens værdi:** for hver farve, Vest har kort i, er farvens værdi middelstikkene for det kort, profilens udspilsregel giver (`udspil.ts`). Giver reglen "table feeling", tæller det bedste af de to kort, og begge er rigtige.
 - **Lige gode:** farver eller kort under 0,1 stik fra det bedste er lige gode, og alle er rigtige (Franks svar 4).
-- **Klar:** en opgave er klar, når den bedste farve fører med mindst 0,3 stik over den næstbedste.
+- **Klar:** en opgave er klar, når den bedste farve fører med mindst 0,2 stik over den næstbedste (Franks valg 25. nov. 2026; før 0,3, som gav for få klare opgaver i 1b's rapporttal). 0,2 stik er over 3 gange den mediane standardfejl (0,06), så forspringet er reelt.
 - **Afviger fra Kompendiet:** en opgave afviger, når den er klar, og den bedste farve ikke er blandt dem, `kompendieraad` peger på.
 
 ## Niveauerne for øvelse 8
@@ -161,7 +161,7 @@ Følger sporets niveau (v1, "Niveauer"):
 | 1 | farven | klare; S1, S4 og S7 |
 | 2 | farven | klare; alle otte situationer |
 | 3 | kortet | klare |
-| 4–5 | kortet | også de tætte (forspring under 0,3) og dem, der afviger fra Kompendiet (Franks svar 9, bekræftet 24. nov.) |
+| 4–5 | kortet | også de tætte (forspring under 0,2) og dem, der afviger fra Kompendiet (Franks svar 9, bekræftet 24. nov.) |
 
 Svarer brugeren med et kort i den rigtige farve, men ikke profilens kort, er svaret forkert, og facit siger, at farven var rigtig, og hvilket kort profilen spiller ud.
 
@@ -176,8 +176,8 @@ Svarer brugeren med et kort i den rigtige farve, men ikke profilens kort, er sva
 ## Accepttest for trin 2 (skrives først, røde)
 
 1. **Farvens værdi og kortet:** faste eksempler for hver profil, også "table feeling" og en farve, hvor Standard og Kompendiet spiller forskellige kort (fx K D 5 3 mod sans: Standard K, Kompendiet D efter ALA).
-2. **Lige gode og klare:** faste eksempler på 0,09, 0,1 og 0,3 stik.
-3. **Facit mod de rå data:** for alle 400 opgaver og alle tre profiler regner en uafhængig test (der kun importerer typer) facit direkte fra `tools/udspil/raa/` og sammenligner.
+2. **Lige gode og klare:** faste eksempler på 0,09, 0,1, 0,19 og 0,2 stik.
+3. **Facit mod de rå data:** for alle 1200 opgaver og alle tre profiler regner en uafhængig test (der kun importerer typer) facit direkte fra `tools/udspil/raa/` og sammenligner.
 4. **Niveauerne:** niveau 1–2 giver kun klare opgaver og svar i farver, niveau 1 kun S1, S4 og S7, og niveau 3 og op svar i kort.
 5. **Afviger fra Kompendiet:** findes kun på niveau 4–5, og forklaringen nævner både rådet og den bedste farve.
 6. **Genskabelse:** samme seed, niveau og profil giver samme opgave og facit.
@@ -231,7 +231,7 @@ Accepttest (3a), byggeri (3b), hele suiten, browsertjek og skærmbilleder i en s
 1. Facit er simulering med dobbeltdummy på fordelinger, der passer med meldeforløbet; csv-filerne er kun statistik.
 2. Bedst er flest stik i gennemsnit (parturnering); chancen for at sætte vises ved siden af.
 3. Niveau 1–2 svarer med farven, niveau 3 og op med kortet efter profilens udspilsregel.
-4. Under 0,1 stik er lige godt, og alle er rigtige; niveau 1–2 bruger kun opgaver med et forspring på mindst 0,3 stik.
+4. Under 0,1 stik er lige godt, og alle er rigtige; niveau 1–2 bruger kun opgaver med et forspring på mindst 0,3 stik (ændret til 0,2 stik 25. nov., se Status).
 5. Første bølge er de otte situationer S1–S8.
 6. Situationerne står i én fil med kravene pr. hånd, som TS kontrollerer uafhængigt; meldegiveren fra v1 bruges ikke.
 7. Generatoren ligger i `tools/udspil/` i Fordelingstræneren. BridgeLab er et sideprojekt og indgår ikke.
@@ -266,6 +266,7 @@ Accepttest (3a), byggeri (3b), hele suiten, browsertjek og skærmbilleder i en s
 
   Kun få opgaver er klare: i S4 og S8 er det 1 af 50, i S6 2 af 50. Stabilitetstesten (5 opgaver pr. situation) kontrollerer derfor kun de klare blandt dem, og tallene viser, at den bedste farve oftest er tæt på den næstbedste. I 1 opgave i S6 og 1 i S7 peger rådet ikke på nogen farve, Vest har (talt som uenig). Datafilerne (`src/modspil/content/udspil/*.json` og `tools/udspil/raa/`) er committet; der er ikke flettet.
 
+- **Franks valg efter 1b (25. nov. 2026):** med forspring på mindst 0,3 stik var kun 45 af 400 opgaver klare (S4 og S8 1 hver, S7 25), så niveau 1 og 2 ville blive tynde og mest bestå af S7. Talt i data: med mindst 0,2 stik er der 82 klare (S1 12, S2 9, S3 3, S4 3, S5 7, S6 13, S7 30, S8 5). Valget: (1) "klar" er mindst 0,2 stik i trin 2 (stabilitetstesten beholder 0,3); (2) 150 opgaver pr. situation i stedet for 50, så hver situation får flere klare opgaver, og opgave Æ får flere hænder. Generatoren fortsætter fra opgave 51, så de første 50 og eksemplerne er uændrede. Begrundelsen er læringsværdien: et facit, der kun skiller udspillene med under 0,2 stik, lærer støj. Forslag til trin 2a (ikke besluttet): facit viser også prisen, dvs. hvor mange stik det valgte udspil koster i snit mod det bedste, så også de tætte opgaver lærer noget. Næste: Frank kører `generer.py --alle` og `kontrol.py --alt` igen, så 1b igen (datatestene, `npm test`, rapporttallene og `rapporttal.mjs` i `tools/udspil/`).
 **Krav til gennemgang (session 1a):** **Godkendt af Frank 25. nov. 2026** (kravene, Kompendiets regler med svarene a–d og de otte eksempler). Frank godkender punkt 1–4, før generatoren køres. Ændres et krav, en regel eller et eksempel, rettes kun `situationer.json`.
 
 1. **endplay og Python.** `endplay` 0.5.12 (den nyeste) har færdige hjul til Python 3.9–3.13 på Windows, men **ikke til 3.14**; på 3.14 vil pip bygge DDS fra kildekoden, hvilket kræver en C++-compiler og som regel fejler. Jeg har ikke kunnet prøve installationen på Franks pc (prøvekørslen kørte i en Linux-VM med Python 3.10). Derfor: **Python 3.13 installeres**, og venv'et laves med `py -3.13 -m venv tools\udspil\.venv` (`tools/udspil/README.md`). DDS er eksakt, så tallene bliver de samme på Windows.

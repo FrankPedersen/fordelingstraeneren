@@ -4,7 +4,7 @@ import { appSti, bedsteFarver, farvevaerdier, fraPbn, kompendieraad, laes, situa
 /*
  * Accepttest 6 i SPEC-modspil-v2.md, trin 1: faste eksempler fra Kompendiet. Mindst én hånd pr. situation, hvor
  * Kompendiets råd er tydeligt, og opgavens bedste farve er en af dem, rådet peger på. Hånden er regnet som en ekstra
- * opgave med fast hånd (ikke med i de 50). Farvens værdi er middelstikket for profilen Standards udspil i farven; de
+ * opgave med fast hånd (ikke med i de 150). Farvens værdi er middelstikket for profilen Standards udspil i farven; de
  * bedste farver er dem under 0,1 stik fra den bedste (Franks svar 4). Rød, indtil generatoren har kørt.
  */
 

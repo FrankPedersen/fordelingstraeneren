@@ -12,7 +12,7 @@ import { alleOpfyldt, appSti, fordeling, laes, maal, middelHundrededele, raaSti,
  *    første opgave pr. situation tjekkes også, at hvert seed, generatoren sprang over, virkelig ikke opfylder kravene.
  * 4. Opsummeringen: middelstik (hundrededele, rundet halvt op) og antal sætninger pr. kort i appens data regnes igen fra
  *    de rå data og skal være ens.
- * 5. Antallet: 50 opgaver pr. situation, 100 fordelinger pr. opgave, 13 kort pr. fordeling og stik mellem 0 og 13.
+ * 5. Antallet: 150 opgaver pr. situation (Franks valg 25. nov. 2026; før 50), 100 fordelinger pr. opgave, 13 kort pr. fordeling og stik mellem 0 og 13.
  */
 
 const fil = situationsfil();
@@ -90,7 +90,7 @@ describe.each(fil.situationer.map((s) => [s.id, s] as const))('%s', (id, s) => {
     }
   });
 
-  it('antallet: 50 opgaver, 100 fordelinger, 13 kort og stik mellem 0 og 13 (accepttest 5)', () => {
+  it('antallet: 150 opgaver, 100 fordelinger, 13 kort og stik mellem 0 og 13 (accepttest 5)', () => {
     const raa = laes<Raa>(raaSti(id));
     expect(raa.id).toBe(id);
     expect(raa.kontrakt).toBe(s.kontrakt);

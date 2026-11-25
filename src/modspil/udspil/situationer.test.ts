@@ -30,9 +30,9 @@ function kravFelter(k: Krav): string[] {
 }
 
 describe('Situationsfilen (accepttest 1)', () => {
-  it('har de otte situationer i rækkefølge og 50 opgaver med 100 fordelinger', () => {
+  it('har de otte situationer i rækkefølge og 150 opgaver med 100 fordelinger', () => {
     expect(fil.situationer.map((s) => s.id)).toEqual(ID);
-    expect(fil.opgaver).toBe(50);
+    expect(fil.opgaver).toBe(150);
     expect(fil.fordelinger).toBe(100);
     expect(new Set(fil.situationer.map((s) => s.seed)).size).toBe(8);
   });
