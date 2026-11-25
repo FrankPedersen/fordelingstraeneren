@@ -556,12 +556,208 @@
   font-size: 0.95rem;
 }
 
+/*
+ * Øvelse 8, Find udspillet (SPEC-modspil-v2.md, trin 3, og mock-up'en i docs/specs/design/modspil-v2/, varianten med
+ * prisen). Skærmen bruger opgavens klasser fra v1 (.ms-opgave, .ms-meldinger, .ms-spoergsmaal, .ms-facit) og har
+ * desuden klassen .ms-udspil. Ingen nye tokens.
+ */
+
+/* Kontrakten er fremhævet i meldeforløbet. */
+.ms-kontrakt {
+  border-radius: var(--radius-12);
+  background: var(--accent-soft);
+  box-shadow: inset 0 0 0 2px var(--text);
+}
+
+.ms-udspil-haand {
+  gap: var(--space-4);
+}
+
+/* Meldeforløbet på én linje står kun i facit under 1000 px (mock-up 2 og 4). */
+.ms-udspil-forloeb {
+  display: none;
+  font-size: var(--type-note);
+}
+
+/* Farveknapperne: fire i en række med symbolet og antallet af kort (mock-up 1). */
+.ms-farveknapper {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-8);
+}
+
+.ms-valg.ms-farveknap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 64px;
+  font-size: 1.6rem;
+  line-height: 1.1;
+}
+
+.ms-farveantal {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+/* En farve uden kort er deaktiveret: stiplet kant og grå flade. */
+.ms-valg.ms-tom-farve {
+  border: 1px dashed var(--muted);
+  background: var(--surface-2);
+  color: var(--muted);
+}
+
+/* Kortknapperne: én række pr. farve (mock-up 3); en farve med mere end fem kort deler rækken i flere kolonner. */
+.ms-kortraekker {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.ms-kortraekke {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  gap: var(--space-6);
+}
+
+.ms-udspil .ms-kortknap {
+  min-height: 56px;
+  padding: 0;
+  font-size: 1.1rem;
+  white-space: nowrap;
+}
+
+/* En farve med syv eller otte kort (33 af datasættets 1200 hænder): lidt mindre skrift, så rækken kan være ved 320 px. */
+.ms-udspil .ms-kortraekke:has(> :nth-child(7)) .ms-kortknap {
+  font-size: 0.95rem;
+}
+
+/* Facit med prisen (mock-up 2 og 4). */
+.ms-udspil .ms-dom[data-dom='forkert'] h2 {
+  color: var(--fb-miss-text);
+}
+
+.ms-pris {
+  display: inline-block;
+  padding: var(--space-2) var(--space-10);
+  border-radius: var(--radius-pill);
+  background: var(--fb-miss);
+  color: var(--fb-miss-text);
+  font-weight: 600;
+}
+
+.ms-domtekst {
+  font-size: var(--type-note);
+}
+
+.ms-udspil-tabel {
+  width: 100%;
+  padding: var(--space-4) var(--space-8) var(--space-8);
+  border-collapse: separate;
+  border-spacing: 0 var(--space-4);
+  border-radius: var(--radius-12);
+  background: var(--surface-2);
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.ms-udspil-tabel th,
+.ms-udspil-tabel td {
+  padding: var(--space-6) var(--space-8);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.ms-udspil-tabel thead th {
+  padding-top: 0;
+  padding-bottom: 0;
+  color: var(--muted);
+  font-size: var(--type-eyebrow);
+  font-weight: 600;
+}
+
+.ms-udspil-tabel tr > :first-child {
+  width: 100%;
+  text-align: left;
+  white-space: normal;
+}
+
+/* Rækkerne: hvide felter med en usynlig kant, så de rigtige kan få grøn kant og det forkerte svar stiplet. */
+.ms-udspil-tabel tbody > tr > * {
+  border: 2px solid transparent;
+  border-right-width: 0;
+  border-left-width: 0;
+  background: var(--surface);
+  font-weight: 600;
+}
+
+.ms-udspil-tabel tbody > tr > :first-child {
+  border-left-width: 2px;
+  border-radius: var(--radius-12) 0 0 var(--radius-12);
+}
+
+.ms-udspil-tabel tbody > tr > :last-child {
+  border-right-width: 2px;
+  border-radius: 0 var(--radius-12) var(--radius-12) 0;
+}
+
+.ms-udspil-tabel tbody > tr > td:not(:last-child) {
+  font-weight: 400;
+}
+
+.ms-udspil-tabel .ms-raekke-rigtig > * {
+  border-color: var(--ok);
+  background: var(--ok-bg);
+}
+
+.ms-udspil-tabel .ms-raekke-dit > * {
+  border-style: dashed;
+  border-color: var(--muted);
+  background: var(--surface-2);
+}
+
+.ms-raekke-maerke {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.ms-raekke-bedst {
+  color: var(--ok);
+}
+
 /* Under 1000 px står facit alene som i mock-up 2; spørgsmålet og bordet står over det fra 1000 px. */
 @media (max-width: 999.98px) {
   .ms-opgave[data-facit] .ms-meldinger,
   .ms-opgave[data-facit] .ms-bord,
   .ms-opgave[data-facit] .ms-spoergsmaal {
     display: none;
+  }
+
+  /* Øvelse 8 på niveau 3–5: kortknapperne er hånden, så hånden er skjult, før der er svaret (mock-up 3). */
+  .ms-udspil[data-svar='kort']:not([data-facit]) .ms-udspil-haand {
+    display: none;
+  }
+
+  /* Øvelse 8's facit: meldeforløbet på én linje over hånden (mock-up 2 og 4); skemaet og spørgsmålet er skjult ovenfor. */
+  .ms-udspil[data-facit] .ms-udspil-forloeb {
+    display: block;
+  }
+
+  .ms-udspil[data-facit] .ms-udspil-haand .eyebrow {
+    display: none;
+  }
+
+  .ms-udspil[data-facit] .ms-udspil-haand .ms-haand {
+    justify-items: start;
+  }
+
+  .ms-udspil[data-facit] .ms-udspil-haand .ms-haandlinje {
+    justify-content: flex-start;
+    font-size: 1.05rem;
   }
 }
 

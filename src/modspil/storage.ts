@@ -59,6 +59,12 @@ export interface MsSaved {
   answers?: MsAnswerEntry[];
   /** Dagen for den seneste eksport; til påmindelsen om at gemme en kopi. Valgfrit felt. */
   lastExport?: string;
+  /**
+   * Øvelse 8's Leitner-post, "Find udspillet" (SPEC-modspil-v2.md, trin 3). Valgfrit felt: det står her og ikke i
+   * `items`, fordi `items` kun godtager v1's syv øvelser. Læses og skrives med `udspilPost` og `medUdspilPost` i
+   * `training/findUdspil.ts`.
+   */
+  findUdspil?: Item;
 }
 
 /** Standardprofilen er valgt for nye brugere (SPEC-modspil.md, Metoderne og profilerne). */
@@ -170,9 +176,11 @@ export function readMsSaved(input: unknown): { saved: MsSaved; problems: string[
   }
 
   // Valgfrie felter: de kontrolleres kun, når de findes.
-  const { answers: answersIn, lastExport: lastExportIn, ...rest } = raw;
+  const { answers: answersIn, lastExport: lastExportIn, findUdspil: findUdspilIn, ...rest } = raw;
   const answers = answersIn === undefined ? undefined : list<MsAnswerEntry>('answers', answersIn, isAnswer);
   const lastExport = lastExportIn === undefined ? undefined : check<string | undefined>('lastExport', lastExportIn, isDay, undefined);
+  // Øvelse 8's post (Modspil v2): en ugyldig post læses som manglende og noteres.
+  const findUdspil = findUdspilIn === undefined ? undefined : check<Item | undefined>('findUdspil', findUdspilIn, isItem, undefined);
   const saved: MsSaved = {
     ...rest,
     version: 1,
@@ -187,6 +195,7 @@ export function readMsSaved(input: unknown): { saved: MsSaved; problems: string[
     sessions: list('sessions', raw.sessions, isSession),
     ...(answers ? { answers } : {}),
     ...(lastExport ? { lastExport } : {}),
+    ...(findUdspil ? { findUdspil } : {}),
   };
   return { saved, problems };
 }

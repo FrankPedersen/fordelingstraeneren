@@ -3,7 +3,7 @@ import { tx } from '../i18n';
 /**
  * Sidefoden (SPEC-sidefod.md): ens med forsidens kompakte sidefod på www.kontraktbridge.dk, efter målene under Afklaret
  * i SPEC-ny-forside.md. Logo og "Om mig og kontakt", kolonnerne Trænere og Opslag og ©-linjen; Om mig og Kontakt står på
- * om-mig-siden. Den står nederst på forsiden og sporenes skærme, ikke i en session og ikke i dialoger. De fire spor og
+ * om-mig-siden. Den står nederst på forsiden og sporenes skærme, ikke i en session og ikke i dialoger. De fem spor og
  * modulet Analyse (SPEC-analyse-modul.md) åbnes i appen med adresse (`#fordeling`, `#analyse` osv.), så de også virker
  * offline; links ud af appen åbnes i samme vindue og virker kun online.
  */
@@ -14,6 +14,8 @@ export function Footer() {
     { href: '#pointregnskab', title: tx('Pointregnskab', 'Point count') },
     { href: '#farvebehandling', title: tx('Farvebehandling', 'Suit combinations') },
     { href: '#haandevaluering', title: tx('Håndevaluering', 'Hand evaluation') },
+    // Modspil efter Håndevaluering (SPEC-modspil-v2.md, trin 3, Franks svar 11).
+    { href: '#modspil', title: tx('Modspil', 'Defence') },
   ];
   const reference = [
     { href: '#analyse', title: tx('Analyse', 'Analysis') },

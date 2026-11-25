@@ -100,6 +100,8 @@ export const UNDTAGELSER: readonly (string | RegExp)[] = [
   // Modspils øvelser (SPEC-modspil.md, trin 2; Franks svar 18. nov. 2026).
   'Vælg kortet',
   'Vælg afkastet',
+  // Modspil v2, øvelse 8 (SPEC-modspil-v2.md, trin 3).
+  'Find udspillet',
 ];
 
 /** Sætninger, der begynder med et af ordene, men ikke er bydeform: meldingen pas, en knap eller opgave som grundled og lister med navne. */
