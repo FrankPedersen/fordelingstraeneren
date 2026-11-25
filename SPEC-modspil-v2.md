@@ -283,6 +283,40 @@ Accepttest (3a), byggeri (3b), hele suiten, browsertjek og skærmbilleder i en s
 
   Med 0,2 stik er 264 af 1200 opgaver klare (mod 82 af 400 før), med 0,3 stik 158. S7 står for 102 af de 264 (39 %); uden S7 er der 162 klare i de syv andre situationer, 15–38 pr. situation (S4 har færrest). "Uden råd" er opgaver, hvor Kompendiets regel ikke peger på nogen farve, Vest har (talt som uenig). Stabilitetstesten beholder 0,3. Datafilerne, `rapporttal.mjs` og specen er committet; der er ikke flettet.
 - **Session 1c, trin 1 er flettet og pushet (25. nov. 2026):** Frank har godkendt trin 1 (grenen `udspil-data`, sidste commit `aed4058`). Grenen er flettet ind på `main` med `--no-ff` i `4606082` og pushet; `npm test` på `main` er grøn (149 filer, 1088 tests bestået og 2 sprunget over, 295 s), og grenen `udspil-data` er slettet lokalt (den lå aldrig på GitHub). Taget `v45-foer-udspil-data` (`9277086`) står. Der er intet live-tjek, fordi intet er synligt i appen. `../SYSTEM.md` har generatoren, datasættet og Franks beslutninger. Specen bliver i roden til trin 3. Næste: trin 2 (`udspil-model`, tag før `v46-foer-udspil-model`).
+- **Session 2a, accepttestene for trin 2 (25. nov. 2026):** `main` (`d6653ae`) er tagget `v46-foer-udspil-model`, og grenen `udspil-model` er oprettet. Specen havde ingen ændringer, der ikke var committet, så grenens første commit er accepttestene med denne Status. **Skrevet:** det tomme modul `src/modspil/model/findUdspil.ts` med typerne og signaturerne (`hentDatasaet`, `farvevaerdier`, `rigtigeFarver`, `forspring`, `erKlar`, `udspilFacit`, `pulje`, `lavFindUdspil`, `forklarUdspil`, `vedBordet` og `bedoemUdspil`), hvor hver funktion kaster "ikke bygget", og accepttestene i `src/modspil/find-udspil/` med fælles testkode i `hjaelp.ts`:
+
+  | Accepttest | Fil | Tests | Røde |
+  | --- | --- | --- | --- |
+  | 1 Farvens værdi og kortet | `vaerdi.test.ts` | 8 | 8 |
+  | 2 Lige gode og klare | `graenser.test.ts` | 6 | 6 |
+  | 3 Facit mod de rå data | `facit-raa.test.ts` | 10 | 8 |
+  | 4 Niveauerne (og dommen over svaret) | `niveauer.test.ts` | 21 | 21 |
+  | 5 Afviger fra Kompendiet (og forklaringens indhold) | `afviger.test.ts` | 10 | 9 |
+  | 6 Genskabelse (og den dovne indlæsning) | `genskabelse.test.ts` | 10 | 10 |
+  | 7 Sproget | `sprog.test.ts` | 8 | 7 |
+  | 8 Intet andet er ændret | `intet-andet.test.ts` | 2 | 0 |
+  | **I alt** | | **75** | **69** |
+
+  **Røde, og hvorfor:** `npx tsc --noEmit` er grøn. `npx vitest run src/modspil/find-udspil` giver 69 røde og 6 grønne, og alle 69 fejler med "Error: ikke bygget" fra modulet (talt i Vitests JSON-rapport), ingen på en forventning eller en typefejl. De 6 grønne tester ikke modellen: accepttest 8 (to tests) og testenes egne kontroller, nemlig at accepttest 3 kun importerer typer og `udspilFacit`, at gennemregningen i accepttest 3 giver trin 1's rapporttal for Standard (klare 31, 20, 17, 15, 20, 38, 102 og 21, i alt 264, og 4 opgaver uden råd), og "testen kan se forskel" i 5 og 7. `npx vitest run src/modspil` (84 s): v1's og trin 1's 26 testfiler er grønne (221 bestået og 2 sprunget over som før), og de eneste røde er de 69. Hele suiten er ikke kørt. Vitest kører kun i PowerShell her; i Git Bash fejler alle testfiler, også trin 1's, med "Cannot read properties of undefined (reading 'config')", sandsynligvis på grund af "æ" i stien.
+
+  **Accepttest 3** importerer kun typer, bortset fra den funktion, den sammenligner med (`udspilFacit`); uden den kan intet sammenlignes. Udspilsreglen, ALA-tabellen og Kompendiets råd står i testen for sig selv, og profilerne, situationerne og de rå data læses som JSON. Den første test kontrollerer importerne.
+
+  **Claude Codes valg i accepttestene** (2b følger dem; Frank kan rette dem):
+  1. Specens eksempel "K D 5 3 mod sans: Standard K, Kompendiet D" er efter udspilsreglen (`udspil.ts`) "table feeling" med Standard (♠K eller ♠3). Testen bruger K D 5 3 til "table feeling" og ♥K D 10 5 til Standard K og Kompendiet D (brudt sekvens mod ALA's K D x x).
+  2. Chancen for at sætte i en farve er chancen med det kort, der giver farvens værdi; står de to kort ved "table feeling" lige i middelstik, gælder det højeste antal.
+  3. Niveau 1–3 har de klare opgaver, der ikke afviger fra Kompendiet (accepttest 5), og niveau 4–5 alle 1200; niveau 2 og 3 har samme pulje. Eksemplerne i datafilerne er ikke opgaver.
+  4. Lige gode og klare regnes i hundrededele, så 2,30 mod 2,10 er klar, og 2,30 mod 2,20 er ikke lige godt; testen har eksempler på begge sider af hver grænse, fordi kommatal i JavaScript ligger lidt over eller under.
+  5. Forklaringen nævner situationen (meldeforløbet fra `navn`), mindst én bedste farves middelstik med én decimal (rundet halvt op) og chancen i hele procent og Kompendiet med siden ("s. 14", på engelsk "p. 14"). En opgave, der afviger, har sætningen om det i et eget felt (`afvigelse`), som også står i forklaringen og nævner rådets farver og den bedste farve.
+  6. "Skifter profilen kortet" er testet med to faste eksempler: med Kompendiet nævner forklaringen ♥D og ALA (Standard spiller ♥K), og med Standard ♠K og ♠3 (Kompendiet spiller ♠D).
+  7. Dommen (`bedoemUdspil`): et kort i en rigtig farve, der ikke er profilens, er forkert, og teksten nævner profilens kort i farven; andre svar har ingen tekst.
+  8. "Ved bordet" kan ikke stå i `situationer.json`, fordi accepttest 8 kun tillader nye filer i `src/modspil/`; 2b lægger teksterne i en ny fil.
+  9. Lodtrækningen (til 2b; testene kræver det ikke): `mulberry32(seed)` vælger situationen jævnt blandt dem med opgaver i puljen og så opgaven, så S7 ikke fylder næsten halvdelen af niveau 2.
+
+  **Tal til orientering** (gennemregningen i accepttest 3, profilen Standard; Omvendt og Kompendiet er næsten ens): af de 264 klare opgaver afviger 35 fra Kompendiet (S1 4, S2 2, S3 0, S4 10, S5 2, S6 15, S7 0, S8 2). Niveau 2–3 har derfor 229 opgaver (S7 102), og niveau 1 har 134, heraf kun 5 i S4, fordi 10 af S4's 15 klare opgaver afviger. I 674 af de 1200 opgaver er to farver eller flere lige gode (under 0,1 stik); de kommer kun på niveau 4–5.
+
+  **Åbent til Frank (blokerer ikke 2b):** forslaget fra 1b om at vise prisen (hvor mange stik det valgte udspil koster mod det bedste) kan regnes ud fra facit-tabellen uden ændringer i modellen og kan derfor afgøres sammen med mock-up'en før trin 3.
+
+  **Tokenforbrug:** Claude Code kan ikke selv aflæse forbruget, så de fire tal står under "Tokenforbrug pr. session" og udfyldes fra Franks `/usage` før og efter sessionen. Næste: session 2b bygger modellen, forklaringerne og "Tekster til gennemgang", til testene er grønne uden at blive rettet; CLAUDE.md's afsnit om Modspil v2 udvides i 2b, og `../SYSTEM.md` opdateres, når trin 2 flettes (som i 1c). Der er ikke flettet eller pushet.
 **Krav til gennemgang (session 1a):** **Godkendt af Frank 25. nov. 2026** (kravene, Kompendiets regler med svarene a–d og de otte eksempler). Frank godkender punkt 1–4, før generatoren køres. Ændres et krav, en regel eller et eksempel, rettes kun `situationer.json`.
 
 1. **endplay og Python.** `endplay` 0.5.12 (den nyeste) har færdige hjul til Python 3.9–3.13 på Windows, men **ikke til 3.14**; på 3.14 vil pip bygge DDS fra kildekoden, hvilket kræver en C++-compiler og som regel fejler. Jeg har ikke kunnet prøve installationen på Franks pc (prøvekørslen kørte i en Linux-VM med Python 3.10). Derfor: **Python 3.13 installeres**, og venv'et laves med `py -3.13 -m venv tools\udspil\.venv` (`tools/udspil/README.md`). DDS er eksakt, så tallene bliver de samme på Windows.
@@ -338,4 +372,6 @@ Accepttest (3a), byggeri (3b), hele suiten, browsertjek og skærmbilleder i en s
 
 **Tekster til gennemgang (session 2b og 3b):** –
 
-**Tokenforbrug pr. session** (nye input, skrevet til cachen, læst fra cachen og output): –
+**Tokenforbrug pr. session** (nye input, skrevet til cachen, læst fra cachen og output):
+
+- Session 2a: – / – / – / – (udfyldes fra Franks `/usage`; Claude Code kan ikke selv aflæse tallene)
