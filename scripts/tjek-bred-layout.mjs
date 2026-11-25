@@ -136,6 +136,8 @@ async function chrome() {
       await send('Page.addScriptToEvaluateOnNewDocument', { source: FAST });
       return {
         kør,
+        /** Mørk tilstand (prefers-color-scheme: dark), fx til verdenshjørnerne i Modspil (SPEC-modspil-kompas.md). */
+        mørk: () => send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-color-scheme', value: 'dark' }, { name: 'prefers-reduced-motion', value: 'reduce' }] }),
         async gå(url) {
           await send('Page.navigate', { url });
           for (let i = 0; i < 100; i++) { await vent(100); if ((await kør('document.readyState')) === 'complete') break; }
@@ -688,7 +690,10 @@ async function facitSomMockup(s, navn, ventet) {
   tjek(d.ud <= 0, `${navn}: intet stikker ud til siden`, `${d.ud} px`);
 }
 
-/** Vælg kortet som 3-vaelg-kortet-390.html: store kortknapper, resten af hånden gråtonet og aftalen under spørgsmålet. */
+/**
+ * Vælg kortet som 3-vaelg-kortet-390.html, men med kortknapperne i spørgsmålet (SPEC-modspil-kompas.md): store
+ * kortknapper, farverne uden spilbare kort gråtonede i hånden og aftalen under spørgsmålet.
+ */
 async function vælgKortetSomMockup(s, navn) {
   const d = await s.kør(`(() => {
     ${FARVE}
@@ -700,16 +705,23 @@ async function vælgKortetSomMockup(s, navn) {
     for (let n = gå.nextNode(); n; n = gå.nextNode()) if (n.textContent.trim() && !n.parentElement.closest('button')) resten.push(getComputedStyle(n.parentElement).color);
     const grå = (c) => { const [r, g, b] = c.match(/\\d+/g).map(Number); return Math.max(r, g, b) - Math.min(r, g, b) <= 16; };
     const h1 = document.querySelector('h1'), aftale = document.querySelector('details');
+    // SPEC-modspil-kompas.md: kortknapperne står i gruppen "Svar" under spørgsmålet, og hånden ved feltet er tekst, hvor
+    // farverne uden kort, der kan spilles, er gråtonede.
+    const gruppe = document.querySelector('[role="group"][aria-label="Svar"]');
+    const dæmpede = [...dig.querySelectorAll('.ms-farvelinje.ms-resten')];
+    const dæmpet = [];
+    for (const l of dæmpede) { const g = document.createTreeWalker(l, NodeFilter.SHOW_TEXT); for (let n = g.nextNode(); n; n = g.nextNode()) if (n.textContent.trim()) dæmpet.push(getComputedStyle(n.parentElement).color); }
     return {
-      kort: kort.map((b) => Math.round(b.getBoundingClientRect().height)), iHånden: kort.length > 0 && kort.every((b) => dig.contains(b)),
-      resten: [...new Set(resten)], tekst: farve('--text'),
-      gråtonet: resten.length > 0 && resten.every((c) => røde.includes(c) || (grå(c) && c !== farve('--text'))),
+      kort: kort.map((b) => Math.round(b.getBoundingClientRect().height)),
+      iSpørgsmålet: kort.length > 0 && !!gruppe && kort.every((b) => gruppe.contains(b) && !dig.contains(b)) && gruppe.getBoundingClientRect().top >= h1.getBoundingClientRect().bottom - 1,
+      resten: [...new Set(dæmpet)], tekst: farve('--text'),
+      gråtonet: dæmpet.length > 0 && dæmpet.every((c) => røde.includes(c) || (grå(c) && c !== farve('--text'))),
       aftale: !!aftale && !!h1 && aftale.getBoundingClientRect().top >= h1.getBoundingClientRect().bottom - 1 && !aftale.open,
       ud: document.documentElement.scrollWidth - document.documentElement.clientWidth,
     };
   })()`);
   tjek(d.kort.length > 0 && d.kort.every((h) => h >= 44), `${navn}: kortknapperne er mindst 44 px høje`, JSON.stringify(d.kort));
-  tjek(d.iHånden, `${navn}: kortknapperne står i din hånd`);
+  tjek(d.iSpørgsmålet, `${navn}: kortknapperne står i gruppen "Svar" under spørgsmålet`);
   tjek(d.gråtonet, `${navn}: resten af hånden er gråtonet`, `${d.resten.join(' ')} (teksten er ${d.tekst})`);
   tjek(d.aftale, `${navn}: aftalen står foldet sammen under spørgsmålet`);
   tjek(d.ud <= 0, `${navn}: intet stikker ud til siden`, `${d.ud} px`);
@@ -1026,6 +1038,32 @@ async function tjekFindUdspil() {
   }
 }
 
+/**
+ * Bordet med rigtige verdenshjørner (SPEC-modspil-kompas.md, accepttest 5): Nords hånd står over feltet og inden for
+ * dets bredde, Østs hånd til højre for feltet og Vests til venstre, lodret ud for det, feltet er mindst 180 px bredt,
+ * stikkets tekst dækker intet kort, "hp" står med små bogstaver, og intet stikker ud til siden.
+ */
+async function kompas(s, navn) {
+  const d = await s.kør(`(() => {
+    const r = (x) => document.querySelector(x)?.getBoundingClientRect();
+    const n = r('[data-haand="nord"]'), h = r('[data-haand="dig"]'), f = r('.ms-bord > .ms-stik');
+    const m = document.querySelector('.ms-stik-midte')?.getBoundingClientRect();
+    const dækker = !!m && [...document.querySelectorAll('.ms-bord .ms-spillekort')].some((k) => { const b = k.getBoundingClientRect(); return m.left < b.right - 1 && m.right > b.left + 1 && m.top < b.bottom - 1 && m.bottom > b.top + 1; });
+    const hp = [...document.querySelectorAll('.ms-hp')].map((e) => e.innerText.trim());
+    return { n, h, f, dækker, hp, plads: document.querySelector('[data-haand="dig"]')?.dataset.plads, ud: document.documentElement.scrollWidth - document.documentElement.clientWidth };
+  })()`);
+  tjek(!!(d.n && d.h && d.f), `${navn}: Nord, feltet og din hånd findes`);
+  if (!(d.n && d.h && d.f)) return;
+  tjek(d.n.bottom <= d.f.top + 0.5 && d.n.left >= d.f.left - 1 && d.n.right <= d.f.right + 1, `${navn}: Nord står over feltet`);
+  if (d.plads === 'E') tjek(d.h.left >= d.f.right - 0.5, `${navn}: Øst står til højre for feltet`);
+  else tjek(d.plads === 'W' && d.h.right <= d.f.left + 0.5, `${navn}: Vest står til venstre for feltet`, d.plads);
+  tjek(d.h.bottom >= d.f.top && d.h.top <= d.f.bottom, `${navn}: din hånd står ud for feltet`);
+  tjek(d.f.width >= 179.5, `${navn}: feltet er mindst 180 px bredt`, `${Math.round(d.f.width)} px`);
+  tjek(!d.dækker, `${navn}: stikkets tekst dækker intet kort`);
+  tjek(d.hp.every((t) => / hp$/.test(t)), `${navn}: hp med små bogstaver`, d.hp.join(', '));
+  tjek(d.ud <= 0, `${navn}: intet stikker ud til siden`, `${d.ud} px`);
+}
+
 /** Alle Modspils tjek i Chrome. */
 async function tjekModspil() {
   let s;
@@ -1050,6 +1088,21 @@ async function tjekModspil() {
     await rødtKunPåSymbolerne(s, 'Vælg kortet ved 390 px');
     await s.luk();
   });
+  // SPEC-modspil-kompas.md, accepttest 5: verdenshjørnerne i alle øvelser med Øst og Vest, ved fire bredder i lys og mørk.
+  for (const mørk of [false, true]) {
+    for (const bredde of [320, 390, 1000, 1280]) {
+      await del(`Modspil: verdenshjørnerne ved ${bredde} px${mørk ? ' (mørk)' : ''}`, async () => {
+        for (const [ovelse, niveau, profil] of [['point', 1, 'standard'], ['regel11', 1, 'standard'], ['laengde', 1, 'standard'], ['markering', 2, 'standard'], ['vaelg-kort', 2, 'standard'], ['afkast', 3, 'standard'], ['forsinket', 3, 'kompendiet']]) {
+          for (const seed of [1, 2, 3, 4]) {
+            s = await åbnTestside(bredde, 900, ovelse, niveau, seed, profil);
+            if (mørk) await s.mørk();
+            await kompas(s, `${ovelse} seed ${seed} ved ${bredde} px${mørk ? ' (mørk)' : ''}`);
+            await s.luk();
+          }
+        }
+      });
+    }
+  }
   // Mock-up 4: Indstillinger i appen, og sporets forside.
   await del('Modspil: Indstillinger som mock-up\'en ved 390 px', async () => {
     s = await åbnModspil('indstillinger', 390, 844);

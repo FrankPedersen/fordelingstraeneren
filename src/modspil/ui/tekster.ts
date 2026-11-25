@@ -242,6 +242,7 @@ const DA = {
     tabelNavn: 'Udspillene',
     bedst: 'bedst',
     ditSvarRaekke: 'dit svar',
+    tableFeeling: 'table feeling',
     procent: (n: number) => `${n} %`,
     tabelNote: (kontrakt: string, n: number) =>
       `Middelstik til modspillet og chancen for at sætte ${kontrakt} over ${n} fordelinger, der passer med meldingerne (dobbeltdummy).`,
@@ -509,6 +510,7 @@ const EN: Tekster = {
     tabelNavn: 'The leads',
     bedst: 'best',
     ditSvarRaekke: 'your answer',
+    tableFeeling: 'table feeling',
     procent: (n: number) => `${n}%`,
     tabelNote: (kontrakt: string, n: number) =>
       `Average tricks for the defence and the chance of defeating ${kontrakt} over ${n} deals that fit the bidding (double dummy).`,

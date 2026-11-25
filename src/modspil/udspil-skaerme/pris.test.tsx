@@ -231,13 +231,15 @@ describe('Prisen på skærmen (accepttest 10, trin 3)', () => {
     expect(linje(eksempel(data, 3), { kort: HJERTER_K })).toBe('Dit svar: ♥K · koster under 0,1 stik i snit');
   });
 
-  it('et rigtigt svar har ingen pris, og kolonnen Koster står med "–" i alle rækker', () => {
+  it('et rigtigt svar har ingen pris, og kolonnen Koster står med "–" i alle rækker undtagen "table feeling"', () => {
     for (const [niveau, svar] of [[1, { farve: 1 }], [3, { kort: HJERTER_E }], [3, { kort: 14 }]] as const) {
       const o = eksempel(data, niveau);
       const l = linje(o, svar);
       expect(l, `niveau ${niveau}`).toMatch(/^Dit svar: /);
       expect(l, `niveau ${niveau}`).not.toMatch(/koster/);
-      expect(visteRaekker(facitTabel()!).map((r) => r.koster), `niveau ${niveau}`).toEqual(o.facit.tabel.map(() => '–'));
+      // Rækken "table feeling" har altid sin pris (SPEC-modspil-kompas.md); de andre rækker står med "–".
+      const vist = visteRaekker(facitTabel()!).filter((r) => !/table feeling/.test(r.udspil));
+      expect(vist.map((r) => r.koster), `niveau ${niveau}`).toEqual(o.facit.tabel.map(() => '–'));
       cleanup();
     }
   });

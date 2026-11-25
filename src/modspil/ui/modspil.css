@@ -102,10 +102,61 @@
   font-weight: 600;
 }
 
-/* Bordet, stikket og hænderne */
+/*
+ * Bordet som klassisk diagram (SPEC-modspil-kompas.md): Nord over feltet og brugerens hånd ved sin egen side af
+ * feltet, Øst til højre og Vest til venstre; Syd sidder forneden i feltet. HTML'en er Nord, feltet, brugerens hånd og
+ * de tidligere stik; kun gitteret flytter Vests hånd til venstre.
+ */
 
 .ms-bord {
-  gap: var(--space-12);
+  grid-template-columns: minmax(180px, 1fr) auto;
+  grid-template-areas:
+    'nord .'
+    'felt dig'
+    'tidligere tidligere';
+  align-items: center;
+  gap: var(--space-8) var(--space-10);
+}
+
+.ms-bord[data-plads='W'] {
+  grid-template-columns: auto minmax(180px, 1fr);
+  grid-template-areas:
+    '. nord'
+    'dig felt'
+    'tidligere tidligere';
+}
+
+.ms-haand-nord {
+  grid-area: nord;
+  justify-self: center;
+}
+
+.ms-bord > .ms-stik {
+  grid-area: felt;
+}
+
+.ms-haand-dig {
+  grid-area: dig;
+}
+
+.ms-bord > .ms-tidligere {
+  grid-area: tidligere;
+}
+
+/* Ved bordet står farverne under hinanden; overskriften og linjerne er venstrestillede. */
+.ms-bord .ms-haand {
+  justify-items: start;
+}
+
+.ms-bord .ms-haandlinje {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+/* "hp" står med små bogstaver, også i etiketterne med versaler. */
+.ms-hp {
+  text-transform: none;
 }
 
 .ms-haand {
@@ -153,16 +204,20 @@
   transform: translateX(-50%);
 }
 
+/* V og Ø har bogstavet under kortet som N og S, så midten har plads til stikkets tekst, også når feltet er smalt. */
 .ms-plads-W {
   top: 50%;
-  left: var(--space-16);
-  flex-direction: row-reverse;
+  left: var(--space-10);
+  flex-direction: column;
+  gap: var(--space-2);
   transform: translateY(-50%);
 }
 
 .ms-plads-E {
   top: 50%;
-  right: var(--space-16);
+  right: var(--space-10);
+  flex-direction: column;
+  gap: var(--space-2);
   transform: translateY(-50%);
 }
 
@@ -791,6 +846,10 @@
   .ms-haandlinje {
     gap: var(--space-4) 18px;
     font-size: 1.25rem;
+  }
+
+  .ms-bord .ms-haandlinje {
+    gap: var(--space-2);
   }
 
   .ms-stik,

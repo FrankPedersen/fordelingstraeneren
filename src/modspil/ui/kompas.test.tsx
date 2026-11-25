@@ -12,8 +12,10 @@
  */
 import { cleanup, fireEvent, screen, within } from '@testing-library/react';
 import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import { setLang } from '../../i18n';
+import { ROOT } from '../../sprog/danskTekst';
 import type { ModspilOpgave } from '../model/generator';
 import { farveAf } from '../model/tekst';
 import { eksempler, foer, kortKnapper, kortLabel, navn, svarGruppe, tæt, vaelgerKort, visOpgave, type Svar } from './testhjaelp';
@@ -133,7 +135,7 @@ describe('hp med små bogstaver (accepttest 3)', () => {
   });
 
   it('modspil.css giver .ms-hp text-transform: none', () => {
-    const css = readFileSync(new URL('./modspil.css', import.meta.url), 'utf8');
+    const css = readFileSync(join(ROOT, 'src/modspil/ui/modspil.css'), 'utf8');
     const regel = css.match(/\.ms-hp\s*\{([^}]*)\}/);
     expect(regel?.[1]).toMatch(/text-transform:\s*none/);
   });
