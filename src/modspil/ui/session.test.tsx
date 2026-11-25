@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { hentDatasaet, lavFindUdspil } from '../model/findUdspil';
 import { FOERSTE_NIVEAU, harOvelse, lavNiveauOpgave, lavOpgave, OVELSER, type Niveau, type Ovelse } from '../model/generator';
 import { profil } from '../model/metoder';
 import { MS_STORAGE_KEY, readMsSaved } from '../storage';
@@ -25,6 +26,9 @@ import { dom, kortKnapper, svarGruppe, visOpgave, type Svar } from './testhjaelp
  *   `{ saved, problems }` som Pointregnskabs `readPrSaved`. `saved` har mindst `sessions` (én pr. gennemført session)
  *   og `streak` med `current`, som de andre spor (forsidens `status.ts` læser samme felter). Kun nøglen `modspil:v1`
  *   skrives.
+ * - Øvelse 8 (SPEC-modspil-v2.md, trin 3; Franks valg 25. nov. 2026, session 3a) kan komme i sessionen: datasættet
+ *   hentes dovent, så løkken venter på opgaven, svarer med den første farve eller det første kort og tjekker, at facit
+ *   har modellens forklaring. Grænsefladen står i src/modspil/udspil-skaerme/hjaelp.tsx.
  */
 
 const click = (name: string | RegExp) => fireEvent.click(screen.getByRole('button', { name }));
@@ -42,7 +46,7 @@ afterEach(() => {
 });
 
 describe('En session fra start til status (accepttest 2, trin 2)', () => {
-  it('opgaverne er fra trin 1, facit har trin 1-forklaringen, og sessionen slutter med status; kun modspil:v1 skrives', () => {
+  it('opgaverne er fra trin 1, facit har trin 1-forklaringen, og sessionen slutter med status; kun modspil:v1 skrives', async () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date(2026, 10, 18, 12));
     localStorage.setItem('fordelingstraener:v1', '{"urørt":true}');
@@ -50,14 +54,39 @@ describe('En session fra start til status (accepttest 2, trin 2)', () => {
     click('Start dagens session');
     const standard = profil('standard');
     const set = new Map<string, { ovelse: Ovelse; niveau: Niveau; seed: number }>();
+    const udspil = new Set<string>();
     for (let i = 0; i < 400 && !status(); i++) {
       act(() => vi.advanceTimersByTime(3_000));
       if (knap('Næste opgave')) {
         click('Næste opgave');
         continue;
       }
+      // Øvelse 8: datasættet hentes dovent, så opgaven kan komme lidt efter.
+      if (!document.querySelector('[data-ovelse]') && !status()) {
+        await vi.waitFor(
+          () => {
+            act(() => vi.advanceTimersByTime(50));
+            if (!document.querySelector('[data-ovelse]') && !status()) throw new Error('venter på opgaven');
+          },
+          { timeout: 10_000, interval: 20 },
+        );
+      }
       const rod = document.querySelector<HTMLElement>('[data-ovelse]');
       if (!rod) continue;
+      if (rod.dataset.ovelse === 'find-udspil') {
+        const o = lavFindUdspil(Number(rod.dataset.niveau) as Niveau, Number(rod.dataset.seed), standard, await hentDatasaet());
+        const id = `find-udspil ${o.niveau} ${o.seed}`;
+        const forste = within(screen.getByRole('group', { name: 'Svar' }))
+          .getAllByRole('button')
+          .find((b) => !(b as HTMLButtonElement).disabled);
+        expect(forste, `${id}: en farve eller et kort at vælge`).toBeTruthy();
+        fireEvent.click(forste!);
+        expect(document.body.textContent, `${id}: facit viser forklaringen fra modellen`).toContain(o.forklaring.da);
+        expect(dom(), id).not.toBeNull();
+        expect(knap('Næste opgave'), id).toBeTruthy();
+        udspil.add(id);
+        continue;
+      }
       const opgave = { ovelse: rod.dataset.ovelse as Ovelse, niveau: Number(rod.dataset.niveau) as Niveau, seed: Number(rod.dataset.seed) };
       const id = `${opgave.ovelse} ${opgave.niveau} ${opgave.seed}`;
       expect(OVELSER, id).toContain(opgave.ovelse);
@@ -79,7 +108,7 @@ describe('En session fra start til status (accepttest 2, trin 2)', () => {
       expect(knap('Næste opgave'), id).toBeTruthy();
     }
     expect(status()).toBeTruthy();
-    expect(set.size).toBeGreaterThanOrEqual(2);
+    expect(set.size + udspil.size).toBeGreaterThanOrEqual(2);
     // Kun modspil:v1 er skrevet, og de andre nøgler er urørte.
     expect(Object.keys(localStorage).sort()).toEqual(['fordelingstraener:v1', MS_STORAGE_KEY].sort());
     expect(localStorage.getItem('fordelingstraener:v1')).toBe('{"urørt":true}');

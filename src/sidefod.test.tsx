@@ -23,6 +23,8 @@ describe('Sidefoden', () => {
       ['Pointregnskab', '#pointregnskab'],
       ['Farvebehandling', '#farvebehandling'],
       ['Håndevaluering', '#haandevaluering'],
+      // Modspil efter Håndevaluering (SPEC-modspil-v2.md, trin 3, Franks svar 11; Franks ja 21. nov. 2026).
+      ['Modspil', '#modspil'],
     ]);
     expect(links('Opslag')).toEqual([
       ['Analyse', '#analyse'],
@@ -47,7 +49,7 @@ describe('Sidefoden', () => {
     setLang('en');
     render(<Footer />);
     expect(screen.getByRole('link', { name: 'About me and contact' }).getAttribute('href')).toBe('/om-mig/');
-    expect(links('Trainers').map((l) => l[0])).toEqual(['Convention trainer', 'Distribution', 'Point count', 'Suit combinations', 'Hand evaluation']);
+    expect(links('Trainers').map((l) => l[0])).toEqual(['Convention trainer', 'Distribution', 'Point count', 'Suit combinations', 'Hand evaluation', 'Defence']);
     expect(links('Reference').map((l) => l[0])).toEqual(['Analysis', 'Bridge dictionary', 'Scoring in bridge']);
     expect(document.querySelector('footer')?.textContent).toContain('Free bridge training in the browser. Made by Frank Pedersen.');
     expect(document.querySelector('footer')?.textContent).not.toMatch(/[æøåÆØÅ]/);

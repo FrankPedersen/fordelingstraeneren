@@ -1,6 +1,6 @@
 // Accepttest (SPEC-bred-layout.md og Del 2 af SPEC-design-som-forsiden.md): det brede layout fra 1000 px i en rigtig
-// browser. Appen startes med Vite fra arbejdsmappen, og referencen (appen før Modspils skærme, tagget
-// v43-foer-modspil-skaerme; før det v38-foer-moensterkort-bred)
+// browser. Appen startes med Vite fra arbejdsmappen, og referencen (appen før øvelse 8's skærme, tagget
+// v47-foer-udspil-skaerme; før det v43-foer-modspil-skaerme og v38-foer-moensterkort-bred)
 // lægges i en midlertidig git worktree og startes ved siden af. Begge åbnes i Chrome eller Edge uden vindue;
 // tilfældighederne og tiden er låst, så opgaverne er de samme hver gang, og hver skærm får sin egen tomme lagring.
 //
@@ -34,6 +34,16 @@
 // pixelsammenligningen; i forsiden og vejledningen skjules Modspils gruppe og afsnit i begge apps, så resten
 // sammenlignes med tagget. Velkomsten og vejledningens linje om I dag siger fem spor i stedet for fire (Franks svar 2);
 // i begge apps skrives de fem spor om til fire før billedet, så alt andet stadig sammenlignes pixel for pixel.
+//
+// Modspil v2, øvelse 8 "Find udspillet" (SPEC-modspil-v2.md, trin 3, accepttest 4, 5 og 9): testsiden viser øvelse 8 med
+// ?ovelse=find-udspil&niveau=…&seed=…&profil=…, og skærmene svarer til mock-up'en i docs/specs/design/modspil-v2/ ved
+// 390, 1000 og 1280 px (eksemplet S1 opgave 55 med Standard: seed 35 på niveau 1 og seed 48 på niveau 3): delene i
+// specens rækkefølge uden bordet, farve- og kortknapper på mindst 44 px med én række pr. farve, facit med mærket, linjen
+// "Dit svar … koster", tabellen med de rigtige rækker i grøn kant og dit svar stiplet, forklaringen, Ved bordet og Næste
+// opgave. Fra 1000 px står meldeforløbet og hånden til venstre og spørgsmålet og facit til højre, spalten dækker intet,
+// og HTML'en er den samme som ved 390 px. Rødt kun på ♥ og ♦, og tastaturet når svarknapperne og Næste opgave, også i en
+// session, hvor øvelse 8 trækkes. Pixelsammenligningen er mod v47-foer-udspil-skaerme; Modspils gruppe og afsnit og
+// sidefoden er stadig skjult i begge apps, så vejledningens nye linjer om øvelse 8 ikke tæller med.
 import { spawn, spawnSync } from 'node:child_process';
 import { existsSync, lstatSync, mkdirSync, mkdtempSync, rmSync, symlinkSync, unlinkSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -42,7 +52,7 @@ import { fileURLToPath } from 'node:url';
 import { createServer } from 'vite';
 
 const ROD = fileURLToPath(new URL('..', import.meta.url));
-const TAG = 'v43-foer-modspil-skaerme';
+const TAG = 'v47-foer-udspil-skaerme';
 // Skærmnavne som argumenter begrænser pixelsammenligningen til dem; en forskel gemmes som billeder her.
 const KUN = process.argv.slice(2).filter((a) => !a.startsWith('--'));
 // --modspil: kun Modspils tjek og pixelsammenligningen af de to skærme, Modspil ændrer (forsiden og vejledningen).
@@ -515,6 +525,9 @@ async function sammenlign(nu, før, side) {
 // data-udspil og din tomme plads data-tom; svarknapperne står i gruppen "Svar", og facit har mærket data-dom.
 const KORT_LABEL = /^(Spar|Hjerter|Ruder|Klør) (2|3|4|5|6|7|8|9|10|knægt|dame|konge|es)$/;
 const KORT_I_SIDEN = KORT_LABEL.toString();
+/** Øvelse 8's farveknapper (niveau 1–2): aria-label "Spar, 4 kort" (mock-up 1 i docs/specs/design/modspil-v2/). */
+const FARVE_LABEL = /^(Spar|Hjerter|Ruder|Klør), \d+ kort$/;
+const FARVE_I_SIDEN = FARVE_LABEL.toString();
 /** Tokens' beregnede farver i siden, fx rgb(31, 92, 74) for --table. */
 const FARVE = `const farve = (v) => { const d = document.createElement('div'); d.style.color = 'var(' + v + ')'; document.body.appendChild(d); const c = getComputedStyle(d).color; d.remove(); return c; };`;
 /** Kassen for et element målt fra sidens top, så rækkefølgen kan ses, uanset hvor langt der er rullet. */
@@ -524,9 +537,23 @@ const KASSE = `const kasse = (e) => { if (!e || !e.getClientRects().length) retu
 const MODSPIL = {
   forside: async (s, u) => { await s.gå(`${u}#modspil`); await erModspil(s); },
   indstillinger: async (s, u) => { await MODSPIL.forside(s, u); await s.klik('Indstillinger'); await venteTil(s, 'input[type="radio"]', 'Indstillinger'); },
-  opgave: async (s, u) => { await MODSPIL.forside(s, u); await s.klik('Start dagens session'); await venteTil(s, '[data-ovelse]', 'Opgaven'); },
+  opgave: async (s, u) => { await MODSPIL.forside(s, u); await s.klik('Start dagens session'); await tilV1Opgave(s); },
   facit: async (s, u) => { await MODSPIL.opgave(s, u); await svarModspil(s); },
 };
+/**
+ * Sessionens første opgave fra v1 (med bordet): trækkes øvelse 8 først (SPEC-modspil-v2.md, trin 3), besvares den, og
+ * Næste opgave fører videre. Tilfældighederne er låst, så det er den samme opgave hver gang.
+ */
+async function tilV1Opgave(s) {
+  for (let i = 0; i < 4; i++) {
+    await venteTil(s, '[data-ovelse]', 'Opgaven');
+    if (!(await s.kør(`document.querySelector('[data-ovelse]').dataset.ovelse === 'find-udspil'`))) return;
+    await svarModspil(s);
+    await s.klik('Næste opgave');
+    await vent(300);
+  }
+  throw new Error('Sessionen havde kun øvelse 8 og ingen opgave fra v1');
+}
 async function erModspil(s) {
   for (let i = 0; i < 40; i++) {
     if (await s.kør(`[...document.querySelectorAll('h1')].some((h) => h.textContent.trim() === 'Modspil')`)) return;
@@ -541,15 +568,18 @@ async function venteTil(s, vælger, hvad) {
   }
   throw new Error(`${hvad} kom ikke frem (${vælger})`);
 }
-/** Svarer "Kan ikke afgøres", eller vælger det første kort, hvor brugeren svarer med et kort, og venter på facit. */
+/**
+ * Svarer "Kan ikke afgøres", eller vælger det første kort, hvor brugeren svarer med et kort, eller (øvelse 8 på niveau
+ * 1–2) den første farve i gruppen "Svar", og venter på facit.
+ */
 async function svarModspil(s) {
   const ok = await s.kør(`(() => {
     const knapper = [...document.querySelectorAll('button')].filter((b) => b.offsetParent !== null && !b.disabled);
-    const k = knapper.find((b) => b.textContent.trim() === 'Kan ikke afgøres') ?? knapper.find((b) => ${KORT_I_SIDEN}.test(b.getAttribute('aria-label') || ''));
+    const k = knapper.find((b) => b.textContent.trim() === 'Kan ikke afgøres') ?? knapper.find((b) => ${KORT_I_SIDEN}.test(b.getAttribute('aria-label') || '')) ?? knapper.find((b) => ${FARVE_I_SIDEN}.test(b.getAttribute('aria-label') || ''));
     k?.click();
     return !!k;
   })()`);
-  if (!ok) throw new Error('Fandt hverken "Kan ikke afgøres" eller et kort at vælge');
+  if (!ok) throw new Error('Fandt hverken "Kan ikke afgøres", et kort eller en farve at vælge');
   await venteTil(s, '[data-dom]', 'Facit');
 }
 const åbnModspil = async (skærm, bredde, højde) => {
@@ -752,7 +782,8 @@ async function tastaturHeleVejen() {
   let opgaver = 0;
   for (let i = 0; i < 60 && !(await færdig()); i++) {
     await venteTil(s, '[data-ovelse]', 'Opgaven');
-    await tabTil((t) => t === 'Kan ikke afgøres' || KORT_LABEL.test(t), 'et svar');
+    // Øvelse 8 kan trækkes i sessionen (SPEC-modspil-v2.md, trin 3): dens svar er en farve eller et kort.
+    await tabTil((t) => t === 'Kan ikke afgøres' || KORT_LABEL.test(t) || FARVE_LABEL.test(t), 'et svar');
     await s.tryk('Enter');
     await venteTil(s, '[data-dom]', 'Facit');
     opgaver++;
@@ -773,6 +804,206 @@ async function tastaturHeleVejen() {
   const valgt = await t.kør(`(document.querySelector('input[type="radio"]:checked')?.labels?.[0]?.textContent || '').trim()`);
   tjek(/^Omvendt/.test(valgt), 'Modspils Indstillinger med tastatur: piletasten vælger den næste profil', valgt);
   await t.luk();
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// Modspil v2, øvelse 8 "Find udspillet" (SPEC-modspil-v2.md, trin 3, accepttest 4–5). Grænsefladen står øverst i
+// src/modspil/udspil-skaerme/hjaelp.tsx: roden har data-ovelse="find-udspil" og børnene .wide-left (meldeforløbet og
+// hånden) og .wide-right (spørgsmålet, svarknapperne og facit); svarknapperne står i gruppen "Svar", og facit har
+// mærket data-dom, linjen "Dit svar: …" og tabellen med kolonnerne Udspil, Stik, Sætter og Koster.
+
+/** Eksemplet fra mock-up'en: S1 opgave 55 med Standard, seed 35 på niveau 1 og seed 48 på niveau 3. */
+const UDSPIL = { 1: 35, 3: 48 };
+
+/** Opgaven som 1-opgave-farve-390.html eller 3-opgave-kort-390.html: rækkefølgen, intet bord og knappernes mål. */
+async function udspilOpgaveSomMockup(s, navn, niveau) {
+  const d = await s.kør(`(() => {
+    ${KASSE}
+    const q = (x) => document.querySelector(x);
+    const hoved = [...document.querySelectorAll('[data-ovelse] *')].find((e) => /^Niveau \\d · opgave \\d+ af \\d+$/.test(e.textContent.trim()) && ![...e.children].some((c) => /^Niveau/.test(c.textContent.trim())));
+    const gruppe = q('[role="group"][aria-label="Svar"]');
+    const knapper = gruppe ? [...gruppe.querySelectorAll('button')].map((b) => { const r = b.getBoundingClientRect(); return [b.getAttribute('aria-label') || b.textContent.trim(), Math.round(r.top), Math.round(r.height)]; }) : [];
+    return {
+      dele: [['niveau og opgave', kasse(hoved)], ['meldeforløbet', kasse(tabel('Meldeforløbet'))], ['din hånd', kasse(q('[data-haand="dig"]'))], ['spørgsmålet', kasse(q('h1'))], ['svarknapperne', kasse(gruppe)]],
+      bordet: !!q('[data-haand="nord"]') || !!q('[role="img"][aria-label^="Stik "]'),
+      kanIkke: [...document.querySelectorAll('button')].some((b) => b.textContent.trim() === 'Kan ikke afgøres'),
+      knapper,
+      ud: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    };
+  })()`);
+  // Mock-up 3 viser ikke hånden ved 390 px på niveau 3–5 (kortknapperne er hånden); dér må den være skjult med CSS.
+  rækkefølge(navn, niveau <= 2 ? d.dele : d.dele.filter(([n, k]) => n !== 'din hånd' || k));
+  tjek(!d.bordet, `${navn}: bordet og stikket vises ikke`);
+  tjek(!d.kanIkke, `${navn}: ingen "Kan ikke afgøres"`);
+  tjek(d.knapper.length > 0 && d.knapper.every(([, , h]) => h >= 44), `${navn}: svarknapperne er mindst 44 px høje`, JSON.stringify(d.knapper));
+  if (niveau <= 2) tjek(d.knapper.length === 4 && d.knapper.every(([t]) => FARVE_LABEL.test(t)), `${navn}: fire farveknapper`, JSON.stringify(d.knapper));
+  else {
+    // Én række pr. farve: kortene i en farve står på samme linje, og farverne står under hinanden i orden ♠ ♥ ♦ ♣.
+    const farver = ['Spar', 'Hjerter', 'Ruder', 'Klør'].map((f) => d.knapper.filter(([t]) => t.startsWith(`${f} `)).map(([, top]) => top)).filter((x) => x.length);
+    const rækker = farver.every((x) => x.every((t) => ca(t, x[0], 2))) && farver.every((x, i) => i === 0 || x[0] > farver[i - 1][0]);
+    tjek(d.knapper.length === 13 && d.knapper.every(([t]) => KORT_LABEL.test(t)), `${navn}: Vests 13 kort som knapper`, JSON.stringify(d.knapper.map(([t]) => t)));
+    tjek(rækker, `${navn}: én række kortknapper pr. farve`, JSON.stringify(farver));
+  }
+  tjek(d.ud <= 0, `${navn}: intet stikker ud til siden`, `${d.ud} px`);
+}
+
+/** Facit som 2-facit-farve-390.html og 4-facit-kort-390.html (varianten med prisen). */
+async function udspilFacitSomMockup(s, navn, ventet, linje) {
+  const d = await s.kør(`(() => {
+    ${FARVE}
+    ${KASSE}
+    const mærke = document.querySelector('[data-dom]');
+    const farver = mærke ? [mærke, ...mærke.querySelectorAll('*')].flatMap((e) => [getComputedStyle(e).color, getComputedStyle(e).backgroundColor]) : [];
+    const p = [...document.querySelectorAll('p')];
+    const ditSvar = p.find((x) => x.textContent.replace(/\\s+/g, ' ').trim().startsWith('Dit svar:'));
+    const facit = [...document.querySelectorAll('table')].find((t) => [...t.querySelectorAll('th')].slice(0, 4).map((th) => th.textContent.trim()).join('|') === 'Udspil|Stik|Sætter|Koster');
+    const forklaring = p.find((x) => x.textContent.includes(window.modspilOpgave.forklaring.da));
+    const ved = [...document.querySelectorAll('[data-ovelse] *')].find((e) => e.textContent.trim() === 'Ved bordet' && !e.children.length);
+    const næste = [...document.querySelectorAll('button')].find((b) => b.textContent.trim() === 'Næste opgave');
+    const ok = farve('--ok');
+    const grå = (c) => { const m = c.match(/[\\d.]+/g); if (!m || (m.length > 3 && Number(m[3]) === 0)) return false; const [r, g, b] = m.map(Number); return Math.max(r, g, b) - Math.min(r, g, b) <= 16; };
+    const rækker = facit ? [...facit.querySelectorAll('tbody tr')].map((tr) => {
+      const el = [tr, ...tr.children].map((e) => getComputedStyle(e));
+      return {
+        tekst: tr.firstElementChild.textContent.replace(/\\s+/g, ' ').trim(),
+        grøn: el.some((c) => (c.borderTopStyle === 'solid' && c.borderTopColor === ok) || (c.outlineStyle === 'solid' && c.outlineColor === ok) || c.boxShadow.includes(ok)),
+        stiplet: el.some((c) => c.borderTopStyle === 'dashed' || c.outlineStyle === 'dashed'),
+        gråFlade: el.some((c) => grå(c.backgroundColor)),
+      };
+    }) : [];
+    return {
+      dom: mærke?.dataset.dom, farver, grøn: farve('--ok'), rød: farve('--fb-miss-text'), linje: ditSvar?.textContent.replace(/\\s+/g, ' ').trim(),
+      dele: [['mærket', kasse(mærke)], ['"Dit svar"', kasse(ditSvar)], ['tabellen', kasse(facit)], ['forklaringen', kasse(forklaring)], ['Ved bordet', kasse(ved)], ['Næste opgave', kasse(næste)]],
+      rækker,
+      næste: næste ? Math.round(næste.getBoundingClientRect().height) : 0,
+      ud: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    };
+  })()`);
+  tjek(d.dom === ventet, `${navn}: dommen er ${ventet}`, `${d.dom}`);
+  if (ventet === 'rigtigt') tjek(d.farver.includes(d.grøn), `${navn}: mærket er grønt (--ok)`, [...new Set(d.farver)].join(' '));
+  else tjek(d.farver.includes(d.rød) && !d.farver.includes(d.grøn), `${navn}: mærket er rødt (--fb-miss-text)`, [...new Set(d.farver)].join(' '));
+  rækkefølge(navn, d.dele);
+  if (linje) tjek(d.linje === linje, `${navn}: "${linje}"`, d.linje);
+  else tjek(!!d.linje && !/koster/.test(d.linje), `${navn}: et rigtigt svar har ingen pris`, d.linje);
+  const rigtige = d.rækker.filter((r) => r.tekst.includes('✓'));
+  tjek(rigtige.length > 0 && rigtige.every((r) => r.grøn), `${navn}: de rigtige rækker har grøn kant (--ok)`, JSON.stringify(d.rækker));
+  const dit = d.rækker.filter((r) => /dit svar/.test(r.tekst));
+  if (ventet === 'forkert') tjek(dit.length === 1 && dit[0].stiplet && dit[0].gråFlade, `${navn}: dit svar har stiplet kant og grå flade`, JSON.stringify(dit));
+  tjek(d.næste >= 44, `${navn}: Næste opgave er mindst 44 px høj`, `${d.næste} px`);
+  tjek(d.ud <= 0, `${navn}: intet stikker ud til siden`, `${d.ud} px`);
+}
+
+/** Klikker på svarknappen med navnet og venter på facit. */
+async function svarUdspil(s, label) {
+  const ok = await s.kør(`(() => { const b = [...document.querySelectorAll('[role="group"][aria-label="Svar"] button')].find((x) => x.getAttribute('aria-label') === ${JSON.stringify(label)}); b?.click(); return !!b; })()`);
+  if (!ok) throw new Error(`Fandt ikke svarknappen "${label}"`);
+  await venteTil(s, '[data-dom]', 'Facit');
+}
+
+/** Øvelse 8's tjek i Chrome (accepttest 4 og 5). */
+async function tjekFindUdspil() {
+  let s;
+  // Mock-up 1 og 2: niveau 1 ved 390 px, svaret ♦ (forkert, koster 0,5) og ♥ (rigtigt).
+  await del('Find udspillet: opgaven og facit som mock-up 1 og 2 ved 390 px', async () => {
+    s = await åbnTestside(390, 844, 'find-udspil', 1, UDSPIL[1], 'standard');
+    await udspilOpgaveSomMockup(s, 'Find udspillet, niveau 1, ved 390 px', 1);
+    await rødtKunPåSymbolerne(s, 'Find udspillet, niveau 1, ved 390 px');
+    await svarUdspil(s, 'Ruder, 4 kort');
+    await udspilFacitSomMockup(s, 'Find udspillets facit ved 390 px (♦)', 'forkert', 'Dit svar: ♦ · koster 0,5 stik i snit');
+    await rødtKunPåSymbolerne(s, 'Find udspillets facit ved 390 px (♦)');
+    await s.luk();
+    s = await åbnTestside(390, 844, 'find-udspil', 1, UDSPIL[1], 'standard');
+    await svarUdspil(s, 'Hjerter, 4 kort');
+    await udspilFacitSomMockup(s, 'Find udspillets facit ved 390 px (♥)', 'rigtigt');
+    await s.luk();
+  });
+  // Mock-up 3 og 4: niveau 3 ved 390 px med kortknapperne, svaret ♥4 (farven rigtig, kortet ikke profilens).
+  await del('Find udspillet: kortknapperne og facit som mock-up 3 og 4 ved 390 px', async () => {
+    s = await åbnTestside(390, 844, 'find-udspil', 3, UDSPIL[3], 'standard');
+    await udspilOpgaveSomMockup(s, 'Find udspillet, niveau 3, ved 390 px', 3);
+    await rødtKunPåSymbolerne(s, 'Find udspillet, niveau 3, ved 390 px');
+    await svarUdspil(s, 'Hjerter 4');
+    await udspilFacitSomMockup(s, 'Find udspillets facit ved 390 px (♥4)', 'forkert', 'Dit svar: ♥4 · koster 0,8 stik i snit');
+    const r = await s.kør(`(() => {
+      const t = [...document.querySelectorAll('table')].find((x) => [...x.querySelectorAll('th')].slice(0, 4).map((th) => th.textContent.trim()).join('|') === 'Udspil|Stik|Sætter|Koster');
+      const dom = [...document.querySelectorAll('p')].find((p) => p.textContent.includes('Farven er rigtig'));
+      const rækker = t ? [...t.querySelectorAll('tbody tr')].map((tr) => tr.firstElementChild.textContent.replace(/\\s+/g, '')) : [];
+      return { rækker, domOver: !!dom && !!t && dom.getBoundingClientRect().bottom <= t.getBoundingClientRect().top + 1 };
+    })()`);
+    tjek(r.rækker.length === 5 && r.rækker[0].includes('♥E') && r.rækker[1].includes('♥4') && /ditsvar/.test(r.rækker[1]), 'Find udspillets facit ved 390 px (♥4): ♥4 har sin egen række lige under ♥E', JSON.stringify(r.rækker));
+    tjek(r.domOver, 'Find udspillets facit ved 390 px (♥4): domsteksten står over tabellen');
+    await s.luk();
+  });
+  // Mock-up 5 og specens "Fra 1000 px": meldeforløbet og hånden til venstre, spørgsmålet og facit til højre.
+  for (const [bredde, højde] of [[1280, 900], [1000, 700]]) {
+    await del(`Find udspillet: bredt layout ved ${bredde} × ${højde}`, async () => {
+      s = await åbnTestside(bredde, højde, 'find-udspil', 3, UDSPIL[3], 'standard');
+      await toSpalter(s, '[data-ovelse]', `Find udspillet ved ${bredde} px`, { toppe: true });
+      await ingenOverlap(s, `Find udspillet ved ${bredde} × ${højde}`);
+      await svarUdspil(s, 'Hjerter 4');
+      await toSpalter(s, '[data-ovelse]', `Find udspillets facit ved ${bredde} px`, { toppe: true });
+      await ingenOverlap(s, `Find udspillets facit ved ${bredde} × ${højde}`);
+      const f = await s.kør(`(() => {
+        const rod = document.querySelector('[data-ovelse]');
+        const v = rod.querySelector(':scope > .wide-left'), h = rod.querySelector(':scope > .wide-right');
+        const skema = [...document.querySelectorAll('table')].find((t) => (t.getAttribute('aria-label') || '').trim() === 'Meldeforløbet');
+        const q = [...document.querySelectorAll('h1')].find((x) => x.textContent.trim().endsWith('?')), dom = document.querySelector('[data-dom]');
+        const synlig = (e) => !!e && e.getClientRects().length > 0;
+        return { venstre: !!v && v.contains(skema) && synlig(v.querySelector('[data-haand="dig"]')),
+          højre: !!h && h.contains(q) && h.contains(dom), under: !!q && !!dom && dom.getBoundingClientRect().top >= q.getBoundingClientRect().bottom - 1 };
+      })()`);
+      tjek(f.venstre, `Find udspillets facit ved ${bredde} px: meldeforløbet og hånden står i venstre spalte`, JSON.stringify(f));
+      tjek(f.højre && f.under, `Find udspillets facit ved ${bredde} px: spørgsmålet og facit står til højre, facit under spørgsmålet`, JSON.stringify(f));
+      await rødtKunPåSymbolerne(s, `Find udspillets facit ved ${bredde} px`);
+      await s.luk();
+    });
+  }
+  // Kun CSS skifter: HTML'en er den samme ved 390 og 1280 px, før og efter svaret.
+  await del('Find udspillet: samme HTML ved 390 og 1280 px', async () => {
+    const html = async (bredde) => {
+      const t = await åbnTestside(bredde, 900, 'find-udspil', 3, UDSPIL[3], 'standard');
+      const før = await t.kør(OPGAVENS_HTML);
+      await svarUdspil(t, 'Hjerter 4');
+      const efter = await t.kør(OPGAVENS_HTML);
+      await t.luk();
+      return [før, efter];
+    };
+    const [smal, bred] = [await html(390), await html(1280)];
+    tjek(smal[0] === bred[0], 'Find udspillet: samme HTML ved 390 og 1280 px');
+    tjek(smal[1] === bred[1], 'Find udspillets facit: samme HTML ved 390 og 1280 px');
+  });
+  // Rødt kun på ♥ og ♦ med alle profiler på niveau 1 og 3, før og efter svaret.
+  await del('Find udspillet: rødt kun på ♥ og ♦', async () => {
+    for (const profil of ['standard', 'omvendt', 'kompendiet']) {
+      for (const niveau of [1, 3]) {
+        const hvor = `Find udspillet, ${profil}, niveau ${niveau}`;
+        s = await åbnTestside(390, 844, 'find-udspil', niveau, UDSPIL[niveau], profil);
+        await rødtKunPåSymbolerne(s, `${hvor}: opgaven`);
+        await svarModspil(s);
+        await rødtKunPåSymbolerne(s, `${hvor}: facit`);
+        await s.luk();
+      }
+    }
+  });
+  // Tastaturet: Tab når den første farveknap, Enter svarer, og Tab når Næste opgave.
+  await del('Find udspillet: tastaturet', async () => {
+    s = await åbnTestside(1280, 900, 'find-udspil', 1, UDSPIL[1], 'standard');
+    await s.kør('document.activeElement?.blur(); window.scrollTo(0, 0); true');
+    let fokus = '';
+    for (let i = 0; i < 60 && !FARVE_LABEL.test(fokus); i++) {
+      await s.tryk('Tab');
+      fokus = await s.kør(FOKUS);
+    }
+    tjek(fokus === 'Spar, 4 kort', 'Find udspillet med tastatur: Tab når den første farveknap', fokus);
+    await s.tryk('Enter');
+    await venteTil(s, '[data-dom]', 'Facit');
+    for (let i = 0; i < 60 && fokus !== 'Næste opgave'; i++) {
+      await s.tryk('Tab');
+      fokus = await s.kør(FOKUS);
+    }
+    tjek(fokus === 'Næste opgave', 'Find udspillet med tastatur: Tab når Næste opgave', fokus);
+    await s.luk();
+  });
 }
 
 /** Alle Modspils tjek i Chrome. */
@@ -888,6 +1119,8 @@ async function tjekModspil() {
     }
   });
   await del('Modspil: tastaturet hele vejen', tastaturHeleVejen);
+  // Modspil v2, øvelse 8 (SPEC-modspil-v2.md, trin 3).
+  await tjekFindUdspil();
 }
 
 // Appen før: en worktree af tagget med node_modules lånt fra arbejdsmappen (en junction på Windows).

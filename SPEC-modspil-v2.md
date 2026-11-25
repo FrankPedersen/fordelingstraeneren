@@ -53,7 +53,7 @@ Trin 2 startes først, når trin 1 er flettet, og trin 3, når trin 2 er flettet
 | Lagring | `modspil:v1` får ét valgfrit felt til øvelse 8 (trin 3) | ny nøgle, ændring af eksisterende felter |
 | Designtokens | ingen nye | – |
 
-Trin 3 må desuden ændre `src/ui/Footer.tsx` og `src/sidefod.test.tsx` (sidefoden med Modspil), `src/app/GuideScreen.tsx` (kun nye linjer), `src/sprog/bydeform.ts` ("Find udspillet" på undtagelseslisten), `scripts/ordliste.txt`, `scripts/tjek-bred-layout.mjs`, `scripts/modspil.html`, `docs/specs/design/modspil-v2/` (mock-up'ens kopi) og `src/modspil/udspil/data.test.ts` (kun tidsgrænsen på 30 s for testen "antallet", som kan løbe over 5 s i den fulde suite; Franks valg 25. nov.).
+Trin 3 må desuden ændre `src/ui/Footer.tsx` og `src/sidefod.test.tsx` (sidefoden med Modspil), `src/app/GuideScreen.tsx` (kun nye linjer), `src/sprog/bydeform.ts` ("Find udspillet" på undtagelseslisten), `scripts/ordliste.txt`, `scripts/tjek-bred-layout.mjs`, `scripts/modspil.html`, `docs/specs/design/modspil-v2/` (mock-up'ens kopi) og `src/modspil/udspil/data.test.ts` (kun tidsgrænsen på 30 s for testen "antallet", som kan løbe over 5 s i den fulde suite; Franks valg 25. nov.). Efter Franks valg i session 3a (25. nov. 2026) også `src/app/forside.test.tsx` og `scripts/tjek-sidefod.mjs` (sidefoden med seks trænere) og v1's `src/modspil/ui/session.test.tsx` (kun så løkken også besvarer øvelse 8).
 
 Kræver noget andet en ændring uden for afgrænsningen, stopper Claude Code og spørger. Alle eksisterende tests skal bestå uændret, bortset fra dem, trin 3 nævner.
 
@@ -214,14 +214,14 @@ Eksemplet er S1-1nt-3nt, opgave 55 (seed 2556829236), profilen Standard: Vest �
   - Niveau 1–2: farvens værdi fra facit (`tabel`).
   - Niveau 3–5: tabellen viser profilens kort pr. farve; prisen for det valgte kort regnes fra `kortTabel`. Er det valgte kort ikke profilens, får det sin egen række ("dit svar") lige under farvens række, og domsteksten fra `bedoemUdspil` står over tabellen.
   - Er prisen for et forkert svar under 0,1 stik (kun muligt med et kort, der ikke er profilens), står der "koster under 0,1 stik i snit".
-  - Et rigtigt svar har ingen pris. Scoringen forbliver rigtigt eller forkert, og modellen fra trin 2 ændres ikke (prisen regnes i skærmens kode eller en ny hjælper i `src/modspil/`).
-- **Sessionen:** øvelse 8 indgår i dagens session med sin egen Leitner-post og samme regler som v1's øvelser. Datasættet indlæses dovent første gang, øvelse 8 bruges.
+  - Et rigtigt svar har ingen pris, og kolonnen "Koster" står da med "–" i alle rækker (Franks valg 25. nov. 2026, session 3a). Scoringen forbliver rigtigt eller forkert, og modellen fra trin 2 ændres ikke (prisen regnes i skærmens kode eller en ny hjælper i `src/modspil/`).
+- **Sessionen:** øvelse 8 indgår i dagens session med sin egen Leitner-post og samme regler som v1's øvelser: den trækkes i niveaufasen som v1's øvelser fra niveau 1, og en forfalden post kommer først som repetition (Franks valg 25. nov. 2026, session 3a). Datasættet indlæses dovent første gang, øvelse 8 bruges.
 - **Fra 1000 px:** meldeforløbet og hånden til venstre, spørgsmålet og facit til højre. Kun CSS skifter.
 - **Rødt kun på ♥ og ♦,** som v1.
 
 ## Sidefoden (Franks svar 11)
 
-Modspil kommer med under "Trænere" efter Håndevaluering: `#modspil` i appen, "Modspil" / "Defence" (Franks ja 21. nov.). `src/sidefod.test.tsx` rettes fra fem til seks trænere, og `scripts/tjek-sidefod.mjs` køres.
+Modspil kommer med under "Trænere" efter Håndevaluering: `#modspil` i appen, "Modspil" / "Defence" (Franks ja 21. nov.). `src/sidefod.test.tsx` og `src/app/forside.test.tsx` rettes fra fem til seks trænere, `scripts/tjek-sidefod.mjs` får Modspil i Trænere og `#modspil` blandt skærmene (Franks valg 25. nov. 2026, session 3a), og scriptet køres.
 
 ## Accepttest for trin 3 (skrives først, røde)
 
@@ -233,7 +233,7 @@ Modspil kommer med under "Trænere" efter Håndevaluering: `#modspil` i appen, "
 6. Sprog: dansk og engelsk, husets ord og beskrivende form; "Find udspillet" står på undtagelseslisten.
 7. Sidefoden har seks trænere med Modspil efter Håndevaluering, og `tjek-sidefod.mjs` er grøn ved 1280, 390 og 320 px.
 8. Lagring: `modspil:v1` med det nye felt overlever genindlæsning, eksport og import, og data uden feltet læses som før.
-9. Alle eksisterende tests består uændret, bortset fra `src/sidefod.test.tsx` og tidsgrænsen på 30 s for testen "antallet" i `src/modspil/udspil/data.test.ts` (intet andet i filen ændres); pixelsammenligningerne er mod `v47-foer-udspil-skaerme`.
+9. Alle eksisterende tests består uændret, bortset fra `src/sidefod.test.tsx`, `src/app/forside.test.tsx` og `scripts/tjek-sidefod.mjs` (seks trænere), `src/modspil/ui/session.test.tsx` (løkken besvarer også øvelse 8; Franks valg i session 3a) og tidsgrænsen på 30 s for testen "antallet" i `src/modspil/udspil/data.test.ts` (intet andet i filen ændres); pixelsammenligningerne er mod `v47-foer-udspil-skaerme`.
 10. **Prisen**, med faste eksempler fra datasættet: S1 opgave 55 (seed 2556829236), Standard, niveau 1 med svaret ♦ koster 0,5 og ♠ 0,9; niveau 3 med svaret ♥4 koster 0,8 og har sin egen række; et forkert kort under 0,1 stik fra det bedste giver "koster under 0,1 stik i snit" (testen finder et i datasættet); et rigtigt svar har ingen pris og ingen kolonneværdi ud over "–". Rundingen testes på begge sider af 0,05 (fx 0,45 → 0,5 og 0,44 → 0,4). Dansk og engelsk.
 
 ## Arbejdsgang (trin 3)
@@ -267,6 +267,11 @@ Accepttest (3a), byggeri (3b), hele suiten, browsertjek og skærmbilleder i en s
 **Franks valg efter mock-up'en, 25. nov. 2026:**
 - Facit viser prisen (mock-up'ens variant med prisen; se "Skærmen").
 - Testen "antallet" i `src/modspil/udspil/data.test.ts` får en tidsgrænse på 30 s på trin 3's gren.
+
+**Franks valg i session 3a, 25. nov. 2026** (Claude Code spurgte, fordi specen stødte mod "eksisterende tests uændret"):
+- Øvelse 8 trækkes i niveaufasen som v1's øvelser fra niveau 1. v1's `src/modspil/ui/session.test.tsx` kører en hel session for en ny bruger og krævede, at hver opgave var en af v1's syv øvelser og kunne besvares med "Kan ikke afgøres" eller et kort; den må rettes, kun så løkken også besvarer øvelse 8 (venter på datasættet og vælger den første farve eller det første kort). Alternativet var kun at trække øvelse 8, når datasættet allerede er hentet.
+- Sidefoden med seks trænere: også `src/app/forside.test.tsx` (sidefodens Trænere) og `scripts/tjek-sidefod.mjs` (`KOLONNER` og skærmene) tjekker listen og må rettes; intet andet i filerne.
+- Kolonnen "Koster" står med "–" i alle rækker efter et rigtigt svar (specens ordlyd); priserne vises kun efter et forkert svar.
 
 **Franks bekræftelser, 24. nov. 2026:**
 - Opgaver, hvor Kompendiet og dobbeltdummy er uenige, vises fra niveau 4 (svar 9).
@@ -360,6 +365,43 @@ Accepttest (3a), byggeri (3b), hele suiten, browsertjek og skærmbilleder i en s
   **Tokenforbrug:** Claude Code kan ikke selv aflæse forbruget, så de fire tal står som "–" under "Tokenforbrug pr. session". Næste: Frank gennemgår "Tekster til gennemgang" og prøver modellen; efter "godkendt" kører session 2c hele suiten, fletter og pusher, og `../SYSTEM.md` og CLAUDE.md's beskrivelse af modellen opdateres da. Der er ikke flettet eller pushet.
 
 - **Session 2c, godkendelsen og fletningen (25. nov. 2026):** Frank godkendte trin 2 den 25. nov. 2026 med S6-rettelsen. "Ved bordet" for S6 siger nu "… og kan derfor være et stærkt udspil." / "… and can therefore be a strong lead." i `findUdspilTekst.ts` og under "Tekster til gennemgang"; ingen test er rettet. `npx vitest run src/modspil src/sprog` (PowerShell) gav 312 bestået og 2 sprunget over og én fejl: `src/modspil/udspil/data.test.ts` ("antallet", S2) løb over tidsgrænsen på 5 s under den parallelle kørsel; filen alene er grøn (32 af 32, 16 s), så fejlen var belastning og ikke en ændring. **Hele suiten** (`npm test` i forgrunden, PowerShell): `tsc` er grøn, og Vitest giver 157 filer, 1166 tests bestået og 2 sprunget over (295 s). **Tokenforbrug:** Claude Code kan ikke selv aflæse tallene, så de står som "–" nedenfor. **Fletningen:** grenen `udspil-model` (sidste commit `72c4106`) er flettet ind på `main` med `--no-ff` i `3ea2dda` og pushet, og grenen er slettet lokalt (den lå aldrig på GitHub). `npm test` på `main`: første kørsel 4 røde og anden 8 røde, alle den samme test, `src/modspil/udspil/data.test.ts` "antallet" (trin 1), som løb over standardens 5 s (5–8 s) under den parallelle kørsel; filen alene er grøn (32 af 32), og tredje fulde kørsel er grøn: 157 filer, 1166 bestået og 2 sprunget over (321 s). Ingen test og ingen kode er rettet; testen mangler tidsgrænsen på 30 s, som CLAUDE.md giver andre tunge tests, og det afgøres af Frank. Taget `v46-foer-udspil-model` (`d6653ae`) står. Intet live-tjek, fordi intet er synligt i appen. Specen bliver i roden til trin 3. Næste: mock-up'en ("Modspil v2 – mockup", rådgiveren), så trin 3 (`udspil-skaerme`, tag før `v47-foer-udspil-skaerme`).
+
+- **Session 3a, accepttestene for trin 3 (25. nov. 2026):** `main` (`09f0947`) er tagget `v47-foer-udspil-skaerme`, og grenen `udspil-skaerme` er oprettet. Første commit (`705700a`) er specen og mock-up'ens kopi i `docs/specs/design/modspil-v2/`, andet (`490acf2`) tidsgrænsen på 30 s for "antallet" i `src/modspil/udspil/data.test.ts` (intet andet i filen). Specen stødte to steder mod "eksisterende tests uændret" og var tvetydig om kolonnen Koster; Claude Code spurgte, og svarene står ovenfor under "Franks valg i session 3a". **Skrevet:** tre tomme moduler, hvor skærmen og hver funktion kaster "ikke bygget": `src/modspil/ui/FindUdspil.tsx` (skærmen med props som v1's `Opgave`), `src/modspil/model/udspilPris.ts` (`udspilPris` og `prisTekst`) og `src/modspil/training/findUdspil.ts` (`FIND_UDSPIL`, `udspilIOpgave`, `udspilPost` og `medUdspilPost`); accepttestene i `src/modspil/udspil-skaerme/` med fælles testkode og hele grænsefladen i `hjaelp.tsx`; rettelserne i `src/sidefod.test.tsx`, `src/app/forside.test.tsx` og v1's `src/modspil/ui/session.test.tsx`; og Chrome-delen: `scripts/tjek-bred-layout.mjs` (tagget er nu `v47-foer-udspil-skaerme`, øvelse 8's tjek står i `tjekFindUdspil`, og v1's tjek og tastaturturen klarer en session, hvor øvelse 8 trækkes), `scripts/modspil.html` (`?ovelse=find-udspil&niveau=…&seed=…&profil=…`) og `scripts/tjek-sidefod.mjs` (seks trænere og `#modspil`).
+
+  | Accepttest | Fil | Tests | Røde |
+  | --- | --- | --- | --- |
+  | 1 Sessionen med øvelse 8 (og lodtrækningen i niveaufasen) | `session.test.tsx` | 4 | 4 |
+  | 2 Farve- og kortknapperne | `knapper.test.tsx` | 4 | 4 |
+  | 3 Facit | `facit.test.tsx` | 4 | 4 |
+  | 4 Skærmene som mock-up'en (jsdom; Chrome i `tjek-bred-layout.mjs`) | `skaerme.test.tsx` | 5 | 5 |
+  | 5 Rødt, tilgængelighed og tastatur (jsdom; Chrome i `tjek-bred-layout.mjs`) | `roedt-tilgaengelighed.test.tsx` | 4 | 2 |
+  | 6 Sproget | `sprog.test.tsx` | 6 | 4 |
+  | 7 Sidefoden (Chrome i `tjek-sidefod.mjs`) | `src/sidefod.test.tsx` (2 rettede af 3) og `src/app/forside.test.tsx` (1 rettet af 12) | 3 | 3 |
+  | 8 Lagringen | `lagring.test.tsx` | 6 | 6 |
+  | 9 Intet andet er ændret | `intet-andet.test.ts` | 4 | 0 |
+  | 10 Prisen | `pris.test.tsx` | 14 | 13 |
+  | **I alt** | | **54** | **45** |
+
+  Filerne uden sti ligger i `src/modspil/udspil-skaerme/`.
+
+  **Røde, og hvorfor:** `npx tsc --noEmit` er grøn, og `node --check` er grøn for de to scripts. `npx vitest run src/modspil/udspil-skaerme src/sidefod.test.tsx src/app/forside.test.tsx` (PowerShell, med filerne lagt i git): af de 51 nye tests er 42 røde, og 41 af dem fejler med "Error: ikke bygget" fra de tomme moduler (talt i Vitests JSON-rapport), ingen på en typefejl. Fire tests fejler på en forventning, fordi de ser på kode, der allerede findes: "Find udspillet" står endnu ikke på undtagelseslisten i `src/sprog/bydeform.ts`, og de tre rettede sidefodstests fejler, fordi sidefoden har fem trænere. De 9 grønne tester ikke skærmene: accepttest 9 (fire tests; ændringerne siden tagget er alle tilladte), "testen kan se forskel" i 5 og 6 (tre), kontrollen af mock-up'ens eksempel i 10 (seed 35 og 48 giver S1 opgave 55 med mock-up'ens tal) og "de eksisterende sprogtjek læser øvelse 8's skærm" i 6, som kun kræver, at `FindUdspil.tsx` ligger i git (`danishTexts()` læser filerne med `git ls-files`; før filerne blev lagt i git, var den rød). Chrome-delen (`node scripts/tjek-bred-layout.mjs --modspil` og `node scripts/tjek-sidefod.mjs`) er ikke kørt (3c); øvelse 8's tjek fejler, indtil skærmen er bygget, fordi testsiden ikke kan vise den. Husets ord og bydeform er tjekket på de nye kildefiler uden for testfilerne (`hjaelp.tsx` og de tre tomme moduler) med `fund` og `bydeform` direkte: ingen fund. `src/sprog` er ikke kørt.
+
+  **`npx vitest run src/modspil`** (PowerShell, 76 s, med filerne lagt i git): 43 testfiler og 352 tests. v1 (20 filer): 147 bestået og 2 sprunget over som før, også den rettede sessionstest; trin 1 (6 filer): 74 bestået; trin 2 (8 filer): 78 bestået; trin 3 (9 filer): 9 bestået og 42 røde som ovenfor. Hele suiten er ikke kørt (3c).
+
+  **Claude Codes valg i accepttestene** (3b følger dem; Frank kan rette dem):
+  1. Prisen regnes i en ny hjælper, `src/modspil/model/udspilPris.ts`: `udspilPris(opgave, svar)` giver svarets pris i hundrededele (null ved et rigtigt svar) og tabellens rækker i skærmens rækkefølge, og `prisTekst` viser prisen med én decimal som `tiendedele`. Testene regner det samme uafhængigt ud fra facit fra trin 2 (`forventedeRaekker` i `hjaelp.tsx`). "Det bedste svar" er den bedste farves værdi (`tabel`), så et kort, der ikke er profilens, kan koste under 0,1 stik eller mindre end nul: ♥K i eksemplet koster 0 og giver "koster under 0,1 stik i snit". Cellen i Koster for et sådant kort er fri.
+  2. Øvelse 8 i sessionen: `nextMsStep` trækker øvelse 8 med chancen 1/(k + 1), hvor k er antallet af v1's øvelser, profilen har på niveauet (én øvelse mere i v1's lodtrækning), på brugerens niveau. Sessionen holder kun `{ niveau, seed }` (`udspilIOpgave`), så lodtrækningen ikke venter på datasættet. Testen tjekker andelen over 1000 faste seeds pr. niveau med en tolerance på 0,05.
+  3. Leitner-posten står i det ene valgfrie felt, fordi `items` og `answers` kun godtager v1's syv øvelser (`OVELSER` i v1's generator, der ikke må ændres). Feltets navn og form er 3b's; testene finder det som det felt, `medUdspilPost` tilføjer. Et ugyldigt felt noteres i `problems`, og der gemmes en kopi, som ved v1's valgfrie felter. Accepttest 1 lægger en forfalden post i lagringen, så øvelse 8 kommer først som repetition; ellers ville testen afhænge af lodtrækningen.
+  4. Skærmen: farveknapperne har aria-label "Spar, 4 kort" (mock-up 1) og kortknapperne "Spar konge" (som v1), og begge står i gruppen "Svar". I facit står linjen "Dit svar: …" i et `<p>`; tabellen er en rigtig `<table>` (mock-up'en har div'er) med kolonneoverskrifterne i `<th>`, og de rigtige rækker har "✓" og det forkerte svar "dit svar" i første celle. Svarknapperne er deaktiveret i facit, og det valgte svar har `aria-pressed="true"` (mock-up 5). Overskriften er "Forkert: ♥ giver flest stik" og "Forkert: ♥E giver flest stik" i mock-up'ens eksempler; ellers kræves kun, at den begynder med "Rigtigt" eller "Forkert". Rækker med lige mange stik må bytte plads.
+  5. Mærket er "<profil> · <metode>" med metoden for udspillet mod kontraktens art (mock-up'en: "Standard · 4.-højeste"), og øvelsens navn har en ⓘ ("Hjælp: Find udspillet"), som nye elementer skal have.
+  6. Mock-up 3 viser ikke hånden ved 390 px på niveau 3–5, men mock-up 5 viser den til venstre ved 1280 px. HTML'en er den samme ved alle bredder, så testene kræver hånden i HTML'en på alle niveauer; Chrome-tjekket godtager, at den er skjult med CSS ved 390 px på niveau 3–5. Facit-mock-up'erne ved 390 px viser meldeforløbet trukket sammen på én linje; testene følger v1, hvor opgaven står uændret over facit.
+  7. Mock-up'ens eksempel nås med opgavens seed 35 (niveau 1) og 48 (niveau 3) med Standard. Med Standard er ♥E og ♥3 begge rigtige ("table feeling" fra ♥E K 4 3), så ♥4 er forkert med farven rigtig, som i mock-up 4.
+  8. Specen giver ikke spørgsmålet og "under 0,1"-linjen på engelsk; testene kræver kun specens "Your answer: ♦ · costs 0.5 tricks on average", "… 0.1 tricks on average" og ingen dansk.
+  9. I Chrome finder v1's tjek af bredt layout og samme HTML deres v1-opgave ved at besvare øvelse 8, hvis den trækkes først (`tilV1Opgave`), og tastaturturen godtager en farveknap som svar. Pixelsammenligningen skjuler stadig Modspils afsnit i vejledningen, så 3b's nye linjer om øvelse 8 skal stå i det afsnit.
+
+  **Til 3b:** skærmen, prisen og sessionen bygges efter `hjaelp.tsx` og de tre tomme moduler; "Find udspillet" kommer på undtagelseslisten; Modspil kommer i `src/ui/Footer.tsx`; og vejledningen og CLAUDE.md udvides. `../SYSTEM.md` får Franks valg fra 3a i beslutningsloggen, når trin 3 flettes (3d), som i 1c og 2c.
+
+  **Tokenforbrug:** Claude Code kan ikke selv aflæse tallene, så de står som "–" nedenfor. Der er ikke flettet eller pushet.
 
 **Krav til gennemgang (session 1a):** **Godkendt af Frank 25. nov. 2026** (kravene, Kompendiets regler med svarene a–d og de otte eksempler). Frank godkender punkt 1–4, før generatoren køres. Ændres et krav, en regel eller et eksempel, rettes kun `situationer.json`.
 
@@ -478,3 +520,4 @@ Accepttest (3a), byggeri (3b), hele suiten, browsertjek og skærmbilleder i en s
 - Session 2a: – / – / – / – (udfyldes fra Franks `/usage`; Claude Code kan ikke selv aflæse tallene)
 - Session 2b: – / – / – / – (udfyldes fra Franks `/usage`)
 - Session 2c: – / – / – / – (udfyldes fra Franks `/usage`)
+- Session 3a: – / – / – / – (udfyldes fra Franks `/usage`)
