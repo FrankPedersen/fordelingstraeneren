@@ -250,6 +250,21 @@ Accepttest (3a), byggeri (3b), hele suiten, browsertjek og skærmbilleder i en s
 - **Session 1a (25. nov. 2026):** `main` er tagget `v45-foer-udspil-data`, og grenen `udspil-data` er oprettet. Situationsfilen, porten af `rng.ts` og `dealer.ts`, generatoren, kontrollen og accepttestene er skrevet og committet. Generatoren er prøvekørt på én opgave og eksemplet pr. situation uden for repoet (intet datasæt er committet). På prøvedataene er accepttest 3, 4 og 6 grønne, og accepttest 5 fejler kun på antallet (1 opgave i stedet for 50): TS og Python er enige om hver hånd, hver fordeling og hvert sprunget seed. Accepttest 1, 2 og 7 er grønne nu; 3–6 og stabiliteten er røde, indtil Frank har kørt generatoren og kontrollen (`tools/udspil/README.md`). Stop: Frank godkender "Krav til gennemgang" nedenfor.
 - **Kørslen (25. nov. 2026):** Frank kørte `generer.py --alle` og `kontrol.py --alt` i PowerShell (Python 3.13, endplay 0.5.12): 50 opgaver og ét eksempel pr. situation, 100 fordelinger.
 - **Session 1b, første forsøg (25. nov. 2026):** 82 af 83 tests bestod. Stabilitetstesten fejlede på S1-1nt-3nt, seed 2085890785 (♠ D 10 9 5 4 ♥ 9 7 ♦ E 10 9 8 ♣ 9 4): ♠ var bedst i begge regninger, men middelstikket for ♠5 afveg 0,26 stik (3,07 mod 2,81). Med 100 fordelinger er standardfejlen på forskellen ca. 0,2 stik, så grænsen på 0,25 stik var strammere, end data kan holde. **Franks valg:** grænsen er højst 3 standardfejl på forskellen pr. opgave, √(s₁²/n₁ + s₂²/n₂) for farvens kort; kravet om samme bedste farve i mindst 90 % er uændret. `stabilitet.test.ts` er rettet, data er uændret, og session 1b køres igen.
+- **Session 1b, andet forsøg (25. nov. 2026):** Franks valg: grænsen på 3 standardfejl beholdes, og der kommer ingen 90 %-regel ud over kravet om samme bedste farve. `npx vitest run src/modspil/udspil` er grøn (7 filer, 83 tests) uden at nogen test er rettet, og `npm test` er grøn (tsc og Vitest: 149 filer, 1088 tests bestået og 2 sprunget over, 273 s). **Rapporttal** (400 opgaver, 50 pr. situation; regnet af datasættet med profilen Standard; "råd" er, at mindst én af de bedste farver, under 0,1 stik fra den bedste, er blandt Kompendiets; "strengt" er, at den ene bedste farve er det; standardfejlen er på forskellen mellem bedste og næstbedste farves bedste kort, parret over de 100 fordelinger):
+
+  | Situation | Råd blandt de bedste | Strengt | Klare opgaver (forspring ≥ 0,3) | Median standardfejl |
+  | --- | --- | --- | --- | --- |
+  | S1-1nt-3nt | 96 % | 90 % | 12 % | 0,10 |
+  | S2-stayman | 96 % | 82 % | 6 % | 0,08 |
+  | S3-transfer | 100 % | 92 % | 6 % | 0,06 |
+  | S4-kun-en-farve | 72 % | 54 % | 2 % | 0,05 |
+  | S5-sidefarve | 98 % | 84 % | 8 % | 0,06 |
+  | S6-trumf | 56 % | 40 % | 4 % | 0,06 |
+  | S7-makker-aabnet | 96 % | 92 % | 50 % | 0,10 |
+  | S8-delkontrakt | 94 % | 82 % | 2 % | 0,05 |
+  | **I alt** | **88,5 %** | **77 %** | **11,3 %** | **0,06** |
+
+  Kun få opgaver er klare: i S4 og S8 er det 1 af 50, i S6 2 af 50. Stabilitetstesten (5 opgaver pr. situation) kontrollerer derfor kun de klare blandt dem, og tallene viser, at den bedste farve oftest er tæt på den næstbedste. I 1 opgave i S6 og 1 i S7 peger rådet ikke på nogen farve, Vest har (talt som uenig). Datafilerne (`src/modspil/content/udspil/*.json` og `tools/udspil/raa/`) er committet; der er ikke flettet.
 
 **Krav til gennemgang (session 1a):** **Godkendt af Frank 25. nov. 2026** (kravene, Kompendiets regler med svarene a–d og de otte eksempler). Frank godkender punkt 1–4, før generatoren køres. Ændres et krav, en regel eller et eksempel, rettes kun `situationer.json`.
 
