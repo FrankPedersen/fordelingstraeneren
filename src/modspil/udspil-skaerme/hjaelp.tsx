@@ -267,6 +267,11 @@ export interface ForventetRaekke {
   ditSvar: boolean;
   /** Rækken "dit svar" med et kort, der ikke er profilens (står lige under sin farves række). */
   egen: boolean;
+  /**
+   * Niveau 3–5: rækken med det andet kort ved "table feeling" (står lige under sin farves række med mærket "table
+   * feeling", egne stik og sin pris; SPEC-modspil-kompas.md).
+   */
+  tableFeeling: boolean;
   koster: number | null;
 }
 
@@ -282,23 +287,35 @@ export function forventetPris(o: FindUdspilOpgave, svar: UdspilSvar): number | n
 
 /**
  * Tabellens rækker (specen, "Skærmen" og "Prisen"): én pr. farve med flest stik først (står to farver lige, er
- * rækkefølgen mellem dem fri), og ved et kort, der ikke er profilens, rækken "dit svar" lige under sin farves række.
- * Koster: det bedste svars middelstik minus rækkens efter et forkert svar, "–" (null) i de rigtige rækker og i alle
- * rækker efter et rigtigt svar (Franks valg 25. nov. 2026, session 3a).
+ * rækkefølgen mellem dem fri). Koster: det bedste svars middelstik minus rækkens efter et forkert svar, "–" (null) i de
+ * rigtige rækker og i alle rækker efter et rigtigt svar (Franks valg 25. nov. 2026, session 3a).
+ *
+ * Fra niveau 3 (SPEC-modspil-kompas.md): giver profilen to kort i farven ("table feeling"), står kortet, der giver
+ * farvens værdi (højeste middelstik, så flest sætninger, så det laveste kort), i farvens række, og det andet kort får
+ * sin egen række lige under med egne stik og sætninger, mærket "table feeling" og altid sin pris. Har brugeren valgt
+ * det andet kort, står "dit svar" i dets række, også når svaret er rigtigt. Et kort, der ikke er profilens, får som
+ * før rækken "dit svar" lige under (efter en eventuel række for "table feeling").
  */
 export function forventedeRaekker(o: FindUdspilOpgave, svar: UdspilSvar): ForventetRaekke[] {
   const rigtigt = erRigtigt(o, svar);
   const top = Math.max(...o.facit.tabel.map((r) => h(r.middel)));
+  const k = (c: Card) => o.facit.kortTabel.find((x) => x.kort === c)!;
   const ud: ForventetRaekke[] = [];
   for (const r of [...o.facit.tabel].sort((a, b) => h(b.middel) - h(a.middel))) {
     const rigtig = o.facit.farver.includes(r.farve);
-    // Kortet, der giver farvens værdi: samme middelstik og sætninger (ved "table feeling" kan det være begge).
-    const kort = o.svar === 'kort' ? r.kort.filter((c) => o.facit.kortTabel.some((k) => k.kort === c && h(k.middel) === h(r.middel) && k.saet === r.saet)) : [];
-    const ditSvar = !rigtigt && ('farve' in svar ? svar.farve === r.farve : r.kort.includes(svar.kort));
-    ud.push({ farve: r.farve, kort, middel: r.middel, saet: r.saet, rigtig, ditSvar, egen: false, koster: rigtigt || rigtig ? null : top - h(r.middel) });
+    const stigende = [...r.kort].sort((a, b) => a - b);
+    const vaerdi = o.svar === 'kort' ? stigende.reduce((b, c) => (h(k(c).middel) > h(k(b).middel) || (h(k(c).middel) === h(k(b).middel) && k(c).saet > k(b).saet) ? c : b)) : undefined;
+    const andet = o.svar === 'kort' && r.kort.length === 2 ? r.kort.find((c) => c !== vaerdi) : undefined;
+    const valgtAndet = andet !== undefined && 'kort' in svar && svar.kort === andet;
+    const ditSvar = !rigtigt && !valgtAndet && ('farve' in svar ? svar.farve === r.farve : r.kort.includes(svar.kort));
+    ud.push({ farve: r.farve, kort: vaerdi === undefined ? [] : [vaerdi], middel: r.middel, saet: r.saet, rigtig, ditSvar, egen: false, tableFeeling: false, koster: rigtigt || rigtig ? null : top - h(r.middel) });
+    if (andet !== undefined) {
+      const x = k(andet);
+      ud.push({ farve: r.farve, kort: [andet], middel: x.middel, saet: x.saet, rigtig: false, ditSvar: valgtAndet, egen: false, tableFeeling: true, koster: top - h(x.middel) });
+    }
     if (!rigtigt && 'kort' in svar && farveAf(svar.kort) === r.farve && !r.kort.includes(svar.kort)) {
-      const k = o.facit.kortTabel.find((x) => x.kort === svar.kort)!;
-      ud.push({ farve: r.farve, kort: [svar.kort], middel: k.middel, saet: k.saet, rigtig: false, ditSvar: true, egen: true, koster: top - h(k.middel) });
+      const x = k(svar.kort);
+      ud.push({ farve: r.farve, kort: [svar.kort], middel: x.middel, saet: x.saet, rigtig: false, ditSvar: true, egen: true, tableFeeling: false, koster: top - h(x.middel) });
     }
   }
   return ud;
@@ -325,7 +342,7 @@ export function tjekTabel(o: FindUdspilOpgave, svar: UdspilSvar, sprog: 'da' | '
   expect(tabel, `${hvor}: facit-tabellen med kolonnerne ${KOLONNER[sprog].join(', ')}`).toBeTruthy();
   const vist = visteRaekker(tabel!);
   const ventet = forventedeRaekker(o, svar);
-  expect(vist.length, `${hvor}: én række pr. farve (og "dit svar")`).toBe(ventet.length);
+  expect(vist.length, `${hvor}: én række pr. farve (og "table feeling" og "dit svar")`).toBe(ventet.length);
   // Hver række hører til den farve, hvis symbol står i første celle (og ingen andres).
   const farveI = vist.map((r, i) => {
     const s = SYMBOLER.filter((x) => r.udspil.includes(x));
@@ -336,21 +353,24 @@ export function tjekTabel(o: FindUdspilOpgave, svar: UdspilSvar, sprog: 'da' | '
   const set = new Set<number>();
   vist.forEach((r, i) => {
     const f = farveI[i];
-    // Anden række med samme farve er rækken "dit svar" med et kort, der ikke er profilens, lige under farvens række.
-    const egen = set.has(f);
-    if (egen) expect(farveI[i - 1], `${hvor}, række ${i + 1}: "dit svar" står lige under sin farves række`).toBe(f);
+    // En række mere med samme farve står lige under farvens række: "table feeling" (med mærket) eller "dit svar" med et
+    // kort, der ikke er profilens.
+    const tf = /table feeling/i.test(r.udspil);
+    const egen = set.has(f) && !tf;
+    if (set.has(f)) expect(farveI[i - 1], `${hvor}, række ${i + 1}: rækken står lige under sin farves række`).toBe(f);
     set.add(f);
-    const v = ventet.find((x) => x.farve === f && x.egen === egen);
+    const v = ventet.find((x) => x.farve === f && x.egen === egen && x.tableFeeling === tf);
     const her = `${hvor}, række ${i + 1} (${r.udspil})`;
     expect(v, `${her}: rækken findes ikke i facit`).toBeTruthy();
     if (!v) return;
     if (v.kort.length) expect(v.kort.some((k) => tæt(r.udspil).includes(kortTekst(k, sprog))), `${her}: kortet ${v.kort.map((k) => kortTekst(k, sprog)).join(' eller ')}`).toBe(true);
     expect(r.udspil.includes('✓'), `${her}: ✓ i de rigtige rækker`).toBe(v.rigtig);
-    expect(/dit svar|your answer/i.test(r.udspil), `${her}: "dit svar" i rækken med det forkerte svar`).toBe(v.ditSvar);
+    expect(/dit svar|your answer/i.test(r.udspil), `${her}: "dit svar" i rækken med svaret`).toBe(v.ditSvar);
     expect(r.stik, `${her}: Stik`).toBe(tiendedele(v.middel, sprog));
     expect(r.saetter, `${her}: Sætter`).toBe(`${procent(v.saet, o.facit.fordelinger)}${procentTegn}`);
     if (v.koster === null) expect(r.koster, `${her}: Koster`).toBe('–');
     else if (v.koster >= 10) expect(r.koster, `${her}: Koster`).toBe(prisSomTekst(v.koster, sprog));
+    else expect(r.koster, `${her}: Koster under 0,1 stik`).not.toBe('–');
   });
   // Rækkefølgen: farvernes rækker med flest stik først (står to farver lige, må de bytte plads).
   const middel = (f: number) => h(o.facit.tabel.find((r) => r.farve === f)!.middel);

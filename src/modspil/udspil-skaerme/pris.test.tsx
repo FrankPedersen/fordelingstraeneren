@@ -58,6 +58,7 @@ afterEach(() => {
   setLang('da');
 });
 
+const HJERTER_3 = 14;
 const HJERTER_4 = 15;
 const HJERTER_E = 25;
 const HJERTER_K = 24;
@@ -69,10 +70,12 @@ function tjekRaekker(o: FindUdspilOpgave, svar: UdspilSvar, raekker: PrisRaekke[
   expect(raekker.length, `${hvor}: antal rækker`).toBe(ventet.length);
   const set = new Set<number>();
   raekker.forEach((r, i) => {
-    const egen = set.has(r.farve);
-    if (egen) expect(raekker[i - 1].farve, `${hvor}: "dit svar" lige under sin farve`).toBe(r.farve);
+    // En række mere med samme farve står lige under: "table feeling" eller "dit svar" (SPEC-modspil-kompas.md).
+    const tf = r.tableFeeling === true;
+    const egen = set.has(r.farve) && !tf;
+    if (set.has(r.farve)) expect(raekker[i - 1].farve, `${hvor}: rækken står lige under sin farve`).toBe(r.farve);
     set.add(r.farve);
-    const v = ventet.find((x) => x.farve === r.farve && x.egen === egen)!;
+    const v = ventet.find((x) => x.farve === r.farve && x.egen === egen && x.tableFeeling === tf)!;
     expect(v, `${hvor}, række ${i + 1}`).toBeTruthy();
     const her = `${hvor}, række ${i + 1}`;
     expect([r.middel, r.saet, r.rigtig, r.ditSvar, r.koster], her).toEqual([v.middel, v.saet, v.rigtig, v.ditSvar, v.koster]);
@@ -120,13 +123,14 @@ describe('Prisen regnes i hundrededele (accepttest 10, trin 3)', () => {
     ]);
   });
 
-  it('niveau 3: ♥4 koster 0,8 og har sin egen række lige under ♥E; ♥E og ♥3 er rigtige ("table feeling")', () => {
+  it('niveau 3: ♥4 koster 0,8 og har sin egen række under ♥E og ♥3; ♥E og ♥3 er rigtige ("table feeling", SPEC-modspil-kompas.md)', () => {
     const o = eksempel(data, 3);
     const p = udspilPris(o, { kort: HJERTER_4 });
     expect(p.pris).toBe(83);
     expect(prisTekst(83, 'da')).toBe('0,8');
     expect(p.raekker.map((x) => [x.farve, x.kort, x.rigtig, x.ditSvar, x.koster])).toEqual([
       [1, HJERTER_E, true, false, null],
+      [1, HJERTER_3, false, false, 83],
       [1, HJERTER_4, false, true, 83],
       [2, 27, false, false, 48],
       [3, 48, false, false, 49],
@@ -188,17 +192,20 @@ describe('Prisen på skærmen (accepttest 10, trin 3)', () => {
     expect(linje(eksempel(data, 1), { farve: 0 })).toBe('Dit svar: ♠ · koster 0,9 stik i snit');
   });
 
-  it('niveau 3 med ♥4: "Dit svar: ♥4 · koster 0,8 stik i snit", og ♥4 har sin egen række lige under ♥E', () => {
+  it('niveau 3 med ♥4: "Dit svar: ♥4 · koster 0,8 stik i snit", og ♥4 har sin egen række under ♥E og ♥3 (table feeling)', () => {
     const o = eksempel(data, 3);
     expect(linje(o, { kort: HJERTER_4 })).toBe('Dit svar: ♥4 · koster 0,8 stik i snit');
     tjekTabel(o, { kort: HJERTER_4 });
     const r = visteRaekker(facitTabel()!);
     expect(r[0].udspil).toContain('♥E');
     expect(r[0].udspil).toContain('✓');
-    expect(r[1].udspil.replace(/\s+/g, '')).toContain('♥4');
-    expect(r[1].udspil).toContain('dit svar');
+    expect(r[1].udspil.replace(/\s+/g, '')).toContain('♥3');
+    expect(r[1].udspil).toContain('table feeling');
+    expect(r[2].udspil.replace(/\s+/g, '')).toContain('♥4');
+    expect(r[2].udspil).toContain('dit svar');
     expect(r.map((x) => [x.stik, x.saetter, x.koster])).toEqual([
       ['3,4', '14 %', '–'],
+      ['2,5', '4 %', '0,8'],
       ['2,5', '4 %', '0,8'],
       ['2,9', '8 %', '0,5'],
       ['2,9', '7 %', '0,5'],
