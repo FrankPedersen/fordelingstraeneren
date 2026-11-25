@@ -36,8 +36,8 @@ export const VED_BORDET: Readonly<Record<SituationId, Tekst>> = {
     en: "A singleton in a side suit is the first choice, even in dummy's hearts. Otherwise the unbid suits, diamonds and clubs, are best, preferably from small cards rather than from honours, unless the leader holds a three-card honour sequence such as K Q J. With the ace and four or five cards in dummy's hearts the ace can also be a good lead.",
   },
   'S6-trumf': {
-    da: 'Syd har vist ♥ og ♣, og Nord er kort i ♥, så bordet kan trumfe Syds hjerter. Trumf ud fjerner bordets trumfer og er derfor et stærkt udspil.',
-    en: "South has shown hearts and clubs, and North is short in hearts, so dummy can ruff South's hearts. A trump lead removes dummy's trumps and is therefore a strong lead.",
+    da: 'Syd har vist ♥ og ♣, og Nord er kort i ♥, så bordet kan trumfe Syds hjerter. Trumf ud fjerner bordets trumfer og kan derfor være et stærkt udspil.',
+    en: "South has shown hearts and clubs, and North is short in hearts, so dummy can ruff South's hearts. A trump lead removes dummy's trumps and can therefore be a strong lead.",
   },
   'S7-makker-aabnet': {
     da: 'Når makker har åbnet med 1♥, er makkers farve næsten altid det rigtige udspil med to kort eller flere i ♥. Med singleton ♥ kræver et andet udspil en stærk sekvens som K D B eller K D 10.',
