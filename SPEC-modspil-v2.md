@@ -431,6 +431,8 @@ Accepttest (3a), byggeri (3b), hele suiten, browsertjek og skærmbilleder i en s
   **Til Frank:** hånden i S1 opgave 55 står som "12 HP" i store bogstaver på skærmbillederne, selv om teksten er "hp"; det er skriftens versaler i hånden ("Vest · dig · 12 hp"), og ikke ændret her. Intet er flettet eller pushet; `../SYSTEM.md` og CLAUDE.md's afsnit om Modspil v2 opdateres i 3d som planlagt.
   **Tokenforbrug:** Claude Code kan ikke selv aflæse forbruget, så de fire tal står som "–" under "Tokenforbrug pr. session".
 
+- **Session 3d, godkendelsen (25. nov. 2026):** Frank har godkendt trin 3 (grenen `udspil-skaerme`, sidste commit `eb604e7`), også "Tekster til gennemgang (trin 3)". Fletning, live-tjek og arkivering følger i denne session.
+
 **Krav til gennemgang (session 1a):** **Godkendt af Frank 25. nov. 2026** (kravene, Kompendiets regler med svarene a–d og de otte eksempler). Frank godkender punkt 1–4, før generatoren køres. Ændres et krav, en regel eller et eksempel, rettes kun `situationer.json`.
 
 1. **endplay og Python.** `endplay` 0.5.12 (den nyeste) har færdige hjul til Python 3.9–3.13 på Windows, men **ikke til 3.14**; på 3.14 vil pip bygge DDS fra kildekoden, hvilket kræver en C++-compiler og som regel fejler. Jeg har ikke kunnet prøve installationen på Franks pc (prøvekørslen kørte i en Linux-VM med Python 3.10). Derfor: **Python 3.13 installeres**, og venv'et laves med `py -3.13 -m venv tools\udspil\.venv` (`tools/udspil/README.md`). DDS er eksakt, så tallene bliver de samme på Windows.
