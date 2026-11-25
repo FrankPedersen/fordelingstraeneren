@@ -266,14 +266,16 @@ Accepttest (3a), byggeri (3b), hele suiten, browsertjek og skærmbilleder i en s
    | --- | --- | --- |
    | S1 | ♠ og ♥ | s. 11–12: major, helst den korteste; en kort major før en firefarve med honnør i minor |
    | S2 | ♠ og ♥ | s. 14: spilføreren har ofte minorerne; major, ofte den korteste, også singleton |
-   | S3 | ♥ med en dyb sekvens (mindst 5 kort, de fire øverste i træk med toppen mindst B), ellers ♠ | s. 14: sjældent bordets femfarve; lille fordel for den anden major |
+   | S3 | ♥ med en dyb sekvens (mindst 5 kort, de fire øverste i træk med toppen mindst B), ellers ♠, ♦ og ♣ (Franks svar b) | s. 14: sjældent bordets femfarve; lille fordel for den anden major |
    | S4 | singleton i en sidefarve, ellers doubleton i en sidefarve, ellers sidefarver uden honnør, ellers alle sidefarver | s. 19 |
    | S5 | singleton i ♥, ♦ eller ♣, ellers ♦ og ♣ | s. 20 |
    | S6 | ♣ (trumf) | s. 4 |
    | S7 | ♥ med 2+ kort, ellers en farve med en stærk sekvens (de tre øverste i træk eller brudt, fx K D B eller K D 10, toppen mindst B), ellers ♥ | s. 16 |
    | S8 | singleton i en sidefarve, ellers doubleton i en sidefarve, ellers alle sidefarver | s. 19 |
 
-   Spørgsmål til Frank: (a) S1 og S2 peger på begge majorer, ikke kun den korteste, så "afviger" (trin 2) kun gælder, når dobbeltdummy vil have en minor; skal det i stedet være den korteste major? (b) S3 peger kun på ♠, fordi Kompendiet nævner en lille fordel; skal det være alle farver undtagen ♥? (c) S5's "es i bordets farve med 4–5 kort" og S8's "E x og D x" er med i teksten, men ikke i reglerne. (d) S8: Kompendiets "singleton i en firfarve" er læst som en singleton i en sidefarve.
+   **Franks svar, 25. nov. 2026:** (a) S1 og S2 beholder begge majorer; (b) ja, S3 peger på alle farver undtagen ♥ (♥ kun med en dyb sekvens), og teksten nævner stadig den lille fordel for ♠; (c) S5's es i bordets farve står kun i teksten, ikke i reglen (S8's E x og D x er doubletons og dækkes af reglen); (d) ja, en singleton i en sidefarve.
+
+   Spørgsmålene var: (a) S1 og S2 peger på begge majorer, ikke kun den korteste, så "afviger" (trin 2) kun gælder, når dobbeltdummy vil have en minor; skal det i stedet være den korteste major? (b) S3 peger kun på ♠, fordi Kompendiet nævner en lille fordel; skal det være alle farver undtagen ♥? (c) S5's "es i bordets farve med 4–5 kort" og S8's "E x og D x" er med i teksten, men ikke i reglerne. (d) S8: Kompendiets "singleton i en firfarve" er læst som en singleton i en sidefarve.
 
 4. **De faste eksempler** (accepttest 6), én hånd pr. situation, regnet i prøvekørslen med 100 fordelinger. Farvens værdi er middelstikket for profilen Standards kort; rådets farve er den bedste i alle otte (i S1 og S2 med ♥ under 0,1 stik efter ♠).
 

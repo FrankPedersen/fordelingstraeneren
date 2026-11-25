@@ -71,7 +71,7 @@
         "tekstEn": "Dummy's five-card heart suit is rarely the right lead unless the leader has a deep sequence such as Q J 10 9 3. Among the other suits spades have a small edge, because the defence often holds seven cards in the other major.",
         "regler": [
           { "hvis": { "dybSekvens": "H" }, "udvalg": "farver", "blandt": ["H"] },
-          { "udvalg": "farver", "blandt": ["S"] }
+          { "udvalg": "farver", "blandt": ["S", "D", "C"] }
         ]
       },
       "eksempler": [{ "haand": "KQJ5.63.9742.853", "seed": 3611243 }]
