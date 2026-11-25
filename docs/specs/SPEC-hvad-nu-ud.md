@@ -1,6 +1,6 @@
 # SPEC-hvad-nu-ud
 
-25. november 2026 · Franks valg. Bygges på grenen `hvad-nu-ud`; `main` før er tagget `v48-foer-hvad-nu-ud`.
+25. november 2026 · Franks valg. Bygges på grenen `hvad-nu-ud`; `main` før er tagget `v48-foer-hvad-nu-ud`. Godkendt af Frank og flettet ind 25. november 2026 (`1680741`); grenen er slettet.
 
 ## Baggrund
 
