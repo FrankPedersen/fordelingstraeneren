@@ -31,6 +31,12 @@ export interface PrisRaekke {
    * rækker og alle rækker efter et rigtigt svar (Franks valg 25. nov. 2026, session 3a).
    */
   koster: number | null;
+  /**
+   * Niveau 3–5: rækken med det andet kort ved "table feeling" (profilen giver to kort i farven). Den står lige under
+   * farvens række med kortets egne stik og sætninger, mærket "table feeling" og altid sin pris; "dit svar" står her, når
+   * brugeren valgte kortet (SPEC-modspil-kompas.md, Franks valg 25. nov. 2026).
+   */
+  tableFeeling?: true;
 }
 
 export interface UdspilPris {
@@ -40,7 +46,10 @@ export interface UdspilPris {
    * profilens, kan den være under 10 og endda negativ.
    */
   pris: number | null;
-  /** Tabellens rækker i skærmens rækkefølge: flest stik først, og rækken "dit svar" lige under sin farves række. */
+  /**
+   * Tabellens rækker i skærmens rækkefølge: flest stik først, og under en farves række først rækken "table feeling" og
+   * så rækken "dit svar" med et kort, der ikke er profilens.
+   */
   raekker: PrisRaekke[];
 }
 
@@ -86,16 +95,24 @@ export function udspilPris(opgave: FindUdspilOpgave, svar: UdspilSvar): UdspilPr
   const raekker: PrisRaekke[] = [];
   for (const r of sorteret) {
     const rigtig = opgave.facit.farver.includes(r.farve);
-    const ditSvar = !rigtigt && ('farve' in svar ? svar.farve === r.farve : r.kort.includes(svar.kort));
+    const vaerdi = opgave.svar === 'kort' ? vaerdikort(opgave, [...r.kort].sort((a, b) => a - b)) : undefined;
+    // "Table feeling": profilens andet kort i farven får sin egen række lige under (SPEC-modspil-kompas.md).
+    const andet = vaerdi !== undefined && r.kort.length === 2 ? r.kort.find((c) => c !== vaerdi) : undefined;
+    const valgtAndet = andet !== undefined && 'kort' in svar && svar.kort === andet;
+    const ditSvar = !rigtigt && !valgtAndet && ('farve' in svar ? svar.farve === r.farve : r.kort.includes(svar.kort));
     raekker.push({
       farve: r.farve,
-      ...(opgave.svar === 'kort' ? { kort: vaerdikort(opgave, r.kort) } : {}),
+      ...(vaerdi !== undefined ? { kort: vaerdi } : {}),
       middel: r.middel,
       saet: r.saet,
       rigtig,
       ditSvar,
       koster: rigtigt || rigtig ? null : top - h(r.middel),
     });
+    if (andet !== undefined) {
+      const k = kortRaekke(opgave, andet);
+      raekker.push({ farve: r.farve, kort: andet, middel: k.middel, saet: k.saet, rigtig: false, ditSvar: valgtAndet, koster: top - h(k.middel), tableFeeling: true });
+    }
     // Et kort, der ikke er profilens, får sin egen række lige under sin farves række.
     if (!rigtigt && 'kort' in svar && farveAf(svar.kort) === r.farve && !r.kort.includes(svar.kort)) {
       const k = kortRaekke(opgave, svar.kort);

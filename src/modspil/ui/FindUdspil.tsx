@@ -150,20 +150,13 @@ function kosterTekst(koster: number | null): string {
   return koster < UNDER_TIENDEDEL ? `< ${prisTekst(UNDER_TIENDEDEL, sprog)}` : prisTekst(koster, sprog);
 }
 
-/** Første celle: farven eller kortet, og mærket "✓ bedst" eller "dit svar". */
-function UdspilCelle({ r, svar }: { r: PrisRaekke; svar: UdspilSvar }) {
-  // Ved "table feeling" kan svaret være profilens andet kort i farven; så står det efter kortet, der giver værdien.
-  const andetKort = r.ditSvar && 'kort' in svar && r.kort !== undefined && svar.kort !== r.kort ? svar.kort : undefined;
+/** Første celle: farven eller kortet og mærket "✓ bedst", "table feeling" eller "dit svar". */
+function UdspilCelle({ r }: { r: PrisRaekke }) {
   return (
     <>
       <SuitText text={r.kort === undefined ? SYMBOLER[r.farve] : kortTekst(r.kort, getLang())} />
-      {andetKort !== undefined && (
-        <>
-          {' · '}
-          <Kort kort={andetKort} />
-        </>
-      )}
       {r.rigtig && <span className="ms-raekke-maerke ms-raekke-bedst"> ✓ {T.udspil.bedst}</span>}
+      {r.tableFeeling && <span className="ms-raekke-maerke"> {T.udspil.tableFeeling}</span>}
       {r.ditSvar && <span className="ms-raekke-maerke"> {T.udspil.ditSvarRaekke}</span>}
     </>
   );
@@ -221,9 +214,9 @@ function Facit({ o, svar, xp, iTraek, onNaeste }: FacitProps) {
         </thead>
         <tbody>
           {raekker.map((r) => (
-            <tr key={`${r.farve}-${r.kort ?? ''}-${r.ditSvar}`} className={r.rigtig ? 'ms-raekke-rigtig' : r.ditSvar ? 'ms-raekke-dit' : undefined}>
+            <tr key={`${r.farve}-${r.kort ?? ''}-${r.ditSvar}`} className={r.rigtig ? 'ms-raekke-rigtig' : r.ditSvar && !r.tableFeeling ? 'ms-raekke-dit' : undefined}>
               <th scope="row">
-                <UdspilCelle r={r} svar={svar} />
+                <UdspilCelle r={r} />
               </th>
               <td>{tiendedele(r.middel, sprog)}</td>
               <td>{T.udspil.procent(procent(r.saet, o.facit.fordelinger))}</td>
@@ -292,7 +285,7 @@ export function FindUdspil({ opgave: o, nummer, antal, svar, onSvar, onNaeste, o
           )}
           <div className="ms-haand" data-haand="dig">
             <span className="eyebrow">
-              {T.plads.W} · {T.dig} · {T.hp(hpI(o.vest))}
+              {T.plads.W} · {T.dig} · <span className="ms-hp">{T.hp(hpI(o.vest))}</span>
             </span>
             <Haandlinje kort={o.vest} />
           </div>

@@ -54,8 +54,11 @@ const ORDEN: readonly Seat[] = ['W', 'N', 'E', 'S'];
 /** Kortet med farvesymbol, hvor ♥ og ♦ er røde, fx ♠7 og ♥K. */
 const Kort = ({ kort }: { kort: Card }) => <SuitText text={kortTekst(kort, getLang())} />;
 
-/** Hånden som tekstlinjer pr. farve: symbolet og valørerne faldende, fx "♠ K103". */
-function Haandlinje({ kort }: { kort: readonly Card[] }) {
+/**
+ * Hånden som tekstlinjer pr. farve: symbolet og valørerne faldende, fx "♠ K103". Ved bordet står farverne under
+ * hinanden som i et klassisk diagram (CSS); `daempet` gråtoner farver, brugeren ikke kan spille fra.
+ */
+function Haandlinje({ kort, daempet }: { kort: readonly Card[]; daempet?: (farve: number) => boolean }) {
   const sprog = getLang();
   return (
     <span className="ms-haandlinje">
@@ -66,7 +69,7 @@ function Haandlinje({ kort }: { kort: readonly Card[] }) {
           .sort((a, b) => b - a);
         if (!v.length) return null;
         return (
-          <span key={f} className="ms-farvelinje">
+          <span key={f} className={daempet?.(f) ? 'ms-farvelinje ms-resten' : 'ms-farvelinje'}>
             <SuitText text={SYMBOLER[f]} /> {v.map((x) => valoer(x, sprog)).join('')}
           </span>
         );
@@ -123,7 +126,17 @@ function Meldeforloeb({ o }: { o: ModspilOpgave }) {
 function Stik({ o }: { o: ModspilOpgave }) {
   const { nummer, start } = aktueltStik(o);
   const kort = o.spillet.slice(start);
-  if (!kort.length) return null;
+  // Uden spillede kort står feltet kun med pladserne, så diagrammet har sine verdenshjørner.
+  if (!kort.length)
+    return (
+      <div className="ms-stik" aria-hidden="true">
+        {(['N', 'W', 'E', 'S'] as const).map((p) => (
+          <span key={p} className={`ms-plads ms-plads-${p}`}>
+            <span className="ms-pladsnavn">{p === 'S' ? `${T.pladsKort.S} · ${T.spilfoerer}` : T.pladsKort[p]}</span>
+          </span>
+        ))}
+      </div>
+    );
   const harLagt = kort.some((s) => s.plads === o.plads);
   const sprog = getLang();
   const label = T.stikLabel(nummer, [...kort.map((s) => `${T.plads[s.plads]} ${kortTekst(s.kort, sprog)}`), ...(harLagt ? [] : [T.skalLaegge(T.plads[o.plads])])]);
@@ -265,7 +278,6 @@ export function Opgave({ opgave: o, nummer, antal, svar, onSvar, onNaeste, onInd
 
   const egne = egneKort(o);
   const spilbare = spilbareKort(o);
-  const rest = vaelgerKort(o) ? egne.filter((c) => !spilbare.includes(c)) : egne;
   const valg = svarValg(o);
   const skjulte = spoergerHvilke(o) ? skjulteOver(o) : [];
   const aft = aftale(o);
@@ -303,45 +315,33 @@ export function Opgave({ opgave: o, nummer, antal, svar, onSvar, onNaeste, onInd
 
       <div className="wide-left">
         <Meldeforloeb o={o} />
-        <section className="card ms-bord">
-          <div className="ms-haand" data-haand="nord">
+        <section className="card ms-bord" data-plads={o.plads}>
+          <div className="ms-haand ms-haand-nord" data-haand="nord">
             <span className="eyebrow">
               {T.plads.N} · {T.bordet}
-              {visHp(o) && ` · ${T.hp(hpI(o.haender.N))}`}
+              {visHp(o) && (
+                <>
+                  {' · '}
+                  <span className="ms-hp">{T.hp(hpI(o.haender.N))}</span>
+                </>
+              )}
             </span>
             <Haandlinje kort={o.haender.N.filter((c) => !o.spillet.some((s) => s.kort === c))} />
           </div>
           <Stik o={o} />
-          <Tidligere o={o} />
-          <div className="ms-haand" data-haand="dig">
+          <div className="ms-haand ms-haand-dig" data-haand="dig" data-plads={o.plads}>
             <span className="eyebrow">
               {plads} · {T.dig}
-              {visHp(o) && ` · ${T.hp(hpI(o.haender[o.plads]))}`}
-              {vaelgerKort(o) && ` · ${o.ovelse === 'afkast' ? T.afkastet : T.dineKort(o.farve)}`}
+              {visHp(o) && (
+                <>
+                  {' · '}
+                  <span className="ms-hp">{T.hp(hpI(o.haender[o.plads]))}</span>
+                </>
+              )}
             </span>
-            {spilbare.length > 0 && (
-              <div className="ms-kortknapper">
-                {spilbare.map((c) => (
-                  <button
-                    key={c}
-                    type="button"
-                    className={`ms-kortknap${facit && erRigtigt(o, { type: 'kort', kort: c }) ? ' ms-rigtig' : ''}`}
-                    aria-label={kortLabelAf(c)}
-                    aria-pressed={facit ? svar.type === 'kort' && svar.kort === c : undefined}
-                    disabled={facit}
-                    onClick={() => onSvar({ type: 'kort', kort: c })}
-                  >
-                    <Kort kort={c} />
-                  </button>
-                ))}
-              </div>
-            )}
-            {rest.length > 0 && (
-              <span className={vaelgerKort(o) ? 'ms-resten' : undefined}>
-                <Haandlinje kort={rest} />
-              </span>
-            )}
+            <Haandlinje kort={egne} daempet={vaelgerKort(o) ? (f) => !spilbare.some((c) => farveAf(c) === f) : undefined} />
           </div>
+          <Tidligere o={o} />
         </section>
       </div>
 
@@ -363,6 +363,23 @@ export function Opgave({ opgave: o, nummer, antal, svar, onSvar, onNaeste, onInd
                 </p>
               )}
             </details>
+          )}
+          {vaelgerKort(o) && spilbare.length > 0 && (
+            <div className="ms-kortknapper" role="group" aria-label={T.svar}>
+              {spilbare.map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  className={`ms-kortknap${facit && erRigtigt(o, { type: 'kort', kort: c }) ? ' ms-rigtig' : ''}`}
+                  aria-label={kortLabelAf(c)}
+                  aria-pressed={facit ? svar.type === 'kort' && svar.kort === c : undefined}
+                  disabled={facit}
+                  onClick={() => onSvar({ type: 'kort', kort: c })}
+                >
+                  <Kort kort={c} />
+                </button>
+              ))}
+            </div>
           )}
           {!vaelgerKort(o) && (
             <div className={`ms-svar${o.ovelse === 'regel11' ? ' ms-tal' : ''}`} role="group" aria-label={T.svar}>
