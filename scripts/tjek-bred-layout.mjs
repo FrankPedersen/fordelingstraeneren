@@ -8,6 +8,7 @@
 //   node scripts/tjek-bred-layout.mjs analyse             kun Analyse i pixelsammenligningen
 //   node scripts/tjek-bred-layout.mjs ingen               uden pixelsammenligningen (kun layout og overlap)
 //   node scripts/tjek-bred-layout.mjs --billeder=mappe    gemmer også skærmbillederne til Frank i mappen
+//   node scripts/tjek-bred-layout.mjs --modspil --udspil-billeder=mappe   gemmer også skærmbillederne af øvelse 8 (S1 opgave 55)
 //   node scripts/tjek-bred-layout.mjs --modspil           kun Modspil og pixelsammenligningen af forsiden og vejledningen
 //
 // Ved 1280 px står bordet til venstre og opgaven til højre med toppene ud for hinanden, og indholdet er højst 1120 px
@@ -57,6 +58,7 @@ const TAG = 'v47-foer-udspil-skaerme';
 const KUN = process.argv.slice(2).filter((a) => !a.startsWith('--'));
 // --modspil: kun Modspils tjek og pixelsammenligningen af de to skærme, Modspil ændrer (forsiden og vejledningen).
 const KUN_MODSPIL = process.argv.includes('--modspil');
+const UDSPIL_BILLEDER = process.argv.find((a) => a.startsWith('--udspil-billeder='))?.slice('--udspil-billeder='.length);
 const BILLEDER = process.argv.find((a) => a.startsWith('--billeder='))?.slice('--billeder='.length);
 const FORSKELLE = join(tmpdir(), 'tjek-bred-layout');
 const CHROME = [
@@ -1004,6 +1006,24 @@ async function tjekFindUdspil() {
     tjek(fokus === 'Næste opgave', 'Find udspillet med tastatur: Tab når Næste opgave', fokus);
     await s.luk();
   });
+  // Skærmbillederne til Frank (--udspil-billeder=mappe): opgaven på niveau 1 og 3 og facit med prisen, S1 opgave 55.
+  if (UDSPIL_BILLEDER) {
+    mkdirSync(UDSPIL_BILLEDER, { recursive: true });
+    const gem = (fil, data) => writeFileSync(join(UDSPIL_BILLEDER, fil), Buffer.from(data, 'base64'));
+    for (const bredde of [390, 1000, 1280]) {
+      const højde = bredde === 390 ? 844 : 900;
+      for (const [niveau, label, navn] of [[1, 'Ruder, 4 kort', 'facit-niveau-1-forkert-farve'], [3, 'Hjerter 4', 'facit-niveau-3-forkert-kort']]) {
+        s = await åbnTestside(bredde, højde, 'find-udspil', niveau, UDSPIL[niveau], 'standard');
+        gem(`${bredde}-opgave-niveau-${niveau}.png`, await s.billede());
+        await s.luk();
+        // billede() kan kun tages én gang pr. fane, så facit står på en ny.
+        s = await åbnTestside(bredde, højde, 'find-udspil', niveau, UDSPIL[niveau], 'standard');
+        await svarUdspil(s, label);
+        gem(`${bredde}-${navn}.png`, await s.billede());
+        await s.luk();
+      }
+    }
+  }
 }
 
 /** Alle Modspils tjek i Chrome. */
