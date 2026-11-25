@@ -65,13 +65,15 @@ export interface FbSession {
   shownAt: number;
 }
 
-/** Opgavetypernes vægt, når motoren vælger. Spil den selv tager længst og kommer sjældnest. */
+/**
+ * Opgavetypernes vægt, når motoren vælger. Spil den selv tager længst og kommer sjældnest. Hvad nu? har ingen vægt og
+ * vælges aldrig, fordi opgaverne starter med en uåbnet farve (SPEC-hvad-nu-ud.md, Franks valg 25. november 2026).
+ */
 const WEIGHT: Partial<Record<TaskType, number>> = {
   'vælg-linjen': 4,
   chancen: 2,
   'linje-mod-linje': 2,
   'nyt-mål': 2,
-  'hvad-nu': 2,
   'find-hullet': 2,
   optælling: 1,
   'spil-selv': 1,

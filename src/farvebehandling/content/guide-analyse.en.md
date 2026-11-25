@@ -141,15 +141,11 @@ With A Q J 10 opposite 6 5 4 3 2, 5 tricks, South on lead and North unlimited, t
 
 With two entries the line loses only the layout Kxxx–void (4.78 %), because the finesses and the last small card from hand take three entries to the hand. With one entry it wins only when West has the king singleton or K x.
 
-### 2.6 What now?
-
-After the first round a card has fallen, and you must choose how to continue. The task type uses the solver's chances after what has been seen, and this is where restricted choice is trained. If East drops the queen under the ace with dummy A K 10 3 2 and your hand 7 6 5 4, the finesse against the jack wins 64.7 %.
-
-### 2.7 Play it yourself
+### 2.6 Play it yourself
 
 You play the combination trick by trick against rule-based defence. Second hand plays low and covers 10 or higher with the cheapest card that beats it. Fourth hand wins as cheaply as possible. The current layout lights up in the band. Opened from Analysis with limited entries, the table shows which hand is on lead and how many entries are left, e.g. "North on lead · South 0 entries".
 
-### 2.8 Teams or pairs
+### 2.7 Teams or pairs
 
 Some combinations have one best line for teams (the chance of the goal) and another for pairs (the most tricks on average). The task type "Teams or pairs" shows both lines and what the safety play costs in tricks.
 
@@ -177,7 +173,7 @@ Three of the examples show what the analysis can be used for:
 - **The middle cards decide.** With Q 10 4 opposite A 9 8 6 3 2, low towards the 10 gives 81.35 % against 78.00 % for the ace first. Swap the 9 for the 7, and the ace first is best.
 - **Small improvements are found too.** With A J 8 opposite 10 3 2, the Encyclopedia gives 39 % for low towards the 8. The 10 from hand gives 39.66 % against 38.70 %.
 
-The four examples on restricted choice (Kelsey, Villy Dam and Root) are about what happens after the first or second round. In Suit combinations that is the task type "What now?".
+The four examples on restricted choice (Kelsey, Villy Dam and Root) are about what happens after the first or second round. The tasks in Suit combinations start with an unopened suit, so they do not train the position after the first round.
 
 ## 4 The calculation model
 

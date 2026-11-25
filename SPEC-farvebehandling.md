@@ -49,7 +49,7 @@ Opgavetyper i Træning og Selvvalgt:
 2. **Hvor stor er chancen?** Gæt i intervaller.
 3. **Linje mod linje:** tryk på den bedste.
 4. **Samme farve, nyt mål:** indgangen til sikkerhedsspil.
-5. **Hvad nu?** Et kort er faldet i første runde; begrænset valg.
+5. **Hvad nu?** Et kort er faldet i første runde; begrænset valg. Taget ud af Træning og Selvvalgt 25. november 2026 (SPEC-hvad-nu-ud.md, Franks valg): opgaverne starter med en uåbnet farve, så motoren vælger aldrig typen. Koden og gemte svar bliver.
 6. **Find hullet:** vis sidningen, hvor en given linje taber.
 7. **Spil den selv:** interaktivt, stik for stik.
 8. **Med optælling:** en ny 13-sudoku fra generatoren giver kun Vests og Østs længder i de tre andre farver. Vest har så 13 minus sine kendte kort som ledige pladser, Øst tilsvarende, og chancerne regnes om. Dagens sudoku og fordelingssporets data røres ikke.
