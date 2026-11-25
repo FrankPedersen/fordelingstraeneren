@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<title>Modspil – bordet med rigtige verdenshjørner (forslag)</title>
+<style>
+body{margin:0;font-family:Inter,'Segoe UI',Roboto,sans-serif;color:#1a1a1a;background:#d9dcdf}
+.wrap{display:flex;gap:24px;padding:24px;align-items:flex-start}
+.screen{width:390px;box-sizing:border-box;background:#f2f3f4;font-size:17px;line-height:1.45}
+.cap{font-size:13px;font-weight:600;color:#333;margin:0 0 8px}
+.top{background:#1a1a1a;color:#f2f3f4;padding:14px 16px;font-weight:600;font-size:15px}
+.top b{color:#ff9f4a}
+.body{padding:16px;display:flex;flex-direction:column;gap:14px}
+.card{background:#fff;border-radius:24px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.eb{font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#4a4a4a}
+.hp{text-transform:none}
+.r{color:#c62828}
+.meld{display:grid;grid-template-columns:repeat(4,1fr);text-align:center;font-size:.92rem;gap:4px}
+.meld .h{font-size:.8rem;font-weight:600;color:#4a4a4a}
+.note{margin:0;font-size:.8rem;color:#4a4a4a}
+/* Bordet: grid med Nord over feltet og brugerens hånd ved sin side */
+.bord{display:grid;gap:8px 10px;align-items:center}
+.bord.oest{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"nord ." "felt haand"}
+.bord.vest{grid-template-columns:auto minmax(0,1fr);grid-template-areas:". nord" "haand felt"}
+.nord{grid-area:nord;justify-self:center;display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+.nord .eb{margin-bottom:4px}
+.linje{display:flex;flex-direction:column;align-items:flex-start;gap:2px;font-size:1.15rem;font-weight:600;font-variant-numeric:tabular-nums}
+.felt{grid-area:felt;position:relative;height:210px;border-radius:12px;background:#1f5c4a;color:#fff;font-size:.72rem}
+.felt>span{position:absolute;display:flex;align-items:center;gap:6px}
+.kort{width:44px;height:60px;border-radius:8px;background:#fff;color:#1a1a1a;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:1rem;box-sizing:border-box}
+.ud{box-shadow:0 0 0 3px #ff9f4a}
+.tom{background:none;border:2px dashed rgba(255,255,255,.7)}
+.n{left:50%;top:10px;transform:translateX(-50%);flex-direction:column;gap:2px}
+.w{left:12px;top:50%;transform:translateY(-50%)}
+.e{right:12px;top:50%;transform:translateY(-50%)}
+.s{left:50%;bottom:10px;transform:translateX(-50%);white-space:nowrap}
+.midt{left:50%;top:50%;transform:translate(-50%,-50%);font-size:.8rem;font-weight:600;text-align:center;line-height:1.25;flex-direction:column;gap:0;white-space:nowrap}
+.haand{grid-area:haand;display:flex;flex-direction:column;gap:2px;font-size:1.15rem;font-weight:600;font-variant-numeric:tabular-nums}
+.haand .eb{margin-bottom:4px}
+.mut{color:#8a8a8a}
+.spm{margin:0;font-family:Manrope,Inter,sans-serif;font-weight:800;font-size:1.35rem;line-height:1.25}
+.knapper{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.knapper button{height:64px;border-radius:12px;border:1px solid rgba(26,26,26,.2);background:#fff;font:inherit;font-weight:600;font-size:1.15rem}
+.svar{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.svar button{height:64px;border-radius:12px;border:1px solid rgba(26,26,26,.2);background:#fff;font:inherit;font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- 1: Øst, opgaven fra skærmbilledet -->
+<div>
+<p class="cap">1 · Øst (dig) sidder til højre for feltet</p>
+<div class="screen">
+  <div class="top"><b>Fordelingstræneren</b> · Modspil</div>
+  <div class="body">
+    <div class="card">
+      <div class="meld">
+        <span class="h">Vest</span><span class="h">Nord</span><span class="h">Øst</span><span class="h">Syd</span>
+        <span></span><span></span><span></span><span><b>2<span class="r">♥</span></b></span>
+        <span>pas</span><span><b>4<span class="r">♥</span></b></span><span>pas</span><span>pas</span>
+        <span>pas</span><span></span><span></span><span></span>
+      </div>
+      <p class="note">2<span class="r">♥</span>: 5–11 hp. Syd spiller 4<span class="r">♥</span>.</p>
+    </div>
+    <div class="card">
+      <div class="bord oest">
+        <div class="nord">
+          <span class="eb">Nord · bordet · <span class="hp">14 hp</span></span>
+          <div class="linje"><span>♠ EB654</span><span><span class="r">♥</span> D1042</span><span><span class="r">♦</span> E3</span><span>♣ K7</span></div>
+        </div>
+        <div class="felt">
+          <span class="n">N</span>
+          <span class="w">V <span class="kort ud">♣4</span></span>
+          <span class="e"><span class="kort tom"></span> Ø</span>
+          <span class="s">S · spilfører</span>
+          <span class="midt">Stik 1<br>udspil ♣4</span>
+        </div>
+        <div class="haand">
+          <span class="eb">Øst · dig<br><span class="hp">2 hp</span></span>
+          <span>♠ D983</span><span><span class="r">♥</span> 3</span><span><span class="r">♦</span> 109742</span><span>♣ 962</span>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <span class="eb">Makkers point</span>
+      <p class="spm">Hvor mange hp har makker?</p>
+      <div class="svar"><button>0–2</button><button>3–5</button><button>6–8</button><button>9–11</button></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- 2: Øst, vælg kortet: kortknapperne står i spørgsmålet -->
+<div>
+<p class="cap">2 · Vælg kortet: knapperne står i spørgsmålet, hånden ved Øst</p>
+<div class="screen">
+  <div class="top"><b>Fordelingstræneren</b> · Modspil</div>
+  <div class="body">
+    <div class="card">
+      <div class="bord oest">
+        <div class="nord">
+          <span class="eb">Nord · bordet</span>
+          <div class="linje"><span>♠ B4</span><span><span class="r">♥</span> K1086</span><span><span class="r">♦</span> E752</span><span>♣ K84</span></div>
+        </div>
+        <div class="felt">
+          <span class="n"><span class="kort">♠4</span>N</span>
+          <span class="w">V <span class="kort ud">♠E</span></span>
+          <span class="e"><span class="kort tom"></span> Ø</span>
+          <span class="s">S · spilfører</span>
+          <span class="midt">Stik 1<br>udspil ♠E</span>
+        </div>
+        <div class="haand">
+          <span class="eb">Øst · dig</span>
+          <span>♠ 8652</span><span class="mut"><span class="r">♥</span> 73</span><span class="mut"><span class="r">♦</span> KD104</span><span class="mut">♣ 953</span>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <span class="eb">Vælg kortet</span>
+      <p class="spm">Du vil have makker til at skifte til ruder. Hvilket spar lægger du?</p>
+      <div class="knapper"><button>♠8</button><button>♠6</button><button>♠5</button><button>♠2</button></div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- 3: Vest (øvelse 4 m.fl.) -->
+<div>
+<p class="cap">3 · Vest (dig) sidder til venstre for feltet</p>
+<div class="screen">
+  <div class="top"><b>Fordelingstræneren</b> · Modspil</div>
+  <div class="body">
+    <div class="card">
+      <div class="bord vest">
+        <div class="nord">
+          <span class="eb">Nord · bordet</span>
+          <div class="linje"><span>♠ K72</span><span><span class="r">♥</span> E5</span><span><span class="r">♦</span> KB83</span><span>♣ D1064</span></div>
+        </div>
+        <div class="haand">
+          <span class="eb">Vest · dig</span>
+          <span>♠ D1083</span><span><span class="r">♥</span> 942</span><span><span class="r">♦</span> 1065</span><span>♣ E7</span>
+        </div>
+        <div class="felt">
+          <span class="n"><span class="kort">♠2</span>N</span>
+          <span class="w">V <span class="kort ud">♠3</span></span>
+          <span class="e"><span class="kort">♠B</span> Ø</span>
+          <span class="s">S · spilfører</span>
+          <span class="midt">Stik 1<br>udspil ♠3</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+</div>
+</body>
+</html>
