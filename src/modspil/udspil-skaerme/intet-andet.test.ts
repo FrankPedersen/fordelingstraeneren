@@ -25,6 +25,12 @@ import { ROOT } from '../../sprog/danskTekst';
  */
 
 const TAG = 'v47-foer-udspil-skaerme';
+/**
+ * Trin 3's fletning. Vagten sammenligner tagget med den, ikke med arbejdsmappen, så senere grene (fx hvad-nu-ud og
+ * modspil-kompas) ikke gør den rød; den tjekker stadig, at trin 3 kun ændrede det tilladte (SPEC-modspil-kompas.md,
+ * Afklaret, som rettelsen af v43-vagterne 21. nov. 2026).
+ */
+const EFTER = '0817125';
 
 const UDENFOR = [
   'src/ui/Footer.tsx',
@@ -77,7 +83,7 @@ function ulovlige(aendringer: readonly (readonly [string, string])[]): string[] 
 }
 
 function aendringer(): [string, string][] {
-  const felter = git('diff', '--name-status', '-z', '--no-renames', TAG, '--').split('\0').filter(Boolean);
+  const felter = git('diff', '--name-status', '-z', '--no-renames', TAG, EFTER, '--').split('\0').filter(Boolean);
   const ud: [string, string][] = [];
   for (let i = 0; i < felter.length; i += 2) ud.push([felter[i], felter[i + 1]]);
   return ud;
@@ -91,19 +97,19 @@ describe('Intet andet er ændret (accepttest 9, trin 3)', () => {
 
   it('data.test.ts har kun fået tidsgrænsen på 30 s for testen "antallet"', (ctx) => {
     if (!harTag()) ctx.skip(`Tagget ${TAG} findes ikke her.`);
-    const diff = git('diff', '-U0', TAG, '--', 'src/modspil/udspil/data.test.ts')
+    const diff = git('diff', '-U0', TAG, EFTER, '--', 'src/modspil/udspil/data.test.ts')
       .split('\n')
       .map((l) => l.replace(/\r$/, ''))
       .filter((l) => /^[-+]/.test(l) && !/^(---|\+\+\+) /.test(l));
     expect(diff).toEqual(['-  });', '+  }, 30_000);']);
-    expect(git('diff', '-U3', TAG, '--', 'src/modspil/udspil/data.test.ts')).toContain('for (const x of r) expect(Number.isInteger(x) && x >= 0 && x <= 13).toBe(true);');
+    expect(git('diff', '-U3', TAG, EFTER, '--', 'src/modspil/udspil/data.test.ts')).toContain('for (const x of r) expect(Number.isInteger(x) && x >= 0 && x <= 13).toBe(true);');
   });
 
   it('vejledningen har kun fået nye linjer', (ctx) => {
     if (!harTag()) ctx.skip(`Tagget ${TAG} findes ikke her.`);
     // Efter Franks svar efter session 3b (25. nov. 2026) må netop én linje være slettet: den gamle "Øvelserne: …" med syv
     // øvelser, og den nye med otte øvelser skal stå i stedet.
-    const linjer = git('diff', '-U0', TAG, '--', 'src/app/screens/GuideScreen.tsx')
+    const linjer = git('diff', '-U0', TAG, EFTER, '--', 'src/app/screens/GuideScreen.tsx')
       .split('\n')
       .map((l) => l.replace(/\r$/, ''))
       .filter((l) => /^[-+]/.test(l) && !/^(---|\+\+\+) /.test(l));
