@@ -246,7 +246,7 @@ const DA = {
     tabelNote: (kontrakt: string, n: number) =>
       `Middelstik til modspillet og chancen for at sætte ${kontrakt} over ${n} fordelinger, der passer med meldingerne (dobbeltdummy).`,
     henter: 'Opgaven hentes …',
-    hentFejl: 'Opgaven kunne ikke hentes. Næste opgave går videre uden den.',
+    hentFejl: 'Opgaven kunne ikke hentes og springes over.',
   },
 
   // Indstillinger
@@ -513,7 +513,7 @@ const EN: Tekster = {
     tabelNote: (kontrakt: string, n: number) =>
       `Average tricks for the defence and the chance of defeating ${kontrakt} over ${n} deals that fit the bidding (double dummy).`,
     henter: 'Loading the task …',
-    hentFejl: 'The task could not be loaded. Next task moves on without it.',
+    hentFejl: 'The task could not be loaded and is skipped.',
   },
 
   profilOgMetoder: 'Methods · profile',
