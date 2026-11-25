@@ -165,6 +165,8 @@ describe('Topbjælken og sidefoden', () => {
       ['Pointregnskab', '#pointregnskab'],
       ['Farvebehandling', '#farvebehandling'],
       ['Håndevaluering', '#haandevaluering'],
+      // Modspil efter Håndevaluering (SPEC-modspil-v2.md, trin 3; Franks valg 25. nov. 2026, session 3a).
+      ['Modspil', '#modspil'],
     ]);
     // Analyse som modul (SPEC-analyse-modul.md, trin 2) står under Opslag (SPEC-sidefod.md).
     const reference = within(footer() as HTMLElement).getByRole('navigation', { name: 'Opslag' });

@@ -159,7 +159,15 @@ export function Indstillinger({ saved, update }: IndstillingerProps) {
 
       {indkommende && (
         <section className="card" aria-label={T.importer}>
-          <p>{T.importResume(indkommende.xp, Object.keys(indkommende.items).length, indkommende.sessions.length, indkommende.streak.current)}</p>
+          <p>
+            {T.importResume(
+              indkommende.xp,
+              // Øvelse 8's post står i sit eget felt (SPEC-modspil-v2.md, trin 3), men hører til bunken.
+              Object.keys(indkommende.items).length + (indkommende.findUdspil ? 1 : 0),
+              indkommende.sessions.length,
+              indkommende.streak.current,
+            )}
+          </p>
           <div className="ms-handlinger">
             <button type="button" className="btn small-btn" onClick={() => setIndkommende(null)}>
               {T.annuller}

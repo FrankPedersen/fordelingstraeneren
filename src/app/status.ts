@@ -11,7 +11,7 @@ import type { Grade } from '../domain/patterns';
 import { FB_STORAGE_KEY, readFbSaved } from '../farvebehandling/storage';
 import { HE_STORAGE_KEY, readHeSaved } from '../haandevaluering/storage';
 import { warmupQueue as heWarmup } from '../haandevaluering/training/deck';
-import { MS_STORAGE_KEY, readMsSaved } from '../modspil/storage';
+import { MS_STORAGE_KEY, readMsSaved, type MsSaved } from '../modspil/storage';
 import { warmupQueue as msWarmup } from '../modspil/training/deck';
 import { PR_STORAGE_KEY, readPrSaved } from '../pointregnskab/storage';
 import { warmupQueue as prWarmup } from '../pointregnskab/training/deck';
@@ -88,6 +88,13 @@ function withDeck(
   return { ...status, level: data.level, due: warmup(data.items, today).filter((key) => key in data.items).length };
 }
 
+/** Modspil: øvelse 8's post (`findUdspil`) ligger uden for `items`, men tæller med i emner til repetition (SPEC-modspil-v2.md, Franks svar efter 3b). */
+function withFindUdspil(status: TrackStatus, data: MsSaved, now: number): TrackStatus {
+  if (!status.started || !data.findUdspil) return status;
+  const today = dayOf(now, data.settings.dayStartsAtHour);
+  return isDue(data.findUdspil, today) ? { ...status, due: status.due + 1 } : status;
+}
+
 /** Status for de fem spor i forsidens rækkefølge. Fordelingssporets data er dem, appen allerede har indlæst. */
 export function trackStatuses(saved: Saved, storage: ReadOnlyStorage, now: number): Record<string, TrackStatus> {
   const today = dayOf(now, saved.settings.dayStartsAtHour);
@@ -116,7 +123,7 @@ export function trackStatuses(saved: Saved, storage: ReadOnlyStorage, now: numbe
     fordeling,
     pointregnskab: pr ? withDeck(common('pointregnskab', pr, now), pr, prWarmup, now) : notStarted('pointregnskab'),
     farvebehandling: fb ? common('farvebehandling', fb, now) : notStarted('farvebehandling'),
-    modspil: ms ? withDeck(common('modspil', ms, now), ms, msWarmup, now) : notStarted('modspil'),
+    modspil: ms ? withFindUdspil(withDeck(common('modspil', ms, now), ms, msWarmup, now), ms, now) : notStarted('modspil'),
     haandevaluering: he ? withDeck(common('haandevaluering', he, now), he, heWarmup, now) : notStarted('haandevaluering'),
   };
 }

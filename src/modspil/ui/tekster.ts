@@ -223,6 +223,32 @@ const DA = {
   } as Record<string, string>,
   naeste: 'Næste opgave',
 
+  // Øvelse 8, Find udspillet (SPEC-modspil-v2.md, trin 3, og mock-up'en i docs/specs/design/modspil-v2/)
+  udspil: {
+    navn: 'Find udspillet',
+    hjaelp:
+      'Du sidder som Vest og vælger udspillet ud fra din hånd og meldeforløbet: farven på niveau 1–2 og fra niveau 3 kortet efter profilens udspilsregel. Facit er regnet med dobbeltdummy på 100 fordelinger, der passer med meldingerne, og det bedste udspil giver flest stik i gennemsnit.',
+    spmFarve: 'Hvilken farve spilles ud?',
+    spmKort: 'Hvilket kort spilles ud?',
+    vist: (min: number, max: number) => `Syd har vist ${min}–${max} hp.`,
+    duSpillerUd: 'Du spiller ud.',
+    allePasser: 'alle passer',
+    antalKort: (n: number) => `${n} kort`,
+    farveLabel: (farve: number, n: number) => `${KORTFARVE_DA[farve]}, ${n} kort`,
+    flestStik: (svar: readonly string[]) => `${ogMed('og')(svar)} giver flest stik`,
+    koster: (pris: string) => `koster ${pris} stik i snit`,
+    kosterUnder: (pris: string) => `koster under ${pris} stik i snit`,
+    kolonner: ['Udspil', 'Stik', 'Sætter', 'Koster'],
+    tabelNavn: 'Udspillene',
+    bedst: 'bedst',
+    ditSvarRaekke: 'dit svar',
+    procent: (n: number) => `${n} %`,
+    tabelNote: (kontrakt: string, n: number) =>
+      `Middelstik til modspillet og chancen for at sætte ${kontrakt} over ${n} fordelinger, der passer med meldingerne (dobbeltdummy).`,
+    henter: 'Opgaven hentes …',
+    hentFejl: 'Opgaven kunne ikke hentes og springes over.',
+  },
+
   // Indstillinger
   profilOgMetoder: 'Metoder · profil',
   profilIntro: 'Facit og forklaringer følger de metoder, du vælger. Du vælger en profil og kan rette enkelte metoder herunder.',
@@ -261,7 +287,7 @@ const DA = {
 
   hjaelp: {
     skaerm:
-      'Modspil træner at tælle og aflæse som modspiller: makkers point, regel 11 og 12, udspillets længde og markeringerne efter de metoder, du vælger i Indstillinger. Alle øvelser har svaret "Kan ikke afgøres", når kortene ikke afgør det.',
+      'Modspil træner at tælle og aflæse som modspiller: makkers point, regel 11 og 12, udspillets længde og markeringerne efter de metoder, du vælger i Indstillinger. I Find udspillet vælger du udspillet ud fra hånden og meldeforløbet. De andre øvelser har svaret "Kan ikke afgøres", når kortene ikke afgør det.',
     iDag: 'Dagens session har fire opgaver: først højst to øvelser til repetition, så opgaver på dit niveau. Sessionen tæller i din streak, når status vises.',
     start: 'Sessionen tager få minutter. Efter hvert svar står facit med forklaringen, og Næste opgave går videre.',
     metoder: 'Profilen vælger én metode i hver af de syv kategorier. Under Indstillinger kan profilen skiftes og enkelte metoder rettes.',
@@ -465,6 +491,31 @@ const EN: Tekster = {
   } as Record<string, string>,
   naeste: 'Next task',
 
+  udspil: {
+    navn: 'Find the lead',
+    hjaelp:
+      "You sit West and choose the opening lead from your hand and the bidding: the suit at levels 1–2 and from level 3 the card by your profile's lead rule. The solution is computed double dummy on 100 deals that fit the bidding, and the best lead gives the most tricks on average.",
+    spmFarve: 'Which suit is led?',
+    spmKort: 'Which card is led?',
+    vist: (min: number, max: number) => `South has shown ${min}–${max} HCP.`,
+    duSpillerUd: 'You are on lead.',
+    allePasser: 'all pass',
+    antalKort: (n: number) => `${n} ${n === 1 ? 'card' : 'cards'}`,
+    farveLabel: (farve: number, n: number) => `${['Spades', 'Hearts', 'Diamonds', 'Clubs'][farve]}, ${n} ${n === 1 ? 'card' : 'cards'}`,
+    flestStik: (svar: readonly string[]) => `${ogMed('and')(svar)} ${svar.length > 1 ? 'give' : 'gives'} the most tricks`,
+    koster: (pris: string) => `costs ${pris} tricks on average`,
+    kosterUnder: (pris: string) => `costs less than ${pris} tricks on average`,
+    kolonner: ['Lead', 'Tricks', 'Defeats', 'Cost'],
+    tabelNavn: 'The leads',
+    bedst: 'best',
+    ditSvarRaekke: 'your answer',
+    procent: (n: number) => `${n}%`,
+    tabelNote: (kontrakt: string, n: number) =>
+      `Average tricks for the defence and the chance of defeating ${kontrakt} over ${n} deals that fit the bidding (double dummy).`,
+    henter: 'Loading the task …',
+    hentFejl: 'The task could not be loaded and is skipped.',
+  },
+
   profilOgMetoder: 'Methods · profile',
   profilIntro: 'The answers and explanations follow the methods you choose. You choose a profile and can change single methods below.',
   profilResume: {
@@ -503,7 +554,7 @@ const EN: Tekster = {
 
   hjaelp: {
     skaerm:
-      "Defence trains counting and reading the cards as a defender: partner's points, the rule of 11 and 12, the length from the lead and signals by the methods you choose in Settings. Every exercise has the answer \"Can't tell\" when the cards do not settle it.",
+      "Defence trains counting and reading the cards as a defender: partner's points, the rule of 11 and 12, the length from the lead and signals by the methods you choose in Settings. In Find the lead you choose the lead from the hand and the bidding. The other exercises have the answer \"Can't tell\" when the cards do not settle it.",
     iDag: "Today's session has four tasks: first at most two exercises for review, then tasks at your level. The session counts in your streak when the status is shown.",
     start: 'The session takes a few minutes. After each answer the solution is shown with the explanation, and Next task moves on.',
     metoder: 'The profile chooses one method in each of the seven categories. Under Settings the profile can be switched and single methods changed.',

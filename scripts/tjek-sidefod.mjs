@@ -14,7 +14,8 @@ import { createServer } from 'vite';
 
 const ROD = fileURLToPath(new URL('..', import.meta.url));
 const BILLEDER = process.argv.find((a) => a.startsWith('--billeder='))?.slice('--billeder='.length);
-const SKÆRME = ['', '#fordeling', '#pointregnskab', '#farvebehandling', '#haandevaluering', '#analyse'];
+// #modspil og Modspil i Trænere: SPEC-modspil-v2.md, trin 3 (Franks valg 25. nov. 2026, session 3a).
+const SKÆRME = ['', '#fordeling', '#pointregnskab', '#farvebehandling', '#haandevaluering', '#modspil', '#analyse'];
 const CHROME = [
   process.env.CHROME,
   'C:/Program Files/Google/Chrome/Application/chrome.exe',
@@ -101,7 +102,7 @@ const MÅL = `(() => {
   };
 })()`;
 const KOLONNER = JSON.stringify([
-  { titel: 'Trænere', links: [['Konventionstræner', '/konventionstraener/'], ['Fordeling', '#fordeling'], ['Pointregnskab', '#pointregnskab'], ['Farvebehandling', '#farvebehandling'], ['Håndevaluering', '#haandevaluering']] },
+  { titel: 'Trænere', links: [['Konventionstræner', '/konventionstraener/'], ['Fordeling', '#fordeling'], ['Pointregnskab', '#pointregnskab'], ['Farvebehandling', '#farvebehandling'], ['Håndevaluering', '#haandevaluering'], ['Modspil', '#modspil']] },
   { titel: 'Opslag', links: [['Analyse', '#analyse'], ['Bridgeordbog', '/ordbog/'], ['Scoring i bridge', '/scoring/']] },
 ]);
 

@@ -236,9 +236,34 @@ function sections(): Section[] {
           </p>
           <List
             items={[
-              tx('Øvelserne: Makkers point, Regel 11 og 12, Udspillets længde, Aflæs markeringen, Vælg kortet, Første afkast og Forsinket kald. Øvelser, som metoderne ikke har, springes over.', 'The exercises: Partner’s points, Rule of 11 and 12, Length from the lead, Read the signal, Choose the card, First discard and Delayed signal. Exercises the methods do not have are skipped.'),
+              tx('Øvelserne: Makkers point, Regel 11 og 12, Udspillets længde, Aflæs markeringen, Vælg kortet, Første afkast, Forsinket kald og Find udspillet. Øvelser, som metoderne ikke har, springes over.', 'The exercises: Partner’s points, Rule of 11 and 12, Length from the lead, Read the signal, Choose the card, First discard, Delayed signal and Find the lead. Exercises the methods do not have are skipped.'),
               tx('Opgaven viser meldeforløbet, bordet, stikket og din hånd. "Kan ikke afgøres" er altid et svar, og at vide, hvornår kortene ikke afgør det, er en del af færdigheden.', `The task shows the bidding, dummy, the trick and your hand. "Can't tell" is always an answer, and knowing when the cards do not settle it is part of the skill.`),
               tx('Facit nævner metoden og har regnestykket, forklaringen, hvad du gør ved bordet, og et link til ordbogen.', 'The solution names the method and has the sum, the explanation, what you do at the table and a link to the dictionary.'),
+              // Øvelse 8, Find udspillet (SPEC-modspil-v2.md, trin 3).
+              tx(
+                'Øvelse 8, Find udspillet, viser din hånd som Vest og meldeforløbet, men ikke bordet, fordi det er udspillet. Svaret er farven på niveau 1–2 og fra niveau 3 kortet efter profilens udspilsregel; der er ingen "Kan ikke afgøres".',
+                `Exercise 8, Find the lead, shows your hand as West and the bidding, but not dummy, because it is the opening lead. The answer is the suit at levels 1–2 and from level 3 the card by your profile's lead rule; there is no "Can't tell".`,
+              ),
+              tx(
+                'Facit i Find udspillet er regnet med dobbeltdummy på 100 fordelinger af de tre andre hænder, der passer med meldingerne, efter metoden i Bird og Anthias\' Winning Notrump Leads og Winning Suit Contract Leads. Tabellen viser pr. farve middelstik til modspillet og chancen for at sætte kontrakten, og det bedste udspil giver flest stik i gennemsnit (som i parturnering). Farver under 0,1 stik fra den bedste er lige gode og alle rigtige; fra niveau 3 er det profilens kort i de farver. Et forkert svar viser, hvad det koster i stik i snit.',
+                `The solution in Find the lead is computed double dummy on 100 deals of the other three hands that fit the bidding, by the method of Bird and Anthias' Winning Notrump Leads and Winning Suit Contract Leads. The table shows for each suit the average tricks for the defence and the chance of defeating the contract, and the best lead gives the most tricks on average (as at pairs). Suits within 0.1 tricks of the best are equally good and all right; from level 3 it is the profile's card in those suits. A wrong answer shows what it costs in tricks on average.`,
+              ),
+              tx(
+                'Markeringer indgår ikke i Find udspillet, fordi dobbeltdummy ikke regner med dem: alle kort er synlige. Kortet i en farve følger profilens udspilsregel, så profilen Kompendiet spiller ALA ud mod sans.',
+                `Signals are not part of Find the lead, because double dummy does not account for them: all cards are visible. The card in a suit follows your profile's lead rule, so the Compendium profile leads ALA against notrump.`,
+              ),
+              tx(
+                'Forklaringen nævner Kompendiets råd efter meldeforløbet med siden. Er dobbeltdummy og Kompendiet uenige, er dobbeltdummy facit, og de opgaver kommer først fra niveau 4.',
+                `The explanation names the Compendium's advice after the bidding with the page. When double dummy and the Compendium disagree, double dummy is the solution, and those tasks only appear from level 4.`,
+              ),
+              tx(
+                'Som baggrund: i simuleringerne bag MODEL.md (afsnit 7), med dobbeltdummy på tilfældige fordelinger uden meldeforløb, er forskellen mellem det bedste og det dårligste udspil i tætte kontrakter i gennemsnit 1,33 stik mod 3NT og 0,98 stik mod 4 i major, og trumfudspil er det svageste mod 4 i major. Tallene er ikke facit i øvelsen, fordi fordelingerne ikke er udvalgt efter meldingerne.',
+                'As background: in the simulations behind MODEL.md (section 7), double dummy on random deals without bidding, the difference between the best and the worst lead in close contracts is 1.33 tricks on average against 3NT and 0.98 tricks against 4 of a major, and a trump lead is the weakest against 4 of a major. The figures are not the solution in the exercise, because the deals are not selected by the bidding.',
+              ),
+              tx(
+                'Dobbeltdummy kender alle fire hænder. Et udspil, der sætter spilføreren på et gæt, kan derfor være bedre ved bordet, end tallene viser.',
+                'Double dummy sees all four hands, so a lead that leaves declarer a guess can be better at the table than the figures show.',
+              ),
               tx('Sessionen: fire opgaver, først højst to øvelser til repetition og så opgaver på dit niveau. Niveauet stiger, når over 90 % af de seneste 20 svar er rigtige, og falder under 80 %.', 'The session: four tasks, first at most two exercises for review and then tasks at your level. Your level rises when more than 90% of your last 20 answers are right, and falls below 80%.'),
               tx('Profil, metoder og eksport ligger under Modspil → Indstillinger.', 'Profile, methods and export are under Defence → Settings.'),
             ]}

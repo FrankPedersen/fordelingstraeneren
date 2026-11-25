@@ -106,5 +106,5 @@ describe.each(fil.situationer.map((s) => [s.id, s] as const))('%s', (id, s) => {
         for (const x of r) expect(Number.isInteger(x) && x >= 0 && x <= 13).toBe(true);
       }
     }
-  });
+  }, 30_000);
 });

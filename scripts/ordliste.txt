@@ -9,6 +9,7 @@ doubleton
 esudspil
 femkortsfarve
 firekortsmajor
+firekortsstøtte
 fittet
 handviewer
 handvieweren
@@ -33,6 +34,7 @@ streaken
 syvkortsfarve
 trinene
 Trinene
+umeldte
 ustoppede
 
 # Almindelige ord og forkortelser, som ordbogen ikke har
@@ -64,6 +66,7 @@ contract
 count
 counterfactual
 even
+feeling
 four
 leads
 losing
@@ -80,8 +83,10 @@ worker
 # Feltnavne, adresser og engelsk i kode, som værktøjet ikke kan skille fra dansk tekst
 about
 accuracy
+answer
 choice
 club
+content
 evening
 fordelingstraener
 fordelingstraeneren
@@ -90,7 +95,12 @@ json
 once
 pattern
 patterns
+python
+raa
 readms
+src
+tbody
+your
 
 # Fra ordbogen (Dansk_bridgeordbog.md version 1.1 på www.kontraktbridge.dk/ordbog/): opslagsordenes ord, som hunspell ikke kender
 average

@@ -8,6 +8,8 @@
 <body>
 <!-- Testside til scripts/tjek-bred-layout.mjs (SPEC-modspil.md, trin 2, accepttest 4–6): én opgave fra trin 1's
      generator på Modspils opgaveskærm, valgt med adressen, fx ?ovelse=regel11&niveau=1&seed=1&profil=standard.
+     Øvelse 8 (SPEC-modspil-v2.md, trin 3) vises med ?ovelse=find-udspil&niveau=…&seed=…&profil=…: opgaven er
+     lavFindUdspil(niveau, seed, profil) på øvelse 8's skærm, og datasættet hentes først.
      Et svar viser facit, som i sessionen. Siden vises kun af Vites dev-server og kommer ikke med i bygget (kun
      index.html bygges). Rammen er den samme som sporets skærm: main.screen.ms-screen. -->
 <div id="rod"></div>
@@ -15,19 +17,25 @@
   import '/src/ui/styles.css';
   import { createElement } from 'react';
   import { createRoot } from 'react-dom/client';
+  import { hentDatasaet, lavFindUdspil } from '/src/modspil/model/findUdspil.ts';
   import { lavOpgave } from '/src/modspil/model/generator.ts';
   import { profil } from '/src/modspil/model/metoder.ts';
+  import { FindUdspil } from '/src/modspil/ui/FindUdspil.tsx';
   import { Opgave } from '/src/modspil/ui/Opgave.tsx';
 
   const q = new URLSearchParams(location.search);
-  const opgave = lavOpgave(q.get('ovelse'), Number(q.get('niveau')), Number(q.get('seed')), profil(q.get('profil')));
+  const udspil = q.get('ovelse') === 'find-udspil';
+  const p = profil(q.get('profil'));
+  const opgave = udspil
+    ? lavFindUdspil(Number(q.get('niveau')), Number(q.get('seed')), p, await hentDatasaet())
+    : lavOpgave(q.get('ovelse'), Number(q.get('niveau')), Number(q.get('seed')), p);
   window.modspilOpgave = opgave;
   const rod = createRoot(document.getElementById('rod'));
   const tom = () => {};
   const vis = (svar) =>
     rod.render(
       createElement('main', { className: 'screen ms-screen' },
-        createElement(Opgave, { opgave, nummer: 2, antal: 4, svar, onSvar: vis, onNaeste: tom, onIndstillinger: tom })),
+        createElement(udspil ? FindUdspil : Opgave, { opgave, nummer: 2, antal: 4, svar, onSvar: vis, onNaeste: tom, onIndstillinger: tom })),
     );
   vis(undefined);
 </script>

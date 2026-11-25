@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { dayOf } from '../../engine/dates';
 import { formatInt } from '../../engine/format';
 import { randomSeed } from '../../engine/rng';
@@ -7,11 +7,13 @@ import { getLang } from '../../i18n';
 import { Footer } from '../../ui/Footer';
 import { Info } from '../../ui/Info';
 import { TopBar } from '../../ui/TopBar';
+import { bedoemUdspil, hentDatasaet, lavFindUdspil, type Datasaet, type FindUdspilOpgave, type UdspilSvar } from '../model/findUdspil';
 import { profilNavn } from '../model/metoder';
 import { loadMsSaved, msExportDue, MS_STORAGE_KEY, saveMsSaved, type MsSaved } from '../storage';
-import { warmupQueue } from '../training/deck';
+import { udspilIOpgave } from '../training/findUdspil';
 import type { Svar } from '../training/scoring';
-import { ANTAL_OPGAVER, answerMsTask, nextMsStep, REPETITIONER, startMsSession, type MsSession } from '../training/session';
+import { ANTAL_OPGAVER, answerMsTask, answerUdspilTask, nextMsStep, profilAf, REPETITIONER, repetitionsKoe, startMsSession, type MsSession } from '../training/session';
+import { FindUdspil } from './FindUdspil';
 import { downloadMsExport, Indstillinger } from './Indstillinger';
 import { Opgave } from './Opgave';
 import { T } from './tekster';
@@ -53,6 +55,32 @@ export default function ModspilScreen({ onBack, start = false }: { onBack(): voi
   const [view, setView] = useState<View>(start ? 'session' : 'home');
   const [session, setSession] = useState<MsSession | null>(() => (start ? nySession(saved) : null));
   const [resultat, setResultat] = useState<{ svar: Svar; xp: number } | null>(null);
+  // Øvelse 8 (SPEC-modspil-v2.md, trin 3): datasættet hentes dovent første gang, øvelsen trækkes, og opgaven laves én
+  // gang pr. opgave i sessionen med profilen fra det øjeblik (som v1's opgaver).
+  const [udspilData, setUdspilData] = useState<Datasaet | null>(null);
+  const [udspilFejl, setUdspilFejl] = useState(false);
+  const [udspilOpgave, setUdspilOpgave] = useState<{ count: number; opgave: FindUdspilOpgave } | null>(null);
+  const [udspilResultat, setUdspilResultat] = useState<{ svar: UdspilSvar; xp: number } | null>(null);
+  const udspilRef = session && !session.done ? udspilIOpgave(session) : null;
+  const venterPaaData = udspilRef !== null && udspilData === null;
+
+  useEffect(() => {
+    if (!venterPaaData) return;
+    let aktiv = true;
+    hentDatasaet().then(
+      (data) => aktiv && setUdspilData(data),
+      () => aktiv && setUdspilFejl(true),
+    );
+    return () => {
+      aktiv = false;
+    };
+  }, [venterPaaData]);
+
+  useEffect(() => {
+    if (!session || !udspilRef || !udspilData || udspilOpgave?.count === session.count) return;
+    setUdspilOpgave({ count: session.count, opgave: lavFindUdspil(udspilRef.niveau, udspilRef.seed, profilAf(saved), udspilData) });
+  }, [session, udspilRef, udspilData, udspilOpgave, saved]);
+  const aktuelUdspil = session && udspilRef && udspilOpgave?.count === session.count ? udspilOpgave.opgave : null;
 
   const update = useCallback(
     (next: MsSaved) => {
@@ -68,11 +96,13 @@ export default function ModspilScreen({ onBack, start = false }: { onBack(): voi
   const hjem = () => {
     setSession(null);
     setResultat(null);
+    setUdspilResultat(null);
     vis('home');
   };
   const startSession = () => {
     setSession(nySession(saved));
     setResultat(null);
+    setUdspilResultat(null);
     vis('session');
   };
   /** Indstillinger fører tilbage til sessionen, hvis en er i gang. */
@@ -86,12 +116,22 @@ export default function ModspilScreen({ onBack, start = false }: { onBack(): voi
     setResultat({ svar: s, xp: r.xp });
   }
 
+  /** Svar på øvelse 8: dommen kommer fra modellen, og sessionen registrerer den som v1's svar. */
+  function svarUdspil(s: UdspilSvar) {
+    if (!session || !aktuelUdspil) return;
+    const r = answerUdspilTask(session, saved, bedoemUdspil(aktuelUdspil, s).rigtig, Date.now());
+    update(r.saved);
+    setSession(r.session);
+    setUdspilResultat({ svar: s, xp: r.xp });
+  }
+
   function naeste() {
     if (!session) return;
     const r = nextMsStep(session, saved, Date.now());
     if (r.saved !== saved) update(r.saved);
     setSession(r.session);
     setResultat(null);
+    setUdspilResultat(null);
     window.scrollTo(0, 0);
   }
 
@@ -138,6 +178,32 @@ export default function ModspilScreen({ onBack, start = false }: { onBack(): voi
             onIndstillinger={() => vis('settings')}
           />
         )}
+        {udspilRef &&
+          (aktuelUdspil ? (
+            <FindUdspil
+              key={session.count}
+              opgave={aktuelUdspil}
+              nummer={session.count}
+              antal={ANTAL_OPGAVER}
+              svar={udspilResultat?.svar}
+              xp={udspilResultat?.xp}
+              iTraek={udspilResultat ? session.iTraek : undefined}
+              onSvar={svarUdspil}
+              onNaeste={naeste}
+              onIndstillinger={() => vis('settings')}
+            />
+          ) : udspilFejl ? (
+            <section className="card">
+              <p role="alert">{T.udspil.hentFejl}</p>
+              <button type="button" className="btn primary wide" onClick={naeste}>
+                {T.naeste}
+              </button>
+            </section>
+          ) : (
+            <p className="ms-note" role="status">
+              {T.udspil.henter}
+            </p>
+          ))}
       </>
     );
   } else {
@@ -172,7 +238,7 @@ interface ForsideProps {
 function Forside({ saved, update, onBack, onStart, onSettings }: ForsideProps) {
   const today = dayOf(Date.now(), saved.settings.dayStartsAtHour);
   const streak = streakOn(saved.streak, today).current;
-  const repetition = Math.min(REPETITIONER, warmupQueue(saved.items, today).length);
+  const repetition = Math.min(REPETITIONER, repetitionsKoe(saved, today).length);
   const navn = profilNavn(saved.profil);
   return (
     <>

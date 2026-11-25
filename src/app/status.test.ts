@@ -50,6 +50,14 @@ describe('Status fra sporene (SPEC-forside-spor.md)', () => {
     expect(todayOverview(ORDER, s)).toEqual({ done: 2, total: 5, next: 'fordeling' });
   });
 
+  it('Modspil tæller øvelse 8 med (findUdspil) med i emner til repetition', () => {
+    const base = { ...defaultMsSaved(), level: 2, streak: { current: 1, best: 1, lastDay: '2026-10-16' }, items: { 'ovelse:regel11': newItem('2026-10-17') } };
+    const due = (ms: object) => trackStatuses(defaultSaved(), storageOf({ [MS_STORAGE_KEY]: JSON.stringify(ms) }), NOON).modspil.due;
+    expect(due(base)).toBe(1);
+    expect(due({ ...base, findUdspil: newItem('2026-10-17') })).toBe(2);
+    expect(due({ ...base, findUdspil: newItem('2026-10-20') })).toBe(1);
+  });
+
   it('dagen skifter kl. 04: kl. 03.30 er det stadig gårsdagens session', () => {
     const pr = { ...defaultPrSaved(), streak: { current: 1, best: 1, lastDay: '2026-10-16' }, items: { [PR_DECK[0]]: newItem('2026-10-20') } };
     const storage = storageOf({ [PR_STORAGE_KEY]: JSON.stringify(pr) });
