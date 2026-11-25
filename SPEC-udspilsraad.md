@@ -149,3 +149,45 @@ Opfølgningen (tallene i forklaringerne i øvelse 8) er ikke med her.
 ## Afklaret
 
 (udfyldes af Claude Code: tiden for prøvekørslen, tokenforbruget pr. session, rapporten og "Tekster til gennemgang")
+
+**Session 1 (25. nov. 2026, Opus 5.5, high effort)**
+
+- **Tag og gren:** `main` (`a60ae52`) er tagget `v50-foer-udspilsraad`, og grenen `udspilsraad` er oprettet. Byggeriet og de røde accepttest er committet i `09fe92a`. Der er ikke flettet eller pushet.
+- **Varianterne:** `tools/udspil/varianter.json` har de syv varianter i specens rækkefølge med seedene 2611251–2611257 og `"opgaver": 150`. Kravene `farveMed` og `tableFeeling` står i `krav.py` og i `hjaelp.ts`. `generer.py --variant <id>` og `--varianter` skriver kun `tools/udspil/raa/varianter/<id>.json`: situationens hoved (`id` er situationens id) plus `variant` og `ekstra`, og `eksempler` er tom. Kørslen kan genoptages som `--situation` og stopper, hvis filen er lavet til en anden variant eller med et andet ekstra krav. `kontrol.py --varianter` (eller `--variant <id>`) kører DDS-tjekket på hver tiende fordeling. `tools/udspil/README.md` har et afsnit om varianterne.
+- **Python og TS er enige:** for `deal(seed)` med seed 1–40.000 giver de ekstra krav (uden situationens krav) det samme i Python og TS for alle syv varianter, med 0 afvigelser. Andelen af tilfældige hænder med formen: singleton 6,2–6,3 %, doubleton uden honnør 7,5 % og "table feeling" 27,1 %.
+- **Accepttestene:** 101 tests i `src/modspil/udspil/varianter.test.ts` og `raadanalyse.test.ts`; 90 er røde og 11 grønne. Røde: accepttest 1's datadel og accepttest 3 (21, fordi variantdataene ikke findes endnu) og accepttest 4–7 (69: "ikke bygget" i `raadanalyse.ts` og intet afsnit 7a). Grønne: accepttest 1's tjek af `varianter.json` og af de nye krav på faste hænder (4), accepttest 2 (3; `generer.py --situation S1-1nt-3nt --antal 1` gav den samme første opgave på 2,3 s), accepttest 8 (3) og rækkerne i accepttest 5 (1). `raadanalyse.ts` har signaturerne, typerne og `RAEKKER`; hver funktion kaster "ikke bygget" som `findUdspil.ts` i Modspil v2, session 2a. `tsc` er grøn.
+- **De øvrige tests:** `npx vitest run src/modspil src/sprog` uden de to nye filer gav 46 af 47 filer grønne, 375 bestået og 2 sprunget over. `src/modspil/ui/kompas.test.tsx` løb over standardens 5 s under den parallelle kørsel og er grøn alene (7 af 7). Hele `npm test` er ikke kørt i session 1.
+- **Prøvekørslen:** 2 hænder pr. variant i en midlertidig mappe (`--ud`) på pc'en i `C:\Users\frank` (Intel Core i7-1355U, 12 logiske kerner):
+
+  | Variant | Tid i alt | Pr. hånd | 150 hænder |
+  | --- | --- | --- | --- |
+  | S4-singleton | 21,7 s | 7,9 s | ca. 20 min |
+  | S5-singleton | 22,5 s | 10,6 s | ca. 27 min |
+  | S8-singleton | 20,1 s | 9,5 s | ca. 24 min |
+  | S4-doubleton | 11,5 s | 5,2 s | ca. 13 min |
+  | S8-doubleton | 9,1 s | 4,0 s | ca. 10 min |
+  | S1-tablefeeling | 6,6 s | 2,8 s | ca. 7 min |
+  | S2-tablefeeling | 5,8 s | 2,3 s | ca. 6 min |
+  | I alt | 97,3 s | | ca. 1 t 46 min |
+
+  "Pr. hånd" er generatorens eget tal efter 2. hånd (tiden siden start delt med 2). Hele kørslen ventes at tage ca. 1¾ time, altså under 2 timer, så **de 150 hænder pr. variant beholdes** (specens "Tiden"). Tallet er usikkert, fordi det bygger på 2 hænder pr. variant: i S5-singleton tog den første hånd 6,3 s og den anden ca. 15 s. Singletonvarianterne tager længst, fordi hånden er sjælden: søgningen alene (20 hænder) tog ca. 4 s pr. hånd i S5 og S8 (160.000–210.000 blandinger pr. hånd) og 1 s i S4. Hver variant kan køres for sig (6–27 min) og afbrydes og fortsættes.
+- **Kontrol af prøvekørslen:** `kontrol.py --varianter --raa <mappe>` tjekkede 140 fordelinger mod DDS-tabellen med 0 afvigelser (17 s), og der blev ikke skrevet appdata. Lagt midlertidigt i `raa/varianter/` gav prøvehænderne accepttest 1 grøn (14 af 14 for genskabelsen og de oversprungne seeds) og accepttest 3 rød som ventet (2 hænder mod 150). Filerne er fjernet igen, så Franks kørsel starter forfra.
+
+**Claude Codes valg i session 1** (accepttestene bygger på dem):
+
+1. **"Table feeling" er kun E K, K D og D B.** Specen siger "to honnører i træk", og honnørerne er E, K, D og B. Appens `muligeUdspil` giver også to kort fra B 10 x (x), men de hænder er hverken med i varianterne eller i P9. TS-kravet er derfor, at `muligeUdspil` giver to kort, og at det næsthøjeste kort er mindst B (`tableFeeling` i `hjaelp.ts`); Python følger tabellens regel.
+2. **Variantens rådata:** `id` er situationens id, så formatet er det samme som `raa/<situation>.json`, og `variant` og `ekstra` står efter `kontrakt`. Seedet står kun i `varianter.json`.
+3. **Renonce i en major (P1 og P2):** i P1 er "den korteste major" den korteste af de majorer, Vest har kort i. P2 kræver kort i begge majorer; ellers er hånden ikke med.
+4. **P2's underopdeling** har også gruppen "4+" (4-5 i majorerne), så grupperne tilsammen er hele rækken; specen nævner kun 1–2 og 3.
+5. **"Uden sekvens" i P7:** profilen Standard spiller ikke en honnør ud i farvekontrakt (appens sekvensregel, hvor også B 10 er en sekvens).
+6. **Udeladt** gælder kun hænder, der passer i rækken, men hvor A ikke er entydig: to lige lange majorer (P1 og P2), to singletoner (P5), to doubletoner uden honnør (P6), to sidefarver med 3+ kort uden honnør (P7) eller "table feeling" i to farver (P9). En hånd uden B eller med renonce i A eller B er ikke med i rækken og tælles ikke som udeladt.
+7. **Statistikken:** spredningen er stikprøvespredningen (n − 1), og grænsen 0,1 regnes med en tolerance på 1e-9, så 0,3 − 0,2 tæller som 0,1. "Uden praktisk betydning" står kun ved en dom, altså ikke ved for få hænder. Dommens tekster er "For få hænder", "Holder", "Modsat" og "Ingen forskel påvist", og ", uden praktisk betydning" står efter.
+8. **En side med to kort** ("table feeling" uden for P9): kortet med flest middelstik bruges; står de lige, det med flest sætninger.
+9. **"Undtagen i P8"** under "Kortet i farven" er læst som P9, der sammenligner de to kort.
+10. **Accepttest 2** sammenligner med `git diff` mod tagget, fordi arbejdsmappen har CRLF (autocrlf), og nye filer tæller med. **Accepttest 8** tillader også `docs/specs/SPEC-udspilsraad.md` og `docs/specs/README.md` (arkiveringen i session 3) og nye filer i `src/modspil/udspil/` og `tools/udspil/raa/varianter/`, og CLAUDE.md må have højst én ny linje. Usporede filer tæller med, og findes et tag `v51-foer-*`, sammenlignes tagget med det i stedet for arbejdsmappen.
+
+**Spørgsmål til Frank før session 2:** i P4 (♥ uden dyb sekvens mod ♠) og i P8 i S8 (trumf i delkontrakten) er A den farve, Kompendiet fraråder. Dommen regnes på A − B, så "Modsat" betyder dér, at Kompendiet har ret. Mulighederne er (a) at beholde dommen og forklare det i konklusionerne eller (b) at tabellen får en kolonne med Kompendiets retning (A bedre, B bedre eller "–" for P8 i S4, hvor rådet ikke har en retning), og at dommen siger "holder" og "modsat" om påstanden. Testene er de samme i begge tilfælde. Claude Code anbefaler (b).
+
+**Tokenforbrug pr. session** (nye input, skrevet til cachen, læst fra cachen og output):
+
+- Session 1: 94 / 253.335 / 8.629.495 / 131.351 (lagt sammen fra sessionens transcript: 47 kald til og med prøvekørslen; de sidste kald med Afklaret og commit er ikke med, og Franks `/usage` før og efter giver hele sessionen)
