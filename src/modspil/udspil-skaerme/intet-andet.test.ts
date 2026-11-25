@@ -11,9 +11,10 @@ import { ROOT } from '../../sprog/danskTekst';
  * - Ingen eksisterende testfil er ændret, slettet eller flyttet, bortset fra `src/sidefod.test.tsx` (fem til seks
  *   trænere), `src/modspil/udspil/data.test.ts` (kun tidsgrænsen på 30 s for testen "antallet"; Franks valg 25. nov.) og,
  *   efter Franks valg i session 3a (25. nov. 2026), `src/app/forside.test.tsx` (seks trænere i sidefoden) og
- *   `src/modspil/ui/session.test.tsx` (løkken besvarer også øvelse 8).
+ *   `src/modspil/ui/session.test.tsx` (løkken besvarer også øvelse 8) og, efter Franks svar efter session 3b (25. nov.
+ *   2026), `src/app/status.test.ts` og denne fil (afgrænsningen; også `src/app/status.ts` er tilladt).
  * - Uden for src/modspil/ er kun de filer ændret, Afgrænsningen og Franks valg i session 3a tillader: `src/ui/Footer.tsx`,
- *   `src/app/screens/GuideScreen.tsx` (kun nye linjer), `src/sprog/bydeform.ts`, `scripts/ordliste.txt`,
+ *   `src/app/screens/GuideScreen.tsx` (kun nye linjer og, efter Franks svar efter 3b, linjen "Øvelserne: …" med otte øvelser i stedet for syv), `src/sprog/bydeform.ts`, `scripts/ordliste.txt`,
  *   `scripts/tjek-bred-layout.mjs`, `scripts/tjek-sidefod.mjs`, `scripts/modspil.html`, mock-up'ens kopi i
  *   `docs/specs/design/modspil-v2/`, repoets CLAUDE.md og specen, og de rettede tests ovenfor.
  * - I src/modspil/ er v1's model, generator og metodefil, modellen fra trin 2, datasættet og situationsfilen, v1's og
@@ -37,10 +38,12 @@ const UDENFOR = [
   'SPEC-modspil-v2.md',
   'src/sidefod.test.tsx',
   'src/app/forside.test.tsx',
+  // Efter Franks svar efter session 3b (25. nov. 2026): forsidens kort tæller øvelse 8's post med.
+  'src/app/status.ts',
 ];
 const UDENFOR_MAPPER = ['docs/specs/design/modspil-v2/'];
 /** Eksisterende testfiler, der må rettes (kun ændres, ikke slettes). */
-const RETTEDE_TESTE = ['src/sidefod.test.tsx', 'src/app/forside.test.tsx', 'src/modspil/ui/session.test.tsx', 'src/modspil/udspil/data.test.ts'];
+const RETTEDE_TESTE = ['src/sidefod.test.tsx', 'src/app/forside.test.tsx', 'src/modspil/ui/session.test.tsx', 'src/modspil/udspil/data.test.ts', 'src/app/status.test.ts', 'src/modspil/udspil-skaerme/intet-andet.test.ts'];
 /** Filer og mapper i src/modspil/, hvor intet eksisterende må ændres (nye filer er tilladt). */
 const URØRTE = ['src/modspil/model/', 'src/modspil/content/', 'src/modspil/bruteforce.ts', 'src/modspil/kontrol.ts', 'src/modspil/ui/testhjaelp.tsx', 'src/modspil/udspil/hjaelp.ts', 'src/modspil/find-udspil/hjaelp.ts'];
 
@@ -98,9 +101,21 @@ describe('Intet andet er ændret (accepttest 9, trin 3)', () => {
 
   it('vejledningen har kun fået nye linjer', (ctx) => {
     if (!harTag()) ctx.skip(`Tagget ${TAG} findes ikke her.`);
-    const tal = git('diff', '--numstat', TAG, '--', 'src/app/screens/GuideScreen.tsx').trim();
-    const slettet = tal ? Number(tal.split('\t')[1]) : 0;
-    expect(slettet, 'slettede linjer i GuideScreen.tsx').toBe(0);
+    // Efter Franks svar efter session 3b (25. nov. 2026) må netop én linje være slettet: den gamle "Øvelserne: …" med syv
+    // øvelser, og den nye med otte øvelser skal stå i stedet.
+    const linjer = git('diff', '-U0', TAG, '--', 'src/app/screens/GuideScreen.tsx')
+      .split('\n')
+      .map((l) => l.replace(/\r$/, ''))
+      .filter((l) => /^[-+]/.test(l) && !/^(---|\+\+\+) /.test(l));
+    const slettede = linjer.filter((l) => l.startsWith('-'));
+    const nye = linjer.filter((l) => l.startsWith('+'));
+    expect(slettede.length, 'slettede linjer i GuideScreen.tsx').toBe(1);
+    expect(slettede[0]).toContain('Øvelserne: Makkers point, Regel 11 og 12, Udspillets længde, Aflæs markeringen, Vælg kortet, Første afkast og Forsinket kald.');
+    expect(slettede[0]).toContain('First discard and Delayed signal.');
+    const ny = nye.filter((l) => l.includes('Øvelserne: Makkers point'));
+    expect(ny.length, 'den nye linje med otte øvelser').toBe(1);
+    expect(ny[0]).toContain('Forsinket kald og Find udspillet.');
+    expect(ny[0]).toContain('Delayed signal and Find the lead.');
   });
 
   it('testen kan se forskel', () => {
