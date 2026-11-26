@@ -24,9 +24,11 @@ const TILLADT = [
   'CLAUDE.md',
   'scripts/ordliste.txt',
   'SPEC-udspilstal.md',
+  // Session 2: specen arkiveres med én linje i README.md (rettelse af testen, Afklaret, session 2).
+  'docs/specs/README.md',
 ];
-/** Nye filer: raadtal.json, specen og accepttestene. */
-const NYE = ['src/modspil/content/udspil/raadtal.json', 'SPEC-udspilstal.md'];
+/** Nye filer: raadtal.json, specen (i roden eller arkiveret) og accepttestene. */
+const NYE = ['src/modspil/content/udspil/raadtal.json', 'SPEC-udspilstal.md', 'docs/specs/SPEC-udspilstal.md'];
 const MAPPE = 'src/modspil/udspilstal/';
 
 const git = (...args: string[]): string => execFileSync('git', args, { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
@@ -104,6 +106,9 @@ describe('Intet andet er ændret (accepttest 8)', () => {
     expect(claude.minus).toEqual([]);
     expect(claude.plus.filter((l) => l.trim() !== '')).toHaveLength(1);
     expect(linjer('scripts/ordliste.txt').minus).toEqual([]);
+    const readme = linjer('docs/specs/README.md');
+    expect(readme.minus).toEqual([]);
+    expect(readme.plus.length).toBeLessThanOrEqual(1);
   });
 
   it('testen kan se forskel', () => {

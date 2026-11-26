@@ -252,5 +252,14 @@ Godkendt med to rettelser (Franks valg 26. nov. 2026):
 
 Specens tabeller (Sætningen i forklaringen og Sætningen sidst i "Ved bordet") er rettet tilsvarende.
 
+### Session 2 (26. nov. 2026, Claude Code)
+
+Rettelserne er committet på grenen i `85aa00f`.
+- **`npm test`** (PowerShell): den første kørsel gav 3 fejl på tidsgrænser (`src/app/App.test.tsx` "låser en legendarisk albumplads op" med 5,3 s mod 5 s, `hvad-nu-ud.test.ts` og `guide.dist.test.ts`), fordi Chrome-tjekket og skærmbillederne kørte samtidig på maskinen; ingen af filerne er ændret på grenen. Kørt igen alene: grøn, 178 testfiler, 1410 bestået og 2 sprunget over (kontroltestenes `forsinket` for profiler uden forsinket kald, som på `main`), 9½ minut.
+- **`node scripts/sprogtjek.ts`**: ingen ukendte ord.
+- **`node scripts/tjek-bred-layout.mjs --modspil`**: 2131 ok og 0 FEJL ("Alt er grønt"), 11 minutter.
+- **Skærmbilleder** i `../skaermbilleder/udspilstal/`: `1280-facit-S4.png`, `390-facit-S4.png`, `1280-facit-S6.png` og `390-facit-S6.png`. De er taget med et script uden for repoet (samme CDP-tilgang som `tjek-bred-layout.mjs`, som ikke kan vælge situation og ligger uden for afgrænsningen) på testsiden `scripts/modspil.html` med niveau 4, profilen Standard og det første kort som svar: seed 21 er S4 opgave 91 (♠D 8 7 4 ♥8 4 ♦K 9 3 ♣B 7 4 2; P8-sætningen og "Ved bordet" med rettelse 1), og seed 6 er S6 opgave 6 (♠E 7 6 2 ♥K B 6 ♦E B 8 ♣8 7 3).
+- **Rettelse af accepttest 8** (`intet-andet.test.ts`): specen arkiveres i `docs/specs/` med én linje i `docs/specs/README.md`, så vagten tillader nu `docs/specs/SPEC-udspilstal.md` som specen og én ny linje i `README.md` (som vagten i SPEC-udspilsraad.md). Uden den ville testen blive rød lokalt på `main` efter arkiveringen.
+
 **Tokenforbrug pr. session** (nye input, skrevet til cachen, læst fra cachen og output):
 - Session 1: 134 / 336.180 / 15.986.352 / 151.148 (lagt sammen fra sessionens transcript: 66 kald til og med den fulde testkørsel og commit af byggeriet; de sidste kald med Afklaret og commit er ikke med, og Franks `/usage` før og efter giver hele sessionen)
