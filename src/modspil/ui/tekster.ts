@@ -227,7 +227,7 @@ const DA = {
   udspil: {
     navn: 'Find udspillet',
     hjaelp:
-      'Du sidder som Vest og vælger udspillet ud fra din hånd og meldeforløbet: farven på niveau 1–2 og fra niveau 3 kortet efter profilens udspilsregel. Facit er regnet med dobbeltdummy på 100 fordelinger, der passer med meldingerne, og det bedste udspil giver flest stik i gennemsnit.',
+      'Du sidder som Vest og vælger udspillet ud fra din hånd og meldeforløbet: farven på niveau 1–2 og fra niveau 3 kortet efter profilens udspilsregel. Facit er regnet med dobbeltdummy på 100 fordelinger, der passer med meldingerne, og det bedste udspil giver flest stik i gennemsnit. Sætningerne "Med dobbeltdummy …" er gennemsnit over hænderne i meldeforløbet. Dobbeltdummy kender alle kort, så passive udspil undervurderes, og honnørudspil overvurderes.',
     spmFarve: 'Hvilken farve spilles ud?',
     spmKort: 'Hvilket kort spilles ud?',
     vist: (min: number, max: number) => `Syd har vist ${min}–${max} hp.`,
@@ -495,7 +495,7 @@ const EN: Tekster = {
   udspil: {
     navn: 'Find the lead',
     hjaelp:
-      "You sit West and choose the opening lead from your hand and the bidding: the suit at levels 1–2 and from level 3 the card by your profile's lead rule. The solution is computed double dummy on 100 deals that fit the bidding, and the best lead gives the most tricks on average.",
+      'You sit West and choose the opening lead from your hand and the bidding: the suit at levels 1–2 and from level 3 the card by your profile\'s lead rule. The solution is computed double dummy on 100 deals that fit the bidding, and the best lead gives the most tricks on average. The sentences "With double dummy …" are averages over the hands in the auction. Double dummy knows all the cards, so passive leads are underrated and honour leads overrated.',
     spmFarve: 'Which suit is led?',
     spmKort: 'Which card is led?',
     vist: (min: number, max: number) => `South has shown ${min}–${max} HCP.`,

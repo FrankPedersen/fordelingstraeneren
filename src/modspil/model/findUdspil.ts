@@ -1,9 +1,27 @@
 import type { Card } from '../../domain/cards';
 import type { Seat } from '../../domain/dealer';
 import { mulberry32 } from '../../engine/rng';
+import raadtalfil from '../content/udspil/raadtal.json';
 import situationsfil from '../content/udspil/situationer.json';
 import type { Tekst } from './forklaring';
-import { domTekst, INDLEDNING, kortSaetning, raadSaetning, talSaetning, VED_BORDET, type RaadRegel, type TalRaekke } from './findUdspilTekst';
+import {
+  dobbeltdummySaetning,
+  domTekst,
+  INDLEDNING,
+  kortSaetning,
+  raadSaetning,
+  raadTalI,
+  talSaetning,
+  toppenSaetning,
+  trumfSaetning,
+  VED_BORDET,
+  vedBordetSaetning,
+  type ParRaekke,
+  type RaadRegel,
+  type RaadTalFil,
+  type TalRaekke,
+  type ToppenGruppe,
+} from './findUdspilTekst';
 import type { Niveau } from './generator';
 import { gaeldende, KATEGORIER, metode, PROFILER, profilId, profilNavn, type Kontraktart, type Profil } from './metoder';
 import { honnoerUdspil, muligeUdspil, udspilKategori } from './udspil';
@@ -487,21 +505,104 @@ export function forklarUdspil(situation: SituationId, opgave: UdspilDataOpgave, 
         metode: metodeFor(holding, art, profil),
       });
       if (saetning) dele.push(saetning);
+      // "Table feeling" (P9): tallet for toppen mod det lave kort lige efter sætningen om de to kort (SPEC-udspilstal.md).
+      const toppen = saetning && kort.length === 2 ? toppenFor(situation, holding) : null;
+      if (toppen) dele.push(toppen);
     }
   }
 
   const raad = raadFor(opgave.vest, s.kompendieraad.regler);
   const raadTekst = raadSaetning(s.sider, raad.regel, raad.farver, trumfAf(s.kontrakt), f.afviger, bedsteFarve(f.tabel));
   dele.push(raadTekst);
+  // Tallet fra afsnit 7a for reglen, der gav rådet, sidst og uden for afvigelsen (SPEC-udspilstal.md).
+  const tal = dobbeltdummyFor(situation, opgave.vest, raad.regel, s.kompendieraad.regler);
+  if (tal) dele.push(tal);
   const forklaring = { da: dele.map((d) => d.da).join(' '), en: dele.map((d) => d.en).join(' ') };
   return f.afviger ? { forklaring, afvigelse: raadTekst } : { forklaring };
 }
 
-/** "Ved bordet": én tekst pr. situation, en omskrivning af Kompendiets råd (accepttest 7). */
+/**
+ * "Ved bordet": én tekst pr. situation, en omskrivning af Kompendiets råd (accepttest 7), og i S1–S6 og S8 sidst én
+ * sætning med stikkene fra afsnit 7a (SPEC-udspilstal.md, accepttest 4).
+ */
 export function vedBordet(situation: SituationId): Tekst {
   const t = VED_BORDET[situation];
   if (!t) throw new Error(`Ukendt situation: ${situation}`);
-  return { da: t.da, en: t.en };
+  const tal = vedBordetSaetning(situation, RAADTAL);
+  return tal ? { da: `${t.da} ${tal.da}`, en: `${t.en} ${tal.en}` } : { da: t.da, en: t.en };
+}
+
+// ---------------------------------------------------------------- tallene fra afsnit 7a (SPEC-udspilstal.md)
+
+/** Tallene fra afsnit 7a i docs/MODEL.md, skrevet af `node tools/udspil/raadanalyse.mjs --app`. */
+const RAADTAL = raadtalfil as unknown as RaadTalFil;
+
+/**
+ * Rækken pr. regel i situationens `kompendieraad` (samme rækkefølge), efter specens tabel: "majorer" er P2 eller P1
+ * efter hånden, P4 kræver kort i ♥, og null er ingen sætning (S3's dybe sekvens i ♥, S5's ♦ og ♣ og S7).
+ */
+const RAADRAEKKE: Readonly<Record<SituationId, readonly ('majorer' | ParRaekke | 'P8' | null)[]>> = {
+  'S1-1nt-3nt': ['majorer'],
+  'S2-stayman': ['majorer'],
+  'S3-transfer': [null, 'P4'],
+  'S4-kun-en-farve': ['P5', 'P6', 'P7', 'P8'],
+  'S5-sidefarve': ['P5', null],
+  'S6-trumf': ['P8'],
+  'S7-makker-aabnet': [null, null, null],
+  'S8-delkontrakt': ['P5', 'P6', 'P8'],
+};
+
+/** En honnør (E, K, D eller B) i valører. */
+const honnoerer = (v: readonly number[]) => v.filter((x) => x >= HONNOER).length;
+
+/**
+ * Sætningen "Med dobbeltdummy …" efter Kompendiets råd: rækken vælges efter reglen, der gav rådet, og efter hånden. I
+ * S1 og S2 P2, når Vest har kort i begge majorer, og de ikke er lige lange, ellers P1, når Vest har en minor med præcis
+ * 4 kort og 1–2 honnører og en major med 1–3 kort. Null, når ingen regel gav rådet, rækken ingen sætning har, eller
+ * rækken har for få hænder.
+ */
+function dobbeltdummyFor(situation: SituationId, vest: readonly Card[], regel: RaadRegel | null, regler: readonly RaadRegel[]): Tekst | null {
+  if (!regel) return null;
+  const raekke = RAADRAEKKE[situation][regler.indexOf(regel)] ?? null;
+  const laengde = (f: number) => valoerer(vest, f).length;
+  const par = (r: ParRaekke) => {
+    const tal = raadTalI(RAADTAL, r, situation);
+    return tal ? dobbeltdummySaetning(r, tal) : null;
+  };
+  switch (raekke) {
+    case null:
+      return null;
+    case 'majorer': {
+      if (laengde(0) > 0 && laengde(1) > 0 && laengde(0) !== laengde(1)) return par('P2');
+      const minor = [2, 3].some((f) => laengde(f) === 4 && honnoerer(valoerer(vest, f)) >= 1 && honnoerer(valoerer(vest, f)) <= 2);
+      const major = [0, 1].some((f) => laengde(f) >= 1 && laengde(f) <= 3);
+      return minor && major ? par('P1') : null;
+    }
+    case 'P4':
+      return laengde(1) > 0 ? par('P4') : null;
+    case 'P8':
+      return trumfSaetning(
+        ['S', 'H', 'D', 'C'].flatMap((b, farve) => {
+          const tal = raadTalI(RAADTAL, `P8-${b}`, situation);
+          return tal ? [{ farve, tal }] : [];
+        }),
+      );
+    default:
+      return par(raekke);
+  }
+}
+
+/** P9's grupper efter de to øverste kort i farven (E K, K D, D B); B 10 har ingen gruppe. */
+const TOPPEN: Readonly<Record<number, ToppenGruppe>> = { 14: 'E K', 13: 'K D', 12: 'D B' };
+
+/** Tilføjelsen ved "table feeling": P9 er kun målt i S1 og S2. */
+function toppenFor(situation: SituationId, holding: readonly number[]): Tekst | null {
+  if (situation !== 'S1-1nt-3nt' && situation !== 'S2-stayman') return null;
+  const [top, anden] = faldende(holding);
+  const gruppe = anden === top - 1 ? TOPPEN[top] : undefined;
+  if (!gruppe) return null;
+  const tal = raadTalI(RAADTAL, 'P9', situation, gruppe);
+  return tal ? toppenSaetning(gruppe, tal) : null;
 }
 
 // ---------------------------------------------------------------- dommen

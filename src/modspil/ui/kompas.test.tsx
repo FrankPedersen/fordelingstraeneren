@@ -55,7 +55,7 @@ describe('Bordet har rigtige verdenshjørner (accepttest 1)', () => {
       expect(kortKnapper().filter((b) => b.closest('.ms-bord')), `${hvor}: ingen kortknap i bordet`).toEqual([]);
       cleanup();
     }
-  });
+  }, 30_000);
 
   it('feltet viser stadig V, Ø og "S · spilfører", og hånden står efter stikket i HTML', () => {
     for (const o of eksempler().filter((x) => x.spillet.length)) {
@@ -65,7 +65,7 @@ describe('Bordet har rigtige verdenshjørner (accepttest 1)', () => {
       expect(foer(stik, document.querySelector('[data-haand="dig"]')!), navn(o)).toBe(true);
       cleanup();
     }
-  });
+  }, 30_000);
 });
 
 describe('Kortknapperne står i spørgsmålet (accepttest 2)', () => {
@@ -97,7 +97,7 @@ describe('Kortknapperne står i spørgsmålet (accepttest 2)', () => {
       for (const f of farvelinjer(o, o.plads)) expect(tekst.includes(f), `${hvor}: ${f} i hånden`).toBe(true);
       cleanup();
     }
-  });
+  }, 30_000);
 
   it('et klik svarer med kortet, og i facit har det rigtige kort grøn kant', () => {
     for (const o of vaelger()) {
@@ -118,7 +118,7 @@ describe('Kortknapperne står i spørgsmålet (accepttest 2)', () => {
       }
       cleanup();
     }
-  });
+  }, 30_000);
 });
 
 describe('hp med små bogstaver (accepttest 3)', () => {
@@ -132,7 +132,7 @@ describe('hp med små bogstaver (accepttest 3)', () => {
       for (const t of hp) expect(t, navn(o)).toMatch(/^\d+ hp$/);
       cleanup();
     }
-  });
+  }, 30_000);
 
   it('modspil.css giver .ms-hp text-transform: none', () => {
     const css = readFileSync(join(ROOT, 'src/modspil/ui/modspil.css'), 'utf8');

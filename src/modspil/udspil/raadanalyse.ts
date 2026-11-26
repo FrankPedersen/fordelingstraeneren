@@ -679,9 +679,43 @@ export interface AppTal {
   trumfBedst: { situation: SituationId; n: number; andel: number };
 }
 
-/** Appens tal ud fra analysen (`node tools/udspil/raadanalyse.mjs --app`). */
-export function appTal(_r: Resultat): AppTal {
-  throw new Error('appTal: ikke bygget');
+/**
+ * Grupperne, appen bruger pr. række: hele rækken (null), og i P9 kun grupperne efter toppen. P2's underopdeling på den
+ * korteste majors længde og P9's længdegrupper bruges ikke (SPEC-udspilstal.md, Rådgiverens valg).
+ */
+const APP_GRUPPER: Partial<Record<RaekkeId, readonly (string | null)[]>> = { P9: ['E K', 'K D', 'D B'] };
+
+/** Situationen med tallet "trumf er den bedste farve" i "Ved bordet". */
+const TRUMF_BEDST: SituationId = 'S6-trumf';
+
+/**
+ * Appens tal ud fra analysen (`node tools/udspil/raadanalyse.mjs --app` skriver dem til
+ * src/modspil/content/udspil/raadtal.json): pr. række, situation og gruppe, som appen bruger, n, forskellen i stik og i
+ * chancen for at sætte, dommen og "uden praktisk betydning", uafrundet; og i S6 andelen af hænderne med trumf, hvor
+ * trumf er den bedste farve (kolonnen "1." i tabellen "Trumfs plads"). Accepttest 1 i src/modspil/udspilstal/tal.test.ts.
+ */
+export function appTal(r: Resultat): AppTal {
+  const raekker = r.raekker
+    .filter((x) => (APP_GRUPPER[x.raekke] ?? [null]).includes(x.gruppe))
+    .map(
+      (x): AppRaekke => ({
+        raekke: x.raekke,
+        situation: x.situation,
+        gruppe: x.gruppe,
+        n: x.statistik.n,
+        forskel: x.statistik.forskel,
+        saetForskel: x.statistik.saetForskel,
+        dom: x.statistik.dom,
+        udenPraktiskBetydning: x.statistik.udenPraktiskBetydning,
+      }),
+    );
+  const t = r.trumfPlads.find((x) => x.situation === TRUMF_BEDST);
+  if (!t || t.n === 0) throw new Error(`raadanalyse.ts: tabellen "Trumfs plads" mangler ${TRUMF_BEDST}.`);
+  return {
+    kilde: 'node tools/udspil/raadanalyse.mjs --app (afsnit 7a i docs/MODEL.md, SPEC-udspilstal.md); rettes aldrig i hånden',
+    raekker,
+    trumfBedst: { situation: t.situation, n: t.n, andel: t.plads[0] / t.n },
+  };
 }
 
 // ---------------------------------------------------------------- tabellerne
