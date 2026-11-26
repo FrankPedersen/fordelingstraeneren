@@ -21,6 +21,7 @@ import {
   type Farve,
   type Krav,
   type Raa,
+  type RaaOpgave,
   type Variant,
   type VariantRaa,
 } from './hjaelp';
@@ -38,6 +39,8 @@ import {
  *    S1-1nt-3nt --antal 1 --ud <tmp>` giver den samme første opgave som i raa/S1-1nt-3nt.json (springes over med en
  *    besked, hvis Python med endplay ikke findes i tools/udspil/.venv).
  * 3. Variantdataene: 150 hænder pr. variant, 100 fordelinger pr. hånd, 13 kort pr. fordeling og stik mellem 0 og 13.
+ *    Dubletter (samme seed) tælles mod `DUBLETTER` (rettet i session 2 med Franks valg 26. nov. 2026; før krævede
+ *    testen 150 forskellige seeds).
  * 8. Intet andet er ændret siden `v50-foer-udspilsraad` end filerne i Afgrænsningen og specen (se `ulovlige`).
  *
  * Tunge løkker har tidsgrænsen 300 s pr. variant.
@@ -45,6 +48,11 @@ import {
 
 const TUNG = { timeout: 300_000 };
 const TAG = 'v50-foer-udspilsraad';
+/**
+ * Hænder, der står to gange i variantens rådata (Franks valg 26. nov. 2026): mulberry32 kan give samme tal igen, og
+ * S5-singleton fik 4 dubletter. Dataene beholdes, og rettelsen i `find_opgaver` venter til næste generering.
+ */
+const DUBLETTER: Record<string, number> = { 'S5-singleton': 4 };
 const sit = situationsfil();
 const vfil = variantfil();
 const situation = (id: string) => sit.situationer.find((s) => s.id === id)!;
@@ -172,7 +180,18 @@ describe.each(vfil.varianter.map((v) => [v.id, v] as const))('%s', (id, v: Varia
     const raa = laes<VariantRaa>(variantSti(id));
     expect(raa.fordelinger).toBe(sit.fordelinger);
     expect(raa.opgaver).toHaveLength(vfil.opgaver);
-    expect(new Set(raa.opgaver.map((o) => o.seed)).size).toBe(vfil.opgaver);
+    // Dubletter (samme seed er samme hånd med de samme fordelinger og stik) tælles; antallet står i DUBLETTER og
+    // under Afklaret, og analysen bruger kun forskellige hænder.
+    const foerste = new Map<number, RaaOpgave>();
+    let dubletter = 0;
+    for (const o of raa.opgaver) {
+      const f = foerste.get(o.seed);
+      if (f) {
+        dubletter++;
+        expect(o, `${id}: seed ${o.seed} står to gange`).toEqual(f);
+      } else foerste.set(o.seed, o);
+    }
+    expect(dubletter, `${id}: hænder, der står to gange`).toBe(DUBLETTER[id] ?? 0);
     expect(raa.eksempler).toEqual([]);
     for (const o of raa.opgaver) {
       expect(o.vest).toHaveLength(13);

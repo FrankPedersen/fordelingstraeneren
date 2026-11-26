@@ -2,12 +2,14 @@ import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { ROOT } from '../../sprog/danskTekst';
-import { fraPbn, laes, raaSti, type Farve, type Raa } from './hjaelp';
-import { domTekst, haandtal, RAEKKER, statistik, udvaelg, type Haandtal, type RaekkeId, type Side, type SituationId, type Valg } from './raadanalyse';
+import { fraPbn, laes, raaSti, variantSti, type Farve, type Raa } from './hjaelp';
+import { analyser, domTekst, haandtal, RAEKKER, statistik, UDELADT, udvaelg, type Haandtal, type RaekkeId, type Side, type SituationId, type Valg } from './raadanalyse';
 
 /*
  * Accepttest 4–7 i SPEC-udspilsraad.md. Røde, indtil session 2 har bygget analysen (raadanalyse.ts og
- * tools/udspil/raadanalyse.mjs) og skrevet afsnit 7a i docs/MODEL.md. Testene rettes ikke i session 2.
+ * tools/udspil/raadanalyse.mjs) og skrevet afsnit 7a i docs/MODEL.md. Testene rettes ikke i session 2, med Franks
+ * undtagelser 26. nov. 2026: sætningstallene i accepttest 5 (haandtal) og 6 regner 3NT sat ved 5 stik som appen, og
+ * testene af, at analysen kun bruger forskellige hænder (accepttest 3), er nye.
  *
  * 4. Statistikken på faste, håndregnede tal: forskel, standardfejl (stikprøvespredning med n − 1, divideret med √n),
  *    interval, holder/lige/modsat ved grænsen 0,1, forskellen i chancen for at sætte og dommen i alle fem tilfælde.
@@ -247,7 +249,8 @@ describe('Udvælgelsen (accepttest 5)', () => {
   });
 
   it('haandtal: ved to kort bruges kortet med flest middelstik, og står de lige, det med flest sætninger', () => {
-    // P1 med ♠ E K 5 ("table feeling") mod ♦ K B 7 3 i 3NT (sat ved 4 stik). To fordelinger; Vests kort stigende.
+    // P1 med ♠ E K 5 ("table feeling") mod ♦ K B 7 3 i 3NT (sat ved 5 stik, 8 − niveau som appen; rettet fra 4 i
+    // session 2 med Franks godkendelse 26. nov. 2026). To fordelinger; Vests kort stigende.
     const vest = fraPbn('AK5.9864.KJ73.82');
     const v = udvaelg('P1', S1, vest) as Valg;
     const kolonne = (kort: number) => vest.indexOf(kort);
@@ -261,10 +264,10 @@ describe('Udvælgelsen (accepttest 5)', () => {
         raekke[kolonne(d3)] = ruder3[i];
         return raekke;
       });
-    // ♠5 giver 4 og 4 (middel 4, sat 2 af 2); ♠E 5 og 2 (middel 3,5); ♦3 2 og 4 (middel 3, sat 1 af 2).
-    expect(haandtal(v, { vest, stik: stik([4, 4], [5, 2], [2, 4]) }, '3NT')).toEqual({ a: 4, b: 3, aSaet: 1, bSaet: 0.5 });
-    // ♠5 3 og 3 og ♠E 4 og 2 står lige (middel 3); ♠E sætter i 1 af 2 og bruges.
-    expect(haandtal(v, { vest, stik: stik([3, 3], [4, 2], [2, 4]) }, '3NT')).toEqual({ a: 3, b: 3, aSaet: 0.5, bSaet: 0.5 });
+    // ♠5 giver 5 og 5 (middel 5, sat 2 af 2); ♠E 6 og 3 (middel 4,5); ♦3 3 og 5 (middel 4, sat 1 af 2).
+    expect(haandtal(v, { vest, stik: stik([5, 5], [6, 3], [3, 5]) }, '3NT')).toEqual({ a: 5, b: 4, aSaet: 1, bSaet: 0.5 });
+    // ♠5 4 og 4 og ♠E 5 og 3 står lige (middel 4); ♠E sætter i 1 af 2 og bruges.
+    expect(haandtal(v, { vest, stik: stik([4, 4], [5, 3], [3, 5]) }, '3NT')).toEqual({ a: 4, b: 4, aSaet: 0.5, bSaet: 0.5 });
   });
 });
 
@@ -281,8 +284,28 @@ describe('S1 opgave 55 (accepttest 6)', () => {
     const t = haandtal(v as Valg, o, '3NT');
     expect(t.a).toBeCloseTo(3.35, 9);
     expect(t.b).toBeCloseTo(2.52, 9);
-    expect(t.aSaet).toBeCloseTo(0.47, 9);
-    expect(t.bSaet).toBeCloseTo(0.23, 9);
+    // 3NT sættes ved 5 stik som i appens facit (rettet fra 0,47 og 0,23, der var 4 stik; Franks godkendelse 26. nov. 2026).
+    expect(t.aSaet).toBeCloseTo(0.14, 9);
+    expect(t.bSaet).toBeCloseTo(0.04, 9);
+  });
+});
+
+// ---------------------------------------------------------------- accepttest 3: kun forskellige hænder
+
+describe('Analysen bruger kun forskellige hænder (accepttest 3, Franks valg 26. nov. 2026)', () => {
+  it('en hånd, der står to gange, tæller én gang og står som udeladt', () => {
+    const raa = laes<Raa>(raaSti(S1));
+    const o = raa.opgaver[55];
+    const p9 = analyser({ base: { [S1]: { ...raa, opgaver: [o, o] } }, varianter: {} }).raekker.find((x) => x.raekke === 'P9' && x.gruppe === null)!;
+    expect(p9.nBase).toBe(1);
+    expect(p9.udeladt).toEqual({ [UDELADT.dublet]: 1 });
+  });
+
+  it('S5-singletons 4 dubletter: P5 i S5 bruger 146 varianthænder', TUNG, () => {
+    const data = { base: { [S5]: laes<Raa>(raaSti(S5)) }, varianter: { 'S5-singleton': laes<Raa>(variantSti('S5-singleton')) } };
+    const p5 = analyser(data).raekker.find((x) => x.raekke === 'P5' && x.situation === S5 && x.gruppe === null)!;
+    expect(p5.nVariant).toBe(146);
+    expect(p5.udeladt).toEqual({ [UDELADT.dublet]: 4 });
   });
 });
 

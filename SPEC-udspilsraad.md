@@ -70,7 +70,7 @@ Singletonen må gerne være en honnør (`honnoerer [0, 1]`), fordi Kompendiets r
 
 Hver påstand sammenligner to udspil, A og B, **på de samme hænder og de samme fordelinger** (parret). Hændernes datasæt står i kolonnen "Data": "base" er Modspil v2's 150 opgaver, og en variant er de 150 ekstra hænder. Hvor både base og variant passer, bruges begge, og rækken viser de to antal for sig og samlet.
 
-**Kortet i farven:** udspillet i en farve er det kort, profilen Standard spiller (`muligeUdspil` med `profil('standard')`), og stikkene er stikkene for netop det kort i hver fordeling i rådataene. Ved "table feeling" bruges kortet med flest middelstik, som i `farvevaerdier` (undtagen i P8, der sammenligner de to kort).
+**Kortet i farven:** udspillet i en farve er det kort, profilen Standard spiller (`muligeUdspil` med `profil('standard')`), og stikkene er stikkene for netop det kort i hver fordeling i rådataene. Ved "table feeling" bruges kortet med flest middelstik, som i `farvevaerdier` (undtagen i P9, der sammenligner de to kort).
 
 **Ingen "bedste af resten":** B er altid én bestemt farve, valgt efter en fast regel uden at se på stikkene. Har hånden flere farver, der passer som B, vælges den længste, og ved lige længde den højeste (♠ ♥ ♦ ♣). Hænder, hvor A ikke er entydig (fx to lige lange majorer i P2), udelades, og antallet skrives i rækken.
 
@@ -188,6 +188,118 @@ Opfølgningen (tallene i forklaringerne i øvelse 8) er ikke med her.
 
 **Spørgsmål til Frank før session 2:** i P4 (♥ uden dyb sekvens mod ♠) og i P8 i S8 (trumf i delkontrakten) er A den farve, Kompendiet fraråder. Dommen regnes på A − B, så "Modsat" betyder dér, at Kompendiet har ret. Mulighederne er (a) at beholde dommen og forklare det i konklusionerne eller (b) at tabellen får en kolonne med Kompendiets retning (A bedre, B bedre eller "–" for P8 i S4, hvor rådet ikke har en retning), og at dommen siger "holder" og "modsat" om påstanden. Testene er de samme i begge tilfælde. Claude Code anbefaler (b).
 
+**Session 2 (26. nov. 2026, Opus 5.5, high effort)**
+
+- **Kørslen (Frank, 25.–26. nov.):** varianterne er kørt med `generer.py --varianter`, og `kontrol.py --varianter` gav for alle syv varianter (S4-, S5-, S8-singleton, S4-, S8-doubleton, S1-, S2-tablefeeling): 1500 fordelinger tjekket mod DDS-tabellen, 0 afvigelser.
+- **Afsnit 7a** står i `docs/MODEL.md` mellem afsnit 7 og 8 med indledningen, tabellerne mellem markørerne (nøjagtigt `node tools/udspil/raadanalyse.mjs --markdown`), forbeholdene og seks konklusioner. Afsnit 9 har én ny linje, og CLAUDE.md én ny linje om analysen under Modspil v2. Appen er ikke ændret.
+
+**Franks valg 26. nov.**
+
+1. Tabellen har kolonnen "Kompendiets retning" (A eller B), og dommen siger "Kompendiet holder", "Kompendiet tager fejl", "Ingen forskel påvist" eller "For få hænder", og desuden "uden praktisk betydning" under 0,05 stik.
+2. "Undtagen i P8" under Kortet i farven er rettet til P9.
+3. Claude Codes valg 1, 4 og 9 fra session 1 er godkendt: "table feeling" kun E K, K D og D B, P2-gruppen 4+ og P9.
+4. **3NT sættes ved 5 stik.** Accepttest 5 (`haandtal`) og 6 regnede 3NT sat ved 4 stik, efter kommentaren "3NT → 4" i `maal` og `kontraktens_maal`; koden giver 8 − niveau = 5 som appens facit. Sætningstallene i de to tests er rettet med Franks godkendelse: stikkene i `haandtal`-testen er 1 højere ("sat ved 5 stik"), og S1 opgave 55 sætter i 0,14 med ♥E og 0,04 med ♥3 (før 0,47 og 0,23). Stikkene 3,35 og 2,52 er uændrede. Kommentaren rettes sammen med `find_opgaver` (punkt 5).
+5. **Dubletter i S5-singleton:** 4 hænder står to gange (samme seed og dermed samme hånd, fordelinger og stik: indeks 52 og 95, 32 og 118, 76 og 121 samt 0 og 123), fordi mulberry32 kan give samme tal igen; S5-singleton trak op til 2,4 mio. seeds pr. hånd. Dataene beholdes, og analysen tæller hver hånd én gang: P5 i S5 har 4 + 146 hænder og "4 (samme hånd to gange)" under Udeladt. Accepttest 3 tæller dubletterne mod `DUBLETTER` i `varianter.test.ts` (S5-singleton 4, de andre 0) i stedet for at kræve 150 forskellige seeds, og to nye tests i `raadanalyse.test.ts` viser, at analysen kun bruger forskellige hænder. Rettelsen i `find_opgaver` (et brugt seed springes over) står på planens småting til næste generering.
+6. **Dubletter i basen:** de otte situationers rådata har 0 dubletter: 150 forskellige seeds og 150 forskellige hænder i hver, intet seed i to situationer, og intet eksempels seed er også en opgaves. Ingen varianthånd står i sin situations base. Intet er rettet.
+
+**Claude Codes valg i session 2** (Frank kan ændre dem ved gennemgangen):
+
+1. **Kompendiets retning:** A i P1, P2, P3, P5, P6 og P7, B i P4, og i P8 A i S6 og B i S4 og S8. I S4 er trumf "kun attraktivt, når ingen sidefarve er det", og Kompendiets råd i S4 peger aldrig på trumf, så retningen er B (session 1 foreslog "–"). P9 har ingen retning ("–"), fordi "table feeling" overlader valget til spilleren; dommen siger dér "A bedre" eller "B bedre". `domTekst` (accepttest 4) er uændret og giver dommen om A − B; tabellens dom kommer fra `kompendieDom`.
+2. **P9's underopdeling** er to opdelinger hver for sig, toppen (E K, K D, D B) og længden (3, 4, 5+), ikke ni celler.
+3. **Hyppigheden** er antallet af basens 150 hænder i situationen, der opfylder variantens ekstra krav (`opfyldt` med `ekstra` fra rådataene).
+4. **Trumfs plads (P8)** er 1 + antallet af farver med flere middelstik end trumf (farvens værdi som i `farvevaerdier`, middelstikkene i hundrededele som i appen) og tæller kun hænder med trumf.
+5. **S4 og S6:** "rådet blandt de bedste" regnes som i `rapporttal.mjs` (`kompendieraad` og `bedsteFarver`); "bedste farve" er farven med flest middelstik (ved lige den højeste); en honnørsekvens i en sidefarve er en sidefarve, hvorfra profilen Standard spiller en honnør ud i farvekontrakt (samme regel som "uden sekvens" i P7). Tabellen viser de samme optællinger for alle hænder ved siden af.
+6. **Tabellerne:** dansk decimalkomma, fortegn (+0,12 og −0,10) og "–", hvor et tal ikke findes. Et interval, der er rundet til 0,00, kan stadig ligge helt på den ene side af 0 (P8 · ♣ i S4). Mellem markørerne står fem tabeller: påstandene med A og B, resultaterne (med det faste eksempel S1 opgave 55 under), hyppigheden, trumfs plads og S4 og S6.
+7. **Afsnit 9's nye linje** står i kodeblokken: `node tools/udspil/raadanalyse.mjs --markdown  # afsnit 7a (Fordelingstrænerens rod)`. `scripts/ordliste.txt` har fire nye ord (doubletonen, doubletoner, raadanalyse og tablefeeling), og `node scripts/sprogtjek.ts` finder ingen ukendte ord.
+
+**Testene:** `npm test` er grøn (tsc og Vitest): 171 testfiler, 1337 bestået og 2 sprunget over (293 s). `raadanalyse.test.ts` og `varianter.test.ts` alene: 103 af 103, så accepttest 1–8 er grønne; testene er kun rettet, hvor Frank valgte det (punkt 4 og 5 ovenfor). `node scripts/sprogtjek.ts` finder ingen ukendte ord, og `tsc` er grøn.
+
+**Rapporten**
+
+| Række | Situation | Kompendiets retning | Hænder (base + variant) | Udeladt | A − B (stik) | Standardfejl | 95 %-interval | A bedre / lige / B bedre | Sætter, A − B (procentpoint) | Dom |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| P1 | S1 + S2 | A | 71 | 13 (to lige lange majorer) | +0,03 | 0,02 | [−0,01; +0,06] | 32 % / 51 % / 17 % | +1,1 | Ingen forskel påvist, uden praktisk betydning |
+| P2 | S1 + S2 | A | 240 | 58 (to lige lange majorer) | −0,10 | 0,01 | [−0,13; −0,08] | 10 % / 40 % / 51 % | −1,8 | Kompendiet tager fejl |
+| P2 · korteste major 1–2 kort | S1 + S2 | A | 103 |  | −0,12 | 0,02 | [−0,15; −0,09] | 10 % / 33 % / 57 % | −2,4 | Kompendiet tager fejl |
+| P2 · korteste major 3 kort | S1 + S2 | A | 120 |  | −0,10 | 0,02 | [−0,14; −0,06] | 9 % / 44 % / 47 % | −1,1 | Kompendiet tager fejl |
+| P2 · korteste major 4+ kort | S1 + S2 | A | 17 |  | −0,03 | 0,07 | [−0,17; +0,12] | 12 % / 47 % / 41 % | −3,4 | For få hænder |
+| P3 · ♦ | S3 | A | 149 | – | +0,03 | 0,02 | [−0,01; +0,06] | 31 % / 48 % / 21 % | +0,5 | Ingen forskel påvist, uden praktisk betydning |
+| P3 · ♣ | S3 | A | 149 | – | +0,02 | 0,01 | [−0,01; +0,05] | 30 % / 47 % / 23 % | +0,6 | Ingen forskel påvist, uden praktisk betydning |
+| P4 | S3 | B | 150 | – | −0,12 | 0,01 | [−0,14; −0,09] | 9 % / 39 % / 52 % | −1,6 | Kompendiet holder |
+| P5 | S4 | A | 5 + 150 = 155 | – | +0,13 | 0,01 | [+0,12; +0,15] | 62 % / 38 % / 0 % | +4,4 | Kompendiet holder |
+| P5 | S5 | A | 4 + 146 = 150 | 4 (samme hånd to gange) | +0,11 | 0,01 | [+0,09; +0,14] | 47 % / 46 % / 7 % | +3,0 | Kompendiet holder |
+| P5 | S8 | A | 3 + 150 = 153 | – | +0,17 | 0,01 | [+0,15; +0,19] | 79 % / 17 % / 4 % | +3,4 | Kompendiet holder |
+| P6 | S4 | A | 11 + 150 = 161 | – | −0,02 | 0,00 | [−0,03; −0,01] | 3 % / 87 % / 10 % | +0,4 | Kompendiet tager fejl, uden praktisk betydning |
+| P6 | S8 | A | 10 + 150 = 160 | – | −0,02 | 0,01 | [−0,03; −0,01] | 9 % / 78 % / 13 % | +1,3 | Kompendiet tager fejl, uden praktisk betydning |
+| P7 | S4 | A | 59 | 4 (to sidefarver med 3+ kort uden honnør) | +0,15 | 0,02 | [+0,12; +0,18] | 64 % / 34 % / 2 % | +1,7 | Kompendiet holder |
+| P8 · ♠ | S6 | A | 149 | – | +0,07 | 0,02 | [+0,02; +0,11] | 46 % / 26 % / 29 % | +2,7 | Kompendiet holder |
+| P8 · ♠ | S4 | B | 143 | – | −0,06 | 0,02 | [−0,10; −0,01] | 24 % / 45 % / 31 % | −1,2 | Kompendiet holder |
+| P8 · ♥ | S6 | A | 149 | – | +0,32 | 0,03 | [+0,26; +0,37] | 76 % / 15 % / 9 % | +5,6 | Kompendiet holder |
+| P8 · ♥ | S8 | B | 142 | – | −0,06 | 0,02 | [−0,10; −0,02] | 21 % / 51 % / 28 % | −0,9 | Kompendiet holder |
+| P8 · ♦ | S6 | A | 149 | – | +0,03 | 0,02 | [0,00; +0,07] | 40 % / 32 % / 28 % | +2,4 | Ingen forskel påvist, uden praktisk betydning |
+| P8 · ♦ | S4 | B | 144 | – | −0,06 | 0,02 | [−0,10; −0,02] | 22 % / 49 % / 30 % | −1,2 | Kompendiet holder |
+| P8 · ♦ | S8 | B | 141 | – | −0,06 | 0,02 | [−0,10; −0,02] | 21 % / 45 % / 33 % | −0,8 | Kompendiet holder |
+| P8 · ♣ | S4 | B | 144 | – | −0,04 | 0,02 | [−0,08; 0,00] | 24 % / 51 % / 26 % | −0,9 | Kompendiet holder, uden praktisk betydning |
+| P8 · ♣ | S8 | B | 142 | – | −0,06 | 0,02 | [−0,09; −0,02] | 16 % / 58 % / 26 % | −0,9 | Kompendiet holder |
+| P9 | S1 + S2 | – | 31 + 293 = 324 | 8 ("table feeling" i to farver) | +0,31 | 0,02 | [+0,27; +0,35] | 79 % / 20 % / 1 % | +3,2 | A bedre |
+| P9 · E K | S1 + S2 | – | 7 + 46 = 53 |  | +0,83 | 0,08 | [+0,68; +0,98] | 100 % / 0 % / 0 % | +12,3 | A bedre |
+| P9 · K D | S1 + S2 | – | 6 + 96 = 102 |  | +0,32 | 0,01 | [+0,30; +0,35] | 93 % / 6 % / 1 % | +2,4 | A bedre |
+| P9 · D B | S1 + S2 | – | 18 + 151 = 169 |  | +0,14 | 0,01 | [+0,12; +0,16] | 64 % / 34 % / 2 % | +1,0 | A bedre |
+| P9 · 3 kort | S1 + S2 | – | 11 + 98 = 109 |  | +0,36 | 0,02 | [+0,32; +0,40] | 98 % / 2 % / 0 % | +4,6 | A bedre |
+| P9 · 4 kort | S1 + S2 | – | 15 + 123 = 138 |  | +0,23 | 0,02 | [+0,19; +0,26] | 68 % / 29 % / 3 % | +2,4 | A bedre |
+| P9 · 5+ kort | S1 + S2 | – | 5 + 72 = 77 |  | +0,39 | 0,07 | [+0,26; +0,52] | 71 % / 29 % / 0 % | +3,0 | A bedre |
+
+Fast eksempel i P9: S1 opgave 55 (seed 2556829236, ♠K B 7 6 ♥E K 4 3 ♦10 8 6 3 ♣B): ♥E giver 3,35 stik og sætter i 14 %, ♥3 giver 2,52 stik og sætter i 4 %.
+
+De vigtigste fund:
+
+- **P5 holder:** singletonen giver 0,11–0,17 stik mere end småkort i S4, S5 og S8 og sætter 3–4 procentpoint oftere. Formen findes kun i 2–3 % af basens hænder, så rækkerne bygger på varianterne.
+- **P2 tager fejl:** den korteste major giver 0,10 stik mindre end den længste (1–2 kort −0,12, 3 kort −0,10), som rådgiverens første kig. P1 er +0,03 og uden praktisk betydning.
+- **P4 holder** (♥ uden dyb sekvens −0,12 mod ♠), men ♠'s fordel i P3 ses ikke (+0,02 og +0,03, uden praktisk betydning).
+- **P6 er lige:** doubletonen giver 0,02 stik mindre end småkort ("tager fejl, uden praktisk betydning"), men sætter 0,4–1,3 procentpoint oftere. **P7 holder** (+0,15).
+- **P8 følger Kompendiet:** i S6 er trumf bedre end ♠ (+0,07) og ♥ (+0,32), men ikke påviseligt end ♦ (+0,03); i S4 og S8 er hver sidefarve 0,04–0,06 stik bedre end trumf. Trumf er den bedste farve i 46 % af hænderne i S6, 16 % i S4 og 8 % i S8.
+- **P9:** toppen giver 0,31 stik mere end det lave kort (E K +0,83, K D +0,32, D B +0,14); dobbeltdummy overvurderer esudspil, så tallet er en øvre grænse.
+- **S4 og S6:** rådet er blandt de bedste farver i 80 % og 61 %. I S4's 30 andre hænder har Vest oftere en honnørsekvens i en sidefarve (70 % mod 43 %); i S6's 59 er den bedste farve ♠ eller ♦, aldrig ♥.
+- **Dataene:** S5-singleton har 4 dubletter (analysen bruger 146); basen har ingen.
+
+**Tekster til gennemgang** (konklusionerne i afsnit 7a, Claude Codes tekst):
+
+1. **Singleton i en sidefarve holder (P5).** I 4♥, 4♠ og 3♠ giver
+   singletonen 0,11–0,17 stik mere end en sidefarve med småkort og sætter
+   3–4 procentpoint oftere; småkort er 0,1 stik bedre eller mere i højst
+   7 % af hænderne. Formen er sjælden (2–3 % af basens hænder), så tallene
+   bygger næsten kun på de ekstra hænder.
+2. **Den korteste major mod 1NT – 3NT tager fejl (P2).** Den korteste major
+   giver 0,10 stik mindre end den længste og sætter 1,8 procentpoint
+   sjældnere, både med 1–2 og med 3 kort. Mod en minor med 4 kort og en
+   eller to honnører (P1) er forskellen +0,03 stik, uden praktisk
+   betydning. Forbeholdet om dobbeltdummy gælder især her.
+3. **Efter transfer holder rådet mod bordets ♥ (P4):** ♥ uden dyb sekvens
+   giver 0,12 stik mindre end ♠. ♠'s lille fordel frem for ♦ og ♣ (P3) ses
+   ikke; forskellen er +0,02 til +0,03 stik, uden praktisk betydning.
+4. **Doubleton uden honnør og småkort er lige gode (P6), og småkort slår
+   honnørfarven (P7).** Doubletonen giver 0,02 stik mindre end småkort,
+   men sætter 0,4–1,3 procentpoint oftere, og 78–87 % af hænderne er under
+   0,1 stik fra hinanden. Småkort giver 0,15 stik mere end en sidefarve med
+   en eller to honnører uden sekvens. I 4♥ (S4) er Kompendiets råd blandt
+   dobbeltdummys bedste farver i 80 % af hænderne; i de øvrige 30 har Vest
+   oftere en honnørsekvens i en sidefarve (70 % mod 43 % af alle hænder) og
+   sjældnere en honnør i trumf (20 % mod 34 %).
+5. **Trumf ud følger Kompendiet (P8).** Efter 1♥ – 1♠ – 2♣ er trumf bedre
+   end bordets ♠ (+0,07) og især end Syds ♥ (+0,32), men ikke påviseligt
+   bedre end ♦, og trumf er den bedste farve i 46 % af hænderne. Rådet
+   (trumf) er blandt de bedste farver i 61 %; i de øvrige 59 hænder er den
+   bedste farve ♠ eller ♦, aldrig ♥. I 4♥ og 3♠ giver hver sidefarve
+   0,04–0,06 stik mere end trumf, og trumf er den bedste farve i 16 % og
+   8 % af hænderne; forskellene er små og ligger tæt ved grænsen for
+   praktisk betydning.
+6. **"Table feeling" mod sans (P9): toppen giver 0,31 stik mere end det lave
+   kort**, mest fra E K (+0,83) og mindst fra D B (+0,14), og sætter 3,2
+   procentpoint oftere. Dobbeltdummy overvurderer netop esudspil, fordi
+   modspillet ser det rigtige skift efter at have set bordet, så tallet er
+   en øvre grænse, især fra E K.
+
 **Tokenforbrug pr. session** (nye input, skrevet til cachen, læst fra cachen og output):
 
 - Session 1: 94 / 253.335 / 8.629.495 / 131.351 (lagt sammen fra sessionens transcript: 47 kald til og med prøvekørslen; de sidste kald med Afklaret og commit er ikke med, og Franks `/usage` før og efter giver hele sessionen)
+- Session 2: 112 / 251.114 / 10.407.518 / 117.753 (lagt sammen fra sessionens transcript: 54 kald til og med den fulde testkørsel; de sidste kald med Afklaret og commit er ikke med, og Franks `/usage` før og efter giver hele sessionen)

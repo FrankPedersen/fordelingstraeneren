@@ -346,6 +346,188 @@ som brugte samme metode på meldeforløbs-filtrerede fordelinger.
 
 ---
 
+## 7a. Kompendiets udspilsråd mod dobbeltdummy
+
+Afsnittet tester udspilsrådene i *Kompendium over modspilsaftaler* påstand
+for påstand mod dobbeltdummy. Data er Fordelingstrænerens datasæt til
+Modspil v2 (`tools/udspil/raa/`): 150 hænder til Vest i hvert meldeforløb,
+hver med 100 fordelinger af de andre 39 kort, der passer med meldingerne
+efter appens system, og modspillets stik med DDS for alle 13 udspil. Til
+singleton, doubleton uden honnør og "table feeling" er der desuden 150
+ekstra hænder pr. variant, hvor Vests hånd har formen ("base + variant").
+Syd er spilfører, og meldeforløbene er S1 1NT – 3NT, S2 1NT – 2♣ – 2♦ – 3NT,
+S3 1NT – 2♦ – 2♥ – 3NT (transfer), S4 1♥ – 2♥ – 4♥, S5 1♠ – 2♥ – 2♠ – 4♠,
+S6 1♥ – 1♠ – 2♣ og S8 1♠ – 3♠.
+
+Hver påstand sammenligner to udspil, A og B, på de samme hænder og
+fordelinger. Udspillet i en farve er det kort, profilen Standard spiller;
+ved "table feeling" tæller det bedste af de to kort, undtagen i P9, der
+sammenligner dem. B er altid én bestemt farve efter en fast regel, og
+hænder, hvor A ikke er entydig, er udeladt. Forskellen er gennemsnittet
+over hænderne af A's middelstik minus B's (modspillets stik), hånden er
+enheden, og 95 %-intervallet er ± 1,96 standardfejl. "A bedre / lige /
+B bedre" bruger appens grænse på 0,1 stik, og "Sætter" er forskellen i
+procentpoint i chancen for at sætte kontrakten. Dommen er "For få hænder"
+under 30 hænder, "Kompendiet holder", når intervallet ligger helt på
+Kompendiets side af 0, "Kompendiet tager fejl", når det ligger helt på den
+anden side, og ellers "Ingen forskel påvist"; under 0,05 stik fra 0 står
+der desuden "uden praktisk betydning". P9 har ingen retning, fordi "table
+feeling" overlader valget til spilleren, og dommen siger dér, hvilket kort
+der er bedst. Valgene står i `SPEC-udspilsraad.md`.
+
+<!-- raadanalyse:start -->
+### Påstandene
+
+| Række | Kompendiets påstand (s.) | A | B |
+| --- | --- | --- | --- |
+| P1 | En kort major er bedre end en minor med 4 kort og en eller to honnører (s. 11–12, 14) | den korteste major (højst 3 kort) | en minor med præcis 4 kort og 1–2 honnører |
+| P2 | Mod 1NT – 3NT helst den korteste major (s. 11–12) | den korteste major | den længste major |
+| P3 · ♦ | Efter transfer har ♠ en lille fordel blandt de andre farver (s. 14) | ♠ | ♦ |
+| P3 · ♣ | Efter transfer har ♠ en lille fordel blandt de andre farver (s. 14) | ♠ | ♣ |
+| P4 | Bordets viste ♥ er sjældent rigtigt uden en dyb sekvens (s. 14) | ♥ uden dyb sekvens | ♠ |
+| P5 | En singleton i en sidefarve er et glimrende udspil (s. 19–20) | singletonen i en sidefarve | sidefarven med 3+ kort uden honnør |
+| P6 | En doubleton uden honnør er bedre end sit rygte (s. 19) | doubletonen uden honnør i en sidefarve | sidefarven med 3+ kort uden honnør |
+| P7 | Med et svagt bord er småkort bedre end en farve med en eller to honnører (s. 19) | sidefarven med 3+ kort uden honnør | sidefarven med 3+ kort og 1–2 honnører uden sekvens |
+| P8 · ♠ | Trumf ud er stærkt efter 1♥ – 1♠ – 2♣ (s. 4), kun attraktivt, når ingen sidefarve er det (s. 19), og ofte det dårligste i delkontrakten (s. 19) | trumf | ♠ |
+| P8 · ♥ | Trumf ud er stærkt efter 1♥ – 1♠ – 2♣ (s. 4), kun attraktivt, når ingen sidefarve er det (s. 19), og ofte det dårligste i delkontrakten (s. 19) | trumf | ♥ |
+| P8 · ♦ | Trumf ud er stærkt efter 1♥ – 1♠ – 2♣ (s. 4), kun attraktivt, når ingen sidefarve er det (s. 19), og ofte det dårligste i delkontrakten (s. 19) | trumf | ♦ |
+| P8 · ♣ | Trumf ud er stærkt efter 1♥ – 1♠ – 2♣ (s. 4), kun attraktivt, når ingen sidefarve er det (s. 19), og ofte det dårligste i delkontrakten (s. 19) | trumf | ♣ |
+| P9 | "Table feeling" mod sans: toppen eller det lave kort fra to honnører i træk | toppen | det lave kort (Standard) i samme farve |
+
+### Resultaterne
+
+| Række | Situation | Kompendiets retning | Hænder (base + variant) | Udeladt | A − B (stik) | Standardfejl | 95 %-interval | A bedre / lige / B bedre | Sætter, A − B (procentpoint) | Dom |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| P1 | S1 + S2 | A | 71 | 13 (to lige lange majorer) | +0,03 | 0,02 | [−0,01; +0,06] | 32 % / 51 % / 17 % | +1,1 | Ingen forskel påvist, uden praktisk betydning |
+| P2 | S1 + S2 | A | 240 | 58 (to lige lange majorer) | −0,10 | 0,01 | [−0,13; −0,08] | 10 % / 40 % / 51 % | −1,8 | Kompendiet tager fejl |
+| P2 · korteste major 1–2 kort | S1 + S2 | A | 103 |  | −0,12 | 0,02 | [−0,15; −0,09] | 10 % / 33 % / 57 % | −2,4 | Kompendiet tager fejl |
+| P2 · korteste major 3 kort | S1 + S2 | A | 120 |  | −0,10 | 0,02 | [−0,14; −0,06] | 9 % / 44 % / 47 % | −1,1 | Kompendiet tager fejl |
+| P2 · korteste major 4+ kort | S1 + S2 | A | 17 |  | −0,03 | 0,07 | [−0,17; +0,12] | 12 % / 47 % / 41 % | −3,4 | For få hænder |
+| P3 · ♦ | S3 | A | 149 | – | +0,03 | 0,02 | [−0,01; +0,06] | 31 % / 48 % / 21 % | +0,5 | Ingen forskel påvist, uden praktisk betydning |
+| P3 · ♣ | S3 | A | 149 | – | +0,02 | 0,01 | [−0,01; +0,05] | 30 % / 47 % / 23 % | +0,6 | Ingen forskel påvist, uden praktisk betydning |
+| P4 | S3 | B | 150 | – | −0,12 | 0,01 | [−0,14; −0,09] | 9 % / 39 % / 52 % | −1,6 | Kompendiet holder |
+| P5 | S4 | A | 5 + 150 = 155 | – | +0,13 | 0,01 | [+0,12; +0,15] | 62 % / 38 % / 0 % | +4,4 | Kompendiet holder |
+| P5 | S5 | A | 4 + 146 = 150 | 4 (samme hånd to gange) | +0,11 | 0,01 | [+0,09; +0,14] | 47 % / 46 % / 7 % | +3,0 | Kompendiet holder |
+| P5 | S8 | A | 3 + 150 = 153 | – | +0,17 | 0,01 | [+0,15; +0,19] | 79 % / 17 % / 4 % | +3,4 | Kompendiet holder |
+| P6 | S4 | A | 11 + 150 = 161 | – | −0,02 | 0,00 | [−0,03; −0,01] | 3 % / 87 % / 10 % | +0,4 | Kompendiet tager fejl, uden praktisk betydning |
+| P6 | S8 | A | 10 + 150 = 160 | – | −0,02 | 0,01 | [−0,03; −0,01] | 9 % / 78 % / 13 % | +1,3 | Kompendiet tager fejl, uden praktisk betydning |
+| P7 | S4 | A | 59 | 4 (to sidefarver med 3+ kort uden honnør) | +0,15 | 0,02 | [+0,12; +0,18] | 64 % / 34 % / 2 % | +1,7 | Kompendiet holder |
+| P8 · ♠ | S6 | A | 149 | – | +0,07 | 0,02 | [+0,02; +0,11] | 46 % / 26 % / 29 % | +2,7 | Kompendiet holder |
+| P8 · ♠ | S4 | B | 143 | – | −0,06 | 0,02 | [−0,10; −0,01] | 24 % / 45 % / 31 % | −1,2 | Kompendiet holder |
+| P8 · ♥ | S6 | A | 149 | – | +0,32 | 0,03 | [+0,26; +0,37] | 76 % / 15 % / 9 % | +5,6 | Kompendiet holder |
+| P8 · ♥ | S8 | B | 142 | – | −0,06 | 0,02 | [−0,10; −0,02] | 21 % / 51 % / 28 % | −0,9 | Kompendiet holder |
+| P8 · ♦ | S6 | A | 149 | – | +0,03 | 0,02 | [0,00; +0,07] | 40 % / 32 % / 28 % | +2,4 | Ingen forskel påvist, uden praktisk betydning |
+| P8 · ♦ | S4 | B | 144 | – | −0,06 | 0,02 | [−0,10; −0,02] | 22 % / 49 % / 30 % | −1,2 | Kompendiet holder |
+| P8 · ♦ | S8 | B | 141 | – | −0,06 | 0,02 | [−0,10; −0,02] | 21 % / 45 % / 33 % | −0,8 | Kompendiet holder |
+| P8 · ♣ | S4 | B | 144 | – | −0,04 | 0,02 | [−0,08; 0,00] | 24 % / 51 % / 26 % | −0,9 | Kompendiet holder, uden praktisk betydning |
+| P8 · ♣ | S8 | B | 142 | – | −0,06 | 0,02 | [−0,09; −0,02] | 16 % / 58 % / 26 % | −0,9 | Kompendiet holder |
+| P9 | S1 + S2 | – | 31 + 293 = 324 | 8 ("table feeling" i to farver) | +0,31 | 0,02 | [+0,27; +0,35] | 79 % / 20 % / 1 % | +3,2 | A bedre |
+| P9 · E K | S1 + S2 | – | 7 + 46 = 53 |  | +0,83 | 0,08 | [+0,68; +0,98] | 100 % / 0 % / 0 % | +12,3 | A bedre |
+| P9 · K D | S1 + S2 | – | 6 + 96 = 102 |  | +0,32 | 0,01 | [+0,30; +0,35] | 93 % / 6 % / 1 % | +2,4 | A bedre |
+| P9 · D B | S1 + S2 | – | 18 + 151 = 169 |  | +0,14 | 0,01 | [+0,12; +0,16] | 64 % / 34 % / 2 % | +1,0 | A bedre |
+| P9 · 3 kort | S1 + S2 | – | 11 + 98 = 109 |  | +0,36 | 0,02 | [+0,32; +0,40] | 98 % / 2 % / 0 % | +4,6 | A bedre |
+| P9 · 4 kort | S1 + S2 | – | 15 + 123 = 138 |  | +0,23 | 0,02 | [+0,19; +0,26] | 68 % / 29 % / 3 % | +2,4 | A bedre |
+| P9 · 5+ kort | S1 + S2 | – | 5 + 72 = 77 |  | +0,39 | 0,07 | [+0,26; +0,52] | 71 % / 29 % / 0 % | +3,0 | A bedre |
+
+Fast eksempel i P9: S1 opgave 55 (seed 2556829236, ♠K B 7 6 ♥E K 4 3 ♦10 8 6 3 ♣B): ♥E giver 3,35 stik og sætter i 14 %, ♥3 giver 2,52 stik og sætter i 4 %.
+
+### Hyppigheden af varianternes former i basen
+
+| Variant | Formen | Hænder i basen med formen |
+| --- | --- | --- |
+| S4-singleton | singleton i en sidefarve og en anden sidefarve med 3+ kort uden honnør | 5 af 150 (3 %) |
+| S5-singleton | singleton i en sidefarve og en anden sidefarve med 3+ kort uden honnør | 4 af 150 (3 %) |
+| S8-singleton | singleton i en sidefarve og en anden sidefarve med 3+ kort uden honnør | 3 af 150 (2 %) |
+| S4-doubleton | doubleton uden honnør i en sidefarve og en anden sidefarve med 3+ kort uden honnør | 11 af 150 (7 %) |
+| S8-doubleton | doubleton uden honnør i en sidefarve og en anden sidefarve med 3+ kort uden honnør | 10 af 150 (7 %) |
+| S1-tablefeeling | "table feeling" i en farve med 3+ kort (E K, K D eller D B) | 15 af 150 (10 %) |
+| S2-tablefeeling | "table feeling" i en farve med 3+ kort (E K, K D eller D B) | 17 af 150 (11 %) |
+
+### Trumfs plads blandt Vests farver (P8)
+
+| Situation | Trumf | Hænder med trumf | 1. | 2. | 3. | 4. |
+| --- | --- | --- | --- | --- | --- | --- |
+| S6 | ♣ | 149 | 68 (46 %) | 35 (23 %) | 29 (19 %) | 17 (11 %) |
+| S4 | ♥ | 144 | 23 (16 %) | 49 (34 %) | 39 (27 %) | 33 (23 %) |
+| S8 | ♠ | 142 | 12 (8 %) | 41 (29 %) | 52 (37 %) | 37 (26 %) |
+
+### S4 og S6: hænderne, hvor rådet ikke er blandt dobbeltdummys bedste farver
+
+|  | S4 (♥): rådet ikke blandt de bedste | S4: alle hænder | S6 (♣): rådet ikke blandt de bedste | S6: alle hænder |
+| --- | --- | --- | --- | --- |
+| Hænder | 30 | 150 | 59 | 150 |
+| Bedste farve ♠ | 7 (23 %) | 47 (31 %) | 28 (47 %) | 42 (28 %) |
+| Bedste farve ♥ | 4 (13 %) | 21 (14 %) | 0 (0 %) | 0 (0 %) |
+| Bedste farve ♦ | 13 (43 %) | 46 (31 %) | 31 (53 %) | 44 (29 %) |
+| Bedste farve ♣ | 6 (20 %) | 36 (24 %) | 0 (0 %) | 64 (43 %) |
+| Trumflængde 0 | 3 (10 %) | 6 (4 %) | 1 (2 %) | 1 (1 %) |
+| Trumflængde 1 | 7 (23 %) | 28 (19 %) | 8 (14 %) | 19 (13 %) |
+| Trumflængde 2 | 9 (30 %) | 56 (37 %) | 16 (27 %) | 44 (29 %) |
+| Trumflængde 3 | 11 (37 %) | 46 (31 %) | 26 (44 %) | 54 (36 %) |
+| Trumflængde 4+ | 0 (0 %) | 14 (9 %) | 8 (14 %) | 32 (21 %) |
+| Honnør i trumf | 6 (20 %) | 51 (34 %) | 44 (75 %) | 95 (63 %) |
+| Singleton eller doubleton i en sidefarve | 15 (50 %) | 71 (47 %) | 25 (42 %) | 52 (35 %) |
+| Honnørsekvens i en sidefarve | 21 (70 %) | 64 (43 %) | 25 (42 %) | 54 (36 %) |
+
+Rådet er blandt dobbeltdummys bedste farver (under 0,1 stik fra den bedste) i S4 120 af 150 (80 %) og S6 91 af 150 (61 %).
+<!-- raadanalyse:slut -->
+
+**Forbehold**
+
+- **Dobbeltdummy kender alle kort.** Spilføreren gætter aldrig forkert, og
+  modspillet finder altid skiftet. Udspil, der virker, fordi spilføreren
+  skal gætte (passive og korte udspil), undervurderes; aktive udspil, især
+  esudspil, overvurderes, fordi modspillet "ser" det rigtige skift efter at
+  have set bordet (afsnit 8). Det gælder især P2 og P9.
+- **Gennemsnitlige stik er parturneringens mål.** I holdturnering tæller
+  chancen for at sætte mere; den står derfor ved siden af.
+- **Fordelingerne passer med meldingerne efter appens system**, ikke med
+  alle måder at melde på, og varianternes hænder er udvalgt efter formen,
+  så de siger intet om, hvor ofte formen forekommer; det gør tabellen over
+  hyppigheden.
+- **Kun de otte situationer.** Konklusionerne gælder meldeforløbene, ikke
+  udspil generelt.
+- **Kompendiet citeres ikke**; påstandene er omskrevet med siden.
+
+**Konklusioner**
+
+1. **Singleton i en sidefarve holder (P5).** I 4♥, 4♠ og 3♠ giver
+   singletonen 0,11–0,17 stik mere end en sidefarve med småkort og sætter
+   3–4 procentpoint oftere; småkort er 0,1 stik bedre eller mere i højst
+   7 % af hænderne. Formen er sjælden (2–3 % af basens hænder), så tallene
+   bygger næsten kun på de ekstra hænder.
+2. **Den korteste major mod 1NT – 3NT tager fejl (P2).** Den korteste major
+   giver 0,10 stik mindre end den længste og sætter 1,8 procentpoint
+   sjældnere, både med 1–2 og med 3 kort. Mod en minor med 4 kort og en
+   eller to honnører (P1) er forskellen +0,03 stik, uden praktisk
+   betydning. Forbeholdet om dobbeltdummy gælder især her.
+3. **Efter transfer holder rådet mod bordets ♥ (P4):** ♥ uden dyb sekvens
+   giver 0,12 stik mindre end ♠. ♠'s lille fordel frem for ♦ og ♣ (P3) ses
+   ikke; forskellen er +0,02 til +0,03 stik, uden praktisk betydning.
+4. **Doubleton uden honnør og småkort er lige gode (P6), og småkort slår
+   honnørfarven (P7).** Doubletonen giver 0,02 stik mindre end småkort,
+   men sætter 0,4–1,3 procentpoint oftere, og 78–87 % af hænderne er under
+   0,1 stik fra hinanden. Småkort giver 0,15 stik mere end en sidefarve med
+   en eller to honnører uden sekvens. I 4♥ (S4) er Kompendiets råd blandt
+   dobbeltdummys bedste farver i 80 % af hænderne; i de øvrige 30 har Vest
+   oftere en honnørsekvens i en sidefarve (70 % mod 43 % af alle hænder) og
+   sjældnere en honnør i trumf (20 % mod 34 %).
+5. **Trumf ud følger Kompendiet (P8).** Efter 1♥ – 1♠ – 2♣ er trumf bedre
+   end bordets ♠ (+0,07) og især end Syds ♥ (+0,32), men ikke påviseligt
+   bedre end ♦, og trumf er den bedste farve i 46 % af hænderne. Rådet
+   (trumf) er blandt de bedste farver i 61 %; i de øvrige 59 hænder er den
+   bedste farve ♠ eller ♦, aldrig ♥. I 4♥ og 3♠ giver hver sidefarve
+   0,04–0,06 stik mere end trumf, og trumf er den bedste farve i 16 % og
+   8 % af hænderne; forskellene er små og ligger tæt ved grænsen for
+   praktisk betydning.
+6. **"Table feeling" mod sans (P9): toppen giver 0,31 stik mere end det lave
+   kort**, mest fra E K (+0,83) og mindst fra D B (+0,14), og sætter 3,2
+   procentpoint oftere. Dobbeltdummy overvurderer netop esudspil, fordi
+   modspillet ser det rigtige skift efter at have set bordet, så tallet er
+   en øvre grænse, især fra E K.
+
+---
+
 ## 8. Forbehold
 
 - **Dobbeltdummy overvurderer.** Facit er perfekt spil fra begge sider med
@@ -380,6 +562,7 @@ python3 scripts/sanslaengde.py           # længdepoint i sans
 python3 scripts/teknik.py fit 900        # positionsafhængighed + trumfværdi
 python3 scripts/udspil.py fit 900 10 5 0 # udspilsanalyse
 python3 scripts/udspil2.py               # udspil, tætte kontrakter
+node tools/udspil/raadanalyse.mjs --markdown  # afsnit 7a (Fordelingstrænerens rod)
 ```
 
 Scripterne forventer at ligge i samme mappe som datafilerne, eller at
