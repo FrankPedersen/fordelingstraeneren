@@ -374,7 +374,7 @@ anden side, og ellers "Ingen forskel påvist"; under 0,05 stik fra 0 står
 der desuden "uden praktisk betydning". P9 har ingen retning, fordi "table
 feeling" overlader valget til spilleren, og P6 heller ingen, fordi
 påstanden er, at doubletonen er bedre end sit rygte, ikke at den slår
-småkort. Dommen siger dér, hvilket udspil der er bedst. Valgene står i `SPEC-udspilsraad.md`.
+småkort. Dommen siger dér, hvilket udspil der er bedst. Valgene står i `docs/specs/SPEC-udspilsraad.md`.
 
 <!-- raadanalyse:start -->
 ### Påstandene

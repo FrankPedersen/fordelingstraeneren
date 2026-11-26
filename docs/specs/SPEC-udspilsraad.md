@@ -310,3 +310,10 @@ De vigtigste fund:
 2. **Konklusionernes overskrifter siger "i dobbeltdummy"**, fx "Den korteste major mod 1NT – 3NT holder ikke i dobbeltdummy (P2)". Indledningen nævner, at P6 heller ikke har en retning.
 3. **Sætningen om S4's 30 hænder** er flyttet fra konklusion 4 til konklusion 5, så S4 og S6 står sammen; konklusion 4 slutter nu med, at doubletonen støtter påstanden.
 4. **Testene** (kørt i en Linux-kopi af repoet med `npm ci`): `raadanalyse.test.ts` 71 bestået og 1 sprunget over (testen af afsnit 1–7 og 8–9 mod tagget, fordi kopien ikke har git; `git diff` viser kun ændringer i afsnit 7a), accepttest 7 grøn og `tsc` grøn. Hele `npm test` køres i session 3.
+
+**Session 3 (26. nov. 2026, fra rådgiverchatten efter Franks besked "Er alt grønt, er Kompendiets udspilsråd godkendt")**
+
+- Rettelserne efter gennemgangen er committet i `86fa5df`.
+- **Testene** i en ren klon af grenen (Linux, 2 kerner, `npm ci`): `tsc` grøn; Vitest grøn for alle filer uden for `src/farvebehandling/solver/` (19 + 29 + 70 + 20 + 21 filer), også `raadanalyse.test.ts`, `varianter.test.ts` og vagterne mod tagget. Løserens 13 testfiler blev ikke færdige inden for værktøjets tidsgrænse på maskinen; grenen ændrer intet i Farvebehandling, og GitHub Actions kører hele `npm test` ved pushet.
+- **Flettet** med `--no-ff` i `0a04545`; specen er arkiveret i `docs/specs/` med en linje i `docs/specs/README.md`, og grenen `udspilsraad` er slettet. Frank pusher `main` og tagget `v50-foer-udspilsraad` selv. Der er intet live-tjek, fordi appen ikke er ændret.
+- **Til planens småting:** `find_opgaver` i `generer.py` skal springe et brugt seed over (S5-singleton har 4 dubletter), og kommentaren "3NT → 4" i `maal` og `kontraktens_maal` rettes til 5; begge ved næste generering.
