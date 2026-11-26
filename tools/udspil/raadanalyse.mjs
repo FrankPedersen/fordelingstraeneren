@@ -4,6 +4,8 @@
 //
 //   node tools/udspil/raadanalyse.mjs --markdown   tabellerne, som de står mellem markørerne i docs/MODEL.md
 //   node tools/udspil/raadanalyse.mjs --json       tallene som JSON
+//   node tools/udspil/raadanalyse.mjs --app        appens tal (appTal) som JSON, til src/modspil/content/udspil/raadtal.json
+//                                                  (SPEC-udspilstal.md; filen rettes aldrig i hånden)
 //
 // Uden argument skrives tabellerne som med --markdown. Scriptet læser kun; koden fra src/ indlæses med Vites
 // runnerImport som i scripts/ og tools/udspil/rapporttal.mjs.
@@ -32,5 +34,6 @@ if (mangler.length) {
 }
 
 const resultat = ra.analyser({ base, varianter });
-if (process.argv.includes('--json')) console.log(JSON.stringify(resultat, null, 1));
+if (process.argv.includes('--app')) console.log(JSON.stringify(ra.appTal(resultat), null, 2));
+else if (process.argv.includes('--json')) console.log(JSON.stringify(resultat, null, 1));
 else console.log(ra.markdown(resultat));

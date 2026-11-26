@@ -290,6 +290,348 @@ export function raadSaetning(
   };
 }
 
+// ---------------------------------------------------------------- tallene fra afsnit 7a (SPEC-udspilstal.md)
+
+/** Én række fra `src/modspil/content/udspil/raadtal.json` (afsnit 7a i docs/MODEL.md). */
+export interface RaadTal {
+  raekke: string;
+  situation: string | null;
+  gruppe: string | null;
+  n: number;
+  forskel: number;
+  saetForskel: number;
+  dom: 'for-faa' | 'holder' | 'modsat' | 'ingen-forskel';
+  udenPraktiskBetydning: boolean;
+}
+
+/** Hele `raadtal.json`: rækkerne og i S6 andelen af hænderne, hvor trumf er den bedste farve. */
+export interface RaadTalFil {
+  raekker: readonly RaadTal[];
+  trumfBedst: { situation: string; n: number; andel: number };
+}
+
+/** Rækken i filen for hele rækken (ikke en gruppe): med situationen, eller samlet over situationerne (situation null). */
+export const raadTalI = (fil: RaadTalFil, raekke: string, situation: SituationId, gruppe: string | null = null): RaadTal | undefined =>
+  fil.raekker.find((r) => r.raekke === raekke && r.gruppe === gruppe && (r.situation === null || r.situation === situation));
+
+/** Rækkerne med én B-farve i forklaringen. */
+export type ParRaekke = 'P1' | 'P2' | 'P4' | 'P5' | 'P6' | 'P7';
+
+/** P9's grupper: de to øverste honnører i Vests farve. */
+export type ToppenGruppe = 'E K' | 'K D' | 'D B';
+
+type Form = 'mere' | 'mindre' | 'lige';
+
+/**
+ * Formen afgøres alene af `dom` og `udenPraktiskBetydning`, som analysen har sat (specens formtabel); null ved for få
+ * hænder. Teksten regner ingen grænse selv.
+ */
+function formAf(t: RaadTal): Form | null {
+  if (t.dom === 'for-faa') return null;
+  if (t.dom === 'ingen-forskel' || t.udenPraktiskBetydning) return 'lige';
+  return t.dom === 'holder' ? 'mere' : 'mindre';
+}
+
+/** Et tal uden fortegn, afrundet som i afsnit 7a (`toFixed`); komma på dansk og punktum på engelsk. */
+function decimal(x: number, decimaler: number, sprog: Sprog): string {
+  const t = Math.abs(x).toFixed(decimaler);
+  return sprog === 'en' ? t : t.replace('.', ',');
+}
+
+/**
+ * Sætterchancen i procentpoint afrundet til én decimal, når den peger samme vej som stikkene og ikke afrundes til 0,0;
+ * ellers null.
+ */
+function saetter(t: RaadTal): number | null {
+  if (Math.sign(t.saetForskel) !== Math.sign(t.forskel)) return null;
+  const y = Number(Math.abs(t.saetForskel).toFixed(1));
+  return y === 0 ? null : y;
+}
+
+/** Sætterchancerne fra den mindste til den største ("0,8–0,9"), eller ét tal, når de er ens efter afrunding. */
+function interval(xs: readonly number[], sprog: Sprog): string {
+  const lav = Math.min(...xs);
+  const hoej = Math.max(...xs);
+  return lav === hoej ? decimal(lav, 1, sprog) : `${decimal(lav, 1, sprog)}–${decimal(hoej, 1, sprog)}`;
+}
+
+const MERE = { da: { mere: 'mere', mindre: 'mindre' }, en: { mere: 'more', mindre: 'fewer' } };
+const OFTERE = { da: { mere: 'oftere', mindre: 'sjældnere' }, en: { mere: 'more', mindre: 'less' } };
+
+/** A og B i forklaringen (specens navnetabel). */
+const PAR_NAVNE: Readonly<Record<ParRaekke, { da: readonly [string, string]; en: readonly [string, string] }>> = {
+  P1: { da: ['en kort major', 'en firefarve i minor med en eller to honnører'], en: ['a short major', 'a four-card minor with one or two honours'] },
+  P2: { da: ['den korteste major', 'den længste'], en: ['the shorter major', 'the longer one'] },
+  P4: { da: ['♥ uden dyb sekvens', '♠'], en: ['♥ without a deep sequence', '♠'] },
+  P5: { da: ['singletonen', 'en sidefarve med småkort'], en: ['the singleton', 'a side suit with small cards'] },
+  P6: { da: ['doubletonen uden honnør', 'en sidefarve med småkort'], en: ['the doubleton without an honour', 'a side suit with small cards'] },
+  P7: { da: ['småkort i en sidefarve', 'en sidefarve med en eller to honnører'], en: ['small cards in a side suit', 'a side suit with one or two honours'] },
+};
+
+/**
+ * Sætningen "Med dobbeltdummy …" sidst i forklaringen for en række med én B-farve: A giver mere eller mindre end B (med
+ * sætterchancen, når den peger samme vej og ikke er 0,0), eller A og B er lige gode med forskellen uden fortegn; null
+ * ved for få hænder.
+ */
+export function dobbeltdummySaetning(raekke: ParRaekke, tal: RaadTal): Tekst | null {
+  const form = formAf(tal);
+  if (form === null) return null;
+  const { da: [a, b], en: [aEn, bEn] } = PAR_NAVNE[raekke];
+  if (form === 'lige') {
+    return {
+      da: `Med dobbeltdummy er ${a} og ${b} lige gode efter dette forløb (forskel ${decimal(tal.forskel, 2, 'da')} stik).`,
+      en: `With double dummy, ${aEn} and ${bEn} are equally good leads after this auction (difference ${decimal(tal.forskel, 2, 'en')} tricks).`,
+    };
+  }
+  const y = saetter(tal);
+  return {
+    da: `Med dobbeltdummy giver ${a} efter dette forløb i gennemsnit ${decimal(tal.forskel, 2, 'da')} stik ${MERE.da[form]} end ${b}${y === null ? '' : ` og sætter kontrakten ${decimal(y, 1, 'da')} procentpoint ${OFTERE.da[form]}`}.`,
+    en: `With double dummy, leading ${aEn} after this auction gives on average ${decimal(tal.forskel, 2, 'en')} ${MERE.en[form]} tricks than ${bEn}${y === null ? '' : ` and defeats the contract ${decimal(y, 1, 'en')} percentage points ${OFTERE.en[form]} often`}.`,
+  };
+}
+
+/** Farver, der lægges sammen: samme form, samme stiktal med to decimaler og sætterchancen ved alle eller ingen. */
+interface Gruppe {
+  form: 'mere' | 'mindre';
+  stik: number;
+  saetter: number[] | null;
+  farver: number[];
+}
+
+/**
+ * Rækkerne med A mod hver farve (P8: trumf; P3: ♠) delt i grupper og lige gode. Farver med for få hænder udelades.
+ * Grupperne står efter deres første farve i orden ♠ ♥ ♦ ♣.
+ */
+function grupper(raekker: readonly { farve: number; tal: RaadTal }[]): { grupper: Gruppe[]; lige: number[]; antal: number } {
+  const ud: Gruppe[] = [];
+  const lige: number[] = [];
+  let antal = 0;
+  for (const { farve, tal } of [...raekker].sort((x, y) => x.farve - y.farve)) {
+    const form = formAf(tal);
+    if (form === null) continue;
+    antal++;
+    if (form === 'lige') {
+      lige.push(farve);
+      continue;
+    }
+    const stik = Number(Math.abs(tal.forskel).toFixed(2));
+    const y = saetter(tal);
+    const g = ud.find((x) => x.form === form && x.stik === stik && (x.saetter === null) === (y === null));
+    if (g) {
+      g.farver.push(farve);
+      if (y !== null) g.saetter!.push(y);
+    } else ud.push({ form, stik, saetter: y === null ? null : [y], farver: [farve] });
+  }
+  return { grupper: ud, lige, antal };
+}
+
+const symboler = (farver: readonly number[], sprog: Sprog) => og(farver.map((f) => SYMBOLER[f]), sprog);
+
+/**
+ * P8 i forklaringen: én sætning med trumf som A mod hver sidefarve, fx "Med dobbeltdummy giver trumf efter dette forløb i
+ * gennemsnit 0,07 stik mere end ♠ (sætter 2,7 procentpoint oftere) og 0,32 stik mere end ♥ (5,6 procentpoint oftere),
+ * mens trumf og ♦ er lige gode." Kun den første sætterchance har "sætter". Er alle lige gode, siges kun det; null, når
+ * alle farver har for få hænder.
+ */
+export function trumfSaetning(raekker: readonly { farve: number; tal: RaadTal }[]): Tekst | null {
+  const g = grupper(raekker);
+  if (g.antal === 0) return null;
+  const lige = { da: og(['trumf', ...g.lige.map((f) => SYMBOLER[f])], 'da'), en: og(['a trump', ...g.lige.map((f) => SYMBOLER[f])], 'en') };
+  if (g.grupper.length === 0) {
+    return { da: `Med dobbeltdummy er ${lige.da} lige gode efter dette forløb.`, en: `With double dummy, ${lige.en} are equally good leads after this auction.` };
+  }
+  let foerste = true;
+  const dele = g.grupper.map((x) => {
+    let p = { da: '', en: '' };
+    if (x.saetter) {
+      p = {
+        da: ` (${foerste ? 'sætter ' : ''}${interval(x.saetter, 'da')} procentpoint ${OFTERE.da[x.form]})`,
+        en: ` (${foerste ? 'defeating the contract ' : ''}${interval(x.saetter, 'en')} percentage points ${OFTERE.en[x.form]} often)`,
+      };
+      foerste = false;
+    }
+    return {
+      da: `${decimal(x.stik, 2, 'da')} stik ${MERE.da[x.form]} end ${symboler(x.farver, 'da')}${p.da}`,
+      en: `${decimal(x.stik, 2, 'en')} ${MERE.en[x.form]} tricks than ${symboler(x.farver, 'en')}${p.en}`,
+    };
+  });
+  const mens = g.lige.length ? { da: `, mens ${lige.da} er lige gode`, en: `, while ${lige.en} are equally good` } : { da: '', en: '' };
+  return {
+    da: `Med dobbeltdummy giver trumf efter dette forløb i gennemsnit ${og(dele.map((d) => d.da), 'da')}${mens.da}.`,
+    en: `With double dummy, leading a trump after this auction gives on average ${og(dele.map((d) => d.en), 'en')}${mens.en}.`,
+  };
+}
+
+const GRUPPE_EN: Readonly<Record<ToppenGruppe, string>> = { 'E K': 'A K', 'K D': 'K Q', 'D B': 'Q J' };
+
+/**
+ * Tilføjelsen til "table feeling" (P9): toppen mod det lave kort fra E K, K D eller D B. Giver toppen mere, står der, at
+ * tallet er en øvre grænse; null ved for få hænder.
+ */
+export function toppenSaetning(gruppe: ToppenGruppe, tal: RaadTal): Tekst | null {
+  const form = formAf(tal);
+  if (form === null) return null;
+  const g = { da: gruppe, en: GRUPPE_EN[gruppe] };
+  if (form === 'lige') {
+    return {
+      da: `Med dobbeltdummy er toppen og det lave kort fra ${g.da} lige gode (forskel ${decimal(tal.forskel, 2, 'da')} stik).`,
+      en: `With double dummy, the top card and the low card from ${g.en} are equally good (difference ${decimal(tal.forskel, 2, 'en')} tricks).`,
+    };
+  }
+  const y = saetter(tal);
+  const graense = form === 'mere';
+  return {
+    da: `Med dobbeltdummy giver toppen fra ${g.da} i gennemsnit ${decimal(tal.forskel, 2, 'da')} stik ${MERE.da[form]} end det lave kort${y === null ? '' : ` og sætter kontrakten ${decimal(y, 1, 'da')} procentpoint ${OFTERE.da[form]}`}${graense ? '; tallet er en øvre grænse, fordi dobbeltdummy overvurderer honnørudspil' : ''}.`,
+    en: `With double dummy, leading the top card from ${g.en} gives on average ${decimal(tal.forskel, 2, 'en')} ${MERE.en[form]} tricks than the low card${y === null ? '' : ` and defeats the contract ${decimal(y, 1, 'en')} percentage points ${OFTERE.en[form]} often`}${graense ? '; the figure is an upper limit, because double dummy overrates honour leads' : ''}.`,
+  };
+}
+
+// ---------------------------------------------------------------- sætningen sidst i "Ved bordet"
+
+/** Leddets plads: først efter "Med dobbeltdummy" (omvendt ordstilling), i en liste eller efter "mens". */
+type Plads = 'foerst' | 'liste' | 'mens';
+type Led = { aktiv: boolean; tekst: (plads: Plads) => Tekst };
+type Retning = 'A' | 'B' | null;
+
+/** "dog" ("actually"), når A giver mere, men Kompendiet siger B, eller mindre, men Kompendiet siger A. */
+const imod = (form: 'mere' | 'mindre', retning: Retning) => (form === 'mere' && retning === 'B') || (form === 'mindre' && retning === 'A');
+
+const INGEN: Led = { aktiv: false, tekst: () => ({ da: '', en: '' }) };
+
+/** Et led med én B-farve, kun stik: "giver singletonen 0,13 stik mere end småkort" eller "doubletonen og småkort er lige gode". */
+function parLed(tal: RaadTal | undefined, navne: { da: readonly [string, string]; en: readonly [string, string] }, retning: Retning): Led {
+  const form = tal ? formAf(tal) : null;
+  if (!tal || form === null) return INGEN;
+  const { da: [a, b], en: [aEn, bEn] } = navne;
+  if (form === 'lige') {
+    return { aktiv: true, tekst: (plads) => ({ da: plads === 'foerst' ? `er ${a} og ${b} lige gode` : `${a} og ${b} er lige gode`, en: `${aEn} and ${bEn} are equally good` }) };
+  }
+  const dog = imod(form, retning);
+  const rest = { da: `${decimal(tal.forskel, 2, 'da')} stik ${MERE.da[form]} end ${b}`, en: `${decimal(tal.forskel, 2, 'en')} ${MERE.en[form]} tricks than ${bEn}` };
+  return {
+    aktiv: true,
+    tekst: (plads) => ({
+      da: plads === 'foerst' ? `giver ${a}${dog ? ' dog' : ''} ${rest.da}` : plads === 'liste' ? `${a} giver${dog ? ' dog' : ''} ${rest.da}` : `${a}${dog ? ' dog' : ''} giver ${rest.da}`,
+      en: `leading ${aEn}${dog ? ' actually' : ''} gives ${rest.en}`,
+    }),
+  };
+}
+
+/**
+ * Et led med A mod flere farver (P3: ♠ mod ♦ og ♣; P8: trumf mod sidefarverne), kun stik, med samme sammenlægning som
+ * i forklaringen. Står alle farverne i én gruppe, bruges navnet `alle` ("minorfarverne", "hver sidefarve"). De lige gode
+ * står sidst med ", mens trumf og ♦ er lige gode", også i en liste (S4, Franks valg 26. nov. 2026); kun efter "mens"
+ * (S3) står " og er lige så godt som ♣", så sætningen ikke får to gange "mens".
+ */
+function flereLed(
+  a: { da: string; en: string },
+  raekker: readonly { farve: number; tal: RaadTal }[],
+  alle: { da: string; en: string },
+  retning: Retning,
+): Led {
+  const g = grupper(raekker);
+  if (g.antal === 0) return INGEN;
+  const navn = (farver: readonly number[], sprog: Sprog) => (farver.length === raekker.length ? alle[sprog] : symboler(farver, sprog));
+  const lige = { da: navn(g.lige, 'da'), en: navn(g.lige, 'en') };
+  if (g.grupper.length === 0) {
+    return { aktiv: true, tekst: (plads) => ({ da: plads === 'foerst' ? `er ${a.da} og ${lige.da} lige gode` : `${a.da} og ${lige.da} er lige gode`, en: `${a.en} and ${lige.en} are equally good` }) };
+  }
+  const dog = g.grupper.every((x) => imod(x.form, retning));
+  const dele = {
+    da: og(g.grupper.map((x) => `${decimal(x.stik, 2, 'da')} stik ${MERE.da[x.form]} end ${navn(x.farver, 'da')}`), 'da'),
+    en: og(g.grupper.map((x) => `${decimal(x.stik, 2, 'en')} ${MERE.en[x.form]} tricks than ${navn(x.farver, 'en')}`), 'en'),
+  };
+  return {
+    aktiv: true,
+    tekst: (plads) => {
+      const hale = !g.lige.length
+        ? { da: '', en: '' }
+        : plads !== 'mens'
+          ? { da: `, mens ${a.da} og ${lige.da} er lige gode`, en: `, while ${a.en} and ${lige.en} are equally good` }
+          : { da: ` og er lige så godt som ${lige.da}`, en: ` and is as good as ${lige.en}` };
+      const d = dog ? ' dog' : '';
+      return {
+        da: `${plads === 'foerst' ? `giver ${a.da}${d}` : plads === 'liste' ? `${a.da} giver${d}` : `${a.da}${d} giver`} ${dele.da}${hale.da}`,
+        en: `leading ${a.en}${dog ? ' actually' : ''} gives ${dele.en}${hale.en}`,
+      };
+    },
+  };
+}
+
+const TRUMF = { da: 'trumf', en: 'a trump' };
+const SIDEFARVER = { da: 'hver sidefarve', en: 'each side suit' };
+const SPAR = { da: '♠', en: '♠' };
+const MINORFARVERNE = { da: 'minorfarverne', en: 'the minors' };
+
+/** A og B i "Ved bordet" (kortere end i forklaringen). */
+const VB = {
+  P1: { da: ['en kort major', 'en firefarve i minor med honnør'], en: ['a short major', 'a four-card minor with an honour'] },
+  P2: { da: ['den korteste major', 'den længste'], en: ['the shorter major', 'the longer one'] },
+  P4: { da: ['♥ uden dyb sekvens', '♠'], en: ['♥ without a deep sequence', '♠'] },
+  P5: { da: ['singletonen', 'småkort'], en: ['the singleton', 'small cards'] },
+  P5S5: { da: ['singletonen', 'småkort i en sidefarve'], en: ['the singleton', 'small cards in a side suit'] },
+  P6: { da: ['doubletonen', 'småkort'], en: ['the doubleton', 'small cards'] },
+  P7: { da: ['småkort', 'en farve med en eller to honnører'], en: ['small cards', 'a suit with one or two honours'] },
+} as const satisfies Record<string, { da: readonly [string, string]; en: readonly [string, string] }>;
+
+/** A mod hver farve i rækkerne `<præfiks>-<farve>` (fx P8-S … P8-C) i situationen. */
+const modHver = (fil: RaadTalFil, praefiks: string, situation: SituationId) =>
+  ['S', 'H', 'D', 'C'].flatMap((b, farve) => {
+    const tal = raadTalI(fil, `${praefiks}-${b}`, situation);
+    return tal ? [{ farve, tal }] : [];
+  });
+
+/**
+ * Leddene pr. situation og hvordan de bindes: "mens" (to led) eller en liste ("…, … og …"). Kompendiets retning giver
+ * "dog", når stikkene peger den anden vej: P1, P2, P3, P5, P7 og P8 i S6 siger A; P4 og P8 i S4 og S8 siger B; P6 ingen.
+ */
+function vedBordetLed(situation: SituationId, fil: RaadTalFil): { led: Led[]; binding: 'mens' | 'liste' } {
+  const par = (raekke: string, navne: { da: readonly [string, string]; en: readonly [string, string] }, retning: Retning) => parLed(raadTalI(fil, raekke, situation), navne, retning);
+  switch (situation) {
+    case 'S1-1nt-3nt':
+    case 'S2-stayman':
+      return { led: [par('P2', VB.P2, 'A'), par('P1', VB.P1, 'A')], binding: 'mens' };
+    case 'S3-transfer':
+      return { led: [par('P4', VB.P4, 'B'), flereLed(SPAR, modHver(fil, 'P3', situation), MINORFARVERNE, 'A')], binding: 'mens' };
+    case 'S4-kun-en-farve':
+      return { led: [par('P5', VB.P5, 'A'), par('P7', VB.P7, 'A'), par('P6', VB.P6, null), flereLed(TRUMF, modHver(fil, 'P8', situation), SIDEFARVER, 'B')], binding: 'liste' };
+    case 'S5-sidefarve':
+      return { led: [par('P5', VB.P5S5, 'A')], binding: 'liste' };
+    case 'S6-trumf':
+      return { led: [flereLed(TRUMF, modHver(fil, 'P8', situation), SIDEFARVER, 'A')], binding: 'liste' };
+    case 'S7-makker-aabnet':
+      return { led: [], binding: 'liste' };
+    case 'S8-delkontrakt':
+      return { led: [par('P5', VB.P5, 'A'), par('P6', VB.P6, null), flereLed(TRUMF, modHver(fil, 'P8', situation), SIDEFARVER, 'B')], binding: 'liste' };
+  }
+}
+
+/** Liste med komma og ", og" før det sidste led (", and" på engelsk). */
+const liste = (xs: readonly string[], sprog: Sprog) => (xs.length <= 1 ? xs.join('') : `${xs.slice(0, -1).join(', ')}, ${sprog === 'en' ? 'and' : 'og'} ${xs[xs.length - 1]}`);
+
+/**
+ * Sætningen sidst i "Ved bordet" med stikkene fra afsnit 7a (kun stik; sætterchancen står i forklaringen), fx "Med
+ * dobbeltdummy giver singletonen 0,11 stik mere end småkort i en sidefarve." I S6 desuden, hvor ofte trumf er den
+ * bedste farve. Null i S7 og, når alle led har for få hænder.
+ */
+export function vedBordetSaetning(situation: SituationId, fil: RaadTalFil): Tekst | null {
+  const { led, binding } = vedBordetLed(situation, fil);
+  const aktive = led.filter((l) => l.aktiv);
+  if (aktive.length === 0) return null;
+  const dele = aktive.map((l, i) => l.tekst(i === 0 ? 'foerst' : binding));
+  const samlet =
+    binding === 'mens'
+      ? { da: dele.map((d) => d.da).join(', mens '), en: dele.map((d) => d.en).join(', while ') }
+      : { da: liste(dele.map((d) => d.da), 'da'), en: liste(dele.map((d) => d.en), 'en') };
+  const hale = { da: '', en: '' };
+  if (situation === fil.trumfBedst.situation) {
+    const p = Math.round(100 * fil.trumfBedst.andel);
+    hale.da = `; trumf er den bedste farve i ${p} % af hænderne`;
+    hale.en = `; the trump suit is the best suit in ${p}% of the hands`;
+  }
+  return { da: `Med dobbeltdummy ${samlet.da}${hale.da}.`, en: `With double dummy, ${samlet.en}${hale.en}.` };
+}
+
 /** Dommen, når farven er rigtig, men kortet ikke er profilens: farven var rigtig, og profilens kort. */
 export function domTekst(vest: readonly Card[], kort: readonly Card[], profilNavn: { tekst: string; tekstEn: string }): Tekst {
   const farve = farveAf(kort[0]);
