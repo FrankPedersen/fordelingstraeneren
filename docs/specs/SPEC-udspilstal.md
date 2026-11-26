@@ -1,6 +1,6 @@
 # SPEC – Tallene fra afsnit 7a i forklaringerne i Find udspillet
 
-26. november 2026 · Fordelingstræneren · opfølgningen på opgave Æ i `PLAN-aabne-opgaver.md`. Bygger på afsnit 7a i `docs/MODEL.md` (`docs/specs/SPEC-udspilsraad.md`, flettet 26. nov. 2026) og øvelse 8 (`docs/specs/SPEC-modspil-v2.md`). Ikke godkendt endnu.
+26. november 2026 · Fordelingstræneren · opfølgningen på opgave Æ i `PLAN-aabne-opgaver.md`. Bygger på afsnit 7a i `docs/MODEL.md` (`docs/specs/SPEC-udspilsraad.md`, flettet 26. nov. 2026) og øvelse 8 (`docs/specs/SPEC-modspil-v2.md`). Godkendt af Frank med to rettelser og udgivet 26. nov. 2026 (fletning `5cb5374`).
 
 Øvelse 8 forklarer facit med Kompendiets råd, men siger ikke, hvad dobbeltdummy siger om rådet. Afsnit 7a har tallene. Opgaven sætter dem ind i forklaringen og i "Ved bordet" som korte sætninger, der begynder "Med dobbeltdummy …". **Facit, niveauerne, udvalget og prisen ændres ikke.**
 
@@ -260,6 +260,10 @@ Rettelserne er committet på grenen i `85aa00f`.
 - **`node scripts/tjek-bred-layout.mjs --modspil`**: 2131 ok og 0 FEJL ("Alt er grønt"), 11 minutter.
 - **Skærmbilleder** i `../skaermbilleder/udspilstal/`: `1280-facit-S4.png`, `390-facit-S4.png`, `1280-facit-S6.png` og `390-facit-S6.png`. De er taget med et script uden for repoet (samme CDP-tilgang som `tjek-bred-layout.mjs`, som ikke kan vælge situation og ligger uden for afgrænsningen) på testsiden `scripts/modspil.html` med niveau 4, profilen Standard og det første kort som svar: seed 21 er S4 opgave 91 (♠D 8 7 4 ♥8 4 ♦K 9 3 ♣B 7 4 2; P8-sætningen og "Ved bordet" med rettelse 1), og seed 6 er S6 opgave 6 (♠E 7 6 2 ♥K B 6 ♦E B 8 ♣8 7 3).
 - **Rettelse af accepttest 8** (`intet-andet.test.ts`): specen arkiveres i `docs/specs/` med én linje i `docs/specs/README.md`, så vagten tillader nu `docs/specs/SPEC-udspilstal.md` som specen og én ny linje i `README.md` (som vagten i SPEC-udspilsraad.md). Uden den ville testen blive rød lokalt på `main` efter arkiveringen.
+- **Flettet og udgivet**: grenen er flettet med `--no-ff` i `5cb5374` og pushet sammen med tagget `v51-foer-udspilstal`; GitHub Actions ("Udgiv på GitHub Pages", run 45884665177) er grøn (9 min).
+- **Live-tjek** på www.kontraktbridge.dk/fordelingstraeneren/ i Chrome ved 1280 px med en ny session i Modspil: ⓘ i Find udspillet har den nye sætning, og en facit i S1 har "Med dobbeltdummy giver den korteste major efter dette forløb i gennemsnit 0,10 stik mindre end den længste og sætter kontrakten 1,8 procentpoint sjældnere." sidst i forklaringen og "Med dobbeltdummy giver den korteste major dog 0,10 stik mindre end den længste, mens en kort major og en firefarve i minor med honnør er lige gode." sidst i "Ved bordet" (de første fem sessioner gav S7, som ingen sætning har). Billedet er `../skaermbilleder/udspilstal/live-facit-1280.png`.
+- **Arkiveret** i `docs/specs/` med en linje i `docs/specs/README.md`; `../SYSTEM.md` (afsnit 2 og beslutningsloggen) og `../PLAN-aabne-opgaver.md` er opdateret, og grenen `udspilstal` er slettet (den lå kun lokalt).
 
 **Tokenforbrug pr. session** (nye input, skrevet til cachen, læst fra cachen og output):
 - Session 1: 134 / 336.180 / 15.986.352 / 151.148 (lagt sammen fra sessionens transcript: 66 kald til og med den fulde testkørsel og commit af byggeriet; de sidste kald med Afklaret og commit er ikke med, og Franks `/usage` før og efter giver hele sessionen)
+- Session 2 (med Franks to rettelser; Opus, ikke Sonnet som i tabellen, fordi den kørte videre i samme samtale): 110 / 94.722 / 21.409.431 / 39.425 (lagt sammen fra transcriptet fra Franks "godkendt" til og med live-tjekket: 50 kald; arkiveringen, SYSTEM.md og den sidste commit er ikke med)
