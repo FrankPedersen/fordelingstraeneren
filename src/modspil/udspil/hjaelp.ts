@@ -16,6 +16,16 @@ export type Farve = 'S' | 'H' | 'D' | 'C';
 export const FARVER: readonly Farve[] = ['S', 'H', 'D', 'C'];
 const FARVE_NR: Record<Farve, number> = { S: 0, H: 1, D: 2, C: 3 };
 
+/**
+ * Varianternes krav (SPEC-udspilsraad.md, Varianterne): mindst én farve blandt `blandt` har en længde og et antal
+ * honnører (E, K, D, B) i intervallerne. Hvert element i `farveMed` skal opfyldes, gerne af forskellige farver.
+ */
+export interface FarveMed {
+  blandt: Farve[];
+  laengde: [number, number];
+  honnoerer: [number, number];
+}
+
 /** Et krav til en hånd; alle felter skal være opfyldt (se tools/udspil/krav.py). */
 export interface Krav {
   hp?: [number, number];
@@ -27,6 +37,10 @@ export interface Krav {
   stop?: Farve;
   pas?: string;
   enAf?: Krav[];
+  /** Varianternes ekstra krav til Vest (SPEC-udspilsraad.md). */
+  farveMed?: FarveMed[];
+  /** En farve blandt `blandt` med mindst `min` kort og "table feeling" mod sans i profilen Standard (`tableFeeling`). */
+  tableFeeling?: { blandt: Farve[]; min: number };
 }
 
 export interface Udvalg {
@@ -98,6 +112,37 @@ export interface AppData extends Omit<Raa, 'opgaver' | 'eksempler'> {
 export const raaSti = (id: string) => `tools/udspil/raa/${id}.json`;
 export const appSti = (id: string) => `src/modspil/content/udspil/${id}.json`;
 
+/** En variant (SPEC-udspilsraad.md, `tools/udspil/varianter.json`): en situation med et ekstra krav til Vest og sit eget seed. */
+export interface Variant {
+  id: string;
+  situation: string;
+  seed: number;
+  ekstra: Krav;
+}
+
+export interface Variantfil {
+  version: number;
+  kilde: string;
+  /** Hænder pr. variant. */
+  opgaver: number;
+  varianter: Variant[];
+}
+
+export const VARIANTFIL = 'tools/udspil/varianter.json';
+export const variantfil = (): Variantfil => JSON.parse(readFileSync(ROOT + VARIANTFIL, 'utf8'));
+
+/** Variantens rådata: samme format som situationernes plus variantens id og ekstra krav (`generer.py --variant`). */
+export interface VariantRaa extends Raa {
+  variant: string;
+  ekstra: Krav;
+}
+export const variantSti = (id: string) => `tools/udspil/raa/varianter/${id}.json`;
+
+/** Variantens krav til de fire hænder: situationens krav, og Vests krav udvidet med det ekstra krav. */
+export function variantKrav(s: Situation, v: Variant): Record<Seat, Krav> {
+  return { ...s.krav, W: { ...s.krav.W, ...v.ekstra } };
+}
+
 /** En datafil, eller en fejl, der siger, at generatoren ikke har kørt endnu. */
 export function laes<T>(sti: string): T {
   if (!existsSync(ROOT + sti)) throw new Error(`${sti} findes ikke endnu: generatoren har ikke kørt (python tools/udspil/generer.py).`);
@@ -140,7 +185,28 @@ export function opfyldt(haand: readonly Card[], krav: Krav): boolean {
     if (chooseCall(krav.pas, haand, theirSuit(krav.pas)) !== null) return false;
   }
   if (krav.enAf && !krav.enAf.some((k) => opfyldt(haand, k))) return false;
+  if (krav.farveMed && !krav.farveMed.every((e) => e.blandt.some((f) => farvePasser(valoerer(haand, f), e)))) return false;
+  const tf = krav.tableFeeling;
+  if (tf && !tf.blandt.some((f) => valoerer(haand, f).length >= tf.min && tableFeeling(valoerer(haand, f)))) return false;
   return true;
+}
+
+const iInterval = (x: number, [lo, hi]: readonly [number, number]) => x >= lo && x <= hi;
+
+/** Passer farvens valører med længden og antallet af honnører (E, K, D, B) i `farveMed`-elementet? */
+function farvePasser(v: readonly number[], e: FarveMed): boolean {
+  return iInterval(v.length, e.laengde) && iInterval(v.filter((x) => x >= HONNOER).length, e.honnoerer);
+}
+
+/**
+ * "Table feeling" mod sans i profilen Standard (SPEC-udspilsraad.md, Varianterne): appens udspilsregel (`muligeUdspil`)
+ * giver to kort, toppen og det lave kort, og de to øverste kort er honnører (E K, K D eller D B; ikke B 10, fordi
+ * honnørerne her er E, K, D og B). Valørerne er 2–14 i vilkårlig orden.
+ */
+export function tableFeeling(v: readonly number[]): boolean {
+  const kort = muligeUdspil(v, 'sans', profil('standard'));
+  const anden = [...v].sort((a, b) => b - a)[1];
+  return kort.length === 2 && anden >= HONNOER;
 }
 
 export const alleOpfyldt = (h: Hands, krav: Record<Seat, Krav>, pladser: readonly Seat[] = ['N', 'E', 'S', 'W']) =>
@@ -156,8 +222,9 @@ export function fraPbn(tekst: string): Card[] {
 }
 
 /** Valørerne 2–14 i farven. */
-const valoerer = (haand: readonly Card[], f: Farve) => haand.filter((c) => Math.floor(c / 13) === FARVE_NR[f]).map((c) => (c % 13) + 2);
-const HONNOER = 11;
+export const valoerer = (haand: readonly Card[], f: Farve) => haand.filter((c) => Math.floor(c / 13) === FARVE_NR[f]).map((c) => (c % 13) + 2);
+/** Den laveste honnør (B = 11); honnørerne er E, K, D og B. */
+export const HONNOER = 11;
 
 /** Tre øverste kort i sekvens eller brudt sekvens (E K B, K D 10 …) med toppen mindst B. */
 function staerkSekvens(v: number[]): boolean {

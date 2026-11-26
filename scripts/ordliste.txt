@@ -6,6 +6,8 @@
 combo
 cuebid
 doubleton
+doubletonen
+doubletoner
 esudspil
 femkortsfarve
 firekortsmajor
@@ -97,8 +99,10 @@ pattern
 patterns
 python
 raa
+raadanalyse
 readms
 src
+tablefeeling
 tbody
 your
 

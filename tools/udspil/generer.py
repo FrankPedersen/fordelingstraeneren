@@ -4,6 +4,8 @@
     python tools/udspil/generer.py --alle                    alle otte efter hinanden
     python tools/udspil/generer.py --situation S1-1nt-3nt --antal 1 --ud C:\\temp\\proeve
                                                              prøvekørsel: én opgave og eksemplerne i en anden mappe
+    python tools/udspil/generer.py --variant S4-singleton    én variant (SPEC-udspilsraad.md); fortsætter, hvor den slap
+    python tools/udspil/generer.py --varianter               alle syv varianter efter hinanden
 
 For hver situation giver mulberry32(situationens seed) en række seeds; en opgave er det første deal(seed), hvor alle fire
 hænder opfylder kravene, og Vests hånd er opgaven. For hver opgave giver mulberry32(opgavens seed) en række seeds; for hvert
@@ -12,6 +14,11 @@ regner modspillets stik for hvert af Vests 13 kort i hver fordeling. Eksemplerne
 eksemplets seed.
 
 Rådata: tools/udspil/raa/<id>.json. Appens data: src/modspil/content/udspil/<id>.json. Begge skrives efter hver opgave.
+
+Varianterne (SPEC-udspilsraad.md, tools/udspil/varianter.json): en variant er en situation med et ekstra krav til Vests hånd
+og sit eget seed. Opgaverne og fordelingerne laves som ovenfor; det eneste nye er, at Vests hånd også skal opfylde det
+ekstra krav. Kørslen skriver kun rådata, tools/udspil/raa/varianter/<variant>.json (samme format som raa/<id>.json plus
+"variant" og "ekstra"), og ingen appdata. Varianterne har ingen eksempler.
 """
 import argparse
 import datetime
@@ -32,11 +39,29 @@ GENERATOR_VERSION = 1
 HER = Path(__file__).resolve().parent
 ROD = HER.parents[1]
 SITUATIONER = ROD / "src" / "modspil" / "content" / "udspil" / "situationer.json"
+VARIANTER = HER / "varianter.json"
 
 
 def laes_situationer() -> dict:
     with open(SITUATIONER, encoding="utf-8") as f:
         return json.load(f)
+
+
+def laes_varianter() -> dict:
+    with open(VARIANTER, encoding="utf-8") as f:
+        return json.load(f)
+
+
+def variantens_situation(variant: dict, situationer: list) -> dict:
+    """Situationen med variantens seed og ekstra krav til Vest (alle situationens krav gælder stadig) og uden eksempler."""
+    sit = next((s for s in situationer if s["id"] == variant["situation"]), None)
+    if sit is None:
+        sys.exit(f"{variant['id']}: ukendt situation {variant['situation']}.")
+    vest = sit["krav"]["W"]
+    faelles = set(vest) & set(variant["ekstra"])
+    if faelles:
+        sys.exit(f"{variant['id']}: det ekstra krav har samme nøgler som situationens krav til Vest: {', '.join(sorted(faelles))}.")
+    return {**sit, "seed": variant["seed"], "krav": {**sit["krav"], "W": {**vest, **variant["ekstra"]}}, "eksempler": []}
 
 
 def kontraktens_maal(kontrakt: str) -> tuple:
@@ -120,8 +145,13 @@ def hoved(sit: dict, antal_fordelinger: int) -> dict:
     }
 
 
-def koer(sit: dict, antal_opgaver: int, antal_fordelinger: int, raa_mappe: Path, app_mappe: Path) -> None:
-    raa_sti = raa_mappe / f"{sit['id']}.json"
+def koer(sit: dict, antal_opgaver: int, antal_fordelinger: int, raa_sti: Path, app_sti, variant=None) -> None:
+    """Regner opgaverne og eksemplerne og skriver rådata (raa_sti) og appens data (app_sti; None for en variant).
+
+    `variant` er {"variant": id, "ekstra": krav} for en variant: felterne står i rådataenes hoved efter "kontrakt", og
+    navnet i fremdriften er variantens id.
+    """
+    navn = variant["variant"] if variant else sit["id"]
     _, maal = kontraktens_maal(sit["kontrakt"])
     raa = None
     if raa_sti.exists():
@@ -129,15 +159,19 @@ def koer(sit: dict, antal_opgaver: int, antal_fordelinger: int, raa_mappe: Path,
             raa = json.load(f)
         if raa["fordelinger"] != antal_fordelinger or raa["generator"] != GENERATOR_VERSION:
             sys.exit(f"{raa_sti} har {raa['fordelinger']} fordelinger og generator {raa['generator']}; slet filen for at starte forfra.")
+        if variant and (raa.get("variant") != variant["variant"] or raa.get("ekstra") != variant["ekstra"]):
+            sys.exit(f"{raa_sti} er lavet til en anden variant eller et andet ekstra krav; slet filen for at starte forfra.")
     if raa is None:
-        raa = {**hoved(sit, antal_fordelinger), "opgaver": [], "eksempler": []}
+        raa = {**hoved(sit, antal_fordelinger), **(variant or {}), "opgaver": [], "eksempler": []}
 
     def gem() -> None:
         raa["dato"] = datetime.date.today().isoformat()
         skriv(raa_sti, raa)
+        if app_sti is None:
+            return
         app = {**hoved(sit, antal_fordelinger), "opgaver": [opsummering(o, maal) for o in raa["opgaver"]],
                "eksempler": [{**opsummering(o, maal), "haand": o["haand"]} for o in raa["eksempler"]]}
-        skriv(app_mappe / f"{sit['id']}.json", app)
+        skriv(app_sti, app)
 
     start = time.time()
     regnet = 0
@@ -153,7 +187,7 @@ def koer(sit: dict, antal_opgaver: int, antal_fordelinger: int, raa_mappe: Path,
         gem()
         pr_opgave = (time.time() - start) / regnet
         tilbage = (antal_opgaver - i - 1) * pr_opgave
-        print(f"{sit['id']}: opgave {i + 1}/{antal_opgaver}, {pr_opgave:.1f} s pr. opgave, ca. {tilbage / 60:.0f} min tilbage", flush=True)
+        print(f"{navn}: opgave {i + 1}/{antal_opgaver}, {pr_opgave:.1f} s pr. opgave, ca. {tilbage / 60:.0f} min tilbage", flush=True)
 
     for j, eks in enumerate(sit.get("eksempler", [])):
         if j < len(raa["eksempler"]) and raa["eksempler"][j]["haand"] == eks["haand"] and raa["eksempler"][j]["seed"] == eks["seed"]:
@@ -168,7 +202,7 @@ def koer(sit: dict, antal_opgaver: int, antal_fordelinger: int, raa_mappe: Path,
         print(f"{sit['id']}: eksempel {j + 1} ({eks['haand']}) regnet", flush=True)
     del raa["eksempler"][len(sit.get("eksempler", [])):]
     gem()
-    print(f"{sit['id']}: færdig på {(time.time() - start) / 60:.1f} min", flush=True)
+    print(f"{navn}: færdig på {(time.time() - start) / 60:.1f} min", flush=True)
 
 
 def main() -> None:
@@ -176,11 +210,24 @@ def main() -> None:
     g = p.add_mutually_exclusive_group(required=True)
     g.add_argument("--situation", help="situationens id, fx S2-stayman")
     g.add_argument("--alle", action="store_true", help="alle situationer efter hinanden")
-    p.add_argument("--antal", type=int, help="antal opgaver (standard: tallet i situationer.json)")
+    g.add_argument("--variant", help="variantens id, fx S4-singleton (SPEC-udspilsraad.md); kun rådata")
+    g.add_argument("--varianter", action="store_true", help="alle varianter efter hinanden")
+    p.add_argument("--antal", type=int, help="antal opgaver (standard: tallet i situationer.json eller varianter.json)")
     p.add_argument("--ud", type=Path, help="anden mappe til rådata og appens data (prøvekørsel)")
     a = p.parse_args()
 
     fil = laes_situationer()
+    if a.variant or a.varianter:
+        vfil = laes_varianter()
+        varianter = vfil["varianter"] if a.varianter else [v for v in vfil["varianter"] if v["id"] == a.variant]
+        if not varianter:
+            sys.exit(f"Ukendt variant: {a.variant}. Kendte: {', '.join(v['id'] for v in vfil['varianter'])}")
+        antal = a.antal or vfil["opgaver"]
+        mappe = (a.ud / "raa" if a.ud else HER / "raa") / "varianter"
+        for v in varianter:
+            koer(variantens_situation(v, fil["situationer"]), antal, fil["fordelinger"], mappe / f"{v['id']}.json", None,
+                 {"variant": v["id"], "ekstra": v["ekstra"]})
+        return
     situationer = fil["situationer"] if a.alle else [s for s in fil["situationer"] if s["id"] == a.situation]
     if not situationer:
         sys.exit(f"Ukendt situation: {a.situation}. Kendte: {', '.join(s['id'] for s in fil['situationer'])}")
@@ -188,7 +235,7 @@ def main() -> None:
     raa_mappe = a.ud / "raa" if a.ud else HER / "raa"
     app_mappe = a.ud / "app" if a.ud else SITUATIONER.parent
     for sit in situationer:
-        koer(sit, antal, fil["fordelinger"], raa_mappe, app_mappe)
+        koer(sit, antal, fil["fordelinger"], raa_mappe / f"{sit['id']}.json", app_mappe / f"{sit['id']}.json")
 
 
 if __name__ == "__main__":
