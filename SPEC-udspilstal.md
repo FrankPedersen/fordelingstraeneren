@@ -54,14 +54,14 @@ Sætningen står **efter Kompendiets råd** (`raadSaetning`) som sidste sætning
 | S4 | singleton | P5 · S4 | altid |
 | S4 | doubleton | P6 · S4 | altid |
 | S4 | sidefarve uden honnør | P7 | altid |
-| S4 | sidefarverne | P8 · S4 (♠, ♦, ♣) | altid |
+| S4 | sidefarverne | P8 · S4 (♠, ♦, ♣) | Vest har trumf (Franks valg 26. nov. 2026, Afklaret) |
 | S5 | singleton | P5 · S5 | altid |
 | S5 | ♦ ♣ | – | ingen sætning |
 | S6 | ♣ (trumf) | P8 · S6 (♠, ♥, ♦) | altid |
 | S7 | alle | – | ingen sætning |
 | S8 | singleton | P5 · S8 | altid |
 | S8 | doubleton | P6 · S8 | altid |
-| S8 | sidefarverne | P8 · S8 (♥, ♦, ♣) | altid |
+| S8 | sidefarverne | P8 · S8 (♥, ♦, ♣) | Vest har trumf (Franks valg 26. nov. 2026, Afklaret) |
 
 Er rækkens dom "For få hænder", står der ingen sætning.
 
@@ -117,7 +117,7 @@ Sætningen kommer efter den nuværende tekst og regnes af koden ud fra `raadtal.
 | --- | --- |
 | S1, S2 | Med dobbeltdummy giver den korteste major dog 0,10 stik mindre end den længste, mens en kort major og en firefarve i minor med honnør er lige gode. |
 | S3 | Med dobbeltdummy giver ♥ uden dyb sekvens 0,12 stik mindre end ♠, mens ♠ og minorfarverne er lige gode. |
-| S4 | Med dobbeltdummy giver singletonen 0,13 stik mere end småkort, småkort giver 0,15 stik mere end en farve med en eller to honnører, doubletonen og småkort er lige gode, og trumf giver 0,06 stik mindre end ♠ og ♦ og er lige så godt som ♣. |
+| S4 | Med dobbeltdummy giver singletonen 0,13 stik mere end småkort, småkort giver 0,15 stik mere end en farve med en eller to honnører, doubletonen og småkort er lige gode, og trumf giver 0,06 stik mindre end ♠ og ♦, mens trumf og ♣ er lige gode. (Franks valg 26. nov. 2026, Afklaret) |
 | S5 | Med dobbeltdummy giver singletonen 0,11 stik mere end småkort i en sidefarve. |
 | S6 | Med dobbeltdummy giver trumf 0,07 stik mere end ♠ og 0,32 stik mere end ♥, mens trumf og ♦ er lige gode; trumf er den bedste farve i 46 % af hænderne. |
 | S7 | (ingen sætning) |
@@ -192,10 +192,10 @@ Datasættets 150 hænder i S3 har ingen dyb sekvens i ♥ (Nord har vist fem ♥
 
 **Claude Codes valg (Frank kan ændre dem):**
 1. **`raadtal.json`** har `kilde`, `raekker` og `trumfBedst`. Rækkerne er de 23, appen bruger: P1, P2, P3 · ♦, P3 · ♣, P4, P5 i S4, S5 og S8, P6 i S4 og S8, P7, P8 i hver situation (9) og P9's grupper E K, K D og D B. P2's længdegrupper og P9's hele række og længdegrupper er ikke med. `trumfBedst` er S6 med n = 149 og andelen 68/149 (kolonnen "1." i "Trumfs plads", hvor lige med den bedste tæller som bedst).
-2. **Udvælgelsen** følger reglens plads i `kompendieraad` (`RAADRAEKKE` i `findUdspil.ts`). Giver ingen regel rådet (S6 uden ♣, 1 hånd i datasættet), er der ingen sætning. P1 og P4 bruger specens betingelser ordret: P1 gælder også ved lige lange majorer (7a udelader de hænder, så sætningen taler om gennemsnittet over hænder, hvor A er entydig), og P4 kræver kun kort i ♥ (7a's P4 kræver også ♠). P8 står i S4 og S8 også, når Vest ikke har trumf ("altid").
+2. **Udvælgelsen** følger reglens plads i `kompendieraad` (`RAADRAEKKE` i `findUdspil.ts`). Giver ingen regel rådet (S6 uden ♣, 1 hånd i datasættet), er der ingen sætning. P1 og P4 bruger specens betingelser ordret: P1 gælder også ved lige lange majorer (7a udelader de hænder, så sætningen taler om gennemsnittet over hænder, hvor A er entydig), og P4 kræver kun kort i ♥ (7a's P4 kræver også ♠). P8 stod i S4 og S8 også, når Vest ikke havde trumf ("altid"); Frank har valgt, at den kun står, når Vest har trumf (rettelse 2 nedenfor).
 3. **"Table feeling"**: gruppen er farvens to øverste kort, når de står i træk (E K, K D, D B); B 10 har ingen gruppe og ingen tilføjelse. Tilføjelsen står kun med svar i kort, fordi kun dér er der en sætning om de to kort, og med alle profiler, der giver to kort.
 4. **P8 i forklaringen**: grupperne står efter deres første farve i orden ♠ ♥ ♦ ♣, og kun den første sætterchance har "sætter" (specens eksempel). Flere lige gode står samlet: "mens trumf, ♦ og ♣ er lige gode". Er alle lige gode: "Med dobbeltdummy er trumf, ♠ og ♦ lige gode efter dette forløb." uden forskel. Ingen af de to forekommer med tallene fra 7a.
-5. **"Ved bordet"**: leddene bindes med "mens" i S1–S3 og som liste med ", og" før det sidste i S4 og S8; S5 og S6 har ét led. "dog" ("actually") står, når stikkene går imod Kompendiets retning fra 7a (P1, P2, P3, P5, P7 og P8 i S6: A; P4 og P8 i S4 og S8: B; P6 ingen); med tallene fra 7a kun ved P2. Retningen står i `findUdspilTekst.ts`, fordi appen ikke henter `raadanalyse.ts`. Navnene er kortere end i forklaringen ("småkort", "en farve med en eller to honnører"). Farverne i P3 og P8 lægges sammen efter samme regel som i forklaringen, også sætterchancens betingelse, selv om den ikke vises; dækker én gruppe alle farverne, hedder de "minorfarverne" og "hver sidefarve". De lige gode står med ", mens trumf og ♦ er lige gode", når leddet står først (S6), og med " og er lige så godt som ♣" i en liste (S4).
+5. **"Ved bordet"**: leddene bindes med "mens" i S1–S3 og som liste med ", og" før det sidste i S4 og S8; S5 og S6 har ét led. "dog" ("actually") står, når stikkene går imod Kompendiets retning fra 7a (P1, P2, P3, P5, P7 og P8 i S6: A; P4 og P8 i S4 og S8: B; P6 ingen); med tallene fra 7a kun ved P2. Retningen står i `findUdspilTekst.ts`, fordi appen ikke henter `raadanalyse.ts`. Navnene er kortere end i forklaringen ("småkort", "en farve med en eller to honnører"). Farverne i P3 og P8 lægges sammen efter samme regel som i forklaringen, også sætterchancens betingelse, selv om den ikke vises; dækker én gruppe alle farverne, hedder de "minorfarverne" og "hver sidefarve". De lige gode står med ", mens trumf og ♦ er lige gode", når leddet står først (S6), og med " og er lige så godt som ♣" i en liste (S4); Frank har valgt ", mens trumf og ♣ er lige gode" også i S4 (rettelse 1 nedenfor).
 6. **Afrundingen** er 7a's (`toFixed`), og fortegnene sammenlignes med `Math.sign`, så en sætterchance på præcis 0 også udelades.
 7. **Engelsk**: "With double dummy, leading X … gives …" (verbet er altid ental, også ved "small cards"), "are equally good leads", "percentage points more/less often", "defeating the contract" i P8's parentes og "actually" for "dog". Grupperne hedder A K, K Q og Q J.
 8. **Testene**: `foer.json` er skrevet i den røde fase med koden ved tagget (forklaringerne, "Ved bordet", ⓘ og hashen). Hashen i accepttest 6 dækker også prisen for hvert muligt svar (hver farve og hvert kort) med de tre profiler. Accepttest 7 tjekker de nye sætninger for sig og ⓘ mod teksten ved tagget; accepttest 8 kræver desuden, at `raadanalyse.ts` kun har nye linjer, at `kompas.test.tsx` kun har `}, 30_000);`, og at `CLAUDE.md` har én ny linje.
@@ -212,8 +212,8 @@ Datasættets 150 hænder i S3 har ingen dyb sekvens i ♥ (Nord har vist fem ♥
 - S1, S2 EN: With double dummy, leading the shorter major actually gives 0.10 fewer tricks than the longer one, while a short major and a four-card minor with an honour are equally good.
 - S3 DA: Med dobbeltdummy giver ♥ uden dyb sekvens 0,12 stik mindre end ♠, mens ♠ og minorfarverne er lige gode.
 - S3 EN: With double dummy, leading ♥ without a deep sequence gives 0.12 fewer tricks than ♠, while ♠ and the minors are equally good.
-- S4 DA: Med dobbeltdummy giver singletonen 0,13 stik mere end småkort, småkort giver 0,15 stik mere end en farve med en eller to honnører, doubletonen og småkort er lige gode, og trumf giver 0,06 stik mindre end ♠ og ♦ og er lige så godt som ♣.
-- S4 EN: With double dummy, leading the singleton gives 0.13 more tricks than small cards, leading small cards gives 0.15 more tricks than a suit with one or two honours, the doubleton and small cards are equally good, and leading a trump gives 0.06 fewer tricks than ♠ and ♦ and is as good as ♣.
+- S4 DA: Med dobbeltdummy giver singletonen 0,13 stik mere end småkort, småkort giver 0,15 stik mere end en farve med en eller to honnører, doubletonen og småkort er lige gode, og trumf giver 0,06 stik mindre end ♠ og ♦ og er lige så godt som ♣. (Rettet af Frank, se rettelse 1.)
+- S4 EN: With double dummy, leading the singleton gives 0.13 more tricks than small cards, leading small cards gives 0.15 more tricks than a suit with one or two honours, the doubleton and small cards are equally good, and leading a trump gives 0.06 fewer tricks than ♠ and ♦ and is as good as ♣. (Rettet af Frank, se rettelse 1.)
 - S5 DA: Med dobbeltdummy giver singletonen 0,11 stik mere end småkort i en sidefarve.
 - S5 EN: With double dummy, leading the singleton gives 0.11 more tricks than small cards in a side suit.
 - S6 DA: Med dobbeltdummy giver trumf 0,07 stik mere end ♠ og 0,32 stik mere end ♥, mens trumf og ♦ er lige gode; trumf er den bedste farve i 46 % af hænderne.
@@ -239,6 +239,18 @@ Former, der ikke forekommer med tallene fra 7a (accepttest 3):
 - P9, lige gode: "Med dobbeltdummy er toppen og det lave kort fra E K lige gode (forskel 0,04 stik)." / "With double dummy, the top card and the low card from A K are equally good (difference 0.04 tricks)."
 - P8, alle lige gode: "Med dobbeltdummy er trumf, ♠, ♥ og ♦ lige gode efter dette forløb." / "With double dummy, a trump, ♠, ♥ and ♦ are equally good leads after this auction."
 - P8, flere lige gode: "…, mens trumf, ♦ og ♣ er lige gode." / "…, while a trump, ♦ and ♣ are equally good."
+
+### Franks godkendelse og rettelser (26. nov. 2026)
+
+Godkendt med to rettelser (Franks valg 26. nov. 2026):
+1. **"Ved bordet" i S4** slutter "…, og trumf giver 0,06 stik mindre end ♠ og ♦, mens trumf og ♣ er lige gode." (EN "…, and leading a trump gives 0.06 fewer tricks than ♠ and ♦, while a trump and ♣ are equally good."). I koden står de lige gode nu med ", mens …" både først i sætningen og i en liste; kun i et led efter "mens" (P3 i S3, når ♦ og ♣ ikke er lige gode begge to) står stadig " og er lige så godt som …", så sætningen ikke får to gange "mens". Med tallene fra 7a ændres kun S4.
+2. **P8-sætningen i forklaringen i S4 og S8** står kun, når Vest har trumf. I S6 sikrer reglen (♣) det allerede. Datasættet har 1 hånd i S4 og 6 i S8, hvor rådet er sidefarverne, og Vest ikke har trumf; de mister sætningen.
+
+**Rettelsen af accepttestene** (Franks valg 26. nov. 2026; ellers er testene uændrede siden den røde commit `bf2f157`):
+- Accepttest 4 (`ved-bordet.test.ts`): den forventede S4-sætning på dansk og engelsk er rettet efter rettelse 1.
+- Accepttest 2 (`udvaelgelse.test.ts`): to faste hænder uden sætning er tilføjet efter rettelse 2: S4 opgave 53 (♠D 10 7 3 2 ♥– ♦K 10 3 ♣D 9 5 4 2) og S8 opgave 12 (♠– ♥E 7 6 ♦10 8 7 ♣B 10 8 7 4 3 2). De øvrige forventninger var uberørte, fordi S4 opgave 6 og S8 opgave 0 har trumf.
+
+Specens tabeller (Sætningen i forklaringen og Sætningen sidst i "Ved bordet") er rettet tilsvarende.
 
 **Tokenforbrug pr. session** (nye input, skrevet til cachen, læst fra cachen og output):
 - Session 1: 134 / 336.180 / 15.986.352 / 151.148 (lagt sammen fra sessionens transcript: 66 kald til og med den fulde testkørsel og commit af byggeriet; de sidste kald med Afklaret og commit er ikke med, og Franks `/usage` før og efter giver hele sessionen)

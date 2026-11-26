@@ -25,8 +25,9 @@ const NY: Readonly<Record<SituationId, Tekst | null>> = {
     en: 'With double dummy, leading ♥ without a deep sequence gives 0.12 fewer tricks than ♠, while ♠ and the minors are equally good.',
   },
   'S4-kun-en-farve': {
-    da: 'Med dobbeltdummy giver singletonen 0,13 stik mere end småkort, småkort giver 0,15 stik mere end en farve med en eller to honnører, doubletonen og småkort er lige gode, og trumf giver 0,06 stik mindre end ♠ og ♦ og er lige så godt som ♣.',
-    en: 'With double dummy, leading the singleton gives 0.13 more tricks than small cards, leading small cards gives 0.15 more tricks than a suit with one or two honours, the doubleton and small cards are equally good, and leading a trump gives 0.06 fewer tricks than ♠ and ♦ and is as good as ♣.',
+    // Franks rettelse 26. nov. 2026: "…, mens trumf og ♣ er lige gode" i stedet for "… og er lige så godt som ♣".
+    da: 'Med dobbeltdummy giver singletonen 0,13 stik mere end småkort, småkort giver 0,15 stik mere end en farve med en eller to honnører, doubletonen og småkort er lige gode, og trumf giver 0,06 stik mindre end ♠ og ♦, mens trumf og ♣ er lige gode.',
+    en: 'With double dummy, leading the singleton gives 0.13 more tricks than small cards, leading small cards gives 0.15 more tricks than a suit with one or two honours, the doubleton and small cards are equally good, and leading a trump gives 0.06 fewer tricks than ♠ and ♦, while a trump and ♣ are equally good.',
   },
   'S5-sidefarve': {
     da: 'Med dobbeltdummy giver singletonen 0,11 stik mere end småkort i en sidefarve.',

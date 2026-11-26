@@ -558,8 +558,8 @@ const honnoerer = (v: readonly number[]) => v.filter((x) => x >= HONNOER).length
 /**
  * Sætningen "Med dobbeltdummy …" efter Kompendiets råd: rækken vælges efter reglen, der gav rådet, og efter hånden. I
  * S1 og S2 P2, når Vest har kort i begge majorer, og de ikke er lige lange, ellers P1, når Vest har en minor med præcis
- * 4 kort og 1–2 honnører og en major med 1–3 kort. Null, når ingen regel gav rådet, rækken ingen sætning har, eller
- * rækken har for få hænder.
+ * 4 kort og 1–2 honnører og en major med 1–3 kort. P8 kun, når Vest har trumf. Null, når ingen regel gav rådet,
+ * rækken ingen sætning har, eller rækken har for få hænder.
  */
 function dobbeltdummyFor(situation: SituationId, vest: readonly Card[], regel: RaadRegel | null, regler: readonly RaadRegel[]): Tekst | null {
   if (!regel) return null;
@@ -580,13 +580,17 @@ function dobbeltdummyFor(situation: SituationId, vest: readonly Card[], regel: R
     }
     case 'P4':
       return laengde(1) > 0 ? par('P4') : null;
-    case 'P8':
+    case 'P8': {
+      // Kun når Vest har trumf (Franks valg 26. nov. 2026); i S6 sikrer reglen (♣) det allerede.
+      const trumf = trumfAf(situationData(situation).kontrakt);
+      if (trumf === null || laengde(trumf) === 0) return null;
       return trumfSaetning(
         ['S', 'H', 'D', 'C'].flatMap((b, farve) => {
           const tal = raadTalI(RAADTAL, `P8-${b}`, situation);
           return tal ? [{ farve, tal }] : [];
         }),
       );
+    }
     default:
       return par(raekke);
   }

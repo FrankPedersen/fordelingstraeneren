@@ -520,7 +520,8 @@ function parLed(tal: RaadTal | undefined, navne: { da: readonly [string, string]
 /**
  * Et led med A mod flere farver (P3: ♠ mod ♦ og ♣; P8: trumf mod sidefarverne), kun stik, med samme sammenlægning som
  * i forklaringen. Står alle farverne i én gruppe, bruges navnet `alle` ("minorfarverne", "hver sidefarve"). De lige gode
- * står sidst: først i sætningen ", mens trumf og ♦ er lige gode", ellers " og er lige så godt som ♣".
+ * står sidst med ", mens trumf og ♦ er lige gode", også i en liste (S4, Franks valg 26. nov. 2026); kun efter "mens"
+ * (S3) står " og er lige så godt som ♣", så sætningen ikke får to gange "mens".
  */
 function flereLed(
   a: { da: string; en: string },
@@ -545,7 +546,7 @@ function flereLed(
     tekst: (plads) => {
       const hale = !g.lige.length
         ? { da: '', en: '' }
-        : plads === 'foerst'
+        : plads !== 'mens'
           ? { da: `, mens ${a.da} og ${lige.da} er lige gode`, en: `, while ${a.en} and ${lige.en} are equally good` }
           : { da: ` og er lige så godt som ${lige.da}`, en: ` and is as good as ${lige.en}` };
       const d = dog ? ' dog' : '';

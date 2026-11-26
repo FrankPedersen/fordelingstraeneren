@@ -8,7 +8,8 @@ import { SVAR } from './hjaelp';
  * Accepttest 2 i SPEC-udspilstal.md: udvælgelsen. For faste hænder giver forklaringen (profilen Standard) præcis den
  * forventede sætning på dansk og engelsk, med tallene skrevet ind fra afsnit 7a i docs/MODEL.md. Sætningen står sidst
  * i forklaringen, efter Kompendiets råd, og ikke i `afvigelse`; ved "table feeling" (P9) står tilføjelsen lige efter
- * sætningen om de to rigtige kort. Situationer og regler uden sætning har ingen "Med dobbeltdummy".
+ * sætningen om de to rigtige kort. Situationer og regler uden sætning har ingen "Med dobbeltdummy". P8 i S4 og S8 står
+ * kun, når Vest har trumf (Franks rettelse 26. nov. 2026; S4 opgave 53 og S8 opgave 12 er tilføjet til testen).
  *
  * Hænderne er fra datasættet (src/modspil/content/udspil/), undtagen S3 med dyb sekvens i ♥: datasættets 150 hænder i
  * S3 har ingen (Nord har vist fem ♥), så den hånd er konstrueret (middelstikkene er ligegyldige for sætningen).
@@ -97,6 +98,9 @@ const TILFAELDE: Tilfaelde[] = [
       en: 'With double dummy, leading a trump after this auction gives on average 0.06 fewer tricks than ♠ and ♦ (defeating the contract 1.2 percentage points less often), while a trump and ♣ are equally good.',
     },
   },
+  // S4 opgave 53: ♠D 10 7 3 2 ♥– ♦K 10 3 ♣D 9 5 4 2. Sidefarverne, men Vest har ingen trumf: ingen sætning (Franks
+  // rettelse 26. nov. 2026).
+  { navn: 'S4, sidefarverne uden trumf', situation: 'S4-kun-en-farve', indeks: 53, seed: 4221155054, saetning: null },
   // S5 opgave 9: ♠10 8 4 2 ♥2 ♦E 10 8 4 ♣E D 8 6. Singleton: P5 · S5.
   { navn: 'S5, singleton (P5)', situation: 'S5-sidefarve', indeks: 9, seed: 2783398064, saetning: P5('0.11', '3.0') },
   // S5 opgave 0: ♠3 ♥5 4 2 ♦B 9 8 7 6 ♣E D 10 7. Rådet er ♦ og ♣: ingen sætning.
@@ -131,6 +135,9 @@ const TILFAELDE: Tilfaelde[] = [
       en: 'With double dummy, leading a trump after this auction gives on average 0.06 fewer tricks than ♥, ♦ and ♣ (defeating the contract 0.8–0.9 percentage points less often).',
     },
   },
+  // S8 opgave 12: ♠– ♥E 7 6 ♦10 8 7 ♣B 10 8 7 4 3 2. Sidefarverne, men Vest har ingen trumf: ingen sætning (Franks
+  // rettelse 26. nov. 2026).
+  { navn: 'S8, sidefarverne uden trumf', situation: 'S8-delkontrakt', indeks: 12, seed: 550303604, saetning: null },
 ];
 
 const antal = (t: string, ord: string) => t.split(ord).length - 1;
