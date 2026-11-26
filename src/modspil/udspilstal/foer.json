@@ -1,0 +1,1748 @@
+{
+  "tag": "v51-foer-udspilstal",
+  "vedBordet": {
+    "S1-1nt-3nt": {
+      "da": "Mod 1NT – 3NT spilles der normalt ud i en major, og den korteste major er ofte bedst. En kort major er et bedre udspil end en firefarve i minor med en eller to honnører.",
+      "en": "Against 1NT – 3NT the lead is normally a major, and the shorter major is often best. A short major is a better lead than a four-card minor with one or two honours."
+    },
+    "S2-stayman": {
+      "da": "Et svar på 2♦ efter Stayman betyder ofte, at spilføreren har minorfarverne. Udspillet er derfor normalt i en major, gerne den korteste og også fra en singleton.",
+      "en": "A 2♦ answer to Stayman often means that declarer holds the minors. The lead is therefore normally a major, preferably the shorter one and even from a singleton."
+    },
+    "S3-transfer": {
+      "da": "Udspil i bordets viste femfarve i ♥ betaler sig sjældent; kun en dyb sekvens som D B 10 9 3 gør det til et godt valg. Blandt de andre farver er ♠ en anelse bedre end minorfarverne, fordi modspillet tit har syv kort i den anden major.",
+      "en": "A lead in dummy's five-card heart suit rarely pays; only a deep sequence such as Q J 10 9 3 makes it a good choice. Among the other suits spades are slightly better than the minors, because the defence often holds seven cards in the other major."
+    },
+    "S4-kun-en-farve": {
+      "da": "Når kun trumffarven er meldt, er en singleton i en sidefarve et stærkt udspil, og en doubleton er bedre end sit rygte. Bordet er svagt, så småkort er bedre end en farve med en eller to honnører, og trumf ud kommer først på tale, når ingen sidefarve frister.",
+      "en": "When only the trump suit has been bid, a singleton in a side suit is a strong lead, and a doubleton is better than its reputation. Dummy is weak, so small cards are better than a suit with one or two honours, and a trump lead only comes into question when no side suit appeals."
+    },
+    "S5-sidefarve": {
+      "da": "En singleton i en sidefarve er førstevalget, også i bordets ♥. Ellers er de umeldte farver ♦ og ♣ bedst, helst fra småkort frem for fra honnører, medmindre udspilleren har en trekorts honnørsekvens som K D B. Med esset og fire eller fem kort i bordets ♥ kan esset også være et godt udspil.",
+      "en": "A singleton in a side suit is the first choice, even in dummy's hearts. Otherwise the unbid suits, diamonds and clubs, are best, preferably from small cards rather than from honours, unless the leader holds a three-card honour sequence such as K Q J. With the ace and four or five cards in dummy's hearts the ace can also be a good lead."
+    },
+    "S6-trumf": {
+      "da": "Syd har vist ♥ og ♣, og Nord er kort i ♥, så bordet kan trumfe Syds hjerter. Trumf ud fjerner bordets trumfer og kan derfor være et stærkt udspil.",
+      "en": "South has shown hearts and clubs, and North is short in hearts, so dummy can ruff South's hearts. A trump lead removes dummy's trumps and can therefore be a strong lead."
+    },
+    "S7-makker-aabnet": {
+      "da": "Når makker har åbnet med 1♥, er makkers farve næsten altid det rigtige udspil med to kort eller flere i ♥. Med singleton ♥ kræver et andet udspil en stærk sekvens som K D B eller K D 10.",
+      "en": "When partner has opened 1♥, partner's suit is almost always the right lead with two or more hearts. With a singleton heart another lead needs a strong sequence such as K Q J or K Q 10."
+    },
+    "S8-delkontrakt": {
+      "da": "Mod en delkontrakt, hvor Nord har vist firekortsstøtte, er en singleton næsten altid det rigtige udspil, og en doubleton uden honnører er bedre end sit rygte. E x og D x er værd at overveje, mens trumf ud ofte er det svageste valg.",
+      "en": "Against a part score where North has shown four-card support, a singleton is almost always the right lead, and a doubleton without honours is better than its reputation. A x and Q x are worth considering, while a trump lead is often the weakest choice."
+    }
+  },
+  "hjaelp": {
+    "da": "Du sidder som Vest og vælger udspillet ud fra din hånd og meldeforløbet: farven på niveau 1–2 og fra niveau 3 kortet efter profilens udspilsregel. Facit er regnet med dobbeltdummy på 100 fordelinger, der passer med meldingerne, og det bedste udspil giver flest stik i gennemsnit.",
+    "en": "You sit West and choose the opening lead from your hand and the bidding: the suit at levels 1–2 and from level 3 the card by your profile's lead rule. The solution is computed double dummy on 100 deals that fit the bidding, and the best lead gives the most tricks on average."
+  },
+  "facitHash": "0ebc8e65e095814baa6200b63a3c69e34dee40a24b25b00bd09d4aa821842045",
+  "forklaringer": [
+    {
+      "situation": "S1-1nt-3nt",
+      "indeks": 28,
+      "seed": 3840206489,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 3NT har Syd 15–17 hp og en jævn hånd, og Nord har ikke søgt et fit i major. ♥ og ♣ er lige gode (under 0,1 stik fra den bedste): ♥ giver i gennemsnit 2,2 stik til modspillet og sætter 3NT i 2 % af fordelingerne, ♣ 2,1 stik og 1 %. Kompendiet (s. 11–12) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 3NT South has 15–17 HCP and a balanced hand, and North has not looked for a major fit. ♥ and ♣ are equally good (within 0.1 tricks of the best): ♥ gives the defence 2.2 tricks on average and defeats 3NT in 2% of the deals, ♣ 2.1 tricks and 1%. The Compendium (pp. 11–12) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S1-1nt-3nt",
+      "indeks": 28,
+      "seed": 3840206489,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 3NT har Syd 15–17 hp og en jævn hånd, og Nord har ikke søgt et fit i major. ♥6 og ♣9 er lige gode (under 0,1 stik fra den bedste): ♥6 giver i gennemsnit 2,2 stik til modspillet og sætter 3NT i 2 % af fordelingerne, ♣9 2,1 stik og 1 %. Kompendiet (s. 11–12) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 3NT South has 15–17 HCP and a balanced hand, and North has not looked for a major fit. ♥6 and ♣9 are equally good (within 0.1 tricks of the best): ♥6 gives the defence 2.2 tricks on average and defeats 3NT in 2% of the deals, ♣9 2.1 tricks and 1%. The Compendium (pp. 11–12) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S1-1nt-3nt",
+      "indeks": 28,
+      "seed": 3840206489,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 3NT har Syd 15–17 hp og en jævn hånd, og Nord har ikke søgt et fit i major. ♥ og ♣ er lige gode (under 0,1 stik fra den bedste): ♥ giver i gennemsnit 2,2 stik til modspillet og sætter 3NT i 2 % af fordelingerne, ♣ 2,1 stik og 1 %. Kompendiet (s. 11–12) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 3NT South has 15–17 HCP and a balanced hand, and North has not looked for a major fit. ♥ and ♣ are equally good (within 0.1 tricks of the best): ♥ gives the defence 2.2 tricks on average and defeats 3NT in 2% of the deals, ♣ 2.1 tricks and 1%. The Compendium (pp. 11–12) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S1-1nt-3nt",
+      "indeks": 28,
+      "seed": 3840206489,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 3NT har Syd 15–17 hp og en jævn hånd, og Nord har ikke søgt et fit i major. ♥6 og ♣9 er lige gode (under 0,1 stik fra den bedste): ♥6 giver i gennemsnit 2,2 stik til modspillet og sætter 3NT i 2 % af fordelingerne, ♣9 2,1 stik og 1 %. Kompendiet (s. 11–12) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 3NT South has 15–17 HCP and a balanced hand, and North has not looked for a major fit. ♥6 and ♣9 are equally good (within 0.1 tricks of the best): ♥6 gives the defence 2.2 tricks on average and defeats 3NT in 2% of the deals, ♣9 2.1 tricks and 1%. The Compendium (pp. 11–12) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S1-1nt-3nt",
+      "indeks": 28,
+      "seed": 3840206489,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 3NT har Syd 15–17 hp og en jævn hånd, og Nord har ikke søgt et fit i major. ♥ og ♣ er lige gode (under 0,1 stik fra den bedste): ♥ giver i gennemsnit 2,2 stik til modspillet og sætter 3NT i 2 % af fordelingerne, ♣ 2,1 stik og 1 %. Kompendiet (s. 11–12) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 3NT South has 15–17 HCP and a balanced hand, and North has not looked for a major fit. ♥ and ♣ are equally good (within 0.1 tricks of the best): ♥ gives the defence 2.2 tricks on average and defeats 3NT in 2% of the deals, ♣ 2.1 tricks and 1%. The Compendium (pp. 11–12) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S1-1nt-3nt",
+      "indeks": 28,
+      "seed": 3840206489,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 3NT har Syd 15–17 hp og en jævn hånd, og Nord har ikke søgt et fit i major. ♥6 og ♣9 er lige gode (under 0,1 stik fra den bedste): ♥6 giver i gennemsnit 2,2 stik til modspillet og sætter 3NT i 2 % af fordelingerne, ♣9 2,1 stik og 1 %. Kompendiet (s. 11–12) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 3NT South has 15–17 HCP and a balanced hand, and North has not looked for a major fit. ♥6 and ♣9 are equally good (within 0.1 tricks of the best): ♥6 gives the defence 2.2 tricks on average and defeats 3NT in 2% of the deals, ♣9 2.1 tricks and 1%. The Compendium (pp. 11–12) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S1-1nt-3nt",
+      "indeks": 42,
+      "seed": 2307651963,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 3NT har Syd 15–17 hp og en jævn hånd, og Nord har ikke søgt et fit i major. ♠ giver i gennemsnit 2,4 stik til modspillet og sætter 3NT i 6 % af fordelingerne; ♦ giver 2,2 stik og 1 %. Kompendiet (s. 11–12) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 3NT South has 15–17 HCP and a balanced hand, and North has not looked for a major fit. ♠ gives the defence 2.4 tricks on average and defeats 3NT in 6% of the deals; ♦ gives 2.2 tricks and 1%. The Compendium (pp. 11–12) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S1-1nt-3nt",
+      "indeks": 42,
+      "seed": 2307651963,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 3NT har Syd 15–17 hp og en jævn hånd, og Nord har ikke søgt et fit i major. ♠D giver i gennemsnit 2,4 stik til modspillet og sætter 3NT i 6 % af fordelingerne; ♦5 giver 2,2 stik og 1 %. Fra ♠D B 6 mod sans afgøres udspillet af \"table feeling\": ♠D og ♠6 er begge rigtige. Kompendiet (s. 11–12) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 3NT South has 15–17 HCP and a balanced hand, and North has not looked for a major fit. ♠Q gives the defence 2.4 tricks on average and defeats 3NT in 6% of the deals; ♦5 gives 2.2 tricks and 1%. From ♠Q J 6 against notrump the lead is a matter of table feeling: ♠Q and ♠6 are both right. The Compendium (pp. 11–12) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S1-1nt-3nt",
+      "indeks": 42,
+      "seed": 2307651963,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 3NT har Syd 15–17 hp og en jævn hånd, og Nord har ikke søgt et fit i major. ♠ giver i gennemsnit 2,4 stik til modspillet og sætter 3NT i 6 % af fordelingerne; ♦ giver 2,2 stik og 1 %. Kompendiet (s. 11–12) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 3NT South has 15–17 HCP and a balanced hand, and North has not looked for a major fit. ♠ gives the defence 2.4 tricks on average and defeats 3NT in 6% of the deals; ♦ gives 2.2 tricks and 1%. The Compendium (pp. 11–12) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S1-1nt-3nt",
+      "indeks": 42,
+      "seed": 2307651963,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 3NT har Syd 15–17 hp og en jævn hånd, og Nord har ikke søgt et fit i major. ♠D giver i gennemsnit 2,4 stik til modspillet og sætter 3NT i 6 % af fordelingerne; ♦5 giver 2,2 stik og 1 %. Fra ♠D B 6 mod sans afgøres udspillet af \"table feeling\": ♠D og ♠6 er begge rigtige. Kompendiet (s. 11–12) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 3NT South has 15–17 HCP and a balanced hand, and North has not looked for a major fit. ♠Q gives the defence 2.4 tricks on average and defeats 3NT in 6% of the deals; ♦5 gives 2.2 tricks and 1%. From ♠Q J 6 against notrump the lead is a matter of table feeling: ♠Q and ♠6 are both right. The Compendium (pp. 11–12) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S1-1nt-3nt",
+      "indeks": 42,
+      "seed": 2307651963,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 3NT har Syd 15–17 hp og en jævn hånd, og Nord har ikke søgt et fit i major. ♠ giver i gennemsnit 2,4 stik til modspillet og sætter 3NT i 6 % af fordelingerne; ♦ giver 2,2 stik og 1 %. Kompendiet (s. 11–12) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 3NT South has 15–17 HCP and a balanced hand, and North has not looked for a major fit. ♠ gives the defence 2.4 tricks on average and defeats 3NT in 6% of the deals; ♦ gives 2.2 tricks and 1%. The Compendium (pp. 11–12) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S1-1nt-3nt",
+      "indeks": 42,
+      "seed": 2307651963,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 3NT har Syd 15–17 hp og en jævn hånd, og Nord har ikke søgt et fit i major. ♠D giver i gennemsnit 2,4 stik til modspillet og sætter 3NT i 6 % af fordelingerne; ♦5 giver 2,2 stik og 1 %. Fra ♠D B 6 mod sans afgøres udspillet af \"table feeling\": ♠D og ♠6 er begge rigtige. Kompendiet (s. 11–12) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 3NT South has 15–17 HCP and a balanced hand, and North has not looked for a major fit. ♠Q gives the defence 2.4 tricks on average and defeats 3NT in 6% of the deals; ♦5 gives 2.2 tricks and 1%. From ♠Q J 6 against notrump the lead is a matter of table feeling: ♠Q and ♠6 are both right. The Compendium (pp. 11–12) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S1-1nt-3nt",
+      "indeks": 55,
+      "seed": 2556829236,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 3NT har Syd 15–17 hp og en jævn hånd, og Nord har ikke søgt et fit i major. ♥ giver i gennemsnit 3,4 stik til modspillet og sætter 3NT i 14 % af fordelingerne; ♦ giver 2,9 stik og 8 %. Kompendiet (s. 11–12) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 3NT South has 15–17 HCP and a balanced hand, and North has not looked for a major fit. ♥ gives the defence 3.4 tricks on average and defeats 3NT in 14% of the deals; ♦ gives 2.9 tricks and 8%. The Compendium (pp. 11–12) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S1-1nt-3nt",
+      "indeks": 55,
+      "seed": 2556829236,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 3NT har Syd 15–17 hp og en jævn hånd, og Nord har ikke søgt et fit i major. ♥E giver i gennemsnit 3,4 stik til modspillet og sætter 3NT i 14 % af fordelingerne; ♦3 giver 2,9 stik og 8 %. Med profilen Standard afgøres udspillet fra ♥E K 4 3 mod sans af \"table feeling\" (top af sekvens): ♥E og ♥3 er begge rigtige. Kompendiet (s. 11–12) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 3NT South has 15–17 HCP and a balanced hand, and North has not looked for a major fit. ♥A gives the defence 3.4 tricks on average and defeats 3NT in 14% of the deals; ♦3 gives 2.9 tricks and 8%. With the Standard profile the lead from ♥A K 4 3 against notrump is a matter of table feeling (top of sequence): ♥A and ♥3 are both right. The Compendium (pp. 11–12) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S1-1nt-3nt",
+      "indeks": 55,
+      "seed": 2556829236,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 3NT har Syd 15–17 hp og en jævn hånd, og Nord har ikke søgt et fit i major. ♥ giver i gennemsnit 3,4 stik til modspillet og sætter 3NT i 14 % af fordelingerne; ♦ giver 2,9 stik og 8 %. Kompendiet (s. 11–12) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 3NT South has 15–17 HCP and a balanced hand, and North has not looked for a major fit. ♥ gives the defence 3.4 tricks on average and defeats 3NT in 14% of the deals; ♦ gives 2.9 tricks and 8%. The Compendium (pp. 11–12) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S1-1nt-3nt",
+      "indeks": 55,
+      "seed": 2556829236,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 3NT har Syd 15–17 hp og en jævn hånd, og Nord har ikke søgt et fit i major. ♥E giver i gennemsnit 3,4 stik til modspillet og sætter 3NT i 14 % af fordelingerne; ♦3 giver 2,9 stik og 8 %. Med profilen Omvendt afgøres udspillet fra ♥E K 4 3 mod sans af \"table feeling\" (top af sekvens): ♥E og ♥3 er begge rigtige. Kompendiet (s. 11–12) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 3NT South has 15–17 HCP and a balanced hand, and North has not looked for a major fit. ♥A gives the defence 3.4 tricks on average and defeats 3NT in 14% of the deals; ♦3 gives 2.9 tricks and 8%. With the Upside-down profile the lead from ♥A K 4 3 against notrump is a matter of table feeling (top of sequence): ♥A and ♥3 are both right. The Compendium (pp. 11–12) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S1-1nt-3nt",
+      "indeks": 55,
+      "seed": 2556829236,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 3NT har Syd 15–17 hp og en jævn hånd, og Nord har ikke søgt et fit i major. ♥ giver i gennemsnit 3,4 stik til modspillet og sætter 3NT i 14 % af fordelingerne; ♣ giver 2,9 stik og 7 %. Kompendiet (s. 11–12) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 3NT South has 15–17 HCP and a balanced hand, and North has not looked for a major fit. ♥ gives the defence 3.4 tricks on average and defeats 3NT in 14% of the deals; ♣ gives 2.9 tricks and 7%. The Compendium (pp. 11–12) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S1-1nt-3nt",
+      "indeks": 55,
+      "seed": 2556829236,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 3NT har Syd 15–17 hp og en jævn hånd, og Nord har ikke søgt et fit i major. ♥E giver i gennemsnit 3,4 stik til modspillet og sætter 3NT i 14 % af fordelingerne; ♣B giver 2,9 stik og 7 %. Med profilen Kompendiet spilles ♥E ud fra ♥E K 4 3 (ALA mod sans). Kompendiet (s. 11–12) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 3NT South has 15–17 HCP and a balanced hand, and North has not looked for a major fit. ♥A gives the defence 3.4 tricks on average and defeats 3NT in 14% of the deals; ♣J gives 2.9 tricks and 7%. With the Compendium profile ♥A is led from ♥A K 4 3 (ALA against notrump). The Compendium (pp. 11–12) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S2-stayman",
+      "indeks": 1,
+      "seed": 3339419771,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 2♣ – 2♦ – 3NT har Syd ingen firefarve i major, mens Nord har en, så spilføreren har ofte minorfarverne. ♦ og ♠ er lige gode (under 0,1 stik fra den bedste): ♦ giver i gennemsnit 2,4 stik til modspillet og sætter 3NT i 11 % af fordelingerne, ♠ 2,4 stik og 12 %. Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 2♣ – 2♦ – 3NT South has no four-card major while North has one, so declarer often holds the minors. ♦ and ♠ are equally good (within 0.1 tricks of the best): ♦ gives the defence 2.4 tricks on average and defeats 3NT in 11% of the deals, ♠ 2.4 tricks and 12%. The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S2-stayman",
+      "indeks": 1,
+      "seed": 3339419771,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 2♣ – 2♦ – 3NT har Syd ingen firefarve i major, mens Nord har en, så spilføreren har ofte minorfarverne. ♦B og ♠5 er lige gode (under 0,1 stik fra den bedste): ♦B giver i gennemsnit 2,4 stik til modspillet og sætter 3NT i 11 % af fordelingerne, ♠5 2,4 stik og 12 %. Med profilen Standard spilles ♦B ud fra ♦B 10 8 7 5 (top af sekvens). Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 2♣ – 2♦ – 3NT South has no four-card major while North has one, so declarer often holds the minors. ♦J and ♠5 are equally good (within 0.1 tricks of the best): ♦J gives the defence 2.4 tricks on average and defeats 3NT in 11% of the deals, ♠5 2.4 tricks and 12%. With the Standard profile ♦J is led from ♦J 10 8 7 5 (top of sequence). The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S2-stayman",
+      "indeks": 1,
+      "seed": 3339419771,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 2♣ – 2♦ – 3NT har Syd ingen firefarve i major, mens Nord har en, så spilføreren har ofte minorfarverne. ♦ og ♠ er lige gode (under 0,1 stik fra den bedste): ♦ giver i gennemsnit 2,4 stik til modspillet og sætter 3NT i 11 % af fordelingerne, ♠ 2,4 stik og 12 %. Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 2♣ – 2♦ – 3NT South has no four-card major while North has one, so declarer often holds the minors. ♦ and ♠ are equally good (within 0.1 tricks of the best): ♦ gives the defence 2.4 tricks on average and defeats 3NT in 11% of the deals, ♠ 2.4 tricks and 12%. The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S2-stayman",
+      "indeks": 1,
+      "seed": 3339419771,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 2♣ – 2♦ – 3NT har Syd ingen firefarve i major, mens Nord har en, så spilføreren har ofte minorfarverne. ♦B og ♠5 er lige gode (under 0,1 stik fra den bedste): ♦B giver i gennemsnit 2,4 stik til modspillet og sætter 3NT i 11 % af fordelingerne, ♠5 2,4 stik og 12 %. Med profilen Omvendt spilles ♦B ud fra ♦B 10 8 7 5 (top af sekvens). Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 2♣ – 2♦ – 3NT South has no four-card major while North has one, so declarer often holds the minors. ♦J and ♠5 are equally good (within 0.1 tricks of the best): ♦J gives the defence 2.4 tricks on average and defeats 3NT in 11% of the deals, ♠5 2.4 tricks and 12%. With the Upside-down profile ♦J is led from ♦J 10 8 7 5 (top of sequence). The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S2-stayman",
+      "indeks": 1,
+      "seed": 3339419771,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 2♣ – 2♦ – 3NT har Syd ingen firefarve i major, mens Nord har en, så spilføreren har ofte minorfarverne. ♦ og ♠ er lige gode (under 0,1 stik fra den bedste): ♦ giver i gennemsnit 2,4 stik til modspillet og sætter 3NT i 11 % af fordelingerne, ♠ 2,4 stik og 12 %. Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 2♣ – 2♦ – 3NT South has no four-card major while North has one, so declarer often holds the minors. ♦ and ♠ are equally good (within 0.1 tricks of the best): ♦ gives the defence 2.4 tricks on average and defeats 3NT in 11% of the deals, ♠ 2.4 tricks and 12%. The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S2-stayman",
+      "indeks": 1,
+      "seed": 3339419771,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 2♣ – 2♦ – 3NT har Syd ingen firefarve i major, mens Nord har en, så spilføreren har ofte minorfarverne. ♦B og ♠5 er lige gode (under 0,1 stik fra den bedste): ♦B giver i gennemsnit 2,4 stik til modspillet og sætter 3NT i 11 % af fordelingerne, ♠5 2,4 stik og 12 %. Med profilen Kompendiet afgøres udspillet fra ♦B 10 8 7 5 mod sans af \"table feeling\" (ALA mod sans): ♦B og ♦7 er begge rigtige. Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 2♣ – 2♦ – 3NT South has no four-card major while North has one, so declarer often holds the minors. ♦J and ♠5 are equally good (within 0.1 tricks of the best): ♦J gives the defence 2.4 tricks on average and defeats 3NT in 11% of the deals, ♠5 2.4 tricks and 12%. With the Compendium profile the lead from ♦J 10 8 7 5 against notrump is a matter of table feeling (ALA against notrump): ♦J and ♦7 are both right. The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S2-stayman",
+      "indeks": 18,
+      "seed": 1522139186,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 2♣ – 2♦ – 3NT har Syd ingen firefarve i major, mens Nord har en, så spilføreren har ofte minorfarverne. ♠ giver i gennemsnit 3,1 stik til modspillet og sætter 3NT i 12 % af fordelingerne; ♥ giver 2,7 stik og 6 %. Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 2♣ – 2♦ – 3NT South has no four-card major while North has one, so declarer often holds the minors. ♠ gives the defence 3.1 tricks on average and defeats 3NT in 12% of the deals; ♥ gives 2.7 tricks and 6%. The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S2-stayman",
+      "indeks": 18,
+      "seed": 1522139186,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 2♣ – 2♦ – 3NT har Syd ingen firefarve i major, mens Nord har en, så spilføreren har ofte minorfarverne. ♠K giver i gennemsnit 3,1 stik til modspillet og sætter 3NT i 12 % af fordelingerne; ♥2 giver 2,7 stik og 6 %. Fra ♠K D 9 mod sans afgøres udspillet af \"table feeling\": ♠K og ♠9 er begge rigtige. Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 2♣ – 2♦ – 3NT South has no four-card major while North has one, so declarer often holds the minors. ♠K gives the defence 3.1 tricks on average and defeats 3NT in 12% of the deals; ♥2 gives 2.7 tricks and 6%. From ♠K Q 9 against notrump the lead is a matter of table feeling: ♠K and ♠9 are both right. The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S2-stayman",
+      "indeks": 18,
+      "seed": 1522139186,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 2♣ – 2♦ – 3NT har Syd ingen firefarve i major, mens Nord har en, så spilføreren har ofte minorfarverne. ♠ giver i gennemsnit 3,1 stik til modspillet og sætter 3NT i 12 % af fordelingerne; ♥ giver 2,7 stik og 6 %. Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 2♣ – 2♦ – 3NT South has no four-card major while North has one, so declarer often holds the minors. ♠ gives the defence 3.1 tricks on average and defeats 3NT in 12% of the deals; ♥ gives 2.7 tricks and 6%. The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S2-stayman",
+      "indeks": 18,
+      "seed": 1522139186,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 2♣ – 2♦ – 3NT har Syd ingen firefarve i major, mens Nord har en, så spilføreren har ofte minorfarverne. ♠K giver i gennemsnit 3,1 stik til modspillet og sætter 3NT i 12 % af fordelingerne; ♥2 giver 2,7 stik og 6 %. Fra ♠K D 9 mod sans afgøres udspillet af \"table feeling\": ♠K og ♠9 er begge rigtige. Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 2♣ – 2♦ – 3NT South has no four-card major while North has one, so declarer often holds the minors. ♠K gives the defence 3.1 tricks on average and defeats 3NT in 12% of the deals; ♥2 gives 2.7 tricks and 6%. From ♠K Q 9 against notrump the lead is a matter of table feeling: ♠K and ♠9 are both right. The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S2-stayman",
+      "indeks": 18,
+      "seed": 1522139186,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 2♣ – 2♦ – 3NT har Syd ingen firefarve i major, mens Nord har en, så spilføreren har ofte minorfarverne. ♠ giver i gennemsnit 3,1 stik til modspillet og sætter 3NT i 12 % af fordelingerne; ♥ giver 2,7 stik og 6 %. Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 2♣ – 2♦ – 3NT South has no four-card major while North has one, so declarer often holds the minors. ♠ gives the defence 3.1 tricks on average and defeats 3NT in 12% of the deals; ♥ gives 2.7 tricks and 6%. The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S2-stayman",
+      "indeks": 18,
+      "seed": 1522139186,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 2♣ – 2♦ – 3NT har Syd ingen firefarve i major, mens Nord har en, så spilføreren har ofte minorfarverne. ♠K giver i gennemsnit 3,1 stik til modspillet og sætter 3NT i 12 % af fordelingerne; ♥6 giver 2,7 stik og 6 %. Fra ♠K D 9 mod sans afgøres udspillet af \"table feeling\": ♠K og ♠9 er begge rigtige. Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb.",
+        "en": "After 1NT – 2♣ – 2♦ – 3NT South has no four-card major while North has one, so declarer often holds the minors. ♠K gives the defence 3.1 tricks on average and defeats 3NT in 12% of the deals; ♥6 gives 2.7 tricks and 6%. From ♠K Q 9 against notrump the lead is a matter of table feeling: ♠K and ♠9 are both right. The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S2-stayman",
+      "indeks": 130,
+      "seed": 3478528702,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 2♣ – 2♦ – 3NT har Syd ingen firefarve i major, mens Nord har en, så spilføreren har ofte minorfarverne. ♣ giver i gennemsnit 3,0 stik til modspillet og sætter 3NT i 7 % af fordelingerne; ♠ giver 2,8 stik og 4 %. Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb, men med denne hånd giver ♣ flest stik.",
+        "en": "After 1NT – 2♣ – 2♦ – 3NT South has no four-card major while North has one, so declarer often holds the minors. ♣ gives the defence 3.0 tricks on average and defeats 3NT in 7% of the deals; ♠ gives 2.8 tricks and 4%. The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction, but with this hand ♣ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb, men med denne hånd giver ♣ flest stik.",
+        "en": "The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction, but with this hand ♣ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S2-stayman",
+      "indeks": 130,
+      "seed": 3478528702,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 2♣ – 2♦ – 3NT har Syd ingen firefarve i major, mens Nord har en, så spilføreren har ofte minorfarverne. ♣E giver i gennemsnit 3,0 stik til modspillet og sætter 3NT i 7 % af fordelingerne; ♠D giver 2,8 stik og 4 %. Med profilen Standard afgøres udspillet fra ♣E K 6 4 mod sans af \"table feeling\" (top af sekvens): ♣E og ♣4 er begge rigtige. Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb, men med denne hånd giver ♣ flest stik.",
+        "en": "After 1NT – 2♣ – 2♦ – 3NT South has no four-card major while North has one, so declarer often holds the minors. ♣A gives the defence 3.0 tricks on average and defeats 3NT in 7% of the deals; ♠Q gives 2.8 tricks and 4%. With the Standard profile the lead from ♣A K 6 4 against notrump is a matter of table feeling (top of sequence): ♣A and ♣4 are both right. The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction, but with this hand ♣ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb, men med denne hånd giver ♣ flest stik.",
+        "en": "The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction, but with this hand ♣ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S2-stayman",
+      "indeks": 130,
+      "seed": 3478528702,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 2♣ – 2♦ – 3NT har Syd ingen firefarve i major, mens Nord har en, så spilføreren har ofte minorfarverne. ♣ giver i gennemsnit 3,0 stik til modspillet og sætter 3NT i 7 % af fordelingerne; ♠ giver 2,8 stik og 4 %. Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb, men med denne hånd giver ♣ flest stik.",
+        "en": "After 1NT – 2♣ – 2♦ – 3NT South has no four-card major while North has one, so declarer often holds the minors. ♣ gives the defence 3.0 tricks on average and defeats 3NT in 7% of the deals; ♠ gives 2.8 tricks and 4%. The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction, but with this hand ♣ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb, men med denne hånd giver ♣ flest stik.",
+        "en": "The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction, but with this hand ♣ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S2-stayman",
+      "indeks": 130,
+      "seed": 3478528702,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 2♣ – 2♦ – 3NT har Syd ingen firefarve i major, mens Nord har en, så spilføreren har ofte minorfarverne. ♣E giver i gennemsnit 3,0 stik til modspillet og sætter 3NT i 7 % af fordelingerne; ♠D giver 2,8 stik og 4 %. Med profilen Omvendt afgøres udspillet fra ♣E K 6 4 mod sans af \"table feeling\" (top af sekvens): ♣E og ♣4 er begge rigtige. Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb, men med denne hånd giver ♣ flest stik.",
+        "en": "After 1NT – 2♣ – 2♦ – 3NT South has no four-card major while North has one, so declarer often holds the minors. ♣A gives the defence 3.0 tricks on average and defeats 3NT in 7% of the deals; ♠Q gives 2.8 tricks and 4%. With the Upside-down profile the lead from ♣A K 6 4 against notrump is a matter of table feeling (top of sequence): ♣A and ♣4 are both right. The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction, but with this hand ♣ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb, men med denne hånd giver ♣ flest stik.",
+        "en": "The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction, but with this hand ♣ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S2-stayman",
+      "indeks": 130,
+      "seed": 3478528702,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 2♣ – 2♦ – 3NT har Syd ingen firefarve i major, mens Nord har en, så spilføreren har ofte minorfarverne. ♣ giver i gennemsnit 3,0 stik til modspillet og sætter 3NT i 7 % af fordelingerne; ♠ giver 2,8 stik og 4 %. Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb, men med denne hånd giver ♣ flest stik.",
+        "en": "After 1NT – 2♣ – 2♦ – 3NT South has no four-card major while North has one, so declarer often holds the minors. ♣ gives the defence 3.0 tricks on average and defeats 3NT in 7% of the deals; ♠ gives 2.8 tricks and 4%. The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction, but with this hand ♣ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb, men med denne hånd giver ♣ flest stik.",
+        "en": "The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction, but with this hand ♣ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S2-stayman",
+      "indeks": 130,
+      "seed": 3478528702,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 2♣ – 2♦ – 3NT har Syd ingen firefarve i major, mens Nord har en, så spilføreren har ofte minorfarverne. ♣E giver i gennemsnit 3,0 stik til modspillet og sætter 3NT i 7 % af fordelingerne; ♠D giver 2,8 stik og 4 %. Med profilen Kompendiet spilles ♣E ud fra ♣E K 6 4 (ALA mod sans). Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb, men med denne hånd giver ♣ flest stik.",
+        "en": "After 1NT – 2♣ – 2♦ – 3NT South has no four-card major while North has one, so declarer often holds the minors. ♣A gives the defence 3.0 tricks on average and defeats 3NT in 7% of the deals; ♠Q gives 2.8 tricks and 4%. With the Compendium profile ♣A is led from ♣A K 6 4 (ALA against notrump). The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction, but with this hand ♣ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 14) anbefaler udspil i ♠ eller ♥ efter dette forløb, men med denne hånd giver ♣ flest stik.",
+        "en": "The Compendium (p. 14) recommends a lead in ♠ or ♥ after this auction, but with this hand ♣ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S3-transfer",
+      "indeks": 0,
+      "seed": 590894564,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 2♦ – 2♥ – 3NT har Nord vist fem ♥, og Syd har valgt sans. ♦ giver i gennemsnit 2,8 stik til modspillet og sætter 3NT i 7 % af fordelingerne; ♠ giver 2,7 stik og 4 %. Forspringet til ♠ er kun 0,10 stik. Kompendiet (s. 14) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1NT – 2♦ – 2♥ – 3NT North has shown five hearts, and South has chosen notrump. ♦ gives the defence 2.8 tricks on average and defeats 3NT in 7% of the deals; ♠ gives 2.7 tricks and 4%. The margin over ♠ is only 0.10 tricks. The Compendium (p. 14) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S3-transfer",
+      "indeks": 0,
+      "seed": 590894564,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 2♦ – 2♥ – 3NT har Nord vist fem ♥, og Syd har valgt sans. ♦3 giver i gennemsnit 2,8 stik til modspillet og sætter 3NT i 7 % af fordelingerne; ♠5 giver 2,7 stik og 4 %. Forspringet til ♠5 er kun 0,10 stik. Kompendiet (s. 14) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1NT – 2♦ – 2♥ – 3NT North has shown five hearts, and South has chosen notrump. ♦3 gives the defence 2.8 tricks on average and defeats 3NT in 7% of the deals; ♠5 gives 2.7 tricks and 4%. The margin over ♠5 is only 0.10 tricks. The Compendium (p. 14) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S3-transfer",
+      "indeks": 0,
+      "seed": 590894564,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 2♦ – 2♥ – 3NT har Nord vist fem ♥, og Syd har valgt sans. ♦ giver i gennemsnit 2,8 stik til modspillet og sætter 3NT i 7 % af fordelingerne; ♠ giver 2,7 stik og 4 %. Forspringet til ♠ er kun 0,10 stik. Kompendiet (s. 14) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1NT – 2♦ – 2♥ – 3NT North has shown five hearts, and South has chosen notrump. ♦ gives the defence 2.8 tricks on average and defeats 3NT in 7% of the deals; ♠ gives 2.7 tricks and 4%. The margin over ♠ is only 0.10 tricks. The Compendium (p. 14) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S3-transfer",
+      "indeks": 0,
+      "seed": 590894564,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 2♦ – 2♥ – 3NT har Nord vist fem ♥, og Syd har valgt sans. ♦3 giver i gennemsnit 2,8 stik til modspillet og sætter 3NT i 7 % af fordelingerne; ♠5 giver 2,7 stik og 4 %. Forspringet til ♠5 er kun 0,10 stik. Kompendiet (s. 14) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1NT – 2♦ – 2♥ – 3NT North has shown five hearts, and South has chosen notrump. ♦3 gives the defence 2.8 tricks on average and defeats 3NT in 7% of the deals; ♠5 gives 2.7 tricks and 4%. The margin over ♠5 is only 0.10 tricks. The Compendium (p. 14) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S3-transfer",
+      "indeks": 0,
+      "seed": 590894564,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 2♦ – 2♥ – 3NT har Nord vist fem ♥, og Syd har valgt sans. ♦ giver i gennemsnit 2,8 stik til modspillet og sætter 3NT i 7 % af fordelingerne; ♠ giver 2,7 stik og 4 %. Forspringet til ♠ er kun 0,10 stik. Kompendiet (s. 14) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1NT – 2♦ – 2♥ – 3NT North has shown five hearts, and South has chosen notrump. ♦ gives the defence 2.8 tricks on average and defeats 3NT in 7% of the deals; ♠ gives 2.7 tricks and 4%. The margin over ♠ is only 0.10 tricks. The Compendium (p. 14) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S3-transfer",
+      "indeks": 0,
+      "seed": 590894564,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 2♦ – 2♥ – 3NT har Nord vist fem ♥, og Syd har valgt sans. ♦3 giver i gennemsnit 2,8 stik til modspillet og sætter 3NT i 7 % af fordelingerne; ♠5 giver 2,7 stik og 4 %. Forspringet til ♠5 er kun 0,10 stik. Kompendiet (s. 14) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1NT – 2♦ – 2♥ – 3NT North has shown five hearts, and South has chosen notrump. ♦3 gives the defence 2.8 tricks on average and defeats 3NT in 7% of the deals; ♠5 gives 2.7 tricks and 4%. The margin over ♠5 is only 0.10 tricks. The Compendium (p. 14) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S3-transfer",
+      "indeks": 8,
+      "seed": 3038389474,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 2♦ – 2♥ – 3NT har Nord vist fem ♥, og Syd har valgt sans. ♦, ♣, ♠ og ♥ er lige gode (under 0,1 stik fra den bedste): ♦ giver i gennemsnit 2,8 stik til modspillet og sætter 3NT i 10 % af fordelingerne, ♣ 2,8 stik og 7 %, ♠ 2,8 stik og 7 %, ♥ 2,8 stik og 8 %. Kompendiet (s. 14) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1NT – 2♦ – 2♥ – 3NT North has shown five hearts, and South has chosen notrump. ♦, ♣, ♠ and ♥ are equally good (within 0.1 tricks of the best): ♦ gives the defence 2.8 tricks on average and defeats 3NT in 10% of the deals, ♣ 2.8 tricks and 7%, ♠ 2.8 tricks and 7%, ♥ 2.8 tricks and 8%. The Compendium (p. 14) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S3-transfer",
+      "indeks": 8,
+      "seed": 3038389474,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 2♦ – 2♥ – 3NT har Nord vist fem ♥, og Syd har valgt sans. ♦4, ♣B, ♠3 og ♥8 er lige gode (under 0,1 stik fra den bedste): ♦4 giver i gennemsnit 2,8 stik til modspillet og sætter 3NT i 10 % af fordelingerne, ♣B 2,8 stik og 7 %, ♠3 2,8 stik og 7 %, ♥8 2,8 stik og 8 %. Med profilen Standard spilles ♦4 ud fra ♦10 9 7 4 (4.-højeste). Fra ♣B 10 6 mod sans afgøres udspillet af \"table feeling\": ♣B og ♣6 er begge rigtige. Kompendiet (s. 14) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1NT – 2♦ – 2♥ – 3NT North has shown five hearts, and South has chosen notrump. ♦4, ♣J, ♠3 and ♥8 are equally good (within 0.1 tricks of the best): ♦4 gives the defence 2.8 tricks on average and defeats 3NT in 10% of the deals, ♣J 2.8 tricks and 7%, ♠3 2.8 tricks and 7%, ♥8 2.8 tricks and 8%. With the Standard profile ♦4 is led from ♦10 9 7 4 (fourth highest). From ♣J 10 6 against notrump the lead is a matter of table feeling: ♣J and ♣6 are both right. The Compendium (p. 14) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S3-transfer",
+      "indeks": 8,
+      "seed": 3038389474,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 2♦ – 2♥ – 3NT har Nord vist fem ♥, og Syd har valgt sans. ♦, ♣, ♠ og ♥ er lige gode (under 0,1 stik fra den bedste): ♦ giver i gennemsnit 2,8 stik til modspillet og sætter 3NT i 10 % af fordelingerne, ♣ 2,8 stik og 7 %, ♠ 2,8 stik og 7 %, ♥ 2,8 stik og 8 %. Kompendiet (s. 14) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1NT – 2♦ – 2♥ – 3NT North has shown five hearts, and South has chosen notrump. ♦, ♣, ♠ and ♥ are equally good (within 0.1 tricks of the best): ♦ gives the defence 2.8 tricks on average and defeats 3NT in 10% of the deals, ♣ 2.8 tricks and 7%, ♠ 2.8 tricks and 7%, ♥ 2.8 tricks and 8%. The Compendium (p. 14) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S3-transfer",
+      "indeks": 8,
+      "seed": 3038389474,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 2♦ – 2♥ – 3NT har Nord vist fem ♥, og Syd har valgt sans. ♦4, ♣B, ♠3 og ♥8 er lige gode (under 0,1 stik fra den bedste): ♦4 giver i gennemsnit 2,8 stik til modspillet og sætter 3NT i 10 % af fordelingerne, ♣B 2,8 stik og 7 %, ♠3 2,8 stik og 7 %, ♥8 2,8 stik og 8 %. Med profilen Omvendt spilles ♦4 ud fra ♦10 9 7 4 (4.-højeste). Fra ♣B 10 6 mod sans afgøres udspillet af \"table feeling\": ♣B og ♣6 er begge rigtige. Kompendiet (s. 14) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1NT – 2♦ – 2♥ – 3NT North has shown five hearts, and South has chosen notrump. ♦4, ♣J, ♠3 and ♥8 are equally good (within 0.1 tricks of the best): ♦4 gives the defence 2.8 tricks on average and defeats 3NT in 10% of the deals, ♣J 2.8 tricks and 7%, ♠3 2.8 tricks and 7%, ♥8 2.8 tricks and 8%. With the Upside-down profile ♦4 is led from ♦10 9 7 4 (fourth highest). From ♣J 10 6 against notrump the lead is a matter of table feeling: ♣J and ♣6 are both right. The Compendium (p. 14) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S3-transfer",
+      "indeks": 8,
+      "seed": 3038389474,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 2♦ – 2♥ – 3NT har Nord vist fem ♥, og Syd har valgt sans. ♦, ♣ og ♠ er lige gode (under 0,1 stik fra den bedste): ♦ giver i gennemsnit 2,9 stik til modspillet og sætter 3NT i 10 % af fordelingerne, ♣ 2,8 stik og 7 %, ♠ 2,8 stik og 7 %. Kompendiet (s. 14) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1NT – 2♦ – 2♥ – 3NT North has shown five hearts, and South has chosen notrump. ♦, ♣ and ♠ are equally good (within 0.1 tricks of the best): ♦ gives the defence 2.9 tricks on average and defeats 3NT in 10% of the deals, ♣ 2.8 tricks and 7%, ♠ 2.8 tricks and 7%. The Compendium (p. 14) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S3-transfer",
+      "indeks": 8,
+      "seed": 3038389474,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 2♦ – 2♥ – 3NT har Nord vist fem ♥, og Syd har valgt sans. ♦9, ♣B og ♠3 er lige gode (under 0,1 stik fra den bedste): ♦9 giver i gennemsnit 2,9 stik til modspillet og sætter 3NT i 10 % af fordelingerne, ♣B 2,8 stik og 7 %, ♠3 2,8 stik og 7 %. Med profilen Kompendiet spilles ♦9 ud fra ♦10 9 7 4 (Kompendiets udspil). Fra ♣B 10 6 mod sans afgøres udspillet af \"table feeling\": ♣B og ♣6 er begge rigtige. Kompendiet (s. 14) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1NT – 2♦ – 2♥ – 3NT North has shown five hearts, and South has chosen notrump. ♦9, ♣J and ♠3 are equally good (within 0.1 tricks of the best): ♦9 gives the defence 2.9 tricks on average and defeats 3NT in 10% of the deals, ♣J 2.8 tricks and 7%, ♠3 2.8 tricks and 7%. With the Compendium profile ♦9 is led from ♦10 9 7 4 (the Compendium's leads). From ♣J 10 6 against notrump the lead is a matter of table feeling: ♣J and ♣6 are both right. The Compendium (p. 14) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S3-transfer",
+      "indeks": 43,
+      "seed": 1347375973,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 2♦ – 2♥ – 3NT har Nord vist fem ♥, og Syd har valgt sans. ♠ giver i gennemsnit 3,2 stik til modspillet og sætter 3NT i 6 % af fordelingerne; ♣ giver 2,6 stik og 2 %. Kompendiet (s. 14) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1NT – 2♦ – 2♥ – 3NT North has shown five hearts, and South has chosen notrump. ♠ gives the defence 3.2 tricks on average and defeats 3NT in 6% of the deals; ♣ gives 2.6 tricks and 2%. The Compendium (p. 14) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S3-transfer",
+      "indeks": 43,
+      "seed": 1347375973,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 2♦ – 2♥ – 3NT har Nord vist fem ♥, og Syd har valgt sans. ♠E giver i gennemsnit 3,2 stik til modspillet og sætter 3NT i 6 % af fordelingerne; ♣9 giver 2,6 stik og 2 %. Med profilen Standard afgøres udspillet fra ♠E K 5 3 mod sans af \"table feeling\" (top af sekvens): ♠E og ♠3 er begge rigtige. Kompendiet (s. 14) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1NT – 2♦ – 2♥ – 3NT North has shown five hearts, and South has chosen notrump. ♠A gives the defence 3.2 tricks on average and defeats 3NT in 6% of the deals; ♣9 gives 2.6 tricks and 2%. With the Standard profile the lead from ♠A K 5 3 against notrump is a matter of table feeling (top of sequence): ♠A and ♠3 are both right. The Compendium (p. 14) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S3-transfer",
+      "indeks": 43,
+      "seed": 1347375973,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 2♦ – 2♥ – 3NT har Nord vist fem ♥, og Syd har valgt sans. ♠ giver i gennemsnit 3,2 stik til modspillet og sætter 3NT i 6 % af fordelingerne; ♣ giver 2,6 stik og 2 %. Kompendiet (s. 14) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1NT – 2♦ – 2♥ – 3NT North has shown five hearts, and South has chosen notrump. ♠ gives the defence 3.2 tricks on average and defeats 3NT in 6% of the deals; ♣ gives 2.6 tricks and 2%. The Compendium (p. 14) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S3-transfer",
+      "indeks": 43,
+      "seed": 1347375973,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 2♦ – 2♥ – 3NT har Nord vist fem ♥, og Syd har valgt sans. ♠E giver i gennemsnit 3,2 stik til modspillet og sætter 3NT i 6 % af fordelingerne; ♣9 giver 2,6 stik og 2 %. Med profilen Omvendt afgøres udspillet fra ♠E K 5 3 mod sans af \"table feeling\" (top af sekvens): ♠E og ♠3 er begge rigtige. Kompendiet (s. 14) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1NT – 2♦ – 2♥ – 3NT North has shown five hearts, and South has chosen notrump. ♠A gives the defence 3.2 tricks on average and defeats 3NT in 6% of the deals; ♣9 gives 2.6 tricks and 2%. With the Upside-down profile the lead from ♠A K 5 3 against notrump is a matter of table feeling (top of sequence): ♠A and ♠3 are both right. The Compendium (p. 14) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S3-transfer",
+      "indeks": 43,
+      "seed": 1347375973,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1NT – 2♦ – 2♥ – 3NT har Nord vist fem ♥, og Syd har valgt sans. ♠ giver i gennemsnit 3,2 stik til modspillet og sætter 3NT i 6 % af fordelingerne; ♣ giver 2,6 stik og 2 %. Kompendiet (s. 14) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1NT – 2♦ – 2♥ – 3NT North has shown five hearts, and South has chosen notrump. ♠ gives the defence 3.2 tricks on average and defeats 3NT in 6% of the deals; ♣ gives 2.6 tricks and 2%. The Compendium (p. 14) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S3-transfer",
+      "indeks": 43,
+      "seed": 1347375973,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1NT – 2♦ – 2♥ – 3NT har Nord vist fem ♥, og Syd har valgt sans. ♠E giver i gennemsnit 3,2 stik til modspillet og sætter 3NT i 6 % af fordelingerne; ♣9 giver 2,6 stik og 2 %. Med profilen Kompendiet spilles ♠E ud fra ♠E K 5 3 (ALA mod sans). Kompendiet (s. 14) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1NT – 2♦ – 2♥ – 3NT North has shown five hearts, and South has chosen notrump. ♠A gives the defence 3.2 tricks on average and defeats 3NT in 6% of the deals; ♣9 gives 2.6 tricks and 2%. With the Compendium profile ♠A is led from ♠A K 5 3 (ALA against notrump). The Compendium (p. 14) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S4-kun-en-farve",
+      "indeks": 0,
+      "seed": 2252331041,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 2♥ – 4♥ er kun trumffarven meldt, og bordet er svagt: Nord har vist 6–9 hp med støtte. ♦ giver i gennemsnit 1,7 stik til modspillet og sætter 4♥ i 6 % af fordelingerne; ♠ giver 1,4 stik og 3 %. Kompendiet (s. 19) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♦.",
+        "en": "After 1♥ – 2♥ – 4♥ only the trump suit has been bid, and dummy is weak: North has shown 6–9 HCP with support. ♦ gives the defence 1.7 tricks on average and defeats 4♥ in 6% of the deals; ♠ gives 1.4 tricks and 3%. The Compendium (p. 19) recommends a lead from a singleton in a side suit after this auction, here ♦."
+      }
+    },
+    {
+      "situation": "S4-kun-en-farve",
+      "indeks": 0,
+      "seed": 2252331041,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 2♥ – 4♥ er kun trumffarven meldt, og bordet er svagt: Nord har vist 6–9 hp med støtte. ♦B giver i gennemsnit 1,7 stik til modspillet og sætter 4♥ i 6 % af fordelingerne; ♠D giver 1,4 stik og 3 %. Kompendiet (s. 19) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♦.",
+        "en": "After 1♥ – 2♥ – 4♥ only the trump suit has been bid, and dummy is weak: North has shown 6–9 HCP with support. ♦J gives the defence 1.7 tricks on average and defeats 4♥ in 6% of the deals; ♠Q gives 1.4 tricks and 3%. The Compendium (p. 19) recommends a lead from a singleton in a side suit after this auction, here ♦."
+      }
+    },
+    {
+      "situation": "S4-kun-en-farve",
+      "indeks": 0,
+      "seed": 2252331041,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 2♥ – 4♥ er kun trumffarven meldt, og bordet er svagt: Nord har vist 6–9 hp med støtte. ♦ giver i gennemsnit 1,7 stik til modspillet og sætter 4♥ i 6 % af fordelingerne; ♠ giver 1,4 stik og 3 %. Kompendiet (s. 19) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♦.",
+        "en": "After 1♥ – 2♥ – 4♥ only the trump suit has been bid, and dummy is weak: North has shown 6–9 HCP with support. ♦ gives the defence 1.7 tricks on average and defeats 4♥ in 6% of the deals; ♠ gives 1.4 tricks and 3%. The Compendium (p. 19) recommends a lead from a singleton in a side suit after this auction, here ♦."
+      }
+    },
+    {
+      "situation": "S4-kun-en-farve",
+      "indeks": 0,
+      "seed": 2252331041,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 2♥ – 4♥ er kun trumffarven meldt, og bordet er svagt: Nord har vist 6–9 hp med støtte. ♦B giver i gennemsnit 1,7 stik til modspillet og sætter 4♥ i 6 % af fordelingerne; ♠D giver 1,4 stik og 3 %. Kompendiet (s. 19) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♦.",
+        "en": "After 1♥ – 2♥ – 4♥ only the trump suit has been bid, and dummy is weak: North has shown 6–9 HCP with support. ♦J gives the defence 1.7 tricks on average and defeats 4♥ in 6% of the deals; ♠Q gives 1.4 tricks and 3%. The Compendium (p. 19) recommends a lead from a singleton in a side suit after this auction, here ♦."
+      }
+    },
+    {
+      "situation": "S4-kun-en-farve",
+      "indeks": 0,
+      "seed": 2252331041,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 2♥ – 4♥ er kun trumffarven meldt, og bordet er svagt: Nord har vist 6–9 hp med støtte. ♦ giver i gennemsnit 1,7 stik til modspillet og sætter 4♥ i 6 % af fordelingerne; ♠ giver 1,4 stik og 3 %. Kompendiet (s. 19) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♦.",
+        "en": "After 1♥ – 2♥ – 4♥ only the trump suit has been bid, and dummy is weak: North has shown 6–9 HCP with support. ♦ gives the defence 1.7 tricks on average and defeats 4♥ in 6% of the deals; ♠ gives 1.4 tricks and 3%. The Compendium (p. 19) recommends a lead from a singleton in a side suit after this auction, here ♦."
+      }
+    },
+    {
+      "situation": "S4-kun-en-farve",
+      "indeks": 0,
+      "seed": 2252331041,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 2♥ – 4♥ er kun trumffarven meldt, og bordet er svagt: Nord har vist 6–9 hp med støtte. ♦B giver i gennemsnit 1,7 stik til modspillet og sætter 4♥ i 6 % af fordelingerne; ♠D giver 1,4 stik og 3 %. Kompendiet (s. 19) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♦.",
+        "en": "After 1♥ – 2♥ – 4♥ only the trump suit has been bid, and dummy is weak: North has shown 6–9 HCP with support. ♦J gives the defence 1.7 tricks on average and defeats 4♥ in 6% of the deals; ♠Q gives 1.4 tricks and 3%. The Compendium (p. 19) recommends a lead from a singleton in a side suit after this auction, here ♦."
+      }
+    },
+    {
+      "situation": "S4-kun-en-farve",
+      "indeks": 6,
+      "seed": 3817061378,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 2♥ – 4♥ er kun trumffarven meldt, og bordet er svagt: Nord har vist 6–9 hp med støtte. ♥ giver i gennemsnit 2,6 stik til modspillet og sætter 4♥ i 15 % af fordelingerne; ♦ giver 2,5 stik og 12 %. Forspringet til ♦ er kun 0,10 stik. Kompendiet (s. 19) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1♥ – 2♥ – 4♥ only the trump suit has been bid, and dummy is weak: North has shown 6–9 HCP with support. ♥ gives the defence 2.6 tricks on average and defeats 4♥ in 15% of the deals; ♦ gives 2.5 tricks and 12%. The margin over ♦ is only 0.10 tricks. The Compendium (p. 19) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S4-kun-en-farve",
+      "indeks": 6,
+      "seed": 3817061378,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 2♥ – 4♥ er kun trumffarven meldt, og bordet er svagt: Nord har vist 6–9 hp med støtte. ♥3 giver i gennemsnit 2,6 stik til modspillet og sætter 4♥ i 15 % af fordelingerne; ♦8 giver 2,5 stik og 12 %. Forspringet til ♦8 er kun 0,10 stik. Kompendiet (s. 19) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1♥ – 2♥ – 4♥ only the trump suit has been bid, and dummy is weak: North has shown 6–9 HCP with support. ♥3 gives the defence 2.6 tricks on average and defeats 4♥ in 15% of the deals; ♦8 gives 2.5 tricks and 12%. The margin over ♦8 is only 0.10 tricks. The Compendium (p. 19) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S4-kun-en-farve",
+      "indeks": 6,
+      "seed": 3817061378,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 2♥ – 4♥ er kun trumffarven meldt, og bordet er svagt: Nord har vist 6–9 hp med støtte. ♥ giver i gennemsnit 2,6 stik til modspillet og sætter 4♥ i 15 % af fordelingerne; ♦ giver 2,5 stik og 12 %. Forspringet til ♦ er kun 0,10 stik. Kompendiet (s. 19) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1♥ – 2♥ – 4♥ only the trump suit has been bid, and dummy is weak: North has shown 6–9 HCP with support. ♥ gives the defence 2.6 tricks on average and defeats 4♥ in 15% of the deals; ♦ gives 2.5 tricks and 12%. The margin over ♦ is only 0.10 tricks. The Compendium (p. 19) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S4-kun-en-farve",
+      "indeks": 6,
+      "seed": 3817061378,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 2♥ – 4♥ er kun trumffarven meldt, og bordet er svagt: Nord har vist 6–9 hp med støtte. ♥3 giver i gennemsnit 2,6 stik til modspillet og sætter 4♥ i 15 % af fordelingerne; ♦8 giver 2,5 stik og 12 %. Forspringet til ♦8 er kun 0,10 stik. Kompendiet (s. 19) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1♥ – 2♥ – 4♥ only the trump suit has been bid, and dummy is weak: North has shown 6–9 HCP with support. ♥3 gives the defence 2.6 tricks on average and defeats 4♥ in 15% of the deals; ♦8 gives 2.5 tricks and 12%. The margin over ♦8 is only 0.10 tricks. The Compendium (p. 19) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S4-kun-en-farve",
+      "indeks": 6,
+      "seed": 3817061378,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 2♥ – 4♥ er kun trumffarven meldt, og bordet er svagt: Nord har vist 6–9 hp med støtte. ♥ giver i gennemsnit 2,6 stik til modspillet og sætter 4♥ i 15 % af fordelingerne; ♦ giver 2,5 stik og 12 %. Forspringet til ♦ er kun 0,10 stik. Kompendiet (s. 19) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1♥ – 2♥ – 4♥ only the trump suit has been bid, and dummy is weak: North has shown 6–9 HCP with support. ♥ gives the defence 2.6 tricks on average and defeats 4♥ in 15% of the deals; ♦ gives 2.5 tricks and 12%. The margin over ♦ is only 0.10 tricks. The Compendium (p. 19) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S4-kun-en-farve",
+      "indeks": 6,
+      "seed": 3817061378,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 2♥ – 4♥ er kun trumffarven meldt, og bordet er svagt: Nord har vist 6–9 hp med støtte. ♥3 giver i gennemsnit 2,6 stik til modspillet og sætter 4♥ i 15 % af fordelingerne; ♦8 giver 2,5 stik og 12 %. Forspringet til ♦8 er kun 0,10 stik. Kompendiet (s. 19) anbefaler udspil i ♠, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1♥ – 2♥ – 4♥ only the trump suit has been bid, and dummy is weak: North has shown 6–9 HCP with support. ♥3 gives the defence 2.6 tricks on average and defeats 4♥ in 15% of the deals; ♦8 gives 2.5 tricks and 12%. The margin over ♦8 is only 0.10 tricks. The Compendium (p. 19) recommends a lead in ♠, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S4-kun-en-farve",
+      "indeks": 32,
+      "seed": 2498818893,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 2♥ – 4♥ er kun trumffarven meldt, og bordet er svagt: Nord har vist 6–9 hp med støtte. ♠ giver i gennemsnit 2,3 stik til modspillet og sætter 4♥ i 6 % af fordelingerne; ♣ giver 1,9 stik og 6 %. Kompendiet (s. 19) anbefaler udspil i en sidefarve uden honnør efter dette forløb, her ♣, men med denne hånd giver ♠ flest stik.",
+        "en": "After 1♥ – 2♥ – 4♥ only the trump suit has been bid, and dummy is weak: North has shown 6–9 HCP with support. ♠ gives the defence 2.3 tricks on average and defeats 4♥ in 6% of the deals; ♣ gives 1.9 tricks and 6%. The Compendium (p. 19) recommends a lead in a side suit without an honour after this auction, here ♣, but with this hand ♠ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 19) anbefaler udspil i en sidefarve uden honnør efter dette forløb, her ♣, men med denne hånd giver ♠ flest stik.",
+        "en": "The Compendium (p. 19) recommends a lead in a side suit without an honour after this auction, here ♣, but with this hand ♠ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S4-kun-en-farve",
+      "indeks": 32,
+      "seed": 2498818893,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 2♥ – 4♥ er kun trumffarven meldt, og bordet er svagt: Nord har vist 6–9 hp med støtte. ♠E giver i gennemsnit 2,3 stik til modspillet og sætter 4♥ i 6 % af fordelingerne; ♣4 giver 1,9 stik og 6 %. Kompendiet (s. 19) anbefaler udspil i en sidefarve uden honnør efter dette forløb, her ♣, men med denne hånd giver ♠ flest stik.",
+        "en": "After 1♥ – 2♥ – 4♥ only the trump suit has been bid, and dummy is weak: North has shown 6–9 HCP with support. ♠A gives the defence 2.3 tricks on average and defeats 4♥ in 6% of the deals; ♣4 gives 1.9 tricks and 6%. The Compendium (p. 19) recommends a lead in a side suit without an honour after this auction, here ♣, but with this hand ♠ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 19) anbefaler udspil i en sidefarve uden honnør efter dette forløb, her ♣, men med denne hånd giver ♠ flest stik.",
+        "en": "The Compendium (p. 19) recommends a lead in a side suit without an honour after this auction, here ♣, but with this hand ♠ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S4-kun-en-farve",
+      "indeks": 32,
+      "seed": 2498818893,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 2♥ – 4♥ er kun trumffarven meldt, og bordet er svagt: Nord har vist 6–9 hp med støtte. ♠ giver i gennemsnit 2,3 stik til modspillet og sætter 4♥ i 6 % af fordelingerne; ♣ giver 1,9 stik og 6 %. Kompendiet (s. 19) anbefaler udspil i en sidefarve uden honnør efter dette forløb, her ♣, men med denne hånd giver ♠ flest stik.",
+        "en": "After 1♥ – 2♥ – 4♥ only the trump suit has been bid, and dummy is weak: North has shown 6–9 HCP with support. ♠ gives the defence 2.3 tricks on average and defeats 4♥ in 6% of the deals; ♣ gives 1.9 tricks and 6%. The Compendium (p. 19) recommends a lead in a side suit without an honour after this auction, here ♣, but with this hand ♠ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 19) anbefaler udspil i en sidefarve uden honnør efter dette forløb, her ♣, men med denne hånd giver ♠ flest stik.",
+        "en": "The Compendium (p. 19) recommends a lead in a side suit without an honour after this auction, here ♣, but with this hand ♠ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S4-kun-en-farve",
+      "indeks": 32,
+      "seed": 2498818893,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 2♥ – 4♥ er kun trumffarven meldt, og bordet er svagt: Nord har vist 6–9 hp med støtte. ♠E giver i gennemsnit 2,3 stik til modspillet og sætter 4♥ i 6 % af fordelingerne; ♣5 giver 1,9 stik og 6 %. Kompendiet (s. 19) anbefaler udspil i en sidefarve uden honnør efter dette forløb, her ♣, men med denne hånd giver ♠ flest stik.",
+        "en": "After 1♥ – 2♥ – 4♥ only the trump suit has been bid, and dummy is weak: North has shown 6–9 HCP with support. ♠A gives the defence 2.3 tricks on average and defeats 4♥ in 6% of the deals; ♣5 gives 1.9 tricks and 6%. The Compendium (p. 19) recommends a lead in a side suit without an honour after this auction, here ♣, but with this hand ♠ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 19) anbefaler udspil i en sidefarve uden honnør efter dette forløb, her ♣, men med denne hånd giver ♠ flest stik.",
+        "en": "The Compendium (p. 19) recommends a lead in a side suit without an honour after this auction, here ♣, but with this hand ♠ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S4-kun-en-farve",
+      "indeks": 32,
+      "seed": 2498818893,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 2♥ – 4♥ er kun trumffarven meldt, og bordet er svagt: Nord har vist 6–9 hp med støtte. ♠ giver i gennemsnit 2,3 stik til modspillet og sætter 4♥ i 6 % af fordelingerne; ♣ giver 1,9 stik og 6 %. Kompendiet (s. 19) anbefaler udspil i en sidefarve uden honnør efter dette forløb, her ♣, men med denne hånd giver ♠ flest stik.",
+        "en": "After 1♥ – 2♥ – 4♥ only the trump suit has been bid, and dummy is weak: North has shown 6–9 HCP with support. ♠ gives the defence 2.3 tricks on average and defeats 4♥ in 6% of the deals; ♣ gives 1.9 tricks and 6%. The Compendium (p. 19) recommends a lead in a side suit without an honour after this auction, here ♣, but with this hand ♠ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 19) anbefaler udspil i en sidefarve uden honnør efter dette forløb, her ♣, men med denne hånd giver ♠ flest stik.",
+        "en": "The Compendium (p. 19) recommends a lead in a side suit without an honour after this auction, here ♣, but with this hand ♠ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S4-kun-en-farve",
+      "indeks": 32,
+      "seed": 2498818893,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 2♥ – 4♥ er kun trumffarven meldt, og bordet er svagt: Nord har vist 6–9 hp med støtte. ♠E giver i gennemsnit 2,3 stik til modspillet og sætter 4♥ i 6 % af fordelingerne; ♣5 giver 1,9 stik og 6 %. Kompendiet (s. 19) anbefaler udspil i en sidefarve uden honnør efter dette forløb, her ♣, men med denne hånd giver ♠ flest stik.",
+        "en": "After 1♥ – 2♥ – 4♥ only the trump suit has been bid, and dummy is weak: North has shown 6–9 HCP with support. ♠A gives the defence 2.3 tricks on average and defeats 4♥ in 6% of the deals; ♣5 gives 1.9 tricks and 6%. The Compendium (p. 19) recommends a lead in a side suit without an honour after this auction, here ♣, but with this hand ♠ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 19) anbefaler udspil i en sidefarve uden honnør efter dette forløb, her ♣, men med denne hånd giver ♠ flest stik.",
+        "en": "The Compendium (p. 19) recommends a lead in a side suit without an honour after this auction, here ♣, but with this hand ♠ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S5-sidefarve",
+      "indeks": 0,
+      "seed": 3407728602,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♠ – 2♥ – 2♠ – 4♠ har bordet vist en femfarve i ♥ og støtte i ♠. ♦ giver i gennemsnit 1,8 stik til modspillet og sætter 4♠ i 23 % af fordelingerne; ♥ giver 1,7 stik og 17 %. Forspringet til ♥ er kun 0,13 stik. Kompendiet (s. 20) anbefaler udspil i ♦ eller ♣ efter dette forløb.",
+        "en": "After 1♠ – 2♥ – 2♠ – 4♠ dummy has shown five hearts and spade support. ♦ gives the defence 1.8 tricks on average and defeats 4♠ in 23% of the deals; ♥ gives 1.7 tricks and 17%. The margin over ♥ is only 0.13 tricks. The Compendium (p. 20) recommends a lead in ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S5-sidefarve",
+      "indeks": 0,
+      "seed": 3407728602,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♠ – 2♥ – 2♠ – 4♠ har bordet vist en femfarve i ♥ og støtte i ♠. ♦7 giver i gennemsnit 1,8 stik til modspillet og sætter 4♠ i 23 % af fordelingerne; ♥5 giver 1,7 stik og 17 %. Forspringet til ♥5 er kun 0,13 stik. Med profilen Standard spilles ♦7 ud fra ♦B 9 8 7 6 (4.-højeste). Kompendiet (s. 20) anbefaler udspil i ♦ eller ♣ efter dette forløb.",
+        "en": "After 1♠ – 2♥ – 2♠ – 4♠ dummy has shown five hearts and spade support. ♦7 gives the defence 1.8 tricks on average and defeats 4♠ in 23% of the deals; ♥5 gives 1.7 tricks and 17%. The margin over ♥5 is only 0.13 tricks. With the Standard profile ♦7 is led from ♦J 9 8 7 6 (fourth highest). The Compendium (p. 20) recommends a lead in ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S5-sidefarve",
+      "indeks": 0,
+      "seed": 3407728602,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♠ – 2♥ – 2♠ – 4♠ har bordet vist en femfarve i ♥ og støtte i ♠. ♦ giver i gennemsnit 1,8 stik til modspillet og sætter 4♠ i 23 % af fordelingerne; ♥ giver 1,7 stik og 17 %. Forspringet til ♥ er kun 0,13 stik. Kompendiet (s. 20) anbefaler udspil i ♦ eller ♣ efter dette forløb.",
+        "en": "After 1♠ – 2♥ – 2♠ – 4♠ dummy has shown five hearts and spade support. ♦ gives the defence 1.8 tricks on average and defeats 4♠ in 23% of the deals; ♥ gives 1.7 tricks and 17%. The margin over ♥ is only 0.13 tricks. The Compendium (p. 20) recommends a lead in ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S5-sidefarve",
+      "indeks": 0,
+      "seed": 3407728602,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♠ – 2♥ – 2♠ – 4♠ har bordet vist en femfarve i ♥ og støtte i ♠. ♦6 giver i gennemsnit 1,8 stik til modspillet og sætter 4♠ i 23 % af fordelingerne; ♥2 giver 1,7 stik og 17 %. Forspringet til ♥2 er kun 0,13 stik. Med profilen Omvendt spilles ♦6 ud fra ♦B 9 8 7 6 (3. og 5. højeste). Kompendiet (s. 20) anbefaler udspil i ♦ eller ♣ efter dette forløb.",
+        "en": "After 1♠ – 2♥ – 2♠ – 4♠ dummy has shown five hearts and spade support. ♦6 gives the defence 1.8 tricks on average and defeats 4♠ in 23% of the deals; ♥2 gives 1.7 tricks and 17%. The margin over ♥2 is only 0.13 tricks. With the Upside-down profile ♦6 is led from ♦J 9 8 7 6 (third and fifth highest). The Compendium (p. 20) recommends a lead in ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S5-sidefarve",
+      "indeks": 0,
+      "seed": 3407728602,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♠ – 2♥ – 2♠ – 4♠ har bordet vist en femfarve i ♥ og støtte i ♠. ♦ giver i gennemsnit 1,8 stik til modspillet og sætter 4♠ i 23 % af fordelingerne; ♥ giver 1,7 stik og 17 %. Forspringet til ♥ er kun 0,13 stik. Kompendiet (s. 20) anbefaler udspil i ♦ eller ♣ efter dette forløb.",
+        "en": "After 1♠ – 2♥ – 2♠ – 4♠ dummy has shown five hearts and spade support. ♦ gives the defence 1.8 tricks on average and defeats 4♠ in 23% of the deals; ♥ gives 1.7 tricks and 17%. The margin over ♥ is only 0.13 tricks. The Compendium (p. 20) recommends a lead in ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S5-sidefarve",
+      "indeks": 0,
+      "seed": 3407728602,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♠ – 2♥ – 2♠ – 4♠ har bordet vist en femfarve i ♥ og støtte i ♠. ♦6 giver i gennemsnit 1,8 stik til modspillet og sætter 4♠ i 23 % af fordelingerne; ♥2 giver 1,7 stik og 17 %. Forspringet til ♥2 er kun 0,13 stik. Med profilen Kompendiet spilles ♦6 ud fra ♦B 9 8 7 6 (3. og 5. højeste). Kompendiet (s. 20) anbefaler udspil i ♦ eller ♣ efter dette forløb.",
+        "en": "After 1♠ – 2♥ – 2♠ – 4♠ dummy has shown five hearts and spade support. ♦6 gives the defence 1.8 tricks on average and defeats 4♠ in 23% of the deals; ♥2 gives 1.7 tricks and 17%. The margin over ♥2 is only 0.13 tricks. With the Compendium profile ♦6 is led from ♦J 9 8 7 6 (third and fifth highest). The Compendium (p. 20) recommends a lead in ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S5-sidefarve",
+      "indeks": 9,
+      "seed": 2783398064,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♠ – 2♥ – 2♠ – 4♠ har bordet vist en femfarve i ♥ og støtte i ♠. ♥ giver i gennemsnit 3,4 stik til modspillet og sætter 4♠ i 47 % af fordelingerne; ♠ giver 3,2 stik og 46 %. Forspringet til ♠ er kun 0,17 stik. Kompendiet (s. 20) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♥.",
+        "en": "After 1♠ – 2♥ – 2♠ – 4♠ dummy has shown five hearts and spade support. ♥ gives the defence 3.4 tricks on average and defeats 4♠ in 47% of the deals; ♠ gives 3.2 tricks and 46%. The margin over ♠ is only 0.17 tricks. The Compendium (p. 20) recommends a lead from a singleton in a side suit after this auction, here ♥."
+      }
+    },
+    {
+      "situation": "S5-sidefarve",
+      "indeks": 9,
+      "seed": 2783398064,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♠ – 2♥ – 2♠ – 4♠ har bordet vist en femfarve i ♥ og støtte i ♠. ♥2 giver i gennemsnit 3,4 stik til modspillet og sætter 4♠ i 47 % af fordelingerne; ♠2 giver 3,2 stik og 46 %. Forspringet til ♠2 er kun 0,17 stik. Kompendiet (s. 20) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♥.",
+        "en": "After 1♠ – 2♥ – 2♠ – 4♠ dummy has shown five hearts and spade support. ♥2 gives the defence 3.4 tricks on average and defeats 4♠ in 47% of the deals; ♠2 gives 3.2 tricks and 46%. The margin over ♠2 is only 0.17 tricks. The Compendium (p. 20) recommends a lead from a singleton in a side suit after this auction, here ♥."
+      }
+    },
+    {
+      "situation": "S5-sidefarve",
+      "indeks": 9,
+      "seed": 2783398064,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♠ – 2♥ – 2♠ – 4♠ har bordet vist en femfarve i ♥ og støtte i ♠. ♥ giver i gennemsnit 3,4 stik til modspillet og sætter 4♠ i 47 % af fordelingerne; ♠ giver 3,2 stik og 46 %. Forspringet til ♠ er kun 0,17 stik. Kompendiet (s. 20) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♥.",
+        "en": "After 1♠ – 2♥ – 2♠ – 4♠ dummy has shown five hearts and spade support. ♥ gives the defence 3.4 tricks on average and defeats 4♠ in 47% of the deals; ♠ gives 3.2 tricks and 46%. The margin over ♠ is only 0.17 tricks. The Compendium (p. 20) recommends a lead from a singleton in a side suit after this auction, here ♥."
+      }
+    },
+    {
+      "situation": "S5-sidefarve",
+      "indeks": 9,
+      "seed": 2783398064,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♠ – 2♥ – 2♠ – 4♠ har bordet vist en femfarve i ♥ og støtte i ♠. ♥2 giver i gennemsnit 3,4 stik til modspillet og sætter 4♠ i 47 % af fordelingerne; ♠4 giver 3,2 stik og 46 %. Forspringet til ♠4 er kun 0,17 stik. Kompendiet (s. 20) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♥.",
+        "en": "After 1♠ – 2♥ – 2♠ – 4♠ dummy has shown five hearts and spade support. ♥2 gives the defence 3.4 tricks on average and defeats 4♠ in 47% of the deals; ♠4 gives 3.2 tricks and 46%. The margin over ♠4 is only 0.17 tricks. The Compendium (p. 20) recommends a lead from a singleton in a side suit after this auction, here ♥."
+      }
+    },
+    {
+      "situation": "S5-sidefarve",
+      "indeks": 9,
+      "seed": 2783398064,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♠ – 2♥ – 2♠ – 4♠ har bordet vist en femfarve i ♥ og støtte i ♠. ♥ giver i gennemsnit 3,4 stik til modspillet og sætter 4♠ i 47 % af fordelingerne; ♠ giver 3,2 stik og 46 %. Forspringet til ♠ er kun 0,17 stik. Kompendiet (s. 20) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♥.",
+        "en": "After 1♠ – 2♥ – 2♠ – 4♠ dummy has shown five hearts and spade support. ♥ gives the defence 3.4 tricks on average and defeats 4♠ in 47% of the deals; ♠ gives 3.2 tricks and 46%. The margin over ♠ is only 0.17 tricks. The Compendium (p. 20) recommends a lead from a singleton in a side suit after this auction, here ♥."
+      }
+    },
+    {
+      "situation": "S5-sidefarve",
+      "indeks": 9,
+      "seed": 2783398064,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♠ – 2♥ – 2♠ – 4♠ har bordet vist en femfarve i ♥ og støtte i ♠. ♥2 giver i gennemsnit 3,4 stik til modspillet og sætter 4♠ i 47 % af fordelingerne; ♠4 giver 3,2 stik og 46 %. Forspringet til ♠4 er kun 0,17 stik. Kompendiet (s. 20) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♥.",
+        "en": "After 1♠ – 2♥ – 2♠ – 4♠ dummy has shown five hearts and spade support. ♥2 gives the defence 3.4 tricks on average and defeats 4♠ in 47% of the deals; ♠4 gives 3.2 tricks and 46%. The margin over ♠4 is only 0.17 tricks. The Compendium (p. 20) recommends a lead from a singleton in a side suit after this auction, here ♥."
+      }
+    },
+    {
+      "situation": "S5-sidefarve",
+      "indeks": 130,
+      "seed": 2753892861,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♠ – 2♥ – 2♠ – 4♠ har bordet vist en femfarve i ♥ og støtte i ♠. ♦ giver i gennemsnit 1,5 stik til modspillet og sætter 4♠ i 1 % af fordelingerne; ♥ giver 1,3 stik og 1 %. Kompendiet (s. 20) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♥, men med denne hånd giver ♦ flest stik.",
+        "en": "After 1♠ – 2♥ – 2♠ – 4♠ dummy has shown five hearts and spade support. ♦ gives the defence 1.5 tricks on average and defeats 4♠ in 1% of the deals; ♥ gives 1.3 tricks and 1%. The Compendium (p. 20) recommends a lead from a singleton in a side suit after this auction, here ♥, but with this hand ♦ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 20) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♥, men med denne hånd giver ♦ flest stik.",
+        "en": "The Compendium (p. 20) recommends a lead from a singleton in a side suit after this auction, here ♥, but with this hand ♦ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S5-sidefarve",
+      "indeks": 130,
+      "seed": 2753892861,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♠ – 2♥ – 2♠ – 4♠ har bordet vist en femfarve i ♥ og støtte i ♠. ♦K giver i gennemsnit 1,5 stik til modspillet og sætter 4♠ i 1 % af fordelingerne; ♥10 giver 1,3 stik og 1 %. Kompendiet (s. 20) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♥, men med denne hånd giver ♦ flest stik.",
+        "en": "After 1♠ – 2♥ – 2♠ – 4♠ dummy has shown five hearts and spade support. ♦K gives the defence 1.5 tricks on average and defeats 4♠ in 1% of the deals; ♥10 gives 1.3 tricks and 1%. The Compendium (p. 20) recommends a lead from a singleton in a side suit after this auction, here ♥, but with this hand ♦ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 20) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♥, men med denne hånd giver ♦ flest stik.",
+        "en": "The Compendium (p. 20) recommends a lead from a singleton in a side suit after this auction, here ♥, but with this hand ♦ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S5-sidefarve",
+      "indeks": 130,
+      "seed": 2753892861,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♠ – 2♥ – 2♠ – 4♠ har bordet vist en femfarve i ♥ og støtte i ♠. ♦ giver i gennemsnit 1,5 stik til modspillet og sætter 4♠ i 1 % af fordelingerne; ♥ giver 1,3 stik og 1 %. Kompendiet (s. 20) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♥, men med denne hånd giver ♦ flest stik.",
+        "en": "After 1♠ – 2♥ – 2♠ – 4♠ dummy has shown five hearts and spade support. ♦ gives the defence 1.5 tricks on average and defeats 4♠ in 1% of the deals; ♥ gives 1.3 tricks and 1%. The Compendium (p. 20) recommends a lead from a singleton in a side suit after this auction, here ♥, but with this hand ♦ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 20) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♥, men med denne hånd giver ♦ flest stik.",
+        "en": "The Compendium (p. 20) recommends a lead from a singleton in a side suit after this auction, here ♥, but with this hand ♦ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S5-sidefarve",
+      "indeks": 130,
+      "seed": 2753892861,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♠ – 2♥ – 2♠ – 4♠ har bordet vist en femfarve i ♥ og støtte i ♠. ♦K giver i gennemsnit 1,5 stik til modspillet og sætter 4♠ i 1 % af fordelingerne; ♥10 giver 1,3 stik og 1 %. Kompendiet (s. 20) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♥, men med denne hånd giver ♦ flest stik.",
+        "en": "After 1♠ – 2♥ – 2♠ – 4♠ dummy has shown five hearts and spade support. ♦K gives the defence 1.5 tricks on average and defeats 4♠ in 1% of the deals; ♥10 gives 1.3 tricks and 1%. The Compendium (p. 20) recommends a lead from a singleton in a side suit after this auction, here ♥, but with this hand ♦ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 20) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♥, men med denne hånd giver ♦ flest stik.",
+        "en": "The Compendium (p. 20) recommends a lead from a singleton in a side suit after this auction, here ♥, but with this hand ♦ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S5-sidefarve",
+      "indeks": 130,
+      "seed": 2753892861,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♠ – 2♥ – 2♠ – 4♠ har bordet vist en femfarve i ♥ og støtte i ♠. ♦ giver i gennemsnit 1,5 stik til modspillet og sætter 4♠ i 1 % af fordelingerne; ♥ giver 1,3 stik og 1 %. Kompendiet (s. 20) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♥, men med denne hånd giver ♦ flest stik.",
+        "en": "After 1♠ – 2♥ – 2♠ – 4♠ dummy has shown five hearts and spade support. ♦ gives the defence 1.5 tricks on average and defeats 4♠ in 1% of the deals; ♥ gives 1.3 tricks and 1%. The Compendium (p. 20) recommends a lead from a singleton in a side suit after this auction, here ♥, but with this hand ♦ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 20) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♥, men med denne hånd giver ♦ flest stik.",
+        "en": "The Compendium (p. 20) recommends a lead from a singleton in a side suit after this auction, here ♥, but with this hand ♦ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S5-sidefarve",
+      "indeks": 130,
+      "seed": 2753892861,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♠ – 2♥ – 2♠ – 4♠ har bordet vist en femfarve i ♥ og støtte i ♠. ♦K giver i gennemsnit 1,5 stik til modspillet og sætter 4♠ i 1 % af fordelingerne; ♥10 giver 1,3 stik og 1 %. Kompendiet (s. 20) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♥, men med denne hånd giver ♦ flest stik.",
+        "en": "After 1♠ – 2♥ – 2♠ – 4♠ dummy has shown five hearts and spade support. ♦K gives the defence 1.5 tricks on average and defeats 4♠ in 1% of the deals; ♥10 gives 1.3 tricks and 1%. The Compendium (p. 20) recommends a lead from a singleton in a side suit after this auction, here ♥, but with this hand ♦ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 20) anbefaler udspil fra en singleton i en sidefarve efter dette forløb, her ♥, men med denne hånd giver ♦ flest stik.",
+        "en": "The Compendium (p. 20) recommends a lead from a singleton in a side suit after this auction, here ♥, but with this hand ♦ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S6-trumf",
+      "indeks": 0,
+      "seed": 3897176676,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 1♠ – 2♣ – pas har Syd vist ♥ og ♣, og Nord foretrækker ♣ og er kort i ♥. ♠ og ♣ er lige gode (under 0,1 stik fra den bedste): ♠ giver i gennemsnit 3,0 stik til modspillet og sætter 2♣ i 2 % af fordelingerne, ♣ 2,9 stik og 3 %. Kompendiet (s. 4) anbefaler trumfudspil (♣) efter dette forløb.",
+        "en": "After 1♥ – 1♠ – 2♣ – pass South has shown hearts and clubs, and North prefers clubs and is short in hearts. ♠ and ♣ are equally good (within 0.1 tricks of the best): ♠ gives the defence 3.0 tricks on average and defeats 2♣ in 2% of the deals, ♣ 2.9 tricks and 3%. The Compendium (p. 4) recommends a trump lead (♣) after this auction."
+      }
+    },
+    {
+      "situation": "S6-trumf",
+      "indeks": 0,
+      "seed": 3897176676,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 1♠ – 2♣ – pas har Syd vist ♥ og ♣, og Nord foretrækker ♣ og er kort i ♥. ♠10 og ♣6 er lige gode (under 0,1 stik fra den bedste): ♠10 giver i gennemsnit 3,0 stik til modspillet og sætter 2♣ i 2 % af fordelingerne, ♣6 2,9 stik og 3 %. Med profilen Standard spilles ♠10 ud fra ♠10 6 5 (4.-højeste). Kompendiet (s. 4) anbefaler trumfudspil (♣) efter dette forløb.",
+        "en": "After 1♥ – 1♠ – 2♣ – pass South has shown hearts and clubs, and North prefers clubs and is short in hearts. ♠10 and ♣6 are equally good (within 0.1 tricks of the best): ♠10 gives the defence 3.0 tricks on average and defeats 2♣ in 2% of the deals, ♣6 2.9 tricks and 3%. With the Standard profile ♠10 is led from ♠10 6 5 (fourth highest). The Compendium (p. 4) recommends a trump lead (♣) after this auction."
+      }
+    },
+    {
+      "situation": "S6-trumf",
+      "indeks": 0,
+      "seed": 3897176676,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 1♠ – 2♣ – pas har Syd vist ♥ og ♣, og Nord foretrækker ♣ og er kort i ♥. ♠ og ♣ er lige gode (under 0,1 stik fra den bedste): ♠ giver i gennemsnit 3,0 stik til modspillet og sætter 2♣ i 2 % af fordelingerne, ♣ 2,9 stik og 3 %. Kompendiet (s. 4) anbefaler trumfudspil (♣) efter dette forløb.",
+        "en": "After 1♥ – 1♠ – 2♣ – pass South has shown hearts and clubs, and North prefers clubs and is short in hearts. ♠ and ♣ are equally good (within 0.1 tricks of the best): ♠ gives the defence 3.0 tricks on average and defeats 2♣ in 2% of the deals, ♣ 2.9 tricks and 3%. The Compendium (p. 4) recommends a trump lead (♣) after this auction."
+      }
+    },
+    {
+      "situation": "S6-trumf",
+      "indeks": 0,
+      "seed": 3897176676,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 1♠ – 2♣ – pas har Syd vist ♥ og ♣, og Nord foretrækker ♣ og er kort i ♥. ♠5 og ♣6 er lige gode (under 0,1 stik fra den bedste): ♠5 giver i gennemsnit 3,0 stik til modspillet og sætter 2♣ i 2 % af fordelingerne, ♣6 2,9 stik og 3 %. Med profilen Omvendt spilles ♠5 ud fra ♠10 6 5 (3. og 5. højeste). Kompendiet (s. 4) anbefaler trumfudspil (♣) efter dette forløb.",
+        "en": "After 1♥ – 1♠ – 2♣ – pass South has shown hearts and clubs, and North prefers clubs and is short in hearts. ♠5 and ♣6 are equally good (within 0.1 tricks of the best): ♠5 gives the defence 3.0 tricks on average and defeats 2♣ in 2% of the deals, ♣6 2.9 tricks and 3%. With the Upside-down profile ♠5 is led from ♠10 6 5 (third and fifth highest). The Compendium (p. 4) recommends a trump lead (♣) after this auction."
+      }
+    },
+    {
+      "situation": "S6-trumf",
+      "indeks": 0,
+      "seed": 3897176676,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 1♠ – 2♣ – pas har Syd vist ♥ og ♣, og Nord foretrækker ♣ og er kort i ♥. ♠ og ♣ er lige gode (under 0,1 stik fra den bedste): ♠ giver i gennemsnit 3,0 stik til modspillet og sætter 2♣ i 2 % af fordelingerne, ♣ 2,9 stik og 3 %. Kompendiet (s. 4) anbefaler trumfudspil (♣) efter dette forløb.",
+        "en": "After 1♥ – 1♠ – 2♣ – pass South has shown hearts and clubs, and North prefers clubs and is short in hearts. ♠ and ♣ are equally good (within 0.1 tricks of the best): ♠ gives the defence 3.0 tricks on average and defeats 2♣ in 2% of the deals, ♣ 2.9 tricks and 3%. The Compendium (p. 4) recommends a trump lead (♣) after this auction."
+      }
+    },
+    {
+      "situation": "S6-trumf",
+      "indeks": 0,
+      "seed": 3897176676,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 1♠ – 2♣ – pas har Syd vist ♥ og ♣, og Nord foretrækker ♣ og er kort i ♥. ♠5 og ♣6 er lige gode (under 0,1 stik fra den bedste): ♠5 giver i gennemsnit 3,0 stik til modspillet og sætter 2♣ i 2 % af fordelingerne, ♣6 2,9 stik og 3 %. Med profilen Kompendiet spilles ♠5 ud fra ♠10 6 5 (3. og 5. højeste). Kompendiet (s. 4) anbefaler trumfudspil (♣) efter dette forløb.",
+        "en": "After 1♥ – 1♠ – 2♣ – pass South has shown hearts and clubs, and North prefers clubs and is short in hearts. ♠5 and ♣6 are equally good (within 0.1 tricks of the best): ♠5 gives the defence 3.0 tricks on average and defeats 2♣ in 2% of the deals, ♣6 2.9 tricks and 3%. With the Compendium profile ♠5 is led from ♠10 6 5 (third and fifth highest). The Compendium (p. 4) recommends a trump lead (♣) after this auction."
+      }
+    },
+    {
+      "situation": "S6-trumf",
+      "indeks": 17,
+      "seed": 291413044,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 1♠ – 2♣ – pas har Syd vist ♥ og ♣, og Nord foretrækker ♣ og er kort i ♥. ♦ giver i gennemsnit 2,3 stik til modspillet og sætter 2♣ i 0 % af fordelingerne; ♠ giver 2,1 stik og 0 %. Forspringet til ♠ er kun 0,17 stik. Kompendiets råd efter dette forløb (s. 4) peger ikke på en farve, Vest har.",
+        "en": "After 1♥ – 1♠ – 2♣ – pass South has shown hearts and clubs, and North prefers clubs and is short in hearts. ♦ gives the defence 2.3 tricks on average and defeats 2♣ in 0% of the deals; ♠ gives 2.1 tricks and 0%. The margin over ♠ is only 0.17 tricks. The Compendium's advice after this auction (p. 4) points to no suit West holds."
+      }
+    },
+    {
+      "situation": "S6-trumf",
+      "indeks": 17,
+      "seed": 291413044,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 1♠ – 2♣ – pas har Syd vist ♥ og ♣, og Nord foretrækker ♣ og er kort i ♥. ♦3 giver i gennemsnit 2,3 stik til modspillet og sætter 2♣ i 0 % af fordelingerne; ♠5 giver 2,1 stik og 0 %. Forspringet til ♠5 er kun 0,17 stik. Med profilen Standard spilles ♦3 ud fra ♦E 8 6 3 2 (4.-højeste). Kompendiets råd efter dette forløb (s. 4) peger ikke på en farve, Vest har.",
+        "en": "After 1♥ – 1♠ – 2♣ – pass South has shown hearts and clubs, and North prefers clubs and is short in hearts. ♦3 gives the defence 2.3 tricks on average and defeats 2♣ in 0% of the deals; ♠5 gives 2.1 tricks and 0%. The margin over ♠5 is only 0.17 tricks. With the Standard profile ♦3 is led from ♦A 8 6 3 2 (fourth highest). The Compendium's advice after this auction (p. 4) points to no suit West holds."
+      }
+    },
+    {
+      "situation": "S6-trumf",
+      "indeks": 17,
+      "seed": 291413044,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 1♠ – 2♣ – pas har Syd vist ♥ og ♣, og Nord foretrækker ♣ og er kort i ♥. ♦ giver i gennemsnit 2,3 stik til modspillet og sætter 2♣ i 0 % af fordelingerne; ♠ giver 2,1 stik og 0 %. Forspringet til ♠ er kun 0,17 stik. Kompendiets råd efter dette forløb (s. 4) peger ikke på en farve, Vest har.",
+        "en": "After 1♥ – 1♠ – 2♣ – pass South has shown hearts and clubs, and North prefers clubs and is short in hearts. ♦ gives the defence 2.3 tricks on average and defeats 2♣ in 0% of the deals; ♠ gives 2.1 tricks and 0%. The margin over ♠ is only 0.17 tricks. The Compendium's advice after this auction (p. 4) points to no suit West holds."
+      }
+    },
+    {
+      "situation": "S6-trumf",
+      "indeks": 17,
+      "seed": 291413044,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 1♠ – 2♣ – pas har Syd vist ♥ og ♣, og Nord foretrækker ♣ og er kort i ♥. ♦2 giver i gennemsnit 2,3 stik til modspillet og sætter 2♣ i 0 % af fordelingerne; ♠3 giver 2,1 stik og 0 %. Forspringet til ♠3 er kun 0,17 stik. Med profilen Omvendt spilles ♦2 ud fra ♦E 8 6 3 2 (3. og 5. højeste). Kompendiets råd efter dette forløb (s. 4) peger ikke på en farve, Vest har.",
+        "en": "After 1♥ – 1♠ – 2♣ – pass South has shown hearts and clubs, and North prefers clubs and is short in hearts. ♦2 gives the defence 2.3 tricks on average and defeats 2♣ in 0% of the deals; ♠3 gives 2.1 tricks and 0%. The margin over ♠3 is only 0.17 tricks. With the Upside-down profile ♦2 is led from ♦A 8 6 3 2 (third and fifth highest). The Compendium's advice after this auction (p. 4) points to no suit West holds."
+      }
+    },
+    {
+      "situation": "S6-trumf",
+      "indeks": 17,
+      "seed": 291413044,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 1♠ – 2♣ – pas har Syd vist ♥ og ♣, og Nord foretrækker ♣ og er kort i ♥. ♦ giver i gennemsnit 2,3 stik til modspillet og sætter 2♣ i 0 % af fordelingerne; ♠ giver 2,1 stik og 0 %. Forspringet til ♠ er kun 0,17 stik. Kompendiets råd efter dette forløb (s. 4) peger ikke på en farve, Vest har.",
+        "en": "After 1♥ – 1♠ – 2♣ – pass South has shown hearts and clubs, and North prefers clubs and is short in hearts. ♦ gives the defence 2.3 tricks on average and defeats 2♣ in 0% of the deals; ♠ gives 2.1 tricks and 0%. The margin over ♠ is only 0.17 tricks. The Compendium's advice after this auction (p. 4) points to no suit West holds."
+      }
+    },
+    {
+      "situation": "S6-trumf",
+      "indeks": 17,
+      "seed": 291413044,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 1♠ – 2♣ – pas har Syd vist ♥ og ♣, og Nord foretrækker ♣ og er kort i ♥. ♦2 giver i gennemsnit 2,3 stik til modspillet og sætter 2♣ i 0 % af fordelingerne; ♠3 giver 2,1 stik og 0 %. Forspringet til ♠3 er kun 0,17 stik. Med profilen Kompendiet spilles ♦2 ud fra ♦E 8 6 3 2 (3. og 5. højeste). Kompendiets råd efter dette forløb (s. 4) peger ikke på en farve, Vest har.",
+        "en": "After 1♥ – 1♠ – 2♣ – pass South has shown hearts and clubs, and North prefers clubs and is short in hearts. ♦2 gives the defence 2.3 tricks on average and defeats 2♣ in 0% of the deals; ♠3 gives 2.1 tricks and 0%. The margin over ♠3 is only 0.17 tricks. With the Compendium profile ♦2 is led from ♦A 8 6 3 2 (third and fifth highest). The Compendium's advice after this auction (p. 4) points to no suit West holds."
+      }
+    },
+    {
+      "situation": "S6-trumf",
+      "indeks": 26,
+      "seed": 2064756575,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 1♠ – 2♣ – pas har Syd vist ♥ og ♣, og Nord foretrækker ♣ og er kort i ♥. ♠ giver i gennemsnit 3,5 stik til modspillet og sætter 2♣ i 3 % af fordelingerne; ♦ giver 3,2 stik og 2 %. Kompendiet (s. 4) anbefaler trumfudspil (♣) efter dette forløb, men med denne hånd giver ♠ flest stik.",
+        "en": "After 1♥ – 1♠ – 2♣ – pass South has shown hearts and clubs, and North prefers clubs and is short in hearts. ♠ gives the defence 3.5 tricks on average and defeats 2♣ in 3% of the deals; ♦ gives 3.2 tricks and 2%. The Compendium (p. 4) recommends a trump lead (♣) after this auction, but with this hand ♠ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 4) anbefaler trumfudspil (♣) efter dette forløb, men med denne hånd giver ♠ flest stik.",
+        "en": "The Compendium (p. 4) recommends a trump lead (♣) after this auction, but with this hand ♠ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S6-trumf",
+      "indeks": 26,
+      "seed": 2064756575,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 1♠ – 2♣ – pas har Syd vist ♥ og ♣, og Nord foretrækker ♣ og er kort i ♥. ♠E giver i gennemsnit 3,5 stik til modspillet og sætter 2♣ i 3 % af fordelingerne; ♦9 giver 3,2 stik og 2 %. Kompendiet (s. 4) anbefaler trumfudspil (♣) efter dette forløb, men med denne hånd giver ♠ flest stik.",
+        "en": "After 1♥ – 1♠ – 2♣ – pass South has shown hearts and clubs, and North prefers clubs and is short in hearts. ♠A gives the defence 3.5 tricks on average and defeats 2♣ in 3% of the deals; ♦9 gives 3.2 tricks and 2%. The Compendium (p. 4) recommends a trump lead (♣) after this auction, but with this hand ♠ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 4) anbefaler trumfudspil (♣) efter dette forløb, men med denne hånd giver ♠ flest stik.",
+        "en": "The Compendium (p. 4) recommends a trump lead (♣) after this auction, but with this hand ♠ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S6-trumf",
+      "indeks": 26,
+      "seed": 2064756575,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 1♠ – 2♣ – pas har Syd vist ♥ og ♣, og Nord foretrækker ♣ og er kort i ♥. ♠ giver i gennemsnit 3,5 stik til modspillet og sætter 2♣ i 3 % af fordelingerne; ♦ giver 3,2 stik og 2 %. Kompendiet (s. 4) anbefaler trumfudspil (♣) efter dette forløb, men med denne hånd giver ♠ flest stik.",
+        "en": "After 1♥ – 1♠ – 2♣ – pass South has shown hearts and clubs, and North prefers clubs and is short in hearts. ♠ gives the defence 3.5 tricks on average and defeats 2♣ in 3% of the deals; ♦ gives 3.2 tricks and 2%. The Compendium (p. 4) recommends a trump lead (♣) after this auction, but with this hand ♠ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 4) anbefaler trumfudspil (♣) efter dette forløb, men med denne hånd giver ♠ flest stik.",
+        "en": "The Compendium (p. 4) recommends a trump lead (♣) after this auction, but with this hand ♠ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S6-trumf",
+      "indeks": 26,
+      "seed": 2064756575,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 1♠ – 2♣ – pas har Syd vist ♥ og ♣, og Nord foretrækker ♣ og er kort i ♥. ♠E giver i gennemsnit 3,5 stik til modspillet og sætter 2♣ i 3 % af fordelingerne; ♦3 giver 3,2 stik og 2 %. Kompendiet (s. 4) anbefaler trumfudspil (♣) efter dette forløb, men med denne hånd giver ♠ flest stik.",
+        "en": "After 1♥ – 1♠ – 2♣ – pass South has shown hearts and clubs, and North prefers clubs and is short in hearts. ♠A gives the defence 3.5 tricks on average and defeats 2♣ in 3% of the deals; ♦3 gives 3.2 tricks and 2%. The Compendium (p. 4) recommends a trump lead (♣) after this auction, but with this hand ♠ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 4) anbefaler trumfudspil (♣) efter dette forløb, men med denne hånd giver ♠ flest stik.",
+        "en": "The Compendium (p. 4) recommends a trump lead (♣) after this auction, but with this hand ♠ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S6-trumf",
+      "indeks": 26,
+      "seed": 2064756575,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 1♠ – 2♣ – pas har Syd vist ♥ og ♣, og Nord foretrækker ♣ og er kort i ♥. ♠ giver i gennemsnit 3,5 stik til modspillet og sætter 2♣ i 3 % af fordelingerne; ♦ giver 3,2 stik og 2 %. Kompendiet (s. 4) anbefaler trumfudspil (♣) efter dette forløb, men med denne hånd giver ♠ flest stik.",
+        "en": "After 1♥ – 1♠ – 2♣ – pass South has shown hearts and clubs, and North prefers clubs and is short in hearts. ♠ gives the defence 3.5 tricks on average and defeats 2♣ in 3% of the deals; ♦ gives 3.2 tricks and 2%. The Compendium (p. 4) recommends a trump lead (♣) after this auction, but with this hand ♠ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 4) anbefaler trumfudspil (♣) efter dette forløb, men med denne hånd giver ♠ flest stik.",
+        "en": "The Compendium (p. 4) recommends a trump lead (♣) after this auction, but with this hand ♠ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S6-trumf",
+      "indeks": 26,
+      "seed": 2064756575,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 1♠ – 2♣ – pas har Syd vist ♥ og ♣, og Nord foretrækker ♣ og er kort i ♥. ♠E giver i gennemsnit 3,5 stik til modspillet og sætter 2♣ i 3 % af fordelingerne; ♦3 giver 3,2 stik og 2 %. Kompendiet (s. 4) anbefaler trumfudspil (♣) efter dette forløb, men med denne hånd giver ♠ flest stik.",
+        "en": "After 1♥ – 1♠ – 2♣ – pass South has shown hearts and clubs, and North prefers clubs and is short in hearts. ♠A gives the defence 3.5 tricks on average and defeats 2♣ in 3% of the deals; ♦3 gives 3.2 tricks and 2%. The Compendium (p. 4) recommends a trump lead (♣) after this auction, but with this hand ♠ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 4) anbefaler trumfudspil (♣) efter dette forløb, men med denne hånd giver ♠ flest stik.",
+        "en": "The Compendium (p. 4) recommends a trump lead (♣) after this auction, but with this hand ♠ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S7-makker-aabnet",
+      "indeks": 0,
+      "seed": 2909590540,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 1NT – pas – 3NT har makker åbnet med 1♥, og Syd har vist hold i ♥. ♥ giver i gennemsnit 2,4 stik til modspillet og sætter 3NT i 8 % af fordelingerne; ♠ giver 2,2 stik og 4 %. Kompendiet (s. 16) anbefaler udspil i ♥ efter dette forløb, fordi hånden har mindst to kort i ♥.",
+        "en": "After 1♥ – 1NT – pass – 3NT partner has opened 1♥, and South has shown a heart stopper. ♥ gives the defence 2.4 tricks on average and defeats 3NT in 8% of the deals; ♠ gives 2.2 tricks and 4%. The Compendium (p. 16) recommends a lead in ♥ after this auction, because the hand has at least two cards in ♥."
+      }
+    },
+    {
+      "situation": "S7-makker-aabnet",
+      "indeks": 0,
+      "seed": 2909590540,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 1NT – pas – 3NT har makker åbnet med 1♥, og Syd har vist hold i ♥. ♥7 giver i gennemsnit 2,4 stik til modspillet og sætter 3NT i 8 % af fordelingerne; ♠2 giver 2,2 stik og 4 %. Kompendiet (s. 16) anbefaler udspil i ♥ efter dette forløb, fordi hånden har mindst to kort i ♥.",
+        "en": "After 1♥ – 1NT – pass – 3NT partner has opened 1♥, and South has shown a heart stopper. ♥7 gives the defence 2.4 tricks on average and defeats 3NT in 8% of the deals; ♠2 gives 2.2 tricks and 4%. The Compendium (p. 16) recommends a lead in ♥ after this auction, because the hand has at least two cards in ♥."
+      }
+    },
+    {
+      "situation": "S7-makker-aabnet",
+      "indeks": 0,
+      "seed": 2909590540,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 1NT – pas – 3NT har makker åbnet med 1♥, og Syd har vist hold i ♥. ♥ giver i gennemsnit 2,4 stik til modspillet og sætter 3NT i 8 % af fordelingerne; ♠ giver 2,2 stik og 4 %. Kompendiet (s. 16) anbefaler udspil i ♥ efter dette forløb, fordi hånden har mindst to kort i ♥.",
+        "en": "After 1♥ – 1NT – pass – 3NT partner has opened 1♥, and South has shown a heart stopper. ♥ gives the defence 2.4 tricks on average and defeats 3NT in 8% of the deals; ♠ gives 2.2 tricks and 4%. The Compendium (p. 16) recommends a lead in ♥ after this auction, because the hand has at least two cards in ♥."
+      }
+    },
+    {
+      "situation": "S7-makker-aabnet",
+      "indeks": 0,
+      "seed": 2909590540,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 1NT – pas – 3NT har makker åbnet med 1♥, og Syd har vist hold i ♥. ♥7 giver i gennemsnit 2,4 stik til modspillet og sætter 3NT i 8 % af fordelingerne; ♠2 giver 2,2 stik og 4 %. Kompendiet (s. 16) anbefaler udspil i ♥ efter dette forløb, fordi hånden har mindst to kort i ♥.",
+        "en": "After 1♥ – 1NT – pass – 3NT partner has opened 1♥, and South has shown a heart stopper. ♥7 gives the defence 2.4 tricks on average and defeats 3NT in 8% of the deals; ♠2 gives 2.2 tricks and 4%. The Compendium (p. 16) recommends a lead in ♥ after this auction, because the hand has at least two cards in ♥."
+      }
+    },
+    {
+      "situation": "S7-makker-aabnet",
+      "indeks": 0,
+      "seed": 2909590540,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 1NT – pas – 3NT har makker åbnet med 1♥, og Syd har vist hold i ♥. ♥ giver i gennemsnit 2,4 stik til modspillet og sætter 3NT i 8 % af fordelingerne; ♠ giver 2,2 stik og 4 %. Kompendiet (s. 16) anbefaler udspil i ♥ efter dette forløb, fordi hånden har mindst to kort i ♥.",
+        "en": "After 1♥ – 1NT – pass – 3NT partner has opened 1♥, and South has shown a heart stopper. ♥ gives the defence 2.4 tricks on average and defeats 3NT in 8% of the deals; ♠ gives 2.2 tricks and 4%. The Compendium (p. 16) recommends a lead in ♥ after this auction, because the hand has at least two cards in ♥."
+      }
+    },
+    {
+      "situation": "S7-makker-aabnet",
+      "indeks": 0,
+      "seed": 2909590540,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 1NT – pas – 3NT har makker åbnet med 1♥, og Syd har vist hold i ♥. ♥7 giver i gennemsnit 2,4 stik til modspillet og sætter 3NT i 8 % af fordelingerne; ♠5 giver 2,2 stik og 4 %. Kompendiet (s. 16) anbefaler udspil i ♥ efter dette forløb, fordi hånden har mindst to kort i ♥.",
+        "en": "After 1♥ – 1NT – pass – 3NT partner has opened 1♥, and South has shown a heart stopper. ♥7 gives the defence 2.4 tricks on average and defeats 3NT in 8% of the deals; ♠5 gives 2.2 tricks and 4%. The Compendium (p. 16) recommends a lead in ♥ after this auction, because the hand has at least two cards in ♥."
+      }
+    },
+    {
+      "situation": "S7-makker-aabnet",
+      "indeks": 1,
+      "seed": 4175877823,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 1NT – pas – 3NT har makker åbnet med 1♥, og Syd har vist hold i ♥. ♥ giver i gennemsnit 3,0 stik til modspillet og sætter 3NT i 11 % af fordelingerne; ♣ giver 2,6 stik og 5 %. Kompendiet (s. 16) anbefaler udspil i ♥ efter dette forløb, fordi hånden har mindst to kort i ♥.",
+        "en": "After 1♥ – 1NT – pass – 3NT partner has opened 1♥, and South has shown a heart stopper. ♥ gives the defence 3.0 tricks on average and defeats 3NT in 11% of the deals; ♣ gives 2.6 tricks and 5%. The Compendium (p. 16) recommends a lead in ♥ after this auction, because the hand has at least two cards in ♥."
+      }
+    },
+    {
+      "situation": "S7-makker-aabnet",
+      "indeks": 1,
+      "seed": 4175877823,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 1NT – pas – 3NT har makker åbnet med 1♥, og Syd har vist hold i ♥. ♥9 giver i gennemsnit 3,0 stik til modspillet og sætter 3NT i 11 % af fordelingerne; ♣6 giver 2,6 stik og 5 %. Kompendiet (s. 16) anbefaler udspil i ♥ efter dette forløb, fordi hånden har mindst to kort i ♥.",
+        "en": "After 1♥ – 1NT – pass – 3NT partner has opened 1♥, and South has shown a heart stopper. ♥9 gives the defence 3.0 tricks on average and defeats 3NT in 11% of the deals; ♣6 gives 2.6 tricks and 5%. The Compendium (p. 16) recommends a lead in ♥ after this auction, because the hand has at least two cards in ♥."
+      }
+    },
+    {
+      "situation": "S7-makker-aabnet",
+      "indeks": 1,
+      "seed": 4175877823,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 1NT – pas – 3NT har makker åbnet med 1♥, og Syd har vist hold i ♥. ♥ giver i gennemsnit 3,0 stik til modspillet og sætter 3NT i 11 % af fordelingerne; ♣ giver 2,6 stik og 5 %. Kompendiet (s. 16) anbefaler udspil i ♥ efter dette forløb, fordi hånden har mindst to kort i ♥.",
+        "en": "After 1♥ – 1NT – pass – 3NT partner has opened 1♥, and South has shown a heart stopper. ♥ gives the defence 3.0 tricks on average and defeats 3NT in 11% of the deals; ♣ gives 2.6 tricks and 5%. The Compendium (p. 16) recommends a lead in ♥ after this auction, because the hand has at least two cards in ♥."
+      }
+    },
+    {
+      "situation": "S7-makker-aabnet",
+      "indeks": 1,
+      "seed": 4175877823,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 1NT – pas – 3NT har makker åbnet med 1♥, og Syd har vist hold i ♥. ♥9 giver i gennemsnit 3,0 stik til modspillet og sætter 3NT i 11 % af fordelingerne; ♣6 giver 2,6 stik og 5 %. Kompendiet (s. 16) anbefaler udspil i ♥ efter dette forløb, fordi hånden har mindst to kort i ♥.",
+        "en": "After 1♥ – 1NT – pass – 3NT partner has opened 1♥, and South has shown a heart stopper. ♥9 gives the defence 3.0 tricks on average and defeats 3NT in 11% of the deals; ♣6 gives 2.6 tricks and 5%. The Compendium (p. 16) recommends a lead in ♥ after this auction, because the hand has at least two cards in ♥."
+      }
+    },
+    {
+      "situation": "S7-makker-aabnet",
+      "indeks": 1,
+      "seed": 4175877823,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 1NT – pas – 3NT har makker åbnet med 1♥, og Syd har vist hold i ♥. ♥ giver i gennemsnit 3,0 stik til modspillet og sætter 3NT i 11 % af fordelingerne; ♣ giver 2,6 stik og 5 %. Kompendiet (s. 16) anbefaler udspil i ♥ efter dette forløb, fordi hånden har mindst to kort i ♥.",
+        "en": "After 1♥ – 1NT – pass – 3NT partner has opened 1♥, and South has shown a heart stopper. ♥ gives the defence 3.0 tricks on average and defeats 3NT in 11% of the deals; ♣ gives 2.6 tricks and 5%. The Compendium (p. 16) recommends a lead in ♥ after this auction, because the hand has at least two cards in ♥."
+      }
+    },
+    {
+      "situation": "S7-makker-aabnet",
+      "indeks": 1,
+      "seed": 4175877823,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 1NT – pas – 3NT har makker åbnet med 1♥, og Syd har vist hold i ♥. ♥9 giver i gennemsnit 3,0 stik til modspillet og sætter 3NT i 11 % af fordelingerne; ♣8 giver 2,6 stik og 5 %. Kompendiet (s. 16) anbefaler udspil i ♥ efter dette forløb, fordi hånden har mindst to kort i ♥.",
+        "en": "After 1♥ – 1NT – pass – 3NT partner has opened 1♥, and South has shown a heart stopper. ♥9 gives the defence 3.0 tricks on average and defeats 3NT in 11% of the deals; ♣8 gives 2.6 tricks and 5%. The Compendium (p. 16) recommends a lead in ♥ after this auction, because the hand has at least two cards in ♥."
+      }
+    },
+    {
+      "situation": "S7-makker-aabnet",
+      "indeks": 18,
+      "seed": 3008317012,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 1NT – pas – 3NT har makker åbnet med 1♥, og Syd har vist hold i ♥. ♥ og ♠ er lige gode (under 0,1 stik fra den bedste): ♥ giver i gennemsnit 3,8 stik til modspillet og sætter 3NT i 19 % af fordelingerne, ♠ 3,7 stik og 14 %. Kompendiet (s. 16) anbefaler udspil i ♥ efter dette forløb.",
+        "en": "After 1♥ – 1NT – pass – 3NT partner has opened 1♥, and South has shown a heart stopper. ♥ and ♠ are equally good (within 0.1 tricks of the best): ♥ gives the defence 3.8 tricks on average and defeats 3NT in 19% of the deals, ♠ 3.7 tricks and 14%. The Compendium (p. 16) recommends a lead in ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S7-makker-aabnet",
+      "indeks": 18,
+      "seed": 3008317012,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 1NT – pas – 3NT har makker åbnet med 1♥, og Syd har vist hold i ♥. ♥7 og ♠B er lige gode (under 0,1 stik fra den bedste): ♥7 giver i gennemsnit 3,8 stik til modspillet og sætter 3NT i 19 % af fordelingerne, ♠B 3,7 stik og 14 %. Fra ♠B 10 7 3 mod sans afgøres udspillet af \"table feeling\": ♠B og ♠3 er begge rigtige. Kompendiet (s. 16) anbefaler udspil i ♥ efter dette forløb.",
+        "en": "After 1♥ – 1NT – pass – 3NT partner has opened 1♥, and South has shown a heart stopper. ♥7 and ♠J are equally good (within 0.1 tricks of the best): ♥7 gives the defence 3.8 tricks on average and defeats 3NT in 19% of the deals, ♠J 3.7 tricks and 14%. From ♠J 10 7 3 against notrump the lead is a matter of table feeling: ♠J and ♠3 are both right. The Compendium (p. 16) recommends a lead in ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S7-makker-aabnet",
+      "indeks": 18,
+      "seed": 3008317012,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 1NT – pas – 3NT har makker åbnet med 1♥, og Syd har vist hold i ♥. ♥ og ♠ er lige gode (under 0,1 stik fra den bedste): ♥ giver i gennemsnit 3,8 stik til modspillet og sætter 3NT i 19 % af fordelingerne, ♠ 3,7 stik og 14 %. Kompendiet (s. 16) anbefaler udspil i ♥ efter dette forløb.",
+        "en": "After 1♥ – 1NT – pass – 3NT partner has opened 1♥, and South has shown a heart stopper. ♥ and ♠ are equally good (within 0.1 tricks of the best): ♥ gives the defence 3.8 tricks on average and defeats 3NT in 19% of the deals, ♠ 3.7 tricks and 14%. The Compendium (p. 16) recommends a lead in ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S7-makker-aabnet",
+      "indeks": 18,
+      "seed": 3008317012,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 1NT – pas – 3NT har makker åbnet med 1♥, og Syd har vist hold i ♥. ♥7 og ♠B er lige gode (under 0,1 stik fra den bedste): ♥7 giver i gennemsnit 3,8 stik til modspillet og sætter 3NT i 19 % af fordelingerne, ♠B 3,7 stik og 14 %. Fra ♠B 10 7 3 mod sans afgøres udspillet af \"table feeling\": ♠B og ♠3 er begge rigtige. Kompendiet (s. 16) anbefaler udspil i ♥ efter dette forløb.",
+        "en": "After 1♥ – 1NT – pass – 3NT partner has opened 1♥, and South has shown a heart stopper. ♥7 and ♠J are equally good (within 0.1 tricks of the best): ♥7 gives the defence 3.8 tricks on average and defeats 3NT in 19% of the deals, ♠J 3.7 tricks and 14%. From ♠J 10 7 3 against notrump the lead is a matter of table feeling: ♠J and ♠3 are both right. The Compendium (p. 16) recommends a lead in ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S7-makker-aabnet",
+      "indeks": 18,
+      "seed": 3008317012,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♥ – 1NT – pas – 3NT har makker åbnet med 1♥, og Syd har vist hold i ♥. ♥ og ♠ er lige gode (under 0,1 stik fra den bedste): ♥ giver i gennemsnit 3,8 stik til modspillet og sætter 3NT i 19 % af fordelingerne, ♠ 3,7 stik og 14 %. Kompendiet (s. 16) anbefaler udspil i ♥ efter dette forløb.",
+        "en": "After 1♥ – 1NT – pass – 3NT partner has opened 1♥, and South has shown a heart stopper. ♥ and ♠ are equally good (within 0.1 tricks of the best): ♥ gives the defence 3.8 tricks on average and defeats 3NT in 19% of the deals, ♠ 3.7 tricks and 14%. The Compendium (p. 16) recommends a lead in ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S7-makker-aabnet",
+      "indeks": 18,
+      "seed": 3008317012,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♥ – 1NT – pas – 3NT har makker åbnet med 1♥, og Syd har vist hold i ♥. ♥7 og ♠B er lige gode (under 0,1 stik fra den bedste): ♥7 giver i gennemsnit 3,8 stik til modspillet og sætter 3NT i 19 % af fordelingerne, ♠B 3,7 stik og 14 %. Fra ♠B 10 7 3 mod sans afgøres udspillet af \"table feeling\": ♠B og ♠3 er begge rigtige. Kompendiet (s. 16) anbefaler udspil i ♥ efter dette forløb.",
+        "en": "After 1♥ – 1NT – pass – 3NT partner has opened 1♥, and South has shown a heart stopper. ♥7 and ♠J are equally good (within 0.1 tricks of the best): ♥7 gives the defence 3.8 tricks on average and defeats 3NT in 19% of the deals, ♠J 3.7 tricks and 14%. From ♠J 10 7 3 against notrump the lead is a matter of table feeling: ♠J and ♠3 are both right. The Compendium (p. 16) recommends a lead in ♥ after this auction."
+      }
+    },
+    {
+      "situation": "S8-delkontrakt",
+      "indeks": 0,
+      "seed": 3675280785,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♠ – 3♠ spiller Syd en delkontrakt, og Nord har vist firekortsstøtte. ♣, ♦ og ♠ er lige gode (under 0,1 stik fra den bedste): ♣ giver i gennemsnit 2,9 stik til modspillet og sætter 3♠ i 5 % af fordelingerne, ♦ 2,8 stik og 4 %, ♠ 2,8 stik og 4 %. Kompendiet (s. 19) anbefaler udspil i ♥, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1♠ – 3♠ South plays a part score, and North has shown four-card support. ♣, ♦ and ♠ are equally good (within 0.1 tricks of the best): ♣ gives the defence 2.9 tricks on average and defeats 3♠ in 5% of the deals, ♦ 2.8 tricks and 4%, ♠ 2.8 tricks and 4%. The Compendium (p. 19) recommends a lead in ♥, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S8-delkontrakt",
+      "indeks": 0,
+      "seed": 3675280785,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♠ – 3♠ spiller Syd en delkontrakt, og Nord har vist firekortsstøtte. ♣B, ♦10 og ♠3 er lige gode (under 0,1 stik fra den bedste): ♣B giver i gennemsnit 2,9 stik til modspillet og sætter 3♠ i 5 % af fordelingerne, ♦10 2,8 stik og 4 %, ♠3 2,8 stik og 4 %. Med profilen Standard spilles ♦10 ud fra ♦10 6 2 (4.-højeste). Kompendiet (s. 19) anbefaler udspil i ♥, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1♠ – 3♠ South plays a part score, and North has shown four-card support. ♣J, ♦10 and ♠3 are equally good (within 0.1 tricks of the best): ♣J gives the defence 2.9 tricks on average and defeats 3♠ in 5% of the deals, ♦10 2.8 tricks and 4%, ♠3 2.8 tricks and 4%. With the Standard profile ♦10 is led from ♦10 6 2 (fourth highest). The Compendium (p. 19) recommends a lead in ♥, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S8-delkontrakt",
+      "indeks": 0,
+      "seed": 3675280785,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♠ – 3♠ spiller Syd en delkontrakt, og Nord har vist firekortsstøtte. ♣, ♦ og ♠ er lige gode (under 0,1 stik fra den bedste): ♣ giver i gennemsnit 2,9 stik til modspillet og sætter 3♠ i 5 % af fordelingerne, ♦ 2,8 stik og 4 %, ♠ 2,8 stik og 4 %. Kompendiet (s. 19) anbefaler udspil i ♥, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1♠ – 3♠ South plays a part score, and North has shown four-card support. ♣, ♦ and ♠ are equally good (within 0.1 tricks of the best): ♣ gives the defence 2.9 tricks on average and defeats 3♠ in 5% of the deals, ♦ 2.8 tricks and 4%, ♠ 2.8 tricks and 4%. The Compendium (p. 19) recommends a lead in ♥, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S8-delkontrakt",
+      "indeks": 0,
+      "seed": 3675280785,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♠ – 3♠ spiller Syd en delkontrakt, og Nord har vist firekortsstøtte. ♣B, ♦2 og ♠3 er lige gode (under 0,1 stik fra den bedste): ♣B giver i gennemsnit 2,9 stik til modspillet og sætter 3♠ i 5 % af fordelingerne, ♦2 2,8 stik og 4 %, ♠3 2,8 stik og 4 %. Med profilen Omvendt spilles ♦2 ud fra ♦10 6 2 (3. og 5. højeste). Kompendiet (s. 19) anbefaler udspil i ♥, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1♠ – 3♠ South plays a part score, and North has shown four-card support. ♣J, ♦2 and ♠3 are equally good (within 0.1 tricks of the best): ♣J gives the defence 2.9 tricks on average and defeats 3♠ in 5% of the deals, ♦2 2.8 tricks and 4%, ♠3 2.8 tricks and 4%. With the Upside-down profile ♦2 is led from ♦10 6 2 (third and fifth highest). The Compendium (p. 19) recommends a lead in ♥, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S8-delkontrakt",
+      "indeks": 0,
+      "seed": 3675280785,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♠ – 3♠ spiller Syd en delkontrakt, og Nord har vist firekortsstøtte. ♣, ♦ og ♠ er lige gode (under 0,1 stik fra den bedste): ♣ giver i gennemsnit 2,9 stik til modspillet og sætter 3♠ i 5 % af fordelingerne, ♦ 2,8 stik og 4 %, ♠ 2,8 stik og 4 %. Kompendiet (s. 19) anbefaler udspil i ♥, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1♠ – 3♠ South plays a part score, and North has shown four-card support. ♣, ♦ and ♠ are equally good (within 0.1 tricks of the best): ♣ gives the defence 2.9 tricks on average and defeats 3♠ in 5% of the deals, ♦ 2.8 tricks and 4%, ♠ 2.8 tricks and 4%. The Compendium (p. 19) recommends a lead in ♥, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S8-delkontrakt",
+      "indeks": 0,
+      "seed": 3675280785,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♠ – 3♠ spiller Syd en delkontrakt, og Nord har vist firekortsstøtte. ♣B, ♦2 og ♠3 er lige gode (under 0,1 stik fra den bedste): ♣B giver i gennemsnit 2,9 stik til modspillet og sætter 3♠ i 5 % af fordelingerne, ♦2 2,8 stik og 4 %, ♠3 2,8 stik og 4 %. Med profilen Kompendiet spilles ♦2 ud fra ♦10 6 2 (3. og 5. højeste). Kompendiet (s. 19) anbefaler udspil i ♥, ♦ eller ♣ efter dette forløb.",
+        "en": "After 1♠ – 3♠ South plays a part score, and North has shown four-card support. ♣J, ♦2 and ♠3 are equally good (within 0.1 tricks of the best): ♣J gives the defence 2.9 tricks on average and defeats 3♠ in 5% of the deals, ♦2 2.8 tricks and 4%, ♠3 2.8 tricks and 4%. With the Compendium profile ♦2 is led from ♦10 6 2 (third and fifth highest). The Compendium (p. 19) recommends a lead in ♥, ♦ or ♣ after this auction."
+      }
+    },
+    {
+      "situation": "S8-delkontrakt",
+      "indeks": 5,
+      "seed": 81800168,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♠ – 3♠ spiller Syd en delkontrakt, og Nord har vist firekortsstøtte. ♣, ♠ og ♥ er lige gode (under 0,1 stik fra den bedste): ♣ giver i gennemsnit 2,2 stik til modspillet og sætter 3♠ i 2 % af fordelingerne, ♠ 2,1 stik og 1 %, ♥ 2,1 stik og 1 %. Kompendiet (s. 19) anbefaler udspil fra en doubleton i en sidefarve efter dette forløb, her ♣.",
+        "en": "After 1♠ – 3♠ South plays a part score, and North has shown four-card support. ♣, ♠ and ♥ are equally good (within 0.1 tricks of the best): ♣ gives the defence 2.2 tricks on average and defeats 3♠ in 2% of the deals, ♠ 2.1 tricks and 1%, ♥ 2.1 tricks and 1%. The Compendium (p. 19) recommends a lead from a doubleton in a side suit after this auction, here ♣."
+      }
+    },
+    {
+      "situation": "S8-delkontrakt",
+      "indeks": 5,
+      "seed": 81800168,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♠ – 3♠ spiller Syd en delkontrakt, og Nord har vist firekortsstøtte. ♣8, ♠8 og ♥2 er lige gode (under 0,1 stik fra den bedste): ♣8 giver i gennemsnit 2,2 stik til modspillet og sætter 3♠ i 2 % af fordelingerne, ♠8 2,1 stik og 1 %, ♥2 2,1 stik og 1 %. Med profilen Standard spilles ♥2 ud fra ♥D 6 4 2 (4.-højeste). Kompendiet (s. 19) anbefaler udspil fra en doubleton i en sidefarve efter dette forløb, her ♣.",
+        "en": "After 1♠ – 3♠ South plays a part score, and North has shown four-card support. ♣8, ♠8 and ♥2 are equally good (within 0.1 tricks of the best): ♣8 gives the defence 2.2 tricks on average and defeats 3♠ in 2% of the deals, ♠8 2.1 tricks and 1%, ♥2 2.1 tricks and 1%. With the Standard profile ♥2 is led from ♥Q 6 4 2 (fourth highest). The Compendium (p. 19) recommends a lead from a doubleton in a side suit after this auction, here ♣."
+      }
+    },
+    {
+      "situation": "S8-delkontrakt",
+      "indeks": 5,
+      "seed": 81800168,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♠ – 3♠ spiller Syd en delkontrakt, og Nord har vist firekortsstøtte. ♣, ♠ og ♥ er lige gode (under 0,1 stik fra den bedste): ♣ giver i gennemsnit 2,2 stik til modspillet og sætter 3♠ i 2 % af fordelingerne, ♠ 2,1 stik og 1 %, ♥ 2,1 stik og 1 %. Kompendiet (s. 19) anbefaler udspil fra en doubleton i en sidefarve efter dette forløb, her ♣.",
+        "en": "After 1♠ – 3♠ South plays a part score, and North has shown four-card support. ♣, ♠ and ♥ are equally good (within 0.1 tricks of the best): ♣ gives the defence 2.2 tricks on average and defeats 3♠ in 2% of the deals, ♠ 2.1 tricks and 1%, ♥ 2.1 tricks and 1%. The Compendium (p. 19) recommends a lead from a doubleton in a side suit after this auction, here ♣."
+      }
+    },
+    {
+      "situation": "S8-delkontrakt",
+      "indeks": 5,
+      "seed": 81800168,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♠ – 3♠ spiller Syd en delkontrakt, og Nord har vist firekortsstøtte. ♣8, ♠8 og ♥4 er lige gode (under 0,1 stik fra den bedste): ♣8 giver i gennemsnit 2,2 stik til modspillet og sætter 3♠ i 2 % af fordelingerne, ♠8 2,1 stik og 1 %, ♥4 2,1 stik og 1 %. Med profilen Omvendt spilles ♥4 ud fra ♥D 6 4 2 (3. og 5. højeste). Kompendiet (s. 19) anbefaler udspil fra en doubleton i en sidefarve efter dette forløb, her ♣.",
+        "en": "After 1♠ – 3♠ South plays a part score, and North has shown four-card support. ♣8, ♠8 and ♥4 are equally good (within 0.1 tricks of the best): ♣8 gives the defence 2.2 tricks on average and defeats 3♠ in 2% of the deals, ♠8 2.1 tricks and 1%, ♥4 2.1 tricks and 1%. With the Upside-down profile ♥4 is led from ♥Q 6 4 2 (third and fifth highest). The Compendium (p. 19) recommends a lead from a doubleton in a side suit after this auction, here ♣."
+      }
+    },
+    {
+      "situation": "S8-delkontrakt",
+      "indeks": 5,
+      "seed": 81800168,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♠ – 3♠ spiller Syd en delkontrakt, og Nord har vist firekortsstøtte. ♣, ♠ og ♥ er lige gode (under 0,1 stik fra den bedste): ♣ giver i gennemsnit 2,2 stik til modspillet og sætter 3♠ i 2 % af fordelingerne, ♠ 2,1 stik og 1 %, ♥ 2,1 stik og 1 %. Kompendiet (s. 19) anbefaler udspil fra en doubleton i en sidefarve efter dette forløb, her ♣.",
+        "en": "After 1♠ – 3♠ South plays a part score, and North has shown four-card support. ♣, ♠ and ♥ are equally good (within 0.1 tricks of the best): ♣ gives the defence 2.2 tricks on average and defeats 3♠ in 2% of the deals, ♠ 2.1 tricks and 1%, ♥ 2.1 tricks and 1%. The Compendium (p. 19) recommends a lead from a doubleton in a side suit after this auction, here ♣."
+      }
+    },
+    {
+      "situation": "S8-delkontrakt",
+      "indeks": 5,
+      "seed": 81800168,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♠ – 3♠ spiller Syd en delkontrakt, og Nord har vist firekortsstøtte. ♣8, ♠8 og ♥4 er lige gode (under 0,1 stik fra den bedste): ♣8 giver i gennemsnit 2,2 stik til modspillet og sætter 3♠ i 2 % af fordelingerne, ♠8 2,1 stik og 1 %, ♥4 2,1 stik og 1 %. Med profilen Kompendiet spilles ♥4 ud fra ♥D 6 4 2 (3. og 5. højeste). Kompendiet (s. 19) anbefaler udspil fra en doubleton i en sidefarve efter dette forløb, her ♣.",
+        "en": "After 1♠ – 3♠ South plays a part score, and North has shown four-card support. ♣8, ♠8 and ♥4 are equally good (within 0.1 tricks of the best): ♣8 gives the defence 2.2 tricks on average and defeats 3♠ in 2% of the deals, ♠8 2.1 tricks and 1%, ♥4 2.1 tricks and 1%. With the Compendium profile ♥4 is led from ♥Q 6 4 2 (third and fifth highest). The Compendium (p. 19) recommends a lead from a doubleton in a side suit after this auction, here ♣."
+      }
+    },
+    {
+      "situation": "S8-delkontrakt",
+      "indeks": 55,
+      "seed": 1549378790,
+      "profil": "standard",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♠ – 3♠ spiller Syd en delkontrakt, og Nord har vist firekortsstøtte. ♦ giver i gennemsnit 2,6 stik til modspillet og sætter 3♠ i 4 % af fordelingerne; ♥ giver 2,3 stik og 2 %. Kompendiet (s. 19) anbefaler udspil fra en doubleton i en sidefarve efter dette forløb, her ♣, men med denne hånd giver ♦ flest stik.",
+        "en": "After 1♠ – 3♠ South plays a part score, and North has shown four-card support. ♦ gives the defence 2.6 tricks on average and defeats 3♠ in 4% of the deals; ♥ gives 2.3 tricks and 2%. The Compendium (p. 19) recommends a lead from a doubleton in a side suit after this auction, here ♣, but with this hand ♦ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 19) anbefaler udspil fra en doubleton i en sidefarve efter dette forløb, her ♣, men med denne hånd giver ♦ flest stik.",
+        "en": "The Compendium (p. 19) recommends a lead from a doubleton in a side suit after this auction, here ♣, but with this hand ♦ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S8-delkontrakt",
+      "indeks": 55,
+      "seed": 1549378790,
+      "profil": "standard",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♠ – 3♠ spiller Syd en delkontrakt, og Nord har vist firekortsstøtte. ♦E giver i gennemsnit 2,6 stik til modspillet og sætter 3♠ i 4 % af fordelingerne; ♥K giver 2,3 stik og 2 %. Kompendiet (s. 19) anbefaler udspil fra en doubleton i en sidefarve efter dette forløb, her ♣, men med denne hånd giver ♦ flest stik.",
+        "en": "After 1♠ – 3♠ South plays a part score, and North has shown four-card support. ♦A gives the defence 2.6 tricks on average and defeats 3♠ in 4% of the deals; ♥K gives 2.3 tricks and 2%. The Compendium (p. 19) recommends a lead from a doubleton in a side suit after this auction, here ♣, but with this hand ♦ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 19) anbefaler udspil fra en doubleton i en sidefarve efter dette forløb, her ♣, men med denne hånd giver ♦ flest stik.",
+        "en": "The Compendium (p. 19) recommends a lead from a doubleton in a side suit after this auction, here ♣, but with this hand ♦ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S8-delkontrakt",
+      "indeks": 55,
+      "seed": 1549378790,
+      "profil": "omvendt",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♠ – 3♠ spiller Syd en delkontrakt, og Nord har vist firekortsstøtte. ♦ giver i gennemsnit 2,6 stik til modspillet og sætter 3♠ i 4 % af fordelingerne; ♥ giver 2,3 stik og 2 %. Kompendiet (s. 19) anbefaler udspil fra en doubleton i en sidefarve efter dette forløb, her ♣, men med denne hånd giver ♦ flest stik.",
+        "en": "After 1♠ – 3♠ South plays a part score, and North has shown four-card support. ♦ gives the defence 2.6 tricks on average and defeats 3♠ in 4% of the deals; ♥ gives 2.3 tricks and 2%. The Compendium (p. 19) recommends a lead from a doubleton in a side suit after this auction, here ♣, but with this hand ♦ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 19) anbefaler udspil fra en doubleton i en sidefarve efter dette forløb, her ♣, men med denne hånd giver ♦ flest stik.",
+        "en": "The Compendium (p. 19) recommends a lead from a doubleton in a side suit after this auction, here ♣, but with this hand ♦ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S8-delkontrakt",
+      "indeks": 55,
+      "seed": 1549378790,
+      "profil": "omvendt",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♠ – 3♠ spiller Syd en delkontrakt, og Nord har vist firekortsstøtte. ♦E giver i gennemsnit 2,6 stik til modspillet og sætter 3♠ i 4 % af fordelingerne; ♥K giver 2,3 stik og 2 %. Kompendiet (s. 19) anbefaler udspil fra en doubleton i en sidefarve efter dette forløb, her ♣, men med denne hånd giver ♦ flest stik.",
+        "en": "After 1♠ – 3♠ South plays a part score, and North has shown four-card support. ♦A gives the defence 2.6 tricks on average and defeats 3♠ in 4% of the deals; ♥K gives 2.3 tricks and 2%. The Compendium (p. 19) recommends a lead from a doubleton in a side suit after this auction, here ♣, but with this hand ♦ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 19) anbefaler udspil fra en doubleton i en sidefarve efter dette forløb, her ♣, men med denne hånd giver ♦ flest stik.",
+        "en": "The Compendium (p. 19) recommends a lead from a doubleton in a side suit after this auction, here ♣, but with this hand ♦ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S8-delkontrakt",
+      "indeks": 55,
+      "seed": 1549378790,
+      "profil": "kompendiet",
+      "svar": "farve",
+      "forklaring": {
+        "da": "Efter 1♠ – 3♠ spiller Syd en delkontrakt, og Nord har vist firekortsstøtte. ♦ giver i gennemsnit 2,6 stik til modspillet og sætter 3♠ i 4 % af fordelingerne; ♥ giver 2,3 stik og 2 %. Kompendiet (s. 19) anbefaler udspil fra en doubleton i en sidefarve efter dette forløb, her ♣, men med denne hånd giver ♦ flest stik.",
+        "en": "After 1♠ – 3♠ South plays a part score, and North has shown four-card support. ♦ gives the defence 2.6 tricks on average and defeats 3♠ in 4% of the deals; ♥ gives 2.3 tricks and 2%. The Compendium (p. 19) recommends a lead from a doubleton in a side suit after this auction, here ♣, but with this hand ♦ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 19) anbefaler udspil fra en doubleton i en sidefarve efter dette forløb, her ♣, men med denne hånd giver ♦ flest stik.",
+        "en": "The Compendium (p. 19) recommends a lead from a doubleton in a side suit after this auction, here ♣, but with this hand ♦ gives the most tricks."
+      }
+    },
+    {
+      "situation": "S8-delkontrakt",
+      "indeks": 55,
+      "seed": 1549378790,
+      "profil": "kompendiet",
+      "svar": "kort",
+      "forklaring": {
+        "da": "Efter 1♠ – 3♠ spiller Syd en delkontrakt, og Nord har vist firekortsstøtte. ♦E giver i gennemsnit 2,6 stik til modspillet og sætter 3♠ i 4 % af fordelingerne; ♥K giver 2,3 stik og 2 %. Kompendiet (s. 19) anbefaler udspil fra en doubleton i en sidefarve efter dette forløb, her ♣, men med denne hånd giver ♦ flest stik.",
+        "en": "After 1♠ – 3♠ South plays a part score, and North has shown four-card support. ♦A gives the defence 2.6 tricks on average and defeats 3♠ in 4% of the deals; ♥K gives 2.3 tricks and 2%. The Compendium (p. 19) recommends a lead from a doubleton in a side suit after this auction, here ♣, but with this hand ♦ gives the most tricks."
+      },
+      "afvigelse": {
+        "da": "Kompendiet (s. 19) anbefaler udspil fra en doubleton i en sidefarve efter dette forløb, her ♣, men med denne hånd giver ♦ flest stik.",
+        "en": "The Compendium (p. 19) recommends a lead from a doubleton in a side suit after this auction, here ♣, but with this hand ♦ gives the most tricks."
+      }
+    }
+  ]
+}

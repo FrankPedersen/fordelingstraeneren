@@ -658,6 +658,32 @@ function eksempel(data: Datasaet): Eksempel | null {
   return { ...EKSEMPEL, vest: o.vest, valg: v, tal: haandtal(v, o, kontraktI(EKSEMPEL.situation)) };
 }
 
+// ---------------------------------------------------------------- appens tal (SPEC-udspilstal.md)
+
+/** Én række, situation og gruppe, som appen bruger, med tallene uafrundede (`src/modspil/content/udspil/raadtal.json`). */
+export interface AppRaekke {
+  raekke: RaekkeId;
+  situation: SituationId | null;
+  gruppe: string | null;
+  n: number;
+  forskel: number;
+  saetForskel: number;
+  dom: Dom;
+  udenPraktiskBetydning: boolean;
+}
+
+/** Appens tal: rækkerne og i S6 andelen (0–1) af hænderne med trumf, hvor trumf er den bedste farve. */
+export interface AppTal {
+  kilde: string;
+  raekker: AppRaekke[];
+  trumfBedst: { situation: SituationId; n: number; andel: number };
+}
+
+/** Appens tal ud fra analysen (`node tools/udspil/raadanalyse.mjs --app`). */
+export function appTal(_r: Resultat): AppTal {
+  throw new Error('appTal: ikke bygget');
+}
+
 // ---------------------------------------------------------------- tabellerne
 
 const SYMBOL: Record<Farve, string> = { S: '♠', H: '♥', D: '♦', C: '♣' };

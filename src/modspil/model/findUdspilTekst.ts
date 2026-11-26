@@ -290,6 +290,41 @@ export function raadSaetning(
   };
 }
 
+// ---------------------------------------------------------------- tallene fra afsnit 7a (SPEC-udspilstal.md)
+
+/** Én række fra `src/modspil/content/udspil/raadtal.json` (afsnit 7a i docs/MODEL.md). */
+export interface RaadTal {
+  raekke: string;
+  situation: string | null;
+  gruppe: string | null;
+  n: number;
+  forskel: number;
+  saetForskel: number;
+  dom: 'for-faa' | 'holder' | 'modsat' | 'ingen-forskel';
+  udenPraktiskBetydning: boolean;
+}
+
+/** Rækkerne med én B-farve i forklaringen. */
+export type ParRaekke = 'P1' | 'P2' | 'P4' | 'P5' | 'P6' | 'P7';
+
+/** P9's grupper: de to øverste honnører i Vests farve. */
+export type ToppenGruppe = 'E K' | 'K D' | 'D B';
+
+/** Sætningen "Med dobbeltdummy …" for en række med én B-farve; null ved for få hænder. */
+export function dobbeltdummySaetning(_raekke: ParRaekke, _tal: RaadTal): Tekst | null {
+  throw new Error('dobbeltdummySaetning: ikke bygget');
+}
+
+/** Sætningen "Med dobbeltdummy giver trumf …" for P8 i en situation; null, når alle farver har for få hænder. */
+export function trumfSaetning(_raekker: readonly { farve: number; tal: RaadTal }[]): Tekst | null {
+  throw new Error('trumfSaetning: ikke bygget');
+}
+
+/** Tilføjelsen til "table feeling" (P9); null ved for få hænder. */
+export function toppenSaetning(_gruppe: ToppenGruppe, _tal: RaadTal): Tekst | null {
+  throw new Error('toppenSaetning: ikke bygget');
+}
+
 /** Dommen, når farven er rigtig, men kortet ikke er profilens: farven var rigtig, og profilens kort. */
 export function domTekst(vest: readonly Card[], kort: readonly Card[], profilNavn: { tekst: string; tekstEn: string }): Tekst {
   const farve = farveAf(kort[0]);
