@@ -372,8 +372,9 @@ under 30 hænder, "Kompendiet holder", når intervallet ligger helt på
 Kompendiets side af 0, "Kompendiet tager fejl", når det ligger helt på den
 anden side, og ellers "Ingen forskel påvist"; under 0,05 stik fra 0 står
 der desuden "uden praktisk betydning". P9 har ingen retning, fordi "table
-feeling" overlader valget til spilleren, og dommen siger dér, hvilket kort
-der er bedst. Valgene står i `SPEC-udspilsraad.md`.
+feeling" overlader valget til spilleren, og P6 heller ingen, fordi
+påstanden er, at doubletonen er bedre end sit rygte, ikke at den slår
+småkort. Dommen siger dér, hvilket udspil der er bedst. Valgene står i `SPEC-udspilsraad.md`.
 
 <!-- raadanalyse:start -->
 ### Påstandene
@@ -409,8 +410,8 @@ der er bedst. Valgene står i `SPEC-udspilsraad.md`.
 | P5 | S4 | A | 5 + 150 = 155 | – | +0,13 | 0,01 | [+0,12; +0,15] | 62 % / 38 % / 0 % | +4,4 | Kompendiet holder |
 | P5 | S5 | A | 4 + 146 = 150 | 4 (samme hånd to gange) | +0,11 | 0,01 | [+0,09; +0,14] | 47 % / 46 % / 7 % | +3,0 | Kompendiet holder |
 | P5 | S8 | A | 3 + 150 = 153 | – | +0,17 | 0,01 | [+0,15; +0,19] | 79 % / 17 % / 4 % | +3,4 | Kompendiet holder |
-| P6 | S4 | A | 11 + 150 = 161 | – | −0,02 | 0,00 | [−0,03; −0,01] | 3 % / 87 % / 10 % | +0,4 | Kompendiet tager fejl, uden praktisk betydning |
-| P6 | S8 | A | 10 + 150 = 160 | – | −0,02 | 0,01 | [−0,03; −0,01] | 9 % / 78 % / 13 % | +1,3 | Kompendiet tager fejl, uden praktisk betydning |
+| P6 | S4 | – | 11 + 150 = 161 | – | −0,02 | 0,00 | [−0,03; −0,01] | 3 % / 87 % / 10 % | +0,4 | B bedre, uden praktisk betydning |
+| P6 | S8 | – | 10 + 150 = 160 | – | −0,02 | 0,01 | [−0,03; −0,01] | 9 % / 78 % / 13 % | +1,3 | B bedre, uden praktisk betydning |
 | P7 | S4 | A | 59 | 4 (to sidefarver med 3+ kort uden honnør) | +0,15 | 0,02 | [+0,12; +0,18] | 64 % / 34 % / 2 % | +1,7 | Kompendiet holder |
 | P8 · ♠ | S6 | A | 149 | – | +0,07 | 0,02 | [+0,02; +0,11] | 46 % / 26 % / 29 % | +2,7 | Kompendiet holder |
 | P8 · ♠ | S4 | B | 143 | – | −0,06 | 0,02 | [−0,10; −0,01] | 24 % / 45 % / 31 % | −1,2 | Kompendiet holder |
@@ -491,37 +492,38 @@ Rådet er blandt dobbeltdummys bedste farver (under 0,1 stik fra den bedste) i S
 
 **Konklusioner**
 
-1. **Singleton i en sidefarve holder (P5).** I 4♥, 4♠ og 3♠ giver
+1. **Singleton i en sidefarve holder i dobbeltdummy (P5).** I 4♥, 4♠ og 3♠ giver
    singletonen 0,11–0,17 stik mere end en sidefarve med småkort og sætter
    3–4 procentpoint oftere; småkort er 0,1 stik bedre eller mere i højst
    7 % af hænderne. Formen er sjælden (2–3 % af basens hænder), så tallene
    bygger næsten kun på de ekstra hænder.
-2. **Den korteste major mod 1NT – 3NT tager fejl (P2).** Den korteste major
+2. **Den korteste major mod 1NT – 3NT holder ikke i dobbeltdummy (P2).** Den korteste major
    giver 0,10 stik mindre end den længste og sætter 1,8 procentpoint
    sjældnere, både med 1–2 og med 3 kort. Mod en minor med 4 kort og en
    eller to honnører (P1) er forskellen +0,03 stik, uden praktisk
    betydning. Forbeholdet om dobbeltdummy gælder især her.
-3. **Efter transfer holder rådet mod bordets ♥ (P4):** ♥ uden dyb sekvens
+3. **Efter transfer holder rådet mod bordets ♥ i dobbeltdummy (P4):** ♥ uden dyb sekvens
    giver 0,12 stik mindre end ♠. ♠'s lille fordel frem for ♦ og ♣ (P3) ses
    ikke; forskellen er +0,02 til +0,03 stik, uden praktisk betydning.
-4. **Doubleton uden honnør og småkort er lige gode (P6), og småkort slår
-   honnørfarven (P7).** Doubletonen giver 0,02 stik mindre end småkort,
+4. **Doubleton uden honnør og småkort er lige gode i dobbeltdummy (P6), og
+   småkort slår honnørfarven (P7).** Doubletonen giver 0,02 stik mindre end småkort,
    men sætter 0,4–1,3 procentpoint oftere, og 78–87 % af hænderne er under
    0,1 stik fra hinanden. Småkort giver 0,15 stik mere end en sidefarve med
-   en eller to honnører uden sekvens. I 4♥ (S4) er Kompendiets råd blandt
-   dobbeltdummys bedste farver i 80 % af hænderne; i de øvrige 30 har Vest
-   oftere en honnørsekvens i en sidefarve (70 % mod 43 % af alle hænder) og
-   sjældnere en honnør i trumf (20 % mod 34 %).
-5. **Trumf ud følger Kompendiet (P8).** Efter 1♥ – 1♠ – 2♣ er trumf bedre
+   en eller to honnører uden sekvens. Doubletonen støtter dermed
+   påstanden om, at den er bedre end sit rygte.
+5. **Trumf ud følger Kompendiet i dobbeltdummy (P8).** Efter 1♥ – 1♠ – 2♣ er trumf bedre
    end bordets ♠ (+0,07) og især end Syds ♥ (+0,32), men ikke påviseligt
    bedre end ♦, og trumf er den bedste farve i 46 % af hænderne. Rådet
    (trumf) er blandt de bedste farver i 61 %; i de øvrige 59 hænder er den
    bedste farve ♠ eller ♦, aldrig ♥. I 4♥ og 3♠ giver hver sidefarve
    0,04–0,06 stik mere end trumf, og trumf er den bedste farve i 16 % og
    8 % af hænderne; forskellene er små og ligger tæt ved grænsen for
-   praktisk betydning.
+   praktisk betydning. I 4♥ (S4) er Kompendiets råd blandt
+   dobbeltdummys bedste farver i 80 % af hænderne; i de øvrige 30 har Vest
+   oftere en honnørsekvens i en sidefarve (70 % mod 43 % af alle hænder) og
+   sjældnere en honnør i trumf (20 % mod 34 %).
 6. **"Table feeling" mod sans (P9): toppen giver 0,31 stik mere end det lave
-   kort**, mest fra E K (+0,83) og mindst fra D B (+0,14), og sætter 3,2
+   kort i dobbeltdummy**, mest fra E K (+0,83) og mindst fra D B (+0,14), og sætter 3,2
    procentpoint oftere. Dobbeltdummy overvurderer netop esudspil, fordi
    modspillet ser det rigtige skift efter at have set bordet, så tallet er
    en øvre grænse, især fra E K.

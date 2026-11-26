@@ -303,3 +303,10 @@ De vigtigste fund:
 
 - Session 1: 94 / 253.335 / 8.629.495 / 131.351 (lagt sammen fra sessionens transcript: 47 kald til og med prøvekørslen; de sidste kald med Afklaret og commit er ikke med, og Franks `/usage` før og efter giver hele sessionen)
 - Session 2: 112 / 251.114 / 10.407.518 / 117.753 (lagt sammen fra sessionens transcript: 54 kald til og med den fulde testkørsel; de sidste kald med Afklaret og commit er ikke med, og Franks `/usage` før og efter giver hele sessionen)
+
+**Rettelser efter gennemgangen (26. nov. 2026, Franks valg; lavet af rådgiveren fra chatten)**
+
+1. **P6 har ingen retning ("–")** som P9: påstanden er, at doubletonen er "bedre end sit rygte", ikke at den slår småkort. Dommen er nu "B bedre, uden praktisk betydning" i S4 og S8 (før "Kompendiet tager fejl, uden praktisk betydning"). Rettet i `retning` i `raadanalyse.ts`; tabellerne mellem markørerne er skrevet igen med `raadanalyse.mjs --markdown`.
+2. **Konklusionernes overskrifter siger "i dobbeltdummy"**, fx "Den korteste major mod 1NT – 3NT holder ikke i dobbeltdummy (P2)". Indledningen nævner, at P6 heller ikke har en retning.
+3. **Sætningen om S4's 30 hænder** er flyttet fra konklusion 4 til konklusion 5, så S4 og S6 står sammen; konklusion 4 slutter nu med, at doubletonen støtter påstanden.
+4. **Testene** (kørt i en Linux-kopi af repoet med `npm ci`): `raadanalyse.test.ts` 71 bestået og 1 sprunget over (testen af afsnit 1–7 og 8–9 mod tagget, fordi kopien ikke har git; `git diff` viser kun ændringer i afsnit 7a), accepttest 7 grøn og `tsc` grøn. Hele `npm test` køres i session 3.

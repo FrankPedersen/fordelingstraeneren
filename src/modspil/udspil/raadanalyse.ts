@@ -111,13 +111,14 @@ export const GRUPPER: Readonly<Partial<Record<RaekkeId, readonly string[]>>> = {
 /**
  * Kompendiets retning (Franks valg 26. nov. 2026): A, når Kompendiet siger, at A er bedre, og B, når det siger, at B er
  * bedre. P4 og P8 i S8 fraråder A, og i S4 er trumf kun attraktivt, når ingen sidefarve er det, så B. "Table feeling"
- * (P9) lader valget være op til spilleren og har ingen retning ("–").
+ * (P9) lader valget være op til spilleren og har ingen retning ("–"). P6 har heller ingen retning (Franks valg 26. nov.
+ * 2026 efter session 2): påstanden er, at doubletonen er "bedre end sit rygte", ikke at den slår småkort.
  */
 export type Retning = 'A' | 'B' | '–';
 
 export function retning(raekke: RaekkeId, situation: SituationId | null): Retning {
   const p = paastand(raekke);
-  if (p === 'P9') return '–';
+  if (p === 'P6' || p === 'P9') return '–';
   if (p === 'P4') return 'B';
   if (p === 'P8') return situation === 'S6-trumf' ? 'A' : 'B';
   return 'A';
